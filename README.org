@@ -1,0 +1,4 @@
+* Desarrollo Web en Entorno Cliente - Prácticas
+  Repositorio de prácticas para el módulo de Desarrollo Web en Entorno Cliente.
+
+  - [[./practica1.org][Práctica 1]]
