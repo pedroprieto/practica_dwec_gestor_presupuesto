@@ -23,4 +23,4 @@
 
    A continuación se muestran los enlaces a los enunciados de cada una de las prácticas:
    
-  - [[./enunciados/practica1.org][Gestor de Presupuestos - Práctica 1]]
+  - [[./enunciados/introduccion_js.org][Introducción a JavaScript]]
