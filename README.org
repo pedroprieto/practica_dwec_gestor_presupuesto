@@ -16,7 +16,7 @@
    2. Creación de un *interfaz* web para mostrar la información de la aplicación en el navegador. En este punto podremos cargar nuestro código en el *navegador web* y ver los resultados en HTML.
    3. Añadir los *controles de formulario* necesarios para *interactuar* con la aplicación.
    4. Añadir mecanismos de *validación* para controlar la correcta introducción de datos por parte del usuario.
-   5. *Almacenar* los datos de la aplicación en el *navegador web*. Desde este momento el usuario podrá guardar su información en el navegador: al recargar la página aparecerá la información que hubiera introducido (hasta este momento cada vez que se recargaba la página se borraban todos los datos)
+   5. *Almacenar* los datos de la aplicación en el *navegador web*. Desde este momento el usuario podrá guardar su información en el navegador: al recargar la página aparecerá la información que hubiera introducido (hasta este momento cada vez que se recargaba la página se borraban todos los datos).
    6. Conectarse con una *API web* para almacenar la información del usuario en un *servidor web externo*, incluyendo autenticación de usuario. De esta manera el usuario podrá acceder a sus datos desde cualquier navegador.
    7. Utilizar *librerías externas* para mostrar determinada información de manera *gráfica* en lugar de texto exclusivamente.
    
