@@ -1,0 +1,50 @@
+* Fundamentos de JavaScript I
+  El objetivo de esta práctica es aprender y poner en práctica los conceptos fundamentales de JavaScript.
+
+** Repositorio de la práctica
+   El *repositorio base* de la práctica está disponible en: https://github.com/pedroprieto/practica_dwec_gestor_presupuesto
+
+   En esta *segunda práctica* se debe configurar el *repositorio personal* (el que se creó haciendo un /fork/ del repositorio base) para añadir un *segundo repositorio remoto*. De esta manera, tu repositorio tendrá dos remotos:
+   - El remoto *principal*, llamado ~origin~, que estará conectado con tu repositorio de tu cuenta de GitHub. Es el que utilizarás normalmente para subir periódicamente los cambios (mediante ~git push~) o para actualizarlo o clonarlo en otro equipo.
+   - Un remoto *secundario*, llamado ~profesor~, que será de *solo lectura*. Estará conectado con el *repositorio base* y solo se utilizará para incorporar a tu repositorio personal los *enunciados y archivos base* de las siguientes prácticas que vayamos realizando.
+
+   En el apartado de *Preparación* se indica cómo proceder para realizar estas tareas.
+
+   Recuerda que en todo momento estarás usando el *mismo repositorio*. Lo único que harás será incorporar nuevos cambios con los archivos de las siguientes prácticas.
+
+** Requisitos de software
+Para poder realizar esta práctica y que funcione adecuadamente el entorno de test será necesario *instalar el siguiente software* en el equipo:
+- Navegador [[https://www.google.com/intl/es/chrome/][Chrome]].
+- Entorno de ejecución [[https://nodejs.org/es/][NodeJS]].
+
+** Desarrollo guiado por test
+Para realizar la práctica se seguirán los principios del [[https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas][Desarrollo Guiado por Test]]. Para ello se proporciona en el repositorio una serie de ficheros que permiten *ejecutar tests*. Dichos tests comprobarán que la web cumple con algunos de los requisitos de la práctica.
+
+** Preparación
+1. Instalar los requisitos de software indicados
+2. Abrir un terminal
+3. Situarse en la carpeta del repositorio personal de la práctica
+4. *Añadir el remoto secundario* a tu repositorio personal. Para ello hay que ejecutar el comando:
+   #+begin_src shell
+     git remote add profesor https://github.com/pedroprieto/practica_dwec_gestor_presupuesto.git
+   #+end_src
+5. *Incorporar a tu repositorio personal los cambios* realizados por el profesor correspondientes a los archivos de esta práctica. Para ello hay que ejecutar:
+   #+begin_src shell
+     git pull profesor master
+   #+end_src
+6. Este comando *descarga* los cambios que ha realizado el *profesor* en el *repositorio base* y los *integra* en tu repositorio personal. Tras realizar este paso, seguramente git *abra el editor configurado por defecto* para que introduzcas un *mensaje para crear un nuevo commit* que integre tus cambios y los cambios del profesor. Debes introducir el texto y guardar los cambios.
+7. En principio no deben producirse *conflictos*. En caso de que se produzcan (por ejemplo, porque has editado el fichero ~.gitignore~ y yo también porque lo exigía la práctica), *resuélvelos y notifícamelo a través de un Issue*.
+8. Ejecuta el comando ~git push~ para subir los cambios a tu repositorio personal (el remoto principal) en GitHub y que queden guardados ahí también.
+9. Ejecutar el comando ~npm install~. Este comando instalará todas las librerías de Node necesarias para ejecutar los tests. Dichas librerías se guardarán en una carpeta con nombre ~node_modules~ dentro del repositorio. Nótese que dicha carpeta está excluida del repositorio en el archivo ~.gitignore~.
+10. Ejecutar el comando ~npm test~ para lanzar los tests. Este comando podrá ejecutarse tantas veces como sea necesario. Por pantalla se mostrarán los tests que se pasan y los que no, de manera que se tendrá información sobre las acciones que hay que realizar.
+
+** Tareas a realizar
+*** Lectura
+    Lee atentamente los siguientes artículos y sus correspondientes subsecciones en caso de que las tengan:
+
+** Formato de la entrega
+- Cada persona trabajará en su *repositorio personal* que habrá creado tras realizar el /fork/ del repositorio base.
+- Todos los archivos de la práctica se guardarán en el repositorio y se subirán a GitHub periódicamente. Es conveniente ir subiendo los cambios aunque no sean definitivos. *No se admitirán entregas de tareas que tengan un solo commit*.
+- *Como mínimo* se debe realizar *un commit* por *cada elemento de la lista de tareas* a realizar (si es que estas exigen crear código, claro está).
+- Para cualquier tipo de *duda o consulta* se pueden abrir ~Issues~ haciendo referencia al profesor mediante el texto ~@pedroprieto~ dentro del texto del ~Issue~.
+- Una vez *finalizada* la tarea se debe realizar una ~Pull Request~ al repositorio base indicando tu *nombre y apellidos* en el mensaje.
