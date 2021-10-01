@@ -3,7 +3,7 @@
   El objetivo de esta práctica es conocer la historia y los fundamentos de JavaScript, así como instalar las herramientas necesarias para comenzar a trabajar con dicho lenguaje.
   
 ** Repositorio de la práctica
-   El *repositorio base* de la práctica está disponible en: https://github.com/pedroprieto/practica_dwec_gestor_presupuesto
+   El *repositorio base* de la práctica está disponible en: https://github.com/antroher/practica_dwec_gestor_presupuesto
 
    En esta primera práctica se deberá realizar un /fork/ del repositorio base. Al realizar dicho /fork/, se creará un repositorio copia del original en tu cuenta de usuario. *Será sobre este repositorio personal sobre el que deberás trabajar*.
 
