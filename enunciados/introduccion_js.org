@@ -21,7 +21,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
 
 ** Preparación
 1. Instalar los requisitos de software indicados
-2. Hacer un /fork/ del repositorio base https://github.com/pedroprieto/practica_dwec_gestor_presupuesto.git en tu cuenta de GitHub
+2. Hacer un /fork/ del repositorio base https://github.com/antroher/practica_dwec_gestor_presupuesto.git en tu cuenta de GitHub
 3. Abrir un terminal
 4. Clonar *tu repositorio* (el que se ha creado en tu cuenta al hacer el /fork/, no el repositorio base) al equipo local mediante ~git clone~
 5. Acceder a la carpeta del repositorio
@@ -71,7 +71,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
     El REPL es muy útil a la hora de hacer pruebas rápidas o pequeños prototipos. Podemos acceder al REPL de JavaScript en el *navegador* y en *NodeJS*.
     
 **** El REPL en el navegador
-     Para acceder al REPL en el navegador, accede a las [[https://pedroprieto.github.io/post/herramientas-desarrollo/#herramientas-de-desarrollo-de-navegadores][herramientas de desarrollo]] (en la mayoría de los casos se accede pulsando ~F12~). Una vez ahí, selecciona *consola*.
+     Para acceder al REPL en el navegador, accede a las [[https://antroher.github.io/post/herramientas-desarrollo/#herramientas-de-desarrollo-de-navegadores][herramientas de desarrollo]] (en la mayoría de los casos se accede pulsando ~F12~). Una vez ahí, selecciona *consola*.
 
      Si estás en una pestaña vacía (sin ninguna web cargada) no habrá ningún código JavaScript cargado; si por el contrario no lo está, seguramente haya algún código JavaScript cargado con el que podrías interactuar.
 
@@ -137,7 +137,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
 - Cada persona trabajará en su *repositorio personal* que habrá creado tras realizar el /fork/ del repositorio base.
 - Todos los archivos de la práctica se guardarán en el repositorio y se subirán a GitHub periódicamente. Es conveniente ir subiendo los cambios aunque no sean definitivos. *No se admitirán entregas de tareas que tengan un solo commit*.
 - *Como mínimo* se debe realizar *un commit* por *cada elemento de la lista de tareas* a realizar (si es que estas exigen crear código, claro está).
-- Para cualquier tipo de *duda o consulta* se pueden abrir ~Issues~ haciendo referencia al profesor mediante el texto ~@pedroprieto~ dentro del texto del ~Issue~.
+- Para cualquier tipo de *duda o consulta* se pueden abrir ~Issues~ haciendo referencia al profesor mediante el texto ~@antroher~ dentro del texto del ~Issue~.
 - Una vez *finalizada* la tarea se debe realizar una ~Pull Request~ al repositorio base indicando tu *nombre y apellidos* en el mensaje.
 
 
