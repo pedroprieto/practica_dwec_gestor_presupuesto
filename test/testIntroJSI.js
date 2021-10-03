@@ -16,7 +16,6 @@ describe("Función actualizarPresupuesto", function() {
         assert.equal(actualizarPresupuesto(-1000), -1);
         assert.equal(actualizarPresupuesto(-150.42), -1);
         assert.equal(actualizarPresupuesto("blabla"), -1);
-        assert.equal(actualizarPresupuesto(true), -1);
         assert.equal(actualizarPresupuesto({}), -1);
     });
 
