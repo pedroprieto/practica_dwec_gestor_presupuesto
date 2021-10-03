@@ -57,18 +57,18 @@ Para realizar la práctica se seguirán los principios del [[https://es.wikipedi
 
 *** Funciones
     Crea las siguientes funciones:
-    - ~mostrarPresupuesto~ - Función *sin parámetros* que se encargará de devolver el texto siguiente: ~Tu presupuesto actual es de X €~, siendo ~X~ el valor de la variable global ~presupuesto~.
     - ~actualizarPresupuesto~ - Función de *1 parámetro* que se encargará de actualizar la variable global ~presupuesto~. Esta función *comprobará* que el valor introducido es un *número no negativo*: en caso de que sea un dato válido, actualizará la variable ~presupuesto~ y *devolverá el valor del mismo*; en caso contrario, *mostrará un error por pantalla* y *devolverá el valor -1*.
-    - ~CrearGasto~ - *Función constructora* que se encargará de crear un objeto *gasto*. Esta función devolverá un objeto de tipo *gasto*. Deberá *comprobar que el valor introducido sea un núḿero no negativo*; en caso contrario, devolverá un *objeto vacío*.
+    - ~mostrarPresupuesto~ - Función *sin parámetros* que se encargará de devolver el texto siguiente: ~Tu presupuesto actual es de X €~, siendo ~X~ el valor de la variable global ~presupuesto~.
+    - ~CrearGasto~ - *Función constructora* que se encargará de crear un objeto *gasto*. Esta función devolverá un objeto de tipo *gasto*. Deberá *comprobar que el valor introducido sea un núḿero no negativo*; en caso contrario, devolverá ~null~.
 
 *** Objeto ~gasto~
 **** Propiedades
      - ~descripcion~ - Almacenará la descripción del gasto en formato *cadena*
      - ~valor~ - Almacenará el valor del gasto en formato *numérico*
 **** Métodos
-     - ~mostrarGasto~ - Función sin parámetros que muestre el texto: ~Gasto correspondiente a DESCRIPCION con valor VALOR~, siendo ~VALOR~ y ~DESCRIPCION~ las propiedades del objeto correspondientes.
-     - ~actualizaDescripcion~ - Función de *1 parámetro* que actualizará la descripción del objeto.
-     - ~actualizaValor~ - Función de *1 parámetro* que actualizará el valor del objeto. Se encargará de *comprobar que el valor introducido sea un número no negativo*; en caso contrario, dejará el valor como estaba.
+     - ~mostrarGasto~ - Función sin parámetros que muestre el texto: ~Gasto correspondiente a DESCRIPCION con valor VALOR €~, siendo ~VALOR~ y ~DESCRIPCION~ las propiedades del objeto correspondientes.
+     - ~actualizarDescripcion~ - Función de *1 parámetro* que actualizará la descripción del objeto.
+     - ~actualizarValor~ - Función de *1 parámetro* que actualizará el valor del objeto. Se encargará de *comprobar que el valor introducido sea un número no negativo*; en caso contrario, dejará el valor como estaba.
 
 ** Formato de la entrega
 - Cada persona trabajará en su *repositorio personal* que habrá creado tras realizar el /fork/ del repositorio base.
