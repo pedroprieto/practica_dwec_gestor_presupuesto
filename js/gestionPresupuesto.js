@@ -34,15 +34,16 @@ function CrearGasto(descripcion, valor) {
     // TODO
     this.descripcion=descripcion;
     this.valor=valor;
-    mostrarGasto:function(){
-        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`);
+
+    this.mostrarGasto=function(){
+        return `Gasto correspondiente a ${descripcion} con valor ${valor}`;
     }
-    actualizarDescripcion:function (descripcion){
+    this.actualizarDescripcion =function (descripcion){
         this.descripcion=descripcion;
-    };
-    actualizarValor:function(valor){
+    }
+    this.actualizarValor =function(valor){
         this.valor=valor < 0 ? 0:valor;
-    };
+    }
 
 }
 
@@ -50,8 +51,8 @@ function CrearGasto(descripcion, valor) {
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto
-}
+// export   {
+//     mostrarPresupuesto,
+//     actualizarPresupuesto,
+//     CrearGasto
+// }
