@@ -19,13 +19,14 @@ function mostrarPresupuesto() {
     /*Función sin parámetros que se encargará de devolver el texto siguiente:
      Tu presupuesto actual es de X €, siendo X el valor de la variable global presupuesto.*/
      let x = presupuesto;
+     //hola//
      return('Tu presupuesto actual es de ' + x +' €') ;
 }
 
 function CrearGasto() {
     // TODO
     /*Función constructora que se encargará de crear un objeto gasto. Esta función devolverá un objeto de tipo gasto.
-     Deberá comprobar que el valor introducido sea un núḿero no negativo; en caso contrario, asignará a la propiedad valor el valor 0.
+     Deberá comprobar que el valor introducido sea un núḿero  no negativo; en caso contrario, asignará a la propiedad valor el valor 0.
      */
 }
 
