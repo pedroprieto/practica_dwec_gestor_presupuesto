@@ -40,9 +40,9 @@ function CrearGasto(descripcion, valor) {
     actualizarDescripcion:function (descripcion){
         this.descripcion=descripcion;
     };
-    actualizarValor(valor):function(){
+    actualizarValor:function(valor){
         this.valor=valor < 0 ? 0:valor;
-    }
+    };
 
 }
 
