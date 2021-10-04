@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="js/presentacionNavegador.js" charset="utf-8"></script>
+    <script src="js/gestionPresupuesto.js" charset="utf-8"></script>
     <title>Document</title>
 </head>
 <body>
-    <p>Esto se ejecuta después del script </p>
+
+    <script>
+
+        let valor=actualizarPresupuesto(-1000);
+        document.write(valor);
+        valor=actualizarPresupuesto("Luis");
+        document.write("<p>");
+        document.write(valor);
+        document.write("</p>");
+        valor=actualizarPresupuesto(-10.2);
+        document.write("<p>");
+        document.write(valor);
+        document.write("</p>");
+        valor=actualizarPresupuesto({});
+        document.write("<p>");
+        document.write(valor);
+        document.write("</p>");
+        document.write(mostrarPresupuesto());
+        valor=actualizarPresupuesto(3222.345);
+        document.write("<p>");
+        document.write(valor);
+        document.write("</p>");
+        document.write(mostrarPresupuesto());
+    </script>
+
 </body>
 </html>
