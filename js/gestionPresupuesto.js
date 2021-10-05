@@ -1,18 +1,44 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
+let presupuesto = 0;
 
-
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(numero) {
+    if(numero > 0)
+    {
+     return presumento +=numero;
+    }
+    else{
+        alert("Error, el valor introducido es negativo");
+        return -1
+    }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    alert("Tu presupuesto es "+presupuesto)
 }
 
-function CrearGasto() {
-    // TODO
+function CrearGasto(numero) {
+    
+    if (numero > 0){
+        let gasto = {}
+        gasto = {
+            descripcion = '',
+            valor = numero
+        }
+    }
+    else{
+        descripcion = '',
+        valor = 0
+    }
+}
+
+let gasto = new Object();
+
+gasto = {
+    descripcion: String ,
+    valor: Number
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
