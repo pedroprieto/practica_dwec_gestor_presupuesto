@@ -4,9 +4,9 @@
 let presupuesto = 0;
 
 function actualizarPresupuesto(numero) {
-    if(numero > 0)
-    {
-     return presumento +=numero;
+    if(numero > 0){
+    
+    return presumento +=numero;
     }
     else{
         alert("Error, el valor introducido es negativo");
@@ -19,19 +19,34 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(numero) {
-    
+    let gasto = {};
     if (numero > 0){
-        let gasto = {}
-        gasto = {
-            descripcion = '',
-            valor = numero
-        }
+        
+        return gasto = {  valor : numero };
     }
     else{
-        descripcion = '',
-        valor = 0
+        return gasto = { valor : 0 };
+        
     }
 }
+
+let gasto = new Object();
+
+gasto = {
+    descripcion: String ,
+    valor: Number,
+
+    mostrarGasto(){
+        alert("El gasto correspondiente a  "+descripcion+" con valor "+ valor);    
+    },
+    actualizarDescripcion(descripcion){
+        this.descripcion = descripcion;
+    },
+    actualizarValor(valor){
+        this.valor = valor;
+    }
+
+};
 
 
 
