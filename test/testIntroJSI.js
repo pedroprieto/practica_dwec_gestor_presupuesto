@@ -1,10 +1,10 @@
 // Importar librería Chai para realizar aserciones
-// import {assert} from "chai";
-const assert = require('chai').assert;
+import {assert} from "chai";
+// const assert = require('chai').assert;
 
 // Importar código de la aplicación sobre la que se realizarán los tests
-// import {actualizarPresupuesto, mostrarPresupuesto, CrearGasto} from '../js/gestionPresupuesto.js';
-const {mostrarPresupuesto,actualizarPresupuesto,CrearGasto} =require('../js/gestionPresupuesto.js');
+import {actualizarPresupuesto, mostrarPresupuesto, CrearGasto} from '../js/gestionPresupuesto.js';
+// const {mostrarPresupuesto,actualizarPresupuesto,CrearGasto} =require('../js/gestionPresupuesto.js');
 
 // Inicialización de la variable global presupuesto
 describe("Inicialización de la variable global presupuesto", function() {

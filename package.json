@@ -14,8 +14,9 @@
     "url": "git+https://github.com/LGilat/practica_dwec_gestor_presupuesto.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0",
+  "author": "Pedro Prieto",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/LGilat/practica_dwec_gestor_presupuesto/issues"
   },
