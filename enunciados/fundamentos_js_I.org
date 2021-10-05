@@ -24,7 +24,7 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
 
 #+begin_quote
 ¡IMPORTANTE! Para que el servicio GitHub Actions se active en tu repositorio debes acceder a la pestaña ~Actions~ y activarlo.
-[[/home/pericon/codigo/practica_dwec_gestor_presupuesto/enunciados/imagenes/activar_actions.png]]
+[[./imagenes/activar_actions.png]]
 
 #+end_quote
 
