@@ -63,6 +63,4 @@ function CrearGasto(descripcion, value) {
 
 
 
-
-
 }
