@@ -8,36 +8,58 @@
     <title>Document</title>
 </head>
 <body>
-
-    <script>
-
-        let valor=actualizarPresupuesto(-1000);
-        document.write(valor);
-        valor=actualizarPresupuesto("Luis");
-        document.write("<p>");
-        document.write(valor);
-        document.write("</p>");
-        valor=actualizarPresupuesto(-10.2);
-        document.write("<p>");
-        document.write(valor);
-        document.write("</p>");
-        valor=actualizarPresupuesto({});
-        document.write("<p>");
-        document.write(valor);
-        document.write("</p>");
-        document.write(mostrarPresupuesto());
-        valor=actualizarPresupuesto(3222.345);
-        document.write("<p>");
-        document.write(valor);
-        document.write("</p>");
-        document.write(mostrarPresupuesto());
-    </script>
-
     <script type="text/javascript">
 
-        let gasto=new CrearGasto("Leche",2.2);
-        document.write("</br>");
-        document.write(gasto.mostrarGasto());
+        function Persona(years){
+            var edad=validEdad(years);
+            function validEdad(ages){
+                return ages < 0 ? 0 : ages;
+            }
+
+            return {
+                mostrarDatos:function(){
+                    return edad;
+                },
+                actualizarEdad:function(pEdad){
+                    edad=pEdad;
+                },
+                get edad(){
+                    return edad;
+                },
+                set edad(value){
+                    edad=value;
+                }
+            }
+
+
+        }
+
+        let persona=new Persona(-4);
+        document.write("<p> " + persona.edad + "</p>");
+        let persona2=new Persona(45);
+        document.write("<p>" + persona2.edad + "</p>");
+        document.write("<p>" + persona2.mostrarDatos() + "</p>");
+        persona2.actualizarEdad(100);
+        document.write("<p>" + persona2.mostrarDatos() + "</p>");
+        document.write("<p>" + persona2.edad + "</p>");
+    </script>
+
+
+    <script type="text/javascript">
+        document.write( "<p>"+ (mostrarPresupuesto() == "tu presupuesto actual es de 0 €" ) + "</p>");
+        document.write( "<p>"+ (actualizarPresupuesto(-1000) == -1) + "</p>");
+        document.write( "<p>"+ (actualizarPresupuesto(1000) == 1000) + "</p>");
+        document.write( "<p>"+ (actualizarPresupuesto(-150.42) == -1) + "</p>");
+        document.write( "<p>"+ (actualizarPresupuesto("blabla") == -1) + "</p>");
+        document.write("<p> AHORA COMENZAMOS CON OTRA PRUEBA <p>")
+        actualizarPresupuesto(2000);
+        document.write( "<p>"+ (mostrarPresupuesto() == "tu presupuesto actual es de 2000 €" ) + "</p>");
+        actualizarPresupuesto(14000.25);
+        document.write( "<p>"+ (mostrarPresupuesto() == "tu presupuesto actual es de 14000.25 €" ) + "</p>");
+        actualizarPresupuesto("valor incorrecto");
+        document.write( "<p>"+ (mostrarPresupuesto() == "tu presupuesto actual es de 14000.25 €" ) + "</p>");
+        actualizarPresupuesto("rfalse");
+        document.write( "<p>"+ (mostrarPresupuesto() == "tu presupuesto actual es de 14000.25 €" ) + "</p>");
     </script>
 
 

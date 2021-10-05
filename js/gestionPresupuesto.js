@@ -30,29 +30,48 @@ function mostrarPresupuesto() {
     return `tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, value) {
     // TODO
-    this.descripcion=descripcion;
-    this.valor=valor;
 
+    // get Validar(){
+    //     console.log("Validando el dato");
+    // }
     this.mostrarGasto=function(){
-        return `Gasto correspondiente a ${descripcion} con valor ${valor}`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
     this.actualizarDescripcion =function (descripcion){
         this.descripcion=descripcion;
     }
-    this.actualizarValor =function(valor){
-        this.valor=valor < 0 ? 0:valor;
+    this.actualizarValor=function(dato){
+        if ( !isNaN(dato) ){
+            if ( dato >=  0 ){
+                this.valor=dato;
+            }
+        }
+    }
+    let actualizar =function(dato){
+        if ( !isNaN(dato) ){
+            return valor=dato < 0 ? 0:dato;
+        }
+        else {
+            return valor=0;
+        }
     }
 
-}
+    this.valor=actualizar(value);
+    this.descripcion=descripcion;
 
 
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto
+
+    // Object.defineProperty(this,"valor",{
+    //     set(value){
+    //         this.valor=value;
+    //     }
+    //     get(){
+    //         return this.valor;
+    //     }
+    // });
+
+
+
 }
