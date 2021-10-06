@@ -3,8 +3,14 @@
 
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
-   
+function actualizarPresupuesto(cantidad) {
+    if(cantidad>=0){
+        presupuesto += cantidad;
+    }else{
+        cantidad =-1;
+        console.log("Error al introducir el valor")
+    }
+    return cantidad;
 }
 
 function mostrarPresupuesto() {
