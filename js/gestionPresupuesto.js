@@ -20,11 +20,14 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor) {
-    if (valor < 0) {
-        valor = 0;
-    }
+    
     this.descripcion = descripcion;
-    this.valor = valor;
+    if(valor>=0) {
+        this.valor = valor;
+    }else{
+        this.valor = 0;
+    }
+    
 
     this.mostrarGasto = function () {
         console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`);
