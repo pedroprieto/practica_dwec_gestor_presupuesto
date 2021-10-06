@@ -15,7 +15,7 @@ function actualizarPresupuesto(numero) {
 }
 
 function mostrarPresupuesto() {
-    return "Tu presupuesto actual es de "+presupuesto+ " €";
+    return "Tu presupuesto actual es de "+presupuesto+" €";
 }
 
 function CrearGasto(descripcion,valor) {
@@ -34,16 +34,16 @@ let gasto = {
     descripcion: String,
     valor: Number ,
 
-    set actualizarDescripcion (descripcion) {
+    actualizarDescripcion  : function(descripcion){
         this.descripcion = descripcion;
     },
     
     
-    get mostrarGasto() {
+    mostrarGasto:function () {
         return `"El gasto correspondiente a ${this.descripcion} con valor  ${this.valor}  €"`;
     },
 
-    set actualizarValor(valor){
+    actualizarValor:function (valor){
         if (valor > 0 ){
         this.valor = valor;
         }
@@ -61,4 +61,5 @@ export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto
+    
 }
