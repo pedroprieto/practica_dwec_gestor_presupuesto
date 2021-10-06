@@ -1,11 +1,11 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+
 
 
 let presupuesto = 0;
 
 function actualizarPresupuesto(cantidad) {
     if (cantidad >= 0) {
-        presupuesto += cantidad;
+        presupuesto = cantidad;
     } else {
         cantidad = -1;
         console.log("Error al introducir el valor")
