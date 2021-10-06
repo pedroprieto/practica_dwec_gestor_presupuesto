@@ -30,7 +30,7 @@ function CrearGasto(descripcion, valor) {
     
 
     this.mostrarGasto = function () {
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
     this.actualizarDescripcion = function(nuevaDescripcion) {
         this.descripcion=nuevaDescripcion;
