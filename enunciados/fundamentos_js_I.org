@@ -18,7 +18,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
 - Entorno de ejecución [[https://nodejs.org/es/][NodeJS]].
 
 ** Desarrollo guiado por test
-Para realizar la práctica se seguirán los principios del [[https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas][Desarrollo Guiado por Test]]. Para ello se proporciona en el repositorio una serie de ficheros que permiten *ejecutar tests*. Dichos tests comprobarán que la web cumple con algunos de los requisitos de la práctica.
+Para realizar la práctica se seguirán los principios del [[https://es.wikipedia.org/wiki/Desarrollo_guiado_por_pruebas][Desarrollo Guiado por Test]]. Para ello se proporciona en el repositorio una serie de ficheros que permiten *ejecutar tests*. Dichos tests comprobarán que el programa cumple con algunos de los requisitos de la práctica.
 
 El repositorio se ha configurado para que se *ejecuten los tests automáticamente en la nube de GitHub cuando se realice un push o una pull request*. Para ello se hará uso del servicio [[https://github.com/features/actions][GitHub Actions]]. Los ficheros presentes en la carpeta ~.github/workflows/~ contienen la configuración necesaria para activar la acción de ejecución de tests. Dichos ficheros están convenientemente comentados. Se puede ver el resultado de la ejecución de los tests en la pestaña ~Actions~ del repositorio o bien en su página principal (un aspa roja indica fallo en algún test y un icono verde indica que se han superado). Fuente: https://docs.github.com/en/actions/guides/building-and-testing-nodejs
 
