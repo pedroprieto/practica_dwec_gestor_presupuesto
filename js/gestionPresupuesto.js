@@ -5,8 +5,17 @@ let presupuesto;
 
 presupuesto = 0; //Asignamos valor inicial 0 
 
-function actualizarPresupuesto() {
+function actualizarPresupuesto(n) {
     // TODO
+    if (n < 0) {
+        presupuesto = -1;
+        alert ("El valor introducido ha de ser mayor que cero.")
+
+    } else {
+        presupuesto = n;
+    
+    }
+    return presupuesto;
 }
 
 function mostrarPresupuesto() {
