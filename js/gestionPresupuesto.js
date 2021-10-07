@@ -9,7 +9,7 @@ function actualizarPresupuesto() {
 function mostrarPresupuesto() {
     // TODO
     let x = presupuesto;
-    return `Tu prespuesto actual es de ${x} €`;
+    return `Tu presupuesto actual es de ${x} €`;
 }
 
 function CrearGasto() {
