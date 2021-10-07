@@ -1,6 +1,4 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
-// TODO: Variable global
 
 let presupuesto = 0;
 
@@ -15,35 +13,44 @@ function actualizarPresupuesto(x) {
     return x;
 }
 
-//actualizarPresupuesto(2000);
-//mostrarPresupuesto();
-
 
 
 function mostrarPresupuesto() {
     
-    let y = presupuesto;
-    return "Tu presupuesto actual es de " + y + " €";
+    let x = presupuesto;
+
+    return "Tu presupuesto actual es de " + x + " €";
 }
 
-let gasto = {
+
+
+function CrearGasto(descripcion,valor) {
+
+    this.descripcion = descripcion;
     
-    descripcion: "",
-    valor: 0,
+    if (valor >= 0) {            
+        
+        this.valor = valor;
 
-    mostrarGasto = function () {
+    }else {
 
-        return ("Gasto correspondiente a " + this.descripcion + " con valor " + tdhis.valor + " €");
+        this.valor = 0;
+            
+    }
+    
+    this.mostrarGasto = function () {
 
-    },
+        return ("Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €");
 
-    actualizarDescripcion = function (descripcion) {
+    }
 
-        descripcion = this.descripcion;
+    this.actualizarDescripcion = function (descripcion) {
 
-    },
+        this.descripcion = descripcion;
 
-    actualizarValor = function (valor) {
+    }
+
+    this.actualizarValor = function (valor) {
 
         if (valor >= 0) {
 
@@ -51,40 +58,15 @@ let gasto = {
 
         } else {
 
-            valor = this.valor;
-
+            this.valor;
         }
-    }
-}
 
-function CrearGasto(descripcion,valor) {
-
-    this.descripcion = descripcion;
-    
-    if (valor < 0) {
-            
-        return 0;
         
-        }
-         else {
+    }
 
-            valor= this.valor;
-        } 
-     
-   
+    
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
