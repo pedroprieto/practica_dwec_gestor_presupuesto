@@ -1,7 +1,9 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
+let presupuesto;
 
+presupuesto = 0; //Asignamos valor inicial 0 
 
 function actualizarPresupuesto() {
     // TODO
