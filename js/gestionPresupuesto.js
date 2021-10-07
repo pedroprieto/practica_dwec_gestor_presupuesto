@@ -4,25 +4,26 @@
 let presupuesto = 0;
 
 function actualizarPresupuesto() {
-    // TODO
-    presupuesto = prompt ("Introduce el presupuesto.", "");
+
+    presupuesto = prompt ("Introduce el presupuesto.", 0);
     if (presupuesto >= 0) 
     {
-        alert (presupuesto);
+        return (presupuesto);
     }
     else 
     {
-        alert ( "-1" );
+        return ( "-1" );
     }
 }
 
 function mostrarPresupuesto() {
     // TODO
-    alert ( `Tu prespuesto actual es de ${presupuesto} €` )
+    return ( `Tu prespuesto actual es de ${presupuesto} €` );
 }
 
 function CrearGasto() {
     // TODO
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
