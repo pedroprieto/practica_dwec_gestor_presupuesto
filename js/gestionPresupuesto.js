@@ -20,6 +20,8 @@ function actualizarPresupuesto(n) {
 
 function mostrarPresupuesto() {
     // TODO
+    let message = 'Tu presupuesto actual es de ' + presupuesto + ' €';
+    console.log (message);
 }
 
 function CrearGasto() {
