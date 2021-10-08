@@ -22,7 +22,6 @@ function actualizarPresupuesto(dineroIntroducido) {
      Tengo una duda de estilo y es que en 1º en C# utilizaba las llaves de la forma de arriba pero en los manuales de JS se trabaja como abajo. 
      Ambos funcionan igual. ¿Debo intentar acostumbrarme a utilizar el formato de JS o es indiferente y le estoy dando demasiadas vueltas a algo nimio?
     */
-
      // ¿Entiendo que no haría falta poner dineroIntroducido >= 0 porque no tendria sentido introducir 0? Siempre tendrá que introducir superior a 0, aunque sean céntimos. Ambas pasan la prueba...
     if (dineroIntroducido > 0) {   
         presupuesto = dineroIntroducido;    
