@@ -9,7 +9,7 @@ function actualizarPresupuesto(n) {
     // TODO
     if (n < 0) {
         presupuesto = -1;
-        alert ("El valor introducido ha de ser mayor que cero.")
+        console.log ("El valor introducido ha de ser mayor que cero.")
 
     } else {
         presupuesto = n;
