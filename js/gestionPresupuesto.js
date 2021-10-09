@@ -8,41 +8,43 @@ function actualizarPresupuesto(actPresupuesto) {
      
     if ( actPresupuesto >= 0)
     {
-        presupuesto = presupuesto + actPresupuesto;
+        presupuesto = actPresupuesto;
         return presupuesto;
     }
-else 
-actPresupuesto = -1;
-return `Comprueba el valor de introducido si es correcto ${actPresupuesto} €`;
+    else {
+        //console.error('dato novalido');
+        return -1;
+    }
 }
 
 
 function mostrarPresupuesto() {
     // TODO
-    let x = presupuesto;
-    return `Tu presupuesto actual es de ${x} €`;
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto(descripcion, valor) {
     // TODO
-    this.descripcion = descripcion;
-   if ( valor >= 0) {
-       this.valor = valor;
-   }else {
-       this.valor = 0;
-   }
-   // mostrar gasto 
-   this.mostrarGasto = function() {
-       return `Gasto correspondiente a ${descripcion} con valor ${valor} €`
-   };
-   //Actualizar descripcion
-   this.actualizarDescripcion = function(nuevaDescripcion) {
-       this.descripcion = nuevaDescripcion;
-   };
-   //actualizar valor
-   this.actualizarValor = function(nuevoValor) {
-       this.valor = nuevoValor;
-   };
+
+  
+   let gasto = {
+        descripcion : "", 
+        valor : 0,
+        mostrarGasto : function (){
+            return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        },
+        actualizarDescripcion : function(nuevaDescripcion) {
+            this.descripcion = nuevaDescripcion;
+        },
+        actualizarValor : function(nuevoValor) {
+            if(typeof nuevoValor == 'number' &&  nuevoValor >= 0) {
+                this.valor = nuevoValor;
+            }
+        }
+    };
+    gasto.actualizarValor(valor);
+    gasto.actualizarDescripcion(descripcion);
+    return gasto;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
