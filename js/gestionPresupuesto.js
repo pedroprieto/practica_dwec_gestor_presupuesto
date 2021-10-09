@@ -28,8 +28,15 @@ function CrearGasto( descripcion, valor ) {
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
 
-    this.actualizarDescripcion = function(descripcion) {
+    this.actualizarDescripcion = function( descripcion ) {
         this.descripcion = descripcion;
+    }
+
+    this.actualizarValor = function( valor ) {
+        if ( !isNaN( valor ) && valor >= 0 ){
+            this.valor = valor;
+            actualizarPresupuesto( this.valor );
+        }
     }
 }
 
