@@ -15,7 +15,8 @@ function actualizarPresupuesto( valor ) {
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    // TODO Devuelve el valor de la variable global presupuesto
+    return(`Tu presupuesto actual es de ${presupuesto} €`);    
 }
 
 function CrearGasto() {
