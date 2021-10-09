@@ -3,8 +3,15 @@
 // TODO: Variable global
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto( valor ) {
+    // TODO Actualiza la variable global presupuesto
+
+    if ( !isNaN( valor ) && valor >= 0 ){    
+        return presupuesto = valor;
+    }
+    else {
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
