@@ -32,17 +32,17 @@ function CrearGasto(descripcion, valor) {
        this.valor = 0;
    }
    // mostrar gasto 
-   function mostrarGasto() {
+   this.mostrarGasto = function() {
        return `Gasto correspondiente a ${descripcion} con valor ${valor} €`
-   }
+   };
    //Actualizar descripcion
-   function actualizarDescripcion (nuevaDescripcion) {
+   fthis.actualizarDescripcion = function(nuevaDescripcion) {
        this.descripcion = nuevaDescripcion;
-   }
+   };
    //actualizar valor
-   function actualizarValor (nuevoValor) {
+   this.actualizarValor = function(nuevoValor) {
        this.valor = nuevoValor;
-   }
+   };
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
