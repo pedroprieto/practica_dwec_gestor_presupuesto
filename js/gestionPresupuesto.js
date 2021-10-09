@@ -51,6 +51,7 @@ function CrearGasto(descripcion, value) {
         }
     }
 
+
     this.valor=this.actualizar(value);
     this.descripcion=descripcion;
 
