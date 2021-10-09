@@ -36,7 +36,7 @@ function CrearGasto(descripcion, valor) {
        return `Gasto correspondiente a ${descripcion} con valor ${valor} €`
    };
    //Actualizar descripcion
-   fthis.actualizarDescripcion = function(nuevaDescripcion) {
+   this.actualizarDescripcion = function(nuevaDescripcion) {
        this.descripcion = nuevaDescripcion;
    };
    //actualizar valor
