@@ -4,6 +4,8 @@
 
 // TODO: Variable global
 let presupuesto=0;
+let gastos=[];
+let idGasto=0;
 
 function actualizarPresupuesto(valor) {
     // TODO
@@ -21,28 +23,34 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, value) {
+function CrearGasto(descripcion, value, fecha, ...etiqueta) {
     // TODO
-
-    // get Validar(){
-    //     console.log("Validando el dato");
-    // }
-
-
     this.mostrarGasto=function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+    //'es-Es',{timeZone: 'UTC'}
+    this.mostrarGastoCompleto=function(){
+        let texto_etiquetas='';
+        let texto_info=`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n` +
+        `Fecha: ${new Date(this.fecha).toLocaleString()}\n`+
+        'Etiquetas:\n';
+        for(let etiqueta of this.etiquetas){
+            texto_etiquetas+=`- ${etiqueta}\n`
+        }
+        return texto_info + texto_etiquetas;
     }
     this.actualizarDescripcion =function (descripcion){
         this.descripcion=descripcion;
     }
+
     this.actualizarValor=function(dato){
         if ( !isNaN(dato) ){
-            if ( dato >=  0 ){
-                this.valor=dato;
-            }
-        }
+			if ( dato >=  0 ){
+				this.valor=dato;
+			}
+		}
     }
-     this.actualizar =function(dato){
+    this.actualizar =function(dato){
         if ( !isNaN(dato) ){
             return this.valor=dato < 0 ? 0:dato;
         }
@@ -50,11 +58,76 @@ function CrearGasto(descripcion, value) {
             return this.valor=0;
         }
     }
+    //VALIDAR FECHA
+    this.FechaValida=function(fechastring){
+        let fecha_correcta=Date.parse(fechastring);
+        if ( isNaN(fecha_correcta) ){
+            fecha_correcta=Date.now();
+        }
+        return fecha_correcta;
+    }
+    //ACTUALIZAR FECHA
+	this.actualizarFecha=function(fechastring){
+		let fecha_correcta=Date.parse(fechastring);
+		if ( !isNaN(fecha_correcta) ){
+			this.fecha=fecha_correcta;
+        }
+	}
 
+    this.anyadirEtiquetas=function(...values){
+        for (let etiqueta of values){
+            if ( this.etiquetas.indexOf(etiqueta) == -1){
+                this.etiquetas.push(etiqueta);
+            }
+        }
+    }
+    this.borrarEtiquetas=function(...values){
+        let indice=0;
+        for (let elemento of values){
+            indice=this.etiquetas.indexOf(elemento)
+            if ( indice !== -1) {
+                this.etiquetas.splice(indice,1);
+            }
+        }
+    }
 
     this.valor=this.actualizar(value);
     this.descripcion=descripcion;
+	this.fecha=this.FechaValida(fecha);
+	this.etiquetas=etiqueta;
 
+}
+
+function listarGastos(){
+	return gastos;
+
+}
+function anyadirGasto(gasto){
+	gasto["id"]=idGasto;
+	idGasto++;
+	gastos.push(gasto);
+}
+function borrarGasto(idGasto){
+	let indice=0;
+	for(let gasto of  gastos){
+		if ( gasto["id"] === idGasto )
+		{
+			gastos.splice(indice,1);
+		}
+		indice++;
+	}
+}
+function calcularTotalGastos(){
+	let suma=0;
+	for ( let gasto of gastos){
+		suma = suma + gasto.valor;
+	}
+	return suma;
+}
+
+function calcularBalance(){
+    let totalgasto=calcularTotalGastos();
+	return ( presupuesto - totalgasto);
 }
 
 
@@ -64,5 +137,10 @@ function CrearGasto(descripcion, value) {
 export  {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 };
