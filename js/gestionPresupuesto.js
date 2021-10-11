@@ -8,8 +8,8 @@ presupuesto = 0; //Asignamos valor inicial 0
 function actualizarPresupuesto(n) {
     // TODO
     if (n < 0) {
-        presupuesto = -1;8
-        console.log ('El valor introducido ha de ser mayor que cero.')
+        presupuesto = -1;
+        console.log ('El valor introducido ha de ser mayor que cero.');
 
     } else {
         presupuesto = n;
@@ -20,8 +20,7 @@ function actualizarPresupuesto(n) {
 
 function mostrarPresupuesto() {
     // TODO
-    let message = 'Tu presupuesto actual es de ' + presupuesto + ' €';
-    return message;
+    return ('Tu presupuesto actual es de ' + presupuesto + ' €');     
 }
 
 function CrearGasto(valor) {
