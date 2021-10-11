@@ -45,7 +45,7 @@ this.actualizaDescripcion = funcion (descripcion) {
     this.descripcion = descripcion;
 }
 
-this.actualizaGasto = function (valor) {
+this.actualizaValor = function (valor) {
     if (valor<0) {
         this.gasto = valor;
     } 
