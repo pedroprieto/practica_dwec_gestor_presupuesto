@@ -19,10 +19,13 @@ function actualizarPresupuesto(dineroIntroducido) {
 
     return presupuesto;  
 
-     Tengo una duda de estilo y es que en 1º en C# utilizaba las llaves de la forma de arriba pero en los manuales de JS se trabaja como abajo. 
-     Ambos funcionan igual. ¿Debo intentar acostumbrarme a utilizar el formato de JS o es indiferente y le estoy dando demasiadas vueltas a algo nimio?
+     Tengo una duda de estilo y es que en 1º en C# utilizaba las llaves de la forma de arriba pero en los manuales de JS se trabaja como abajo.
+     El manual menciona el estilo egipcio en la pestaña del manual: "calidad del código/estilo de codificación". 
+     ¿Debo intentar acostumbrarme a utilizar el formato de JS?
     */
-     // ¿Entiendo que no haría falta poner dineroIntroducido >= 0 porque no tendria sentido introducir 0? Siempre tendrá que introducir superior a 0, aunque sean céntimos. Ambas pasan la prueba...
+
+     // ¿Entiendo que no haría falta poner dineroIntroducido >= 0 porque no tendria sentido introducir 0? 
+     // Siempre tendrá que introducir superior a 0, aunque sean céntimos. Ambas pasan la prueba...
     if (dineroIntroducido > 0) {   
         presupuesto = dineroIntroducido;    
         } else {
@@ -36,7 +39,7 @@ function actualizarPresupuesto(dineroIntroducido) {
 function mostrarPresupuesto() {
     let x = presupuesto;
     return `Tu presupuesto actual es de ${x} €`;
-    //return "Tu presupuesto actual es de " + x + " €"; Utilizamos ${} para simplificarlo pero ambos funcionan.
+    // return "Tu presupuesto actual es de " + x + " €"; Utilizamos ${} para simplificarlo.
 }
 
 /* Función constructora que se encargará de crear un objeto gasto. Esta función devolverá un objeto de tipo gasto. 
@@ -45,17 +48,40 @@ function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
     // Almacenará la descripción del gasto en formato cadena
 
-    if(valor>0){
+    if (valor > 0) {
         this.valor = valor;
     } else {
         this.valor = 0;
     }
     // Almacenará el valor del gasto en formato númerico
 
-    // TODO
-    // Metodos mostrarGasto, actualizarDescripcion, actualizarValor
-}
+    // mostrarGasto - Función sin parámetros que muestre el texto: 
+    // Gasto correspondiente a DESCRIPCION con valor VALOR €, siendo VALOR y DESCRIPCION las propiedades del objeto correspondientes.
+    this.mostrarGasto = function() {
+        let gasto = (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+        return gasto;
+        
+        // Se podría simplificar todo en una línea return pero me parece visualmente más fácil hacer una variable y devolver esa variable. 
+        // No se si es correcto o mejor acostrumbrarme a utilizar return y todo junto. 
 
+        // return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+    }
+
+    // actualizarDescripcion - Función de 1 parámetro que actualizará la descripción del objeto.
+    this.actualizarDescripcion = function (descripcionActualizada) {
+        this.descripcion = descripcionActualizada;
+        // A diferencia de mostrarGasto, aquí no se pide expresamente que se muestre la nueva descripción, por lo que no haremos return descripcion;
+    }
+
+    // actualizarValor - Función de 1 parámetro que actualizará el valor del objeto. 
+    // Se encargará de comprobar que el valor introducido sea un número no negativo; en caso contrario, dejará el valor como estaba.
+    this.actualizarValor = function (valorActualizado) {
+        if (valorActualizado > 0) {
+            this.valor = valorActualizado;
+        }
+        // No necesitamos hacer un else porque si el valor no es superior a 0, no modificará nada y por tanto seguirá el valor como estaba antes.
+    }
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
