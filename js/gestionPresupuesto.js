@@ -16,10 +16,22 @@ function actualizarPresupuesto(budget) {
 
 function mostrarPresupuesto() {
     // TODO
+    return `Tu presupuesto actual es de ${presupuesto}€`;
+    
 }
 
-function CrearGasto() {
+function CrearGasto(descripcion,valor) {
     // TODO
+    let gasto={};
+    gasto.descripcion=descripcion;
+    if(valor < 0){
+        gasto.valor= 0;
+    }
+    else{
+        gasto.valor = valor;
+    }
+    return gasto;
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
