@@ -18,7 +18,7 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${x} €`
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, etiquetas) {
 
     this.descripcion = descripcion;
     if (valor >= 0) {
@@ -26,10 +26,25 @@ function CrearGasto(descripcion, valor) {
     } else {
         this.valor = 0;
     }
+    fecha = Date.parse(fecha);
+    if (fecha) {
+        this.fecha = fecha;
+    } else {
+        this.fecha = new Date(timestamp);
+    }
+
+    this.etiquetas = [];
+    if (etiquetas) {
+        this.etiquetas = etiquetas;
+    }
 
 
-    this.mostrarGasto = function () {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    this.mostrarGastoCompleto = function () {
+        let textoEtiquetas = "";
+        for (let etiqueta of this.etiquetas) {
+            textoEtiquetas = textoEtiquetas + `- ${[etiqueta]} \n`;
+        }
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n Fecha: ${this.fecha.toLocaleString('es-ES')}\n Etiquetas: - ${textoEtiquetas}`;
     }
     this.actualizarDescripcion = function (nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
@@ -38,27 +53,46 @@ function CrearGasto(descripcion, valor) {
         if (nuevoValor >= 0) {
             this.valor = nuevoValor;
         }
+    }
+    this.actualizarFecha = function (fecha) {
+        fecha = Date.parse(fecha);
+        if (fecha) {
+            this.fecha = fecha;
+        }
+    }
 
+    this.anyadirEtiquetas = function (etiquetas) {
+        for (let etiqueta of etiquetas) {
+            if (!this.etiquetas.includes(etiqueta)) {
+                this.etiquetas.push(etiqueta);
+            }
+
+        }
     }
 
 }
 
-function listarGastos(){
+function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto(){
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+
 
 }
 
-function borrarGasto(){
+function borrarGasto(id) {
 
 }
 
-function calcularTotalGastos(){
+function calcularTotalGastos() {
 
 }
-function calcularBalance(){
+
+function calcularBalance() {
 
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
