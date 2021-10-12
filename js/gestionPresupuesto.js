@@ -25,6 +25,26 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     // TODO
+    this.descripcion = descripcion;
+    if(valor>=0)
+    {
+    this.valor = valor;
+    }else{
+        this.valor = 0;
+    }
+
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
+    }
+    this.actualizarDescripcion = function(descripcionNueva){
+        this.descripcion = descripcionNueva;
+    }
+    this.actualizarValor = function(valorNuevo){
+        if (valorNuevo >= 0){
+            this.valor = valorNuevo;
+        }
+    }
+   
     
      
 }
