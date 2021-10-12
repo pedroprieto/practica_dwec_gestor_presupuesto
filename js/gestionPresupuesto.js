@@ -89,11 +89,15 @@ function borrarGasto(id) {
     if(pos!=-1){
         gastos.splice(pos,1);
     }
-       
     
 }
 
 function calcularTotalGastos() {
+    let sumaGastos=0;
+    for(let i=0;i<gastos.length;i++){
+        sumaGastos+=gastos[i].valor;
+    }
+    return sumaGastos;
 
 }
 
