@@ -23,14 +23,36 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion,valor) {
     // TODO
     let gasto={};
-    gasto.descripcion=descripcion;
+    this.descripcion=descripcion;
+    this.valor = valor;
     if(valor < 0){
-        gasto.valor= 0;
+        this.valor= 0;
     }
     else{
-        gasto.valor = valor;
+        this.valor = valor;
     }
     return gasto;
+
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${this.descripcion} 
+        con valor ${this.valor}€`
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+
+        this.descripcion = nuevaDescripcion;
+    }
+
+    this.actualizarValor = function(nuevoValor){
+
+        if(nuevoValor < 0 ){
+            this.valor = valor;
+            
+        }else{
+            this.valor = nuevoValor;
+        }
+        
+    }
 
 }
 
