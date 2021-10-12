@@ -85,7 +85,12 @@ function anyadirGasto(gasto) {
 }
 
 function borrarGasto(id) {
-
+    let pos = gastos.findIndex(item => item.id === id);
+    if(pos!=-1){
+        gastos.splice(pos,1);
+    }
+       
+    
 }
 
 function calcularTotalGastos() {
