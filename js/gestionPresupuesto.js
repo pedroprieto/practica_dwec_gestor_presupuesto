@@ -5,51 +5,45 @@ let presupuesto;
 
 presupuesto = 0; //Asignamos valor inicial 0 
 
-function actualizarPresupuesto(n) {
-    // TODO
-    if (n < 0) {
-        presupuesto = -1;
-        console.log ('El valor introducido ha de ser mayor que cero.');
+function actualizarPresupuesto(valor) {
+    // TODO    
+    if (valor < 0 || isNaN(valor)) {
+        return -1;
+        console.log (`El valor introducido ha de ser mayor que cero.`);
 
     } else {
-        presupuesto = n;
-    
+        presupuesto = valor;
+        return presupuesto;
     }
-    return presupuesto;
+    
 }
 
 function mostrarPresupuesto() {
     // TODO
-    return ('Tu presupuesto actual es de ' + presupuesto + ' €');     
+    return (`Tu presupuesto actual es de ${presupuesto} €`);     
 }
 
-function CrearGasto(valor) {
+function CrearGasto(descripcion, valor) {   
     // TODO
-     
-    if (valor < 0) {
-       this.gasto = 0;
-
-   } else {
-       this.gasto = valor;
-   }  
-}
-
-let gasto = new CrearGasto (gasto, descripcion);
-
-this.mostrarGasto = function () {
-    return ('Gasto correspondiente a' + this.descripcion +
-     ' con valor ' + this.gasto +'€')
-}
-
-this.actualizaDescripcion = funcion (descripcion) {
+    
     this.descripcion = descripcion;
-}
+    this.gasto = (valor >= 0 ) ? valor : 0;
 
-this.actualizaValor = function (valor) {
-    if (valor<0) {
-        this.gasto = valor;
+    this.mostrarGasto = function () {
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.gasto} €`);
+    }
+
+    this.actualizarDescripcion = function (descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    this.actualizarValor = function (valor) {
+        this.gasto = (valor >= 0) ? valor : this.gasto;
     } 
 }
+
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
