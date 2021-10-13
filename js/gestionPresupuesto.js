@@ -3,7 +3,8 @@
 
 // TODO: Variable global
 let presupuesto = 0;
-
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(valor) {
     // TODO
@@ -22,10 +23,14 @@ function mostrarPresupuesto() {
         return texto;
 }
 
-function CrearGasto(descripcion, valor) {
+// OBJETO GASTO
+function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
     // TODO
     this.descripcion = descripcion;
     this.valor = (valor > 0) ? valor : 0;
+    this.etiquetas = (etiquetas.length === 0) ? etiquetas = [] : etiquetas;
+    this.fecha = Date.parse(fecha);
+    
 
     this.mostrarGasto = function(){
         let texto;
@@ -40,6 +45,83 @@ function CrearGasto(descripcion, valor) {
     this.actualizarValor = function(valor){
         this.valor = (valor >= 0) ? valor : this.valor;
     }
+
+    this.mostrarGastoCompleto = function(){//Conseguida
+
+        let fechModificada = new Date(fecha);
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechModificada.toLocaleString()}\nEtiquetas:\n- ${this.etiquetas.join('\n- ')}\n`
+        return texto;
+    }
+
+    this.actualizarFecha = function(valor){ 
+        
+        let fechaModificada = Date.parse(valor); // pasamos la fehca introducida a un valor numerico
+        if(isNaN(fechaModificada)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
+            this.fecha = this.fecha; 
+        }else{
+            this.fecha = fechaModificada; 
+        }                     
+    }
+
+    this.anyadirEtiquetas = function(...etiquetasNuevas){
+            
+            for (let i = 0; i < etiquetasNuevas.length; i++) {
+                
+                if(this.etiquetas.includes(etiquetasNuevas[i]) == false){// si no lo encuentra que lo añada
+                    this.etiquetas.push(etiquetasNuevas[i]);
+                }
+            }           
+    }
+
+    this.borrarEtiquetas = function(...etiquetasNuevas){
+           
+        for (let i = 0; i < etiquetasNuevas.length; i++) {
+        
+            let indice = this.etiquetas.indexOf(etiquetasNuevas[i]);// si no encuentra ninguna coincidencia devuelve -1
+            if(indice !== -1){
+                this.etiquetas.splice(indice, 1);
+            }
+        }
+    }
+}
+
+//FUNCIONES PRACTICA 2
+function listarGastos(){   
+    return gastos;
+}
+
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+}
+
+function borrarGasto(id){
+    
+   let indice = gastos.findIndex(gasto => gasto.id == id);// buscamos el indice donde coincida el id
+   if(indice !== -1){
+       gastos.splice(indice, 1);
+   }
+}
+
+function calcularTotalGastos(){
+
+    let total = 0;
+
+    for (let i = 0; i < gastos.length; i++) {
+        
+        total = total + gastos[i].valor;
+    }
+
+    return total;
+}
+
+function calcularBalance(){
+
+    let gastosTotales = calcularTotalGastos();
+    let balance = presupuesto - gastosTotales;
+    return balance;
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -48,5 +130,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
