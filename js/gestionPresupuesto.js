@@ -12,7 +12,6 @@ function actualizarPresupuesto(actPresupuesto) {
         return presupuesto;
     }
     else {
-        //console.error('dato novalido');
         return -1;
     }
 }
@@ -25,26 +24,21 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     // TODO
-
-  
-   let gasto = {
-        descripcion : "", 
-        valor : 0,
-        mostrarGasto : function (){
+    
+        this.descripcion = descripcion;
+        this.valor = (valor >= 0 ) ? valor : 0;
+   
+        this.mostrarGasto = function (){
             return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-        },
-        actualizarDescripcion : function(nuevaDescripcion) {
+        }
+        this.actualizarDescripcion = function(nuevaDescripcion) {
             this.descripcion = nuevaDescripcion;
-        },
-        actualizarValor : function(nuevoValor) {
+        }
+        this.actualizarValor = function(nuevoValor) {
             if(typeof nuevoValor == 'number' &&  nuevoValor >= 0) {
                 this.valor = nuevoValor;
             }
-        }
-    };
-    gasto.actualizarValor(valor);
-    gasto.actualizarDescripcion(descripcion);
-    return gasto;
+        };
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
