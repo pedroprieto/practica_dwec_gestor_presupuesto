@@ -26,23 +26,25 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
     } else {
         this.valor = 0;
     }
-    fecha = Date.parse(fecha);
+
+    
     if (fecha) {
+        fecha = Date.parse(fecha);
         this.fecha = fecha;
     } else {
         this.fecha = new Date(timestamp);
     }
 
     this.etiquetas = [];
-    if (etiquetas) {
-        this.etiquetas = etiquetas;
+    if (etiquetas && etiquetas.length>0) {
+        this.etiquetas = etiquetas.slice();
     }
 
 
     this.mostrarGastoCompleto = function () {
         let textoEtiquetas = "";
-        for (let etiqueta of this.etiquetas) {
-            textoEtiquetas = textoEtiquetas + `- ${[etiqueta]} \n`;
+        for(let i=0;i<this.etiquetas.length;i++){
+            textoEtiquetas = textoEtiquetas + `- ` + this.etiquetas[i] + `\n`;
         }
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n Fecha: ${this.fecha.toLocaleString('es-ES')}\n Etiquetas: - ${textoEtiquetas}`;
     }
@@ -62,11 +64,28 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
     }
 
     this.anyadirEtiquetas = function (etiquetas) {
-        for (let etiqueta of etiquetas) {
-            if (!this.etiquetas.includes(etiqueta)) {
+        let pos;
+        let etiqueta;
+        for (let i=0;i<etiquetas.length;i++) {
+            etiqueta = etiquetas[i];
+            pos= this.etiquetas.lastIndexOf(etiqueta);
+            if(pos==-1){
                 this.etiquetas.push(etiqueta);
             }
 
+        }
+    }
+
+    this.borrarEtiquetas = function (etiquetas){
+
+        let pos;
+        let etiqueta;
+        for(let i=0;i<etiquetas.length;i++){
+            etiqueta = etiquetas[i];
+            pos=this.etiquetas.lastIndexOf(etiqueta);
+            if(pos!=-1){
+                this.etiquetas.splice(pos,1);
+            }
         }
     }
 
