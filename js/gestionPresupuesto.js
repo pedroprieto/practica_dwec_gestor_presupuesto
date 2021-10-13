@@ -18,7 +18,7 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${x} €`
 }
 
-function CrearGasto(descripcion, valor, fecha, etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.descripcion = descripcion;
     if (valor >= 0) {
@@ -36,8 +36,8 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
     }
 
     this.etiquetas = [];
-    if (etiquetas && etiquetas.length>0) {
-        this.etiquetas = etiquetas.slice();
+    for(let etiqueta of etiquetas) {
+        this.etiquetas.push(etiqueta);
     }
 
 
@@ -63,11 +63,9 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
         }
     }
 
-    this.anyadirEtiquetas = function (etiquetas) {
+    this.anyadirEtiquetas = function (...etiquetas) {
         let pos;
-        let etiqueta;
-        for (let i=0;i<etiquetas.length;i++) {
-            etiqueta = etiquetas[i];
+        for (let etiqueta of etiquetas) {
             pos= this.etiquetas.lastIndexOf(etiqueta);
             if(pos==-1){
                 this.etiquetas.push(etiqueta);
