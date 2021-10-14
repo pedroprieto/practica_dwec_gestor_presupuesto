@@ -7,7 +7,7 @@ function actualizarPresupuesto(cantidad) {
         presupuesto = cantidad;
     } else {
         cantidad = -1;
-        console.log("Error al introducir el valor")
+        console.log("Error al introducir el valor");
     }
     return cantidad;
 }
@@ -15,7 +15,7 @@ function actualizarPresupuesto(cantidad) {
 function mostrarPresupuesto() {
 
     let x = presupuesto;
-    return `Tu presupuesto actual es de ${x} €`
+    return `Tu presupuesto actual es de ${x} €`;
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -27,26 +27,27 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.valor = 0;
     }
 
-    
+
     if (fecha) {
-        fecha = new.Date(Date.parse(fecha));
+        fecha = Date.parse(fecha);
         this.fecha = fecha;
     } else {
         this.fecha = new Date(timestamp);
     }
 
     this.etiquetas = [];
-    for(let etiqueta of etiquetas) {
+    for (let etiqueta of etiquetas) {
         this.etiquetas.push(etiqueta);
     }
 
 
     this.mostrarGastoCompleto = function () {
         let textoEtiquetas = "";
-        for(let etiqueta of this.etiquetas){
+        
+        for(let etiqueta of this.etiquetas) {
             textoEtiquetas = textoEtiquetas + `- ${etiqueta}\n`;
         }
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n Fecha: ${this.fecha.toLocaleString('es-ES')}\n Etiquetas: - ${textoEtiquetas}`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n Fecha: ${new Date(this.fecha)}\n Etiquetas: ${textoEtiquetas}`;
     }
     this.actualizarDescripcion = function (nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
@@ -66,23 +67,20 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.anyadirEtiquetas = function (...etiquetas) {
         let pos;
         for (let etiqueta of etiquetas) {
-            pos= this.etiquetas.lastIndexOf(etiqueta);
-            if(pos==-1){
+            pos = this.etiquetas.lastIndexOf(etiqueta);
+            if (pos == -1) {
                 this.etiquetas.push(etiqueta);
             }
 
         }
     }
 
-    this.borrarEtiquetas = function (etiquetas){
-
+    this.borrarEtiquetas = function (...etiquetas) {
         let pos;
-        let etiqueta;
-        for(let i=0;i<etiquetas.length;i++){
-            etiqueta = etiquetas[i];
-            pos=this.etiquetas.lastIndexOf(etiqueta);
-            if(pos!=-1){
-                this.etiquetas.splice(pos,1);
+        for (let etiqueta of etiquetas) {
+            pos = this.etiquetas.lastIndexOf(etiqueta);
+            if (pos != -1) {
+                this.etiquetas.splice(pos, 1);
             }
         }
     }
@@ -97,22 +95,19 @@ function anyadirGasto(gasto) {
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
-
-
 }
 
 function borrarGasto(id) {
     let pos = gastos.findIndex(item => item.id === id);
-    if(pos!=-1){
-        gastos.splice(pos,1);
+    if (pos != -1) {
+        gastos.splice(pos, 1);
     }
-    
 }
 
 function calcularTotalGastos() {
-    let sumaGastos=0;
-    for(let i=0;i<gastos.length;i++){
-        sumaGastos+=gastos[i].valor;
+    let sumaGastos = 0;
+    for (let i = 0; i < gastos.length; i++) {
+        sumaGastos += gastos[i].valor;
     }
     return sumaGastos;
 
