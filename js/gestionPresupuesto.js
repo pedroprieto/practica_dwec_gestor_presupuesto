@@ -5,6 +5,9 @@ let presupuesto;
 
 presupuesto = 0; //Asignamos valor inicial 0 
 
+let gastos = new Array();
+let idGasto = gastos.length;
+
 function actualizarPresupuesto(valor) {
     // TODO    
     if (valor < 0 || isNaN(valor)) {
@@ -42,6 +45,25 @@ function CrearGasto(descripcion, valor) {
     } 
 }
 
+function listarGastos () {
+    // TODO
+}
+
+function anyadirGasto () {
+    // TODO
+}
+
+function borrarGasto () {
+    // TODO
+}
+
+function calcularTotalGastos () {
+    // TODO
+}
+
+function calcularBalance () {
+    // TODO
+}
 
 
 
@@ -51,5 +73,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
