@@ -32,7 +32,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         fecha = Date.parse(fecha);
         this.fecha = fecha;
     } else {
-        this.fecha = new Date(timestamp);
+        fecha= Date.now();
+        this.fecha = fecha;
     }
 
     this.etiquetas = [];
