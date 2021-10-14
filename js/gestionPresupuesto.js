@@ -2,8 +2,8 @@
 
 //Variable global
 let presupuesto = 0;
-let gasto = [];
-let idGasto= 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(x) {
 
@@ -25,8 +25,11 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${x} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, etiquetas) {
     // TODO
+    fecha = new Date();
+    etiquetas = [];
+    
     this.descripcion = descripcion;
 
     if (valor >= 0)
@@ -37,6 +40,9 @@ function CrearGasto(descripcion, valor) {
     {
         this.valor = 0;
     }
+    fecha = getTime();
+    this.fecha = fecha;
+    this.etiquetas = etiquetas;
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${descripcion} con valor ${valor} €`
@@ -54,7 +60,7 @@ function CrearGasto(descripcion, valor) {
     }
 }
 function listarGastos() {
-        
+        return gastos;
 }
 
 function anyadirGasto() {
