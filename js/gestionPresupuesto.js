@@ -35,7 +35,6 @@ function CrearGasto( descripcion, valor ) {
     this.actualizarValor = function( valor ) {
         if ( !isNaN( valor ) && valor >= 0 ){
             this.valor = valor;
-            actualizarPresupuesto( this.valor );
         }
     }
 }
