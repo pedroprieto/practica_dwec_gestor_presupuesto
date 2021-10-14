@@ -2,22 +2,35 @@
 
 // TODO: Variable global
 let presupuesto = 0;
+ 
+function actualizarPresupuesto(valor) {
 
-function actualizarPresupuesto(presupuesto) {
-    if (presupuesto >= 0) {
-        return presupuesto;
+    if (valor >= 0) {
+        presupuesto = valor;
+        return valor;
     } else {
         return -1;
     }
+
 }
 
 function mostrarPresupuesto() {
-    return (`Tu presupuesto actual es de ${presupuesto} €`);
+    let x = presupuesto;
+    
+    return `Tu presupuesto actual es de ${x} €`;
+    
+    
 }
 
 function CrearGasto() {
-  
+    
+
+    
+    
+
 }
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
