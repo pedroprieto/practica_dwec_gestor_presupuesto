@@ -6,24 +6,22 @@ let presupuesto = 0;
 
 
 function actualizarPresupuesto(valorIntroducido) {
-    // TODO
     
+    let numero;
     if(valorIntroducido >= 0 && typeof valorIntroducido === 'number' )
     {
         presupuesto = valorIntroducido;
-        //alert("valor introducido negativo");
+        numero = presupuesto;
     }
     else{
-        
-        presupuesto = -1;
+      numero = -1;
     }
     
-    return presupuesto;
+    return numero;
 }
 
 function mostrarPresupuesto() {
     // TODO
-    
     return `Tu presupuesto actual es de ${presupuesto} €`
 }
 
