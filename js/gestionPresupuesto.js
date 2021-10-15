@@ -27,9 +27,65 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`
 }
 
-function CrearGasto(descripcion,valor) {
+function listarGastos() {
+    return gastos;
+}
+function anyadirGasto(id) {
+
+}
+
+
+function borrarGasto() {}
+function calcularTotalGastos() {}
+function calcularBalance() {}
+
+
+
+
+
+
+
+
+
+
+
+function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     // TODO
     this.descripcion = descripcion;
+    this.etiquetas = [];
+    if( etiquetas.length == 0 )
+    {
+        this.etiquetas = [];
+    }
+    else
+    {
+        
+        for(var i in etiquetas)
+        {
+            let comparar = this.etiquetas.indexOf(etiquetas[i])
+            if(comparar == -1){
+                 this.etiquetas.push(etiquetas[i]);
+            }
+        }
+        
+        //this.anyadirEtiquetas(...etiquetas);
+    }
+
+    if( typeof fecha === "undefined")
+    {
+        this.fecha = new Date();
+    }
+    else
+    {
+        if( isNaN(Date.parse(fecha)) )
+ 	    {
+   		     this.fecha = new Date();
+        }
+ 	    else
+ 	    {
+    	    this.fecha = Date.parse(fecha); 
+        }
+    }
     
 
     if(valor >= 0 && typeof valor === 'number' ){
@@ -53,7 +109,30 @@ function CrearGasto(descripcion,valor) {
           this.valor = valor;
         }
     }
+
+    this.anyadirEtiquetas = function (...etiquetas) {
+        for(var i in etiquetas)
+        {
+            let comparar = this.etiquetas.indexOf(etiquetas[i])
+            if(comparar == -1){
+                 this.etiquetas.push(etiquetas[i]);
+            }
+        }
+    }
     
+    this.mostrarGastoCompleto = function(){
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:${this.etiquetas}`;
+
+        return texto;
+    }
+
+
+
+
+
+
 }
 
 
@@ -69,5 +148,5 @@ export   {
     anyadirGasto, 
     borrarGasto, 
     calcularTotalGastos,
-     calcularBalance
+    calcularBalance
 }
