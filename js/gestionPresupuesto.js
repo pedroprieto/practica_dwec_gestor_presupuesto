@@ -22,13 +22,31 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto() {
+function CrearGasto(descripcion, valor) {
     
+    this.descripcion = descripcion;
 
+    if (valor >= 0) {
+        this.valor = valor;
+    } else {
+        this.valor = 0;
+    }
     
-    
-
+    this.mostrarGasto = function() {
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
+    }
+   
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
