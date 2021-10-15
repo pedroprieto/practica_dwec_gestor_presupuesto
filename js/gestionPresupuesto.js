@@ -5,8 +5,8 @@ let presupuesto;
 
 presupuesto = 0; //Asignamos valor inicial 0 
 
-let gastos = new Array();
-let idGasto = gastos.length;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(valor) {
     // TODO    
@@ -26,11 +26,13 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);     
 }
 
-function CrearGasto(descripcion, valor) {   
+function CrearGasto(descripcion, valor, fecha = new Date (), etiquetas = []) {   
     // TODO
     
     this.descripcion = descripcion;
     this.valor = (valor >= 0 ) ? valor : 0;
+    this.fecha = Date.parse(fecha);
+    this.etiquetas = etiquetas;
 
     this.mostrarGasto = function () {
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
@@ -47,6 +49,7 @@ function CrearGasto(descripcion, valor) {
 
 function listarGastos () {
     // TODO
+    return (gastos);
 }
 
 function anyadirGasto () {
