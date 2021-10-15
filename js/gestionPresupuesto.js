@@ -26,16 +26,27 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);     
 }
 
-function CrearGasto(descripcion, valor, fecha = new Date (), etiquetas = []) {   
+function CrearGasto(descripcion, valor, fecha = new Date (), ...etiquetas) {   
     // TODO
     
     this.descripcion = descripcion;
     this.valor = (valor >= 0 ) ? valor : 0;
     this.fecha = Date.parse(fecha);
-    this.etiquetas = etiquetas;
+    this.etiquetas = (etiquetas.length === 0) ? etiquetas = [] : etiquetas;
 
     this.mostrarGasto = function () {
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+    }
+
+    this.mostrarGastoCompleto = function () {
+                
+        let fechaCambio = new Date (fecha);        
+        let txtEtiqueta = "";
+        for (let i = 0; i < this.etiquetas.length; i++) {
+                txtEtiqueta += `- ${this.etiquetas[i]}\n`;
+            }         
+
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaCambio.toLocaleString()}\nEtiquetas:\n${txtEtiqueta}`);
     }
 
     this.actualizarDescripcion = function (descripcion) {
