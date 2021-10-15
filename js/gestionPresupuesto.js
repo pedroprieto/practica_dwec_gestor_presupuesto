@@ -31,26 +31,32 @@ function CompruebaCantidad(cantidad){
 }
 function CrearGasto(descripcion, valorGasto) {
     
-    
-    let gasto = {
-        descripcion: "",
-        valor : 0,
-        mostrarGasto: function(){
-            return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-        },
-        actualizarDescripcion: function(nuevaDescripcion){
-            this.descripcion = nuevaDescripcion;
-        },
-        actualizarValor: function(nuevoValor){
-            if(CompruebaCantidad(nuevoValor) > -1){
-                this.valor = nuevoValor;
-            }
-        }
+    this.descripcion = descripcion;
+
+    if(CompruebaCantidad(valorGasto) > -1){
+        this.valor = valorGasto;   
+    } else{
+        this.valor = 0;
     }
 
-    gasto.actualizarDescripcion(descripcion);
-    gasto.actualizarValor(valorGasto);
-    return gasto;
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+        this.descripcion = nuevaDescripcion;
+    }
+
+    this.actualizarValor = function(nuevoValor){
+        if(CompruebaCantidad(nuevoValor) > -1){
+            this.valor = nuevoValor;
+        }
+    }
+}
+
+function listarGastos(){
+    console.log(String(gastos));
+    return String(gastos);
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -59,5 +65,6 @@ function CrearGasto(descripcion, valorGasto) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos
 }
