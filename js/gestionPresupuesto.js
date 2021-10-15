@@ -39,8 +39,19 @@ function CrearGasto(descripcion = "No hay descripción", valor = 0, fecha = "", 
         this.fecha = Date.parse(fecha);
     }
 
-    //this.etiquetas = this.anyadirEtiquetas;
-    this.etiquetas = etiquetas;
+    this.etiquetas = [];
+
+    this.anyadirEtiquetas = function(...etiquetas){
+        for(let etiqueta of etiquetas){
+            if(this.etiquetas.includes(etiqueta) == false){
+                this.etiquetas.push(etiqueta);
+            }
+        }
+    }
+
+    this.anyadirEtiquetas(...etiquetas);
+    //this.etiquetas = this.anyadirEtiquetas(...etiquetas);
+    //this.etiquetas = etiquetas;
 
     this.mostrarGasto = function(){
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -50,8 +61,8 @@ function CrearGasto(descripcion = "No hay descripción", valor = 0, fecha = "", 
     this.mostrarGastoCompleto = function(){
         let listaEtiquetas = "";
 
-        for(let i = 0; i<this.etiquetas.length; i++){
-            listaEtiquetas += `- ${this.etiquetas[i]}\n`;
+        for(let etiqueta of this.etiquetas){
+            listaEtiquetas += `- ${etiqueta}\n`;
         }
 
         let fechalocale = new Date(this.fecha).toLocaleString();
@@ -78,25 +89,23 @@ function CrearGasto(descripcion = "No hay descripción", valor = 0, fecha = "", 
         }
     };
 
-    this.anyadirEtiquetas = function(...etiquetas){
-        for(let i = 0; i<etiquetas.length; i++){
-            if(this.etiquetas.includes(etiquetas[i]) == false){
-                this.etiquetas.push(etiquetas[i]);
+    /*this.anyadirEtiquetas = function(...etiquetas){
+        for(let etiqueta of etiquetas){
+            if(this.etiquetas.includes(etiqueta) == false){
+                this.etiquetas.push(etiqueta);
             }
         }
-    }
+    }*/
 
     this.borrarEtiquetas = function(...etiquetas){
-        for(let i = 0; i<etiquetas.length; i++){
-            let index = this.etiquetas.indexOf(etiquetas[i]);
+        for(let etiqueta of etiquetas){
+            let index = this.etiquetas.indexOf(etiqueta);
             if(index != -1){
                 this.etiquetas.splice(index,1);
             }
         }
     }
 }
-
-//let gasto3 = new CrearGasto("Gasto 3", 23.55, "2021-10-06T13:10" );
 
 function listarGastos(){
     return gastos;
@@ -121,8 +130,9 @@ function borrarGasto(numId){
 
 function calcularTotalGastos(){
     let total = 0;
-    for(let i = 0; i<gastos.length;i++){
-        total = total + gastos[i].valor;
+
+    for(let gasto of gastos){
+        total = total + gasto.valor;
     }
 
     return total;
