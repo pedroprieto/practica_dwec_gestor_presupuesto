@@ -27,7 +27,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, etiquetas) {
     // TODO
-    fecha = new Date();
+
     etiquetas = [];
     
     this.descripcion = descripcion;
@@ -40,8 +40,15 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
     {
         this.valor = 0;
     }
-    fecha = getTime();
-    this.fecha = fecha;
+    
+    if (fecha <= fecha.getTime() )
+    {
+        this.fecha = fecha;
+    }
+    else
+    {
+        fecha = fecha.
+    }
     this.etiquetas = etiquetas;
 
     this.mostrarGasto = function() {
