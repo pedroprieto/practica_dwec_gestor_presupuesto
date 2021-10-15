@@ -2,6 +2,9 @@
 
 // Variable global
 let presupuesto = 0;
+//variables Array test2
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(actPresupuesto) {
     // TODO
@@ -24,7 +27,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     // TODO
-    
+        
         this.descripcion = descripcion;
         this.valor = (valor >= 0 ) ? valor : 0;
    
