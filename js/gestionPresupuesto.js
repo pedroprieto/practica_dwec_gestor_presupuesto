@@ -55,7 +55,23 @@ function CrearGasto(descripcion, valor, fecha = new Date (), ...etiquetas) {
 
     this.actualizarValor = function (valor) {
         this.valor = (valor >= 0) ? valor : this.valor;
-    } 
+    }
+
+    this.anyadirEtiquetas = function(...etiquetas){
+
+        for (let i = 0; i < etiquetas.length; i++) {
+            if(this.etiquetas.includes(etiquetas[i]) == false) {
+                this.etiquetas.push(etiquetas[i]);
+            }
+        }           
+    }
+
+    this.actualizarFecha = function (fecha) {
+        let newFecha = Date.parse (fecha);
+        if (newFecha) {
+            this.fecha = newFecha;
+        }
+    }
 }
 
 function listarGastos () {
