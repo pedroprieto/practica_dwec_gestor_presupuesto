@@ -7,39 +7,23 @@ let presupuesto = 0;
 /* Función de 1 parámetro que se encargará de actualizar la variable global presupuesto.
 Esta función comprobará que el valor introducido es un número no negativo: en caso de que sea un dato válido, 
 actualizará la variable presupuesto y devolverá el valor del mismo; en caso contrario, mostrará un error por pantalla y devolverá el valor -1*/
-function actualizarPresupuesto(PresupuestoActualizado) { 
-    /* if (PresupuestoActualizado > 0)
-        {   
-        presupuesto = PresupuestoActualizado;    
-        }
-     else
-        {
-            PresupuestoActualizado = -1;
-        }
+function actualizarPresupuesto(presupuestoActualizado) { 
 
-    return PresupuestoActualizado;  
+    let presupuestoAuxiliar = presupuestoActualizado;
 
-    Tengo una duda de estilo y es que en 1º en C# utilizaba las llaves de la forma de arriba pero en los manuales de JS se trabaja como abajo.
-    El manual menciona el estilo egipcio en la pestaña del manual: "calidad del código/estilo de codificación". 
-    ¿Debo intentar acostumbrarme a utilizar este formato de JS?
-    */
-
-    // ¿Entiendo que no haría falta poner PresupuestoActualizado >= 0 porque no tendria sentido introducir 0? 
-    // Siempre tendrá que introducir superior a 0, aunque sean céntimos. Ambas pasan la prueba...
-    if (PresupuestoActualizado > 0) {   
-        presupuesto = PresupuestoActualizado;    
+    if (presupuestoAuxiliar >= 0) {   
+        presupuesto = presupuestoAuxiliar;    
         } else {
-        PresupuestoActualizado = -1;     
+            presupuestoAuxiliar = -1;     
         }
 
-    return PresupuestoActualizado;               
+    return presupuestoAuxiliar;               
 }
 
 // Función sin parámetros que se encargará de devolver el texto siguiente: Tu presupuesto actual es de X €, siendo X el valor de la variable global presupuesto.
 function mostrarPresupuesto() {
     let x = presupuesto;
     return `Tu presupuesto actual es de ${x} €`;
-    // return "Tu presupuesto actual es de " + x + " €"; Utilizamos ${} para simplificarlo.
 }
 
 /* Función constructora que se encargará de crear un objeto gasto. Esta función devolverá un objeto de tipo gasto. 
@@ -48,7 +32,7 @@ function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
     // Almacenará la descripción del gasto en formato cadena.
 
-    if (valor > 0) {
+    if (valor >= 0) {
         this.valor = valor;
     } else {
         this.valor = 0;
@@ -60,17 +44,11 @@ function CrearGasto(descripcion, valor) {
     this.mostrarGasto = function() {
         let gasto = (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
         return gasto;
-        
-        // Se podría simplificar todo en una línea return pero me parece visualmente más fácil hacer una variable y devolver esa variable. 
-        // No se si es correcto o mejor acostrumbrarme a utilizar return y todo junto. 
-
-        // return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
 
     // actualizarDescripcion - Función de 1 parámetro que actualizará la descripción del objeto.
     this.actualizarDescripcion = function (descripcionActualizada) {
         this.descripcion = descripcionActualizada;
-        // A diferencia de mostrarGasto, aquí no se pide expresamente que se muestre la nueva descripción, por lo que no haremos return descripcion;
     }
 
     // actualizarValor - Función de 1 parámetro que actualizará el valor del objeto. 
@@ -79,7 +57,6 @@ function CrearGasto(descripcion, valor) {
         if (valorActualizado > 0) {
             this.valor = valorActualizado;
         }
-        // No necesitamos hacer un else porque si el valor no es superior a 0, no modificará nada y por tanto seguirá el valor como estaba antes.
     }
 }
 
