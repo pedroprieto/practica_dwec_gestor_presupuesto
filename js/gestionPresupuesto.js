@@ -143,7 +143,24 @@ texto += "- " + this.etiquetas[i] + "\n" ;
         }
 
     }
+    
+    this.borrarEtiquetas = function (...etiquetas){
+        for(var i in etiquetas)
+        {
+            let comparar = this.etiquetas.indexOf(etiquetas[i])
+            if(comparar != -1 && comparar != 0){
+                
+                this.etiquetas.splice(comparar,comparar);
+            }
+            
+            if(comparar == 0){
+            
+                 this.etiquetas.splice(comparar,comparar+1);
+                
+            }
+        }
 
+    }
 
 
 }
