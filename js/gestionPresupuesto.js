@@ -30,13 +30,49 @@ function mostrarPresupuesto() {
 function listarGastos() {
     return gastos;
 }
-function anyadirGasto(id) {
 
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 
 
-function borrarGasto() {}
-function calcularTotalGastos() {}
+function borrarGasto(id) {
+ 
+    for(let i in gastos)
+          {
+              let numGasto = gastos[i].id;
+              
+              if(numGasto == id){
+                  
+                  let numIndex = gastos.indexOf(gastos[i]);
+                  gastos.splice(numIndex,numIndex);
+                  
+                  if(numIndex == 0)
+                   {
+                     gastos.splice(numIndex,numIndex+1); 
+                   
+                   }
+                  
+                  
+                }
+           }
+   }
+
+
+function calcularTotalGastos() {
+    let sum = 0;
+    for(let i in gastos)
+    {
+    sum += gastos[i].valor;
+    }
+   return sum;
+}
+
+
+
+
 function calcularBalance() {}
 
 
