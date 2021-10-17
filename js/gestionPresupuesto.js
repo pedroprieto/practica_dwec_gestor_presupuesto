@@ -3,6 +3,8 @@
 // TODO: Variable global
 let presupuesto = 0;
 
+let gastos= [];
+let idGasto = 0;
 function actualizarPresupuesto(numero) {
     if(numero > 0){
         presupuesto = numero;
@@ -12,6 +14,9 @@ function actualizarPresupuesto(numero) {
         return -1;
 
     }
+}
+function listarGastos(){
+    return gastos
 }
 
 function mostrarPresupuesto() {
