@@ -34,7 +34,18 @@ function borrarGasto(id) {
         gastos.splice(pos, 1);
     }
 }
-
+function calcularTotalGastos (){
+    let suma = 0;
+    for (let gasto of gastos) {
+        suma += gasto.valor;
+    }
+    return suma
+}
+function calcularBalance (){
+    let gastosTotales = calcularTotalGastos();
+    let balance = presupuesto - gastosTotales;
+    return balance
+}
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
@@ -107,13 +118,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
         
     }
-    function calcularTotalGastos (){
-        let suma = 0;
-        for (let gasto of gastos) {
-            suma += gasto.valor;
-        }
-        return suma
-    }
+    
     this.mostrarGastoCompleto = function(){
 
         let fecha = new Date(this.fecha);
@@ -136,6 +141,10 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
-    
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
