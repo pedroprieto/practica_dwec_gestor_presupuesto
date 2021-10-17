@@ -18,6 +18,12 @@ function actualizarPresupuesto(numero) {
 function listarGastos(){
     return gastos
 }
+function anyadirGasto(gasto){
+
+    gasto.id = idGasto;
+    idGasto = idGasto +1;
+    gastos.push(gasto);
+}
 
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
