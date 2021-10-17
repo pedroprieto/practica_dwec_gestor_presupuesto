@@ -107,6 +107,13 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
         
     }
+    function calcularTotalGastos (){
+        let suma = 0;
+        for (let gasto of gastos) {
+            suma += gasto.valor;
+        }
+        return suma
+    }
     this.mostrarGastoCompleto = function(){
 
         let fecha = new Date(this.fecha);
