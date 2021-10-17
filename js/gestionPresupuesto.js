@@ -20,19 +20,8 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function anyadirGasto(gasto){
 
-    gasto.id = idGasto;
-    idGasto = idGasto +1;
-    gastos.push(gasto);
-}
-function borrarGasto(){}
-function calcularTotalGastos (){}
-function calcularBalance(){}
-
-
-
-function CrearGasto(descripcion,valor,fecha,...etiquetas) {
+function CrearGasto(descripcion,valor) {
 
     this.descripcion = descripcion;
     
@@ -58,67 +47,17 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     else {
         this.valor = 0;
     }
-    this.etiquetas = [];
-    if(fecha){
-        fecha = Date.parse(fecha)
-        this.fecha = fecha;
-    }
-    else{
-        fecha = Date.now();
-        this.fecha = fecha;
-    }
     
-
-
-    this.actualizarFecha = function(fecha){
-    
-        fecha = Date.parse(fecha);
-        if (fecha){
-            this.fecha = fecha;
-        }
-    }
-    
-    
-    this.anyadirEtiquetas = function(...etiquetas){
-        let posicion;
-        for (let etiqueta of etiquetas){
-            posicion = this.etiquetas.lastIndexOf(etiqueta);
-            if(posicion == -1){
-                this.etiquetas.push(etiqueta)
-            }
-        }
-    } 
-    this.anyadirEtiquetas(...etiquetas) 
-    
-    this.borrarEtiquetas = function(...etiquetas){
-        let posicion;
-        for (let etiqueta of etiquetas){
-            posicion = this.etiquetas.indexOf(etiqueta);
-            if (posicion !=-1){
-                this.etiquetas.splice(posicion,1);
-            }
-        }
-        
-    }
-    this.mostrarGastoCompleto = function(){
-
-        let fecha = new Date(this.fecha);
-        let fechaTexto = fecha.toLocaleString();
-    
-        let etiqueta = "";
-        for (let e of etiquetas) {
-            etiqueta += `- ${e}\n`;
-        }
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;
-    
-    }
 }
     
     
 function listarGastos(){
     return gastos
 }
-
+function calcularTotalGastos (){}
+function calcularBalance(){}
+function anyadirGasto(){}
+function borrarGasto(){}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
