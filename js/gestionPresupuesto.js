@@ -20,6 +20,17 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
+function anyadirGasto(gasto){
+
+    gasto.id = idGasto;
+    idGasto = idGasto +1;
+    gastos.push(gasto);
+}
+function borrarGasto(){}
+function calcularTotalGastos (){}
+function calcularBalance(){}
+
+
 
 function CrearGasto(descripcion,valor,fecha,...etiquetas) {
 
@@ -107,10 +118,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
 function listarGastos(){
     return gastos
 }
-function calcularTotalGastos (){}
-function calcularBalance(){}
-function anyadirGasto(){}
-function borrarGasto(){}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
