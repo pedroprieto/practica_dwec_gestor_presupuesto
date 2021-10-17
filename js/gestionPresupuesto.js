@@ -5,6 +5,8 @@ let presupuesto = 0;
 
 let gastos= [];
 let idGasto = 0;
+this.anyadirEtiquetas(...etiquetas) 
+
 function actualizarPresupuesto(numero) {
     if(numero > 0){
         presupuesto = numero;
@@ -23,6 +25,14 @@ function anyadirGasto(gasto){
     gasto.id = idGasto;
     idGasto = idGasto +1;
     gastos.push(gasto);
+}
+
+
+function borrarGasto(id) {
+    let pos = gastos.findIndex(gasto => gasto.id === id);
+    if (pos != -1) {
+        gastos.splice(pos, 1);
+    }
 }
 
 function mostrarPresupuesto() {
