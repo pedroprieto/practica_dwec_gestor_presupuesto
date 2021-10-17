@@ -48,7 +48,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
     else
     {
-        fecha = Date.now();
+        fecha = Date.now(fecha);
         this.fecha = fecha;
     }
 
@@ -56,6 +56,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${descripcion} con valor ${valor} €`
+    };
+
+    this.mostrarGastoCompleto = function() {
+        let fecha2 = new Date(fecha)
+        for (let etiqueta of this.etiquetas)
+
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €.\n
+        Fecha: ${fecha2}\n
+        Etiquetas:\n
+        ${etiqueta}`;
     };
 
     this.actualizarDescripcion = function(nuevadesc) {
@@ -68,13 +78,48 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.valor = nuevovalor;
         }
     }
+    this.actualizarFecha = function(nuevafecha) {
+        if (Date.parse(nuevafecha))
+        {
+            fecha = Date.parse(nuevafecha)
+            this.fecha = fecha;
+        }
+    }
+    this.anyadirEtiquetas = function(...nuevaetiqueta) {
+
+        for (let i = 0; i < nuevaetiqueta.length; i++)
+        {
+            let encontrado = this.etiquetas.includes(nuevaetiqueta[i]) 
+
+            if(encontrado == false)
+            {
+                this.etiquetas.push(nuevaetiqueta[i]);
+            }
+        }
+    }
+    this.borrarEtiquetas = function(...borraretiqueta)
+    {
+        for (let i = 0; i < borraretiqueta.length; i++)
+        {
+            let pos = this.etiquetas.indexOf(borraretiqueta[i])
+            
+            if (pos >= 0) 
+            {
+                this.etiquetas.splice(pos, 1)
+            }
+        }
+    }
 }
 function listarGastos() {
         return gastos;
 }
 
-function anyadirGasto() {
+function anyadirGasto(nuevogasto) {
+    nuevogasto = idGasto;
 
+    idGasto = idGasto + 1;
+
+    gastos.push(nuevogasto);
 }
 function borrarGasto() {
 
