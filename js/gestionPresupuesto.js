@@ -3,12 +3,20 @@
 // TODO: Variable global
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(cantidad) {
+
+    let x = presupuesto;
+
+    if (cantidad > -1){
+        presupuesto = presupuesto + cantidad;
+        return `Tu presupuesto actual es de ${presupuesto} €`
+    } else{
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    
     let x = presupuesto;
     return `Tu presupuesto actual es de ${x} €`
 }
