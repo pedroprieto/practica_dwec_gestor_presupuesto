@@ -62,8 +62,30 @@ function CrearGasto(descripcion, valorGasto, fecha, ...etiquetas) {
             this.fecha = fechaParseada;
         }
     }
+    
+    this.mostrarGastoCompleto = new function(){
+        this.actualizarFecha(fecha);
+        let fechaLocalizada = new Date(this.fecha).toLocaleString();
+        let etiquetasConCabecera = this.etiquetas.join('\n- ');
+        return 'Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${etiquetasConCabecera}';
+    }
 
-   
+    this.anyadirEtiquetas = new function(...etiquetasAnyadir){
+        for (let i = 0; i < etiquetas.length; i++) {
+            let etiqueta = etiquetas[i];
+            if(!this.etiquetas.includes(etiqueta)){
+                etiquetas.push(etiqueta);
+            }
+        }
+    }
+
+    this.borrarEtiquetas = new function(...etiquetasBorrar){
+        for (let i = 0; i < etiquetas.length; i++) {
+            let etiqueta = etiquetas[i];
+            let indiceElemento = this.etiquetas.indexOf(etiqueta);
+            this.etiquetas.splice(indiceElemento,1);
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
