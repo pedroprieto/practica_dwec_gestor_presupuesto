@@ -60,12 +60,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.mostrarGastoCompleto = function() {
         let fecha2 = new Date(fecha)
-        for (let etiqueta of this.etiquetas)
 
-        return `Gasto correspondiente a ${descripcion} con valor ${valor} €.\n
-        Fecha: ${fecha2}\n
-        Etiquetas:\n
-        ${etiqueta}`;
+        let texto= `Gasto correspondiente a ${descripcion} con valor ${valor} €.\nFecha: ${fecha2.toLocaleString()}\nEtiquetas:\n- ${etiquetas.join("\n- ")}\n`;
+
+        return texto;
     };
 
     this.actualizarDescripcion = function(nuevadesc) {
@@ -115,20 +113,37 @@ function listarGastos() {
 }
 
 function anyadirGasto(nuevogasto) {
-    nuevogasto = idGasto;
+    nuevogasto.id = idGasto;
 
     idGasto = idGasto + 1;
 
     gastos.push(nuevogasto);
 }
-function borrarGasto() {
+function borrarGasto(id) {
 
+    let pos = gastos.findIndex(gasto => gasto.id == id)
+    
+    if (pos >= 0)
+    {
+        gastos.splice(pos, 1)
+    }
 }
 function calcularTotalGastos() {
+    let totalgastos = 0;
+    
+    for (let i = 0; i < gastos.length; i++)
+    {
+        totalgastos = totalgastos + gastos[i].valor;
+    }
 
+    return totalgastos;
 }
 function calcularBalance() {
-    
+    let balance;
+
+    balance = presupuesto - calcularTotalGastos();
+
+    return balance;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
