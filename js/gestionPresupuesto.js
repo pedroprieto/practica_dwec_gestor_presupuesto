@@ -125,8 +125,8 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         let fechaTexto = fecha.toLocaleString();
     
         let etiqueta = "";
-        for (let i = 0; i < this.etiquetas.length; i++) {
-            etiqueta += `- ${this.etiquetas[i]}\n`;
+        for (let eti of this.etiquetas) {
+            etiqueta += `- ${eti}\n`;
         }
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;
     
