@@ -21,7 +21,7 @@ function mostrarPresupuesto() {
 }
 
 
-function CrearGasto(descripcion,valor) {
+function CrearGasto(descripcion,valor,fecha,...etiquetas) {
 
     this.descripcion = descripcion;
     
@@ -47,10 +47,63 @@ function CrearGasto(descripcion,valor) {
     else {
         this.valor = 0;
     }
-    
+    this.etiquetas = [];
+    if(fecha){
+        fecha = Date.parse(fecha)
+        this.fecha = fecha;
+    }
+    else{
+        fecha = Date.now();
+        this.fecha = fecha;
+    }
     
 
+
+    this.actualizarFecha = function(fecha){
+    
+        fecha = Date.parse(fecha);
+        if (fecha){
+            this.fecha = fecha;
+        }
+    }
+    
+    
+    this.anyadirEtiquetas = function(...etiquetas){
+        let posicion;
+        for (let etiqueta of etiquetas){
+            posicion = this.etiquetas.lastIndexOf(etiqueta);
+            if(posicion == -1){
+                this.etiquetas.push(etiqueta)
+            }
+        }
+    } 
+    this.anyadirEtiquetas(...etiquetas) 
+    
+    this.borrarEtiquetas = function(...etiquetas){
+        let posicion;
+        for (let etiqueta of etiquetas){
+            posicion = this.etiquetas.indexOf(etiqueta);
+            if (posicion !=-1){
+                this.etiquetas.splice(posicion,1);
+            }
+        }
+        
+    }
+    this.mostrarGastoCompleto = function(){
+
+        let fecha = new Date(this.fecha);
+        let fechaTexto = fecha.toLocaleString();
+    
+        let etiqueta = "";
+        for (let e of etiquetas) {
+            etiqueta += `- ${e}\n`;
+        }
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;
+    
+    }
 }
+    
+    
 function listarGastos(){
     return gastos
 }
