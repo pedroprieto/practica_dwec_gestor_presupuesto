@@ -27,11 +27,6 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + x + " €";
 }
 
-/* let gasto1 = new CrearGasto("Gasto1");
-console.log(gasto1);
-let gasto2 = new CrearGasto("Gasto 2", 23.55, 0,  "casa", "supermercado", "comida");
-console.log(gasto2); */
-
 
 
 function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
@@ -69,9 +64,33 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
         this.etiquetas = etiquetas;
     }  
     
-    this.anyadirEtiquetas = function (...etiquetas) {
+    this.anyadirEtiquetas = function (...etiqueta) {
         
+        for (let i = 0; i < etiqueta.length; i++){            
+            
+            if (this.etiquetas.includes(etiqueta[i]) == false) {
+                
+                this.etiquetas.push(etiqueta[i]);
 
+            } 
+        }
+    }
+
+    this.borrarEtiquetas = function (...etiqueta) {
+        
+        for (let i = 0; i < etiqueta.length; i++){
+            
+            if (this.etiquetas.includes(etiqueta[i])) {
+                
+                let pos = this.etiquetas.indexOf(etiqueta[i]);
+
+                if (pos !==(-1)) {
+                    
+                    this.etiquetas.splice(pos, 1);
+                }
+
+            } 
+        }
     }
         
     this.mostrarGasto = function () {
@@ -107,19 +126,47 @@ function listarGastos() {
     return gastos;    
 }
 
-function anyadirGasto() {
-    
+function anyadirGasto(gasto) {
+
+    gasto.id = idGasto;
+
+    idGasto++;
+
+    gastos.push(gasto);
+
 }
 
-function borrarGasto() {
+
+function borrarGasto(id) {
     
+    let pos = gastos.findIndex(gastos => gastos.id === id);    
+    
+    if (pos != (-1)) {
+
+        gastos.splice(pos, 1);
+
+    }
+
 }
 
 function calcularTotalGastos() {
+
+    let totalGastos = 0;
+
+    for (let i = 0; i < gastos.length; i++){
+        
+        totalGastos += gastos[i].valor;
+    }
+
+    return totalGastos;
     
 }
 
 function calcularBalance() {
+
+    let balance = presupuesto - calcularTotalGastos();
+
+    return balance;
     
 }
 
