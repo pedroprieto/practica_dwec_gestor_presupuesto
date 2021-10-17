@@ -79,28 +79,42 @@ function anyadirGasto(gastoAnyadido)
     gastos.push(gastoAnyadido);
 }
 
-//Función de 1 parámetro que eliminará de la variable global gastos el objeto gasto cuyo id haya sido pasado como parámetro. Si no existe un gasto con el id proporcionado
-//no hará nada. 
+//Función de 1 parámetro que eliminará de la variable global gastos el objeto gasto cuyo id haya sido pasado como parámetro. Si no existe un gasto con el id proporcionado no hará nada. 
 function borrarGasto(gastoBorrado)
-{
-        /* TODO. 
+{    
+    //Nota para mi futuro yo. 
+    /*
+    let encontrado;
+    encontrado = gastos.find(item => item.id == gastoBorrado);
 
-    Seguir por aqui
+    if (encontrado = true)
+    {
+        gastos.splice(encontrado, 1);
+    }
+
+    El problema de find es que nos devuelve que encontrado es true y el item es devuelto, pero splice no tiene un índice, "un lugar". 
+    Encontrado es su valor/true , pero nada más, no nos sirve para ponerle en una "posicion".     
+    */
+
+    let encontrado;  
+    encontrado = gastos.findIndex(item => item.id == gastoBorrado);
+    //Cumple la misma función pero esta vez en vez de devolvernos true/item o undefined, nos devuelve la posición exacta o -1 si no lo encuentra. 
     
-    Para buscarlo algo similar del manual: let result = arr.find(function(item, index, array)
-
-    Para borrarlo algo similar del manual: arr.splice(start[, deleteCount, elem1, ..., elemN])
-
-    https://es.javascript.info/array-methods#splice
-     */
+    if (encontrado >= 0)
+    {
+        gastos.splice(encontrado, 1);
+        //De esta forma le decimos que elimine desde el índice: encontrado, la cantidad de 1. 
+    }    
 }
 
-
+//Función sin parámetros que devuelva la suma de todos los gastos creados en la variable global gastos. De momento no los agruparemos por período temporal (lo haremos en sucesivas prácticas).
 function calcularTotalGastos()
 {
     // TODO
 }
 
+//Función sin parámetros que devuelva el balance (presupuesto - gastos totales) disponible. De momento no lo obtendremos por período temporal (lo haremos en sucesivas prácticas). 
+//Puede utilizar a su vez la función calcularTotalGastos. 
 function calcularBalance()
 {
     // TODO
