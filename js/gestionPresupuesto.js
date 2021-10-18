@@ -22,11 +22,11 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(concepto, cantidad) {
-    // TODO
-    let gasto = {
-        descripcion: concepto,
-        valor: cantidad
-    };
+    
+   
+        this.descripcion = concepto,
+        this.valor = cantidad
+   
 
     gasto.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
