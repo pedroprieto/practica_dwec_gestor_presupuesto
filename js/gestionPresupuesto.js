@@ -14,7 +14,9 @@ function actualizarPresupuesto(valor) {
 }
 
 function mostrarPresupuesto() {
-    return 'Tu presupuesto actual es de'+presupuesto}
+    let x = presupuesto;
+    return 'Tu presupuesto actual es de'+x;
+}
 
 function CrearGasto() {
 
