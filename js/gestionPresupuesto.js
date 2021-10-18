@@ -74,8 +74,8 @@ function CrearGasto(descripcion, valor, fecha = new Date (), ...etiquetas) {
     }
 
     this.borrarEtiquetas = function (...etiquetas) {
-        for (let delEtiqueta of etiquetas) {
-            let pos = this.etiquetas.lastIndexOf(delEtiqueta);
+        for (let i = 0; i<etiquetas.length; i++) {
+            let pos = this.etiquetas.lastIndexOf(etiquetas[i]);
             if (pos !== -1) {
                 this.etiquetas.splice(pos,1);
             }
@@ -88,20 +88,34 @@ function listarGastos () {
     return (gastos);
 }
 
-function anyadirGasto () {
+function anyadirGasto (gasto) {
     // TODO
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 
-function borrarGasto () {
+function borrarGasto (id) {
     // TODO
+    let pos = gastos.findIndex(gasto => gasto.id ==id);
+    if (pos !== -1) {
+        gastos.splice(pos,1);
+    }
 }
 
 function calcularTotalGastos () {
     // TODO
+    let sum = 0;
+    for (let i = 0; i < gastos.length; i++) {
+        sum += gastos[i].valor;
+    }
+    
+    return sum;
 }
 
 function calcularBalance () {
     // TODO
+    return (presupuesto - calcularTotalGastos());
 }
 
 
