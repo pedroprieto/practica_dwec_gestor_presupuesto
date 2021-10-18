@@ -19,12 +19,17 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor) {
-    if (valor < 0) {
-        valor = 0;
-    }
 
     this.descripcion=descripcion;
-    this.valor=valor;
+
+    if (valor >= 0) {
+        this.valor=valor;
+    } else {
+        this.valor=0;
+    }
+
+    
+    
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
