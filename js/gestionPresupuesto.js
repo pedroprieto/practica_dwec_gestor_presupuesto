@@ -29,7 +29,7 @@ function CrearGasto(descripcion, valor) {
     }
     
     mostrarGasto: function () {
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€, siendo ${this.valor} y ${this.descripcion} las propiedades del objeto correspondientes`);
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€, siendo ${this.valor} y ${this.descripcion} las propiedades del objeto correspondientes`;
     }
     
 }
