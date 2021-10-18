@@ -110,14 +110,25 @@ function borrarGasto(gastoBorrado)
 //Función sin parámetros que devuelva la suma de todos los gastos creados en la variable global gastos. De momento no los agruparemos por período temporal (lo haremos en sucesivas prácticas).
 function calcularTotalGastos()
 {
-    // TODO
+    let totalGastos = 0;
+
+    for (let i=0; i < gastos.length; i++)
+    {
+        totalGastos = totalGastos + gastos[i].valor;
+    }
+
+    return totalGastos;
 }
 
 //Función sin parámetros que devuelva el balance (presupuesto - gastos totales) disponible. De momento no lo obtendremos por período temporal (lo haremos en sucesivas prácticas). 
 //Puede utilizar a su vez la función calcularTotalGastos. 
 function calcularBalance()
 {
-    // TODO
+    let balance;
+
+    balance = presupuesto - calcularTotalGastos();
+
+    return balance;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
