@@ -19,19 +19,14 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor) {
-    if (valor >=0) {
-        let gasto = {
-            descripcion:descripcion,
-            valor:valor,
-        }
-    }   else {
-        let gasto = {
-            descripcion:descripcion,
-            valor:0,
-        }
+    if (valor < 0) {
+        valor = 0;
     }
-
     
+    let gasto = new Object(descripcion, valor);
+
+    console.log("this.descripcion");
+    console.log("this.valor");
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
