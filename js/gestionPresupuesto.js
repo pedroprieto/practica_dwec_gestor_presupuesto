@@ -3,8 +3,13 @@
 // TODO: Variable global
 var presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(valor) {
+    if (valor >= 0) {
+        presupuesto = valor;
+        return valor;
+    }
+    console.log("Error valor negativo: " + valor);
+    return -1;
 }
 
 function mostrarPresupuesto() {
