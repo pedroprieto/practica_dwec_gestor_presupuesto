@@ -21,9 +21,9 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion, valor) {
 
     if (valor >= 0) {
-        valor=valor,
+        valor=valor;
     } else {
-        valor=0,
+        valor=0;
     }
 
     let gasto = {
