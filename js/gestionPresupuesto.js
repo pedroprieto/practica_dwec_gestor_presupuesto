@@ -20,16 +20,16 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
 
-    this.descripcion = descripcion;
+        this.descripcion : descripcion;
 
     if (valor >= 0) {
-        this.valor = valor;
+        this.valor : valor;
     } else {
-        this.valor = 0;
+        this.valor : 0;
     }
     
-    mostrarGasto: function () {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€, siendo ${this.valor} y ${this.descripcion} las propiedades del objeto correspondientes`;
+    mostrarGasto = function() {
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`;
     }
     
 }
