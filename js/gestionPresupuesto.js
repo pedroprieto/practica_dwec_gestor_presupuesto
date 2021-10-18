@@ -24,9 +24,9 @@ function CrearGasto(descripcion, valor) {
         this.descripcion : descripcion,
 
         if (valor >= 0) {
-            this.valor : valor,
+            valor : valor,
         } else {
-            this.valor : 0,
+            valor : 0,
         }
     }
     
