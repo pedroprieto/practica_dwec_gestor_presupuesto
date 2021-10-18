@@ -20,14 +20,15 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
 
-    let gasto = {
-        this.descripcion : descripcion,
+    if (valor >= 0) {
+        valor=valor,
+    } else {
+        valor=0,
+    }
 
-        if (valor >= 0) {
-            valor : valor,
-        } else {
-            valor : 0,
-        }
+    let gasto = {
+        descripcion: descripcion,
+        valor: valor
     }
     
     mostrarGasto = function() {
