@@ -1,5 +1,7 @@
 // Variable global
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 let gasto = {
     descripcion: "",
