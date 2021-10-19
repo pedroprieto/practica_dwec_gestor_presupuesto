@@ -5,14 +5,13 @@ let presupuesto = 0;
 
 function actualizarPresupuesto(nuevoValor) {
 
-    if (nuevoValor >= 0 ) {
+    if (nuevoValor >= 0) {
         presupuesto = nuevoValor;
-
-        mostrarPresupuesto();
+        
+        return presupuesto;
     } else {
         return -1;
     }
-    console.log(presupuesto);
 }
 
 function mostrarPresupuesto() {
