@@ -24,6 +24,7 @@ function mostrarPresupuesto() {
     
 }
 
+
 function CrearGasto(descripcion,valor) {
     // TODO
     
@@ -32,12 +33,13 @@ function CrearGasto(descripcion,valor) {
     this.valor = valor;
     if(valor < 0){
         this.valor= 0;
+        
+        
     }
     else{
         this.valor = valor;
         
     }
-    
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
@@ -61,7 +63,7 @@ function CrearGasto(descripcion,valor) {
     }
 
     
-}
+ }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -71,3 +73,5 @@ export   {
     actualizarPresupuesto,
     CrearGasto
 }
+
+
