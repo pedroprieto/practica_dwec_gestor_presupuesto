@@ -52,11 +52,7 @@ function CrearGasto(descripcion, valor) {
 };
 
 function listarGastos(){
-    
-};
-
-function CrearGasto(){
-    
+    return gastos;
 };
 
 function anyadirGasto(){
@@ -86,5 +82,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
