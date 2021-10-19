@@ -26,9 +26,22 @@ function mostrarPresupuesto() {
 // OBJETO GASTO
 function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
     // TODO
+
+    this.anyadirEtiquetas = function(...etiquetasNuevas){
+            
+        for (let i = 0; i < etiquetasNuevas.length; i++) {
+            
+            if(this.etiquetas.includes(etiquetasNuevas[i]) == false){// si no lo encuentra que lo añada
+                this.etiquetas.push(etiquetasNuevas[i]);
+            }
+        }           
+    }
+
     this.descripcion = descripcion;
     this.valor = (valor > 0) ? valor : 0;
-    this.etiquetas = (etiquetas.length === 0) ? etiquetas = [] : etiquetas;
+    //this.etiquetas = (etiquetas.length === 0) ? etiquetas = [] : etiquetas;
+    this.etiquetas = [];
+    this.anyadirEtiquetas(...etiquetas);
     this.fecha = Date.parse(fecha);
     
 
@@ -56,21 +69,10 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
     this.actualizarFecha = function(valor){ 
         
         let fechaModificada = Date.parse(valor); // pasamos la fehca introducida a un valor numerico
-        if(isNaN(fechaModificada)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
-            this.fecha = this.fecha; 
-        }else{
-            this.fecha = fechaModificada; 
-        }                     
-    }
-
-    this.anyadirEtiquetas = function(...etiquetasNuevas){
-            
-            for (let i = 0; i < etiquetasNuevas.length; i++) {
-                
-                if(this.etiquetas.includes(etiquetasNuevas[i]) == false){// si no lo encuentra que lo añada
-                    this.etiquetas.push(etiquetasNuevas[i]);
-                }
-            }           
+        if(!isNaN(fechaModificada)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
+            this.fecha = fechaModificada;
+        }         
+                             
     }
 
     this.borrarEtiquetas = function(...etiquetasNuevas){
