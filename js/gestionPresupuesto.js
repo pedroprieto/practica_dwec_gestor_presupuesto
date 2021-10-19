@@ -40,22 +40,14 @@ function anyadirGasto(gasto) {
 
 function borrarGasto(id) {
  
-    for(let i in gastos)
+    for(let i of gastos)
           {
-              let numGasto = gastos[i].id;
+              let numGasto = i.id;
               
               if(numGasto == id){
                   
-                  let numIndex = gastos.indexOf(gastos[i]);
-                  gastos.splice(numIndex,numIndex);
-                  
-                  if(numIndex == 0)
-                   {
-                     gastos.splice(numIndex,numIndex+1); 
-                   
-                   }
-                  
-                  
+                  let numIndex = gastos.indexOf(i);
+                  gastos.splice(numIndex,1);
                 }
            }
    }
@@ -63,9 +55,9 @@ function borrarGasto(id) {
 
 function calcularTotalGastos() {
     let sum = 0;
-    for(let i in gastos)
+    for(let i of gastos)
     {
-    sum += gastos[i].valor;
+    sum += i.valor;
     }
    return sum;
 }
@@ -95,22 +87,24 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     // TODO
     this.descripcion = descripcion;
     this.etiquetas = [];
+
+    this.anyadirEtiquetas = function (...etiquetas) {
+        for(let i of etiquetas)
+        {
+            let comparar = this.etiquetas.indexOf(i)
+            if(comparar == -1){
+                 this.etiquetas.push(i);
+            }
+        }
+    }
+
     if( etiquetas.length == 0 )
     {
         this.etiquetas = [];
     }
     else
     {
-        
-        for(var i in etiquetas)
-        {
-            let comparar = this.etiquetas.indexOf(etiquetas[i])
-            if(comparar == -1){
-                 this.etiquetas.push(etiquetas[i]);
-            }
-        }
-        
-        //this.anyadirEtiquetas(...etiquetas);
+       this.anyadirEtiquetas(...etiquetas);
     }
 
     if( typeof fecha === "undefined")
@@ -152,16 +146,6 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
     }
 
-    this.anyadirEtiquetas = function (...etiquetas) {
-        for(var i in etiquetas)
-        {
-            let comparar = this.etiquetas.indexOf(etiquetas[i])
-            if(comparar == -1){
-                 this.etiquetas.push(etiquetas[i]);
-            }
-        }
-    }
-    
     this.mostrarGastoCompleto = function(){
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
 Fecha: ${new Date(this.fecha).toLocaleString()}
@@ -187,18 +171,12 @@ texto += "- " + this.etiquetas[i] + "\n" ;
     }
     
     this.borrarEtiquetas = function (...etiquetas){
-        for(var i in etiquetas)
+        for(let i of etiquetas)
         {
-            let comparar = this.etiquetas.indexOf(etiquetas[i])
-            if(comparar != -1 && comparar != 0){
+            let comparar = this.etiquetas.indexOf(i)
+            if(comparar != -1){
                 
-                this.etiquetas.splice(comparar,comparar);
-            }
-            
-            if(comparar == 0){
-            
-                 this.etiquetas.splice(comparar,comparar+1);
-                
+                this.etiquetas.splice(comparar,1);
             }
         }
 
