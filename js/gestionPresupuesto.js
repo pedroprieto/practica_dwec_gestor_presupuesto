@@ -30,7 +30,7 @@ function CrearGasto(descripcion,valor) {
     
     
     this.descripcion=descripcion;
-    this.valor = valor;
+    
     if(valor < 0){
         this.valor= 0;
         
@@ -40,6 +40,8 @@ function CrearGasto(descripcion,valor) {
         this.valor = valor;
         
     }
+
+
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
