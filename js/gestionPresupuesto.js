@@ -2,7 +2,9 @@
 
 // TODO: Variable global
 let presupuesto = 0;
- 
+let gastos = [];
+let idGasto = 0;
+
 function actualizarPresupuesto(valor) {
 
     if (valor >= 0) {
@@ -53,7 +55,25 @@ function CrearGasto(descripcion, valor) {
 }
 
 
+function listarGastos() {
 
+}
+
+function anyadirGasto() {
+
+}
+
+function borrarGasto() {
+
+}
+
+function calcularTotalGastos() {
+
+}
+
+function calcularBalance() {
+    
+}
 
 
 
@@ -70,5 +90,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
