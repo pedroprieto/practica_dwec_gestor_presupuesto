@@ -1,5 +1,17 @@
 "use strict";
 
+//FYI
+/*Te comenté en la práctica anterior el tema de las llaves y me he dado cuenta que me sale solo el hacer un intro antes de la llave de apertura.
+Por lo que seguiré utilizando este formato para no estar pensando y "perdiendo" tiempo en luego volver a borrar y colocar las llaves. 
+Entiendo que trabajando me adaptaré sí todo el equipo trabaja de una forma concreta, aunque sólo sea por vergüenza jeje.
+
+Por otro lado, soy consciente de mi afición por dejar comentarios por todas partes. Me ayudan para ver el enunciado de que se pide en cada momento y para dejar una explicación
+en caso de que sea algo "nuevo" para mi (que prácticamente es todo). Sí tengo que recurrir a ver mi anterior código, tenerlo lo más fácil y directo posible de que pensé en ese momento.
+Con cada práctica borraré los anteriores para no hacer tampoco aquí la Biblia.
+
+Disculpa las molestias. 
+*/
+
 //Variables globales
 let presupuesto = 0;
 
@@ -70,7 +82,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.mostrarGastoCompleto = function()
     {
         let fechaFormatoLocalizado = new Date(fecha);
-        //Si utilizasemos solo fecha.toLocaleString() sin hacer new Date(fecha) nos mostrará la fecha pero no con el formato adecuado y no pasa la prueba. 
+        //Si utilizasemos solo fecha.toLocaleString() sin hacer new Date(fecha) nos mostrará la fecha pero no con el formato adecuado y no pasa la prueba.
+        //El objeto Date tiene la característica de: autocorrección.
 
         let gasto = (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaFormatoLocalizado.toLocaleString()}\nEtiquetas:\n- ${etiquetas.join ("\n- ")}\n`);
         //Podemos utilizar toLocaleString en diferentes localizaciones con los parentesis: event.toLocaleString('en-GB') y también cambiará el formato de las horas entre 12h y 24h.
@@ -108,8 +121,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         //Utilizando For Of, recientemente explicado en el vídeo de tutoría 18 octubre. 
         for (let el of etiquetas)
         {
-            //En este caso, queremos encontrarlo y nos da igual su indice, nos basta que devuelva true y false por lo que debemos usar arr.includes()
-            //Además, le añadimos ! para obtener el resultado opuesto, ya que no queremos duplicados. Si no lo encuentra "incluido" en el array, lo añadimos con push.
+            //En este caso, queremos encontrarlo y nos da igual su indice, nos basta que devuelva true y false por lo que debemos usar arr.includes(item, from).
+            //Además, le añadimos ! para obtener el resultado opuesto. Si no lo encuentra "incluido" en el array, lo añadimos con push, si no, no hace nada y así no añadimos duplicados.
             if (!this.etiquetas.includes(el))
             {
                 this.etiquetas.push(el);
@@ -120,15 +133,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //borrarEtiquetas - Función de un número indeterminado de parámetros que recibirá uno o varios nombres de etiquetas y procederá a eliminarlas (si existen) de la propiedad etiquetas del objeto.
     this.borrarEtiquetas = function(...etiquetas)
     {
-        let encontrado;  
+        let indice;  
         for (let el of etiquetas)
         {
             //Utilizaremos indexOf o lastIndexOf para que nos devuelva el indice donde se encuentra o -1 en caso de no estar. Si utilizamos Includes nos devuelve true si lo encuentra pero no un indice.
-            encontrado = this.etiquetas.indexOf(el); 
+            indice = this.etiquetas.indexOf(el); 
 
-            if (encontrado >=0)
+            if (indice >=0)
             {
-                this.etiquetas.splice(encontrado, 1);  
+                this.etiquetas.splice(indice, 1);  
             }          
         }
     }
@@ -186,13 +199,13 @@ function borrarGasto(gastoBorrado)
     Encontrado es su valor/true , pero nada más, no nos sirve para ponerle en una "posicion".     
     */
 
-    let encontrado;  
-    encontrado = gastos.findIndex(item => item.id == gastoBorrado);
+    let indice;  
+    indice = gastos.findIndex(item => item.id == gastoBorrado);
     //Cumple la misma función pero esta vez en vez de devolvernos true/item o undefined, nos devuelve la posición exacta o -1 si no lo encuentra. 
     
-    if (encontrado >= 0)
+    if (indice >= 0)
     {
-        gastos.splice(encontrado, 1);
+        gastos.splice(indice, 1);
         //De esta forma le decimos que elimine desde el índice: encontrado, la cantidad de 1. 
     }    
 }
