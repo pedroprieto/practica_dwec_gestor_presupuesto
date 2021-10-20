@@ -82,19 +82,55 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     //actualizarFecha - Función de 1 parámetro que actualizará la propiedad fecha del objeto. 
     //Deberá recibir la fecha en formato string que sea entendible por la función Date.parse. Si la fecha no es válida, se dejará sin modificar.
-    this.actualizarFecha = function()
+    this.actualizarFecha = function(fecha)
     {
-        // TODO
+        if (fecha = Date.parse(fecha))
+        {
+            this.fecha = fecha;
+        }        
     }
 
-    this.anyadirEtiquetas = function()
+    //anyadirEtiquetas - Función de un número indeterminado de parámetros que añadirá las etiquetas pasadas como parámetro a la propiedad etiquetas del objeto. 
+    //Deberá comprobar que no se creen duplicados.
+    this.anyadirEtiquetas = function(...etiquetas)
     {
-        // TODO
+        //Utilizando método tradicional. 
+        /*   
+        for (let i=0; i < etiquetas.length; i++)
+        {
+            if (!this.etiquetas.includes(etiquetas[i]))
+            {
+                this.etiquetas.push(etiquetas[i]);
+            }
+        }
+        */
+        
+        //Utilizando For Of, recientemente explicado en el vídeo de tutoría 18 octubre. 
+        for (let el of etiquetas)
+        {
+            //En este caso, queremos encontrarlo y nos da igual su indice, nos basta que devuelva true y false por lo que debemos usar arr.includes()
+            //Además, le añadimos ! para obtener el resultado opuesto, ya que no queremos duplicados. Si no lo encuentra "incluido" en el array, lo añadimos con push.
+            if (!this.etiquetas.includes(el))
+            {
+                this.etiquetas.push(el);
+            }
+        }  
     }
 
-    this.borrarEtiquetas = function()
+    //borrarEtiquetas - Función de un número indeterminado de parámetros que recibirá uno o varios nombres de etiquetas y procederá a eliminarlas (si existen) de la propiedad etiquetas del objeto.
+    this.borrarEtiquetas = function(...etiquetas)
     {
-        // TODO
+        let encontrado;  
+        for (let el of etiquetas)
+        {
+            //Utilizaremos indexOf o lastIndexOf para que nos devuelva el indice donde se encuentra o -1 en caso de no estar. Si utilizamos Includes nos devuelve true si lo encuentra pero no un indice.
+            encontrado = this.etiquetas.indexOf(el); 
+
+            if (encontrado >=0)
+            {
+                this.etiquetas.splice(encontrado, 1);  
+            }          
+        }
     }
 
 
