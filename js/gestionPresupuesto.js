@@ -31,6 +31,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = (valor >= 0) ? valor : 0;
     this.fecha = (!fecha) ? new Date() : Date.parse(fecha);
+    //this.fecha = (!fecha) ? new Date() : fecha;
     this.etiquetas = (!etiquetas) ? "" : etiquetas;
     /* if (valor < 0){
         this.valor = 0;
@@ -48,17 +49,46 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         if (nuevo_valor >= 0){
             this.valor = nuevo_valor;
         };
-    this.mostrarGastoCompeto = function(){
-        return `Gasto correspondiente a ${descripcion} con valor ${valor}`;
+    };
+    this.mostrarGastoCompleto = function(){
+
+        let resultado = `Gasto correspondiente a ${descripcion} con valor ${valor} €.\n`;
+        resultado += `Fecha: `;
+        resultado += fecha.toLocaleString();
+        //resultado += Date.parse(fecha);
+        //resultado += fecha.toString();
+        //let f = fecha.toLocaleString();
+        //resultado += `Fecha: ${f} `;
+        resultado += `\nEtiquetas:\n`;
+        for (let etiqueta of etiquetas){
+            resultado += `- ${etiqueta}\n`;
+        };
+        return resultado;
+
+        /*return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
         return `Fecha ${fecha.toLocaleString()}`;
         return `Etiquetas`;
         for (let etiqueta of etiquetas){
-            return `- ${etiquetas[etiqueta]}`
-        };
+            return `- ${etiqueta}`
+        };*/
+    };
+    this.actualizarFecha = function (nueva_fecha){
+
+        //let f = Date.parse(nueva_fecha);
+        
+        //return `${nueva_fecha} - f - ${fecha}`
+        //this.fecha = (NaN) ? f : fecha;
+        //this.fecha = f;
+    };
+    this.anyadirEtiquetas = function(...nuevas_etiquetas){
+
+    };
+    this.borrarEtiquetas = function(...borrar_etiquetas){
+
     };
     
         
-    };
+    
 
 };
 
