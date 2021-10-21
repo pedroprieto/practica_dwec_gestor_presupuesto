@@ -16,7 +16,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     this.valor = ( valor >= 0 ) ? valor : 0;    
     this.etiquetas = [];    
 
-    if ( fecha ){
+    if ( fecha ) {
         fecha = Date.parse( fecha );
     }
     else {
@@ -31,32 +31,60 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
 
+    this.mostrarGastoCompleto = function() {  
+        let txt = "";
+
+        txt =+ `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
+                Fecha: ${this.fecha.toISOString()}\n
+                Etiquetas:`;
+                    
+        for ( let e of etiquetas ){            
+            txt =+ `\n - ${this.e}`;         
+        }
+        
+        return txt;
+    }
+
     this.actualizarDescripcion = function( descripcion ) {
         this.descripcion = descripcion;
     }
 
     this.actualizarValor = function( valor ) {
-        if ( !isNaN( valor ) && valor >= 0 ){
+        if ( !isNaN( valor ) && valor >= 0 ) {
             this.valor = valor;
         }
+    }
+
+    this.actualizarFecha = function( fecha ) {
+        if ( Date.parse( fecha ) ){
+            this.fecha = fecha;
+        }        
     }
 }
 
 //------------------------------------------------------------//
 
+// Funciones con solo RETURN
+
 function mostrarPresupuesto() {
     return(`Tu presupuesto actual es de ${presupuesto} €`);    
 }
 
-function listarGastos(){
+function listarGastos() {
     return gastos;
+}
+
+function calcularBalance() {
+    return presupuesto - calcularTotalGastos();
 }
 
 //------------------------------------------------------------//
 
+// FUNCIONES
+
 function actualizarPresupuesto( valor ) {
     // Actualiza la variable global presupuesto
-    if ( !isNaN( valor ) && valor >= 0 ){    
+    if ( !isNaN( valor ) && valor >= 0 ) {    
         return presupuesto = valor;
     }
     else {
@@ -64,7 +92,7 @@ function actualizarPresupuesto( valor ) {
     }
 }
 
-function anyadirGasto( g ){    
+function anyadirGasto( g ) {    
     // Añade propiedad id al objeto gasto pasado por parámetro
     g.id = idGasto;
     idGasto++;
@@ -73,10 +101,12 @@ function anyadirGasto( g ){
     gastos.push(g);
 }
 
-function borrarGasto( id ){     
+function borrarGasto( id ) {         
     //Recorre el vector gastos buscando un objeto cuyo id coincida con el pasado por parámetro
-    for ( let g of gastos ){
-        let pos = gastos.indefOf( g.id );
+    let pos = -1;
+
+    for ( let g of gastos ) {
+        pos = gastos.indefOf( g.id );
     }
 
     // Si existe, lo borra
@@ -85,21 +115,18 @@ function borrarGasto( id ){
     }
 }
 
-function calcularTotalGastos(){
+function calcularTotalGastos() {
     // Suma de todos los gastos
-    for ( let g of gastos ){
-        let sumAll =+ g;
+    let sumAll = 0;
+    
+    for ( let g of gastos ) {
+        sumAll =+ g;
     }
 
     return sumAll;
 }
 
-function calcularBalance(){
-    // Balance (presupuesto - gastos totales)
-    let balance = presupuesto - calcularTotalGastos();
 
-    return balance;
-}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
