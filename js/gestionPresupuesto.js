@@ -54,10 +54,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
         let resultado = `Gasto correspondiente a ${descripcion} con valor ${valor} €.\n`;
         resultado += `Fecha: `;
-        resultado += fecha.toLocaleString();
+        //return fecha.toLocaleString("es");
+        resultado += new Date(fecha).toLocaleString();
         //resultado += Date.parse(fecha);
         //resultado += fecha.toString();
-        //let f = fecha.toLocaleString();
+        //let f = new Date(fecha).toLocaleString();
         //resultado += `Fecha: ${f} `;
         resultado += `\nEtiquetas:\n`;
         for (let etiqueta of etiquetas){
