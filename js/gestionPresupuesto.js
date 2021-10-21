@@ -41,18 +41,6 @@ function CrearGasto(descripcion = "No hay descripción", valor = 0, fecha = "", 
 
     this.etiquetas = [];
 
-    this.anyadirEtiquetas = function(...etiquetas){
-        for(let etiqueta of etiquetas){
-            if(this.etiquetas.includes(etiqueta) == false){
-                this.etiquetas.push(etiqueta);
-            }
-        }
-    }
-
-    this.anyadirEtiquetas(...etiquetas);
-    //this.etiquetas = this.anyadirEtiquetas(...etiquetas);
-    //this.etiquetas = etiquetas;
-
     this.mostrarGasto = function(){
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         return mensaje;
@@ -89,13 +77,16 @@ function CrearGasto(descripcion = "No hay descripción", valor = 0, fecha = "", 
         }
     };
 
-    /*this.anyadirEtiquetas = function(...etiquetas){
+    this.anyadirEtiquetas = function(...etiquetas){
         for(let etiqueta of etiquetas){
             if(this.etiquetas.includes(etiqueta) == false){
                 this.etiquetas.push(etiqueta);
             }
         }
-    }*/
+    }
+
+    //Comprobamos que las etiquetas que se introducen en el objeto no estén repetidas
+    this.anyadirEtiquetas(...etiquetas);
 
     this.borrarEtiquetas = function(...etiquetas){
         for(let etiqueta of etiquetas){
@@ -104,6 +95,24 @@ function CrearGasto(descripcion = "No hay descripción", valor = 0, fecha = "", 
                 this.etiquetas.splice(index,1);
             }
         }
+    }
+
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let periodoAgrupacion = "";
+
+        if(periodo == "dia" || periodo == "mes" || periodo == "anyo"){
+
+            periodoAgrupacion = new Date(this.fecha).toISOString();
+
+            if(periodo == "dia"){
+                periodoAgrupacion = periodoAgrupacion.substring(0,10);
+            }else if(periodo == "mes"){
+                periodoAgrupacion = periodoAgrupacion.substring(0,7);
+            }else if(periodo == "anyo"){
+                periodoAgrupacion = periodoAgrupacion.substring(0,4);
+            }
+        }
+        return periodoAgrupacion;
     }
 }
 
@@ -143,6 +152,81 @@ function calcularBalance(){
     return balance;
 }
 
+function filtrarGastos(filtro){
+
+    let gastosFiltro = gastos;
+
+    if(typeof(filtro) == "object"){
+
+        if(Object.keys(filtro).length != 0){
+
+            if(filtro.hasOwnProperty('fechaDesde') == true){
+                let fDesde = Date.parse(filtro.fechaDesde);
+                if(!isNaN(fDesde)){
+                    gastosFiltro = gastosFiltro.filter(gasto => gasto.fecha >= fDesde);
+                }
+            }
+
+            if(filtro.hasOwnProperty('fechaHasta') == true){
+                let fHasta = Date.parse(filtro.fechaHasta);
+                if(!isNaN(fHasta)){
+                    gastosFiltro = gastosFiltro.filter(gasto => gasto.fecha <= fHasta);
+                }
+            }
+
+            if(filtro.hasOwnProperty('valorMinimo') == true){
+                let vMinimo = filtro.valorMinimo;
+                if(typeof(vMinimo) == "number"){
+                    gastosFiltro = gastosFiltro.filter(gasto => gasto.valor >= vMinimo);
+                }
+            }
+
+            if(filtro.hasOwnProperty('valorMaximo') == true){
+                let vMaximo = filtro.valorMaximo;
+                if(typeof(vMaximo) == "number"){
+                    gastosFiltro = gastosFiltro.filter(gasto => gasto.valor <= vMaximo);
+                }
+            }
+
+            if(filtro.hasOwnProperty('descripcionContiene') == true){
+                let dContiene = filtro.descripcionContiene;
+                if(typeof(dContiene) == "string"){
+                    gastosFiltro = gastosFiltro.filter(gasto => gasto.descripcion.includes(dContiene));
+                }
+            }
+
+            if(filtro.hasOwnProperty('etiquetasTiene') == true){
+                let eTiene = filtro.etiquetasTiene;
+                if(Array.isArray(eTiene) == true){
+
+
+                    gastosFiltro = gastosFiltro.filter(function(gasto){
+                        let contiene = false;
+                        for(let gast of gasto.etiquetas){
+                            for(let tiene of eTiene){
+                                if(gast == tiene){
+                                    contiene = true;
+                                }
+                            }
+                        }
+                        if(contiene == true){
+                            return gasto;
+                        }
+                    });                 
+                    
+                }
+            }
+
+        }
+    }
+
+    return gastosFiltro;
+}
+
+function agruparGastos(){
+
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -155,4 +239,7 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos,
+
 }
