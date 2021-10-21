@@ -4,7 +4,6 @@
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
-
 //------------------------------------------------------------//
 
 // CONSTRUCTOR
@@ -24,7 +23,6 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
     this.fecha = fecha;
 
-
     // Métodos
 
     this.mostrarGasto = function() {  
@@ -33,13 +31,13 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
 
     this.mostrarGastoCompleto = function() {  
         let txt = "";
+        let fecha = new Date( this.fecha );
+        let fechaISO = fecha.toLocaleString();
 
-        txt =+ `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
-                Fecha: ${this.fecha.toISOString()}\n
-                Etiquetas:`;
+        txt += (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaISO}\nEtiquetas:\n`);
                     
-        for ( let e of etiquetas ){            
-            txt =+ `\n - ${this.e}`;         
+        for ( let e of this.etiquetas ){            
+            txt += (`- ${e}\n`);         
         }
         
         return txt;
@@ -56,9 +54,12 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
 
     this.actualizarFecha = function( fecha ) {
-        if ( Date.parse( fecha ) ){
+        // Recibe la fecha como string
+        fecha = Date.parse( fecha );
+
+        if ( fecha ) {
             this.fecha = fecha;
-        }        
+        }   
     }
 
     this.anyadirEtiquetas = function( ...etiquetas ) {
@@ -66,25 +67,26 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
         let pos = -1;
 
         for ( let e of etiquetas ) {
-            pos = this.etiquetas.indexOf( "e" );
+            pos = this.etiquetas.indexOf( e );
 
             // Si no existe, lo añade
             if ( pos == -1 ){
-                this.etiquetas.push(e)
+                this.etiquetas.push( e );
             }
         }        
     }
+    this.anyadirEtiquetas(...etiquetas);
 
     this.borrarEtiquetas = function( ...etiquetas ) {         
         //Recorre el vector etiquetas buscando nombres de etiquetas pasados por parámetro
         let pos = -1;
     
         for ( let e of etiquetas ) {
-            pos = this.etiquetas.indexOf( "e" );
+            pos = this.etiquetas.indexOf( e );
 
             // Si existe, lo borra
             if ( pos != -1 ){
-                this.etiquetas.splice( pos, 1 )
+                this.etiquetas.splice( pos, 1 );
             }
         }        
     }
@@ -126,7 +128,7 @@ function anyadirGasto( g ) {
     idGasto++;
 
     // Añadir el objeto gasto a la variable global gastos
-    gastos.push(g);
+    gastos.push( g );
 }
 
 function borrarGasto( id ) {         
@@ -135,7 +137,7 @@ function borrarGasto( id ) {
 
     // Si existe, lo borra
     if ( pos != -1 ){
-        gastos.splice( pos, 1 )
+        gastos.splice( pos, 1 );
     }
 }
 
@@ -144,7 +146,7 @@ function calcularTotalGastos() {
     let sumAll = 0;
     
     for ( let g of gastos ) {
-        sumAll =+ g;
+        sumAll += g.valor;
     }
 
     return sumAll;
