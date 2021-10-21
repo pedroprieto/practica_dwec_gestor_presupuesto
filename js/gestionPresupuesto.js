@@ -60,6 +60,34 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
             this.fecha = fecha;
         }        
     }
+
+    this.anyadirEtiquetas = function( ...etiquetas ) {
+        //Recorre el vector etiquetas buscando si ya existe la etiqueta que le pasamos por parámetro
+        let pos = -1;
+
+        for ( let e of etiquetas ) {
+            pos = this.etiquetas.indexOf( "e" );
+
+            // Si no existe, lo añade
+            if ( pos == -1 ){
+                this.etiquetas.push(e)
+            }
+        }        
+    }
+
+    this.borrarEtiquetas = function( ...etiquetas ) {         
+        //Recorre el vector etiquetas buscando nombres de etiquetas pasados por parámetro
+        let pos = -1;
+    
+        for ( let e of etiquetas ) {
+            pos = this.etiquetas.indexOf( "e" );
+
+            // Si existe, lo borra
+            if ( pos != -1 ){
+                this.etiquetas.splice( pos, 1 )
+            }
+        }        
+    }
 }
 
 //------------------------------------------------------------//
@@ -102,12 +130,8 @@ function anyadirGasto( g ) {
 }
 
 function borrarGasto( id ) {         
-    //Recorre el vector gastos buscando un objeto cuyo id coincida con el pasado por parámetro
-    let pos = -1;
-
-    for ( let g of gastos ) {
-        pos = gastos.indefOf( g.id );
-    }
+    //Borra el objeto cuyo id coincida con el pasado por parámetro
+    let pos = gastos.findIndex( gasto => gasto.id === id );
 
     // Si existe, lo borra
     if ( pos != -1 ){
