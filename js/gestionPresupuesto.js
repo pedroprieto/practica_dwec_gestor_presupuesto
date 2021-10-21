@@ -85,6 +85,21 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
             }
         }
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo){
+
+        let fechaNueva = new Date(fecha).toISOString();
+        let fechaModificada = "";
+
+        if(periodo == "dia"){
+            fechaModificada = fechaNueva.substr(0,10);
+        }else if(periodo == "mes"){
+            fechaModificada = fechaNueva.substr(0,7);
+        }else if(periodo == "anyo"){
+            fechaModificada = fechaNueva.substr(0,4);
+        }
+        return fechaModificada;
+    }
 }
 
 //FUNCIONES PRACTICA 2
@@ -126,6 +141,48 @@ function calcularBalance(){
 
 }
 
+//FUNCIONES PRACTICA 3
+
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+
+            let gastosFiltrados=[];
+
+           if(fechaDesde && !fechaHasta){
+               gastosFiltrados = gastos.filter((gasto) => gasto.fecha >= Date.parse(fechaDesde));
+           }else if(fechaDesde && fechaHasta){
+               gastosFiltrados = gastos.filter(function(gasto){
+                   if(gasto.fecha >= Date.parse(fechaDesde) && gasto.fecha <= Date.parse(fechaHasta)){
+                       return gasto;
+                   }
+               });
+           }else if(valorMinimo && !valorMaximo && !fechaDesde && !fechaHasta){
+                gastosFiltrados = gastos.filter((gasto) => gasto.valor >= valorMinimo);
+           }else if(valorMinimo && valorMaximo && !fechaDesde && !fechaHasta){
+                gastosFiltrados = gastos.filter(function(gasto){
+                    if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
+                        return gasto;
+                    }
+                }); 
+           }else if(fechaDesde && fechaHasta && !valorMinimo && valorMaximo){
+                gastosFiltrados = gastos.filter(function(gasto){
+                    if((gasto.fecha >= Date.parse(fechaDesde) && gasto.fecha <= Date.parse(fechaHasta)) && gasto.valor <= valorMaximo){
+                            return gasto;
+                    }
+                });
+           }
+    
+            if(gastosFiltrados.length !== 0){
+                return gastosFiltrados;
+            }else{
+                return gastos;
+            }    
+
+}
+
+function agruparGastos(){
+
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -137,5 +194,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
