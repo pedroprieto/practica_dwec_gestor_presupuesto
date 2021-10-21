@@ -64,7 +64,7 @@ function actualizarPresupuesto( valor ) {
     }
 }
 
-function anyadirGasto(g){
+function anyadirGasto( g ){    
     // Añade propiedad id al objeto gasto
     g.id = idGasto;
     idGasto++;
@@ -73,10 +73,19 @@ function anyadirGasto(g){
     gastos.push(g);
 }
 
+function borrarGasto( id ){     
+    //Recorre el vector gastos buscando un objeto cuyo id coincida con el pasado por parámetro
+    for ( let g of gastos ){
+        let pos = gastos.indefOf( g.id );
+    }
+
+    // Si existe, lo borra
+    if ( pos != -1 ){
+        gastos.splice( pos, 1 )
+    }
+}
 
 
-
-function borrarGasto(){}
 function calcularTotalGastos(){}
 function calcularBalance(){}
 
