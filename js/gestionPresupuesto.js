@@ -5,24 +5,13 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-function actualizarPresupuesto( valor ) {
-    // Actualiza la variable global presupuesto
+//------------------------------------------------------------//
 
-    if ( !isNaN( valor ) && valor >= 0 ){    
-        return presupuesto = valor;
-    }
-    else {
-        return -1;
-    }
-}
-
-function mostrarPresupuesto() {
-    // Devuelve el valor de la variable global presupuesto
-    return(`Tu presupuesto actual es de ${presupuesto} €`);    
-}
-
+// CONSTRUCTOR
 function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
-    // Crea un objeto gasto
+    
+    // Propiedades
+
     this.descripcion = descripcion;
     this.valor = ( valor >= 0 ) ? valor : 0;    
     this.etiquetas = [];    
@@ -36,6 +25,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     this.fecha = fecha;
 
 
+    // Métodos
 
     this.mostrarGasto = function() {  
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
@@ -52,11 +42,40 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
 }
 
+//------------------------------------------------------------//
+
+function mostrarPresupuesto() {
+    return(`Tu presupuesto actual es de ${presupuesto} €`);    
+}
+
 function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(){}
+//------------------------------------------------------------//
+
+function actualizarPresupuesto( valor ) {
+    // Actualiza la variable global presupuesto
+    if ( !isNaN( valor ) && valor >= 0 ){    
+        return presupuesto = valor;
+    }
+    else {
+        return -1;
+    }
+}
+
+function anyadirGasto(g){
+    // Añade propiedad id al objeto gasto
+    g.id = idGasto;
+    idGasto++;
+
+    // Añadir el objeto gasto a la variable global gastos
+    gastos.push(g);
+}
+
+
+
+
 function borrarGasto(){}
 function calcularTotalGastos(){}
 function calcularBalance(){}
