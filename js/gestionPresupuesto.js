@@ -65,7 +65,7 @@ function actualizarPresupuesto( valor ) {
 }
 
 function anyadirGasto( g ){    
-    // Añade propiedad id al objeto gasto
+    // Añade propiedad id al objeto gasto pasado por parámetro
     g.id = idGasto;
     idGasto++;
 
@@ -85,9 +85,21 @@ function borrarGasto( id ){
     }
 }
 
+function calcularTotalGastos(){
+    // Suma de todos los gastos
+    for ( let g of gastos ){
+        let sumAll =+ g;
+    }
 
-function calcularTotalGastos(){}
-function calcularBalance(){}
+    return sumAll;
+}
+
+function calcularBalance(){
+    // Balance (presupuesto - gastos totales)
+    let balance = presupuesto - calcularTotalGastos();
+
+    return balance;
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
