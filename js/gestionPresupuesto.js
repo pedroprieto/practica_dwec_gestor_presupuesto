@@ -167,7 +167,20 @@ function calcularBalance() {
 
     return balance;
 }
-function filtrarGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, descripcionContiene, etiquetasTiene}) {
+
+    let gastosFiltrados = [];  
+
+    if ({})
+    {
+        gastosFiltrados = gastos.slice();
+    }
+
+    else if ({fechaDesde})
+    {
+        gastosFiltrados = gastos.filter(gasto => gasto.fecha >= Date.parse(fechaDesde))
+    }
+    return gastosFiltrados;
 
 }
 function agruparGastos() {
