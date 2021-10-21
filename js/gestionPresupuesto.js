@@ -4,13 +4,12 @@
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
-//------------------------------------------------------------//
 
+//------------------------------------------------------------//
 // CONSTRUCTOR
 function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     
     // Propiedades
-
     this.descripcion = descripcion;
     this.valor = ( valor >= 0 ) ? valor : 0;    
     this.etiquetas = [];    
@@ -24,7 +23,6 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     this.fecha = fecha;
 
     // Métodos
-
     this.mostrarGasto = function() {  
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
@@ -36,6 +34,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
 
         txt += (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaISO}\nEtiquetas:\n`);
                     
+        // Recorro las etiquetas y las voy añadiendo
         for ( let e of this.etiquetas ){            
             txt += (`- ${e}\n`);         
         }
@@ -93,7 +92,6 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
 }
 
 //------------------------------------------------------------//
-
 // Funciones con solo RETURN
 
 function mostrarPresupuesto() {
@@ -109,7 +107,6 @@ function calcularBalance() {
 }
 
 //------------------------------------------------------------//
-
 // FUNCIONES
 
 function actualizarPresupuesto( valor ) {
@@ -151,8 +148,6 @@ function calcularTotalGastos() {
 
     return sumAll;
 }
-
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
