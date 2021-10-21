@@ -22,7 +22,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
     this.fecha = fecha;
 
-    // Métodos
+    // Métodos  
     this.mostrarGasto = function() {  
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
