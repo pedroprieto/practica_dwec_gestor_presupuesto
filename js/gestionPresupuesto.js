@@ -21,7 +21,7 @@ function mostrarPresupuesto() {
     return(`Tu presupuesto actual es de ${presupuesto} €`);    
 }
 
-function CrearGasto( descripcion, valor ) {
+function CrearGasto( descripcion, valor) {
     // Crea un objeto gasto
     this.descripcion = descripcion;
     this.valor = ( valor >= 0 ) ? valor : 0;
@@ -41,7 +41,10 @@ function CrearGasto( descripcion, valor ) {
     }
 }
 
-function listarGastos(){}
+function listarGastos(){
+    return gastos;
+}
+
 function anyadirGasto(){}
 function borrarGasto(){}
 function calcularTotalGastos(){}
