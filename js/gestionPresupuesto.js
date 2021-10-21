@@ -2,9 +2,11 @@
 
 // TODO: Variable global
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto( valor ) {
-    // TODO Actualiza la variable global presupuesto
+    // Actualiza la variable global presupuesto
 
     if ( !isNaN( valor ) && valor >= 0 ){    
         return presupuesto = valor;
@@ -15,12 +17,12 @@ function actualizarPresupuesto( valor ) {
 }
 
 function mostrarPresupuesto() {
-    // TODO Devuelve el valor de la variable global presupuesto
+    // Devuelve el valor de la variable global presupuesto
     return(`Tu presupuesto actual es de ${presupuesto} €`);    
 }
 
 function CrearGasto( descripcion, valor ) {
-    // TODO Crea un objeto gasto
+    // Crea un objeto gasto
     this.descripcion = descripcion;
     this.valor = ( valor >= 0 ) ? valor : 0;
 
@@ -45,5 +47,10 @@ function CrearGasto( descripcion, valor ) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
