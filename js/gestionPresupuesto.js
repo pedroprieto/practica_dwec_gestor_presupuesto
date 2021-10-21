@@ -1,21 +1,24 @@
 
 var presupuesto = 0;
-let gastos;
-let idGastos = 0;
+var idGastos = 0;
 var arraygastos = []
 
 function actualizarPresupuesto(pre) {
 
     
-    if (pre > 0)
+    if (pre >= 0)
     {
-        return pre;
+        presupuesto = pre;
+      
     }    
 
     else
     {
-        return -1 
+        pre = -1 
+        console.log("Error al introducir el valor");
     }
+
+    return pre;
 
    
 }
@@ -25,33 +28,42 @@ function mostrarPresupuesto() {
    
     let x = presupuesto;
     
-     return('Tu presupuesto actual es de '+ x + ' €') ;
+     return `Tu presupuesto actual es de ${x} €`;
 }
 
 
 
 
-function CrearGasto(valor, fecha, tipo) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
-        if (valor > 0){
-        this.valor=valor }
-        else{
-        this.valor = 0;
-        }
+    this.descripcion=descripcion;
+    
+    if (valor >= 0){
+    this.valor=valor}
+    else{
+        this.valor = 0}
 
-        this.fecha=fecha,  //fecha Almacenará la fecha en que se crea el gasto en forma de timestamp
-        this.tipo=tipo;
-        var etiquetas = [];
+        if (fecha) {
+            fecha = Date.parse(fecha);
+            this.fecha = fecha;
+        } else {
+            fecha = Date.now();
+            this.fecha = fecha;
+
+                                                                              //toISOString() para que añada el 0 delante del dia
+        this.etiquetas = [];
 
     this.mostrarGastoCompleto = function(){
 
+
+        
         let texto = 'Gasto correspondiente a DESCRIPCION con valor' + this.valor +'€.'
         
             //Función sin parámetros que devuelva el texto multilínea siguiente (ejemplo para un gasto con tres etiquetas)
           //Gasto correspondiente a DESCRIPCION con valor VALOR €.
           texto = texto + 'Fecha: ' + this.fecha;//Fecha: FECHA_EN_FORMATO_LOCALIZADO
           texto = texto + 'Etiquetas: /n';//Etiquetas:
-          texto = texto + 'Etiqueta 1: ' + this.etiquetas[0];//- ETIQUETA 1
+          texto = texto + 'Etiqueta 1: ' + this.etiquetas[0] ;//- ETIQUETA 1 aqui hay que hacer un bucle.
           texto = texto + 'Etiqueta 2: ' + this.etiquetas[1]; //- ETIQUETA 2
           texto = texto + 'Etiqueta 3: ' + this.etiquetas[2];//- ETIQUETA 3  
           
@@ -66,11 +78,12 @@ function CrearGasto(valor, fecha, tipo) {
         // Deberá recibir la fecha en formato string que sea entendible por la función Date.parse.
         // Si la fecha no es válida, se dejará sin modificar.
     }
-   this.anyadirEtiquetas = function(etiqueta){
+   this.anyadirEtiquetas = function(...etiqueta){
 
         if(etiquetas.indexOf(etiqueta) !== -1){
            return('Esta etiqueta ya existe')
         } else{
+           for (let e of etiquetas)
            etiquetas.push(etiqueta);
         }
 
@@ -78,7 +91,7 @@ function CrearGasto(valor, fecha, tipo) {
     this.borrarEtiquetas = function(etiqueta){
 
         if(etiquetas.indexOf(etiqueta) !== -1){
-            etiquetas.delete(etiqueta);
+           // etiquetas.splice(etiqueta); //se elimina por nombre
             return('Etiqueta eliminada')
           
 
@@ -95,15 +108,16 @@ function listarGastos(){
     if (arraygastos.length > 0)
     {
     for( i = 0; i < arraygastos.length; i++){
-        return("<p>" + arraygastos[i] + "</p>");}
+        return(arraygastos[i].valor + "\n");}
     }
     else
     return arraygastos;
 }
 
-function anyadirGasto(gasto){
+function anyadirGasto(...gasto){
 
-    arraygastos.push(gasto);
+    for (let g of gasto){
+    arraygastos.push(gasto)};
     
 
     //Añadir al objeto gasto pasado como parámetro una propiedad id cuyo valor será el valor actual de la variable global idGasto.
@@ -115,15 +129,20 @@ function borrarGasto(id){
 //Función de 1 parámetro que eliminará de la variable global gastos el objeto gasto cuyo id haya sido pasado como parámetro.
 // Si no existe un gasto con el id proporcionado, no hará nada.
 
+//se elimina por if y splice
+
 }
 function calcularTotalGastos(){
 
-    let suma = 0;
+   let suma = 0;
     let i;
     for(i = 0; i < arraygastos.length; i++){
-        suma = suma  + arraygastos[i];}
+        suma = suma  + arraygastos[i].valor;}
 
     return suma;
+
+   // arraygastos.reduce(function(acc,item) {return acc + item}, 0)
+
 }
 function calcularBalance(){
 
