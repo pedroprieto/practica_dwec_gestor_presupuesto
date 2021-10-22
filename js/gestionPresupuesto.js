@@ -146,10 +146,10 @@ function calcularBalance(){
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
    
 
-           let gastosFiltrados = gastos;
+           let gastosFiltrados;
            
 
-           gastosFiltrados = gastosFiltrados.filter(function(gasto){
+           gastosFiltrados = gastos.filter(function(gasto){
 
             let existe = true;
             if(fechaDesde){
@@ -198,7 +198,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
            
            
 
-            if(gastosFiltrados.length !== 0){
+            if(gastosFiltrados){
                 return gastosFiltrados;
             }else{
                 return gastos;
