@@ -29,12 +29,24 @@ idGasto = idGasto + 1;
 gastos.push(gasto);
 }
 
-function borrarGasto(){
+function borrarGasto(id){
+let idnum = Number(id);
+let indice = 0;
 
+for (let g of gastos){
+    if (g.id == idnum){ 
+        indice = gastos.indexOf(g);
+        gastos.splice(indice,1);
+    }
+}
 }
 
 function calcularTotalGastos(){
-
+let sumagastos = 0;
+for (let g of gastos){
+    sumagastos = sumagastos + gastos[g].valor; 
+    }
+    return sumagastos;
 }
 
 function calcularBalance(){
@@ -80,6 +92,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
     }
+
+    this.mostrarGastoCompleto = function(){
+        let fecha2 = new Date(fecha).toLocaleString();
+        
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €.
+        Fecha: ${fecha2}
+        `
+        ;
+    }
+
+    
+
     this.actualizarDescripcion = function(descripcionNueva){
         this.descripcion = descripcionNueva;
     }
