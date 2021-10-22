@@ -109,7 +109,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return textoTotal;  
     }
 
-    
+    this.anyadirEtiquetas = function(...etiquetasNuevas){
+        for(let eti of etiquetasNuevas){
+                if(etiquetas.indexOf(eti) == -1){
+                    this.etiquetas.push(eti);
+            }
+        }
+    }
 
     this.actualizarDescripcion = function(descripcionNueva){
         this.descripcion = descripcionNueva;
