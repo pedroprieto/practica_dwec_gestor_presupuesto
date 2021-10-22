@@ -201,8 +201,24 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 }
 
 
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
+    if(!fechaDesde){
+        fechaDesde = "2020-01-01";
+    }
+    if(!fechaHasta){
+        fechaHasta =  new Date(Date.now()).toISOString().substr(0,10);
+    }
+
+    let gastosCreados = filtrarGastos({etiquetas, fechaDesde, fechaHasta});
+
+    let resultado = gastosCreados.reduce((acc, item) => {
+            
+            acc[item.obtenerPeriodoAgrupacion(periodo)] = (acc[item.obtenerPeriodoAgrupacion(periodo)] || 0) + item.valor;
+            return acc;
+    }, {});
+    
+    return resultado;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
