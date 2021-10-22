@@ -44,7 +44,7 @@ for (let g of gastos){
 function calcularTotalGastos(){
 let sumagastos = 0;
 for (let g of gastos){
-    sumagastos = sumagastos + gastos[g].valor; 
+    sumagastos = sumagastos + g.valor; 
     }
     return sumagastos;
 }
