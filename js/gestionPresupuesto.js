@@ -55,17 +55,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let resultado = `Gasto correspondiente a ${descripcion} con valor ${valor} €.\n`;
         resultado += `Fecha: `;
         //return fecha.toLocaleString("es");
-        resultado += new Date(fecha).toLocaleString();
+        resultado += new Date(this.fecha).toLocaleString();
         //resultado += Date.parse(fecha);
         //resultado += fecha.toString();
         //let f = new Date(fecha).toLocaleString();
         //resultado += `Fecha: ${f} `;
         resultado += `\nEtiquetas:\n`;
-        for (let etiqueta of etiquetas){
+        for (let etiqueta of this.etiquetas){
             resultado += `- ${etiqueta}\n`;
         };
         return resultado;
-
         /*return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
         return `Fecha ${fecha.toLocaleString()}`;
         return `Etiquetas`;
@@ -75,10 +74,30 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     };
     this.actualizarFecha = function (nueva_fecha){
 
-        //let f = Date.parse(nueva_fecha);
-        
-        //return `${nueva_fecha} - f - ${fecha}`
-        //this.fecha = (NaN) ? f : fecha;
+        //let f = new Date(nueva_fecha);        
+        //return `${nueva_fecha} - f - ${fecha}`;
+        console.log(Date.parse(fecha));
+        console.log(Date.parse(nueva_fecha));
+        console.log(nueva_fecha instanceof Date);
+
+        //this.fecha = (!(nueva_fecha instanceof Date)) ? this.fecha : new Date(nueva_fecha);
+        if (nueva_fecha instanceof Date){
+            this.fecha = new Date(nueva_fecha);
+        }
+
+        //console.log(valueOf f);
+        //this.fecha = (nueva_fecha = !NaN) ? nueva_fecha : fecha;
+        //this.fecha = (!NaN(f)) ? fecha : Date.parse(nueva_fecha);
+        //if ((typeof f) == NaN){
+        //if ((typeof nueva_fecha) == NaN){
+        /*if (f == !NaN){
+            //this.fecha = nueva_fecha;
+            this.fecha = this.fecha;
+        }
+        else {
+            //this.fecha = this.fecha;
+            this.fecha = nueva_fecha;
+        };*/
         //this.fecha = f;
     };
     this.anyadirEtiquetas = function(...nuevas_etiquetas){
