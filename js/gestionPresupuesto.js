@@ -148,7 +148,6 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 
            let gastosFiltrados;
            
-
            gastosFiltrados = gastos.filter(function(gasto){
 
             let existe = true;
@@ -197,12 +196,8 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
            });
            
            
-
-            if(gastosFiltrados){
-                return gastosFiltrados;
-            }else{
-                return gastos;
-            }    
+                return gastosFiltrados;  
+       
 }
 
 
