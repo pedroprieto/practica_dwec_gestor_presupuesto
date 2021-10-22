@@ -117,6 +117,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.borrarEtiquetas = function(...etiquetasBorrar){
+        let indice = -1;
+        for(let eti of etiquetasBorrar){
+                if(etiquetas.indexOf(eti) != -1){
+                    indice = etiquetas.indexOf(eti);
+                    this.etiquetas.splice(indice, 1);
+            }
+        }
+    }
+
+
     this.actualizarDescripcion = function(descripcionNueva){
         this.descripcion = descripcionNueva;
     }
