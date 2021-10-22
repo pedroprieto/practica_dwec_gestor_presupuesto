@@ -144,110 +144,59 @@ function calcularBalance(){
 //FUNCIONES PRACTICA 3
 
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+   
 
-            let gastosFiltrados=[];
+           let gastosFiltrados = gastos;
+           
 
-           if(fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !etiquetasTiene){
-               gastosFiltrados = gastos.filter((gasto) => gasto.fecha >= Date.parse(fechaDesde));
-           }else if(fechaDesde && fechaHasta && !valorMinimo && !valorMaximo){
-               gastosFiltrados = gastos.filter(function(gasto){
-                   if(gasto.fecha >= Date.parse(fechaDesde) && gasto.fecha <= Date.parse(fechaHasta)){
-                       return gasto;
-                   }
-               });
-           }else if(valorMinimo && !valorMaximo && !fechaDesde && !fechaHasta){
-                gastosFiltrados = gastos.filter((gasto) => gasto.valor >= valorMinimo);
-           }else if(valorMinimo && valorMaximo && !fechaDesde && !fechaHasta && !descripcionContiene){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
-                        return gasto;
+           gastosFiltrados = gastosFiltrados.filter(function(gasto){
+
+            let existe = true;
+            if(fechaDesde){
+                if(gasto.fecha < Date.parse(fechaDesde)){
+                    existe = false;
+                }
+            }
+            if(fechaHasta){
+                if(gasto.fecha > Date.parse(fechaHasta)){
+                    existe = false;
+                }
+            }
+            if(valorMinimo){
+                if(gasto.valor < valorMinimo){
+                    existe = false;
+                }
+            }
+            if(valorMaximo){
+                if(gasto.valor > valorMaximo){
+                    existe = false;
+                }
+            }
+            if(descripcionContiene){
+                if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
+                    if(!gasto.descripcion.includes(descripcionContiene)){
+                        existe = false;
                     }
-                }); 
-           }else if(fechaDesde && fechaHasta && !valorMinimo && valorMaximo){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    if(gasto.fecha >= Date.parse(fechaDesde) && gasto.fecha <= Date.parse(fechaHasta)){
-                        if(gasto.valor <= valorMaximo){
-                            return gasto;
-                        }
-                    }   
-                });
-           }else if(!fechaDesde && !fechaHasta && valorMinimo && valorMaximo && descripcionContiene){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
-                        if(gasto.descripcion.includes(descripcionContiene)){
-                            return gasto;
-                        }
-                    }   
-                });
-           }else if(etiquetasTiene && !valorMaximo && !fechaDesde){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    
-                    let contiene = false;
-                    
+                }  
+            }
+            if(etiquetasTiene){
+                let contiene = false;                   
                     for (let i = 0; i < gasto.etiquetas.length; i++) {                   
                         for (let j= 0; j < etiquetasTiene.length; j++) {
                             if(gasto.etiquetas[i] == etiquetasTiene[j]){
                                 contiene = true;
                             }                 
                         }
-                    }   
-                    if(contiene == true){
-                        return gasto;
                     }
-                });
-           }else if(etiquetasTiene && valorMaximo && !fechaHasta){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    
-                    let contiene = false;
-                    
-                    for (let i = 0; i < gasto.etiquetas.length; i++) {                   
-                        for (let j= 0; j < etiquetasTiene.length; j++) {
-                            if(gasto.etiquetas[i] == etiquetasTiene[j]){
-                                contiene = true;
-                            }                 
-                        }
-                    }   
-                    if(contiene == true){
-                        if(gasto.valor <= valorMaximo){
-                            return gasto;
-                        }
-                    }
-                });
-           }else if(fechaDesde && etiquetasTiene && !valorMaximo){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    
-                    let contiene = false;
-                    
-                    for (let i = 0; i < gasto.etiquetas.length; i++) {                   
-                        for (let j= 0; j < etiquetasTiene.length; j++) {
-                            if(gasto.etiquetas[i] == etiquetasTiene[j]){
-                                contiene = true;
-                            }                 
-                        }
-                    }   
-                    if(contiene == true){
-                        if(gasto.fecha >= Date.parse(fechaDesde)){
-                            return gasto;
-                        }
-                    }
-                });
-           }else if(fechaHasta && valorMaximo && etiquetasTiene){
-                gastosFiltrados = gastos.filter(function(gasto){
-                    
-                    let contiene = false;
-                    
-                    for (let i = 0; i < gasto.etiquetas.length; i++) {                   
-                        for (let j= 0; j < etiquetasTiene.length; j++) {
-                            if(gasto.etiquetas[i] == etiquetasTiene[j]){
-                                contiene = true;
-                            }                 
-                        }
-                    }   
-                    if(contiene == true && gasto.fecha <= Date.parse(fechaHasta)){  
-                            return gasto;
-                    }     
-                });
-           }
+                    if(contiene == false){
+                        existe = false;
+                    }  
+            }
+
+                return existe;
+           });
+           
+           
 
             if(gastosFiltrados.length !== 0){
                 return gastosFiltrados;
