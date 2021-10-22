@@ -140,7 +140,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.actualizarFecha = function(fechaNueva){
         fechaNueva = Date.parse(fechaNueva);
-        if (fechaNueva == true){
+        if (fechaNueva){
             this.fecha = fechaNueva;
         }
     }
