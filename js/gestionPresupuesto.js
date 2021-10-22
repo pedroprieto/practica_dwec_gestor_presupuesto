@@ -50,6 +50,11 @@ for (let g of gastos){
 }
 
 function calcularBalance(){
+let gastosTotal = calcularTotalGastos();
+let balance = 0;
+
+balance = presupuesto - gastosTotal;
+return balance;
 
 }
 
@@ -95,11 +100,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.mostrarGastoCompleto = function(){
         let fecha2 = new Date(fecha).toLocaleString();
+        let textoTotal = `Gasto correspondiente a ${descripcion} con valor ${valor} €.\nFecha: ${fecha2}\nEtiquetas:\n`
         
-        return `Gasto correspondiente a ${descripcion} con valor ${valor} €.
-        Fecha: ${fecha2}
-        `
-        ;
+        for(let eti of etiquetas){
+            textoTotal = textoTotal + "- " + eti+ "\n";
+        }
+        
+        return textoTotal;  
     }
 
     
