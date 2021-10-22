@@ -74,16 +74,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     };
     this.actualizarFecha = function (nueva_fecha){
 
-        //let f = new Date(nueva_fecha);        
+        let f = Date.parse(nueva_fecha);        
         //return `${nueva_fecha} - f - ${fecha}`;
         console.log(Date.parse(fecha));
         console.log(Date.parse(nueva_fecha));
         console.log(nueva_fecha instanceof Date);
+        console.log(f);
 
         //this.fecha = (!(nueva_fecha instanceof Date)) ? this.fecha : new Date(nueva_fecha);
-        if (nueva_fecha instanceof Date){
-            this.fecha = new Date(nueva_fecha);
+        //if (nueva_fecha instanceof Date){
+        if (!isNaN(f)){
+            this.fecha = Date.parse(nueva_fecha);
         }
+
 
         //console.log(valueOf f);
         //this.fecha = (nueva_fecha = !NaN) ? nueva_fecha : fecha;
