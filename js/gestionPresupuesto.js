@@ -131,14 +131,20 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.actualizarDescripcion = function(descripcionNueva){
         this.descripcion = descripcionNueva;
     }
+
     this.actualizarValor = function(valorNuevo){
         if (valorNuevo >= 0){
             this.valor = valorNuevo;
         }
     }
-   
-    
-     
+
+    this.actualizarFecha = function(fechaNueva){
+        fechaNueva = Date.parse(fechaNueva);
+        if (fechaNueva == true){
+            this.fecha = fechaNueva;
+        }
+    }
+      
 }
 
 
