@@ -48,100 +48,100 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.fecha = fecha;
         } else {
             fecha = Date.now();
-            this.fecha = fecha;
+            this.fecha = fecha;}
 
-                                                                              //toISOString() para que añada el 0 delante del dia
+                                           //toISOString() para que añada el 0 delante del dia
         this.etiquetas = [];
 
     this.mostrarGastoCompleto = function(){
 
-
+        let date = new Date(this.fecha);
+        let Fechax = date.toLocaleString();
+        let texto = "";
         
-        let texto = 'Gasto correspondiente a DESCRIPCION con valor' + this.valor +'€.'
         
-            //Función sin parámetros que devuelva el texto multilínea siguiente (ejemplo para un gasto con tres etiquetas)
-          //Gasto correspondiente a DESCRIPCION con valor VALOR €.
-          texto = texto + 'Fecha: ' + this.fecha;//Fecha: FECHA_EN_FORMATO_LOCALIZADO
-          texto = texto + 'Etiquetas: /n';//Etiquetas:
-          texto = texto + 'Etiqueta 1: ' + this.etiquetas[0] ;//- ETIQUETA 1 aqui hay que hacer un bucle.
-          texto = texto + 'Etiqueta 2: ' + this.etiquetas[1]; //- ETIQUETA 2
-          texto = texto + 'Etiqueta 3: ' + this.etiquetas[2];//- ETIQUETA 3  
-          
-
-        return(texto)
+        texto = texto + (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${Fechax}\nEtiquetas:\n`);
          
+        for (let i = 0; i < this.etiquetas.length; i++) {
+            texto = texto + ` ${this.etiquetas[i]}\n`;}
        
+            return texto;
+    }
+    this.mostrarGasto = function() {  
+        return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
     this.actualizarFecha = function(fecha){
 
-        //Función de 1 parámetro que actualizará la propiedad fecha del objeto.
-        // Deberá recibir la fecha en formato string que sea entendible por la función Date.parse.
-        // Si la fecha no es válida, se dejará sin modificar.
+
+        fecha = Date.parse( fecha );
+
+        if ( fecha ) {
+            this.fecha = fecha;
+        }   
+
     }
    this.anyadirEtiquetas = function(...etiqueta){
 
-        if(etiquetas.indexOf(etiqueta) !== -1){
-           return('Esta etiqueta ya existe')
-        } else{
-           for (let e of etiquetas)
-           etiquetas.push(etiqueta);
-        }
+        
 
+    }
+    this.actualizarValor = function(valor) {
+        if ( !isNaN( valor ) && valor >= 0 ) {
+            this.valor = valor;
+        }
+    }
+    this.actualizarDescripcion = function(descripcion) {
+        this.descripcion = descripcion;
     }
     this.borrarEtiquetas = function(etiqueta){
 
-        if(etiquetas.indexOf(etiqueta) !== -1){
-           // etiquetas.splice(etiqueta); //se elimina por nombre
-            return('Etiqueta eliminada')
-          
+        let pos = -1;
 
-         } else{
-            return('Etiqueta no encontrada')
-         } 
+        for ( let e of etiquetas ) {
+            pos = this.etiquetas.indexOf( e );
+
+            
+            if ( pos != -1 ){
+                this.etiquetas.splice( pos, 1 );
+            }
+        }
+         
      }
 }
 
 function listarGastos(){
 
-    let texto;
-    let i;
-    if (arraygastos.length > 0)
-    {
-    for( i = 0; i < arraygastos.length; i++){
-        return(arraygastos[i].valor + "\n");}
-    }
-    else
     return arraygastos;
+    
 }
 
-function anyadirGasto(...gasto){
+function anyadirGasto(gasto){
 
-    for (let g of gasto){
-    arraygastos.push(gasto)};
+    gasto.id = idGastos;
+    idGastos++;
+    arraygastos.push(gasto);
     
 
-    //Añadir al objeto gasto pasado como parámetro una propiedad id cuyo valor será el valor actual de la variable global idGasto.
-    //Incrementar el valor de la variable global idGasto.
-     //Añadir el objeto gasto pasado como parámetro a la variable global gastos. El gasto se debe añadir al final del array.
 }
 function borrarGasto(id){
 
-//Función de 1 parámetro que eliminará de la variable global gastos el objeto gasto cuyo id haya sido pasado como parámetro.
-// Si no existe un gasto con el id proporcionado, no hará nada.
+    let pos = arraygastos.findIndex( gasto => gasto.id === id );
 
-//se elimina por if y splice
+   
+    if ( pos != -1 ){
+        arraygastos.splice( pos, 1 );
+    }
 
 }
 function calcularTotalGastos(){
 
-   let suma = 0;
-    let i;
-    for(i = 0; i < arraygastos.length; i++){
-        suma = suma  + arraygastos[i].valor;}
+   let suma = 0;   
+    for ( let gas of arraygastos ) {
+        suma = suma + gas.valor;
+    }
 
     return suma;
 
-   // arraygastos.reduce(function(acc,item) {return acc + item}, 0)
 
 }
 function calcularBalance(){
