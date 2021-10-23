@@ -17,14 +17,18 @@ function actualizarPresupuesto(cantidad) {
     } else{
         
         return -1;
-    }
-}
+    };
+};
 
 function mostrarPresupuesto() {
     
     // let x = presupuesto;
     return `Tu presupuesto actual es de ${presupuesto} €`
-}
+};
+
+function listarGastos(){
+    return gastos;
+};
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     
@@ -114,39 +118,34 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
             if (!(etiquetas.includes(etiqueta))){
                 etiquetas.push(etiqueta);
-            }
+            };
         };
     };
     this.borrarEtiquetas = function(...borrar_etiquetas){
 
         //bucle que recorra las borrar_etiquetas y que compruebe si existen en etiquetas
         // y en caso afirmativo que las borre
-
-        
+     
         for (let etiqueta of borrar_etiquetas){
             //resultado += `- ${etiqueta}\n`;
             //console.log(etiqueta);
 
-            if (etiquetas.includes(etiqueta)){
+            if (etiquetas.indexOf(etiqueta) >= 0){
+            //if (etiquetas.includes(etiqueta)){
                 //etiquetas.push(etiqueta);
 
+                let x = etiquetas.indexOf(etiqueta);
+                this.etiquetas.splice(x, 1);
+
+                /*
                 for (let i = 0; i < this.etiquetas.length; i++){
                     if (etiqueta == this.etiquetas[i]){
                         this.etiquetas.splice(i, 1);
                     };
-                };
+                };*/
             };
         };
-
     };
-    
-        
-    
-
-};
-
-function listarGastos(){
-    return gastos;
 };
 
 function anyadirGasto(){
