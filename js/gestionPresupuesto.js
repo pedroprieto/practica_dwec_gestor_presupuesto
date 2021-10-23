@@ -222,46 +222,30 @@ function filtrarGastos(filtro){
     return gastosFiltro;
 }
 
-function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = "2021-01-01", fechaHasta = new Date(Date.now()).toISOString().substring(0,10)){
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde/* = "2021-01-01"*/, fechaHasta = new Date(Date.now()).toISOString().substring(0,10)){
 
-    /*let filtro = {
+    let filtro = {
         etiquetasTiene: etiquetas,
         fechaDesde: fechaDesde,
         fechaHasta: fechaHasta
-    }*/
-    function Filtro(etiquetas, fechaDesde, fechaHasta){
-        this.etiquetas = etiquetas;
-        this.fechaDesde = fechaDesde;
-        this.fechaHasta = fechaHasta;
     }
 
-    let filtro = new Filtro(etiquetas, fechaDesde, fechaHasta);
+    //let etiquetasTiene = etiquetas;
+    
+    /*function Filtro(etiquetasTiene, fechaDesde, fechaHasta){
+        this.etiquetasTiene = etiquetasTiene;
+        this.fechaDesde = fechaDesde;
+        this.fechaHasta = fechaHasta;
+    }*/
+
+    //let filtro = new Filtro(etiquetasTiene, fechaDesde, fechaHasta);
 
     let gastosFiltro = filtrarGastos(filtro);
-    //let gastosFiltro = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
 
     let gastosAgrupar = gastosFiltro.reduce((acc, gasto) => {
         acc[gasto.obtenerPeriodoAgrupacion(periodo)] = (acc[gasto.obtenerPeriodoAgrupacion(periodo)] || 0) + /*1*/gasto.valor;
         return acc;
     },{});
-
-    /*let gastosAgrupar = function(gastosFiltro = filtrarGastos(Filtro)){
-        return gastosFiltro.reduce(function(acc, gasto){
-            (acc[gasto.obtenerPeriodoAgrupacion(periodo)] = acc[gasto.obtenerPeriodoAgrupacion(periodo)] || []).push(gasto);
-            return acc;
-        },{});
-    }*/
-
-    /*let gastosAgrupar = gastosFiltro.reduce((acc, item) => {
-        let pAgrupacion = item.obtenerPeriodoAgrupacion(periodo);
-        acc[pAgrupacion]++;
-
-        return acc;
-
-        /*for(let gasto of gastosFiltro){
-            gasto.periodoAgrupacion(periodo);
-        }
-    }, {});*/
 
     return gastosAgrupar;
 
