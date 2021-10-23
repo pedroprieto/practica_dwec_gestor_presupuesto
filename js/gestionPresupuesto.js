@@ -203,6 +203,8 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
+    let etiquetasTiene = etiquetas;
+
     if(!fechaDesde){
         fechaDesde = "2020-01-01";
     }
@@ -210,13 +212,18 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
         fechaHasta =  new Date(Date.now()).toISOString().substr(0,10);
     }
 
-    let gastosCreados = filtrarGastos({etiquetas, fechaDesde, fechaHasta});
+    let gastosCreados = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene});
 
     let resultado = gastosCreados.reduce((acc, item) => {
-            
             acc[item.obtenerPeriodoAgrupacion(periodo)] = (acc[item.obtenerPeriodoAgrupacion(periodo)] || 0) + item.valor;
             return acc;
     }, {});
+    
+
+    /*let resultado = gastosCreados.reduce((acc, gasto) => ({       
+        ...acc,
+        [gasto.obtenerPeriodoAgrupacion(periodo)]: gasto.valor,     
+    }), {})*/
     
     return resultado;
 }
