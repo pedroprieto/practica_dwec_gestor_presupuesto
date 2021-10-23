@@ -76,10 +76,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
         let f = Date.parse(nueva_fecha);        
         //return `${nueva_fecha} - f - ${fecha}`;
-        console.log(Date.parse(fecha));
-        console.log(Date.parse(nueva_fecha));
-        console.log(nueva_fecha instanceof Date);
-        console.log(f);
+        //console.log(Date.parse(fecha));
+        //console.log(Date.parse(nueva_fecha));
+        //console.log(nueva_fecha instanceof Date);
+        //console.log(f);
 
         //this.fecha = (!(nueva_fecha instanceof Date)) ? this.fecha : new Date(nueva_fecha);
         //if (nueva_fecha instanceof Date){
@@ -105,9 +105,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     };
     this.anyadirEtiquetas = function(...nuevas_etiquetas){
 
+        //bucle que recorra las etiquetas (array) introducidas en nuevas_etiquetas
+        // y que compruebe para cada una si existe en etiquetas, y si no que la añada
+
+        for (let etiqueta of nuevas_etiquetas){
+            //resultado += `- ${etiqueta}\n`;
+            //console.log(etiqueta);
+
+            if (!(etiquetas.includes(etiqueta))){
+                etiquetas.push(etiqueta);
+            }
+        };
     };
     this.borrarEtiquetas = function(...borrar_etiquetas){
 
+        //bucle que recorra las borrar_etiquetas y que compruebe si existen en etiquetas
+        // y en caso afirmativo que las borre
     };
     
         
