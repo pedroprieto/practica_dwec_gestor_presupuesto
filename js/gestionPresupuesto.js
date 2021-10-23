@@ -121,6 +121,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
         //bucle que recorra las borrar_etiquetas y que compruebe si existen en etiquetas
         // y en caso afirmativo que las borre
+
+        
+        for (let etiqueta of borrar_etiquetas){
+            //resultado += `- ${etiqueta}\n`;
+            //console.log(etiqueta);
+
+            if (etiquetas.includes(etiqueta)){
+                //etiquetas.push(etiqueta);
+
+                for (let i = 0; i < this.etiquetas.length; i++){
+                    if (etiqueta == this.etiquetas[i]){
+                        this.etiquetas.splice(i, 1);
+                    };
+                };
+            };
+        };
+
     };
     
         
