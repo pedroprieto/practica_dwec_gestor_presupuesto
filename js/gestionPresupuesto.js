@@ -73,7 +73,8 @@ return balance;
 
 }
 
-
+function filtrarGastos(){}
+function agruparGastos(){}
 
 
 
@@ -182,6 +183,50 @@ texto += "- " + this.etiquetas[i] + "\n" ;
 
     }
 
+    this.obtenerPeriodoAgrupacion = function (periodo){
+       
+       
+        let dia =  new Date(this.fecha).getDate();
+         let anyo =  new Date(this.fecha).getFullYear();
+            let mes =  new Date(this.fecha).getMonth()+1;
+         let text;
+         
+         if( dia <10)
+         {
+             dia = "0"+dia.toString();
+         
+         }
+         else{ 
+         dia= dia.toString();
+         }
+         
+         if( mes <10)
+         {
+             mes = "0"+mes.toString();
+         
+         }
+         else{ 
+         mes = mes.toString();
+         }
+         
+         
+         
+         if(periodo == "mes"){
+          
+          text= anyo.toString() +"-"+mes;
+         }
+         else if ( periodo == "anyo")
+         {
+          text= anyo.toString();
+         }
+         else
+         {
+         
+         text= anyo.toString() +"-"+mes+"-"+dia;
+         
+         }
+         return text;
+     }
 
 }
 
@@ -198,5 +243,7 @@ export   {
     anyadirGasto, 
     borrarGasto, 
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
