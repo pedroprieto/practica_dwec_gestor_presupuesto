@@ -1,4 +1,3 @@
-
 var presupuesto = 0;
 var idGastos = 0;
 var arraygastos = []
@@ -8,15 +7,12 @@ function actualizarPresupuesto(pre) {
     
     if (pre >= 0)
     {
-        presupuesto = pre;
-      
-    }    
+        presupuesto = pre;}    
 
     else
     {
         pre = -1 
-        console.log("Error al introducir el valor");
-    }
+        console.log("Error al introducir el valor");}
 
     return pre;
 
@@ -26,8 +22,7 @@ function actualizarPresupuesto(pre) {
 function mostrarPresupuesto() {
     
    
-    let x = presupuesto;
-    
+    let x = presupuesto;    
      return `Tu presupuesto actual es de ${x} €`;
 }
 
@@ -48,9 +43,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.fecha = fecha;
         } else {
             fecha = Date.now();
-            this.fecha = fecha;}
+            this.fecha = fecha;
+        }
 
-                                           //toISOString() para que añada el 0 delante del dia
+                                        
         this.etiquetas = [];
 
     this.mostrarGastoCompleto = function(){
@@ -62,8 +58,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         
         texto = texto + (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${Fechax}\nEtiquetas:\n`);
          
-        for (let i = 0; i < this.etiquetas.length; i++) {
-            texto = texto + ` ${this.etiquetas[i]}\n`;}
+        for (let etiqueta of etiquetas) {
+            texto = texto + `- ${etiqueta}\n`;}
        
             return texto;
     }
@@ -80,33 +76,42 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }   
 
     }
-   this.anyadirEtiquetas = function(...etiqueta){
+    this.anyadirEtiquetas = function(...etiquetas) {
+        let pos = -1;
 
-        
+        for (let etiqueta of etiquetas) {
+            pos = this.etiquetas.indexOf(etiqueta);
 
+            if ( pos == -1 ){
+                this.etiquetas.push(etiqueta);
+            }
+        }        
     }
+ 	this.anyadirEtiquetas(...etiquetas);
+    
     this.actualizarValor = function(valor) {
-        if ( !isNaN( valor ) && valor >= 0 ) {
+        if (valor >= 0 && !isNaN(valor)) {
             this.valor = valor;
+        }
+        else{
+            return ('Debe ser un valor numerico')
         }
     }
     this.actualizarDescripcion = function(descripcion) {
         this.descripcion = descripcion;
     }
-    this.borrarEtiquetas = function(etiqueta){
-
+   
+    this.borrarEtiquetas = function(...etiquetas) {         
         let pos = -1;
+    
+        for (let etiqueta of etiquetas) {
+            pos = this.etiquetas.indexOf(etiqueta);
 
-        for ( let e of etiquetas ) {
-            pos = this.etiquetas.indexOf( e );
-
-            
             if ( pos != -1 ){
                 this.etiquetas.splice( pos, 1 );
             }
-        }
-         
-     }
+        }        
+    }
 }
 
 function listarGastos(){
@@ -152,6 +157,12 @@ function calcularBalance(){
     return balancetotal;
 
 }
+function filtrarGastos(){
+
+}
+function agruparGastos(){
+
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -165,5 +176,7 @@ export  {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
