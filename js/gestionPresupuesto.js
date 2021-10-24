@@ -7,28 +7,6 @@ let idGasto = 0;
 
 
 
-function actualizarPresupuesto(x) {
-
-    if (x > 0) {
-        presupuesto = x;
-    }
-    else {
-        x=-1
-    }
-    return x;
-}
-
-
-
-function mostrarPresupuesto() {
-    
-    let x = presupuesto;
-
-    return "Tu presupuesto actual es de " + x + " €";
-}
-
-
-
 function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
 
     this.descripcion = descripcion;
@@ -140,9 +118,52 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
 
             this.valor;
         }        
-    }   
+    }
+    
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+
+        let fecha = new Date(this.fecha).toISOString();
+
+        let resultado ="";
+
+        if (periodo == "dia") {
+            resultado = fecha.substr(0,10);
+        }
+        else if (periodo == "mes") {
+            resultado = fecha.substr(0, 7);
+
+        } else if(periodo == "anyo"){
+            
+            resultado = fecha.substr(0, 4);
+        }
+
+        return resultado;
+
+    }
 
 }
+
+
+function actualizarPresupuesto(x) {
+
+    if (x > 0) {
+        presupuesto = x;
+    }
+    else {
+        x = -1
+    }
+    return x;
+}
+
+
+
+function mostrarPresupuesto() {
+
+    let x = presupuesto;
+
+    return "Tu presupuesto actual es de " + x + " €";
+}
+
 
 
 
@@ -195,6 +216,15 @@ function calcularBalance() {
     
 }
 
+function agruparGastos() {
+    
+
+}
+
+function filtrarGastos() {
+    
+
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -209,4 +239,6 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos,
 }
