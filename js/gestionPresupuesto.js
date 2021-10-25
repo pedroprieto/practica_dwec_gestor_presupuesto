@@ -151,16 +151,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 function anyadirGasto(objeto){
     
     //let objeto = `gasto`+idGasto;
+    //console.log(`idGasto=${idGasto}`);
 
     //let `gasto${idGasto}` = new CrearGasto{descripcion, valor, fecha, ...etiquetas};
-    //let objeto = new CrearGasto{descripcion, valor, fecha, ...etiquetas};
-    objeto = new CrearGasto();
+    //objeto = CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    //objeto = new CrearGasto(objeto);
     objeto.id = idGasto;
 
     gastos.push(objeto);
 
     //console.log(objeto);
-    //console.log(idGasto);
+    
 
     idGasto++;
 };
@@ -178,13 +179,16 @@ function borrarGasto(id_a_borrar){
         }; 
         //console.log(gastos.id);
     }; */
-    console.log(`id a borrar - ${id_a_borrar}`);
+    //console.log(`id a borrar - ${id_a_borrar}`);
     for (let objeto of gastos){
 
+        //console.log(objeto);
         if (objeto.id == id_a_borrar){
-            console.log(`encontrado!!!! - objeto.id=${objeto.id} - x - ${x}`);
+            //console.log(`encontrado!!!! - objeto.id=${objeto.id} - x - ${x}`);
+            //console.log(x);
             gastos.splice(x, 1);
         } //else {
+            
             x++;
         //};
 
@@ -220,7 +224,7 @@ function calcularTotalGastos(){
 
     for (let objeto of gastos){
         total += objeto.valor;
-        console.log(`valor ${objeto.valor}`);
+        //console.log(`valor ${objeto.valor}`);
     };
 
     return total;
@@ -228,6 +232,10 @@ function calcularTotalGastos(){
 };
 
 function calcularBalance(){
+
+    let saldo = 0;
+
+    return saldo;
     
 };
 
