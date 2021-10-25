@@ -130,11 +130,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             //resultado += `- ${etiqueta}\n`;
             //console.log(etiqueta);
 
-            if (etiquetas.indexOf(etiqueta) >= 0){
+            if (this.etiquetas.indexOf(etiqueta) >= 0){
             //if (etiquetas.includes(etiqueta)){
                 //etiquetas.push(etiqueta);
 
-                let x = etiquetas.indexOf(etiqueta);
+                let x = this.etiquetas.indexOf(etiqueta);
                 this.etiquetas.splice(x, 1);
 
                 /*
@@ -148,15 +148,70 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     };
 };
 
-function anyadirGasto(){
+function anyadirGasto(objeto){
     
+    //let objeto = `gasto`+idGasto;
+
+    //let `gasto${idGasto}` = new CrearGasto{descripcion, valor, fecha, ...etiquetas};
+    //let objeto = new CrearGasto{descripcion, valor, fecha, ...etiquetas};
+    objeto = new CrearGasto();
+    objeto.id = idGasto;
+
+    gastos.push(objeto);
+
+    //console.log(objeto);
+    //console.log(idGasto);
+
+    idGasto++;
 };
 
-function borrarGasto(){
-    
+function borrarGasto(id_a_borrar){
+    // funcion que tiene que recorrer el array gastos, y buscar el objeto que tiene el mismo id que se pasa como parámetro
+    // y borrarlo.
+
+    let x = 0;
+
+    /* for (let i = 0; i < gastos.length; i++){
+        console.log(gastos[i].id);
+        if (gastos[i].id === id_a_borrar){
+            gastos.splice(i, 1);
+        }; 
+        //console.log(gastos.id);
+    }; */
+    for (let objeto of gastos){
+    //gastos.forEach(function(objeto, index, gastos){
+
+        
+        if (objeto.id = id_a_borrar){
+
+            /* let x = this.etiquetas.indexOf(etiqueta);
+            this.etiquetas.splice(x, 1); */
+            //let x = this.gastos.indexOf(objeto);
+            //objeto.splice(index, 1);
+            //console.log(index);
+            //console.log(objeto.id);
+            //console.log(`id a borrar ${id_a_borrar}`);
+            //console.log(`x ${x}`);
+            gastos.splice(x, 1);
+            console.log(x);
+            console.log(objeto);
+        };
+        x++;
+    };
 };
 
 function calcularTotalGastos(){
+
+    //for (let etiqueta of nuevas_etiquetas){
+    //for (let g of )
+    let total = 0;
+
+    for (let objeto of gastos){
+        total += objeto.valor;
+        console.log(`valor ${gastos.objeto.valor}`);
+    };
+
+    return total;
     
 };
 
