@@ -47,7 +47,14 @@ function CrearGasto(descripcion, valor) {
 }
 
 function listarGastos() {
-    return String(gastos);
+    if (gastos.length==0) {
+        return String(gastos);
+    } else {
+        //para mostrar los gastos en forma de lista
+        for (let gasto of gastos) { 
+            console.log(gasto);
+        }
+    }
 }
 
 function anyadirGasto() {
