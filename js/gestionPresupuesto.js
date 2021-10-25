@@ -27,6 +27,7 @@
 
 // }
 // TODO: Variable global
+let gasto = new CrearGasto();
 let  presupuesto = 0;
 let descripcion='';
 let valor=0;
@@ -51,15 +52,15 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion,valor) 
 {
     // TODO
-    var gasto = new Object();
+    //var gasto = new Object();
     if(isNaN(valor)==true || valor<0)
         valor = 0;
-    gasto.descripcion=descripcion;
-    gasto.valor=valor;
-    gasto.actualizarDescripcion=function(desc) { gasto.descripcion=desc};
-    gasto.actualizarValor=function(valor) {if (isNaN(valor)==false && valor>0) { gasto.valor=valor}};
-    gasto.mostrarGasto=function() {return ("Gasto correspondiente a "+gasto.descripcion+" con valor "+gasto.valor+" €")};
-    return gasto;
+    this.descripcion=descripcion;
+    this.valor=valor;
+    this.actualizarDescripcion=function(desc) { this.descripcion=desc};
+    this.actualizarValor=function(valor) {if (isNaN(valor)==false && valor>0) { this.valor=valor}};
+    this.mostrarGasto=function() {return ("Gasto correspondiente a "+this.descripcion+" con valor "+this.valor+" €")};
+    return;
     
 }
 
