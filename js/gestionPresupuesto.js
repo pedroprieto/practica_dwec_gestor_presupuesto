@@ -178,11 +178,18 @@ function borrarGasto(id_a_borrar){
         }; 
         //console.log(gastos.id);
     }; */
+    console.log(`id a borrar - ${id_a_borrar}`);
     for (let objeto of gastos){
     //gastos.forEach(function(objeto, index, gastos){
 
-        
-        if (objeto.id = id_a_borrar){
+        //console.log(objeto.id);
+        //console.log(`x - ${x}`)
+
+        if (objeto.id == id_a_borrar){
+            console.log(`encontrado!!!! - objeto.id=${objeto.id} - x - ${x}`);
+            gastos.splice(x, 1);
+        };
+        //if (objeto.id = id_a_borrar){
 
             /* let x = this.etiquetas.indexOf(etiqueta);
             this.etiquetas.splice(x, 1); */
@@ -192,18 +199,16 @@ function borrarGasto(id_a_borrar){
             //console.log(objeto.id);
             //console.log(`id a borrar ${id_a_borrar}`);
             //console.log(`x ${x}`);
-            gastos.splice(x, 1);
-            console.log(x);
-            console.log(objeto);
-        };
+            //gastos.splice(x, 1);
+            //console.log(`x ${x}`);
+            //console.log(objeto);
+        //};
         x++;
     };
 };
 
 function calcularTotalGastos(){
 
-    //for (let etiqueta of nuevas_etiquetas){
-    //for (let g of )
     let total = 0;
 
     for (let objeto of gastos){
