@@ -180,15 +180,22 @@ function borrarGasto(id_a_borrar){
     }; */
     console.log(`id a borrar - ${id_a_borrar}`);
     for (let objeto of gastos){
+
+        if (objeto.id == id_a_borrar){
+            console.log(`encontrado!!!! - objeto.id=${objeto.id} - x - ${x}`);
+            gastos.splice(x, 1);
+        } //else {
+            x++;
+        //};
+
+        
+    };
     //gastos.forEach(function(objeto, index, gastos){
 
         //console.log(objeto.id);
         //console.log(`x - ${x}`)
 
-        if (objeto.id == id_a_borrar){
-            console.log(`encontrado!!!! - objeto.id=${objeto.id} - x - ${x}`);
-            gastos.splice(x, 1);
-        };
+        
         //if (objeto.id = id_a_borrar){
 
             /* let x = this.etiquetas.indexOf(etiqueta);
@@ -203,8 +210,8 @@ function borrarGasto(id_a_borrar){
             //console.log(`x ${x}`);
             //console.log(objeto);
         //};
-        x++;
-    };
+        
+    
 };
 
 function calcularTotalGastos(){
@@ -213,7 +220,7 @@ function calcularTotalGastos(){
 
     for (let objeto of gastos){
         total += objeto.valor;
-        console.log(`valor ${gastos.objeto.valor}`);
+        console.log(`valor ${objeto.valor}`);
     };
 
     return total;
