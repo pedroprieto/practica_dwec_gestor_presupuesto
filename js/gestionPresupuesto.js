@@ -30,11 +30,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     fecha = Date.parse(fecha);
-    
+
     if (fecha === undefined) {
-        this.fecha = Date.now();
+        this.fecha = Date.now(fecha);
     } else if (isNaN(fecha)) {
-        this.fecha = Date.now();
+        this.fecha = Date.now(fecha);
     } else {
         this.fecha = fecha;
     }
@@ -48,6 +48,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.mostrarGastoCompleto = function() {
+
+        //almacenar fecha en formato local
+        let fechalocal = new Date(this.fecha).toLocaleString();
+
+        //almacenar etiquetas para mostrarla en el formato deseado
+        let mostraretiquetas="";
+            for (let etiqueta of this.etiquetas) {
+                mostraretiquetas = mostraretiquetas + "\n- " + etiqueta;
+            };
+        
+        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor +
+        " €.\nFecha: " + fechalocal + "\n" + 
+        "Etiquetas:" + String(mostraretiquetas) + "\n";
     }
 
     this.actualizarDescripcion = function(descripcion) {
@@ -74,7 +90,7 @@ function listarGastos() {
     }
 }
 
-function anyadirGasto() {
+function anyadirGasto(){
 
 }
 
