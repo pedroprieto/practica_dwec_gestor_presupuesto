@@ -8,21 +8,20 @@ function actualizarPresupuesto(cantidad) {
 
     if(cantidad >= 0) {
         presupuesto = cantidad;
-        return (cantidad);
-    }else{
+        return (presupuesto);
+    }
+    else{
         console.log("Cantidad incorrecta.");
         return (numError);
     }
 }
 
-function mostrarPresupuesto(pres) {
+function mostrarPresupuesto() {
     // TODO
     let mensaje; 
 
-    let result = actualizarPresupuesto(pres);
-
-    mensaje ="Tu presupuesto actual es de " + result + " €" ;
-    console.log(mensaje);
+    mensaje ="Tu presupuesto actual es de " + presupuesto + " €" ;
+    return(mensaje);
 }
 
 function CrearGasto(descrip,cantid) {
@@ -34,7 +33,7 @@ function CrearGasto(descrip,cantid) {
     }else
         gasto.valor = 0;
     
-    return gasto;
+    return (gasto);
 
 }
 
@@ -47,7 +46,7 @@ let gasto = {
 };
 
 function mostrarGasto(){
-    console.log("Gasto correspondiente a " + gasto.descripcion + "con valor" + gasto.valor + " €");
+    return("Gasto correspondiente a " + gasto.descripcion + " con valor " + gasto.valor + " €");
 }
 
 function actualizarDescripcion (descr) {
@@ -74,3 +73,4 @@ export   {
     actualizarPresupuesto,
     CrearGasto
 }
+
