@@ -69,7 +69,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
             pos = this.etiquetas.indexOf( e );
 
             // Si no existe, lo añade
-            if ( pos == -1 ){
+            if ( pos == -1 ) {
                 this.etiquetas.push( e );
             }
         }        
@@ -84,43 +84,25 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
             pos = this.etiquetas.indexOf( e );
 
             // Si existe, lo borra
-            if ( pos != -1 ){
+            if ( pos != -1 ) {
                 this.etiquetas.splice( pos, 1 );
             }
         }        
     }
 
     this.obtenerPeriodoAgrupacion = function( periodo ) {      
-        let fecha = new Date( this.fecha );
-
-        let year = fecha.getFullYear();
-        let month = fecha.getMonth() + 1;      
-        let day = fecha.getDate();
+        //Devuelve la agrupación de fecha pasada por parámetro
+        let fecha = new Date(this.fecha).toISOString();
 
         switch ( periodo ){
             case "dia":
-                if ( day < 10 ) 
-                { 
-                    day  = "0" + day;
-                }
-                if ( month < 10 ) 
-                { 
-                    month  = "0" + month;
-                }
-                return year + "-" + month + "-" + day;
-                break;
+                return fecha.substr(0,10); break;
 
             case "mes":
-                if ( month < 10 ) 
-                { 
-                    month  = "0" + month;
-                }
-                return year + "-" + month;
-                break;
+                return fecha.substr(0,7); break;
 
             case "anyo":
-                return year;
-                break;
+                return fecha.substr(0,4); break;
         }
     }
 }
@@ -183,7 +165,14 @@ function calcularTotalGastos() {
     return sumAll;
 }
 
-function filtrarGastos() {}
+function filtrarGastos( gasto ) {
+    // Devuelve subconjunto de los gastos existentes en función de los filtros pasados por parámetro
+    
+}
+
+
+
+
 function agruparGastos() {}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
