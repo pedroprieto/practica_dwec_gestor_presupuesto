@@ -6,17 +6,17 @@ var presupuesto = 0;
 function actualizarPresupuesto(nuevoPresupuesto) 
 {
     // TODO
-    if (nuevoPresupuesto >= 0)
+    if (!isNaN(nuevoPresupuesto) && nuevoPresupuesto >= 0) //controlamos que nuevoPresupuesto sea un numero y mayor = que 0
     {
         presupuesto = nuevoPresupuesto;
     }
     else
     {
-        Presupuesto = -1;
+        nuevoPresupuesto = -1;
         console.log("Error en el presupuesto");
     }
 
-    return presupuesto;
+    return nuevoPresupuesto;
 }
 
 function mostrarPresupuesto() 
@@ -26,9 +26,40 @@ function mostrarPresupuesto()
     return `Tu presupuesto actual es de ${x} €`;
 }
 
-function CrearGasto() 
+function CrearGasto(descripcion, valor) 
 {
     // TODO
+    //Propiedades
+    this.descripcion = descripcion;
+
+    if(!isNaN(valor) && valor >= 0)
+    {
+        this.valor = valor;
+    }
+    else
+    {
+        this.valor = 0;
+    }
+
+    //Metodos
+    this.mostrarGasto = function (){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+        if (nuevaDescripcion != descripcion)
+        {
+            this.descripcion = nuevaDescripcion;
+        }
+    }
+
+    this.actualizarValor = function (nuevoValor){
+        if(nuevoValor >= 0)
+        {
+            this.valor = nuevoValor;
+        }
+    }
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
