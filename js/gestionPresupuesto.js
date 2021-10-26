@@ -161,11 +161,6 @@ function filtrarGastos(object){
     }
 
     if ( sizeProperties == 2 ){
-        let properties=[];
-        for(let item in object){
-            if ( item != "periodo")
-            properties.push(item);
-        }
         if ( object.fechaDesde && object.fechaHasta){
             return GestionFechaDesdeHasta(object["fechaDesde"], object["fechaHasta"]);
         }
