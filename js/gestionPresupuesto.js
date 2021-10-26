@@ -51,7 +51,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.mostrarGastoCompleto = function() {
-
         //almacenar fecha en formato local
         let fechalocal = new Date(this.fecha).toLocaleString();
 
@@ -75,6 +74,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.valor=valor;
         } else {
             this.valor=this.valor;
+        }
+    }
+
+    this.actualizarFecha = function(fecha_actual) {
+        fecha_actual = Date.parse(fecha_actual);
+        
+        if (isNaN(fecha_actual)) {
+            //si no es valida, no se hacen modificaciones;
+            this.fecha;
+        } else {
+            this.fecha = fecha_actual;
         }
     }
 }
