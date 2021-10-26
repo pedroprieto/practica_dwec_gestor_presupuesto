@@ -259,8 +259,6 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
                 return sum;
             },{});
 
-
-    // return {};
 }
 /*********************************************************************************/
 function listarGastos(){
@@ -329,6 +327,7 @@ function GestionDescripcionValorMaximoMinimo(descripcion,valorMinimo,valorMaximo
                 .filter( (x) => x.descripcion.indexOf(descripcion) != -1);
 }
 
+/*********************************************************************************/
 function GestionEtiquetasValorMaximo(valorMaximo, etiquetasTiene){
     return gastos.filter( (x) =>{
                 for(let valor of x["etiquetas"] ){
@@ -339,6 +338,7 @@ function GestionEtiquetasValorMaximo(valorMaximo, etiquetasTiene){
     }).filter( (x) => x.valor < valorMaximo);
 }
 
+/*********************************************************************************/
 function GestionEtiquetasFechaDesdde(fechaDesde, etiquetasTiene){
     return gastos.filter( (x) => {
         for(let valor of x["etiquetas"]){
@@ -349,6 +349,7 @@ function GestionEtiquetasFechaDesdde(fechaDesde, etiquetasTiene){
     }).filter( (x) => x.fecha >= Date.parse(fechaDesde));
 }
 
+/*********************************************************************************/
 function GestionFechasValorMaximoEtiquetas(etiquetasTiene, fechaHasta, valorMaximo){
     return gastos.filter( (x) => {
         for(let valor of x["etiquetas"]){
@@ -360,6 +361,7 @@ function GestionFechasValorMaximoEtiquetas(etiquetasTiene, fechaHasta, valorMaxi
       .filter( (x) => x.valor < valorMaximo);
 }
 
+/*********************************************************************************/
 function GestionEtiquetasFechasDesdeHasta(etiquetasTiene,fechaDesde,fechaHasta){
     return gastos.filter( (x) => {
         for(let valor of x["etiquetas"]){
@@ -370,7 +372,7 @@ function GestionEtiquetasFechasDesdeHasta(etiquetasTiene,fechaDesde,fechaHasta){
     }).filter( (x) => x.fecha >= Date.parse(fechaDesde))
       .filter( (x) => x.fecha <= Date.parse(fechaHasta));
 }
-
+/*********************************************************************************/
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
