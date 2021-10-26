@@ -2,6 +2,8 @@
 
 // TODO: Variable global
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(cantidad) {
     let numError= -1;
@@ -24,17 +26,29 @@ function mostrarPresupuesto() {
     return(mensaje);
 }
 
-function CrearGasto(descrip,cantid) {
+function CrearGasto(descrip,cantid, fec, etiq) {
     // TODO
     gasto.descripcion= descrip;
+    gasto.fecha = fec;
+
     if(cantid >= 0)
     {
         gasto.valor = cantid;
     }else
         gasto.valor = 0;
-    
-    return (gasto);
 
+    if (etiq == null){
+        gasto.etiquetas= [];
+    }else{
+        gasto.etiquetas= etiq;
+    }
+
+    if(fec == null){
+        gasto.fecha = new Date();
+    }else{
+        gasto.fecha = new Date(Date.parse(fec));
+    }
+    return (gasto);
 }
 
 
@@ -42,7 +56,9 @@ function CrearGasto(descrip,cantid) {
 //Objeto gasto y sus métodos
 let gasto = {
     descripcion: "",
-    valor: 0
+    valor: 0,
+    fecha = new Date(timestamp),
+    etiquetas = []
 };
 
 function mostrarGasto(){
@@ -60,9 +76,98 @@ function actualizarValor (val) {
         return;
 }
 
+//métodos práctica2
+function mostrarGastoCompleto(){
+    console.log("Gasto correspondiente a " + gasto.descripcion + "con valor" + gasto.valor + " €");
+    console.log("Fecha: " + gasto.fecha);
+    console.log("Etiquetas:");
+    for(i = 0;i < gasto.etiquetas.length; i++){
+        console.log("- " + gasto.etiquetas[i]);
+    }
+}
+
+function actualizarFecha(paramFecha){
+    gasto.fecha = new Date(Date.parse(paramFecha));
+}
+
+function anyadirEtiquetas(...argumentos){
+    for(i = 0; i < gasto.etiquetas.length; i++){
+        if(gasto.etiquetas.includes(argumentos[i], 0)){
+            gastos.push(argumentos[i]);
+        }  
+        if(idGasto > 0) {
+            idGasto++;
+        }
+    }
+}
+
+function borrarEtiquetas(...argumen){
+    let entrada;
+
+    for(i = 0; i < gasto.etiquetas.length; i++){
+        if(gasto.etiquetas.includes(argumentos[i], 0)){
+            entrada = gasto.etiquetas.indexOf(argumen[i],0);
+            gasto.etiquetas.splice(entrada, 1); 
+        }  
+        if(idGasto > 0) {
+            idGasto++;
+        }
+    }
+}
+
+
 gasto.mostrarGasto = mostrarGasto;
 gasto.actualizarDescripcion = actualizarDescripcion;
 gasto.actualizarValor = actualizarValor;
+
+
+gasto.mostrarGastoCompleto = mostrarGastoCompleto;
+gasto.actualizarFecha = actualizarFecha;
+gasto.anyadirEtiquetas = anyadirEtiquetas;
+gasto.borrarEtiquetas = borrarEtiquetas;
+
+
+//Funciones práctica 2
+
+function listarGastos(){
+    for(i = '0'; i < gastos.length;i++){
+        console.log(gastos[i]);
+    }
+    return(gastos);
+}
+
+
+function anyadirGasto(paramGasto){
+    paramGasto.id= idGasto;
+    idGasto++; 
+    gastos.push(paramGasto);
+}
+
+function borrarGasto(id){
+    gastos.etiquetasa.splice(id, 1);
+    if(idGasto > 0){
+        idGasto = idGasto -1;
+    }
+}
+
+function calcularTotalGastos(){
+    let totalGastos = 0;
+    for(i=0; i <= gasto.etiquetas.length;i++){
+        totalGastos += gasto.etiquetas[i];
+    }
+
+    return(totalGastos);
+}
+
+function calcularBalance(){
+    let tG;
+    let balance;
+
+    tG = gastos.calcularTotalGastos();
+    balance = presupuesto - tG;
+
+    return(balance);
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -71,6 +176,11 @@ gasto.actualizarValor = actualizarValor;
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
 
