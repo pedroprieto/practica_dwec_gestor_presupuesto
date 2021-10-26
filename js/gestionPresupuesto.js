@@ -166,23 +166,19 @@ function filtrarGastos(object){
             if ( item != "periodo")
             properties.push(item);
         }
-        if ( ( properties[0] === "fechaDesde" || properties[1] === "fechaDesde") &&
-             ( properties[0] === "fechaHasta" || properties[1] === "fechaHasta") ){
+        if ( object.fechaDesde && object.fechaHasta){
             return GestionFechaDesdeHasta(object["fechaDesde"], object["fechaHasta"]);
         }
 
-        else if ( ( properties[0] === "valorMinimo" || properties[1] === "valorMinimo") &&
-             ( properties[0] === "valorMaximo" || properties[1] === "valorMaximo") ){
+        else if ( object.valorMinimo && object.valorMaximo) {
             return GestionValorMinimoMaximo(object["valorMinimo"], object["valorMaximo"]);
         }
 
-        else if ( ( properties[0] === "valorMaximo" || properties[1] === "valorMaximo") &&
-             ( properties[0] === "etiquetasTiene" || properties[1] === "etiquetasTiene") ){
+        else if ( object.valorMaximo && object.etiquetasTiene) {
             return GestionEtiquetasValorMaximo(object["valorMaximo"], object["etiquetasTiene"]);
         }
 
-        else if ( ( properties[0] === "fechaDesde" || properties[1] === "fechaDesde") &&
-             ( properties[0] === "etiquetasTiene" || properties[1] === "etiquetasTiene") ){
+        else if ( object.fechaDesde && object.etiquetasTiene ){
             return GestionEtiquetasFechaDesdde(object["fechaDesde"], object["etiquetasTiene"]);
         }
 
@@ -190,33 +186,20 @@ function filtrarGastos(object){
 
     if ( sizeProperties == 3 ){
 
-        let properties=[];
-        for(let item in object){
-            properties.push(item);
-        }
-        if ( ( properties[0] === "fechaDesde" || properties[1] === "fechaDesde" || properties[2] === "fechaDesde") &&
-             ( properties[0] === "fechaHasta" || properties[1] === "fechaHasta" || properties[2] === "fechaDesde") &&
-             ( properties[0] === "valorMaximo" || properties[1] === "valorMaximo" || properties[2] === "valorMaximo") ) {
-
+        if (object.fechaDesde && object.fechaHasta  && object.valorMaximo){
             return GestionFechasValorMaximo(object["fechaDesde"], object["fechaHasta"], object["valorMaximo"])
         }
 
-        else if ( ( properties[0] === "etiquetasTiene" || properties[1] === "etiquetasTiene" || properties[2] === "etiquetasTiene") &&
-             ( properties[0] === "fechaHasta" || properties[1] === "fechaHasta" || properties[2] === "fechaDesde") &&
-             ( properties[0] === "valorMaximo" || properties[1] === "valorMaximo" || properties[2] === "valorMaximo") ) {
+        else if ( object.etiquetasTiene &&  object.fechaHasta &&  object.valorMaximo) {
 
             return GestionFechasValorMaximoEtiquetas(object["etiquetasTiene"], object["fechaHasta"], object["valorMaximo"])
         }
 
-        else if ( ( properties[0] === "etiquetasTiene" || properties[1] === "etiquetasTiene" || properties[2] === "etiquetasTiene") &&
-             ( properties[0] === "fechaHasta" || properties[1] === "fechaHasta" || properties[2] === "fechaHasta") &&
-             ( properties[0] === "fechaDesde" || properties[1] === "fechaDesde" || properties[2] === "fechaDesde") ) {
+        else if ( object.etiquetasTiene && object.fechaDesde && object.fechaHasta ) {
             return GestionEtiquetasFechasDesdeHasta(object["etiquetasTiene"], object["fechaDesde"], object["fechaHasta"]);
         }
 
-        else if ( ( properties[0] === "descripcionContiene" || properties[1] === "descripcionContiene" || properties[2] === "descripcionContiene") &&
-             ( properties[0] === "valorMinimo" || properties[1] === "valorMinimo" || properties[2] === "valorMinimo") &&
-             ( properties[0] === "valorMaximo" || properties[1] === "valorMaximo" || properties[2] === "valorMaximo") ) {
+        else if ( object.descripcionContiene && object.valorMinimo  && object.valorMaximo ) {
 
             return GestionDescripcionValorMaximoMinimo(object["descripcionContiene"], object["valorMinimo"], object["valorMaximo"])
         }
