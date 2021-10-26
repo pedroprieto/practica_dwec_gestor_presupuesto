@@ -89,6 +89,40 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
             }
         }        
     }
+
+    this.obtenerPeriodoAgrupacion = function( periodo ) {      
+        let fecha = new Date( this.fecha );
+
+        let year = fecha.getFullYear();
+        let month = fecha.getMonth() + 1;      
+        let day = fecha.getDate();
+
+        switch ( periodo ){
+            case "dia":
+                if ( day < 10 ) 
+                { 
+                    day  = "0" + day;
+                }
+                if ( month < 10 ) 
+                { 
+                    month  = "0" + month;
+                }
+                return year + "-" + month + "-" + day;
+                break;
+
+            case "mes":
+                if ( month < 10 ) 
+                { 
+                    month  = "0" + month;
+                }
+                return year + "-" + month;
+                break;
+
+            case "anyo":
+                return year;
+                break;
+        }
+    }
 }
 
 //------------------------------------------------------------//
