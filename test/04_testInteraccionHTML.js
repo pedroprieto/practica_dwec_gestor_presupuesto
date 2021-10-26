@@ -1,8 +1,5 @@
 // Utiliza cypress (https://docs.cypress.io/) para el testeo en navegador (necesitamos acceder al DOM, que no existe en Node)
 
-
-import * as manipulaDom from "../js/gestionPresupuestoWeb.js";
-
 // Generación de datos estáticos
 describe("Generación de datos estáticos", () => {
     it("Función mostrarDatoEnId", () => {
