@@ -19,7 +19,7 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de '+x+' €';
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.descripcion=descripcion;
 
@@ -28,6 +28,23 @@ function CrearGasto(descripcion, valor) {
     } else {
         this.valor=0;
     }
+
+    fecha = Date.parse(fecha);
+    
+    if (fecha === undefined) {
+        this.fecha = Date.now();
+    } else if (isNaN(fecha)) {
+        this.fecha = Date.now();
+    } else {
+        this.fecha = fecha;
+    }
+
+    //inicializar etiquetas, así si está vacío se muestra tal cual, porque con if me daba muchos fallos
+   this.etiquetas=etiquetas; 
+
+   this.anyadirEtiquetas = function(...etiquetas) {
+       this.etiquetas=etiquetas;
+   }
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
