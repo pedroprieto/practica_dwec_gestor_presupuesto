@@ -228,7 +228,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
                     }
                 }
             }
-            
+
             if (tiene == false)
             {
                 encontrado = false;
@@ -237,11 +237,35 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
         return encontrado;
     })
 
-// gastosFiltrados = gastos.filter(gasto => gasto.valorMaximo >= gasto.valor && gasto.etiquetas.includes(etiquetasTiene));
     return gastosFiltrados;
 }
-function agruparGastos() {
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
+    let etiquetasTiene = etiquetas;
+
+    if (!fechaDesde)
+    {
+        fechaDesde = "2000-01-01";
+    }
+
+    if (!fechaHasta)
+    {
+        fechaHasta = new Date(Date.now()).toISOString().substr(0,10);
+    }
+
+    let grupoGastos = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene})
+
+
+    let resultado = grupoGastos.reduce((acc, grupo) => { 
+        
+        acc[grupo.obtenerPeriodoAgrupacion(periodo)] = (acc[grupo.obtenerPeriodoAgrupacion(periodo)] || 0) + grupo.valor; 
+        
+        return acc;
+    
+    } , {});
+        
+    
+    return resultado;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
