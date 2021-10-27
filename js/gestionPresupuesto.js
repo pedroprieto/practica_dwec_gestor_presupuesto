@@ -134,76 +134,36 @@ function CrearGasto(descripcion, value, fecha, ...etiqueta) {
 /************************************************************************************/
 function filtrarGastos(object){
 /************************************************************************************/
-    if ( isObjEmpty(object) ){
-        return gastos;
+    let filtergastos=gastos;
+	if ( isObjEmpty(object) ){
+        return filtergastos;
     }
-    let sizeProperties=Object.entries(object).length;
-    if ( sizeProperties  == 1){
-        for(let item in object){
-            if ( item === "fechaDesde"){
-                return GestionFechaDesde(object["fechaDesde"]);
-            }
-            if ( item === "valorMinimo"){
-                return GestionValorMimino(object["valorMinimo"])
-            }
-
-            if ( item === "etiquetasTiene"){
-                let items=Object.entries(object)[0][1];
-                return gastos.filter( (x) =>{
-                            for(let valor of x["etiquetas"] ){
-                                if ( object["etiquetasTiene"].indexOf(valor) > -1 ){
-                                    return x;
-                                }
-                            }
-                });
-            }
-        }
-    }
-
-    if ( sizeProperties == 2 ){
-        let properties=[];
-        for(let item in object){
-            if ( item != "periodo")
-            properties.push(item);
-        }
-        if ( object.fechaDesde && object.fechaHasta){
-            return GestionFechaDesdeHasta(object["fechaDesde"], object["fechaHasta"]);
-        }
-
-        else if ( object.valorMinimo && object.valorMaximo) {
-            return GestionValorMinimoMaximo(object["valorMinimo"], object["valorMaximo"]);
-        }
-
-        else if ( object.valorMaximo && object.etiquetasTiene) {
-            return GestionEtiquetasValorMaximo(object["valorMaximo"], object["etiquetasTiene"]);
-        }
-
-        else if ( object.fechaDesde && object.etiquetasTiene ){
-            return GestionEtiquetasFechaDesdde(object["fechaDesde"], object["etiquetasTiene"]);
-        }
-
-    }
-
-    if ( sizeProperties == 3 ){
-
-        if (object.fechaDesde && object.fechaHasta  && object.valorMaximo){
-            return GestionFechasValorMaximo(object["fechaDesde"], object["fechaHasta"], object["valorMaximo"])
-        }
-
-        else if ( object.etiquetasTiene &&  object.fechaHasta &&  object.valorMaximo) {
-
-            return GestionFechasValorMaximoEtiquetas(object["etiquetasTiene"], object["fechaHasta"], object["valorMaximo"])
-        }
-
-        else if ( object.etiquetasTiene && object.fechaDesde && object.fechaHasta ) {
-            return GestionEtiquetasFechasDesdeHasta(object["etiquetasTiene"], object["fechaDesde"], object["fechaHasta"]);
-        }
-
-        else if ( object.descripcionContiene && object.valorMinimo  && object.valorMaximo ) {
-
-            return GestionDescripcionValorMaximoMinimo(object["descripcionContiene"], object["valorMinimo"], object["valorMaximo"])
-        }
-    }
+	if ( object.fechaDesde ){
+		filtergastos=filtergastos.filter((x) => x.fecha >= Date.parse( object["fechaDesde"] ));
+	}
+	if (object.fechaHasta){
+		filtergastos=filtergastos.filter((x) => x.fecha <= Date.parse(object.fechaHasta));
+	}
+	if (object.valorMinimo){
+		filtergastos=filtergastos.filter((x) => x.valor > object.valorMinimo);
+	}
+	if (object.valorMaximo){
+		filtergastos=filtergastos.filter((x) => x.valor < object.valorMaximo);
+	}
+	if (object.descripcionContiene){
+		filtergastos=filtergastos.filter((x) => x.descripcion.indexOf(object.descripcionContiene
+        ) > -1 );
+	}
+	if (object.etiquetasTiene){
+		filtergastos=filtergastos.filter((x) => {
+			for(let valor of x["etiquetas"]){
+				if (object.etiquetasTiene.indexOf(valor) > -1){
+					return x;
+				}
+			}
+		});
+	}
+	return filtergastos;
 }
 /*********************************************************************************/
 function isObjEmpty(object){
