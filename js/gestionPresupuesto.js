@@ -146,6 +146,40 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             };
         };
     };
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        // Metodo para obtener una agrupación de los objetos gasto
+        // Se agrupan por fecha (dia, mes, año)
+
+        let resultado = "";
+        let temp = "";
+        //console.log(periodo);
+        //console.log(fecha.toLocaleString());
+        temp = fecha.toLocaleString();
+
+        //for (let objeto of gastos){
+            
+            if (periodo == "anyo"){
+                //temp = gasto.fecha.toISOString;
+
+                //resultado = this.fecha.slice(0, 4);
+                //resultado = this.fecha.toLocaleString.slice(0, 4);
+                resultado = temp.slice(0,4);
+            };
+            if (periodo == "mes"){
+                //resultado = this.fecha.slice(0, 7);
+                resultado = temp.slice(0,7);
+            };
+            if (periodo == "dia"){
+                //resultado = this.fecha.slice(0, 10);
+                resultado = temp.slice(0,10);
+            };
+            
+            //console.log(resultado);
+            return resultado;
+            //total += objeto.valor;
+            //console.log(`valor ${objeto.valor}`);
+        //};
+    };
 };
 
 function anyadirGasto(objeto){
@@ -233,10 +267,18 @@ function calcularTotalGastos(){
 
 function calcularBalance(){
 
-    let saldo = 0;
-    saldo = presupuesto - calcularTotalGastos();
+    //let saldo = 0;
+    let saldo = presupuesto - calcularTotalGastos();
     return saldo;
     
+};
+
+function filtrarGastos(){
+
+};
+
+function agruparGastos(){
+
 };
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -250,5 +292,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
