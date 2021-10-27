@@ -42,15 +42,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //inicializar etiquetas, así si está vacío se muestra tal cual, porque con if me daba muchos fallos
     this.etiquetas=etiquetas;
 
-    this.anyadirEtiquetas = function(...etiN) {
+    this.anyadirEtiquetas = function(...etiq_Nueva) {
     //si las etiquetas ya existen no se pueden añadir, bucle para comparar y borrar la etiqueta que sobra
-    for (let i=0; i<etiN.length; i++) {
-        if (this.etiquetas.includes(etiN[i])) {
-            etiN.splice(i,1);
+    for (let i=0; i<etiq_Nueva.length; i++) {
+        if (this.etiquetas.includes(etiq_Nueva[i])) {
+            etiq_Nueva.splice(i,1);
         }
     }
     //añadir nuevas etiquetas
-    this.etiquetas.push(...etiN);
+    this.etiquetas.push(...etiq_Nueva);
    }
 
     this.mostrarGasto = function() {
