@@ -172,25 +172,7 @@ function isObjEmpty(object){
 /*********************************************************************************/
 
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
-    if ( fechaDesde === undefined){
-        fechaDesde="2020-01-01";
-    }
-    if (fechaHasta === undefined){
-        fechaHasta=new Date();
-    }
-    if ( etiquetas === undefined ){
-        return filtrarGastos({ fechaDesde: fechaDesde, fechaHasta: fechaHasta})
-                .reduce(function(sum,obj){
-                    let key=obj.obtenerPeriodoAgrupacion(periodo)
-                    if(!sum[key]){
-                        sum[key]=0;
-                    }
-                    sum[key]+=obj.valor;
-                    return sum;
-                },{});
-    }
-
-
+    
     return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
             .reduce(function(sum,obj){
                 let key=obj.obtenerPeriodoAgrupacion(periodo)
