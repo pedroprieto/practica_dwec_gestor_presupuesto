@@ -134,7 +134,7 @@ function CrearGasto(descripcion, value, fecha, ...etiqueta) {
 /************************************************************************************/
 function filtrarGastos(object){
 /************************************************************************************/
-    let filtergastos=gastos;
+    let filtergastos=gastos.slice();
 	if ( isObjEmpty(object) ){
         return filtergastos;
     }
@@ -239,83 +239,7 @@ function calcularBalance(){
     let totalgasto=calcularTotalGastos();
 	return ( presupuesto - totalgasto);
 }
-/*********************************************************************************/
-function GestionFechaDesde(fechadesde){
-    return gastos.filter((x) => x.fecha >= Date.parse( fechadesde ));
-}
-/*********************************************************************************/
-function GestionFechaDesdeHasta(fechadesde, fechahasta){
-    return gastos.filter( (x) => x.fecha >= Date.parse(fechadesde))
-                 .filter( (x) => x.fecha <= Date.parse(fechahasta));
-}
-/*********************************************************************************/
-function GestionValorMimino(valorminimo){
-    return gastos.filter( (x)=> x.valor > valorminimo )
-}
-/*********************************************************************************/
-function GestionValorMinimoMaximo(valorMinimo, valorMaximo){
-    return gastos.filter( (x) => x.valor > valorMinimo)
-                 .filter( (x) => x.valor < valorMaximo);
-}
-/*********************************************************************************/
-function GestionFechasValorMaximo(fechaDesde, fechaHasta, valorMaximo){
-    return gastos.filter( (x) =>  x.fecha >= Date.parse( fechaDesde))
-                 .filter( (x) =>  x.fecha <= Date.parse(fechaHasta))
-                 .filter( (x) =>  x.valor < valorMaximo);
-}
-/*********************************************************************************/
-function GestionDescripcionValorMaximoMinimo(descripcion,valorMinimo,valorMaximo){
-    return gastos.filter( (x) => x.valor > valorMinimo)
-                .filter( (x) => x.valor < valorMaximo)
-                .filter( (x) => x.descripcion.indexOf(descripcion) != -1);
-}
 
-/*********************************************************************************/
-function GestionEtiquetasValorMaximo(valorMaximo, etiquetasTiene){
-    return gastos.filter( (x) =>{
-                for(let valor of x["etiquetas"] ){
-                    if ( etiquetasTiene.indexOf(valor) > -1 ){
-                        return x;
-                    }
-                }
-    }).filter( (x) => x.valor < valorMaximo);
-}
-
-/*********************************************************************************/
-function GestionEtiquetasFechaDesdde(fechaDesde, etiquetasTiene){
-    return gastos.filter( (x) => {
-        for(let valor of x["etiquetas"]){
-            if ( etiquetasTiene.indexOf(valor) > -1){
-                return x;
-            }
-        }
-    }).filter( (x) => x.fecha >= Date.parse(fechaDesde));
-}
-
-/*********************************************************************************/
-function GestionFechasValorMaximoEtiquetas(etiquetasTiene, fechaHasta, valorMaximo){
-    return gastos.filter( (x) => {
-        for(let valor of x["etiquetas"]){
-            if ( etiquetasTiene.indexOf(valor) > -1){
-                return x;
-            }
-        }
-    }).filter( (x) => x.fecha <= Date.parse(fechaHasta))
-      .filter( (x) => x.valor < valorMaximo);
-}
-
-/*********************************************************************************/
-function GestionEtiquetasFechasDesdeHasta(etiquetasTiene,fechaDesde,fechaHasta){
-    return gastos.filter( (x) => {
-        for(let valor of x["etiquetas"]){
-            if ( etiquetasTiene.indexOf(valor) > -1){
-                return x;
-            }
-        }
-    }).filter( (x) => x.fecha >= Date.parse(fechaDesde))
-      .filter( (x) => x.fecha <= Date.parse(fechaHasta));
-}
-/*********************************************************************************/
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
