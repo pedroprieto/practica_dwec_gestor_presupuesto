@@ -1,3 +1,4 @@
+
 var presupuesto = 0;
 var idGastos = 0;
 var arraygastos = []
@@ -259,3 +260,4 @@ export  {
 }
 
 
+>>>>>>> 378237db888698ad17d2a645f250a35cd40d65f1
