@@ -258,6 +258,3 @@ export  {
     filtrarGastos,
     agruparGastos,
 }
-
-
->>>>>>> 378237db888698ad17d2a645f250a35cd40d65f1
