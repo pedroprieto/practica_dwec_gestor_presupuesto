@@ -130,6 +130,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             fechaAux = fechaAux.slice(0,7);
             //fecha = fecha.slice(0,7);
         }
+
         else if (periodo == "anyo")
         {
             fechaAux = fechaAux.slice(0,4);
@@ -187,12 +188,95 @@ function calcularBalance()
     return balance;
 }
 
-function filtrarGastos ()
-{
 
+//Función de un parámetro que devolverá un subconjunto de los gastos existentes (variable global gastos). 
+//Se deberá utilizar la función filter. El parámetro será un objeto que podrá tener las siguientes propiedades: 
+//fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene.
+function filtrarGastos (opciones)
+{
+    //Hasta que no he visto el vídeo de la tutoría del 26 de octubre no he sabido por donde cogerlo. Una vez visto el ejemplo
+    //con los valores minimo y maximo, el resto es muy similar. Dejo anotadas las ayudas que has dado en el vídeo.
+
+    //gastos.filter(); esto va a estar por algún lado
+    //return gastos.filter(function(gastos) podemos hacer que lo devuelva directamente. 
+    return gastos.filter(function(gasto) 
+    {
+        //Y aqui el código para detectar si se cumplen las condiciones dadas en opciones para el gasto que estéis procesando
+        let resultado = true;
+
+        if (opciones.fechaDesde)
+        {
+            if (gasto.fecha < Date.parse(opciones.fechaDesde))
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.fechaHasta)
+        {
+            if(gasto.fecha > Date.parse(opciones.fechaHasta))
+            {
+                resultado = false;
+            }
+        }
+
+        //Primero miramos si existe valorMinimo, si no, no hace falta que compruebe nada.
+        if (opciones.valorMinimo) 
+        {
+            if (gasto.valor < opciones.valorMinimo) 
+            {
+                resultado = false;
+            }
+        }
+        
+        if (opciones.valorMaximo)
+        {
+            if (gasto.valor > opciones.valorMaximo)
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.descripcionContiene)
+        {
+            //Utilizamos includes igual que hicimos con anaydir etiquetas
+            if (!gasto.descripcion.includes(opciones.descripcionContiene))
+            {
+                resultado = false;
+            }
+        }
+
+        //Al igual que en c# en 1º, utilizamos un for dentro de otro for para ver si son iguales las etiquetas.
+        if (opciones.etiquetasTiene)
+        {           
+            let diferenteEtiqueta = true;
+            //Para no utilizar el método "tradicional" con length, he probado a usar for..of y for..in
+            //He utilizado breakpoints para comprobar que: for..of siempre nos va a dar el valor undefined. 
+            //for..in itera sobre todas las propiedades, no sólo las númericas.
+            for (let i in opciones.etiquetasTiene)
+            {
+                for (let j in gasto.etiquetas)
+                {
+                    if (opciones.etiquetasTiene[i] == gasto.etiquetas[j])
+                    {                        
+                        diferenteEtiqueta = false;
+                    }
+                }
+            }
+
+            if (diferenteEtiqueta)
+            {
+                resultado = false;
+            }
+        }
+        
+        return resultado;
+    });
 }
 
-function agruparGastos()
+//Función de cuatro parámetros que devolverá un objeto con los resultados de realizar una agrupación por período temporal. 
+//Los parámetros son: periodo, etiquetas, fechaDesde, fechaHasta.
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
 {
 
 }
