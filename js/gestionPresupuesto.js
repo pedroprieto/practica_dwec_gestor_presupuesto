@@ -109,21 +109,29 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
 function listarGastos() {
     if (gastos.length==0) {
-        return String(gastos);
+        return gastos;
     } else {
         //para mostrar los gastos en forma de lista
-        for (let gasto of gastos) { 
-            console.log(gasto);
+        for (let i=0; i<gastos; i++) {
+            console.log(gastos[i]);
         }
     }
 }
 
 function anyadirGasto(obj_gasto){
-    
+    //pendiente de resolver error
+    /* obj_gasto.id = idGasto;
+    idGasto++;
+    gastos.push(obj_gasto); */
 }
 
-function borrarGasto() {
-
+function borrarGasto(id_borrar) {
+    //pendiente de resolver error
+    /* for (let i=0; i<gastos; i++) {
+        if (gastos[i].id.includes(id_borrar)) {
+            gastos.splice(i,1);
+        }
+    }*/
 }
 
 function calcularTotalGastos() {
