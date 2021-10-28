@@ -1,8 +1,4 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-function Gasto(descripcion, valor) {
-    this.descripcion = descripcion;
-    this.isAdvalormin = valor;
-  }
+
 
 let presupuesto = 0;
 
@@ -22,10 +18,22 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor) {
-    if(valor < 0) {
-        valor = 0;
-    }
-    return Gasto(descripcion, valor);
+    this.descripcion = descripcion;
+    this.valor = (isNaN(valor) || valor < 0) ? 0 : valor;
+
+    this.mostrarGasto = function() {
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    };
+
+    this.actualizarDescripcion = function(newDesc) {
+        this.descripcion = newDesc;
+    };
+
+    this.actualizarValor = function(newValue) {
+        if (newValue > 0){
+            this.valor = newValue;
+        }
+    };
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
