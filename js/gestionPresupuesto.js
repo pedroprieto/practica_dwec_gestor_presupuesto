@@ -44,13 +44,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.anyadirEtiquetas = function(...etiq_Nueva) {
     //si las etiquetas ya existen no se pueden añadir, bucle para comparar y borrar la etiqueta que sobra
-    for (let i=0; i<etiq_Nueva.length; i++) {
-        if (this.etiquetas.includes(etiq_Nueva[i])) {
-            etiq_Nueva.splice(i,1);
+        for (let i=0; i<etiq_Nueva.length; i++) {
+            if (this.etiquetas.includes(etiq_Nueva[i])) {
+                etiq_Nueva.splice(i,1);
+            }
         }
-    }
     //añadir nuevas etiquetas
     this.etiquetas.push(...etiq_Nueva);
+   }
+
+   this.borrarEtiquetas = function(...etiq_borrar) {
+        for (let i=0; i<etiq_borrar.length; i++) {
+            //si la etiqueta está incluida
+            if (this.etiquetas.includes(etiq_borrar[i])) {
+                //sacar indice que le corresponde y borrarlo
+                let indice = this.etiquetas.indexOf(etiq_borrar[i])
+                this.etiquetas.splice(indice,1);
+            }
+        }
    }
 
     this.mostrarGasto = function() {
@@ -97,18 +108,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 function listarGastos() {
-    if (gastos.length==0) {
-        return String(gastos);
-    } else {
-        //para mostrar los gastos en forma de lista
-        for (let gasto of gastos) { 
-            console.log(gasto);
-        }
-    }
+    
 }
 
-function anyadirGasto(){
-
+function anyadirGasto(obj_gasto){
+    obj_gasto.id = idGasto;
+    gastos.push(obj_gasto);
+    idGasto++;
 }
 
 function borrarGasto() {
