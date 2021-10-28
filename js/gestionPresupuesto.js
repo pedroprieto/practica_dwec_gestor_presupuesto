@@ -108,13 +108,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 function listarGastos() {
-    
+    if (gastos.length==0) {
+        return String(gastos);
+    } else {
+        //para mostrar los gastos en forma de lista
+        for (let gasto of gastos) { 
+            console.log(gasto);
+        }
+    }
 }
 
 function anyadirGasto(obj_gasto){
-    obj_gasto.id = idGasto;
-    gastos.push(obj_gasto);
-    idGasto++;
+    
 }
 
 function borrarGasto() {
