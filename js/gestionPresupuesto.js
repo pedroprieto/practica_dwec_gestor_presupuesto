@@ -213,17 +213,17 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     }
 
     let gastosCreados = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene});
-
+    
     let resultado = gastosCreados.reduce((acc, item) => {
             acc[item.obtenerPeriodoAgrupacion(periodo)] = (acc[item.obtenerPeriodoAgrupacion(periodo)] || 0) + item.valor;
             return acc;
     }, {});
     
-
-    /*let resultado = gastosCreados.reduce((acc, gasto) => ({       
+    /*
+    let resultado = gastosCreados.reduce((acc, gasto) => ({       
         ...acc,
-        [gasto.obtenerPeriodoAgrupacion(periodo)]: gasto.valor,     
-    }), {})*/
+        [gasto.obtenerPeriodoAgrupacion(periodo)]: (acc[gasto.obtenerPeriodoAgrupacion(periodo)] || 0) +gasto.valor,     
+    }), {});*/
     
     return resultado;
 }
