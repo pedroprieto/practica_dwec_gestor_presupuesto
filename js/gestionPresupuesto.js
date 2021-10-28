@@ -160,61 +160,62 @@ function filtrarGastos(filtro){
 
         if(Object.keys(filtro).length != 0){
 
-            if(filtro.hasOwnProperty('fechaDesde') == true){
-                let fDesde = Date.parse(filtro.fechaDesde);
-                if(!isNaN(fDesde)){
-                    gastosFiltro = gastosFiltro.filter(gasto => gasto.fecha >= fDesde);
+            gastosFiltro = gastos.filter(function(gasto){
+
+                let existe = true;
+
+                if(filtro.fechaDesde){
+                    let fDesde = Date.parse(filtro.fechaDesde);
+                    if(gasto.fecha < fDesde){
+                        existe = false;
+                    }
                 }
-            }
 
-            if(filtro.hasOwnProperty('fechaHasta') == true){
-                let fHasta = Date.parse(filtro.fechaHasta);
-                if(!isNaN(fHasta)){
-                    gastosFiltro = gastosFiltro.filter(gasto => gasto.fecha <= fHasta);
+                if(filtro.fechaHasta){
+                    let fHasta = Date.parse(filtro.fechaHasta);
+                    if(gasto.fecha > fHasta){
+                        existe = false;
+                    }
                 }
-            }
 
-            if(filtro.hasOwnProperty('valorMinimo') == true){
-                let vMinimo = filtro.valorMinimo;
-                if(typeof(vMinimo) == "number"){
-                    gastosFiltro = gastosFiltro.filter(gasto => gasto.valor >= vMinimo);
+                if(filtro.valorMinimo){
+                    if(gasto.valor < filtro.valorMinimo){
+                        existe = false;
+                    }
                 }
-            }
 
-            if(filtro.hasOwnProperty('valorMaximo') == true){
-                let vMaximo = filtro.valorMaximo;
-                if(typeof(vMaximo) == "number"){
-                    gastosFiltro = gastosFiltro.filter(gasto => gasto.valor <= vMaximo);
+                if(filtro.valorMaximo){
+                    if(gasto.valor > filtro.valorMaximo){
+                        existe = false;
+                    }
                 }
-            }
 
-            if(filtro.hasOwnProperty('descripcionContiene') == true){
-                let dContiene = filtro.descripcionContiene;
-                if(typeof(dContiene) == "string"){
-                    gastosFiltro = gastosFiltro.filter(gasto => gasto.descripcion.includes(dContiene));
+                if(filtro.descripcionContiene){
+                    if(!gasto.descripcion.includes(filtro.descripcionContiene)){
+                        existe = false;
+                    }
                 }
-            }
 
-            if(filtro.hasOwnProperty('etiquetasTiene') == true){
-                let eTiene = filtro.etiquetasTiene;
-                if(Array.isArray(eTiene) == true){
+                
+                if(filtro.etiquetasTiene){
+                    let eTiene = filtro.etiquetasTiene;
 
-                    gastosFiltro = gastosFiltro.filter(function(gasto){
-                        let existe = false;
-                        for(let gast of gasto.etiquetas){
-                            for(let tiene of eTiene){
-                                if(gast == tiene){
-                                    existe = true;
-                                }
+                    let contiene = false;
+                    for(let gast of gasto.etiquetas){
+                        for(let tiene of eTiene){
+                            if(gast == tiene){
+                                    contiene = true;
                             }
                         }
-                        if(existe == true){
-                            return gasto;
-                        }
-                    });                 
-                    
+                    }
+                    if(contiene == false){
+                        existe = false;
+                    }                                          
                 }
-            }
+
+                return existe;
+       
+            });
 
         }
     }
