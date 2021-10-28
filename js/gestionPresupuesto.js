@@ -112,7 +112,31 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }        
     }
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+
+        let periodoFecha = new Date(fecha).toISOString();
+
+        if (periodo == "dia"){
+            
+           periodoFecha = periodoFecha.slice(0,10);
+        }
+        if (periodo == "mes"){
+
+            periodoFecha = periodoFecha.slice(0,7);
+
+        }
+        if (periodo == "anyo"){
+
+            periodoFecha = periodoFecha.slice(0,4);
+
+        }
+
+        return periodoFecha
+
+    }
 }
+
+
 
 function listarGastos(){
 
@@ -157,10 +181,63 @@ function calcularBalance(){
     return balancetotal;
 
 }
-function filtrarGastos(){
 
+function filtrarGastos(opciones){
+ 
+let filtro;
+           
+filtro = arraygastos.filter(function(gasto){
+
+ let cumpleCondicion = true;
+ if(opciones.fechaDesde){
+     if(gasto.fecha < Date.parse(opciones.fechaDesde)){
+        cumpleCondicion = false;
+     }
+ }
+ if(opciones.fechaHasta){
+     if(gasto.fecha > Date.parse(opciones.fechaHasta)){
+        cumpleCondicion = false;
+     }
+ }
+ if(opciones.valorMinimo){
+     if(gasto.valor < opciones.valorMinimo){
+        cumpleCondicion = false;
+     }
+ }
+ if(opciones.valorMaximo){
+     if(gasto.valor > opciones.valorMaximo){
+        cumpleCondicion = false;
+     }
+ }
+ if (opciones.descripcionContiene){
+     if (!gasto.descripcion.includes(opciones.descripcionContiene)) {
+         cumpleCondicion = false;
+     }
+ }
+ if(opciones.etiquetasTiene){
+     let tieneEtiqueta = false;                   
+         for (let i = 0; i < gasto.etiquetas.length; i++) {                   
+             for (let j= 0; j < opciones.etiquetasTiene.length; j++) {
+                 if(gasto.etiquetas[i] == opciones.etiquetasTiene[j]){
+                     tieneEtiqueta = true;
+                 }                 
+             }
+         }
+         if(tieneEtiqueta == false){
+            cumpleCondicion = false;
+         }  
+ }
+
+     return cumpleCondicion;
+});
+
+
+     return filtro;  
 }
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechadesde, fechahasta){
+
+ 
+
 
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -178,5 +255,7 @@ export  {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
 }
+
+
