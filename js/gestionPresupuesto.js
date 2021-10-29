@@ -273,7 +273,38 @@ function calcularBalance(){
     
 };
 
-function filtrarGastos(){
+function filtrarGastos(parametros){
+    // funcon que filtra los ojetos según parametros indicados
+
+    //console.log(parametros.fechaDesde);
+    //console.log(parametros.fechaHasta);
+    //console.log(parametros.valorMinimo);
+    //console.log(parametros.valorMaximo);
+    //console.log(parametros.descipciónContine);
+    //console.log(parametros.etiquetasTiene);
+
+    let resultado = [];
+
+    for (gasto of gastos){
+        /* if (parametros.fechaDesde){
+
+            temp = fecha.toLocaleString();
+            if (temp >= parametros.fechaDesde){
+                
+                if (parametros.fechaHasta){
+
+                };
+            };
+
+            resultado.push(gasto);
+        }; */
+        resultado.push(gasto);
+    };
+    //resultado.push(gasto);
+
+    console.log(resultado);
+
+    return resultado;
 
 };
 
