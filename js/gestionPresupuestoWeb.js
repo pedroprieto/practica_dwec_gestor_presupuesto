@@ -16,9 +16,9 @@ function mostrarGastoWeb(idElemento, gasto){
 
     for (let eti of gasto.etiquetas) {
          divEtiquetas += `
-        <div class="gasto-etiquetas-etiqueta">
+        <span class="gasto-etiquetas-etiqueta">
             ${eti}
-        </div>
+        </span>
      `
     }
     cuerpo.innerHTML += `
