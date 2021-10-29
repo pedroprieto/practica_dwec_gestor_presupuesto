@@ -33,8 +33,8 @@ describe("Generación de datos estáticos", () => {
         cy.get("#listado-gastos-completo > div.gasto > div.gasto-etiquetas").should((divs) => {
             expect(divs, "Deben mostrarse 6 etiquetas 'div.gasto-etiquetas'").to.have.length(6);
         })
-        cy.get("#listado-gastos-completo > div.gasto > div.gasto-etiquetas > div.gasto-etiquetas-etiqueta").should((divs) => {
-            expect(divs, "Deben mostrarse 11 etiquetas 'div.gasto-etiquetas-etiqueta'").to.have.length(11);
+        cy.get("#listado-gastos-completo > div.gasto > div.gasto-etiquetas > span.gasto-etiquetas-etiqueta").should((divs) => {
+            expect(divs, "Deben mostrarse 11 etiquetas 'span.gasto-etiquetas-etiqueta'").to.have.length(11);
         })
 
     });
