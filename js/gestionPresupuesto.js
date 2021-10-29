@@ -5,6 +5,97 @@ var presupuesto = 0;
 var gastos = [];
 var idGasto = 0;
 
+//Funcion constructora
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) 
+{
+    // TODO
+    //Propiedades
+    this.descripcion = descripcion;
+    this.etiquetas = [];
+
+    if(!isNaN(valor) && valor >= 0)
+    {
+        this.valor = valor;
+    }
+    else
+    {
+        this.valor = 0;
+    }
+
+    if (fecha)
+    {
+        fecha = Date.parse(fecha);
+    }
+    else
+    {
+        fecha = Date.now();
+    }
+    this.fecha = fecha;
+
+
+    //Metodos
+    this.mostrarGasto = function (){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.mostrarGastoCompleto = function (){
+        let texto = "";
+        let fecha = new Date (this.fecha);
+        let fechaL = fecha.toLocaleString();
+
+        texto += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \nFecha: ${fechaL} \nEtiquetas: \n`;
+
+        for (let e of this.etiquetas)
+        {
+            texto += `- ${e}\n`;
+        }
+
+        return texto;
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+        if (nuevaDescripcion != descripcion)
+        {
+            this.descripcion = nuevaDescripcion;
+        }
+    }
+
+    this.actualizarValor = function (nuevoValor){
+        if(nuevoValor >= 0)
+        {
+            this.valor = nuevoValor;
+        }
+    }
+    
+    this.actualizarFecha = function(fecha){
+        //pasamos la fecha en modo string
+        fecha = Date.parse(fecha);
+
+        if(fecha)
+        {
+            this.fecha = fecha;
+        }
+    }
+
+    this.anyadirEtiquetas = function(...etiquetas){
+        let posicion = -1;
+
+        //recorremos las etiquetas buscando a ver si ya existen
+        for (let e of etiquetas)
+        {
+            posicion = this.etiquetas.indexOf(e);
+
+            //si no existe la añadiremos
+            if(posicion == -1)
+            {
+                this.etiquetas.push(e);
+            }
+        }
+    }
+    this.anyadirEtiquetas(...etiquetas);
+}
+
+//FUNCIONES
 function actualizarPresupuesto(nuevoPresupuesto) 
 {
     // TODO
@@ -27,64 +118,6 @@ function mostrarPresupuesto()
     let x = presupuesto;
     return `Tu presupuesto actual es de ${x} €`;
 }
-
-//Funcion constructora
-function CrearGasto(descripcion, valor, fecha, ...etiquetas) 
-{
-    // TODO
-    //Propiedades
-    this.descripcion = descripcion;
-    this.etiquetas = [];
-
-    if(!isNaN(valor) && valor >= 0)
-    {
-        this.valor = valor;
-    }
-    else
-    {
-        this.valor = 0;
-    }
-
-    if (fecha)
-    {
-        this.fecha = Date.parse(fecha);
-    }
-    else
-    {
-        this.fecha = Date.now();
-    }
-    //this.fecha = fecha;
-
-
-    //Metodos
-    this.mostrarGasto = function (){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    }
-
-    this.mostrarGastoCompleto = function (){
-        let texto = "";
-        let fecha = new Date (this.fecha);
-        let fechaL = fecha.toLocaleString();
-
-        texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \nFecha: ${fechaL} \nEtiquetas: \n`;
-    }
-
-    this.actualizarDescripcion = function(nuevaDescripcion){
-        if (nuevaDescripcion != descripcion)
-        {
-            this.descripcion = nuevaDescripcion;
-        }
-    }
-
-    this.actualizarValor = function (nuevoValor){
-        if(nuevoValor >= 0)
-        {
-            this.valor = nuevoValor;
-        }
-    }
-}
-
-//FUNCIONES vacias
 function listarGastos()
 {
     return gastos;
