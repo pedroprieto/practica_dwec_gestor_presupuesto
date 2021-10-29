@@ -105,7 +105,7 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
      Función de *cuatro parámetros* que devolverá *un objeto* con los resultados de realizar una agrupación por período temporal. Los parámetros son:
      - ~periodo~ - Período utilizado para hacer la agrupación. Podrá ser uno de estos tres valores: ~dia~, ~mes~ y ~anyo~. El valor por defecto será ~mes~.
      - ~etiquetas~ - *Array* de etiquetas. Solo se seleccionarán los gastos que contengan alguna de esas etiquetas. Si no se indica o es un array vacío, se considerarán todos los gastos.
-     - ~fechaDesde~ - Fecha mínima de creación del gasto. Su valor deberá ser un ~string~ con formato válido que pueda entender la función ~Date.parse~. Si no se indica se considerará el *comienzo del año actual*.
+     - ~fechaDesde~ - Fecha mínima de creación del gasto. Su valor deberá ser un ~string~ con formato válido que pueda entender la función ~Date.parse~. Si no se indica se considerarán todos los gastos independientemente de su fecha.
      - ~fechaHasta~ - Fecha máxima de creación del gasto. Su valor deberá ser un ~string~ con formato válido que pueda entender la función ~Date.parse~. Si no se indica se considerará la *fecha actual*.
 
      La función realizará los siguientes *pasos*:
