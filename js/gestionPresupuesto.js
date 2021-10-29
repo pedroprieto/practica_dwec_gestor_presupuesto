@@ -39,20 +39,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
     }
 
     this.mostrarGastoCompleto = function (){
+        let nuevaFecha = new Date(this.fecha);
+        let fechaL = nuevaFecha.toLocaleString();
         let texto = "";
-        let fecha = new Date (this.fecha);
-        let fechaL = fecha.toLocaleString();
 
-        texto += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \nFecha: ${fechaL} \nEtiquetas: \n`;
+        texto += (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaL}\nEtiquetas:\n`);
 
-        for (let e of this.etiquetas)
-        {
+        //para cada etiqueta la mostramos
+        for (let e of etiquetas){
             texto += `- ${e}\n`;
         }
-
         return texto;
     }
-
     this.actualizarDescripcion = function(nuevaDescripcion){
         if (nuevaDescripcion != descripcion)
         {
@@ -93,6 +91,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
         }
     }
     this.anyadirEtiquetas(...etiquetas);
+
+    this.borrarEtiquetas = function(...etiquetas){
+        let posicion = -1;
+
+        //recorremos las etiquetas
+        for (let e of etiquetas)
+        {
+            posicion = this.etiquetas.indexOf(e);
+
+            //si existen las eliminamos
+            if(posicion != -1)
+            {
+                this.etiquetas.splice(posicion, 1)
+            }
+        }
+    }
 }
 
 //FUNCIONES
