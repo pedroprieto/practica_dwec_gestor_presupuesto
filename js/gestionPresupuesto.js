@@ -2,6 +2,8 @@
 
 // TODO: Variable global
 var presupuesto = 0;
+var gastos = [];
+var idGasto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) 
 {
@@ -26,11 +28,13 @@ function mostrarPresupuesto()
     return `Tu presupuesto actual es de ${x} €`;
 }
 
-function CrearGasto(descripcion, valor) 
+//Funcion constructora
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) 
 {
     // TODO
     //Propiedades
     this.descripcion = descripcion;
+    this.etiquetas = [];
 
     if(!isNaN(valor) && valor >= 0)
     {
@@ -41,9 +45,28 @@ function CrearGasto(descripcion, valor)
         this.valor = 0;
     }
 
+    if (fecha)
+    {
+        this.fecha = Date.parse(fecha);
+    }
+    else
+    {
+        this.fecha = Date.now();
+    }
+    //this.fecha = fecha;
+
+
     //Metodos
     this.mostrarGasto = function (){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.mostrarGastoCompleto = function (){
+        let texto = "";
+        let fecha = new Date (this.fecha);
+        let fechaL = fecha.toLocaleString();
+
+        texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \nFecha: ${fechaL} \nEtiquetas: \n`;
     }
 
     this.actualizarDescripcion = function(nuevaDescripcion){
@@ -59,6 +82,29 @@ function CrearGasto(descripcion, valor)
             this.valor = nuevoValor;
         }
     }
+}
+
+//FUNCIONES vacias
+function listarGastos()
+{
+    return gastos;
+}
+function anyadirGasto(gasto)
+{
+    gasto.id = idGasto;
+    idGasto++;
+
+    gastos.push(gasto);
+}
+function borrarGasto(id)
+{
+    
+}
+function calcularTotalGastos()
+{
+}
+function calcularBalance()
+{
 
 }
 
@@ -69,5 +115,10 @@ export
 {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
