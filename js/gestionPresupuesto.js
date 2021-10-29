@@ -123,9 +123,36 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         for (let i = 0; i < this.etiquetas.length; i++) {
             etiqueta += `- ${this.etiquetas[i]}\n`;
         }
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;
-    
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;    
     }
+    this.obtenerPeriodoAgrupacion=function(periodo){
+        let fecha=new Date(this.fecha);
+        let anyoPeriodo=fecha.getFullYear();
+        let mesPeriodo=fecha.getMonth()+1;
+        let diaPeriodo=fecha.getDate();
+
+        if ( mesPeriodo < 10 ){
+            mesPeriodo=`0${mesPeriodo}`;
+        }
+        if ( diaPeriodo < 31 ){
+            diaPeriodo=`0${day}`;
+        }
+
+        if (periodo === "mes" ){
+            return `${anyoPeriodo}-${mesPeriodo}`;
+        }
+        else if ( periodo === "anyo" ){
+            return `${anyoPeriodo}`;
+        }
+        else if ( periodo === "dia" ){
+            return `${anyoPeriodo}-${mesPeriodo}-${diaPeriodo}`;
+        }
+        else{
+            return `${anyoPeriodo}-${mesPeriodo}-${diaPeriodo}`;
+        }
+    }
+
+
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
