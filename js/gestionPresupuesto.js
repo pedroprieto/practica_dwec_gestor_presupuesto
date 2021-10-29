@@ -302,27 +302,27 @@ function filtrarGastos(parametros){
 
         
         if (parametros.fechaHasta){
-            if (gasto.fecha > Date.parse(parametros.fechaHasta) || !valido){
+            if (gasto.fecha > Date.parse(parametros.fechaHasta)){
                 valido = false;
             };
         };
         
         if (parametros.valorMinimo){
-            console.log(`Valor actual ${gasto.valor}`);
-            console.log(`VAlor minimo ${parametros.valorMinimo}`);
-            if (gasto.valor < parametros.valorMinimo || !valido){
+            //console.log(`Valor actual ${gasto.valor}`);
+            //console.log(`VAlor minimo ${parametros.valorMinimo}`);
+            if (gasto.valor < parametros.valorMinimo){
                 valido = false;
             };
         };
 
         if (parametros.valorMaximo){
-            if (gasto.valor > parametros.valorMaximo || !valido){
+            if (gasto.valor > parametros.valorMaximo){
                 valido = false;
             };
         };
-
-        if (parametros.descripcionContine){
-            if (!gasto.descripcion.includes(parametros.descripcionContine) || !valido){
+        
+        if (parametros.descripcionContiene){
+            if (!gasto.descripcion.includes(parametros.descripcionContiene)){
                 valido = false;
             }
         };
@@ -330,14 +330,19 @@ function filtrarGastos(parametros){
         if (parametros.etiquetasTiene){
 
             let contador = 0;
+            //let valido = true;
 
-            for (let etiqueta of gasto.etiquetas){
+            for (let etiqueta of parametros.etiquetasTiene){
+            //for (let etiqueta of gasto.etiquetas){
                 if(gasto.etiquetas.includes(etiqueta)){
                     contador++;
                 }
             };
-
-            let valido = 0 ? false : true;
+            
+            if (contador == 0){
+                valido = false;
+            }
+            //valido = (contador = 0) ? false : true;
         };
 
         
