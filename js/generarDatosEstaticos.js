@@ -1,5 +1,6 @@
-<script type="module">
-  import { mostrarDatoEnId, mostrarGastoWeb, mostrarGastoAgrupadosWeb } from "./gestionPresupuestoWeb.js";
+
+  import { mostrarDatoEnId, mostrarGastoWeb, mostrarGastoAgrupadosWeb } from './gestionPresupuestoWeb.js';
+
   import { mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
@@ -10,5 +11,3 @@
     calcularBalance,
     filtrarGastos,
     agruparGastos } from "./gestionPresupuesto.js";
-  
-</script>
