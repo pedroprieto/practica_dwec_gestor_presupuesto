@@ -276,33 +276,80 @@ function calcularBalance(){
 function filtrarGastos(parametros){
     // funcon que filtra los ojetos según parametros indicados
 
-    //console.log(parametros.fechaDesde);
-    //console.log(parametros.fechaHasta);
-    //console.log(parametros.valorMinimo);
-    //console.log(parametros.valorMaximo);
-    //console.log(parametros.descipciónContine);
-    //console.log(parametros.etiquetasTiene);
-
     let resultado = [];
+    
+    for (let gasto of gastos){
 
-    for (gasto of gastos){
-        /* if (parametros.fechaDesde){
+        let valido = true;
 
-            temp = fecha.toLocaleString();
-            if (temp >= parametros.fechaDesde){
+        if (parametros.fechaDesde){
+            // aqui se evalua el parametro en caso de que exista
+            //console.log(`fecha a evaluar ${gasto.fecha}`);
+            //let f = parametros.fechaDesde.toLocaleString();
+            //let f = Date.parse(parametros.fechaDesde);
+            //console.log(`Fecha desde ${f}`);
+            
+            // aqui se evalua si la fecha del objeto es menor que el parametro
+            if (gasto.fecha < Date.parse(parametros.fechaDesde)){               
+                // en el caso de que sea falso, la variable de válido pasa a ser false, por
+                // lo que de esta manera en el resto de condiciones no se continuarán evaluando
+                valido = false;
+            } else {
                 
-                if (parametros.fechaHasta){
+            };
+            //resultado.push(gasto);
+        };
 
-                };
+        
+        if (parametros.fechaHasta){
+            if (gasto.fecha > Date.parse(parametros.fechaHasta) || !valido){
+                valido = false;
+            };
+        };
+        
+        if (parametros.valorMinimo){
+            console.log(`Valor actual ${gasto.valor}`);
+            console.log(`VAlor minimo ${parametros.valorMinimo}`);
+            if (gasto.valor < parametros.valorMinimo || !valido){
+                valido = false;
+            };
+        };
+
+        if (parametros.valorMaximo){
+            if (gasto.valor > parametros.valorMaximo || !valido){
+                valido = false;
+            };
+        };
+
+        if (parametros.descripcionContine){
+            if (!gasto.descripcion.includes(parametros.descripcionContine) || !valido){
+                valido = false;
+            }
+        };
+
+        if (parametros.etiquetasTiene){
+
+            let contador = 0;
+
+            for (let etiqueta of gasto.etiquetas){
+                if(gasto.etiquetas.includes(etiqueta)){
+                    contador++;
+                }
             };
 
+            let valido = 0 ? false : true;
+        };
+
+        
+
+        if (valido){
             resultado.push(gasto);
-        }; */
-        resultado.push(gasto);
+        }
+        //resultado.push(gasto);
     };
     //resultado.push(gasto);
 
-    console.log(resultado);
+    //console.log(resultado);
 
     return resultado;
 
