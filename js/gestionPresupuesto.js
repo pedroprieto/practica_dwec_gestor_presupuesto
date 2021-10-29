@@ -342,10 +342,8 @@ function filtrarGastos(parametros){
             if (contador == 0){
                 valido = false;
             }
-            //valido = (contador = 0) ? false : true;
+            //valido = (contador > 0) ? false : true;
         };
-
-        
 
         if (valido){
             resultado.push(gasto);
@@ -360,7 +358,7 @@ function filtrarGastos(parametros){
 
 };
 
-function agruparGastos(){
+function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
 
 };
 
