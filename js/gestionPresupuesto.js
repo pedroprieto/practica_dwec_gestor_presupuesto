@@ -94,6 +94,7 @@ function anyadirGasto(gasto)
     gasto.id = idGasto;
     idGasto++;
 
+    //añadimos el objeto a la variable gastos al final del array
     gastos.push(gasto);
 }
 function borrarGasto(id)
@@ -107,6 +108,14 @@ function borrarGasto(id)
 }
 function calcularTotalGastos()
 {
+    let suma = 0;
+
+    for (let g of gastos)
+    {
+        suma += g.valor;
+    }
+
+    return suma;
 }
 function calcularBalance()
 {
