@@ -231,16 +231,6 @@ function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = new 
         fechaHasta: fechaHasta
     }
 
-    //let etiquetasTiene = etiquetas;
-    
-    /*function Filtro(etiquetasTiene, fechaDesde, fechaHasta){
-        this.etiquetasTiene = etiquetasTiene;
-        this.fechaDesde = fechaDesde;
-        this.fechaHasta = fechaHasta;
-    }*/
-
-    //let filtro = new Filtro(etiquetasTiene, fechaDesde, fechaHasta);
-
     let gastosFiltro = filtrarGastos(filtro);
 
     let gastosAgrupar = gastosFiltro.reduce((acc, gasto) => {

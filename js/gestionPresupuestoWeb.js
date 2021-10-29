@@ -12,9 +12,9 @@ function mostrarGastoWeb(idElemento, gasto){
 
     for(let etiqueta of gasto.etiquetas){
         txtEtiquetas += `
-                <div class="gasto-etiquetas-etiqueta">
+                <span class="gasto-etiquetas-etiqueta">
                     ${etiqueta}
-                </div>       
+                </span>       
         `;
     }
 
@@ -50,36 +50,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         ${txtEtiquetas}
     </div>
 `;
-
-
-    /*mostrar.innerHTML += `
-    <div class="agrupacion">
-        <h1>Gastos agrupados por ${periodo}</h1>
-        ${txtEtiquetas}
-    </div>
-`;
-
-    /*for(let agru of Object.entries(agrup)){
-        txtEtiquetas += `
-            <div class="agrupacion-dato">
-            <span class="agrupacion-dato-clave">${Object.keys(agru[0])}</span>
-            <span class="agrupacion-dato-valor">${Object.keys(agru[1])}</span>
-            </div>
-        `;
-    }
-
-    mostrar.innerHTML += `
-        <div class="agrupacion">
-            <h1>Gastos agrupados por ${periodo}</h1>
-            ${txtEtiquetas}
-        </div>
-    `;*/
-
-
-
-    /*mostrar.innerHTML += `
-        </div>
-    `;*/
 
 }
 
