@@ -277,9 +277,84 @@ function filtrarGastos (opciones)
 //Función de cuatro parámetros que devolverá un objeto con los resultados de realizar una agrupación por período temporal. 
 //Los parámetros son: periodo, etiquetas, fechaDesde, fechaHasta.
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
-{
+{  
+    /*Al igual que con filter, iba dando palos de ciego hasta que en el vídeo de la tutoría has dado un poco de luz y has encauzado el problema.
+    Las ideas que has dado son las siguientes:
 
+    resul = arr.reduce(miAcumulador, {})
+    function miAcumuladorPractica(acc, gasto) 
+    {
+        Para cada gasto se obtendra periodo de agrupacion.
+        let pA = gasto.obtenerPeriodoAgrupacion(periodo);
+      
+        acc[pA] = acc[pA] + gasto.valor; esto no va a funcionar la primera vez porque acc[pA] no existe, previo a esto hay que detectarlo.
+
+        if (acc[pA]) 
+        {   
+            blabla
+        }
+        si no, haz la asignacion
+        
+        acc[pA] = acc[pA] + gasto.valor;
+
+        return acc;
+    }
+
+    A raíz de toda esta información, he ido extrapolando y haciendo comprobaciones para llegar a la solución:
+    
+    let etiquetasTiene = etiquetas; 
+    let gastosFiltrados = filtrarGastos({etiquetasTiene, fechaDesde, fechaHasta});
+
+    return gastosFiltrados.reduce(miAcumuladorPractica, {})
+
+    function miAcumuladorPractica(acc, gasto) 
+    {
+        let pA = gasto.obtenerPeriodoAgrupacion(periodo);   
+        if (!acc[pA])
+        {
+            acc[pA] = 0;
+        }        
+        acc[pA] = acc[pA] + gasto.valor; 
+        
+        return acc;
+    }
+    Sabiendo que ya funciona, he intentado comprimirlo como mencionas para no tener que llamar 
+    a una función extra sino hacerlo directamente en el .reduce.
+
+    Una vez que has ayudado con la solución, leo el enunciado por partes y parece muy "sencillo", pero para enfocarlo desde 0 he sido incapaz :(
+    */
+
+    let etiquetasTiene = etiquetas; 
+    //En primer lugar se llamará a filtrarGastos para obtener el subconjunto de 
+    //gastos creados entre las fechas indicadas y que tengan alguna de las etiquetas proporcionadas en el parámetro correspondiente.
+    let gastosFiltrados = filtrarGastos({etiquetasTiene, fechaDesde, fechaHasta});
+      
+    //Ejecutar reduce sobre el conjunto de gastos filtrados. **El valor inicial del acumulador de reduce será un objeto vacío.
+    return gastosFiltrados.reduce(function(acc, gasto)
+    {
+        //Dentro del cuerpo de la función de reduce, para cada gasto se obtendrá su período de agrupación (a través del método obtenerPeriodoAgrupacion
+        //del gasto y el parámetro periodo), que se utilizará para identificar la propiedad del acumulador sobre la que se sumará su valor. 
+        let pA = gasto.obtenerPeriodoAgrupacion(periodo);   
+
+        //Así, si periodo = mes, un gasto con fecha 2021-11-01 tendrá un período de agrupación 2021-11, por lo que su valor se sumará a acc["2021-11"]     
+        //(siempre que la variable del acumulador haya recibido el nombre acc en la llamada a reduce). 
+        if (!acc[pA])
+        {
+            acc[pA] = 0;
+        }
+        
+        acc[pA] = acc[pA] + gasto.valor; 
+    
+        return acc;       
+    }, {});
+    //{} **El valor inicial del acumulador de reduce será un objeto vacío. 
+    
+    //El ejemplo del manual:
+    //let value = arr.reduce(function(accumulator, item, index, array) {
+    //    // ...
+    //  }, [initial]); de ahí la terminacion }, {});
 }
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
