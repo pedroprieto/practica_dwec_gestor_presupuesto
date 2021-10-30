@@ -62,13 +62,13 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
 
     this.anyadirEtiquetas = function( ...etiquetas ) {
-        //Recorre el vector etiquetas buscando si ya existe la etiqueta que le pasamos por parámetro
+        //Recorre el vector etiquetas buscando si ya cumpleCondicion la etiqueta que le pasamos por parámetro
         let pos = -1;
 
         for ( let e of etiquetas ) {
             pos = this.etiquetas.indexOf( e );
 
-            // Si no existe, lo añade
+            // Si no cumpleCondicion, lo añade
             if ( pos == -1 ) {
                 this.etiquetas.push( e );
             }
@@ -83,7 +83,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
         for ( let e of etiquetas ) {
             pos = this.etiquetas.indexOf( e );
 
-            // Si existe, lo borra
+            // Si cumpleCondicion, lo borra
             if ( pos != -1 ) {
                 this.etiquetas.splice( pos, 1 );
             }
@@ -96,12 +96,15 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
 
         switch ( periodo ){
             case "dia":
+                // Resultado: "2021-09-06"
                 return fecha.substr(0,10); break;
 
             case "mes":
+                // Resultado: "2021-11"
                 return fecha.substr(0,7); break;
 
             case "anyo":
+                // Resultado: "2021"
                 return fecha.substr(0,4); break;
         }
     }
@@ -148,7 +151,7 @@ function borrarGasto( id ) {
     //Borra el objeto cuyo id coincida con el pasado por parámetro
     let pos = gastos.findIndex( gasto => gasto.id === id );
 
-    // Si existe, lo borra
+    // Si cumpleCondicion, lo borra
     if ( pos != -1 ){
         gastos.splice( pos, 1 );
     }
@@ -165,15 +168,57 @@ function calcularTotalGastos() {
     return sumAll;
 }
 
-function filtrarGastos( gasto ) {
-    // Devuelve subconjunto de los gastos existentes en función de los filtros pasados por parámetro
-    
+// Comprueba si el objeto esta vacio (sin propiedades)
+function isObjEmpty( object ) {
+    return Object.keys( object ).length === 0;
 }
 
+function filtrarGastos( object ) {
+    // Devolverá un subconjunto de los gastos existentes
 
+    // Copio el array gastos en un nuevo array 'gastosFiltrados'
+    // El array original no se modifica
+    let gastosFiltrados = gastos.slice();
 
+    // Si el objeto esta vacio (no se pasan parámetros) -> Devuelve el array gastos
+	if ( isObjEmpty(object) ) {
+        return gastosFiltrados;
+    }
 
-function agruparGastos() {}
+    // if ( object.fechaDesde) -> Si existe la propiedad 'dechaDesde' en el objeto, entra en el if
+	if ( object.fechaDesde ) {        
+        // gastosFiltrados.filter(condición) -> Si cumple la condición añade el gasto al array, si no pasa al siguiente
+		gastosFiltrados = gastosFiltrados.filter((x) => x.fecha >= Date.parse( object["fechaDesde"] ));
+    }
+
+	if ( object.fechaHasta ) {
+		gastosFiltrados = gastosFiltrados.filter((x) => x.fecha <= Date.parse( object.fechaHasta ));
+	}
+
+	if ( object.valorMinimo ) {
+		gastosFiltrados = gastosFiltrados.filter((x) => x.valor > object.valorMinimo);
+	}
+
+	if ( object.valorMaximo ) {
+		gastosFiltrados = gastosFiltrados.filter((x) => x.valor < object.valorMaximo);
+	}
+
+	if ( object.descripcionContiene ) {
+		gastosFiltrados = gastosFiltrados.filter((x) => x.descripcion.indexOf( object.descripcionContiene ) > -1 );
+	}
+
+	if ( object.etiquetasTiene ) {
+		gastosFiltrados = gastosFiltrados.filter((x) => {
+			for( let valor of x["etiquetas"] ) {
+				if ( object.etiquetasTiene.indexOf(valor) > -1 ) {
+					return x;
+				}
+			}
+		});
+	}
+	return gastosFiltrados;
+}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
