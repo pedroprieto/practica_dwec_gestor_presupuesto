@@ -3,6 +3,8 @@ let presupuesto = 0;
 let gastos= [];
 let idGasto = 0;
 
+
+
 function mostrarPresupuesto() {
     
     return `Tu presupuesto actual es de ${presupuesto} €`
@@ -127,15 +129,16 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
     this.obtenerPeriodoAgrupacion=function(periodo){
         let fecha=new Date(this.fecha);
-        let anyoPeriodo=fecha.getFullYear();
-        let mesPeriodo=fecha.getMonth()+1;
-        let diaPeriodo=fecha.getDate();
 
+        let diaPeriodo=fecha.getDate();
+        let mesPeriodo=fecha.getMonth()+1;
+        let anyoPeriodo=fecha.getFullYear();
+        
         if ( mesPeriodo < 10 ){
             mesPeriodo=`0${mesPeriodo}`;
         }
-        if ( diaPeriodo < 31 ){
-            diaPeriodo=`0${day}`;
+        if ( diaPeriodo < 10 ){
+            diaPeriodo=`0${diaPeriodo}`;
         }
 
         if (periodo === "mes" ){
@@ -151,8 +154,16 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
             return `${anyoPeriodo}-${mesPeriodo}-${diaPeriodo}`;
         }
     }
+}
+function filtrarGastos(object){
+
+    
+}
 
 
+function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
+    
+    
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
