@@ -55,7 +55,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
 
         if(!fecha) {
-            fecha = new Date();
+            fecha = Date.parse(new Date())
             this.fecha = fecha;
         } else {
             fecha = Date.parse(fecha);
@@ -130,6 +130,13 @@ function calcularBalance() {
     return balance;
     
 }
+function filtrarGastos() {
+
+}
+
+function agruparGastos() {
+    
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -142,5 +149,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
