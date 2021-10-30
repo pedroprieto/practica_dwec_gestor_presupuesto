@@ -133,7 +133,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         let diaPeriodo=fecha.getDate();
         let mesPeriodo=fecha.getMonth()+1;
         let anyoPeriodo=fecha.getFullYear();
-        
+
         if ( mesPeriodo < 10 ){
             mesPeriodo=`0${mesPeriodo}`;
         }
@@ -155,10 +155,46 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
     }
 }
-function filtrarGastos(object){
+function filtrarGastos(objecto){
 
-    
+    let filtrogastos=gastos.slice();
+
+    if (objecto.valorMinimo){
+		filtrogastos=filtrogastos.filter((x) => x.valor > objecto.valorMinimo);
+	}
+
+	if (objecto.valorMaximo){
+		filtrogastos=filtrogastos.filter((x) => x.valor < objecto.valorMaximo);
+	}
+
+    if ( objecto.fechaDesde ){
+		filtrogastos=filtrogastos.filter((x) => x.fecha >= Date.parse( objecto["fechaDesde"] ));
+    }
+
+    if (objecto.fechaHasta){
+		filtrogastos=filtrogastos.filter((x) => x.fecha <= Date.parse(objecto.fechaHasta));
+	}
+
+    if (objecto.etiquetasTiene){
+		filtrogastos=filtrogastos.filter((x) => {
+			for(let etiqueta of x["etiquetas"]){
+				if (objecto.etiquetasTiene.indexOf(etiqueta) > -1){
+					return x;
+				}
+			}
+		});
+	}
+
+    if (objecto.descripcionContiene){
+		filtrogastos=filtrogastos.filter((x) => x.descripcion.indexOf(objecto.descripcionContiene
+        ) > -1 );
+	}
+
+	
+
+	return filtrogastos;
 }
+
 
 
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
