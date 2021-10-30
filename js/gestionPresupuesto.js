@@ -199,7 +199,15 @@ function filtrarGastos(objecto){
 
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
     
-    
+    return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
+            .reduce(function(acumula,objeto){
+                let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo)
+                if(!acumula[objPerAgru]){
+                    acumula[objPerAgru]=0;
+                }
+                acumula[objPerAgru]+=objeto.valor;
+                return acumula;
+            },{});
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
