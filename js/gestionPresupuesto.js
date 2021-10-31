@@ -93,6 +93,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
                 this.fecha = fechaCompra;
             }
         }
+    // parte 3
+        this.obtenerPeriodoAgrupacion = function (periodo) {
+            if (periodo == "dia") {
+                fecha = fecha.slice(0, 10);
+            }else if (periodo == "mes") {
+                fecha = fecha.slice(0, 7);
+            }else if (periodo == "anyo") {
+                fecha = fecha.slice(0, 4)
+            }
+
+        }
+
 }
 //Funciones test 2
 function listarGastos() {
