@@ -3,9 +3,9 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
-let presupuesto=0;
-let gastos=[];
-let idGasto=0;
+ let presupuesto=0;
+ let gastos=[];
+ let idGasto=0;
 
 /*********************************************************************************/
 function actualizarPresupuesto(valor) {
@@ -21,7 +21,7 @@ function actualizarPresupuesto(valor) {
 }
 
 /*********************************************************************************/
-function mostrarPresupuesto() {
+ function mostrarPresupuesto() {
 /*********************************************************************************/
     // TODO
     return `Tu presupuesto actual es de ${presupuesto} €`;
@@ -172,7 +172,7 @@ function isObjEmpty(object){
 /*********************************************************************************/
 
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
-    
+
     return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
             .reduce(function(sum,obj){
                 let key=obj.obtenerPeriodoAgrupacion(periodo)
@@ -237,5 +237,8 @@ export  {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    presupuesto,
+    gastos,
+    idGasto
 };
