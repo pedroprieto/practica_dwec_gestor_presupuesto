@@ -108,21 +108,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 function listarGastos() {
-    if (gastos.length==0) {
-        return gastos;
-    } else {
-        //para mostrar los gastos en forma de lista
-        for (let i=0; i<gastos; i++) {
-            console.log(gastos[i]);
-        }
-    }
+    return gastos;
 }
 
 function anyadirGasto(obj_gasto){
-    //pendiente de resolver error
-    /* obj_gasto.id = idGasto;
+    obj_gasto.id = idGasto;
+    gastos.push(obj_gasto); 
     idGasto++;
-    gastos.push(obj_gasto); */
 }
 
 function borrarGasto(id_borrar) {
@@ -135,7 +127,11 @@ function borrarGasto(id_borrar) {
 }
 
 function calcularTotalGastos() {
-
+    //pendiente
+    /*let suma_gastos = 0;
+    for (let i=0; i < gastos.length; i++) {
+        suma_gastos = suma_gastos + gastos[i].valor;
+    }*/
 }
 
 function calcularBalance() {
