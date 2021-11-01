@@ -101,14 +101,14 @@ describe("Función agruparGastos", function() {
         expect(agrup3["2021-10"], "La opción de agrupar por mes y etiquetas no funciona").to.exist;
         assert.equal(agrup3["2020-05"], valor3, "No se suman los totales por mes filtrando por etiquetas correctamente");
         assert.equal(agrup3["2021-10"], valor4 + valor6, "No se suman los totales por mes filtrando por etiquetas correctamente");
-
+         
         let agrup4 = agruparGastos("anyo", ["transporte", "casa"]);
         assert.lengthOf(Object.keys(agrup4), 2, "La opción de agrupar y filtrar por etiquetas no funciona");
         expect(agrup4["2020"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
         expect(agrup4["2021"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
         assert.equal(agrup4["2020"], valor3, "No se suman los totales por año filtrando por etiquetas correctamente");
         assert.equal(agrup4["2021"], valor1 + valor4 + valor5 + valor6, "No se suman los totales por año filtrando por etiquetas correctamente");
-
+        
         let agrup5 = agruparGastos("mes", ["transporte"], "2021-01-01");
         assert.lengthOf(Object.keys(agrup5), 1, "La opción de agrupar y filtrar por etiquetas y fecha no funciona");
         expect(agrup5["2021-10"], "La opción de agrupar y filtrar por etiquetas y fecha no funciona").to.exist;

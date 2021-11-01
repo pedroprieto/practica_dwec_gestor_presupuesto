@@ -88,6 +88,8 @@ function filtrarGastos(objeto) {
     }
   }
 
+  //let nuevaMatriz;
+
   if (
     fechaDesde != undefined &&
     fechaHasta === undefined &&
@@ -99,6 +101,7 @@ function filtrarGastos(objeto) {
     nuevaMatriz = gastos.filter(
       (filtro) => filtro.fecha >= Date.parse(fechaDesde)
     );
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde != undefined &&
     fechaHasta != undefined &&
@@ -112,6 +115,7 @@ function filtrarGastos(objeto) {
         filtro.fecha >= Date.parse(fechaDesde) &&
         filtro.fecha <= Date.parse(fechaHasta)
     );
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde === undefined &&
     fechaHasta === undefined &&
@@ -121,6 +125,7 @@ function filtrarGastos(objeto) {
     etiquetasTiene === undefined
   ) {
     nuevaMatriz = gastos.filter((filtro) => filtro.valor > valorMinimo);
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde === undefined &&
     fechaHasta === undefined &&
@@ -132,6 +137,7 @@ function filtrarGastos(objeto) {
     nuevaMatriz = gastos.filter(
       (filtro) => filtro.valor > valorMinimo && filtro.valor < valorMaximo
     );
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde != undefined &&
     fechaHasta != undefined &&
@@ -146,6 +152,7 @@ function filtrarGastos(objeto) {
         filtro.fecha <= Date.parse(fechaHasta) &&
         filtro.valor < valorMaximo
     );
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde === undefined &&
     fechaHasta === undefined &&
@@ -161,6 +168,7 @@ function filtrarGastos(objeto) {
         }
       }
     });
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde === undefined &&
     fechaHasta === undefined &&
@@ -170,12 +178,13 @@ function filtrarGastos(objeto) {
     etiquetasTiene != undefined
   ) {
     nuevaMatriz = gastos.filter((filtro) => {
-      for ( let x of etiquetasTiene) {
+      for (let x of etiquetasTiene) {
         if (filtro.etiquetas.indexOf(x) != -1 && filtro.valor < valorMaximo) {
           return filtro;
         }
       }
     });
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde != undefined &&
     fechaHasta === undefined &&
@@ -185,7 +194,7 @@ function filtrarGastos(objeto) {
     etiquetasTiene != undefined
   ) {
     nuevaMatriz = gastos.filter((filtro) => {
-      for ( let x of etiquetasTiene) {
+      for (let x of etiquetasTiene) {
         if (
           filtro.etiquetas.indexOf(x) != -1 &&
           filtro.fecha >= Date.parse(fechaDesde)
@@ -194,6 +203,7 @@ function filtrarGastos(objeto) {
         }
       }
     });
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde === undefined &&
     fechaHasta != undefined &&
@@ -213,6 +223,7 @@ function filtrarGastos(objeto) {
         }
       }
     });
+    num = nuevaMatriz.length;
   } else if (
     fechaDesde === undefined &&
     fechaHasta === undefined &&
@@ -230,23 +241,101 @@ function filtrarGastos(objeto) {
         return filtro;
       }
     });
+  } else if (
+    fechaDesde != undefined &&
+    fechaHasta != undefined &&
+    valorMinimo === undefined &&
+    valorMaximo === undefined &&
+    descripcionContiene === undefined &&
+    etiquetasTiene != undefined
+  ) {
+    nuevaMatriz = gastos.filter((filtro) => {
+      for (let x of etiquetasTiene) {
+        if (
+          filtro.etiquetas.indexOf(x) != -1 &&
+          filtro.fecha >= Date.parse(fechaDesde) &&
+          filtro.fecha <= Date.parse(fechaHasta)
+        ) {
+          return filtro;
+        }
+      }
+    });
+  } else if (
+    fechaDesde === undefined &&
+    fechaHasta != undefined &&
+    valorMinimo === undefined &&
+    valorMaximo === undefined &&
+    descripcionContiene === undefined &&
+    etiquetasTiene != undefined
+  ) {
+    nuevaMatriz = gastos.filter((filtro) => {
+      for (let x of etiquetasTiene) {
+        if (
+          filtro.etiquetas.indexOf(x) != -1 &&
+          filtro.fecha <= Date.parse(fechaHasta)
+        ) {
+          return filtro;
+        }
+      }
+    });
   }
+
   return nuevaMatriz;
 }
 
+function agruparGastos(periodo, etiquetasTiene, fechaDesde, fechaHasta) {
+  let periodoInicial, fechaInicial, fechaFinal;
+  let num = [];
+  let etiqueta = [];
 
+  if (periodo === undefined) {
+    periodoInicial = "mes";
+  } else {
+    periodoInicial = periodo;
+  }
 
+  if (etiquetasTiene === undefined || etiquetasTiene.length === 0) {
+    etiqueta;
+  } else {
+    etiqueta = etiquetasTiene;
+  }
 
-function agruparGastos() {}
+  if (fechaHasta === undefined || isNaN(Date.parse(fechaHasta))) {
+    fechaFinal = new Date();
+  } else {
+    fechaFinal = new Date(Date.parse(fechaHasta));
+  }
 
+  if (fechaDesde === undefined || isNaN(Date.parse(fechaDesde))) {
+    fechaInicial;
+  } else {
+    fechaInicial = new Date(Date.parse(fechaDesde));
+  }
 
+  if (etiquetasTiene === undefined || etiquetasTiene.length === 0) {
+    num = gastos;
+  } else if (fechaDesde === undefined || isNaN(Date.parse(fechaDesde))) {
+    num = gastos;
+    num = filtrarGastos({ fechaHasta: fechaFinal, etiquetasTiene: etiqueta });
+  } else {
+    num = filtrarGastos({
+      fechaDesde: fechaInicial,
+      fechaHasta: fechaFinal,
+      etiquetasTiene: etiqueta,
+    });
+  }
 
+  let result = num.reduce((acc, order) => {
+    return {
+      ...acc,
+      [order.obtenerPeriodoAgrupacion(periodoInicial)]:
+        (acc[order.obtenerPeriodoAgrupacion(periodoInicial)] || 0) +
+        order.valor,
+    };
+  }, {});
 
-
-
-
-
-
+  return result;
+}
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   // TODO
