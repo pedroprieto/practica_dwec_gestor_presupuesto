@@ -126,11 +126,11 @@ function borrarGasto(id_borrar) {
 }
 
 function calcularTotalGastos() {
-    //pendiente
-    /*let suma_gastos = 0;
+    let suma_gastos = 0;
     for (let i=0; i < gastos.length; i++) {
         suma_gastos = suma_gastos + gastos[i].valor;
-    }*/
+    }
+    return suma_gastos;
 }
 
 function calcularBalance() {
