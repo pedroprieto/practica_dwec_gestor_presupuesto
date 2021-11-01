@@ -118,12 +118,11 @@ function anyadirGasto(obj_gasto){
 }
 
 function borrarGasto(id_borrar) {
-    //pendiente de resolver error
-    /* for (let i=0; i<gastos; i++) {
-        if (gastos[i].id.includes(id_borrar)) {
+    for (let i=0; i < gastos.length; i++) {
+        if (gastos[i].id == id_borrar) {
             gastos.splice(i,1);
         }
-    }*/
+    }
 }
 
 function calcularTotalGastos() {
