@@ -6,6 +6,8 @@ let idGasto = 0;
 let gasto = {
     descripcion: "",
     valor: 0,
+    fecha: 0,
+    etiquetas: [],
 
     mostrarGasto() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
