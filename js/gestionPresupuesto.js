@@ -94,7 +94,28 @@ function CrearGasto(descripcion, valorGasto, fecha = new Date(), ... etiquetas) 
     }
 
     this.obtenerPeriodoAgrupacion = function(agrupacion){
-        ///TODO: Crear función
+        let fecha = new Date(this.fecha);
+        let resultado = "";
+        switch (agrupacion) {
+            case "mes":
+                let mes = fecha.getMonth().toString().padStart(2,"0");
+                let anyo = fecha.getFullYear().toString().padStart(4,"0");
+                resultado = `${mes}-${anyo}`;
+                break;
+            case "dia":
+                let mes = fecha.getMonth().toString().padStart(2,"0");
+                let anyo = fecha.getFullYear().toString().padStart(4,"0");
+                let dia = fecha.getDate().toString().padStart(2,"0");
+                resultado = `${mes}-${anyo}-${dia}`;
+                break;
+            case "anyo":
+                resultado = fecha.getFullYear().toString().padStart(4,"0");
+                break;    
+            default:
+                break;
+        }
+        return resultado;
+
     }
 }
 
