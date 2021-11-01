@@ -78,7 +78,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     if(!fecha)
     {
-        fecha = new Date();
+        fecha = Date.parse(new Date());
         this.fecha = fecha;
     }else{
         fecha = Date.parse(fecha)
