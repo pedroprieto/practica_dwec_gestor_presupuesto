@@ -127,9 +127,11 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
         let resultado ="";
 
         if (periodo == "dia") {
-            resultado = fecha.substr(0,10);
-        }
-        else if (periodo == "mes") {
+
+            resultado = fecha.substr(0, 10);
+            
+        } else if (periodo == "mes") {
+
             resultado = fecha.substr(0, 7);
 
         } else if(periodo == "anyo"){
@@ -216,15 +218,117 @@ function calcularBalance() {
     
 }
 
-function agruparGastos() {
-    
+
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+
+    let etiquetasTiene = etiquetas;
+
+    if (!fechaDesde) {
+
+        fechaDesde = "2021-01-01";
+
+    }
+
+    if (!fechaHasta) {
+
+        fechaHasta = new Date(Date.now()).toISOString().substr(0, 10);
+    }
+
+    let gastosCreados = filtrarGastos(fechaDesde, fechaHasta, etiquetasTiene);
+
+    let resultado = gastosCreados.reduce((acc, gasto) => {
+
+        acc[gasto.obtenerPeriodoAgrupacion(periodo)] = (acc[gasto.obtenerPeriodoAgrupacion(periodo)] || 0) + gasto.valor;
+
+        return acc;
+
+    }, {});
+
+    return resultado;
 
 }
 
-function filtrarGastos() {
-    
 
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}) {
+    
+    
+    let gastosFiltrados = gastos;
+
+    gastosFiltrados = gastosFiltrados.filter(function(gasto) {
+        
+        let existe = true;
+
+        if (fechaDesde) {
+            
+            if (gasto.fecha < Date.parse(fechaDesde)) {
+                
+                existe = false;
+            }
+        }
+
+        if (fechaHasta) {
+            
+            if (gasto.fecha > Date.parse(fechaHasta)) {
+                
+                existe = false;
+            }
+        }
+
+        if (valorMinimo) {
+
+            if (gasto.valor < valorMinimo) {
+                
+                existe = false;
+            }
+        }
+
+        if (valorMaximo) {
+            
+            if (gasto.valor > valorMaximo) {
+                
+                existe = false;
+            }
+        }
+
+        if (descripcionContiene) {
+
+                        
+            if (!gasto.descripcion.includes(descripcionContiene)) {
+                
+                existe = false;
+            }
+        }
+
+        if (etiquetasTiene) {
+           
+            let tiene = false;
+
+            for (let i = 0; i < gasto.etiquetas.length; i++) {
+                
+                for (let j = 0; i < etiquetasTiene.length; j++) {
+
+                    if (gasto.etiquetas[i] == etiquetasTiene[j]) {
+                        
+                        tiene = true;
+                    }
+                }
+            }
+
+            if (tiene == false) {
+                
+                existe = false;
+            }
+        }
+        return existe;
+
+    })
+
+    return gastosFiltrados;   
+    
 }
+
+
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
