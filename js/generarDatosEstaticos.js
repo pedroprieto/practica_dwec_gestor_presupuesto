@@ -70,3 +70,7 @@ gpw.mostrarGastosAgrupadosWeb("agrupacion-mes", gastosAgruparMes, "mes");
 let gastosAgruparAnyo = gp.agruparGastos("anyo");
 
 gpw.mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAgruparAnyo, "año");
+
+document.getElementById("actualizarpresupuesto").addEventListener("click", gpw.actualizarPresupuestoWeb);
+
+document.getElementById("anyadirgasto").addEventListener("click", gpw.nuevoGastoWeb);
