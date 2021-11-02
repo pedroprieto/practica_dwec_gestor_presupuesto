@@ -64,3 +64,9 @@ let periodo3="anyo";
 gastosFiltrados = gestionPresupuesto.agruparGastos(periodo3);
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosFiltrados, "año");
 
+let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+botonActualizarPresupuesto.addEventListener("click", gestionPresupuestoWeb.actualizarPresupuestoWeb);
+
+let botonAnyadirGasto = document.getElementById("anyadirgasto");
+botonAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb);
+
