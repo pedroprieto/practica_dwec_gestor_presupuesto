@@ -40,7 +40,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     if (!isNaN(Date.parse(fecha))) {
 
 
-        this.fecha = Date.parse(fecha); 
+        this.fecha = Date.parse(fecha);   
         
     }
 
@@ -72,6 +72,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         } else {
             this.valor = this.valor;
         }
+
     }
 }
 
