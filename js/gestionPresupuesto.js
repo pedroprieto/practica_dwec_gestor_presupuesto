@@ -59,12 +59,20 @@ return balance;
 }
 
 
-
 function mostrarPresupuesto() {
     // TODO
     let x = presupuesto;
     return `Tu presupuesto actual es de ${x} €`;
 }
+
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+
+}
+
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
@@ -127,6 +135,25 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let fechaPer;
+
+        if (periodo == "dia"){
+            fechaPer = new Date(fecha).toISOString();
+            fechaPer = fechaPer.substring(0,10);
+            return fechaPer;
+        }
+        if (periodo == "mes"){
+            fechaPer = new Date(fecha).toISOString();
+            fechaPer = fechaPer.substring(0,7);
+            return fechaPer;
+        }
+        if (periodo == "anyo"){
+            fechaPer = new Date(fecha).toISOString();
+            fechaPer = fechaPer.substring(0,4);
+            return fechaPer;
+        }
+    }
 
     this.actualizarDescripcion = function(descripcionNueva){
         this.descripcion = descripcionNueva;
@@ -144,7 +171,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.fecha = fechaNueva;
         }
     }
-      
+    
+    
 }
 
 
@@ -159,5 +187,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance 
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos 
 }
