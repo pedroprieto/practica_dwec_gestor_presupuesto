@@ -24,7 +24,7 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     
     this.descripcion = descripcion;
 
@@ -33,6 +33,28 @@ function CrearGasto(descripcion, valor) {
     } else {
         this.valor = 0;
     }
+
+
+    this.fecha = new Date();
+    
+    if (!isNaN(Date.parse(fecha))) {
+
+
+        this.fecha = Date.parse(fecha); 
+        
+    }
+
+    this.etiquetas = [];
+
+    if(etiquetas = []) {
+
+        this.etiquetas = [];
+    }
+   
+  
+    
+
+    
     
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
@@ -48,19 +70,22 @@ function CrearGasto(descripcion, valor) {
             this.valor = valorNuevo;
             return valorNuevo; 
         } else {
-            this.valorNuevo = valor;
-            return valor;
+            this.valor = this.valor;
         }
     }
 }
 
 
 function listarGastos() {
-
+ return gastos;
 }
 
-function anyadirGasto() {
+function anyadirGasto(id) {
 
+    /*
+    this.id = this.idGasto; 
+    idGasto++;
+    gastos.push(id); */
 }
 
 function borrarGasto() {
@@ -72,7 +97,7 @@ function calcularTotalGastos() {
 }
 
 function calcularBalance() {
-    
+
 }
 
 
