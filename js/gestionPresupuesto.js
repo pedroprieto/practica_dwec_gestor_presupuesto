@@ -219,6 +219,28 @@ function filtrarGastos( object ) {
 	return gastosFiltrados;
 }
 
+function agruparGastos( periodo,etiquetas,fechaDesde, fechaHasta ) {
+// Devuelve un objeto con los resultados de realizar una agrupación por período temporal
+
+    // Devuelve un subconjunto de gastos filtrados según los parármetros pasados
+    return filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta })
+
+    // Ejecuta reduce sobre el subconjunto de gastos
+    .reduce( function( acumulador, gasto ){
+        // Para cada gasto se obtiene su período de agrupación
+        let agrupacion = gasto.obtenerPeriodoAgrupacion( periodo )
+
+        if( !acumulador[agrupacion] ) {
+            acumulador[agrupacion] = 0;
+        }
+
+        acumulador[agrupacion] += gasto.valor;
+
+        return acumulador;        
+    }, 
+    // El valor inicial del acumulador de reduce será un objeto vacío -> {}
+    {});
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
