@@ -88,7 +88,7 @@ function filtrarGastos(objeto) {
     }
   }
 
-  
+  //let nuevaMatriz;
 
   if (
     fechaDesde != undefined &&
@@ -228,22 +228,6 @@ function filtrarGastos(objeto) {
     fechaDesde === undefined &&
     fechaHasta === undefined &&
     valorMinimo != undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (filtro.etiquetas.indexOf(x) != -1 && filtro.valor >= valorMinimo) {
-          return filtro;
-        }
-      }
-    });
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo != undefined &&
     valorMaximo != undefined &&
     descripcionContiene != undefined &&
     etiquetasTiene === undefined
@@ -276,6 +260,40 @@ function filtrarGastos(objeto) {
         }
       }
     });
+  } else if (
+    fechaDesde === undefined &&
+    fechaHasta != undefined &&
+    valorMinimo === undefined &&
+    valorMaximo === undefined &&
+    descripcionContiene === undefined &&
+    etiquetasTiene != undefined
+  ) {
+    nuevaMatriz = gastos.filter((filtro) => {
+      for (let x of etiquetasTiene) {
+        if (
+          filtro.etiquetas.indexOf(x) != -1 &&
+          filtro.fecha <= Date.parse(fechaHasta)
+        ) {
+          return filtro;
+        }
+      }
+    });
+  } else if (
+    fechaDesde === undefined &&
+    fechaHasta === undefined &&
+    valorMinimo != undefined &&
+    valorMaximo === undefined &&
+    descripcionContiene === undefined &&
+    etiquetasTiene != undefined
+  ) {
+    nuevaMatriz = gastos.filter((filtro) => {
+      for (let x of etiquetasTiene) {
+        if (filtro.etiquetas.indexOf(x) != -1 && filtro.valor >= valorMinimo) {
+          return filtro;
+        }
+      }
+    });
+    num = nuevaMatriz.length;
   }
 
   return nuevaMatriz;

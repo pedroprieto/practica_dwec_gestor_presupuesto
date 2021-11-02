@@ -106,19 +106,19 @@ let agrupacion1 = datosPresupuesto.agruparGastos("dia");
 datosPresupuestoWeb.mostrarGastosAgrupadosWeb(
   "agrupacion-dia",
   agrupacion1,
-  "Dia"
+  "día"
 );
 
 let agrupacion2 = datosPresupuesto.agruparGastos("mes");
 datosPresupuestoWeb.mostrarGastosAgrupadosWeb(
   "agrupacion-mes",
   agrupacion2,
-  "Mes"
+  "mes"
 );
 
 let agrupacion3 = datosPresupuesto.agruparGastos("anyo");
 datosPresupuestoWeb.mostrarGastosAgrupadosWeb(
   "agrupacion-anyo",
   agrupacion3,
-  "Año"
+  "año"
 );
