@@ -16,27 +16,28 @@ function mostrarGastoWeb(idElemento, gasto) {
 
   let gastoDescripcion = document.createElement("div");
   gastoDescripcion.className = "gasto-descripcion";
-  gastoDescripcion.innerHTML = gastos.descripcion;
+  gastoDescripcion.innerHTML = gasto.descripcion;
   divGasto.append(gastoDescripcion);
 
   let gastoFecha = document.createElement("div");
   gastoFecha.className = "gasto-fecha";
-  gastoFecha.innerHTML = gastos.fecha;
+  let fechaNueva = new Date(gasto.fecha);
+  gastoFecha.innerHTML = fechaNueva.toLocaleString();
   divGasto.append(gastoFecha);
 
   let gastoValor = document.createElement("div");
   gastoValor.className = "gasto-valor";
-  gastoValor.innerHTML = gastos.valor;
+  gastoValor.innerHTML = gasto.valor;
   divGasto.append(gastoValor);
 
   let gastoEtiquetas = document.createElement("div");
   gastoEtiquetas.className = "gasto-etiquetas";
   divGasto.append(gastoEtiquetas);
 
-  for (let x of gastos.etiquetas) {
+  for (let x of gasto.etiquetas) {
     let gastoEtiqueta = document.createElement("span");
     gastoEtiqueta.className = "gasto-etiquetas-etiqueta";
-    gastoEtiqueta.innerHTML = x;
+    gastoEtiqueta.innerHTML = x + "<br>";
     gastoEtiquetas.append(gastoEtiqueta);
   }
 }
@@ -64,7 +65,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 
     let agrupacionValor = document.createElement("span");
     agrupacionValor.className = "agrupacion-dato-valor";
-    agrupacionValor.innerHTML = agrup[x] + "<br>";
+    let valorDecimal = agrup[x];
+    agrupacionValor.innerHTML = valorDecimal.toFixed(2) + "<br>";
     agrupacionDato.append(agrupacionValor);
   }
 }
