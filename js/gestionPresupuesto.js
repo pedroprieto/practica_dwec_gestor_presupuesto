@@ -54,7 +54,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     
     this.mostrarGastoCompleto = function()
     {
-        let fechaFormatoLocalizado = new Date(fecha);
+        //Corrección de profesor: modificación this.fecha.
+        let fechaFormatoLocalizado = new Date(this.fecha);
 
         let gasto = (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaFormatoLocalizado.toLocaleString()}\nEtiquetas:\n- ${etiquetas.join ("\n- ")}\n`);
 
@@ -114,7 +115,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //Si el período a agrupar es dia, el período de agrupación tendrá el formato aaaa-mm-dd; si es mes, tendrá el formato aaaa-mm; y si es anyo, tendrá el formato aaaa. Ejemplos:
     this.obtenerPeriodoAgrupacion = function (periodo)
     {
-        let fechaAux = fecha;
+        //Aquí igual: tienes que poner this.fecha. Además, como this.fecha es un timestamp, antes tendrás que pasarla a cadena de texto.
+        //Previa conversión a objeto Date
+        let fechaAux = new Date(this.fecha);
+
+        //El método toISOString() devuelve una cadena en el formato simplicado extendido ISO 8601 según la hora universal.
+        fechaAux = fechaAux.toISOString();
+
+        //Corrección de profesor: modificación this.fecha.
+        //let fechaAux = fecha; (pasa el test pero no es correcto)
         //Si utilizamos directamente fecha, no pasará la prueba de: el día. Se quedará solamente con el formato aaaa de la última prueba: anyo.
 
         if (periodo == "dia")
