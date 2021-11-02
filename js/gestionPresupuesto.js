@@ -358,9 +358,49 @@ function filtrarGastos(parametros){
 
 };
 
-function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+
+    let resultado = [];
+
+    console.log(`periodo ${periodo}`);
+    console.log(`fecha desde ${fechaDesde}`);
+    console.log(`fecha hasta ${fechaHasta}`);
+    console.log(`etiquetas ${etiquetas}`);
+
+    
+
+    // primer paso: filtramos los gastos por fechas
+    resultado = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+
+
+    //llamada al metodo de agrupacion de gasto -> Si el periodo no está definido,
+    // se le debe de poner "mes" como perido de afrupación predeterminado.
+
+    let pA = gasto.obtenerPeriodoAgrupacion(periodo);
+
+    resultado = resultado.reduce((pA, ));
+
+    //resultado = gastos.reduce(acumulador, {});
+
+
+    console.log(resultado);
+
 
 };
+
+// function acumulador(acc, gasto){
+
+//     let pA = gasto.obtenerPeriodoAgrupacion(periodo);
+
+//     if (!acc[pA]){
+//         acc[pA] = [];
+//     } else {
+//         acc[pA] = acc[pA] + gasto.valor;
+//     }
+
+//     return acc;
+    
+// };
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
