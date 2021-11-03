@@ -367,28 +367,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     console.log(`fecha hasta ${fechaHasta}`);
     console.log(`etiquetas ${etiquetas}`);
 
-    
-
-    // primer paso: filtramos los gastos por fechas
-    resultado = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
-
-
-    //llamada al metodo de agrupacion de gasto -> Si el periodo no está definido,
-    // se le debe de poner "mes" como perido de afrupación predeterminado.
-
-    let pA = gasto.obtenerPeriodoAgrupacion(periodo);
-
-    resultado = resultado.reduce((pA, ));
-
-    //resultado = gastos.reduce(acumulador, {});
-
-
-    console.log(resultado);
-
-
-};
-
-// function acumulador(acc, gasto){
+    // function acumulador(acc, gasto){
 
 //     let pA = gasto.obtenerPeriodoAgrupacion(periodo);
 
@@ -401,6 +380,36 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 //     return acc;
     
 // };
+
+    // primer paso: filtramos los gastos por fechas
+    resultado = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+
+
+    //llamada al metodo de agrupacion de gasto -> Si el periodo no está definido,
+    // se le debe de poner "mes" como perido de afrupación predeterminado.
+
+    //let pA = gasto.obtenerPeriodoAgrupacion(periodo);
+
+    //resultado = resultado.reduce((pA, rtrtr));
+
+    //resultado = gastos.reduce(acumulador, {});
+
+    return gastos.reduce(function(acum, item){
+
+        // primero poner un if para ver si existe o no el acumulador
+        // ver las fotos que ahi está como se hace.
+
+        
+
+        return acum;
+    }, {});
+
+    console.log(resultado);
+
+
+};
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
