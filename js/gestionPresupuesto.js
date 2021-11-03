@@ -225,7 +225,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
     if (!fechaDesde) {
 
-        fechaDesde = "2021-01-01";
+        fechaDesde = "2020-01-01";
 
     }
 
@@ -234,7 +234,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
         fechaHasta = new Date(Date.now()).toISOString().substr(0, 10);
     }
 
-    let gastosCreados = filtrarGastos(fechaDesde, fechaHasta, etiquetasTiene);
+    let gastosCreados = filtrarGastos({ fechaDesde, fechaHasta, etiquetasTiene });
 
     let resultado = gastosCreados.reduce((acc, gasto) => {
 
@@ -305,7 +305,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 
             for (let i = 0; i < gasto.etiquetas.length; i++) {
                 
-                for (let j = 0; i < etiquetasTiene.length; j++) {
+                for (let j = 0; j < etiquetasTiene.length; j++) {
 
                     if (gasto.etiquetas[i] == etiquetasTiene[j]) {
                         
