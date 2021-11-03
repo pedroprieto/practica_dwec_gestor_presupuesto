@@ -362,10 +362,10 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
     let resultado = [];
 
-    console.log(`periodo ${periodo}`);
-    console.log(`fecha desde ${fechaDesde}`);
-    console.log(`fecha hasta ${fechaHasta}`);
-    console.log(`etiquetas ${etiquetas}`);
+    //console.log(`periodo ${periodo}`);
+    //console.log(`fecha desde ${fechaDesde}`);
+    //console.log(`fecha hasta ${fechaHasta}`);
+    //console.log(`etiquetas ${etiquetas}`);
 
     // function acumulador(acc, gasto){
 
@@ -384,29 +384,29 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     // primer paso: filtramos los gastos por fechas
     resultado = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
 
-
     //llamada al metodo de agrupacion de gasto -> Si el periodo no está definido,
     // se le debe de poner "mes" como perido de afrupación predeterminado.
-
     //let pA = gasto.obtenerPeriodoAgrupacion(periodo);
-
     //resultado = resultado.reduce((pA, rtrtr));
-
     //resultado = gastos.reduce(acumulador, {});
-
-    return gastos.reduce(function(acum, item){
+    
+    return resultado.reduce(function(acum, item){
 
         // primero poner un if para ver si existe o no el acumulador
         // ver las fotos que ahi está como se hace.
-
         
+        let periodoAgrupacion = item.obtenerPeriodoAgrupacion(periodo);
 
+        if (!acum[periodoAgrupacion]){
+            //console.log("Agrupación no existe. Se crea");
+            acum[periodoAgrupacion] = 0;
+        }
+
+        acum[periodoAgrupacion] = acum[periodoAgrupacion] + item.valor;
         return acum;
     }, {});
 
-    console.log(resultado);
-
-
+    console.log(acum);
 };
 
 
