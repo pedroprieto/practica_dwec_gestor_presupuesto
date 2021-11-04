@@ -33,14 +33,7 @@ let gastos = gp.listarGastos();
 
 for(let gasto of gastos){
     gpw.mostrarGastoWeb("listado-gastos-completo", gasto);
-        /*** */
-        /*let evEditar = new gpw.EditarHandle();
-        evEditar.gasto = gasto;*/
-        //document.getElementsByClassName("gasto-editar").addEventListener("click", evEditar);
-        /*** */
 }
-
-//document.getElementsByClassName('gasto-editar').addEventListener("click", () => alert("hola"));
 
 let gastosFiltro = gp.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
 
