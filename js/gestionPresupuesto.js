@@ -41,6 +41,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     };
 
+    this.etiquetas = [];
+
     this.anyadirEtiquetas = function(...nuevasEtiquetas) {
         for (let etiq of nuevasEtiquetas) {
 
@@ -60,8 +62,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     if (etiquetas.length > 0) {
         this.anyadirEtiquetas(...etiquetas);
-    } else {
-        this.etiquetas = [];
     }
 }
 
