@@ -52,6 +52,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     };
 
+    this.borrarEtiquetas = function(...nombreEtiquetas) {
+
+        for (let etiq of nombreEtiquetas) {
+            let posEtiqueta = this.etiquetas.indexOf(etiq);
+
+            if (posEtiqueta >= 0) {
+                this.etiquetas.splice(posEtiqueta, 1);
+            }
+        }
+    };
+
     this.actualizarFecha = function(nuevaFecha) {
         if (! isNaN(Date.parse(nuevaFecha))) {
             this.fecha = Date.parse(nuevaFecha);
