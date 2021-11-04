@@ -34,18 +34,40 @@ anyadirGasto(gasto5);
 anyadirGasto(gasto6);
 
 
-export {mostrarDatoEnId};
-export {mostrarGastosAgrupadosWeb};
-export {mostrarGastoWeb};
-export {mostrarPresupuesto};
-export {anyadirGasto};
-export {gastos};
-export {CrearGasto};
-export {calcularBalance};
-export {calcularTotalGastos};
-export {actualizarPresupuesto};
-export {listarGastos};
 
-export {filtrarGastos};
 
-export {agruparGastos};
+
+
+let node=document.getElementById('gastos-totales');
+let balance=document.getElementById('balance-total');
+let listadogastos=document.getElementById('listado-gastos-completo');
+let gastosfiltrados1=document.getElementById('listado-gastos-filtrado-1');
+let gastosfiltrados2=document.getElementById('listado-gastos-filtrado-2');
+let gastosfiltrados3=document.getElementById('listado-gastos-filtrado-3');
+let gastosfiltrados4=document.getElementById('listado-gastos-filtrado-4');
+let gastosagrupadosdia=document.getElementById('agrupacion-dia');
+let gastosagrupadosmes=document.getElementById('agrupacion-mes');
+let gastosagrupadosyear=document.getElementById('agrupacion-anyo');
+
+
+mostrarDatoEnId(presupuesto,mostrarPresupuesto());
+mostrarDatoEnId(node,Math.floor(calcularTotalGastos()));
+mostrarDatoEnId(balance,Math.floor(calcularBalance()));
+
+
+IterarGastos(listadogastos,listarGastos());
+IterarGastos(gastosfiltrados1,filtrarGastos({fechaDesde:"2021-09-01",fechaHasta:"2021-09-30"}));
+IterarGastos(gastosfiltrados2,filtrarGastos({valorMinimo:50}));
+IterarGastos(gastosfiltrados3,filtrarGastos({valorMaximo:200,etiquetasTiene:["seguros"]}));
+IterarGastos(gastosfiltrados4,filtrarGastos({valorMaximo:50, etiquetasTiene:["comida","transporte"]}));
+
+
+mostrarGastosAgrupadosWeb(gastosagrupadosdia,agruparGastos("dia"),"día");
+mostrarGastosAgrupadosWeb(gastosagrupadosmes,agruparGastos("mes"),"mes");
+mostrarGastosAgrupadosWeb(gastosagrupadosyear,agruparGastos("anyo"),"año");
+
+function IterarGastos(elemento,arraygastos){
+    for(let gasto of arraygastos ){
+        mostrarGastoWeb(elemento,gasto);
+    }
+}
