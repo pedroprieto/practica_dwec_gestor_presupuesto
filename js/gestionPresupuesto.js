@@ -3,35 +3,6 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-let gasto = {
-    descripcion: "",
-    valor: 0,
-    fecha: 0,
-    etiquetas: [],
-
-    mostrarGasto() {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    },
-    actualizarDescripcion(descripcion) {
-        this.descripcion = descripcion;
-    },
-
-    actualizarValor(valor) {
-        if (valor >= 0) {
-            this.valor = valor;
-        }
-    },
-
-    anyadirEtiquetas(nuevasEtiquetas) {
-        for (let etiq of nuevasEtiquetas) {
-
-            if(! this.etiquetas.includes(etiq)) {
-                this.etiquetas.push(etiq);
-            }
-        }
-    },
-}
-
 function actualizarPresupuesto(nuevoValor) {
 
     if (nuevoValor >= 0) {
@@ -48,19 +19,44 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha = new Date(), ...etiquetas) {
-    gasto.descripcion = descripcion;
+    this.descripcion = descripcion;
     
     if (valor >= 0) {
-        gasto.valor = valor;
+        this.valor = valor;
     } else {
-        gasto.valor = 0;
+        this.valor = 0;
     }
+
+    this.mostrarGasto = function() {
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    };
+
+    this.actualizarDescripcion = function(descripcion) {
+        this.descripcion = descripcion;
+    };
+
+    this.actualizarValor = function(valor) {
+        if (valor >= 0) {
+            this.valor = valor;
+        }
+    };
+
+    this.anyadirEtiquetas = function(...nuevasEtiquetas) {
+        for (let etiq of nuevasEtiquetas) {
+
+            if(! this.etiquetas.includes(etiq)) {
+                this.etiquetas.push(etiq);
+            }
+        }
+    };
+
+    this.fecha = (isNaN(Date.parse(fecha))) ? Date.now() : fecha; 
 
     if (etiquetas.length > 0) {
-        gasto.anyadirEtiquetas(etiquetas);
+        this.anyadirEtiquetas(...etiquetas);
+    } else {
+        this.etiquetas = [];
     }
-
-    return gasto;
 }
 
 function listarGastos() {
