@@ -15,12 +15,15 @@ function mostrarGastoWeb(idElemento, gastos){
         div.append("gasto-descripcion", gasto.descripcion);
         div.append("gasto-fecha", gasto.fecha);
         div.append("gasto-valor", gasto.valor);
-        
-        document.body.append(div);
 
+        let etiquetas = gasto.etiquetas;
+
+        for (let etiqueta of etiquetas)
+        {            
+            div.append("gasto-etiquetas", etiqueta);
+        }
         
-    
-        
+        document.body.append(div);   
     }
 }
 function mostrarGastoAgrupadosWeb(){
