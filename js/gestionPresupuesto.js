@@ -52,6 +52,12 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     };
 
+    this.actualizarFecha = function(nuevaFecha) {
+        if (! isNaN(Date.parse(nuevaFecha))) {
+            this.fecha = Date.parse(nuevaFecha);
+        }
+    };
+
     let nFecha = Date.parse(fecha);
 
     if (isNaN(nFecha)) {
