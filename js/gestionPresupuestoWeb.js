@@ -12,14 +12,18 @@ function mostrarGastoWeb(idElemento, gastos){
 
         div.className = "gasto";
 
-        div.append('div', "gasto-descripcion", gasto.descripcion); 
+        div.append("gasto-descripcion", gasto.descripcion);
+        div.append("gasto-fecha", gasto.fecha);
+        div.append("gasto-valor", gasto.valor);
+        
+        document.body.append(div);
 
+        
+    
+        
     }
-    document.getElementById(idElemento) = div;
-    document.body.append(div);
 }
 function mostrarGastoAgrupadosWeb(){
-
 }
 
 export {

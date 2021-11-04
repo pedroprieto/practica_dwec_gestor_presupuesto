@@ -4,7 +4,11 @@
   import * as gesPres from "./gestionPresupuesto.js";
 
   gesPres.actualizarPresupuesto(1500);
+
   gesPresWeb.mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
+
+  
+
 
   let g1 = new gesPres.CrearGasto("Compra carne", 23.44, "2021-10-06", "supermercado", "comida");
   let g2 = new gesPres.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -20,6 +24,7 @@
   gesPres.anyadirGasto(g5);
   gesPres.anyadirGasto(g6);
 
-
+  gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
+  gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
   gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gesPres.listarGastos());
