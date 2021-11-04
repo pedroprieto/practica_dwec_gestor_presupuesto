@@ -6,7 +6,7 @@ import * as gestionPresupuesto from "./gestionPresupuesto.js";
 function mostrarDatoEnId(idElemento, valor){
 
     let div = document.getElementById(idElemento);
-    div.innerHTML = valor;
+    div.textContent = valor;
 }
 
 
@@ -47,7 +47,7 @@ function mostrarGastoWeb(idElemento, gasto){
     // boton borrar
     let botonBorrar = document.createElement('button');
     botonBorrar.className = "gasto-borrar";
-    botonBorrar.id = "gasto-editar";
+    botonBorrar.id = "gasto-borrar";
     botonBorrar.type = "button";
     botonBorrar.textContent = "Borrar gasto";
     // evento boton borrar
@@ -67,7 +67,14 @@ function mostrarGastoWeb(idElemento, gasto){
         spanEtiqueta.className = "gasto-etiquetas-etiqueta";
         spanEtiqueta.textContent = `${eti}`;
         divEtiquetas.append(spanEtiqueta);
+
+        let eventBorrarEti = new BorrarEtiquetasHandle();
+        eventBorrarEti.gasto = gasto;
+        eventBorrarEti.etiqueta = eti;
+        spanEtiqueta.addEventListener('click', eventBorrarEti);
     }
+
+
 
         divGasto.append(divDescripcion);
         divGasto.append(divFecha);
@@ -84,25 +91,35 @@ function mostrarGastoWeb(idElemento, gasto){
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     let cuerpo = document.getElementById(idElemento);
-    let divAgrupados = "";
+    
+    let divAgrupacion = document.createElement('div');
+    divAgrupacion.className = "agrupacion";
+    let h1 = document.createElement('h1');
+    h1.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrupacion.append(h1);
+
 
 
     for (const[key, value] of Object.entries(agrup)) {
         
-        divAgrupados += `
-            <div class="agrupacion-dato">
-                <span class="agrupacion-dato-clave">${key}</span>
-                <span class="agrupacion-dato-valor">${value}</span>
-            </div>
-        `;
+        let divAgruDato = document.createElement('div');
+        divAgruDato.className = "agrupacion-dato";
+
+        let spanKey = document.createElement('span');
+        spanKey.className = "agrupacion-dato-clave";
+        spanKey.textContent = `${key}`;
+
+        let spanValue = document.createElement('span');
+        spanValue.className = "agrupacion-dato-valor";
+        spanValue.textContent = `${value}`;
+
+        divAgruDato.append(spanKey);
+        divAgruDato.append(spanValue);
+        divAgrupacion.append(divAgruDato);
     }   
 
-    cuerpo.innerHTML = `
-        <div class="agrupacion">
-            <h1>Gastos agrupados por ${periodo}</h1>
-            ${divAgrupados}
-        </div>
-    `;
+    cuerpo.append(divAgrupacion);
+ 
 }
 
 
@@ -162,7 +179,8 @@ function EditarHandle(){
       this.gasto.actualizarFecha(fecha);
 
       let etiquetas = prompt("Introduce las etiquetas:", this.gasto.etiquetas);
-      this.gasto.anyadirEtiquetas(etiquetas);
+      etiquetas = etiquetas.split(',');
+      this.gasto.anyadirEtiquetas(...etiquetas);
 
       repintar();
     }
@@ -171,9 +189,19 @@ function EditarHandle(){
 function BorrarHandle(){
 
     this.handleEvent = function(e){
-        
 
         gestionPresupuesto.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+}
+
+function BorrarEtiquetasHandle(){
+
+    this.handleEvent = function(e){
+        
+        this.etiqueta = this.etiqueta.split(',');
+        this.gasto.borrarEtiquetas(...this.etiqueta);
 
         repintar();
     }
@@ -187,5 +215,6 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     EditarHandle,
-    BorrarHandle
+    BorrarHandle,
+    BorrarEtiquetasHandle
 }
