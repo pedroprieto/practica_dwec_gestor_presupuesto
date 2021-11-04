@@ -18,7 +18,7 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €` ;
 }
 
-function CrearGasto(descripcion, valor, fecha = new Date(), ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     
     if (valor >= 0) {
@@ -50,7 +50,13 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ...etiquetas) {
         }
     };
 
-    this.fecha = (isNaN(Date.parse(fecha))) ? Date.now() : fecha; 
+    let nFecha = Date.parse(fecha);
+
+    if (isNaN(nFecha)) {
+        this.fecha = Date.now();
+    } else {
+        this.fecha = nFecha;
+    }
 
     if (etiquetas.length > 0) {
         this.anyadirEtiquetas(...etiquetas);
