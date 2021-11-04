@@ -67,8 +67,11 @@ function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {
+function anyadirGasto(nuevoGasto) {
 
+    nuevoGasto["id"] = idGasto;
+    idGasto++;
+    gastos.push(nuevoGasto);
 }
 
 function borrarGasto() {
