@@ -64,7 +64,7 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ...etiquetas) {
 }
 
 function listarGastos() {
-
+    return gastos;
 }
 
 function anyadirGasto() {
