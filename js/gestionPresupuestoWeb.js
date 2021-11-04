@@ -172,8 +172,8 @@ function BorrarHandle(){
 
     this.handleEvent = function(e){
         
-        let idGasto = prompt("Introduzca el Id del gasto a borrar", this.gasto.id);
-        this.gasto.borrarGasto(parseInt(idGasto));
+
+        gestionPresupuesto.borrarGasto(this.gasto.id);
 
         repintar();
     }
