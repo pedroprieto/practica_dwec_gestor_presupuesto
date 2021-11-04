@@ -13,25 +13,72 @@ function mostrarDatoEnId(idElemento, valor){
 function mostrarGastoWeb(idElemento, gasto){
     
     let cuerpo = document.getElementById(idElemento);
-    let divEtiquetas = "";
+
+    let divGasto = document.createElement('div');
+    divGasto.className = "gasto";
+    divGasto.id = "gasto-editar";
+
+    let divDescripcion = document.createElement('div');
+    divDescripcion.className = "gasto-descripcion";
+    divDescripcion.textContent = `${gasto.descripcion}`;
+
+    let divFecha = document.createElement('div');
+    divFecha.className = "gasto-fecha";
+    divFecha.textContent = `${gasto.fecha}`;
+
+    let divValor = document.createElement('div');
+    divValor.className = "gasto-valor";
+    divValor.textContent = `${gasto.valor}`;
+
+    let divEtiquetas = document.createElement('div');
+    divEtiquetas.className = "gasto-etiquetas";
+    
+    // boton editar
+    let botonEditar = document.createElement('button');
+    botonEditar.className = "gasto-editar";
+    botonEditar.id = "gasto-editar";
+    botonEditar.type = "button";
+    botonEditar.textContent = "Editar gasto";
+    // evento del botonEditar
+    let eventEditar = new EditarHandle();
+    eventEditar.gasto = gasto;
+    botonEditar.addEventListener("click", eventEditar);
+
+    // boton borrar
+    let botonBorrar = document.createElement('button');
+    botonBorrar.className = "gasto-borrar";
+    botonBorrar.id = "gasto-editar";
+    botonBorrar.type = "button";
+    botonBorrar.textContent = "Borrar gasto";
+    // evento boton borrar
+    let eventBorrar = new BorrarHandle();
+    eventBorrar.gasto = gasto;
+    botonBorrar.addEventListener("click", eventBorrar);
+
+    /*if(botonEditar.addEventListener("click", eventEditar)){
+        divGasto.id = "gasto-editar";
+    }else if(botonBorrar.addEventListener("click", eventBorrar)){
+        divGasto.id = "gasto-borrar";
+    }*/
 
     for (let eti of gasto.etiquetas) {
-         divEtiquetas += `
-        <span class="gasto-etiquetas-etiqueta">
-            ${eti}
-        </span>
-     `
+
+        let spanEtiqueta = document.createElement("span");
+        spanEtiqueta.className = "gasto-etiquetas-etiqueta";
+        spanEtiqueta.textContent = `${eti}`;
+        divEtiquetas.append(spanEtiqueta);
     }
-    cuerpo.innerHTML += `
-    <div class="gasto">
-        <div class="gasto-descripcion">${gasto.descripcion}</div>
-        <div class="gasto-fecha">${gasto.fecha}</div>
-        <div class="gasto-valor">${gasto.valor}</div>
-        <div class="gasto-etiquetas">
-        ${divEtiquetas}
-        </div>
-    </div>
-    `;
+
+        divGasto.append(divDescripcion);
+        divGasto.append(divFecha);
+        divGasto.append(divValor);
+        divGasto.append(divEtiquetas);
+        divGasto.append(botonEditar);
+        divGasto.append(botonBorrar);
+
+        cuerpo.append(divGasto);
+     
+
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -104,8 +151,31 @@ function nuevoGastoWeb(){
 
 function EditarHandle(){
 
-    this.handleEvent = function(){
+    this.handleEvent = function(e){
+      let descripcion = prompt("Introduce una descripcion:", this.gasto.descripcion);
+      this.gasto.actualizarDescripcion(descripcion);
+
+      let valor = prompt("Introduce un valor:", this.gasto.valor);
+      this.gasto.actualizarValor(parseFloat(valor));
+
+      let fecha = prompt("Introduce una fecha", this.gasto.fecha);
+      this.gasto.actualizarFecha(fecha);
+
+      let etiquetas = prompt("Introduce las etiquetas:", this.gasto.etiquetas);
+      this.gasto.anyadirEtiquetas(etiquetas);
+
+      repintar();
+    }
+}
+
+function BorrarHandle(){
+
+    this.handleEvent = function(e){
         
+        let idGasto = prompt("Introduzca el Id del gasto a borrar", this.gasto.id);
+        this.gasto.borrarGasto(parseInt(idGasto));
+
+        repintar();
     }
 }
 
@@ -115,5 +185,7 @@ export {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    EditarHandle,
+    BorrarHandle
 }

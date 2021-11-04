@@ -26,6 +26,7 @@ gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcu
 gestionPresupuestoWeb.mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
 
+
 gastos = gestionPresupuesto.listarGastos();
 for (const gasto of gastos) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
@@ -69,4 +70,7 @@ botonActualizarPresupuesto.addEventListener("click", gestionPresupuestoWeb.actua
 
 let botonAnyadirGasto = document.getElementById("anyadirgasto");
 botonAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb);
+
+
+
 
