@@ -65,66 +65,54 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${x} €`;
 }
 
-function filtrarGastos(opciones){
-opciones.fechaDesde;
-opciones.fechaHasta;
-opciones.valorMinimo;
-opciones.valorMaximo;
-opciones.descripcionContiene;
-opciones.etiquetasTiene = [];
-
-let fechaDesde = Date.parse(opciones.fechaDesde);
-let fechaHasta = Date.parse(opciones.fechaHasta);
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
 
 return gastos.filter(function(gasto){
     let resultado = true;
 
-    if (opciones.fechaDesde){
-        if(gasto.fecha <= fechaDesde){
+    if (fechaDesde){
+        if(gasto.fecha < Date.parse(fechaDesde)){
             resultado = false;
         }
         } 
-    if (opciones.fechaHasta){
-        if(gasto.fecha >= fechaHasta){
-            resultado = false;
-        }
-        } 
-    if (opciones.valorMinimo){
-        if(gasto.valor <= opciones.valorMinimo){
-            resultado = false;
-        }
-        } 
-    if (opciones.valorMaximo){
-        if(gasto.valor >= opciones.valorMaximo){
+    if (fechaHasta){
+        if(gasto.fecha > Date.parse(fechaHasta)){
             resultado = false;
         }
         }
-    if (opciones.descripcionContiene){
-        if(gasto.descripcion.includes(opciones.descripcionContiene)){
-            resultado = true;
-        }else{
+    if (valorMinimo){
+        if(gasto.valor < valorMinimo){
+            resultado = false;
+        }
+    }
+        
+    if (valorMaximo){
+        if(gasto.valor > valorMaximo){
+            resultado = false;
+        }
+    }
+    if (descripcionContiene){
+        if(!gasto.descripcion.includes(descripcionContiene)){
             resultado = false;
         }
         }
-    if (opciones.etiquetasTiene){
-        for(let e of opciones.etiquetasTiene){
-        if(gasto.etiquetas.indexOf(e) == -1){
-            resultado = false;
+    if (etiquetasTiene){
+        let encontrado = false;
+        for (let g of gasto.etiquetas){
+            for (let e of etiquetasTiene){
+                if (g == e){
+                    encontrado = true;
+                }
+            }
         }
+        if (encontrado == false){
+            resultado = false;
         }
     }
     
-
         return resultado;
-});
-  
-
+}); 
 }
-
-
-
-
-
 
 function agruparGastos(){
 
