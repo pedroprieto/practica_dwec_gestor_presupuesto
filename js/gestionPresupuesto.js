@@ -65,9 +65,66 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${x} €`;
 }
 
-function filtrarGastos(){
+function filtrarGastos(opciones){
+opciones.fechaDesde;
+opciones.fechaHasta;
+opciones.valorMinimo;
+opciones.valorMaximo;
+opciones.descripcionContiene;
+opciones.etiquetasTiene = [];
+
+let fechaDesde = Date.parse(opciones.fechaDesde);
+let fechaHasta = Date.parse(opciones.fechaHasta);
+
+return gastos.filter(function(gasto){
+    let resultado = true;
+
+    if (opciones.fechaDesde){
+        if(gasto.fecha <= fechaDesde){
+            resultado = false;
+        }
+        } 
+    if (opciones.fechaHasta){
+        if(gasto.fecha >= fechaHasta){
+            resultado = false;
+        }
+        } 
+    if (opciones.valorMinimo){
+        if(gasto.valor <= opciones.valorMinimo){
+            resultado = false;
+        }
+        } 
+    if (opciones.valorMaximo){
+        if(gasto.valor >= opciones.valorMaximo){
+            resultado = false;
+        }
+        }
+    if (opciones.descripcionContiene){
+        if(gasto.descripcion.includes(opciones.descripcionContiene)){
+            resultado = true;
+        }else{
+            resultado = false;
+        }
+        }
+    if (opciones.etiquetasTiene){
+        for(let e of opciones.etiquetasTiene){
+        if(gasto.etiquetas.indexOf(e) == -1){
+            resultado = false;
+        }
+        }
+    }
+    
+
+        return resultado;
+});
+  
 
 }
+
+
+
+
+
 
 function agruparGastos(){
 
