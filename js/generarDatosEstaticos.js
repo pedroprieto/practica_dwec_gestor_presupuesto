@@ -17,19 +17,21 @@ let gasto1 = new datosPresupuesto.CrearGasto(
   "casa",
   "comida"
 );
-let gasto2 = new datosPresupuesto.CrearGasto(
+export let gasto2 = new datosPresupuesto.CrearGasto(
   "Compra fruta y verdura",
   14.25,
   "2021-09-06",
   "supermercado",
   "comida"
 );
-let gasto3 = new datosPresupuesto.CrearGasto(
+/*let gasto3 = new datosPresupuesto.CrearGasto(
   "Bonobús",
   18.6,
   "2020-05-26",
   "transporte"
 );
+
+
 let gasto4 = new datosPresupuesto.CrearGasto(
   "Gasolina",
   60.42,
@@ -50,14 +52,14 @@ let gasto6 = new datosPresupuesto.CrearGasto(
   "2021-10-06",
   "transporte",
   "seguros"
-);
+);*/
 
 datosPresupuesto.anyadirGasto(gasto1);
 datosPresupuesto.anyadirGasto(gasto2);
-datosPresupuesto.anyadirGasto(gasto3);
+/*datosPresupuesto.anyadirGasto(gasto3);
 datosPresupuesto.anyadirGasto(gasto4);
 datosPresupuesto.anyadirGasto(gasto5);
-datosPresupuesto.anyadirGasto(gasto6);
+datosPresupuesto.anyadirGasto(gasto6);*/
 
 let gastoTotal = datosPresupuesto.calcularTotalGastos().toFixed(2);
 let datoTotal = datosPresupuestoWeb.mostrarDatoEnId(
@@ -76,7 +78,7 @@ for (const x of matrizGasto) {
   datosPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", x);
 }
 
-let filtro1 = datosPresupuesto.filtrarGastos({
+/*let filtro1 = datosPresupuesto.filtrarGastos({
   fechaDesde: "2021-09-01",
   fechaHasta: "2021-09-30",
 });
@@ -123,4 +125,5 @@ datosPresupuestoWeb.mostrarGastosAgrupadosWeb(
   "agrupacion-anyo",
   agrupacion3,
   "año"
-);
+);*/
+

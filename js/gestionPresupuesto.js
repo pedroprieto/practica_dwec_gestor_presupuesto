@@ -3,7 +3,7 @@
 
 // TODO: Variable global
 let presupuesto = 0;
-let gastos = [];
+export let gastos = [];
 let idGasto = 0;
 
 function actualizarPresupuesto(valorIntroducido) {
@@ -353,6 +353,7 @@ function agruparGastos(periodo, etiquetasTiene, fechaDesde, fechaHasta) {
   return result;
 }
 
+
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   // TODO
   this.descripcion = descripcion;
@@ -430,6 +431,16 @@ Etiquetas:` + "\n";
         this.etiquetas.splice(comparar, 1);
       }
     }
+  };
+
+  this.actualizarEtiquetas = function (...etiquetas) {
+   this.etiquetas = [];
+   for (const x of etiquetas) {
+     this.etiquetas.push(x);
+     
+   }
+   //this.etiquetas = etiquetas;
+    
   };
 
   this.obtenerPeriodoAgrupacion = function (periodo) {
