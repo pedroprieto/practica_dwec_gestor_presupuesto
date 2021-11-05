@@ -28,3 +28,10 @@
   gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
   gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gesPres.listarGastos());
+  
+  let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})
+  for (gastoFiltrado of gastosFiltrados)
+  {
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-1", gastosFiltrado);
+  }
+  
