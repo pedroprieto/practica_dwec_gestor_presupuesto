@@ -1,5 +1,7 @@
-import * as datosPresupuesto from "../js/gestionPresupuesto.js";
-import * as datosPresupuestoWeb from "../js/gestionPresupuestoWeb.js";
+import * as datosPresupuesto from "./gestionPresupuesto.js";
+import * as datosPresupuestoWeb from "./gestionPresupuestoWeb.js";
+
+
 
 let number = datosPresupuesto.actualizarPresupuesto(1500);
 let mostrar = datosPresupuesto.mostrarPresupuesto();
