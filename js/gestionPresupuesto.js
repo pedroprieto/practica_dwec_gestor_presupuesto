@@ -16,7 +16,7 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas = []) {
+function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas) {
 
     let valor = 0;
 
@@ -26,7 +26,7 @@ function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas = []
 
     this.valor = valor;
     this.descripcion = descripcion;
-    this.fecha = fecha;
+    this.fecha = Date.parse(fecha);
     this.etiquetas = etiquetas;
 
     this.mostrarGasto = function() {
@@ -35,13 +35,15 @@ function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas = []
 
     this.mostrarGastoCompleto = function() {
         let gastoCadena = '';
-        gastoCadena += `Gasto correspondiente a ${this.descripcion} con valor VALOR €.\n`;
-        gastoCadena += `Fecha: ${this.fecha.toLocaleString('es-ES')}\n`;
+        gastoCadena += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        gastoCadena += `Fecha: ${new Date(this.fecha).toLocaleString('es-ES')}\n`;
         gastoCadena += 'Etiquetas:\n';
 
         for(let etiqueta of this.etiquetas) {
-            gastoCadena += ` - ${etiqueta}\n`;
+            gastoCadena += `- ${etiqueta}\n`;
         }
+
+        return gastoCadena;
     }
 
     this.actualizarValor = function(nuevoValor) {
