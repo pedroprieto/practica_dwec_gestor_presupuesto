@@ -1,4 +1,6 @@
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(cantidad) {
     if (typeof cantidad === 'number' && cantidad >= 0) {
