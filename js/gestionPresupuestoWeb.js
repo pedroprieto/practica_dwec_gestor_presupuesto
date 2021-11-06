@@ -6,7 +6,8 @@ export  {
 
 
 function mostrarDatoEnId(idElemento,valor){
-    idElemento.append(valor);
+    console.log("hola");
+    document.getElementById(idElemento).append(valor);
 }
 
 function mostrarGastoWeb(idElemento,gasto){
@@ -28,7 +29,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
         // g.mostrarGastoCompleto()
         div.prepend(etiquetas);
-        idElemento.append(div);
+        document.getElementById(idElemento).append(div);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -45,7 +46,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
         div.prepend(div_agrupar);
     }
 
-    idElemento.append(div);
+    document.getElementById(idElemento).append(div);
 }
 
 function CrearElement(element,clase,texto){
