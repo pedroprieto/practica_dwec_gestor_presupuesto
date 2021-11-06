@@ -6,34 +6,35 @@ function mostrarDatosEnId(idElemento, valor){
 
 function mostrarGastosWeb(idElemento, gasto){
 
-    let contenedor = document.getElementById("container")
+    let contenedor = document.getElementById("aplicacion")
 
-    let gasto = document.createElement("div");
-    gasto.setAttribute("class", "gasto");
-    contenedor.appendChild(gasto);
+    let div_gasto = document.createElement("div");
+    div_gasto.setAttribute("class", "gasto");
+    contenedor.appendChild(div_gasto);
     
     let descripcion = document.createElement("div");
-    gasto.appendChild(descripcion);
+    div_gasto.appendChild(descripcion);
     descripcion.setAttribute("class", "gasto-descripcion");
-    descripcion.append(gasto1.descripcion);
+    descripcion.append(gasto.descripcion);
     
     let valor = document.createElement("div");
     valor.setAttribute("class", "gasto-valor");
-    gasto.appendChild(valor);
-    valor.append(gasto1.valor);
+    div_gasto.appendChild(valor);
+    valor.append(gasto.valor);
     
     let fecha = document.createElement("div");
     fecha.setAttribute("class", "gasto-fecha");
-    gasto.appendChild(fecha);fecha.append(gasto1.fecha);
+    div_gasto.appendChild(fecha);
+    fecha.append(gasto.fecha);
     
     let etiqueta = document.createElement("div");
     etiqueta.setAttribute("class", "gasto-etiquetas");
-    gasto.appendChild(etiqueta);
+    div_gasto.appendChild(etiqueta);
     
     let etiqs = document.createElement("span");
     etiqs.setAttribute("class", "gasto-etiquetas-etiqueta");
     etiqueta.appendChild(etiqs);
-    etiqs.append(gasto1.etiquetas);
+    etiqs.append(gasto.etiquetas);
 
 }
 
