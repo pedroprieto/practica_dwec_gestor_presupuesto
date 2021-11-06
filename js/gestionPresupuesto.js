@@ -36,7 +36,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     };
 
     this.actualizarValor = function(valor) {
-        
+
         if (valor >= 0) {
             this.valor = valor;
         }
@@ -67,16 +67,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.mostrarGastoCompleto = function() {
         let fechaFormato = new Date(this.fecha);
-        let etiquetasFormato = [];
+        let etiquetasFormato = "";
+
+        etiquetasFormato += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        etiquetasFormato += `Fecha: ${fechaFormato.toLocaleString('es-ES')}\n`;
+        etiquetasFormato += `Etiquetas:\n`;
 
         this.etiquetas.forEach(etiq => {
-            etiquetasFormato.push(`- ${etiq}\n`);
+            etiquetasFormato += `- ${etiq}\n`;
         });
 
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
-Fecha: ${fechaFormato.toLocaleString('es-ES')}
-Etiquetas:
-${etiquetasFormato.join('')}`;
+        return etiquetasFormato;
     };
 
     this.actualizarFecha = function(nuevaFecha) {
