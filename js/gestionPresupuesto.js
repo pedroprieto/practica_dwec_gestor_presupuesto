@@ -129,7 +129,9 @@ function calcularTotalGastos() {
 }
 
 function calcularBalance() {
+    let balance =  presupuesto - calcularTotalGastos();
 
+    return balance;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
