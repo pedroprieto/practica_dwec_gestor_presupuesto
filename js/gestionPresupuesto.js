@@ -196,9 +196,7 @@ function filtrarGastos(objeto) {
 }
 
 function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta) {
-debugger;
     let gastos = filtrarGastos({fechaDesde:fechaDesde,fechaHasta:fechaHasta,etiquetasTiene:etiquetas}).reduce((sum,current) =>{
-        debugger;
         let periodoAct = current.obtenerPeriodoAgrupacion(periodo);
         if(!sum[periodoAct]){
             sum[periodoAct]=0;
