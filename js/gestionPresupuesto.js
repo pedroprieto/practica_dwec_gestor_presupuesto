@@ -16,11 +16,11 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas) {
+function CrearGasto(descripcion, cantidad, fecha, ...etiquetas) {
 
     this.valor = (typeof cantidad === 'number' && cantidad >= 0) ? cantidad : 0;
     this.descripcion = descripcion;
-    this.fecha = Date.parse(fecha);
+    this.fecha = (!isNaN(Date.parse(fecha))) ? Date.parse(fecha) : Date.now();
     this.etiquetas = etiquetas;
 
     this.mostrarGasto = function() {
@@ -70,10 +70,27 @@ function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {}
-function borrarGasto() {}
-function calcularTotalGastos() {}
-function calcularBalance() {}
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+}
+
+function borrarGasto(id) {
+    gastos = gastos.filter(gasto => gasto.id != id);
+}
+
+function calcularTotalGastos() {
+    let totalGastos = 0;
+    for(let gasto of gastos) {
+        totalGastos += gasto.valor;
+    }
+    return totalGastos;
+}
+
+function calcularBalance() {
+    return presupuesto - calcularTotalGastos();
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
