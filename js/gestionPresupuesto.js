@@ -439,7 +439,7 @@ Etiquetas:` + "\n";
      this.etiquetas.push(x);
      
    }
-   //this.etiquetas = etiquetas;
+  
     
   };
 
