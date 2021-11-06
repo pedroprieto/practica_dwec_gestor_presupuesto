@@ -1,13 +1,13 @@
 let presupuesto = 0;
 
 function actualizarPresupuesto(cantidad) {
-    if (cantidad >= 0) {
+    if (typeof cantidad === 'number' && cantidad >= 0) {
         presupuesto = cantidad;
         return presupuesto;
+    } else {
+        console.log("La cantidad introducida no puede ser negativa.")
+        return -1;    
     }
-
-    console.log("La cantidad introducida no puede ser negativa.")
-    return -1;    
 }
 
 function mostrarPresupuesto() {
