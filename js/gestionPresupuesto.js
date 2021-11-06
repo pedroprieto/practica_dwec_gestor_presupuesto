@@ -33,6 +33,9 @@ function CrearGasto(descripcion, cantidad) {
                 this.valor = nuevoValor;
             }
         },
+        actualizarDescripcion: function(nuevaDescripcion) {
+            this.descripcion = nuevaDescripcion;
+        },
     };
 
     return gasto;
