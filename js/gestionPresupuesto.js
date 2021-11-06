@@ -18,13 +18,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas) {
 
-    let valor = 0;
-
-    if (typeof cantidad === 'number' && cantidad >= 0) {
-        valor = cantidad;
-    }
-
-    this.valor = valor;
+    this.valor = (typeof cantidad === 'number' && cantidad >= 0) ? cantidad : 0;
     this.descripcion = descripcion;
     this.fecha = Date.parse(fecha);
     this.etiquetas = etiquetas;
@@ -54,6 +48,21 @@ function CrearGasto(descripcion, cantidad, fecha = Date.now(), ...etiquetas) {
 
     this.actualizarDescripcion = function(nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
+    }
+
+    this.actualizarFecha = function(fecha) {
+        if (!isNaN(Date.parse(fecha))) {
+            this.fecha = Date.parse(fecha);
+        }
+    }
+
+    this.anyadirEtiquetas = function(...etiquetas) {
+        let nuevasEtiquetas = etiquetas.filter(etiqueta => !this.etiquetas.includes(etiqueta));
+        this.etiquetas = this.etiquetas.concat(nuevasEtiquetas);
+    }
+
+    this.borrarEtiquetas = function(...etiquetas) {
+        this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetas.includes(etiqueta));
     }
 }
 
