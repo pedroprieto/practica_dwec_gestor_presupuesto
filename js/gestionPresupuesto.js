@@ -119,7 +119,13 @@ function borrarGasto(idGasto) {
 }
 
 function calcularTotalGastos() {
+    let totalGastos = 0;
 
+    gastos.forEach(gasto => {
+        totalGastos += gasto.valor;
+    });
+
+    return totalGastos;
 }
 
 function calcularBalance() {
