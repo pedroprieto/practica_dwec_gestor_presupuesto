@@ -25,6 +25,9 @@ function CrearGasto(descripcion, cantidad) {
     let gasto = {
         valor: valor,
         descripcion: descripcion,
+        mostrarGasto: function() {
+            return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        },
     };
 
     return gasto;
