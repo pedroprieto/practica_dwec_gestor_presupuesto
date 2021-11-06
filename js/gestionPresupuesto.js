@@ -28,6 +28,11 @@ function CrearGasto(descripcion, cantidad) {
         mostrarGasto: function() {
             return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         },
+        actualizarValor: function(nuevoValor) {
+            if (typeof nuevoValor === 'number' && nuevoValor >= 0) {
+                this.valor = nuevoValor;
+            }
+        },
     };
 
     return gasto;
