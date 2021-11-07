@@ -130,6 +130,7 @@ function CrearGasto(descripcion, valorGasto, fecha = new Date(), ...etiquetas) {
 }
 
 function listarGastos() {
+    debugger;
     return gastos;
 }
 
@@ -162,6 +163,7 @@ function calcularBalance() {
 }
 
 function filtrarGastos(objeto) {
+    debugger;
     // Creamos una copia del objeto gastos para poder filtrar sobre él.
     let copiaGastos = gastos.slice();
     // debugger;
