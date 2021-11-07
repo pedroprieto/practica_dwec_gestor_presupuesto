@@ -114,8 +114,39 @@ return gastos.filter(function(gasto){
 }); 
 }
 
-function agruparGastos(){
+function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta){
 
+    let etiquetasTiene = etiquetas;
+
+    if(!periodo){
+        periodo = "mes";
+    }
+
+    if(!fechaDesde){
+        fechaDesde = "2000-01-01";
+    }
+
+    if(!fechaHasta){
+        fechaHasta = new Date();
+    }
+
+
+    let gastosFiltrados = filtrarGastos({etiquetasTiene,fechaDesde,fechaHasta});
+    
+
+    return gastosFiltrados.reduce(function(acum, gasto){
+        let pa = gasto.obtenerPeriodoAgrupacion(periodo);
+        
+
+        if (!acum[pa]){
+            acum[pa] = 0;
+        }
+            acum[pa] = acum[pa] + gasto.valor;
+        
+        return acum;
+
+    },{});
+      
 }
 
 
