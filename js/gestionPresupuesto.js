@@ -168,11 +168,6 @@ function calcularTotalGastos() {
     return sumAll;
 }
 
-// Comprueba si el objeto esta vacio (sin propiedades)
-function isObjEmpty( object ) {
-    return Object.keys( object ).length === 0;
-}
-
 function filtrarGastos( {fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene} ){
 
     return gastos.filter( function( gasto ) {
