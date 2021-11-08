@@ -27,11 +27,39 @@
   gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
   gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
-  gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gesPres.listarGastos());
-  
-  let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})
-  for (gastoFiltrado of gastosFiltrados)
+  let gastos = gesPres.listarGastos();
+
+  for (let gasto of gastos)
   {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-1", gastosFiltrado);
+    gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+  }
+
+  let gastosFiltrados1 = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
+  
+  for (let gasto of gastosFiltrados1)
+  {
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-1", gasto);
   }
   
+  let gastosFiltrados2 = gesPres.filtrarGastos({valorMinimo: 50});
+  
+  for (let gasto of gastosFiltrados2)
+  {
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-2", gasto);
+  }
+
+  let gastosFiltrados3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: "seguros"});
+  
+  for (let gasto of gastosFiltrados3)
+  {
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-3", gasto);
+  }
+
+  let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: "comida, transporte"});
+  
+  for (let gasto of gastosFiltrados4)
+  {
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-4", gasto);
+  }
+
+  gesPresWeb.mostrarGastoAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos(periodo));
