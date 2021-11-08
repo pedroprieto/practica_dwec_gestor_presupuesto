@@ -35,29 +35,42 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
 
-    this.fecha = new Date();
+    this.fecha = Date.now();  //almaceno la fecha de hoy
+
     
-    if (!isNaN(Date.parse(fecha))) {
+    if (!isNaN(Date.parse(fecha))) {  //si fecha es false, almaceno la fecha actual en timestamp
 
 
-        this.fecha = Date.parse(fecha);   
+        this.fecha = Date.parse(fecha); 
         
     }
 
-    this.etiquetas = [];
+    this.etiquetas = [];  //inicializo el array vacío
 
-    if(etiquetas = []) {
+    if(etiquetas) {
 
+        this.etiquetas = etiquetas;
+        
+    }
+    
+    if(etiquetas.length === 0)
+    {
         this.etiquetas = [];
     }
-   
-  
     
+    
+    this.mostrarGastoCompleto = function() {
 
-    
-    
-    this.mostrarGasto = function() {
-        return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
+        let fechaLocal = new Date(fecha).toLocaleString();
+
+        let resultado = "\n";
+
+        for (var el of etiquetas) 
+        {
+            resultado = resultado + "- " + el + "\n";
+        }
+
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €.\nFecha: ${fechaLocal}\nEtiquetas:${resultado}`;
     }
 
     this.actualizarDescripcion = function(descripcionNueva) {
@@ -78,27 +91,44 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
 
 function listarGastos() {
- return gastos;
+    return gastos;
 }
 
-function anyadirGasto(id) {
+function anyadirGasto(gasto) {
 
-    /*
-    this.id = this.idGasto; 
+    
+    gasto.id = this.idGasto; 
     idGasto++;
-    gastos.push(id); */
+    gastos.push(gasto); 
 }
 
 function borrarGasto() {
-
+    for (const el in gastos)
+    {
+        if(gasto.id)
+        {
+            return gastos.splice(0,1);
+        }else {}
+    }
+    
 }
 
 function calcularTotalGastos() {
+    for (const el in gastos)
+    {
+        for(var ol of gastos.valor)
+        {
+            var total = gastos.valor.reduce ((sum, current) => sum + current, 0);
+        }
+    }
 
+    return total;
 }
 
 function calcularBalance() {
+    let balance;
 
+    balance = presupuesto - calcularTotalGastos();
 }
 
 
