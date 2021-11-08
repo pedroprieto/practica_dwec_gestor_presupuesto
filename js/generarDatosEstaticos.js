@@ -38,28 +38,27 @@
   
   for (let gasto of gastosFiltrados1)
   {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-1", gasto);
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
   }
   
   let gastosFiltrados2 = gesPres.filtrarGastos({valorMinimo: 50});
   
   for (let gasto of gastosFiltrados2)
   {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-2", gasto);
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
   }
 
-  let gastosFiltrados3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: "seguros"});
+  let gastosFiltrados3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetas:"seguros"});
   
   for (let gasto of gastosFiltrados3)
   {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-3", gasto);
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
   }
 
-  let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: "comida, transporte"});
+  let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetas:"comida, transporte"});
   
   for (let gasto of gastosFiltrados4)
   {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrados-4", gasto);
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
   }
 
-  gesPresWeb.mostrarGastoAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos(periodo));

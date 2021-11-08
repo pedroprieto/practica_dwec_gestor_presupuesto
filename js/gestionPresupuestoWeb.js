@@ -48,7 +48,7 @@ function mostrarGastoWeb(idElemento, gasto){
     raiz.append(div); 
 }
 function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
-    for (let agr of agrup)
+    /*for (let agr of agrup)
     {
         let div = document.createElement('div');
         div.className = "agrupacion";
@@ -74,7 +74,7 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
         div.append(div1);
         let raiz = document.getElementById(idElemento);
         raiz.append(div);
-    }
+    }*/
 }
 
 export {
