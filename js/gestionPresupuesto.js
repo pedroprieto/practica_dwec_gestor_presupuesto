@@ -61,7 +61,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     
     this.mostrarGastoCompleto = function() {
 
-        let fechaLocal = new Date(fecha).toLocaleString();
+        let fechaLocal = new Date(this.fecha).toLocaleString();
 
         let resultado = "\n";
 
@@ -85,6 +85,26 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         } else {
             this.valor = this.valor;
         }
+    }
+
+    this.actualizarFecha = function(fechaActualizada) {
+        
+        if(!isNaN(Date.parse(fechaActualizada)))
+        {
+            this.fecha = Date.parse(fechaActualizada);
+        } 
+        else 
+        {
+            this.fecha = this.fecha;
+        }
+    }
+
+    this.anyadirEtiquetas = function() {
+
+    }
+
+    this.borrarEtiquetas = function() {
+
     }
 }
 
