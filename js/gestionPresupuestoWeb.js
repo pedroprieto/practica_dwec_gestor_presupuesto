@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 function mostrarDatoEnId( idElemento, valor ){
 // Escribe el valor (texto) en el elemento HTML con id idElemento indicado
     idElemento.append( valor );
