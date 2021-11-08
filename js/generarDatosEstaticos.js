@@ -61,4 +61,12 @@
   {
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
   }
+  let periodo1 = "dia";
+  gesPresWeb.mostrarGastoAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos(periodo1), "día");
+
+  let periodo2 = "mes";
+  gesPresWeb.mostrarGastoAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos(periodo2), "mes");
+
+  let periodo3 = "anyo";
+  gesPresWeb.mostrarGastoAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos(periodo3), "año");
 
