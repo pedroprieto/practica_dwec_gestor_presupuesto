@@ -173,50 +173,60 @@ function isObjEmpty( object ) {
     return Object.keys( object ).length === 0;
 }
 
-function filtrarGastos( object ) {
-    // Devolverá un subconjunto de los gastos existentes
+function filtrarGastos( {fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene} ){
 
-    // Copio el array gastos en un nuevo array 'gastosFiltrados'
-    // El array original no se modifica
-    let gastosFiltrados = gastos.slice();
+    return gastos.filter( function( gasto ) {
 
-    // Si el objeto esta vacio (no se pasan parámetros) -> Devuelve el array gastos
-	if ( isObjEmpty(object) ) {
-        return gastosFiltrados;
-    }
+        let resultado = true;
+    
+        if ( fechaDesde ){
+            if( gasto.fecha < Date.parse( fechaDesde )){
+                resultado = false;
+            }
+        } 
 
-    // if ( object.fechaDesde) -> Si existe la propiedad 'dechaDesde' en el objeto, entra en el if
-	if ( object.fechaDesde ) {        
-        // gastosFiltrados.filter(condición) -> Si cumple la condición añade el gasto al array, si no pasa al siguiente
-		gastosFiltrados = gastosFiltrados.filter((x) => x.fecha >= Date.parse( object["fechaDesde"] ));
-    }
+        if ( fechaHasta ){
+            if( gasto.fecha > Date.parse( fechaHasta )){
+                resultado = false;
+            }
+        }
 
-	if ( object.fechaHasta ) {
-		gastosFiltrados = gastosFiltrados.filter((x) => x.fecha <= Date.parse( object.fechaHasta ));
-	}
+        if ( valorMinimo ){
+            if( gasto.valor < valorMinimo ){
+                resultado = false;
+            }
+        }
+    
+        if ( valorMaximo ){
+            if( gasto.valor > valorMaximo ){
+                resultado = false;
+            }
+        }
 
-	if ( object.valorMinimo ) {
-		gastosFiltrados = gastosFiltrados.filter((x) => x.valor > object.valorMinimo);
-	}
+        if (descripcionContiene){
+            if( gasto.descripcion.indexOf( descripcionContiene ) == -1){
+                resultado = false;
+            }
+        }
 
-	if ( object.valorMaximo ) {
-		gastosFiltrados = gastosFiltrados.filter((x) => x.valor < object.valorMaximo);
-	}
+        if (etiquetasTiene){
+            let encontrado = false;
 
-	if ( object.descripcionContiene ) {
-		gastosFiltrados = gastosFiltrados.filter((x) => x.descripcion.indexOf( object.descripcionContiene ) > -1 );
-	}
+            for ( let etiquetaGasto of gasto.etiquetas ){
+                for ( let etiqueta of etiquetasTiene ){
 
-	if ( object.etiquetasTiene ) {
-		gastosFiltrados = gastosFiltrados.filter((x) => {
-			for( let valor of x["etiquetas"] ) {
-				if ( object.etiquetasTiene.indexOf(valor) > -1 ) {
-					return x;
-				}
-			}
-		});
-	}
-	return gastosFiltrados;
+                    if ( etiquetaGasto == etiqueta ){
+                        encontrado = true;
+                    }
+                }
+            }
+            if ( !encontrado ){
+                resultado = false;
+            }
+        }
+    
+        return resultado;
+    }); 
 }
 
 function agruparGastos( periodo,etiquetas,fechaDesde, fechaHasta ) {
