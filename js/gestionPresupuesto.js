@@ -1,6 +1,8 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+"use strict";
 
-// TODO: Variable global
+// Crear las funciones, objetos y variables indicadas en el enunciado
+
+// Variable global
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
