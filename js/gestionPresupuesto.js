@@ -35,17 +35,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
 
-    this.fecha = Date.now();  //almaceno la fecha de hoy
+    this.fecha = Date.now();  
 
     
-    if (!isNaN(Date.parse(fecha))) {  //si fecha es false, almaceno la fecha actual en timestamp
+    if (!isNaN(Date.parse(fecha))) {  
 
 
         this.fecha = Date.parse(fecha); 
         
     }
 
-    this.etiquetas = [];  //inicializo el array vacío
+    this.etiquetas = []; 
 
     if(etiquetas) {
 
@@ -85,7 +85,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         } else {
             this.valor = this.valor;
         }
-
     }
 }
 
