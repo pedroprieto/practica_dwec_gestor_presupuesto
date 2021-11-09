@@ -433,15 +433,6 @@ Etiquetas:` + "\n";
     }
   };
 
-  this.actualizarEtiquetas = function (...etiquetas) {
-   this.etiquetas = [];
-   for (const x of etiquetas) {
-     this.etiquetas.push(x);
-     
-   }
-  
-    
-  };
 
   this.obtenerPeriodoAgrupacion = function (periodo) {
     let dia = new Date(this.fecha).getDate();
