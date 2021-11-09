@@ -99,12 +99,34 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
-    this.anyadirEtiquetas = function() {
+    this.anyadirEtiquetas = function(...etiquetas) {
+      
+        for (let el of etiquetas)
+        {
+            if(!this.etiquetas.includes(el))
+            {
+                this.etiquetas.push(el);
+            }
+        }
+  
 
+        
     }
 
-    this.borrarEtiquetas = function() {
+    this.borrarEtiquetas = function(...etiquetasNuevas) {
+        
+        for (let el of etiquetas)
+        {
+            for (let elm of etiquetasNuevas)
+            {
+                el = etiquetas.indexOf(elm);
 
+                if(el !== -1)
+                {
+                    this.etiquetas.splice(el , 1);
+                }
+            }
+        }
     }
 }
 
