@@ -41,39 +41,40 @@ function mostrarGastoWeb(idElemento, gasto) {
   gastoEtiquetas.className = "gasto-etiquetas";
   divGasto.append(gastoEtiquetas);
 
- 
+  let nuevoObjEtiqueta = new BorrarEtiquetasHandle(); 
+  nuevoObjEtiqueta.gasto = gasto;
 
   for (let x of gasto.etiquetas) {
     let gastoEtiqueta = document.createElement("span");
     gastoEtiqueta.className = "gasto-etiquetas-etiqueta";
     gastoEtiqueta.innerHTML = x + "<br>";
+    nuevoObjEtiqueta.etiqueta = x;
     gastoEtiquetas.append(gastoEtiqueta);
 
   }
 
+  gastoEtiquetas.addEventListener('click',nuevoObjEtiqueta);
+  
+  let nuevoObj = new EditarHandle(); 
+  nuevoObj.gasto = gasto;
+  
   
   let button = document.createElement('button'); 
   button.type = 'button'; 
   button.innerText = 'Editar';
   button.className = "gasto-editar";
+  button.addEventListener('click',nuevoObj);
   divGasto.append(button);
 
-  let nuevoObj = new EditarHandle(); 
-  nuevoObj.gasto = gasto;
-  //nuevoObj.handleEvent();
 
-
-  let elemento = document.getElementsByClassName("gasto-editar");
-  for(let x of elemento){ 
-    x.addEventListener('click',nuevoObj);
-  }
-
-
+  let nuevoObjBorrar = new BorrarHandle(); 
+  nuevoObjBorrar.gasto = gasto;
   
   let buttonBorrar = document.createElement('button'); 
   buttonBorrar.type = 'button'; 
   buttonBorrar.innerText = 'Borrar';
   buttonBorrar.className = "gasto-borrar";
+  buttonBorrar.addEventListener('click',nuevoObjBorrar);
   divGasto.append(buttonBorrar);
 
   
@@ -152,7 +153,7 @@ function repintar(){
 
   function nuevoGastoWeb(){
     let descripcion = prompt("Escribe la descripción del gasto");
-    let valor = parseInt(prompt("Escribe el valor del gasto"));
+    let valor = parseFloat(prompt("Escribe el valor del gasto"));
     let fecha = prompt("Escribe la fecha del gasto en formato yyyy-mm-dd");
     let etiquetas = prompt("Escribe las etiquetas del gasto separadas por ,");
     
@@ -176,10 +177,10 @@ function repintar(){
 
   function EditarHandle() {
     
-    this.handleEvent = function (){
+    this.handleEvent = function (e){
     
     let descripcion = prompt("Escribe la nueva descripción del gasto");
-    let valor = parseInt(prompt("Escribe la nueva valor del gasto"));
+    let valor = parseFloat(prompt("Escribe la nueva valor del gasto"));
     let fecha = prompt("Escribe la fecha del gasto en formato yyyy-mm-dd");
     let etiquetas = prompt("Escribe las etiquetas del gasto separadas por ,");
     
@@ -202,9 +203,10 @@ function repintar(){
     
       let number = this.gasto.id;
     
-      this.gasto.borrarGasto(number);
+      datosPresupuesto.borrarGasto(number);
     
       repintar();
+      
     }
 
   }

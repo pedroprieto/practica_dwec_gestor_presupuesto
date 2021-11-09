@@ -88,7 +88,7 @@ function filtrarGastos(objeto) {
     }
   }
 
-  //let nuevaMatriz;
+  
 
   if (
     fechaDesde != undefined &&
