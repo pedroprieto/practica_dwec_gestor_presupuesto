@@ -2,9 +2,19 @@
 
 // TODO: Variable global
 
+let presupuesto;
+presupuesto = 0;
 
 function actualizarPresupuesto() {
-    // TODO
+    if (cantidad >= 0)
+    {
+        presupuesto = cantidad;
+        return presupuesto;
+    } 
+    else {
+        console.log("La cantidad introducida no es valida");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
