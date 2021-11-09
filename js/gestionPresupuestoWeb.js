@@ -20,29 +20,29 @@ function mostrarGastosWeb(idElemento, gasto){
     div_gasto.setAttribute("class", "gasto");
     contenedor.appendChild(div_gasto);
     
-    let descripcion = document.createElement("div");
+    let div_descripcion = document.createElement("div");
     div_gasto.appendChild(descripcion);
-    descripcion.setAttribute("class", "gasto-descripcion");
-    descripcion.append(gasto.descripcion);
+    div_descripcion.setAttribute("class", "gasto-descripcion");
+    div_descripcion.append(gasto.descripcion);
     
-    let valor = document.createElement("div");
-    valor.setAttribute("class", "gasto-valor");
+    let div_valor = document.createElement("div");
+    div_valor.setAttribute("class", "gasto-valor");
     div_gasto.appendChild(valor);
-    valor.append(gasto.valor);
+    div_valor.append(gasto.valor);
     
-    let fecha = document.createElement("div");
-    fecha.setAttribute("class", "gasto-fecha");
+    let div_fecha = document.createElement("div");
+    div_fecha.setAttribute("class", "gasto-fecha");
     div_gasto.appendChild(fecha);
-    fecha.append(gasto.fecha);
+    div_fecha.append(gasto.fecha);
     
-    let etiqueta = document.createElement("div");
-    etiqueta.setAttribute("class", "gasto-etiquetas");
+    let div_etiqueta = document.createElement("div");
+    div_etiqueta.setAttribute("class", "gasto-etiquetas");
     div_gasto.appendChild(etiqueta);
     
-    let etiqs = document.createElement("span");
-    etiqs.setAttribute("class", "gasto-etiquetas-etiqueta");
-    etiqueta.appendChild(etiqs);
-    etiqs.append(gasto.etiquetas);
+    let div_etiqs = document.createElement("span");
+    div_etiqs.setAttribute("class", "gasto-etiquetas-etiqueta");
+    div_etiqueta.appendChild(etiqs);
+    div_etiqs.append(gasto.etiquetas);
 
 }
 
@@ -54,10 +54,10 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     agrupacion.setAttribute("class", "agrupacion");
     contenedor.appendChild(agrupacion);
 
-    let periodo = document.createElement("h1");
+    let period = document.createElement("h1");
     //periodo.setAttribute("class", "periodo");
-    periodo.append("Gastos agrupados por " + periodo);
-    agrupacion.appendChild(periodo);
+    period.append("Gastos agrupados por " + period);
+    agrupacion.appendChild(period);
 
     let agrupacion_dato = document.createElement("div");
     agrupacion_dato.setAttribute("class", "agrupacion-dato");
