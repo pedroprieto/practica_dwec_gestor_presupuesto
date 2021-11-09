@@ -3,5 +3,6 @@ import * as gespresweb from "./gestionPresupuestoWeb";
 
 gespres.actualizarPresupuesto(1500);
 
-gespres.mostrarPresupuesto();
-gespresweb.mostrarDatosEnId();
+//let presup = gespres.mostrarPresupuesto();
+gespresweb.mostrarDatosEnId("presupuesto", gespres.mostrarPresupuesto());
+//gespresweb.mostrarDatosEnId("presupuesto", presup);

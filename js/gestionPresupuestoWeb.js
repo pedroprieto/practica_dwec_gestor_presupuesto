@@ -2,17 +2,19 @@
 
 function mostrarDatoEnId(idElemento, valor){
 
-    let contenedor = document.getElementById("presupuesto");
+    let contenedor = document.getElementById(idElemento);
 
-    let presupuesto = document.createElement("div");
-    presupuesto.setAttribute("class", "presupuesto");
-    contenedor.appendChild(presupuesto);
-    presupuesto.append(prespuesto);
+    //let elemento = document.createElement("div");
+    //presupuesto.setAttribute("class", "presupuesto");
+    //contenedor.appendChild(elemento);
+    //elemento.append(valor);
+    //contenedor.innerHTML = valor;
+    contenedor.append(valor);
 }
 
 function mostrarGastosWeb(idElemento, gasto){
 
-    let contenedor = document.getElementById("aplicacion");
+    let contenedor = document.getElementById(idElemento);
 
     let div_gasto = document.createElement("div");
     div_gasto.setAttribute("class", "gasto");
@@ -75,7 +77,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 // Exportamos las funciones del documento
 export {
-    mostrarDatosEnId,
+    mostrarDatoEnId,
     mostrarGastosWeb,
     mostrarGastosAgrupadosWeb
 }

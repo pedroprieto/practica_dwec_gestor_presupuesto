@@ -23,7 +23,7 @@ function actualizarPresupuesto(cantidad) {
 function mostrarPresupuesto() {
     
     // let x = presupuesto;
-    return `Tu presupuesto actual es de ${presupuesto} €`
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 };
 
 function listarGastos(){
@@ -336,6 +336,8 @@ function filtrarGastos(parametros){
         return valido;
 
     });
+
+    return gastosfiltrados;
 
     // for (let gasto of gastos){
 
