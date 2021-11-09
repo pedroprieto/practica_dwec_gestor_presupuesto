@@ -50,13 +50,11 @@ function mostrarGastoWeb(idElemento, gasto) {
     
     let botonEditar = document.createElement('button');
     botonEditar.className = 'gasto-editar';
-    // botonEditar.type = 'button';
     botonEditar.innerText = 'Editar';
     divBloque.prepend(botonEditar);
 
     let botonBorrar = document.createElement('button');
     botonEditar.className = 'gasto-borrar';
-    // botonEditar.type = 'button';
     botonEditar.innerText = 'Borrar';
     divBloque.prepend(botonEditar);
 
