@@ -274,33 +274,25 @@ function calcularBalance(){
 };
 
 function filtrarGastos(parametros){
-    // funcon que filtra los ojetos según parametros indicados
+    // funcion que filtra los ojetos según parametros indicados
 
-    let resultado = [];
-    
-    for (let gasto of gastos){
+    //let resultado = [];
+    let gastosfiltrados = [];
+
+    gastosfiltrados = gastos.filter(function(gasto) {
 
         let valido = true;
 
-        if (parametros.fechaDesde){
-            // aqui se evalua el parametro en caso de que exista
-            //console.log(`fecha a evaluar ${gasto.fecha}`);
-            //let f = parametros.fechaDesde.toLocaleString();
-            //let f = Date.parse(parametros.fechaDesde);
-            //console.log(`Fecha desde ${f}`);
-            
+        if (parametros.fechaDesde){            
             // aqui se evalua si la fecha del objeto es menor que el parametro
             if (gasto.fecha < Date.parse(parametros.fechaDesde)){               
                 // en el caso de que sea falso, la variable de válido pasa a ser false, por
                 // lo que de esta manera en el resto de condiciones no se continuarán evaluando
-                valido = false;
-            } else {
-                
+                valido = false;   
             };
             //resultado.push(gasto);
         };
 
-        
         if (parametros.fechaHasta){
             if (gasto.fecha > Date.parse(parametros.fechaHasta)){
                 valido = false;
@@ -308,8 +300,6 @@ function filtrarGastos(parametros){
         };
         
         if (parametros.valorMinimo){
-            //console.log(`Valor actual ${gasto.valor}`);
-            //console.log(`VAlor minimo ${parametros.valorMinimo}`);
             if (gasto.valor < parametros.valorMinimo){
                 valido = false;
             };
@@ -329,32 +319,101 @@ function filtrarGastos(parametros){
 
         if (parametros.etiquetasTiene){
 
-            let contador = 0;
-            //let valido = true;
-
+            let contador = false;
             for (let etiqueta of parametros.etiquetasTiene){
             //for (let etiqueta of gasto.etiquetas){
-                if(gasto.etiquetas.includes(etiqueta)){
-                    contador++;
-                }
+                if(gasto.etiquetas.indexOf(etiqueta) > -1){
+                    contador = true;
+                };
             };
             
-            if (contador == 0){
+            if (!contador){
                 valido = false;
-            }
+            };
             //valido = (contador > 0) ? false : true;
         };
 
-        if (valido){
-            resultado.push(gasto);
-        }
-        //resultado.push(gasto);
-    };
-    //resultado.push(gasto);
+        return valido;
 
-    //console.log(resultado);
+    });
 
-    return resultado;
+    // for (let gasto of gastos){
+
+    //     let valido = true;
+
+    //     if (parametros.fechaDesde){
+    //         // aqui se evalua el parametro en caso de que exista
+    //         //console.log(`fecha a evaluar ${gasto.fecha}`);
+    //         //let f = parametros.fechaDesde.toLocaleString();
+    //         //let f = Date.parse(parametros.fechaDesde);
+    //         //console.log(`Fecha desde ${f}`);
+            
+    //         // aqui se evalua si la fecha del objeto es menor que el parametro
+    //         if (gasto.fecha < Date.parse(parametros.fechaDesde)){               
+    //             // en el caso de que sea falso, la variable de válido pasa a ser false, por
+    //             // lo que de esta manera en el resto de condiciones no se continuarán evaluando
+    //             valido = false;
+    //         } else {
+                
+    //         };
+    //         //resultado.push(gasto);
+    //     };
+
+        
+    //     if (parametros.fechaHasta){
+    //         if (gasto.fecha > Date.parse(parametros.fechaHasta)){
+    //             valido = false;
+    //         };
+    //     };
+        
+    //     if (parametros.valorMinimo){
+    //         //console.log(`Valor actual ${gasto.valor}`);
+    //         //console.log(`VAlor minimo ${parametros.valorMinimo}`);
+    //         if (gasto.valor < parametros.valorMinimo){
+    //             valido = false;
+    //         };
+    //     };
+
+    //     if (parametros.valorMaximo){
+    //         if (gasto.valor > parametros.valorMaximo){
+    //             valido = false;
+    //         };
+    //     };
+        
+    //     if (parametros.descripcionContiene){
+    //         if (!gasto.descripcion.includes(parametros.descripcionContiene)){
+    //             valido = false;
+    //         }
+    //     };
+
+    //     if (parametros.etiquetasTiene){
+
+    //         let contador = 0;
+    //         //let valido = true;
+
+    //         for (let etiqueta of parametros.etiquetasTiene){
+    //         //for (let etiqueta of gasto.etiquetas){
+    //             if(gasto.etiquetas.includes(etiqueta)){
+    //                 contador++;
+    //             }
+    //         };
+            
+    //         if (contador == 0){
+    //             valido = false;
+    //         }
+    //         //valido = (contador > 0) ? false : true;
+    //     };
+
+    //     if (valido){
+    //         resultado.push(gasto);
+    //     }
+    //     //resultado.push(gasto);
+    // };
+    // //resultado.push(gasto);
+
+    // //console.log(resultado);
+
+    // return resultado;
 
 };
 
