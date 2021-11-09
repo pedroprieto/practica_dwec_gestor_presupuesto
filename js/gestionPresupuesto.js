@@ -136,40 +136,50 @@ function listarGastos() {
 }
 
 function anyadirGasto(gasto) {
-
     
-    gasto.id = this.idGasto; 
+    gasto.id = idGasto; 
     idGasto++;
-    gastos.push(gasto); 
+    gastos.push(gasto);
+    
+
 }
 
-function borrarGasto() {
-    for (const el in gastos)
+function borrarGasto(idNueva) {
+
+    for(let el of gastos)
     {
-        if(gasto.id)
+        for (let e in idNueva)
         {
-            return gastos.splice(0,1);
-        }else {}
+            el = gastos.indexOf(e);
+
+            if(el !== -1)
+            {
+                this.gastos.splice(el, 1);
+            }
+
+        }
     }
     
 }
 
 function calcularTotalGastos() {
-    for (const el in gastos)
-    {
-        for(var ol of gastos.valor)
-        {
-            var total = gastos.valor.reduce ((sum, current) => sum + current, 0);
-        }
-    }
 
-    return total;
+    
+    let resultado = gastos.map(gasto => gasto.valor).reduce((suma, actual) => suma + actual, 0); 
+
+
+    return resultado;  
+    
+
 }
 
 function calcularBalance() {
+
     let balance;
 
     balance = presupuesto - calcularTotalGastos();
+
+    return balance;
 }
 
 
