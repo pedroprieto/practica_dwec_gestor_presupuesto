@@ -226,25 +226,25 @@ function filtrarGastos( {fechaDesde, fechaHasta, valorMinimo, valorMaximo, descr
     }); 
 }
 
-function agruparGastos( periodo,etiquetas,fechaDesde, fechaHasta ) {
+function agruparGastos( periodo, etiquetas, fechaDesde, fechaHasta ) {
 // Devuelve un objeto con los resultados de realizar una agrupación por período temporal
 
     // Devuelve un subconjunto de gastos filtrados según los parármetros pasados
     return filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta })
 
-    // Ejecuta reduce sobre el subconjunto de gastos
-    .reduce( function( acumulador, gasto ){
-        // Para cada gasto se obtiene su período de agrupación
-        let agrupacion = gasto.obtenerPeriodoAgrupacion( periodo )
+        // Ejecuta reduce sobre el subconjunto de gastos
+        .reduce( function( acumulador, gasto ){
+            // Para cada gasto se obtiene su período de agrupación
+            let agrupacion = gasto.obtenerPeriodoAgrupacion( periodo )
 
-        if( !acumulador[agrupacion] ) {
-            acumulador[agrupacion] = 0;
-        }
+            if( !acumulador[agrupacion] ) {
+                acumulador[agrupacion] = 0;
+            }
 
-        acumulador[agrupacion] += gasto.valor;
+            acumulador[agrupacion] += gasto.valor;
 
-        return acumulador;        
-    }, 
+            return acumulador;        
+        }, 
     // El valor inicial del acumulador de reduce será un objeto vacío -> {}
     {});
 }
