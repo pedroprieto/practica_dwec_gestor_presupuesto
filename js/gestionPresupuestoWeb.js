@@ -1,3 +1,4 @@
+import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, CrearGasto, listarGastos, mostrarPresupuesto } from "./gestionPresupuesto";
 
 
 function mostrarDatoEnId(idElemento, valor){
@@ -43,6 +44,24 @@ function mostrarGastoWeb(idElemento, gasto){
     
     div.append(div4);
 
+    let botEditar = document.createElement('button');
+    botEditar.className = "gasto-editar";
+    botEditar.type = "button";
+
+    let manejadorEdit = new EditarHandle();
+    manejadorEdit.gasto = gasto;
+    botEditar.addEventListener("click", manejadorEdit);
+    div.append(botEditar);
+
+    let botBorrar = document.createElement('button');
+    botBorrar.className = "gasto-borrar";
+    botBorrar.type = "button";
+
+    let manejadorBorrar = new BorrarHandle();
+    manejadorBorrar.gasto = gasto;
+    botEditar.addEventListener("click", manejadorBorrar);
+    div.append(botBorrar);
+
     let raiz = document.getElementById(idElemento);
 
     raiz.append(div); 
@@ -79,6 +98,83 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
     raiz.append(div);
 
 }
+
+function repintar(){
+
+    mostrarDatoEnId(idElemento, mostrarPresupuesto());
+    mostrarDatoEnId(idElemento, calcularTotalGastos());
+    mostrarDatoEnId(idElemento, calcularBalance());
+
+    mostrarGastoWeb(idElemento, listarGastos().innerHTML);
+}
+function EditarHandle(){
+    this.handleEvent = function(e){
+
+        let nuevadesc = prompt("Introduce nueva descripción");
+        this.gasto.descripcion = nuevadesc;
+
+        let nuevovalor = prompt("Introduce nuevo valor");
+        this.gasto.valor = parseFloat(nuevovalor);
+
+        let nuevafecha = prompt("Introduce nueva fecha");
+        this.gasto.fecha = Date.parse(nuevafecha);
+
+        let nuevaetiqueta = prompt("Introduce nuevas etiquetas");
+        this.gasto.etiquetas = nuevaetiqueta.split(', ');
+
+        repintar();
+        
+    }
+}
+
+function BorrarHandle(){
+    this.handleEvent = function(e){
+
+        borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+}
+
+function BorrarEtiquetasHandle(){
+    this.handleEvent = function(e){
+
+        this.gasto.borrarEtiquetas(this.gasto.etiquetas);
+
+        repintar();
+    }
+}
+
+function actualizarPresupuestoWeb(){
+
+    let nuevoPresupuesto = prompt("Introduzca nuevo presupuesto");
+    actualizarPresupuesto(parseFloat(nuevoPresupuesto));
+
+    repintar();
+}
+
+let botActualizar = document.getElementById("actualizarpresupuesto");
+botActualizar.addEventListener("click", actualizarPresupuestoWeb());
+
+function nuevoGastoWeb(){
+
+    let nuevadesc = prompt("Introduce nueva descripción");
+    let nuevovalor = prompt("Introduce nuevo valor");
+    let nuevafecha = prompt("Introduce nueva fecha");
+    let nuevaetiqueta = prompt("Introduce nuevas etiquetas");
+
+    let arrEtiquetas = nuevaetiqueta.split(', ');
+
+    gasto = new CrearGasto(nuevadesc, parseFloat(nuevovalor), Date.parse(nuevafecha), arrEtiquetas);
+    anyadirGasto(gasto);
+
+    repintar();
+
+}
+
+let botAnaydir = document.getElementById("anyadirgasto");
+botAnaydir.addEventListener("click", nuevoGastoWeb());
+
 
 export {
     mostrarDatoEnId,
