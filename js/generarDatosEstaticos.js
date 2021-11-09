@@ -37,7 +37,16 @@ gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
 //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
 gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
+//Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+let gastos = gesPres.listarGastos();
+
+for (let g of gastos)
+{    
+    //gesPresWeb.mostrarGastoWeb(g); Ejemplo tutoria
+    gesPresWeb.mostrarGastoWeb("listado-gastos-completo", g);
+}
+
+
 /*
-gesPresWeb.mostrarGastoWeb();
 gesPresWeb.mostrarGastosAgrupadosWeb();
 */

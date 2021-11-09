@@ -246,6 +246,18 @@ function filtrarGastos (opciones)
             {
                 resultado = false;
             }
+
+            /*Otra opción vista en tutoria 8 nov.
+            var tieneAlguna=false;
+            for(let et of opciones.etiquetasTiene) {
+                if (gasto.etiquetas.indexOf(et) > -1 {
+                    tieneAlguna = true;
+                    break;
+                })
+            }
+            if (!tieneAgluna)
+                resultado = false;
+            */
         }
         
         return resultado;
