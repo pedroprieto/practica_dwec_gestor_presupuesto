@@ -27,7 +27,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
-        
+        //console.log('creando gasto');
         this.descripcion = descripcion;
         this.valor = (valor >= 0 ) ? valor : 0;
    
@@ -95,14 +95,32 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     // parte 3
         this.obtenerPeriodoAgrupacion = function (periodo) {
-            if (periodo == "dia") {
-                fecha = fecha.slice(0, 10);
-            }else if (periodo == "mes") {
-                fecha = fecha.slice(0, 7);
-            }else if (periodo == "anyo") {
-                fecha = fecha.slice(0, 4)
+            let aux = new Date(this.fecha).toISOString();
+            let cont;
+            switch(periodo) {
+                case ('dia'):
+                    cont = 10;
+                    break;
+                case('mes'):
+                    cont = 7;
+                    break;
+                case('anyo'):
+                    cont = 4;
+                    break;
+                default: 
+                    return 'Periodo erroneo';
             }
-
+            return aux.slice(0, cont);
+            // if (periodo == "dia") {
+            //     console.log(aux);
+            //     console.log (aux.toISOString().slice(0, 10));
+            //     //aux = fecha.slice();
+            // }else if (periodo == "mes") {
+            //     aux = fecha.slice(0, 7);
+            // }else if (periodo == "anyo") {
+            //     aux = fecha.slice(0, 4)
+            // }
+            // return aux;
         }
 
 }
@@ -149,7 +167,10 @@ function filtrarGastos() {
 function agruparGastos() {
     
 }
-
+// pruebas de consola
+let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
+let agrupacion = gasto1.obtenerPeriodoAgrupacion('anyo');        
+console.log(agrupacion);
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
