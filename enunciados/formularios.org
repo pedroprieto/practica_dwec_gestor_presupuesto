@@ -149,7 +149,7 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
      Recuerda, al final tienes que tener lo siguiente:
      - Función ~nuevoGastoWebFormulario~ (manejadora de eventos del botón ~anyadirgasto-formulario~). Se encarga de pintar el formulario (cargar la plantilla, modificarla y añadirla a la página), desactivar el botón ~anyadirgasto-formulario~ y crear y asociar manejadores de eventos a los botones ~Enviar~ y ~Cancelar~ del formulario.
      - Función manejadora de eventos del evento ~submit~ del formulario. Se encarga de crear el gasto a partir de los datos del formulario, llamar a ~repintar~ y activar de nuevo el botón ~anyadirgasto-formulario~.
-     - Función constructora que se utilizará para crear el objeto manejador de eventos del botón ~Cancelar~ del formulario, que se encargará de crear objetos con un único método ~handleEvent~ tal como estudiamos en la práctica anterior.
+     - Función constructora que se utilizará para crear el objeto manejador de eventos del botón ~Cancelar~ del formulario, que se encargará de crear objetos con un único método ~handleEvent~ tal como estudiamos en la práctica anterior. El método ~handleEvent~ de esta función constructora se encargará de eliminar el formulario y volver a activar el botón ~anyadirgasto-formulario~.
      
 **** Modificación de la función ~mostrarGastoWeb~
      Añade un *segundo botón de edición* a la estructura HTML de cada gasto. Este botón deberá asociarse a un evento ~click~ asociado a un *objeto manejador de eventos* basado en la función constructora ~EditarHandleformulario~ siguiendo la técnica indicada en la práctica anterior.
