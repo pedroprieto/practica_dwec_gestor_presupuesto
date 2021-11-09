@@ -6,7 +6,13 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 gestionPresupuesto.actualizarPresupuesto( 1500 );
 
 // Mostrar el presupuesto en el div#presupuesto
-gestionPresupuestoWeb.mostrarDatoEnId( "presupuesto", gestionPresupuesto.mostrarPresupuesto() );
+let mpresupuesto = document.getElementById('presupuesto');
+
+mpresupuesto.innerHTML = `
+    ${gestionPresupuesto.mostrarPresupuesto()}
+`;
+
+//gestionPresupuestoWeb.mostrarDatoEnId( "presupuesto", gestionPresupuesto.mostrarPresupuesto() );
 
 // Crear los siguientes gastos
 let gasto1 = new gestionPresupuesto.CrearGasto( "Compra carne", 23.44, "2021-10-06", "casa", "comida" );
@@ -31,7 +37,7 @@ gestionPresupuestoWeb.mostrarDatoEnId( "gastos-totales", gestionPresupuesto.calc
 gestionPresupuestoWeb.mostrarDatoEnId( "balance-total", gestionPresupuesto.calcularBalance() );
 
 // Mostrar el listado completo de gastos en div#listado-gastos-completo
-gastos = gestionPresupuesto.listarGastos();
+let gastos = gestionPresupuesto.listarGastos();
 
 for ( let gasto of gastos ){
     gestionPresupuestoWeb.mostrarGastoWeb( "listado-gastos-completo", gasto );

@@ -1,5 +1,3 @@
-"use strict";
-
 // Crear las funciones, objetos y variables indicadas en el enunciado
 
 // Variable global
