@@ -215,13 +215,85 @@ function repintar(){
     
     this.handleEvent = function (e){
     
-    this.gasto.borrarEtiquetas(this.etiqueta);
+      this.gasto.borrarEtiquetas(this.etiqueta);
     
-    repintar();
-   }
+      repintar();
+    }
 
   }
  
+  function submitBoton(event){
+
+    document.getElementById("anyadirgasto-formulario").attributes.removeNamedItem("disabled");
+    
+
+    event.preventDefault();
+    
+    let formulario = event.currentTarget;
+
+    let descripcionFormulario = formulario.elements.descripcion.value;
+    let valorFormulario = parseFloat(formulario.elements.valor.value);
+    let fechaFormulario = formulario.elements.fecha.value;
+    let etiquetasFormulario = formulario.elements.etiquetas.value;
+    
+    let arrFormulario = etiquetasFormulario.split(',');
+
+    let gasto = new datosPresupuesto.CrearGasto(
+    descripcionFormulario,
+    valorFormulario,
+    fechaFormulario,
+    ... arrFormulario );
+
+    datosPresupuesto.anyadirGasto(gasto);
+    repintar();
+
+  }
+
+
+  function CancelarHandle() {
+    
+    this.handleEvent = function (e){
+    
+      this.formulario.remove();
+      this.asignacion.attributes.removeNamedItem("disabled");
+    
+    }
+
+  }
+
+
+
+
+  function nuevoGastoWebFormulario(){
+
+   document.getElementById("anyadirgasto-formulario").disabled = true;
+   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+   let control = document.getElementById("controlesprincipales");
+   control.append(plantillaFormulario);
+   
+   
+   var datos = document.getElementById("gree");
+   datos.addEventListener("submit", submitBoton);
+
+   var datos = document.getElementById("gree");
+   datos.addEventListener("submit", submitBoton);
+
+   let cancelar = new CancelarHandle();
+   cancelar.formulario = datos;
+   cancelar.asignacion = event.currentTarget;
+
+   datos.lastElementChild.addEventListener('click',cancelar);
+
+     
+  }
+
+
+
+  let anyadirFormulario = document.getElementById("anyadirgasto-formulario");
+  anyadirFormulario.addEventListener("click",nuevoGastoWebFormulario);
+
+
+
 
  
 
