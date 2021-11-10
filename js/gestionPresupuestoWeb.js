@@ -16,39 +16,57 @@ function mostrarGastosWeb(idElemento, gasto){
 
     let contenedor = document.getElementById(idElemento);
 
-    let div_gasto = document.createElement("div");
-    div_gasto.setAttribute("class", "gasto");
-    contenedor.appendChild(div_gasto);
+    for (let g of gasto){
+
+        let div_gasto = document.createElement("div");
+        div_gasto.className = "gasto";
+        // div_gasto.setAttribute("class", "gasto");
+        contenedor.appendChild(div_gasto);
+        
+        let div_descripcion = document.createElement("div");
+        div_descripcion.className = "gasto-descripcion";
+        div_gasto.appendChild(div_descripcion);
+        // div_descripcion.setAttribute("class", "gasto-descripcion");
+        div_descripcion.append(g.descripcion);
+        
+        let div_valor = document.createElement("div");
+        // div_valor.setAttribute("class", "gasto-valor");
+        div_valor.className = "gasto-valor";
+        div_gasto.appendChild(div_valor);
+        div_valor.append(g.valor);
+        
+        let div_fecha = document.createElement("div");
+        // div_fecha.setAttribute("class", "gasto-fecha");
+        div_fecha.className = "gasto-fecha";
+        div_gasto.appendChild(div_fecha);
+        div_fecha.append(g.fecha);
+        
+        let div_etiqueta = document.createElement("div");
+        // div_etiqueta.setAttribute("class", "gasto-etiquetas");
+        div_etiqueta.className = "gasto-etiqueta";
+        div_gasto.appendChild(div_etiqueta);
+        
+        //let listado_etiquetas = g.etiquetas.split(",");
+
+        for (let etiq of g.etiquetas) {
+
+            let div_etiqs = document.createElement("span");
+            // div_etiqs.setAttribute("class", "gasto-etiquetas-etiqueta");
+            div_etiqs.className = "gasto-etiquetas-etiqueta";
+            div_etiqueta.appendChild(div_etiqs);
+            div_etiqs.append(etiq);
+
+        }
+        
+
+    }
     
-    let div_descripcion = document.createElement("div");
-    div_gasto.appendChild(descripcion);
-    div_descripcion.setAttribute("class", "gasto-descripcion");
-    div_descripcion.append(gasto.descripcion);
-    
-    let div_valor = document.createElement("div");
-    div_valor.setAttribute("class", "gasto-valor");
-    div_gasto.appendChild(valor);
-    div_valor.append(gasto.valor);
-    
-    let div_fecha = document.createElement("div");
-    div_fecha.setAttribute("class", "gasto-fecha");
-    div_gasto.appendChild(fecha);
-    div_fecha.append(gasto.fecha);
-    
-    let div_etiqueta = document.createElement("div");
-    div_etiqueta.setAttribute("class", "gasto-etiquetas");
-    div_gasto.appendChild(etiqueta);
-    
-    let div_etiqs = document.createElement("span");
-    div_etiqs.setAttribute("class", "gasto-etiquetas-etiqueta");
-    div_etiqueta.appendChild(etiqs);
-    div_etiqs.append(gasto.etiquetas);
 
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
-    let contenedor = document.getElementById("aplicacion");
+    let contenedor = document.getElementById(idElemento);
 
     let agrupacion = document.createElement("div");
     agrupacion.setAttribute("class", "agrupacion");

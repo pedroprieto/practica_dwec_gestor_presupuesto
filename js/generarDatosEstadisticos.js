@@ -30,7 +30,7 @@ gespresweb.mostrarDatoEnId("gastos-totales", gespres.calcularTotalGastos());
 gespresweb.mostrarDatoEnId("balance-total", gespres.calcularBalance());
 
 // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
-
+gespresweb.mostrarGastosWeb("listado-gastos-completo", gespres.listarGastos());
 // Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
 
 // Mostrar el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2 (funciones filtrarGastos y mostrarGastoWeb)
