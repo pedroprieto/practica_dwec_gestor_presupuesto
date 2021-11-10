@@ -200,8 +200,8 @@ function BorrarEtiquetasHandle(){
 
     this.handleEvent = function(e){
         
-        this.etiqueta = this.etiqueta.split(',');
-        this.gasto.borrarEtiquetas(...this.etiqueta);
+        //this.etiqueta = this.etiqueta.split(',');
+        this.gasto.borrarEtiquetas(this.etiqueta);
 
         repintar();
     }
