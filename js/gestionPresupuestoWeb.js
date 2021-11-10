@@ -16,7 +16,8 @@ let botonActualizar = document.getElementById('actualizarpresupuesto');
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 
 function mostrarDatoEnId(idElemento, valor) {
-    document.getElementById(idElemento).append(valor);
+    let elemento = document.getElementById(idElemento);
+    elemento.append(valor); 
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
@@ -26,7 +27,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let divDescr = document.createElement('div');
     divDescr.className = 'gasto-descripcion';
-    divDescr.innerHTML = gasto.descipcion;
+    divDescr.innerHTML = gasto.descripcion;
 
     let divFecha = document.createElement('div');
     divFecha.className = 'gasto-fecha';
@@ -42,18 +43,18 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let divEtiquetas = document.createElement('div');
     divEtiquetas.className = 'gasto-etiquetas';
-    let objBorradoEtiquetas = new BorrarEtiquetasHandle();
-    objBorradoEtiquetas.gasto = gasto;
     if (gasto.etiquetas) {
         for (let etiqueta of gasto.etiquetas) {
             let span = document.createElement('span');
             span.className = 'gasto-etiquetas-etiqueta';
             span.innerHTML = etiqueta;
+            let objBorradoEtiquetas = new BorrarEtiquetasHandle();
+            objBorradoEtiquetas.gasto = gasto;
             objBorradoEtiquetas.etiqueta = etiqueta;
+            span.addEventListener('click',objBorradoEtiquetas);
             divEtiquetas.prepend(span);
         }
     }
-    divEtiquetas.addEventListener('click',objBorradoEtiquetas);
     divBloque.prepend(divEtiquetas);
 
     let botonEditar = document.createElement('button');

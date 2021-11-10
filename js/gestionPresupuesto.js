@@ -96,18 +96,17 @@ function CrearGasto(descripcion, valorGasto, fecha = new Date(), ...etiquetas) {
     this.obtenerPeriodoAgrupacion = function (agrupacion) {
         let fecha = new Date(this.fecha);
         let resultado = "";
-        let mes,dia,anyo = "";
+        let mes, dia, anyo = "";
         let mes2;
-        // debugger;
         switch (agrupacion) {
             case "mes":
-                mes2=fecha.getMonth() + 1; 
+                mes2 = fecha.getMonth() + 1;
                 mes = mes2.toString().padStart(2, "0");
                 anyo = fecha.getFullYear().toString().padStart(4, "0");
                 resultado = `${anyo}-${mes}`;
                 break;
             case "dia":
-                mes2=fecha.getMonth() + 1; 
+                mes2 = fecha.getMonth() + 1;
                 mes = mes2.toString().padStart(2, "0");
                 anyo = fecha.getFullYear().toString().padStart(4, "0");
                 dia = fecha.getDate().toString().padStart(2, "0");
@@ -117,7 +116,7 @@ function CrearGasto(descripcion, valorGasto, fecha = new Date(), ...etiquetas) {
                 resultado = fecha.getFullYear().toString().padStart(4, "0");
                 break;
             default:
-                mes2=fecha.getMonth() + 1; 
+                mes2 = fecha.getMonth() + 1;
                 mes = mes2.toString().padStart(2, "0");
                 anyo = fecha.getFullYear().toString().padStart(4, "0");
                 dia = fecha.getDate().toString().padStart(2, "0");
@@ -130,7 +129,6 @@ function CrearGasto(descripcion, valorGasto, fecha = new Date(), ...etiquetas) {
 }
 
 function listarGastos() {
-    debugger;
     return gastos;
 }
 
@@ -163,49 +161,62 @@ function calcularBalance() {
 }
 
 function filtrarGastos(objeto) {
-    debugger;
-    // Creamos una copia del objeto gastos para poder filtrar sobre él.
-    let copiaGastos = gastos.slice();
-    // debugger;
-    if (Object.keys(objeto).length !== 0) {
+    return gastos.filter(function (gasto) {
+        let resultado = true;
         if (objeto.fechaDesde) {
-            copiaGastos = copiaGastos.filter(x => x.fecha >= Date.parse(objeto.fechaDesde));
+            if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
+                resultado = false;
+            }
         }
+
         if (objeto.fechaHasta) {
-            copiaGastos = copiaGastos.filter(x => x.fecha <= Date.parse(objeto.fechaHasta));
+            if (gasto.fecha > Date.parse(objeto.fechaHasta)) {
+                resultado = false;
+            }
         }
+
         if (objeto.valorMinimo) {
-            copiaGastos = copiaGastos.filter(x => x.valor >= objeto.valorMinimo);
+            if (gasto.valor < objeto.valorMinimo) {
+                resultado = false;
+            }
         }
+
         if (objeto.valorMaximo) {
-            copiaGastos = copiaGastos.filter(x => x.valor <= objeto.valorMaximo);
+            if (gasto.valor > objeto.valorMaximo) {
+                resultado = false;
+            }
         }
+
         if (objeto.descripcionContiene) {
-            copiaGastos = copiaGastos.filter(x => x.descripcion.includes(objeto.descripcionContiene));
+            if (!gasto.descripcion.includes(objeto.descripcionContiene)) {
+                resultado = false;
+            }
         }
         if (objeto.etiquetasTiene) {
-            copiaGastos = copiaGastos.filter(x => {
-                for (let etiqueta of x.etiquetas) {
-                    if (objeto.etiquetasTiene.indexOf(etiqueta) > -1) {
-                        return x;
-                    }
+            let contadorEtiquetas = 0;
+            for (let etiqueta of objeto.etiquetasTiene) {
+                if (gasto.etiquetas.indexOf(etiqueta) > -1) {
+                    contadorEtiquetas++;
                 }
-            });
+            }
+            if (contadorEtiquetas == 0){
+                resultado = false;
+            }
         }
-    }
-    return copiaGastos;
+        return resultado;
+    })
 
 }
 
-function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta) {
-    let gastos = filtrarGastos({fechaDesde:fechaDesde,fechaHasta:fechaHasta,etiquetasTiene:etiquetas}).reduce((sum,current) =>{
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+    let gastos = filtrarGastos({ fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas }).reduce((sum, current) => {
         let periodoAct = current.obtenerPeriodoAgrupacion(periodo);
-        if(!sum[periodoAct]){
-            sum[periodoAct]=0;
+        if (!sum[periodoAct]) {
+            sum[periodoAct] = 0;
         }
-        sum[periodoAct]+=current.valor;
+        sum[periodoAct] += current.valor;
         return sum;
-    },{});
+    }, {});
     return gastos;
 }
 
