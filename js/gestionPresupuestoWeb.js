@@ -81,7 +81,7 @@ function mostrarGastoWeb(idElemento, gasto)
         let span = document.createElement('span');
         span.className = "gasto-etiquetas-etiqueta";
         //Si no añadimos la , no podremos separar las diferentes etiquetas como sale cuando únicamente lo haces con div4.append(gasto.etiquetas)
-        span.append(etiqueta + ",");
+        span.append(`${etiqueta},`);
         //Ahora no queremos meter dentro el gasto.etiquetas, si no el span que hemos creado con su etiqueta.
         div4.append(span);
     }
@@ -95,9 +95,38 @@ function mostrarGastoWeb(idElemento, gasto)
 
 //Función de tres parámetros que se encargará de crear dentro del elemento 
 //HTML con id idElemento indicado una estructura HTML para el objeto agrup que se pase como parámetro:
-function mostrarGastosAgrupadosWeb()
+//idElemento - Hará referencia al id del elemento HTML donde se insertará el conjunto de estructuras HTML que se creará para cada gasto.
+//agrup - Objeto que contendrá el resultado de agrupar el total de gastos por período temporal (ejecución de la función agruparGastos 
+//desarrollada en la práctica anterior). Recordemos un ejemplo del formato que puede tener agrup en el caso de agrupar por mes:
+//periodo - Período temporal por el que se habrá realizado la agrupación. Recordemos que puede ser mes, dia o anyo.
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
+    let div = document.createElement('div');
+    let div1 = document.createElement('div');
+    let h1 = document.createElement('h1');
+    let span = document.createElement('span');
+    let span1 = document.createElement('span');
+    
+    div.className = "agrupacion";
+    div1.className = "agrupacion-dato";
+    h1.className = "Gastos agrupados por PERIODO";
+    span = "agrupacion-dato-clave";
+    span1 = "agrupacion-dato-valor";
 
+    div.append(div1);
+    div.append(h1);
+    div1.append(span);
+    div1.append(span1);
+
+    //idea principal, ahora comprobar la info del manual
+    // Se deberá crear un div.agrupacion-dato para cada propiedad del objeto agrup:
+    //https://es.javascript.info/keys-values-entries#object-keys-values-entries
+
+    //Por último buscamos la capa que ya debe existir en el documento HTML  
+    let contenido = document.getElementById(idElemento);
+
+    //Dentro le insertamos el div. (Este div ya viene con todos los anteriores insertados en él)
+    contenido.append(div);
 }
 
 //El código de este fichero hará uso de la teoría explicada en la sección Documento del tutorial de JavaScript. El fichero deberá exportar las siguientes funciones:
