@@ -75,4 +75,6 @@ document.getElementById("actualizarpresupuesto").addEventListener("click", gpw.a
 
 document.getElementById("anyadirgasto").addEventListener("click", gpw.nuevoGastoWeb);
 
+document.getElementById("anyadirgasto-formulario").addEventListener("click", gpw.nuevoGastoWebFormulario);
+
 
