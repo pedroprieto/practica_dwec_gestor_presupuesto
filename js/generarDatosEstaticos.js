@@ -71,6 +71,11 @@ botonActualizarPresupuesto.addEventListener("click", gestionPresupuestoWeb.actua
 let botonAnyadirGasto = document.getElementById("anyadirgasto");
 botonAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb);
 
+let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
+botonAnyadirGastoFormulario.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWebFormulario);
+
+
+
 
 
 
