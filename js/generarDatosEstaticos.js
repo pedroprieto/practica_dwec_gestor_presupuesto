@@ -3,7 +3,7 @@ import * as gpw from "./gestionPresupuestoWeb.js";
 
 
 gp.actualizarPresupuesto(1500);
-gpw.mostrarDatoEnId('presupuesto',gp.mostrarPresupuesto());
+
 
 let gastoValor1 = 23.44
 let gastoValor2 = 14.25
@@ -18,3 +18,12 @@ let gasto3 = new gp.CrearGasto("Bonobús", gastoValor3, "2020-05-26", "transport
 let gasto4 = new gp.CrearGasto("Gasolina", gastoValor4, "2021-10-08", "transporte", "gasolina" );
 let gasto5 = new gp.CrearGasto("Seguro hogar", gastoValor5, "2021-09-26", "casa", "seguros" );
 let gasto6 = new gp.CrearGasto("Seguro coche", gastoValor6, "2021-10-06", "transporte", "seguros" );
+
+gp.anyadirGasto(gasto1);
+gp.anyadirGasto(gasto2);
+gp.anyadirGasto(gasto3);
+gp.anyadirGasto(gasto4);
+gp.anyadirGasto(gasto5);
+gp.anyadirGasto(gasto6);
+
+    
