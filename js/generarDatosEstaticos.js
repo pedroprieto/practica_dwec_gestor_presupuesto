@@ -29,9 +29,10 @@ gp.anyadirGasto(gasto6);
 gpw.mostrarDatoEnId('gastos-totales',Math.floor(gp.calcularTotalGastos()));
 gpw.mostrarDatoEnId('balance-total',Math.floor(gp.calcularBalance()));
 
+for (let gasto of gp.listarGastos())
+    {
+        gpw.mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
 
 
 
-gpw.mostrarGastosAgrupadosWeb('agrupacion-dia',gp.agruparGastos("dia"),"día");
-gpw.mostrarGastosAgrupadosWeb('agrupacion-mes',gp.agruparGastos("mes"),"mes");
-gpw.mostrarGastosAgrupadosWeb('agrupacion-anyo',gp.agruparGastos("anyo"),"año");
