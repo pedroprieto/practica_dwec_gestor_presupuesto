@@ -1,17 +1,12 @@
-
 let presupuesto = 0;
 let gastos= [];
 let idGasto = 0;
-
-
-
 function mostrarPresupuesto() {
     
     return `Tu presupuesto actual es de ${presupuesto} €`
 }
 function actualizarPresupuesto(numero) {
     if(numero > 0){
-
     
     return presupuesto = numero;
     }
@@ -20,7 +15,6 @@ function actualizarPresupuesto(numero) {
     }
 }
 function anyadirGasto(gasto){
-
     gasto.id = idGasto;
     idGasto = idGasto +1;
     gastos.push(gasto);
@@ -31,7 +25,6 @@ function borrarGasto(id) {
         gastos.splice(pos, 1);
     }
 }
-
 function calcularTotalGastos (){
     let suma = 0;
     for (let gasto of gastos) {
@@ -47,12 +40,9 @@ function calcularBalance (){
 function listarGastos(){
     return gastos
 }
-
 function CrearGasto(descripcion,valor,fecha,...etiquetas) {
-
     this.descripcion = descripcion;
     
-
     this.actualizarDescripcion  = function(descripcion){
         this.descripcion = descripcion;
     }
@@ -62,7 +52,6 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         return  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         
     }
-
     this.actualizarValor = function (valor){
         if (valor > 0 ){
         this.valor = valor;
@@ -84,8 +73,6 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         this.fecha = fecha;
     }
     
-
-
     this.actualizarFecha = function(fecha){
     
         fecha = Date.parse(fecha);
@@ -117,7 +104,6 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         
     }
     this.mostrarGastoCompleto = function(){
-
         let fecha = new Date(this.fecha);
         let fechaTexto = fecha.toLocaleString();
     
@@ -129,18 +115,15 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
     this.obtenerPeriodoAgrupacion=function(periodo){
         let fecha=new Date(this.fecha);
-
         let diaPeriodo=fecha.getDate();
         let mesPeriodo=fecha.getMonth()+1;
         let anyoPeriodo=fecha.getFullYear();
-
         if ( mesPeriodo < 10 ){
             mesPeriodo=`0${mesPeriodo}`;
         }
         if ( diaPeriodo < 10 ){
             diaPeriodo=`0${diaPeriodo}`;
         }
-
         if (periodo === "mes" ){
             return `${anyoPeriodo}-${mesPeriodo}`;
         }
@@ -156,25 +139,19 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
 }
 function filtrarGastos(objecto){
-
     let filtrogastos=gastos.slice();
-
     if (objecto.valorMinimo){
 		filtrogastos=filtrogastos.filter((x) => x.valor > objecto.valorMinimo);
 	}
-
 	if (objecto.valorMaximo){
 		filtrogastos=filtrogastos.filter((x) => x.valor < objecto.valorMaximo);
 	}
-
     if ( objecto.fechaDesde ){
 		filtrogastos=filtrogastos.filter((x) => x.fecha >= Date.parse( objecto["fechaDesde"] ));
     }
-
     if (objecto.fechaHasta){
 		filtrogastos=filtrogastos.filter((x) => x.fecha <= Date.parse(objecto.fechaHasta));
 	}
-
     if (objecto.etiquetasTiene){
 		filtrogastos=filtrogastos.filter((x) => {
 			for(let etiqueta of x["etiquetas"]){
@@ -184,21 +161,17 @@ function filtrarGastos(objecto){
 			}
 		});
 	}
-
     if (objecto.descripcionContiene){
 		filtrogastos=filtrogastos.filter((x) => x.descripcion.indexOf(objecto.descripcionContiene
         ) > -1 );
 	}
-
 	
-
 	return filtrogastos;
 }
 
-
-
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
-    
+
+
     return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
             .reduce(function(acumula,objeto){
                 let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo)
@@ -207,20 +180,21 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
                 }
                 acumula[objPerAgru]+=objeto.valor;
                 return acumula;
-            },{});
-}
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos
-}
+            },{});     
+        }
+        // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
+        // Las funciones y objetos deben tener los nombres que se indican en el enunciado
+        // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
+        export   {
+            mostrarPresupuesto,
+            actualizarPresupuesto,
+            CrearGasto,
+            listarGastos,
+            anyadirGasto,
+            borrarGasto,
+            calcularTotalGastos,
+            calcularBalance,
+            filtrarGastos,
+            agruparGastos,
+            gastos
+        }
