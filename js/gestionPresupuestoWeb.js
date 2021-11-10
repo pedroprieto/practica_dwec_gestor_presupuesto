@@ -43,7 +43,7 @@ function mostrarGastosWeb(idElemento, gasto){
         
         let div_etiqueta = document.createElement("div");
         // div_etiqueta.setAttribute("class", "gasto-etiquetas");
-        div_etiqueta.className = "gasto-etiqueta";
+        div_etiqueta.className = "gasto-etiquetas";
         div_gasto.appendChild(div_etiqueta);
         
         //let listado_etiquetas = g.etiquetas.split(",");
@@ -70,7 +70,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     let div_agrupacion = document.createElement("div");
     // div_agrupacion.setAttribute("class", "agrupacion");
-    div_agrupacion.className = "agrupacion;"
+    div_agrupacion.className = "agrupacion"
     contenedor.appendChild(div_agrupacion);
 
     let div_period = document.createElement("h1");

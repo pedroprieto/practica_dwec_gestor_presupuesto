@@ -45,10 +45,10 @@ gespresweb.mostrarGastosWeb("listado-gastos-filtrado-3", gespres.filtrarGastos({
 gespresweb.mostrarGastosWeb("listado-gastos-filtrado-4", gespres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]}));
 
 // Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-gespresweb.mostrarGastosAgrupadosWeb("agrupacion-dia", gespres.agruparGastos("dia"), "dia");
+gespresweb.mostrarGastosAgrupadosWeb("agrupacion-dia", gespres.agruparGastos("dia"), "día");
 
 // Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gespresweb.mostrarGastosAgrupadosWeb("agrupacion-mes", gespres.agruparGastos("mes"), "mes");
 
 // Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-gespresweb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gespres.agruparGastos("anyo"), "anyo");
+gespresweb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gespres.agruparGastos("anyo"), "año");
