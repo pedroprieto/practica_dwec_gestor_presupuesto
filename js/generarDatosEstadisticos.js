@@ -48,6 +48,7 @@ gespresweb.mostrarGastosWeb("listado-gastos-filtrado-4", gespres.filtrarGastos({
 gespresweb.mostrarGastosAgrupadosWeb("agrupacion-dia", gespres.agruparGastos("dia"), "dia");
 
 // Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-
+gespresweb.mostrarGastosAgrupadosWeb("agrupacion-mes", gespres.agruparGastos("mes"), "mes");
 
 // Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gespresweb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gespres.agruparGastos("anyo"), "anyo");
