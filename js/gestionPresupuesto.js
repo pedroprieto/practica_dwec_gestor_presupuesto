@@ -146,19 +146,8 @@ function anyadirGasto(gasto) {
 
 function borrarGasto(idNueva) {
 
-    for(let el of gastos)
-    {
-        for (let e in idNueva)
-        {
-            el = gastos.indexOf(e);
-
-            if(el !== -1)
-            {
-                this.gastos.splice(el, 1);
-            }
-
-        }
-    }
+    gastos.splice(gastos.findIndex(gasto => gasto.id === idNueva),1);
+    
     
 }
 
@@ -166,7 +155,6 @@ function calcularTotalGastos() {
 
     
     let resultado = gastos.map(gasto => gasto.valor).reduce((suma, actual) => suma + actual, 0); 
-
 
     return resultado;  
     
@@ -181,7 +169,6 @@ function calcularBalance() {
 
     return balance;
 }
-
 
 
 
