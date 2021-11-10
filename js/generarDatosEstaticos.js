@@ -34,5 +34,29 @@ for (let gasto of gp.listarGastos())
         gpw.mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 
+    for (let gasto of gp.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
+    {
+        gpw.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+    }
 
+    for (let gasto of gp.filtrarGastos({valorMinimo: 50}))
+    {
+        gpw.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+    }
+
+    for (let gasto of  gp.filtrarGastos({valorMinimo: 200, etiquetas:"seguros"}))
+    {
+        gpw.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+    }
+
+    for (let gasto of gp.filtrarGastos({valorMaximo: 50, etiquetas:"comida, transporte"}))
+    {
+        gpw.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+    }
+
+    gpw.mostrarGastosAgrupadosWeb('agrupacion-dia',gp.agruparGastos("dia"),"día");
+
+    gpw.mostrarGastosAgrupadosWeb('agrupacion-mes',gp.agruparGastos("mes"),"mes");
+    
+    gpw.mostrarGastosAgrupadosWeb('agrupacion-anyo',gp.agruparGastos("anyo"),"año");
 
