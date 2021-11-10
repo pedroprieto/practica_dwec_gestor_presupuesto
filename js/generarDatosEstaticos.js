@@ -3,7 +3,7 @@ import * as gpw from "./gestionPresupuestoWeb.js";
 
 
 gp.actualizarPresupuesto(1500);
-
+gpw.mostrarDatoEnId('presupuesto',gp.mostrarPresupuesto());
 
 let gastoValor1 = 23.44
 let gastoValor2 = 14.25
@@ -26,4 +26,12 @@ gp.anyadirGasto(gasto4);
 gp.anyadirGasto(gasto5);
 gp.anyadirGasto(gasto6);
 
-    
+gpw.mostrarDatoEnId('gastos-totales',Math.floor(gp.calcularTotalGastos()));
+gpw.mostrarDatoEnId('balance-total',Math.floor(gp.calcularBalance()));
+
+
+
+
+gpw.mostrarGastosAgrupadosWeb('agrupacion-dia',gp.agruparGastos("dia"),"día");
+gpw.mostrarGastosAgrupadosWeb('agrupacion-mes',gp.agruparGastos("mes"),"mes");
+gpw.mostrarGastosAgrupadosWeb('agrupacion-anyo',gp.agruparGastos("anyo"),"año");
