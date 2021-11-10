@@ -132,6 +132,26 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+
+        let fechaN = new Date(fecha).toISOString();
+        
+            
+        if(periodo === "dia")
+        {
+            return fechaN.slice(0,10);
+        }
+        if(periodo === "mes")
+        {
+            return fechaN.slice(0,7);
+        }
+        if(periodo === "anyo")
+        {
+            return fechaN.slice(0,4);
+        }
+
+    }
 }
 
 
@@ -175,6 +195,13 @@ function calcularBalance() {
 }
 
 
+function filtrarGastos() {
+
+}
+
+function agruparGastos() {
+
+}
 
 
 
@@ -193,5 +220,8 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
+
 }
