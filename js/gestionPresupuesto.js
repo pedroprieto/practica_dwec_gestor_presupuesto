@@ -467,7 +467,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
         return acum;
     }, {});
 
-    console.log(acum);
+    // console.log(acum);
 };
 
 

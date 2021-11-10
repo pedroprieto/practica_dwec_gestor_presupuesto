@@ -68,28 +68,43 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     let contenedor = document.getElementById(idElemento);
 
-    let agrupacion = document.createElement("div");
-    agrupacion.setAttribute("class", "agrupacion");
-    contenedor.appendChild(agrupacion);
+    let div_agrupacion = document.createElement("div");
+    // div_agrupacion.setAttribute("class", "agrupacion");
+    div_agrupacion.className = "agrupacion;"
+    contenedor.appendChild(div_agrupacion);
 
-    let period = document.createElement("h1");
-    //periodo.setAttribute("class", "periodo");
-    period.append("Gastos agrupados por " + period);
-    agrupacion.appendChild(period);
+    let div_period = document.createElement("h1");
+    // periodo.setAttribute("class", "periodo");
+    // div_period.append("Gastos agrupados por " + periodo);
+    div_period.innerHTML = "Gastos agrupados por " + periodo;
+    div_agrupacion.appendChild(div_period);
 
-    let agrupacion_dato = document.createElement("div");
-    agrupacion_dato.setAttribute("class", "agrupacion-dato");
-    agrupacion.appendChild(agrupacion_dato);
+    for (let value of agrup.acum) {
 
-    let agrupacion_dato_clave = document.createElement("span");
-    agrupacion_dato_clave.setAttribute("class", "agrupacion-dato-clave");
-    agrupacion.appendChild(agrupacion_dato_clave);
-    agrupacion_dato_clave.append(acum.periodo);
+        let div_agrupacion_dato = document.createElement("div");
+        div_agrupacion_dato.setAttribute("class", "agrupacion-dato");
+        div_agrupacion.appendChild(div_agrupacion_dato);
 
-    let agrupacion_dato_valor = document.createElement("span");
-    agrupacion_dato_valor.setAttribute("class", "agrupacion-dato-valor");
-    agrupacion.appendChild(agrupacion_dato_valor);
-    agrupacion_dato_clave.append(acum.valor);
+        for (let valores of Object.values(value)) {
+
+            let div_agrupacion_dato_clave = document.createElement("span");
+            div_agrupacion_dato_clave.setAttribute("class", "agrupacion-dato-clave");
+            div_agrupacion.appendChild(div_agrupacion_dato_clave);
+            div_agrupacion_dato_clave.append(valores);
+
+            let div_agrupacion_dato_valor = document.createElement("span");
+            div_agrupacion_dato_valor.setAttribute("class", "agrupacion-dato-valor");
+            div_agrupacion.appendChild(div_agrupacion_dato_valor);
+            div_agrupacion_dato_clave.append(valores);
+
+        }
+
+        
+
+        
+
+    }
+    
 
 }
 

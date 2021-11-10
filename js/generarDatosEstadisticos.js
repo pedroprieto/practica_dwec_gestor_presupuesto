@@ -31,16 +31,23 @@ gespresweb.mostrarDatoEnId("balance-total", gespres.calcularBalance());
 
 // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
 gespresweb.mostrarGastosWeb("listado-gastos-completo", gespres.listarGastos());
+
 // Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
+gespresweb.mostrarGastosWeb("listado-gastos-filtrado-1", gespres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}));
 
 // Mostrar el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2 (funciones filtrarGastos y mostrarGastoWeb)
+gespresweb.mostrarGastosWeb("listado-gastos-filtrado-2", gespres.filtrarGastos({valorMinimo: 50}));
 
 // Mostrar el listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3 (funciones filtrarGastos y mostrarGastoWeb)
+gespresweb.mostrarGastosWeb("listado-gastos-filtrado-3", gespres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}));
 
 // Mostrar el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en div#listado-gastos-filtrado-4 (funciones filtrarGastos y mostrarGastoWeb)
+gespresweb.mostrarGastosWeb("listado-gastos-filtrado-4", gespres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]}));
 
 // Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gespresweb.mostrarGastosAgrupadosWeb("agrupacion-dia", gespres.agruparGastos("dia"), "dia");
 
 // Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+
 
 // Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
