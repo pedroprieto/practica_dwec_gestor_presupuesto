@@ -107,6 +107,7 @@ function repintar(){
 
     mostrarGastoWeb(idElemento, listarGastos().innerHTML);
 }
+
 function EditarHandle(){
     this.handleEvent = function(e){
 
@@ -139,7 +140,7 @@ function BorrarHandle(){
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(e){
 
-        this.gasto.borrarEtiquetas(this.gasto.etiquetas);
+        this.gasto.borrarEtiquetas(...this.gasto.etiquetas);
 
         repintar();
     }
@@ -148,13 +149,15 @@ function BorrarEtiquetasHandle(){
 function actualizarPresupuestoWeb(){
 
     let nuevoPresupuesto = prompt("Introduzca nuevo presupuesto");
-    actualizarPresupuesto(parseFloat(nuevoPresupuesto));
+    nuevoPresupuesto = parseFloat(nuevoPresupuesto);
+
+    actualizarPresupuesto(nuevoPresupuesto);
 
     repintar();
 }
 
-let botActualizar = document.getElementById("actualizarpresupuesto");
-botActualizar.addEventListener("click", actualizarPresupuestoWeb());
+document.getElementById("actualizarpresupuesto");
+botActualizar.addEventListener("click", actualizarPresupuestoWeb);
 
 function nuevoGastoWeb(){
 
@@ -162,10 +165,11 @@ function nuevoGastoWeb(){
     let nuevovalor = prompt("Introduce nuevo valor");
     let nuevafecha = prompt("Introduce nueva fecha");
     let nuevaetiqueta = prompt("Introduce nuevas etiquetas");
-
+    
+    nuevovalor = parseFloat(nuevovalor);
     let arrEtiquetas = nuevaetiqueta.split(', ');
 
-    gasto = new CrearGasto(nuevadesc, parseFloat(nuevovalor), Date.parse(nuevafecha), arrEtiquetas);
+    gasto = new CrearGasto(nuevadesc, nuevovalor, nuevafecha, arrEtiquetas);
     anyadirGasto(gasto);
 
     repintar();
@@ -173,11 +177,13 @@ function nuevoGastoWeb(){
 }
 
 let botAnaydir = document.getElementById("anyadirgasto");
-botAnaydir.addEventListener("click", nuevoGastoWeb());
-
+botAnaydir.addEventListener("click", nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastoAgrupadosWeb,
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle,
 }
