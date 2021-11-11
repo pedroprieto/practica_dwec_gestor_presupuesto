@@ -12,4 +12,4 @@ let g1 = new gesPres.CrearGasto("Compra Carne", 23.44, "2021-05-06", "casa", "co
 gesPres.anyadirGasto(g1);
 
 
-gesPresWeb.mostrarGastoWeb(g1);
+gesPresWeb.mostrarGastoWeb("aplicacion",g1);
