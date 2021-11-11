@@ -30,19 +30,32 @@ gespresweb.mostrarDatoEnId("gastos-totales", gespres.calcularTotalGastos());
 gespresweb.mostrarDatoEnId("balance-total", gespres.calcularBalance());
 
 // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
-gespresweb.mostrarGastosWeb("listado-gastos-completo", gespres.listarGastos());
+
+for (let g of gespres.listarGastos()) {
+    gespresweb.mostrarGastosWeb("listado-gastos-completo", g);
+}
 
 // Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
-gespresweb.mostrarGastosWeb("listado-gastos-filtrado-1", gespres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}));
+
+for (let g of gespres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})) {
+    gespresweb.mostrarGastosWeb("listado-gastos-filtrado-1", g);
+}
 
 // Mostrar el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2 (funciones filtrarGastos y mostrarGastoWeb)
-gespresweb.mostrarGastosWeb("listado-gastos-filtrado-2", gespres.filtrarGastos({valorMinimo: 50}));
+for (let g of gespres.filtrarGastos({valorMinimo: 50})) {
+    gespresweb.mostrarGastosWeb("listado-gastos-filtrado-2", g);
+}
+
 
 // Mostrar el listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3 (funciones filtrarGastos y mostrarGastoWeb)
-gespresweb.mostrarGastosWeb("listado-gastos-filtrado-3", gespres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}));
+for (let g of gespres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]})) {
+    gespresweb.mostrarGastosWeb("listado-gastos-filtrado-3", g);
+}
 
 // Mostrar el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en div#listado-gastos-filtrado-4 (funciones filtrarGastos y mostrarGastoWeb)
-gespresweb.mostrarGastosWeb("listado-gastos-filtrado-4", gespres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]}));
+for (let g of gespres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]})) {
+    gespresweb.mostrarGastosWeb("listado-gastos-filtrado-4", g);
+}
 
 // Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gespresweb.mostrarGastosAgrupadosWeb("agrupacion-dia", gespres.agruparGastos("dia"), "día");
