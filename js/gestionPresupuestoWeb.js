@@ -12,8 +12,7 @@ function mostrarDatoEnId(idElemento, valor){
 
 function mostrarGastoWeb(idElemento, gasto){
 
-    let divPrincipal = document.getElementById(idElemento);
-    
+    let divPrincipal = document.getElementById(idElemento);   
     
 
     let divGasto = document.createElement('div');
@@ -34,7 +33,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     let divGastoEtiquetas = document.createElement('div');
     divGastoEtiquetas.className = "gasto-etiquetas"
-
+    
     for (let etiqueta of gasto.etiqueta) {
         
         let span = document.createElement('span');
@@ -48,7 +47,7 @@ function mostrarGastoWeb(idElemento, gasto){
     divGasto.append(divGastoValor);
     divGasto.append(divGastoEtiquetas);
     
-    divPrincipal.append(gasto);
+    divPrincipal.append(divGasto);
 
 };
 
@@ -59,8 +58,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let divAgrupacion = document.createElement('div');
     divAgrupacion.className = "agrupacion";
     
-    let h1 = document.createElement('h1');
-    h1.append(`Gastos agrupados por ${periodo}`);
+    let h1Titulo = document.createElement('h1');
+    h1Titulo.append(`Gastos agrupados por ${periodo}`);
     divAgrupacion.append(h1);
 
     for (let [key, value] of Object.entries(agrup)) {
@@ -79,7 +78,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divAgrupacionDato.append(divAgrupacionDatoClave);
         divAgrupacionDato.append(divAgrupacionDatoValor);
 
-        divPrincipal.append(divAgrupacionDato);
+        divPrincipal.append(divAgrupacion);
 
     }
 
