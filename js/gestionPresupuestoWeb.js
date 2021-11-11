@@ -1,4 +1,4 @@
-import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, CrearGasto, listarGastos, mostrarPresupuesto } from "./gestionPresupuesto";
+import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, CrearGasto, listarGastos, mostrarPresupuesto } from "./gestionPresupuesto.js";
 
 
 function mostrarDatoEnId(idElemento, valor){
@@ -101,24 +101,30 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
 
 function repintar(){
 
-    mostrarDatoEnId(idElemento, mostrarPresupuesto());
-    mostrarDatoEnId(idElemento, calcularTotalGastos());
-    mostrarDatoEnId(idElemento, calcularBalance());
+    mostrarDatoEnId("presupuesto", mostrarPresupuesto());
+    mostrarDatoEnId("gastos-totales", calcularTotalGastos());
+    mostrarDatoEnId("balance-total", calcularBalance());
 
-    mostrarGastoWeb(idElemento, listarGastos().innerHTML);
+    let listagastos = listarGastos();
+    for (let lista of listagastos)
+    {
+        mostrarGastoWeb("listado-gastos-completo", lista);
+    }
 }
 
 function EditarHandle(){
     this.handleEvent = function(e){
 
         let nuevadesc = prompt("Introduce nueva descripción");
-        this.gasto.descripcion = nuevadesc;
+        this.gasto.actualizarDescripcion(nuevadesc);
 
         let nuevovalor = prompt("Introduce nuevo valor");
-        this.gasto.valor = parseFloat(nuevovalor);
+        nuevovalor = parseFloat(nuevovalor);
+        this.gasto.actualizarValor(nuevovalor);
 
         let nuevafecha = prompt("Introduce nueva fecha");
-        this.gasto.fecha = Date.parse(nuevafecha);
+        nuevafecha = Date.parse(nuevafecha);
+        this.gasto.actualizarFecha(nuevafecha);
 
         let nuevaetiqueta = prompt("Introduce nuevas etiquetas");
         this.gasto.etiquetas = nuevaetiqueta.split(', ');
@@ -156,7 +162,7 @@ function actualizarPresupuestoWeb(){
     repintar();
 }
 
-document.getElementById("actualizarpresupuesto");
+let botActualizar = document.getElementById("actualizarpresupuesto");
 botActualizar.addEventListener("click", actualizarPresupuestoWeb);
 
 function nuevoGastoWeb(){
@@ -169,7 +175,7 @@ function nuevoGastoWeb(){
     nuevovalor = parseFloat(nuevovalor);
     let arrEtiquetas = nuevaetiqueta.split(', ');
 
-    gasto = new CrearGasto(nuevadesc, nuevovalor, nuevafecha, arrEtiquetas);
+    let gasto = new CrearGasto(nuevadesc, nuevovalor, nuevafecha, arrEtiquetas);
     anyadirGasto(gasto);
 
     repintar();
