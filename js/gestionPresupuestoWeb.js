@@ -59,7 +59,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     let manejadorBorrar = new BorrarHandle();
     manejadorBorrar.gasto = gasto;
-    botEditar.addEventListener("click", manejadorBorrar);
+    botBorrar.addEventListener("click", manejadorBorrar);
     div.append(botBorrar);
 
     let raiz = document.getElementById(idElemento);
