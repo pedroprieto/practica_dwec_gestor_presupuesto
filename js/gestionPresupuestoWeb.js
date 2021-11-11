@@ -105,7 +105,9 @@ function repintar(){
     mostrarDatoEnId("gastos-totales", calcularTotalGastos());
     mostrarDatoEnId("balance-total", calcularBalance());
 
+    document.getElementById("listado-gastos-completo").innerHTML = "";
     let listagastos = listarGastos();
+
     for (let lista of listagastos)
     {
         mostrarGastoWeb("listado-gastos-completo", lista);
@@ -177,7 +179,7 @@ function nuevoGastoWeb(){
 
     let gasto = new CrearGasto(nuevadesc, nuevovalor, nuevafecha, arrEtiquetas);
     anyadirGasto(gasto);
-
+    console.log(nuevaetiqueta);
     repintar();
 
 }
