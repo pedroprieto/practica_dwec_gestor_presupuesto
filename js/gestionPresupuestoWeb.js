@@ -41,19 +41,22 @@ function mostrarGastoWeb(idElemento, gasto) {
   gastoEtiquetas.className = "gasto-etiquetas";
   divGasto.append(gastoEtiquetas);
 
-  let nuevoObjEtiqueta = new BorrarEtiquetasHandle(); 
-  nuevoObjEtiqueta.gasto = gasto;
+  
 
   for (let x of gasto.etiquetas) {
     let gastoEtiqueta = document.createElement("span");
     gastoEtiqueta.className = "gasto-etiquetas-etiqueta";
     gastoEtiqueta.innerHTML = x + "<br>";
-    nuevoObjEtiqueta.etiqueta = x;
     gastoEtiquetas.append(gastoEtiqueta);
+
+    let nuevoObjEtiqueta = new BorrarEtiquetasHandle(); 
+    nuevoObjEtiqueta.gasto = gasto;
+    nuevoObjEtiqueta.etiqueta = x;
+    gastoEtiqueta.addEventListener('click',nuevoObjEtiqueta);
 
   }
 
-  gastoEtiquetas.addEventListener('click',nuevoObjEtiqueta);
+  
   
   let nuevoObj = new EditarHandle(); 
   nuevoObj.gasto = gasto;

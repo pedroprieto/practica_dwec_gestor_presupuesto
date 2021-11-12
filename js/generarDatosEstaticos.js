@@ -56,10 +56,10 @@ let gasto6 = new datosPresupuesto.CrearGasto(
 
 datosPresupuesto.anyadirGasto(gasto1);
 datosPresupuesto.anyadirGasto(gasto2);
-/*datosPresupuesto.anyadirGasto(gasto3);
+datosPresupuesto.anyadirGasto(gasto3);
 datosPresupuesto.anyadirGasto(gasto4);
 datosPresupuesto.anyadirGasto(gasto5);
-datosPresupuesto.anyadirGasto(gasto6);*/
+datosPresupuesto.anyadirGasto(gasto6);
 
 let gastoTotal = datosPresupuesto.calcularTotalGastos().toFixed(2);
 let datoTotal = datosPresupuestoWeb.mostrarDatoEnId(
