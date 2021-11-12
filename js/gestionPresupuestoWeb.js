@@ -34,6 +34,7 @@ function mostrarGastoWeb(idElemento,gasto){
     }
     tag.prepend(etiquetas);
     document.getElementById(idElemento).append(tag);
+
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -80,22 +81,50 @@ function actualizarPresupuestoWeb(){
     gp.actualizarPresupuesto(nuevoPresupuesto)
     repintar();
 }
+
 let botonActualizarPresupuestoWeb = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuestoWeb.addEventListener("click", actualizarPresupuestoWeb);
+
 function nuevoGastoWeb(){
 
-    let descripcion = prompt("Introduce la descripción del gasto, por favor");
-    let valor = parseFloat(prompt("Introduce el importe del gasto, por favor"));
-    let fecha = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor");
-    let etiquetas = prompt("Introduce las etiquetas del gasto separadas por comas, por favor");
+    let descripcionN = prompt("Introduce la descripción del gasto, por favor");
+    let valorN = prompt("Introduce el importe del gasto, por favor");
+    valorN = parseFloat(valor);
+    let fechaN = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor");
+    let etiquetasN = prompt("Introduce las etiquetas del gasto separadas por comas, por favor");
 
-    etiquetas = etiquetas.split(",");
+    etiquetasN = etiquetasN.split(',');
 
-    let nuevoGasto = new gp.CrearGasto(descripcion,valor,fecha,etiquetas);
-    gp.anyadirGasto(nuevoGasto);
+    let gasto = new gp.CrearGasto(descripcionN,valorN,fechaN,etiquetasN);
+    gp.anyadirGasto(gasto);
 
     repintar();
 }
+let botonNuevoGasto  = document.getElementById('anyadirgasto');
+botonNuevoGasto.addEventListener("click", nuevoGastoWeb);
+
+function EditarHandle(){
+
+    this.handleEvent = function(e){
+
+        let descripcionNueva = prompt("Introduce una descripción del gasto, por favor : ",this.gasto.descripcion);
+        this.gasto.actualizarDescripcion(descripcionNueva);
+
+        let valorNuevo = prompt("Introduce el importe del gasto, por favor",this.gasto.valor);
+        this.gasto.actualizarValor(valorNuevo);
+
+        let fechaNueva = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor",this.gasto.fecha);
+        this.gasto.actualizarFecha(fechaNueva);
+
+        let etiquetasNuevas = prompt("Introduce las etiquetas del gasto separadas por comas, por favor",this.gasto.etiquetas);
+        etiquetasNuevas =etiquetas.split(',');
+        this.gasto.anyadirEtiquetas(...etiquetasNuevas);
+
+        repintar();
+    }
+}
+
+
 
 export  {
     mostrarDatoEnId,
