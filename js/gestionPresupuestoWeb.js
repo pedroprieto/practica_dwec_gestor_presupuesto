@@ -1,4 +1,4 @@
-
+import * as gp from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento,valor){
     document.getElementById(idElemento).append(valor);
@@ -52,6 +52,34 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
     }
     document.getElementById(idElemento).append(elemento);
+}
+
+function repintar(){
+    
+    let presupuesto = gp.mostrarPresupuesto();
+    mostrarDatoEnId("presupuesto", presupuesto);
+
+    let balanceT = gp.calcularBalance();
+    mostrarDatoEnId("balance-total",balanceT);
+
+    let gastosT = gp.calcularTotalGastos();
+    mostrarDatoEnId("gastos-totales",gastosT);
+
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+    let gastoslistados = gp.listarGastos();
+
+    for (let gasto of gastoslistados){
+
+        mostrarDatoEnId("listado-gastos-completo",gasto)
+    }
+}
+
+function actualizarPresupuestoWeb(){
+
+    let nuevoPresupuesto = parseInt(prompt("Introduce tu presupuesto por favor"));
+
+    gp.actualizarPresupuesto(nuevoPresupuesto)
+    repintar();
 }
 
 export  {
