@@ -77,10 +77,103 @@ function mostrarGastoWeb(idElemento, gasto) {
   buttonBorrar.addEventListener('click',nuevoObjBorrar);
   divGasto.append(buttonBorrar);
 
-  
+  let nuevoObjFormulario = new EditarHandleFormulario(); 
+  nuevoObjFormulario.gasto = gasto;
+  nuevoObjFormulario.div = divGasto;
 
+
+  let buttonFormulario = document.createElement('button'); 
+  buttonFormulario.type = 'button'; 
+  buttonFormulario.innerText = 'Editar (formulario)';
+  buttonFormulario.className = "gasto-editar-formulario";
+  buttonFormulario.addEventListener('click',nuevoObjFormulario);
+  divGasto.append(buttonFormulario);
+  
+}
+
+function submitHandle(){
+  this.handleEvent = function (e){
+
+   event.preventDefault();
+    
+    let formulario = event.currentTarget;
+
+    let descripcionFormularioGasto = formulario.elements.descripcion.value;
+    let valorFormularioGasto = parseFloat(formulario.elements.valor.value);
+    let fechaFormularioGasto = formulario.elements.fecha.value;
+    let etiquetasFormularioGasto = formulario.elements.etiquetas.value;
+    
+    let arrFormularioGasto = etiquetasFormularioGasto.split(',');
+
+    
+    this.gasto.actualizarDescripcion(descripcionFormularioGasto);
+    this.gasto.actualizarValor(valorFormularioGasto);
+    this.gasto.actualizarFecha(fechaFormularioGasto);
+    this.gasto.anyadirEtiquetas(...arrFormularioGasto);
+    
+    repintar();
+    //alert(this.gasto.descripcion);
+
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+ function EditarHandleFormulario() {
+    
+  this.handleEvent = function (e){
+    
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let divGasto = this.div;
+    divGasto.append(plantillaFormulario);
+    let datos = document.body.querySelector("form");
+    datos.elements.descripcion.value = this.gasto.descripcion;
+    datos.elements.valor.value = this.gasto.valor;
+    let fecha = new Date(this.gasto.fecha);
+    
+    let day = fecha.getDate();
+    let month = fecha.getMonth() + 1;
+    let year = fecha.getFullYear();
+    
+
+    //
+
+    if(month < 10){
+      month= `0${month}`;
+    }else{
+      month= `${month}`;
+    }
+    if(day< 10){
+      day= `0${day}`;
+    }else{
+      day= `${day}`;
+    }
+    let fechaValor = `${year}-${month}-${day}`;
+    datos.elements.fecha.value = fechaValor;
+    datos.elements.etiquetas.value = this.gasto.etiquetas;
+
+    
+    let objetoActualizar = new submitHandle();
+    objetoActualizar.gasto = this.gasto;
+
+    datos.addEventListener("submit", objetoActualizar);
+    
+    let objetoCancelar = new CancelarHandle();
+    objetoCancelar.formulario = datos;
+    objetoCancelar.asignacion = event.currentTarget;
+
+    datos.lastElementChild.addEventListener('click',objetoCancelar);
  }
 
+}
  
 
 
@@ -115,6 +208,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     agrupacionDato.append(agrupacionValor);
   }
 }
+
 
 
 
@@ -166,9 +260,6 @@ function repintar(){
     repintar();
 
   }
-
-
-
 
   let botonGasto = document.getElementById("anyadirgasto");
   botonGasto.addEventListener("click",nuevoGastoWeb);
@@ -272,11 +363,9 @@ function repintar(){
    control.append(plantillaFormulario);
    
    
-   var datos = document.getElementById("gree");
+   let datos = document.body.querySelector("form");
    datos.addEventListener("submit", submitBoton);
 
-   var datos = document.getElementById("gree");
-   datos.addEventListener("submit", submitBoton);
 
    let cancelar = new CancelarHandle();
    cancelar.formulario = datos;
