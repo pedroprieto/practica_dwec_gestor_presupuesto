@@ -77,7 +77,6 @@ function repintar(){
 function actualizarPresupuestoWeb(){
 
     let nuevoPresupuesto = parseInt(prompt("Introduce tu presupuesto por favor"));
-
     gp.actualizarPresupuesto(nuevoPresupuesto)
     repintar();
 }
