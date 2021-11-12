@@ -124,6 +124,13 @@ function EditarHandle(){
     }
 }
 
+function BorrarHandle(){
+    this.handleEvent = function(e){
+
+        gp.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
 
 
 export  {
