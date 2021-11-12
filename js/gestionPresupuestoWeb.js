@@ -134,6 +134,8 @@ function submitHandle(){
     
   this.handleEvent = function (e){
     
+    let BotonLlamada = event.currentTarget;
+    BotonLlamada.disabled = true;
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let divGasto = this.div;
     divGasto.append(plantillaFormulario);
@@ -147,7 +149,7 @@ function submitHandle(){
     let year = fecha.getFullYear();
     
 
-    //
+    
 
     if(month < 10){
       month= `0${month}`;
