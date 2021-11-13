@@ -53,6 +53,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let botEditar = document.createElement('button');
     botEditar.className = "gasto-editar";
     botEditar.type = "button";
+    botEditar.textContent = "Editar";
 
     let manejadorEdit = new EditarHandle();
     manejadorEdit.gasto = gasto;
@@ -62,6 +63,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let botBorrar = document.createElement('button');
     botBorrar.className = "gasto-borrar";
     botBorrar.type = "button";
+    botBorrar.textContent = "Borrar";
 
     let manejadorBorrar = new BorrarHandle();
     manejadorBorrar.gasto = gasto;
@@ -135,7 +137,8 @@ function EditarHandle(){
         this.gasto.actualizarFecha(nuevafecha);
 
         let nuevaetiqueta = prompt("Introduce nuevas etiquetas");
-        this.gasto.etiquetas = nuevaetiqueta.split(', ');
+        nuevaetiqueta = nuevaetiqueta.split(', ');
+        this.gasto.anyadirEtiquetas(nuevaetiqueta);
 
         repintar();
         
@@ -153,9 +156,8 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(e){
-
-        this.etiqueta = this.etiqueta.split(", ");
-        this.gasto.borrarEtiquetas(...this.etiqueta);
+       
+        this.gasto.borrarEtiquetas(this.etiqueta);
 
         repintar();
     }
