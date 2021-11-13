@@ -114,10 +114,12 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;    
     }
     this.obtenerPeriodoAgrupacion=function(periodo){
+
         let fecha=new Date(this.fecha);
         let diaPeriodo=fecha.getDate();
         let mesPeriodo=fecha.getMonth()+1;
         let anyoPeriodo=fecha.getFullYear();
+
         if ( mesPeriodo < 10 ){
             mesPeriodo=`0${mesPeriodo}`;
         }
@@ -139,6 +141,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
 }
 function filtrarGastos(objecto){
+    
     let filtrogastos=gastos.slice();
     if (objecto.valorMinimo){
 		filtrogastos=filtrogastos.filter((x) => x.valor > objecto.valorMinimo);
