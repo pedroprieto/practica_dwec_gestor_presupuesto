@@ -18,9 +18,12 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = (isNaN(valor) || valor < 0) ? 0 : valor;
+
+    let fechaAux = fecha || new Date().toString();
+    this.etiquetas = etiquetas || [];
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -35,27 +38,76 @@ function CrearGasto(descripcion, valor) {
             this.valor = newValue;
         }
     };
+
+    this.mostrarGastoCompleto = function(){
+        let etiquetasStr = "";
+        for (let etiqueta of this.etiquetas) {
+            etiquetasStr += "\n- "+etiqueta;
+        }
+        let fechaLocale = new Date(this.fecha).toLocaleString();
+
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${fechaLocale}
+Etiquetas:${etiquetasStr}
+`;
+    };
+
+    this.actualizarFecha = function(fechaStr) {
+        let fechaTimestamp = Date.parse(fechaStr);
+        if (!isNaN(fechaTimestamp)){
+            this.fecha = fechaTimestamp;
+        }
+    };
+
+    this.actualizarFecha(fechaAux);
+
+    this.anyadirEtiquetas = function(...newEtiquetas) {
+        for(let newEtiqueta of newEtiquetas) {
+            if(!this.etiquetas.find(e => e == newEtiqueta)) {
+                this.etiquetas.push(newEtiqueta);
+            }
+        }
+    };
+
+    this.borrarEtiquetas = function(...etiquetasToDelete) {
+        for(let etiqueta of etiquetasToDelete) {
+            let index = this.etiquetas.findIndex(e => e == etiqueta);
+            if(index > -1) {
+                this.etiquetas.splice(index, 1);
+            }
+        }
+    };
 }
 
 function listarGastos() {
-    //TODO
+    return gastos;
 }
 
-function anyadirGasto() {
-    //TODO
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 
-function borrarGasto() {
-    //TODO
+function borrarGasto(idBorrar) {
+    let index = gastos.findIndex(g => g.id == idBorrar);
+    if(index > -1) {
+        gastos.splice(index, 1);
+    }
 }
 
 
 function calcularTotalGastos() {
-    //TODO
+    let total = 0;
+    for (let gasto of gastos) {
+        total += gasto.valor;
+    }
+    return total;
 }
 
 function calcularBalance() {
-    //TODO
+    let gastoTotal = calcularTotalGastos();
+    return presupuesto - gastoTotal;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
