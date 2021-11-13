@@ -67,7 +67,7 @@ let opciones = {
 
 let gastosFiltrados1 = gesPres.filtrarGastos(opciones);
 
-De las tres formas pasa el test pero ya no se si me he hecho un lío a mi mismo y javascript se lo traga todo y da la casualidad que pasa el test. 
+De las tres formas pasa el test pero ya no se si me he hecho un lío a mi mismo y javascript se lo traga todo y da la casualidad que pasa el test.
 En caso de que las tres sean correctas, entiendo que la mejor sería la que menos se tenga que escribir por optimización, ¿no?
 */
 
@@ -110,6 +110,16 @@ for (let g of gastosFiltrados4)
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
 }
 
-/*
-gesPresWeb.mostrarGastosAgrupadosWeb();
-*/
+//Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
+//Si hacemos F12 sobre mostrarGastosAgrupadosWeb se nos abre donde está esa función y por tanto, vemos los parámetros que "recibe". 
+//Estaba enviando "agrupación-dia" como idElemento, la funcion agruparGastos("dia") como agrup pero no le estaba enviado un período, que también es "dia".
+
+//Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
+
+//Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");
+//agruparGastos comprobará la información en obtenerPeriodoAgrupacion(periodo) y ahí escribimos dia, mes, anyo, por lo que la Ñ de año no funcionará. 
+//El año del periodo no importa porque vamos a utilizarlo para escribir el h1, por lo que queremos escribirlo bien (además que escribiéndolo mal 
+//no pasa la prueba y tampoco tendría sentido escribirlo mal si se va a ver en la web). 

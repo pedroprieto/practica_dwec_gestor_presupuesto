@@ -101,27 +101,73 @@ function mostrarGastoWeb(idElemento, gasto)
 //periodo - Período temporal por el que se habrá realizado la agrupación. Recordemos que puede ser mes, dia o anyo.
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
+    //Al igual que en la funcion anterior, creamos los elementos, les damos nombres e introducimos cada uno en su lugar.
     let div = document.createElement('div');
-    let div1 = document.createElement('div');
     let h1 = document.createElement('h1');
-    let span = document.createElement('span');
-    let span1 = document.createElement('span');
     
-    div.className = "agrupacion";
-    div1.className = "agrupacion-dato";
-    h1.className = "Gastos agrupados por PERIODO";
-    span = "agrupacion-dato-clave";
-    span1 = "agrupacion-dato-valor";
+    //h2 creado para pruebas a ver si está llegando porque me esta dando errores cypress y no logro saber que está pasando... 
+    //let h2 = document.createElement('h2');
+    //h1.innerHTML = "pruebah1";
 
-    div.append(div1);
+    div.className = "agrupacion";  
+    h1.innerHTML = "Gastos agrupados por " + periodo;
+
+    //h1.className = "Gastos agrupados por " + periodo;
+    //Estaba dándole un nombre a h1 y no escribiendo sobre ella para mostrarlo, de ahí que me daba un error el test.
+    
     div.append(h1);
-    div1.append(span);
-    div1.append(span1);
 
-    //idea principal, ahora comprobar la info del manual
-    // Se deberá crear un div.agrupacion-dato para cada propiedad del objeto agrup:
+    //Tal y como menciona la práctica, nos enlaza al manual la opción: object.keys, values, entries: 
     //https://es.javascript.info/keys-values-entries#object-keys-values-entries
+    //En nuestro caso necesitamos usar Object.entries(obj) porque queremos devolver [propiedad, valor] del objeto dado. 
+    //He utilizado el siguiente link como referencia para más ejemplos de uso:
+    //https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+    /*Siguiendo esta página, he probado a realizarlo con foreach y con for..of. El código de dentro es el mismo por lo que ambos funcionan correctamente.
 
+    Object.entries(agrup).forEach(([key, value]) =>  
+    {
+        let div1 = document.createElement('div');
+        let span = document.createElement('span');
+        let span1 = document.createElement('span');   
+
+        div1.className = "agrupacion-dato";       
+        span.className = "agrupacion-dato-clave";           
+        span1.className = "agrupacion-dato-valor";
+
+        span.append("Clave: " + key);
+        span1.append(" Valor: " + value);
+        div1.append(span);
+        div1.append(span1);
+        div.append(div1);
+    });
+    */
+    
+    //for (let [key, value] of Object.entries(agrup)) He modificado el nombre a key y value para ver si era irrelevante o es palabra reservada para esto sí o sí.
+    for (let [clave, valor] of Object.entries(agrup))
+    {
+        //Una vez que realizamos el bucle, el resto es igual, creamos elemento, nombramos y añadimos cada cosa en su lugar.
+        let div1 = document.createElement('div');
+        let span = document.createElement('span');
+        let span1 = document.createElement('span');   
+
+        div1.className = "agrupacion-dato";       
+        span.className = "agrupacion-dato-clave";           
+        span1.className = "agrupacion-dato-valor";
+
+        //Trás una hora de modificar cosas por todas partes... y pese a que suena muy absurdo, el fallo lo tenia en que estaba haciendo span = "agrupacion-dato-clave" y 
+        //no dándole el nombre: span.className = "..."; 
+        //h2.innerHTML = "pruebaH2";
+        //div.append(h2);
+
+        span.append("Clave: " + clave);
+        span1.append(" Valor: " + valor);
+        //Añado clave y valor con espacios para dejarlo "mejor" visualmente y no ver todo seguido en la web.
+        
+        div1.append(span);
+        div1.append(span1);
+        div.append(div1);
+    }   
+     
     //Por último buscamos la capa que ya debe existir en el documento HTML  
     let contenido = document.getElementById(idElemento);
 
