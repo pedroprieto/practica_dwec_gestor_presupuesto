@@ -17,7 +17,6 @@ function mostrarGastoWeb(idElemento, gasto) {
       </span>`;
     }
 
-      
     html += `</div> 
     </div>
     `;
