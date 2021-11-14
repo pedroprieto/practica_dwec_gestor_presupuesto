@@ -155,8 +155,45 @@ function calcularBalance() {
     return balance;
 }
 
-function filtrarGastos() {
+function filtrarGastos(opciones) {
 
+        function filtrar(gasto) {
+            let filtro = true;
+            if (opciones.fechaDesde && gasto.fecha < Date.parse(opciones.fechaDesde)) {
+                filtro = false;
+            }
+            if (opciones.fechaHasta && gasto.fecha > Date.parse(opciones.fechaHasta)) {
+                filtro = false;
+            }
+            if (opciones.valorMinimo && gasto.valor < opciones.valorMinimo) {
+                filtro = false;
+            }
+            if (opciones.valorMaximo && gasto.valor > opciones.valorMaximo) {
+                filtro = false;
+            }
+            if (opciones.descripcionContiene && !gasto.descripcion.includes(opciones.descripcionContiene)) {
+                filtro = false;
+            }
+            if (opciones.etiquetasTiene) {
+                let cont = 0; //para ir contando las etiquetas que coinciden
+                for (let etiqueta of gasto.etiquetas) {
+                    for (let etiquetaTiene of opciones.etiquetasTiene) {
+                        if (etiqueta === etiquetaTiene) {
+                            cont++; //si coincide añadimos uno al contador
+                        }
+                    }
+                }
+                if (cont === 0) { //si no hay ninguna etiqueta que coincida, devolver false 
+                    filtro = false;
+                }
+            }
+
+            return filtro;
+        }
+        
+        let gastosFiltrados = gastos.filter(filtrar);
+
+        return gastosFiltrados;
 }
 
 function agruparGastos() {
