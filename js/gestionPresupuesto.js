@@ -139,7 +139,7 @@ function filtrarGastos(filtro){
         return gastos;
     }
 
-    let gastosFiltrados = gastos.filter(function(item, index, array){
+    let gastosFiltrados = gastos.filter(function(item){
         let itemMatches = false;
 
         for(let prop in filtro){
@@ -206,7 +206,7 @@ function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta){
 
     //let gastosFiltrados = filtrarGastos({"fechaDesde": fechaDesde, "fechaHasta": fechaHasta, etiquetasTiene: etiquetas});
     let gastosFiltrados = filtrarGastos(filtro);
-    let gastosAgrupados = gastosFiltrados.reduce(function(accumulator, item, index, array){    
+    let gastosAgrupados = gastosFiltrados.reduce(function(accumulator, item){    
         let periodoAgrupacion = item.obtenerPeriodoAgrupacion(periodo);
         let valorActualGrupo = accumulator[periodoAgrupacion] || 0;
         accumulator[periodoAgrupacion] = valorActualGrupo + item.valor;
