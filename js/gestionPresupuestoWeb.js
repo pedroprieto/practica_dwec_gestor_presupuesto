@@ -9,7 +9,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     let html = `<div class="gasto">
     <div class="gasto-descripcion">${gasto.descripcion}</div>
     <div class="gasto-fecha">${gasto.fecha}</div> 
-    <div class="gasto-valor">${gasto.valor}}</div> 
+    <div class="gasto-valor">${gasto.valor}</div> 
     <div class="gasto-etiquetas">`;
 
     for (let etiqueta of gasto.etiquetas) {
@@ -71,13 +71,33 @@ function actualizarPresupuestoWeb() {
     repintar();
 }
 
+function nuevoGastoWeb() {
+    let descripcion = prompt('Introduzca la descripción');
+
+    let valorStr = prompt('Introduzca el valor');
+    let valor = parseFloat(valorStr);
+
+    let fechaStr = prompt('Introduzca la fecha en formato yyyy-mm-dd');
+
+    let etiquetasStr = prompt('Introduzca las etiquetas separadas por comas');
+    let etiquetas = etiquetasStr.split(',');
+
+    let newGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, etiquetas);
+    gestionPresupuesto.anyadirGasto(newGasto);
+
+    repintar();
+}
+
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+let botonAnyadirGasto  = document.getElementById('anyadirgasto');
+botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
