@@ -235,11 +235,33 @@ filtro = arraygastos.filter(function(gasto){
 
      return filtro;  
 }
-function agruparGastos(periodo, etiquetas, fechadesde, fechahasta){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
- 
+    let etiquetasTiene = etiquetas;
+
+    if (!fechaDesde)
+    {
+        fechaDesde = "2000-01-01";
+    }
+
+    if (!fechaHasta)
+    {
+        fechaHasta = new Date(Date.now()).toISOString().substr(0,10);
+    }
+
+    let filtrodeGastos = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene})
 
 
+    let resultado = filtrodeGastos.reduce((acc, grupo) => { 
+        
+        acc[grupo.obtenerPeriodoAgrupacion(periodo)] = (acc[grupo.obtenerPeriodoAgrupacion(periodo)] || 0) + grupo.valor; 
+        
+        return acc;
+    
+    } , {});
+        
+    
+    return resultado;
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -257,4 +279,5 @@ export  {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    
 }
