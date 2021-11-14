@@ -166,15 +166,19 @@ function filtrarGastos(filtro){
                     break;
                 case 'etiquetasTiene':
                     let etiquetasTiene = filtro.etiquetasTiene;
-                    let tieneAlgunaEtiqueta = false;
-                    for (let etiqueta  of etiquetasTiene) {
-                        let indexEtiqueta = item.etiquetas.findIndex(e => e == etiqueta);
-                        if(indexEtiqueta > -1) {
-                            tieneAlgunaEtiqueta = true;
-                            break;
-                        } 
+                    if(etiquetasTiene.length > 0) {
+                        let tieneAlgunaEtiqueta = false;
+                        for (let etiqueta  of etiquetasTiene) {
+                            let indexEtiqueta = item.etiquetas.findIndex(e => e == etiqueta);
+                            if(indexEtiqueta > -1) {
+                                tieneAlgunaEtiqueta = true;
+                                break;
+                            } 
+                        }
+                        itemMatches = tieneAlgunaEtiqueta;
+                    } else {
+                        itemMatches = true;
                     }
-                    itemMatches = tieneAlgunaEtiqueta;
                     break;
                 default:
                     break;
@@ -188,8 +192,28 @@ function filtrarGastos(filtro){
     return gastosFiltrados;
 }
 
-function agruparGastos(){
-    //TODO
+function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta){
+    let filtro = {};
+    if(etiquetas.length > 0) {
+        filtro.etiquetasTiene = etiquetas;
+    }
+    if (fechaDesde) {
+        filtro.fechaDesde = fechaDesde;
+    }
+    if (fechaHasta) {
+        filtro.fechaHasta = fechaHasta;
+    }
+
+    //let gastosFiltrados = filtrarGastos({"fechaDesde": fechaDesde, "fechaHasta": fechaHasta, etiquetasTiene: etiquetas});
+    let gastosFiltrados = filtrarGastos(filtro);
+    let gastosAgrupados = gastosFiltrados.reduce(function(accumulator, item, index, array){    
+        let periodoAgrupacion = item.obtenerPeriodoAgrupacion(periodo);
+        let valorActualGrupo = accumulator[periodoAgrupacion] || 0;
+        accumulator[periodoAgrupacion] = valorActualGrupo + item.valor;
+        return accumulator;
+    }, {});
+
+    return gastosAgrupados;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
