@@ -134,8 +134,58 @@ function calcularBalance() {
     return presupuesto - gastoTotal;
 }
 
-function filtrarGastos(){
-    //TODO
+function filtrarGastos(filtro){
+    if(Object.keys(filtro).length === 0) {
+        return gastos;
+    }
+
+    let gastosFiltrados = gastos.filter(function(item, index, array){
+        let itemMatches = false;
+
+        for(let prop in filtro){
+            switch(prop){
+                case 'fechaDesde':
+                    let fechaDesdeFiltro = Date.parse(filtro.fechaDesde);
+                    itemMatches = item.fecha >= fechaDesdeFiltro;
+                    break;
+                case 'fechaHasta':
+                    let fechaHastaFiltro = Date.parse(filtro.fechaHasta);
+                    itemMatches = item.fecha <= fechaHastaFiltro;
+                    break;
+                case 'valorMinimo':
+                    let valorMinimoFiltro = filtro.valorMinimo;
+                    itemMatches = item.valor >= valorMinimoFiltro;
+                    break;
+                case 'valorMaximo':
+                    let valorMaximoFiltro = filtro.valorMaximo;
+                    itemMatches = item.valor <= valorMaximoFiltro;
+                    break;
+                case 'descripcionContiene':
+                    let descripcionContieneFiltro = filtro.descripcionContiene;
+                    itemMatches = item.descripcion.includes(descripcionContieneFiltro);
+                    break;
+                case 'etiquetasTiene':
+                    let etiquetasTiene = filtro.etiquetasTiene;
+                    let tieneAlgunaEtiqueta = false;
+                    for (let etiqueta  of etiquetasTiene) {
+                        let indexEtiqueta = item.etiquetas.findIndex(e => e == etiqueta);
+                        if(indexEtiqueta > -1) {
+                            tieneAlgunaEtiqueta = true;
+                            break;
+                        } 
+                    }
+                    itemMatches = tieneAlgunaEtiqueta;
+                    break;
+                default:
+                    break;
+            }
+            if(!itemMatches){
+                break;
+            }
+        }
+        return itemMatches;
+    });
+    return gastosFiltrados;
 }
 
 function agruparGastos(){
