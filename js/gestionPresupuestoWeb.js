@@ -63,12 +63,21 @@ function repintar() {
     for (let gasto of listaGastos) {
         mostrarGastoWeb('listado-gastos-completo', gasto);
     }
-
 }
+
+function actualizarPresupuestoWeb() {
+    let newPresupuesto = prompt('Introduzca el nuevo presupuesto');
+    gestionPresupuesto.actualizarPresupuesto(parseFloat(newPresupuesto));
+    repintar();
+}
+
+let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar
+    repintar,
+    actualizarPresupuestoWeb
 }
