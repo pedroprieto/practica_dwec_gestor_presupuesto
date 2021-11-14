@@ -23,7 +23,8 @@ function mostrarGastoWeb(idElemento, gasto) {
     `;
 
     let element = document.getElementById(idElemento);
-    element.innerHTML = html;
+    let htmlOrig = element.innerHTML;
+    element.innerHTML = htmlOrig + html;
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
