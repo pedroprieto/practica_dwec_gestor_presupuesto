@@ -9,7 +9,16 @@
     </head>
 
     <body>
-        <div id="aplicacion">
+        <div id="aplicacion">      
+            <div id="controlesprincipales">
+                <button type="button" id="actualizarpresupuesto">
+                    Actualizar presupuesto
+                </button>
+                <button type="button" id="anyadirgasto">
+                    Añadir gasto
+                </button>
+            </div>
+            
             <div id="presupuesto">
             </div>
 
@@ -44,20 +53,6 @@
             </div>
 
         </div>
-
-        <!--
-             TODO: Cargar el script js/generarDatosEstaticos.js
-
-             Cargar script al final para que se haya cargado todo el HTML previo.
-             El script se debe cargar con el atributo type="module" porque vamos a utilizar "import"
-             https://es.javascript.info/modules-intro#que-es-un-modulo
-
-        tutoria 26 oct
-        al añadir type="module" podemos ponerlo arriba porque espera a que cargue el resto
-
-        tutoria 3 nov
-        <script type="module" src="js/generarDatosEstaticos.js"></script>
-        -->
         <script type="module" src="js/generarDatosEstaticos.js"></script>
 
     </body>

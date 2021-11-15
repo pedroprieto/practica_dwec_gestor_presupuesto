@@ -1,151 +1,96 @@
-//Función de dos parámetros que se encargará de escribir el valor (texto) en el elemento HTML con id idElemento indicado:
-//idElemento - Hará referencia al id del elemento HTML donde se insertará el resultado en formato texto.
-//valor - El valor a mostrar.
+//Importar librería js/gestionPresupuesto.js
+import * as gesPres from "./gestionPresupuesto.js";
+
 function mostrarDatoEnId(idElemento, valor)
 {   
-    //Tal como dice el manual, si un elemento tiene el atributo id, podemos obtener el elemento usando este método sin importar donde se encuentre.
-    //Después, la propiedad innerHTML nos permitirá obtener el html dentro del elemento como un string. Con el =valor lo reemplazamos. 
     document.getElementById(idElemento).innerHTML = valor;
 }
 
-//Función de dos parámetros que se encargará de añadir dentro del elemento HTML 
-//con id idElemento indicado una estructura HTML para el gasto que se pase como parámetro:
-//idElemento - Hará referencia al id del elemento HTML donde se insertará el conjunto de estructuras HTML que se crearán para cada gasto.
-//gasto - Objeto gasto
+//Modificación de la función mostrarGastoWeb
 function mostrarGastoWeb(idElemento, gasto)
 {
-    //Ejmplo tutoria 8 nov. 
-    //var div1 = document.createElement('div');
-    //var div2 = document.createElement('div');
-    //div2.innerHTML = "Hola mundo";
-    //div1.append(div2);
-
-    //Buscamos la capa que ya debe existir en el documento HTML
-    //let contenido = document.getElementById(idElemento);
-    //Dentro le metemos el div1 y a ese div1 le habiamos metido antes el div2
-    //contenido.append(div1);
-
-    //div.contenido
-    //  div (div1)
-    //    div2
-    //      Hola mundo
-    //    /div2
-    //  /div
-    ///div.contenido
-
-    //Por tanto, extrapolando datos e información vista en el manual y en la tutoría:
-    //1. Crear elemento <div>
-    //let div = document.createElement('div'); lo repetimos las veces que necesitamos para crear todos los divs
     let div = document.createElement('div');
     let div1 = document.createElement('div');
     let div2 = document.createElement('div');
     let div3 = document.createElement('div');
     let div4 = document.createElement('div');
 
-    // 2. Establecer su clase a "alert"
-    //div.className = "alert"; Le damos el nombre a las clases.
     div.className = "gasto";   
     div1.className = "gasto-descripcion";
     div2.className = "gasto-fecha";
     div3.className = "gasto-valor";
     div4.className = "gasto-etiquetas";
 
-    //Hemos creado el elemento. Pero hasta ahora solamente está en una variable llamada div, no aún en la página, y no la podemos ver.
-    //document.body.append(div); podemos llamar append sobre cualquier elemento y poner otro dentro de el.
     div1.append(gasto.descripcion);
     div2.append(gasto.fecha);
     div3.append(gasto.valor);
-    //div4.append(gasto.etiquetas);
-    //Si dejamos directamente como div, nos mostrará un div pero no llegamos a crear el span como en el ejemplo. Las comas salen correctamente separando las etiquetas. 
-    
-    //Después los añadimos al primer div que es el que contendrá todos. 
+
     div.append(div1);
     div.append(div2);
     div.append(div3);
     div.append(div4);
 
-    /*
-    let span=document.createElement('span');
-    span.className="gasto-etiquetas-etiqueta";
-    span.append(gasto.etiquetas);
-    div4.append(span);
-
-    De esta forma, parece que el archivo es correcto (pero no pasará la prueba). Si inspeccionamos la página, veremos <div class="gasto-etiquetas"> y dentro 
-    un <span class="gasto.etiquetas-etiqueta">casa, comida</span>. No los estamos separando un span por cada etiqueta.
-    */
-    
-    //Por tanto, vamos a recorrer todas las etiquetas y añadiendo por separado.
     for (let etiqueta of gasto.etiquetas)
     {
-        //Hacemos el mismo proceso que con DIV pero esta vez utilizamos SPAN. 
         let span = document.createElement('span');
         span.className = "gasto-etiquetas-etiqueta";
-        //Si no añadimos la , no podremos separar las diferentes etiquetas como sale cuando únicamente lo haces con div4.append(gasto.etiquetas)
         span.append(`${etiqueta},`);
-        //Ahora no queremos meter dentro el gasto.etiquetas, si no el span que hemos creado con su etiqueta.
         div4.append(span);
     }
-    
-    //Por último buscamos la capa que ya debe existir en el documento HTML  
+
     let contenido = document.getElementById(idElemento);
     
-    //Dentro le insertamos el div. (Este div ya viene con todos los anteriores insertados en él)
-    contenido.append(div);      
+    contenido.append(div);   
+
+    /*Ejemplo tutoria 8 nov.
+    Lo haces sobre nuevoGastoWeb en vez de mostrarGastoWeb como pide el ejercicio.
+
+    let butEdit = document.createElement("button");
+    butEdit.type="button";
+
+    let manejadorEdit = new EditarHandle()
+    //Aquí tengo disponible manejadorEdit.handleEvent()
+    manejadorEdit.migasto = g;
+
+    // El objeto manejadorEvent puede acceder a .migasto
+    butEdit.addEventListener("click", manejadorEdit);
+    //En el EditarHandle() { podemos acceder a this.migasto!!! this.migasto.actualizarDescripcion, this.migasto.valor, etc}
+    */
+   
+    //Botón editar:
+    //Crear un botón con texto Editar de tipo button (<button type="button"~) con clase ~gasto-editar.
+    let butEdit = document.createElement("button");
+    butEdit.className = "gasto-editar";
+    butEdit.type = "button";
+    //No lo muestras en el ejemplo, pero hay que darle un nombre al cuadro del botón.
+    butEdit.innerHTML = "Editar";
+
+    //Crear un nuevo objeto a partir de la función constructora EditarHandle.
+    let manejadorEdit = new EditarHandle();
+    
+    //Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
+    manejadorEdit.gasto = gasto;
+
+    //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
+    //element.addEventListener(event, handler, [options]);
+    //elem.addEventListener('click', obj);
+    butEdit.addEventListener("Click", manejadorEdit);
+
+    //Añadir el botón al DOM a continuación de las etiquetas
+    contenido.append(butEdit); 
 }
 
-//Función de tres parámetros que se encargará de crear dentro del elemento 
-//HTML con id idElemento indicado una estructura HTML para el objeto agrup que se pase como parámetro:
-//idElemento - Hará referencia al id del elemento HTML donde se insertará el conjunto de estructuras HTML que se creará para cada gasto.
-//agrup - Objeto que contendrá el resultado de agrupar el total de gastos por período temporal (ejecución de la función agruparGastos 
-//desarrollada en la práctica anterior). Recordemos un ejemplo del formato que puede tener agrup en el caso de agrupar por mes:
-//periodo - Período temporal por el que se habrá realizado la agrupación. Recordemos que puede ser mes, dia o anyo.
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
-    //Al igual que en la funcion anterior, creamos los elementos, les damos nombres e introducimos cada uno en su lugar.
     let div = document.createElement('div');
     let h1 = document.createElement('h1');
-    
-    //h2 creado para pruebas a ver si está llegando porque me esta dando errores cypress y no logro saber que está pasando... 
-    //let h2 = document.createElement('h2');
-    //h1.innerHTML = "pruebah1";
-
     div.className = "agrupacion";  
     h1.innerHTML = "Gastos agrupados por " + periodo;
-
-    //h1.className = "Gastos agrupados por " + periodo;
-    //Estaba dándole un nombre a h1 y no escribiendo sobre ella para mostrarlo, de ahí que me daba un error el test.
-    
+ 
     div.append(h1);
 
-    //Tal y como menciona la práctica, nos enlaza al manual la opción: object.keys, values, entries: 
-    //https://es.javascript.info/keys-values-entries#object-keys-values-entries
-    //En nuestro caso necesitamos usar Object.entries(obj) porque queremos devolver [propiedad, valor] del objeto dado. 
-    //He utilizado el siguiente link como referencia para más ejemplos de uso:
-    //https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-    /*Siguiendo esta página, he probado a realizarlo con foreach y con for..of. El código de dentro es el mismo por lo que ambos funcionan correctamente.
-
-    Object.entries(agrup).forEach(([key, value]) =>  
-    {
-        let div1 = document.createElement('div');
-        let span = document.createElement('span');
-        let span1 = document.createElement('span');   
-
-        div1.className = "agrupacion-dato";       
-        span.className = "agrupacion-dato-clave";           
-        span1.className = "agrupacion-dato-valor";
-
-        span.append("Clave: " + key);
-        span1.append(" Valor: " + value);
-        div1.append(span);
-        div1.append(span1);
-        div.append(div1);
-    });
-    */
-    
-    //for (let [key, value] of Object.entries(agrup)) He modificado el nombre a key y value para ver si era irrelevante o es palabra reservada para esto sí o sí.
     for (let [clave, valor] of Object.entries(agrup))
     {
-        //Una vez que realizamos el bucle, el resto es igual, creamos elemento, nombramos y añadimos cada cosa en su lugar.
         let div1 = document.createElement('div');
         let span = document.createElement('span');
         let span1 = document.createElement('span');   
@@ -153,29 +98,178 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         div1.className = "agrupacion-dato";       
         span.className = "agrupacion-dato-clave";           
         span1.className = "agrupacion-dato-valor";
-
-        //Trás una hora de modificar cosas por todas partes... y pese a que suena muy absurdo, el fallo lo tenia en que estaba haciendo span = "agrupacion-dato-clave" y 
-        //no dándole el nombre: span.className = "..."; 
-        //h2.innerHTML = "pruebaH2";
-        //div.append(h2);
 
         span.append("Clave: " + clave);
         span1.append(" Valor: " + valor);
-        //Añado clave y valor con espacios para dejarlo "mejor" visualmente y no ver todo seguido en la web.
         
         div1.append(span);
         div1.append(span1);
         div.append(div1);
     }   
      
-    //Por último buscamos la capa que ya debe existir en el documento HTML  
     let contenido = document.getElementById(idElemento);
 
-    //Dentro le insertamos el div. (Este div ya viene con todos los anteriores insertados en él)
     contenido.append(div);
 }
 
-//El código de este fichero hará uso de la teoría explicada en la sección Documento del tutorial de JavaScript. El fichero deberá exportar las siguientes funciones:
+//Crear una función repintar para actualizar la página
+//Estamos desarrollando una aplicación JavaScript controlada por datos. Cada vez que se añade, 
+//modifica o borra un gasto, debemos mostrar el resultado en la página HTML. Recordemos que la aplicación debe mostrar:
+function repintar()
+{
+    //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+    mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
+
+    //Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+    mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
+
+    //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+    mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+
+    //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. 
+    //Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    let gastos = gesPres.listarGastos();
+
+    for (let g of gastos) {
+        mostrarGastoWeb("listado-gastos-completo", g);
+    }
+    //Al fin y al cabo estamos utilizando las mismas que utilizamos en generarDatosEstaticos sin utilizar gesPresWeb. porque ya las tenemos aquí.
+}
+
+//Esta función se utilizará como manejadora de eventos del botón actualizarpresupuesto del código HTML. Realizará las siguientes tareas:
+function actualizarPresupuestoWeb()
+{
+    //Pedir al usuario que introduzca un presupuesto mediante un prompt.
+    let presupuestoActualizado = prompt("Introduce un nuevo presupuesto");
+
+    //Convertir el valor a número (recuerda que prompt siempre devuelve un string).
+    presupuestoActualizado = parseInt(presupuestoActualizado);
+
+    //Actualicar el presupuesto (función actualizarPresupuesto)
+    gesPres.actualizarPresupuesto(presupuestoActualizado);
+
+    //Llamar a la función repintar para que se muestre la información actualizada en el archivo HTML.
+    //Recuerda que actualizar el presupuesto provoca cambios en el balance, por lo que al ejecutar repintar se actualizarán ambos campos.
+    repintar(); 
+}
+
+//Una vez definida la función, se añadirá como manejadora del evento click del botón actualizarpresupuesto mediante addEventListener.
+//Para ello habrá que obtener el elemento botón correspondiente previamente.
+//<button type="button" id="actualizarpresupuesto">
+let butActualizar = document.getElementById("actualizarpresupuesto");
+butActualizar.addEventListener('click', actualizarPresupuestoWeb);
+
+//Esta función se utilizará como manejadora de eventos del botón anyadirgasto del código HTML. Realizará las siguientes tareas:
+function nuevoGastoWeb()
+{
+    let descripcionGastoNuevo = prompt("Introduce la descripción");
+    let valorGastoNuevo = prompt("Introduce el gasto");
+    let fechaGastoNuevo = prompt("Introduce la fecha");
+    let etiquetasGastoNuevo = prompt("Introduce la etiqueta");
+
+    //Convertir el valor a número (recuerda que prompt siempre devuelve un string).
+    valorGastoNuevo = parseInt(valorGastoNuevo);
+
+    //Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
+    //es.javascript.info/array-methods#split-y-join
+    let etiquetasSeparadasSplit = etiquetasGastoNuevo.split(',');
+
+    //Crear un nuevo gasto (función crearGasto). ¡Ojo con la manera de pasar el parámetro ~etiquetas~!
+    let gastoNuevo = new gesPres.CrearGasto(descripcionGastoNuevo, valorGastoNuevo, fechaGastoNuevo, etiquetasSeparadasSplit);
+
+    //Añadir el gasto a la lista (función anyadirGasto).
+    gesPres.anyadirGasto(gastoNuevo);
+
+    //Llamar a la función repintar para que se muestre la lista con el nuevo gasto.
+    repintar();
+}
+
+//Una vez definida la función, se añadirá como manejadora del evento click del botón anyadirgasto mediante addEventListener. 
+//Para ello habrá que obtener el elemento botón correspondiente previamente.
+let butAnyadirGasto = document.getElementById("anyadirgasto");
+butAnyadirGasto.addEventListener('click', nuevoGastoWeb);
+
+//Ejemplo tutoria 3 noviembre
+/*
+function EditarHandle()
+{
+    this.handleEvent =  function(e){
+        //pedir al usuario datos del gasto, etc
+        var desc = prompt("Por favor, introduce la descripción");
+        this.gasto.actualizarDescripcion(desc);
+
+        
+let e = new CrearGasto("a", 24);
+
+let el = new EditarHandle();
+el.gasto = e;
+el.handleEvent();
+
+function mostrarGastoWeb(g){
+    pintar datos del gasto en html
+    crear los botones
+    crea boton editar
+    crea boton borrar
+    creo objeto manejador de eventos
+    
+    let evEditar = new EditarHandle();
+    evEditar.gasto = g;
+    //elem.addEventListener('click, obj) --> EN EL MANUAL
+    editar.addEventListener('click', evEditar);
+
+    ademas del editar gasto de arriba, tambien habra que tener las etiquetas.
+    para borrar algo parecido a:
+    for (let et of g.etiquetas){
+        //pintar etiqueta
+        //añadir manejador de eventos de borrar etiqueta
+    
+        repintar();
+    }
+}
+*/
+
+//Esta función se utilizará como objeto manejador de eventos para editar un gasto.
+//La función EditarHandle será una función constructora que definirá exclusivamente un método llamado handleEvent
+function EditarHandle()
+//tutoria 8 nov
+//preguntar nuevos datos al usuario
+//a guardar en el gasto: ¿que gasto?
+// si tengo el id, buscar por getElementById
+//e.target.parentNode.id ????
+//this.migasto!!! 
+//this.migasto.actualizarDescripcion
+//this.migasto.valor, etc
+{
+    this.handleEvent =  function(e)
+    {
+        //Pedir al usuario la información necesaria para editar el gasto mediante sucesivas preguntas con prompt.
+        let desc = prompt("Por favor, introduce la descripción");
+        let valor = prompt("Por favor, introduce el gasto");
+        let fecha = prompt("Por favor, introduce la fecha");
+        let etiqueta = prompt("por favor, introduce la etiqueta");
+
+        //Convertir el valor a número (recuerda que prompt siempre devuelve un string).
+        valor = parseInt(valor);
+
+        //Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
+        //es.javascript.info/array-methods#split-y-join
+        let etiquetasSeparadasSplit = etiqueta.split(',');
+
+        //Actualizar las propiedades del gasto (disponible mediante this.gasto), mediante las funciones actualizarValor, 
+        //actualizarDescripcion, actualizarFecha y anyadirEtiquetas.
+        this.gasto.actualizarDescripcion(desc);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        //Se comenta en la tutoría del 8 nov el error de actualizarEtiquetas
+        this.gasto.anyadirEtiquetas(etiquetasSeparadasSplit);
+
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
