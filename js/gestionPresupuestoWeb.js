@@ -63,6 +63,27 @@ function mostrarGastosWeb(idElemento, gasto){
             div_etiqs.innerHTML = etiq;
         }
     // }
+
+    // Crear los botones de editar y borrar
+    // Boton editar
+    let btn_editar = document.createElement("button");
+    // btn_editar.setAttribute("type", "button");
+    btn_editar.type = "button";
+    btn_editar.className = "gasto-editar"
+    btn_editar.innerHTML = "Editar";
+    contenedor.append(btn_editar);
+    let editar_gasto = new editarHandle();
+    editar_gasto.gasto_actual = gasto;
+    btn_editar.addEventListener("click", editarHandle());   
+
+    // Boton borrrar
+    let btn_borrar = document.createElement("button");
+    // btn_borrar.setAttribute("type", "button");
+    btn_borrar.type = "button";
+    btn_borrar.className = "gasto-borrar";
+    btn_borrar.innerHTML = "Borrar";
+    contenedor.append(btn_borrar);
+
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -154,7 +175,7 @@ function actualizarPresupuestoWeb() {
 
 function nuevoGastoWeb() {
 
-    // Pedimos al usuario los datos referentes al gasto
+    // Pedimos al usuario los datos referentes al nuevo gasto
     let descripcion = prompt("DEscripcion para el gasto");
     let valor = prompt("Cantidad del gasto");
     valor = parseFloat(valor);
@@ -162,19 +183,35 @@ function nuevoGastoWeb() {
     let etiquetas = prompt("Etiquetas del gasto (separadas por coma");
     etiquetas = etiquetas.split(",");
 
-    // Creamos el gasto
+    // Creamos el gasto nuevo
     let gasto = new gespres.CrearGasto(descripcion, valor, fecha, etiquetas);
 
-    // Añadimos el gasto creado al array que contiene todos los gastos
+    // Añadimos el nuevo gasto creado al array que contiene todos los gastos
     gespres.anyadirGasto(gasto);
 
-    // REcargamos los resultado con el nuevo gasto
+    // REcargamos la página con el nuevo gasto, y resto de datos actualizados
     repintar();
 };
 
 // Capturamos el click del boton actualizar presupuesto, y si se presiona 
 let btn_anyadir_gasto = document.getElementById('anyadirgasto');
 btn_anyadir_gasto.addEventListener("click", nuevoGastoWeb);
+
+function editarHandle() {
+    this.handleEvent = function(e) {
+
+        let nueva_descripcion = prompt("Nueva descripcion para el gasto");
+        // this.gasto_actual.CrearGasto.actu
+        
+
+        let nuevo_valor = prompt("Nueva cantidad para el gasto");
+        nuevo_valor = parseFloat(nuevo_valor);
+        let nueva_fecha = prompt("Nueva fecha del gasto (AAAA-MM-DD)");
+        let nuevas_etiquetas = prompt("Nuevas etiquetas del gasto (separadas por coma");
+        nuevas_etiquetas = nuevas_etiquetas.split(",");
+
+    };
+};
 
 // Exportamos las funciones del documento
 export {
@@ -183,5 +220,6 @@ export {
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    editarHandle
 }
