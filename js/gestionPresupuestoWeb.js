@@ -23,24 +23,6 @@ function mostrarGastoWeb(idElemento,gasto){
     let etiquetas=document.createElement('div');
     etiquetas.className="gasto-etiquetas";
 
-    if ( gasto.etiquetas ){
-
-        for(let etiqueta of gasto["etiquetas"]){
-            let span=document.createElement('span');
-            span.className="gasto-etiquetas-etiqueta"
-
-            let handleEtiqueta = new BorrarEtiquetasHandle();
-            handleEtiqueta.gasto = gasto;
-            handleEtiqueta.etiqueta = etiqueta;
-            span.addEventListener("click", handleEtiqueta);
-
-        span.append(etiqueta);
-        etiquetas.append(span);
-        }
-    }
-    tag.prepend(etiquetas);
-    document.getElementById(idElemento).append(tag);
-
     let botonEditar = document.createElement('button');
     botonEditar.className = "gasto-editar";
     botonEditar.type = "button";
@@ -59,8 +41,26 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrar.addEventListener("click", handleBorrar);
 
     tag.append(botonBorrar);
-    let x = document.getElementById(idElemento);
-    x.append(tag); 
+
+    if ( gasto.etiquetas ){
+
+        for(let etiqueta of gasto["etiquetas"]){
+            let span=document.createElement('span');
+            span.className="gasto-etiquetas-etiqueta"
+
+            let handleEtiqueta = new BorrarEtiquetasHandle();
+            handleEtiqueta.gasto = gasto;
+            handleEtiqueta.etiqueta = etiqueta;
+            span.addEventListener("click", handleEtiqueta);
+
+        span.append(etiqueta);
+        etiquetas.append(span);
+        }
+    }
+    tag.prepend(etiquetas);
+    document.getElementById(idElemento).append(tag);
+
+    
 
 }
 
@@ -98,7 +98,7 @@ function repintar(){
 
     for (let gasto of gastoslistados){
 
-        mostrarDatoEnId("listado-gastos-completo",gasto)
+        mostrarGastoWeb("listado-gastos-completo",gasto)
     }
 }
 
@@ -115,11 +115,13 @@ botonActualizarPresupuestoWeb.addEventListener("click", actualizarPresupuestoWeb
 function nuevoGastoWeb(){
 
     let descripcionN = prompt("Introduce la descripción del gasto, por favor");
+
     let valorN = prompt("Introduce el importe del gasto, por favor");
     valorN = parseFloat(valorN);
-    let fechaN = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor");
-    let etiquetasN = prompt("Introduce las etiquetas del gasto separadas por comas, por favor");
 
+    let fechaN = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor");
+
+    let etiquetasN = prompt("Introduce las etiquetas del gasto separadas por comas, por favor");
     etiquetasN = etiquetasN.split(',');
 
     let gasto = new gp.CrearGasto(descripcionN,valorN,fechaN,...etiquetasN);
@@ -134,17 +136,17 @@ function EditarHandle(){
 
     this.handleEvent = function(e){
 
-        let descripcionNueva = prompt("Introduce una descripción del gasto, por favor : ",this.gasto.descripcion);
+        let descripcionNueva = prompt("Introduce una descripcion:", this.gasto.descripcion);
         this.gasto.actualizarDescripcion(descripcionNueva);
 
-        let valorNuevo = prompt("Introduce el importe del gasto, por favor",this.gasto.valor);
-        this.gasto.actualizarValor(valorNuevo);
+        let valorNuevo = prompt("Introduce un valor:", this.gasto.valor);
+        this.gasto.actualizarValor(parseFloat(valorNuevo));
 
-        let fechaNueva = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor",this.gasto.fecha);
+        let fechaNueva = prompt("Introduce una fecha", this.gasto.fecha);
         this.gasto.actualizarFecha(fechaNueva);
 
-        let etiquetasNuevas = prompt("Introduce las etiquetas del gasto separadas por comas, por favor",this.gasto.etiquetas);
-        etiquetasNuevas =etiquetasNuevas.split(',');
+        let etiquetasNuevas = prompt("Introduce las etiquetas:", this.gasto.etiquetas);
+        etiquetasNuevas = etiquetasNuevas.split(',');
         this.gasto.anyadirEtiquetas(...etiquetasNuevas);
 
         repintar();
@@ -162,7 +164,7 @@ function BorrarEtiquetasHandle(){
 
     this.handleEvent = function(e){
 
-        this.gasto.borrarEtiquetas(...this.etiqueta);
+        this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
     }
 
@@ -171,5 +173,6 @@ function BorrarEtiquetasHandle(){
 export  {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    nuevoGastoWeb
 };
