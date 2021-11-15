@@ -124,7 +124,9 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
      a = transformarListadoEtiquetas("eti1 :, ; eti2"); // a = ["eti1","eti2"]
      #+end_src
      
-     Existen varias maneras de enfrentar el problema. Una posible sugerencia: https://es.javascript.info/regexp-methods#str-match-regexp
+     Existen varias maneras de enfrentar el problema. Pistas:
+     - https://es.javascript.info/regexp-methods#str-match-regexp
+     - https://es.javascript.info/regexp-character-sets-and-ranges#rangos
      
      Por último, se deberá [[https://es.javascript.info/import-export#export-separado-de-la-declaracion][exportar]] la función ~transformarListadoEtiquetas~ para poder testearla.
      
