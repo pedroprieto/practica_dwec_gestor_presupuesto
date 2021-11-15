@@ -87,6 +87,24 @@ button:disabled, button:disabled:hover {
     content: "€";
 }
 
+/* Formulario filtrado */
+#formulario-filtrado {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#formulario-filtrado .form-control {
+    flex: 1 1 auto;
+    margin: 0.2em 1em;
+}
+
+#formulario-filtrado #formulario-filtrado-error {
+    flex: 1 1 100%;
+    color: red;
+}
+
+
+/* Pantallas grandes */
 @media screen and (min-width: 600px) {
     .form-control {
         display: flex;
