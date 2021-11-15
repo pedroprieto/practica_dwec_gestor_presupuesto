@@ -74,7 +74,7 @@ function mostrarGastosWeb(idElemento, gasto){
     contenedor.append(btn_editar);
     let editar_gasto = new editarHandle();
     editar_gasto.gasto_actual = gasto;
-    btn_editar.addEventListener("click", editarHandle());   
+    btn_editar.addEventListener("click", editar_gasto);   
 
     // Boton borrrar
     let btn_borrar = document.createElement("button");
@@ -202,13 +202,19 @@ function editarHandle() {
 
         let nueva_descripcion = prompt("Nueva descripcion para el gasto");
         // this.gasto_actual.CrearGasto.actu
+        this.gasto_actual.descripcion = gespres.actualizarDescripcion(nueva_descripcion);
         
 
         let nuevo_valor = prompt("Nueva cantidad para el gasto");
         nuevo_valor = parseFloat(nuevo_valor);
+        this.gasto_actual.valor = gespres.actualizarValor(nuevo_valor);
+
         let nueva_fecha = prompt("Nueva fecha del gasto (AAAA-MM-DD)");
+        this.gasto_actual.fecha = gespres.actualizarFecha(nueva_fecha);
+
         let nuevas_etiquetas = prompt("Nuevas etiquetas del gasto (separadas por coma");
         nuevas_etiquetas = nuevas_etiquetas.split(",");
+        this.gasto_actual.etiquetas = gespres.anyadirEtiquetas(nuevas_etiquetas);
 
     };
 };
