@@ -136,17 +136,18 @@ function EditarHandle(){
 
     this.handleEvent = function(e){
 
-        let descripcionNueva = prompt("Introduce una descripcion:", this.gasto.descripcion);
+        let descripcionNueva = prompt("Introduce una descripción del gasto, por favor : ",this.gasto.descripcion);
         this.gasto.actualizarDescripcion(descripcionNueva);
 
-        let valorNuevo = prompt("Introduce un valor:", this.gasto.valor);
-        this.gasto.actualizarValor(parseFloat(valorNuevo));
+        let valorNuevo = prompt("Introduce el importe del gasto, por favor",this.gasto.valor);
+        valorNuevo = parseFloat(valorNuevo);
+        this.gasto.actualizarValor(valorNuevo);
 
-        let fechaNueva = prompt("Introduce una fecha", this.gasto.fecha);
+        let fechaNueva = prompt("Introduce la fecha del gasto con formato YYYY-MM-DD, por favor",this.gasto.fecha);
         this.gasto.actualizarFecha(fechaNueva);
 
-        let etiquetasNuevas = prompt("Introduce las etiquetas:", this.gasto.etiquetas);
-        etiquetasNuevas = etiquetasNuevas.split(',');
+        let etiquetasNuevas = prompt("Introduce las etiquetas del gasto separadas por comas, por favor",this.gasto.etiquetas);
+        etiquetasNuevas =etiquetasNuevas.split(',');
         this.gasto.anyadirEtiquetas(...etiquetasNuevas);
 
         repintar();
