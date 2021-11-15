@@ -46,7 +46,6 @@ for (let g of gespres.filtrarGastos({valorMinimo: 50})) {
     gespresweb.mostrarGastosWeb("listado-gastos-filtrado-2", g);
 }
 
-
 // Mostrar el listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3 (funciones filtrarGastos y mostrarGastoWeb)
 for (let g of gespres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]})) {
     gespresweb.mostrarGastosWeb("listado-gastos-filtrado-3", g);
@@ -65,3 +64,9 @@ gespresweb.mostrarGastosAgrupadosWeb("agrupacion-mes", gespres.agruparGastos("me
 
 // Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gespresweb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gespres.agruparGastos("anyo"), "año");
+
+// gespresweb.mostrarGastosAgrupadosWeb("listado-gastos-completo");
+// document.getElementById("listado-gastos-completo").innerHTML = "";
+// let contenedor = document.getElementById("listado-gastos-completo");
+// contenedor.innerHTML = "";
+

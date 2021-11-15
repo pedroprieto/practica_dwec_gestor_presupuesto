@@ -1,5 +1,8 @@
 // Javascript 4 - Interaccion con HTML
 
+// Importamos gestionPresupuesto.js
+import * as gespres from "./gestionPresupuesto.js";
+
 function mostrarDatoEnId(idElemento, valor){
 
     let contenedor = document.getElementById(idElemento);
@@ -106,9 +109,58 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     }
 }
 
+function repintar() {
+
+    // Mostrar el presupuesto en el div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+    mostrarDatoEnId("presupuesto", gespres.mostrarPresupuesto());
+
+    // Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+    mostrarDatoEnId("gastos-totales", gespres.calcularTotalGastos());
+
+    // Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+    mostrarDatoEnId("balance-total", gespres.calcularBalance());
+
+    // Borrar el contenido de div#listado-gastos-completo
+    // gespresweb.mostrarGastosAgrupadosWeb("listado-gastos-completo");
+    // let contenedor = document.getElementById("listado-gastos-completo");
+    // contenedor.innerHTML = "";
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+
+    // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    for (let g of gespres.listarGastos()) {
+        mostrarGastosWeb("listado-gastos-completo", g);
+    };
+
+};
+// document.getElementById("actualizarpresupuesto").addEventListener("click", actulizarPresupuestoWeb());
+// actualizarpresupuesto.addEventListener("click", actulizarPresupuestoWeb());
+
+
+function actualizarPresupuestoWeb() {
+
+    let presupuesto = prompt("Introduzca un nuevo presupuesto");
+
+    presupuesto = parseFloat(presupuesto);
+
+    gespres.actualizarPresupuesto(presupuesto);
+
+    repintar();
+    // let descripcion = prompt("DEscripcion para el gasto");
+    // let valor = prompt("Cantidad del gasto");
+    // let fecha = prompt("Fecha del gasto (AAAA-MM-DD)");
+    // let etiquetas = prompt("Etiquetas del gasto (separadas por coma");
+};
+
+    // Capturamos el click del boton actualizar presupuesto, y si se presiona 
+    let btn_act_presupuesto = document.getElementById('actualizarpresupuesto');
+    btn_act_presupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
 // Exportamos las funciones del documento
 export {
     mostrarDatoEnId,
     mostrarGastosWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb
 }
