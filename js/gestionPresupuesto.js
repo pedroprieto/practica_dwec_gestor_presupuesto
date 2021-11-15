@@ -73,6 +73,71 @@ function calcularBalance() {
     return balance;
     
 }
+function agruparGastos(){
+
+}
+
+function filtrarGastos(parametros){
+    
+    let res = [];
+    
+    for (let key of gastos){
+        let verdad = true;
+        if (parametros.fechaDesde){
+            
+            if (key.fecha < Date.parse(parametros.fechaDesde)){               
+                
+               verdad = false;
+            } 
+            
+        }
+    
+        if (parametros.fechaHasta){
+            if (key.fecha > Date.parse(parametros.fechaHasta)){
+                verdad = false;
+            }
+        }
+        
+        if (parametros.valorMinimo){
+           
+            if (key.valor < parametros.valorMinimo){
+                verdad = false;
+            }
+        }
+        if (parametros.valorMaximo){
+            if (key.valor > parametros.valorMaximo){
+                verdad = false;
+            }
+        }
+        
+        if (parametros.descripcionContiene){
+            if (!key.descripcion.includes(parametros.descripcionContiene)){
+                verdad = false;
+            }
+        }
+        if (parametros.etiquetasTiene){
+            let contador = 0;
+            
+            for (let etiqueta of parametros.etiquetasTiene){
+            
+                if(key.etiquetas.includes(etiqueta)){
+                    contador++;
+                }
+            }
+            
+            if (contador == 0){
+                verdad = false;
+            }
+            
+        }
+        if (verdad){
+            res.push(key);
+        }
+        
+    }
+    
+    return res;
+}
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     
@@ -159,6 +224,30 @@ this.borrarEtiquetas = function(...borrarEtiquetas){
         }
     }
 }
+this.obtenerPeriodoAgrupacion = function(periodo){
+
+    let res = "";
+    let fecha2 = "";
+    fecha2 = fecha.toLocaleString();
+
+    if (periodo == "dia"){
+
+        res = fecha2.slice(0,10);
+
+    }
+    if (periodo == "mes"){
+
+        res = fecha2.slice(0,7);
+
+    }
+    if (periodo == "anyo"){
+
+        res = fecha2.slice(0,4);
+
+    }
+    return res;
+
+}
 }
 
 
@@ -173,5 +262,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
