@@ -146,15 +146,35 @@ function actualizarPresupuestoWeb() {
     gespres.actualizarPresupuesto(presupuesto);
 
     repintar();
-    // let descripcion = prompt("DEscripcion para el gasto");
-    // let valor = prompt("Cantidad del gasto");
-    // let fecha = prompt("Fecha del gasto (AAAA-MM-DD)");
-    // let etiquetas = prompt("Etiquetas del gasto (separadas por coma");
 };
 
     // Capturamos el click del boton actualizar presupuesto, y si se presiona 
     let btn_act_presupuesto = document.getElementById('actualizarpresupuesto');
     btn_act_presupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
+function nuevoGastoWeb() {
+
+    // Pedimos al usuario los datos referentes al gasto
+    let descripcion = prompt("DEscripcion para el gasto");
+    let valor = prompt("Cantidad del gasto");
+    valor = parseFloat(valor);
+    let fecha = prompt("Fecha del gasto (AAAA-MM-DD)");
+    let etiquetas = prompt("Etiquetas del gasto (separadas por coma");
+    etiquetas = etiquetas.split(",");
+
+    // Creamos el gasto
+    let gasto = new gespres.CrearGasto(descripcion, valor, fecha, etiquetas);
+
+    // Añadimos el gasto creado al array que contiene todos los gastos
+    gespres.anyadirGasto(gasto);
+
+    // REcargamos los resultado con el nuevo gasto
+    repintar();
+};
+
+// Capturamos el click del boton actualizar presupuesto, y si se presiona 
+let btn_anyadir_gasto = document.getElementById('anyadirgasto');
+btn_anyadir_gasto.addEventListener("click", nuevoGastoWeb);
 
 // Exportamos las funciones del documento
 export {
@@ -162,5 +182,6 @@ export {
     mostrarGastosWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }

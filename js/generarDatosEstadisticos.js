@@ -64,9 +64,3 @@ gespresweb.mostrarGastosAgrupadosWeb("agrupacion-mes", gespres.agruparGastos("me
 
 // Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gespresweb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gespres.agruparGastos("anyo"), "año");
-
-// gespresweb.mostrarGastosAgrupadosWeb("listado-gastos-completo");
-// document.getElementById("listado-gastos-completo").innerHTML = "";
-// let contenedor = document.getElementById("listado-gastos-completo");
-// contenedor.innerHTML = "";
-
