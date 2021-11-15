@@ -200,7 +200,7 @@ function nuevoGastoWebFormulario(){
     document.getElementById("anyadirgasto-formulario").disabled = true;
 
     let enviarGasto = new EnviarGastoHandle();
-    enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
+    //enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
     formulario.addEventListener("submit", enviarGasto);
 
     let cancelarFormBoton = formulario.querySelector("button.cancelar");
@@ -255,11 +255,12 @@ function EnviarGastoHandle(){
 
     this.handleEvent = function(e){
         e.preventDefault();
-     
-         let descripcion = this.formulario.elements.descripcion.value;
-         let valor = this.formulario.elements.valor.value;
-         let fecha = this.formulario.elements.fecha.value;
-         let etiquetas = this.formulario.elements.etiquetas.value;
+        
+         let formulario = e.currentTarget;
+         let descripcion = formulario.elements.descripcion.value;
+         let valor = formulario.elements.valor.value;
+         let fecha = formulario.elements.fecha.value;
+         let etiquetas = formulario.elements.etiquetas.value;
 
          valor = parseFloat(valor);
 
@@ -299,7 +300,7 @@ function EditarHandleFormulario(){
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
         let enviarGasto = new SubmitHandle();
-        enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
+        //enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
         enviarGasto.gasto = this.gasto;
         formulario.addEventListener("submit", enviarGasto);
 
@@ -313,18 +314,19 @@ function SubmitHandle(){
 
     this.handleEvent = function(e){
         e.preventDefault();
- 
-        let descripcion = this.formulario.elements.descripcion.value;
+        
+        let formulario = e.currentTarget;
+        let descripcion = formulario.elements.descripcion.value;
         this.gasto.actualizarDescripcion(descripcion);
 
-        let valor = this.formulario.elements.valor.value;
+        let valor = formulario.elements.valor.value;
         valor = parseFloat(valor);
         this.gasto.actualizarValor(valor);
 
-        let fecha = this.formulario.elements.fecha.value;
+        let fecha = formulario.elements.fecha.value;
         this.gasto.actualizarFecha(fecha);
 
-        let etiquetas = this.formulario.elements.etiquetas.value;
+        let etiquetas = formulario.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(etiquetas);
 
         //document.getElementsByClassName("gasto-editar-formulario").disabled = true;
