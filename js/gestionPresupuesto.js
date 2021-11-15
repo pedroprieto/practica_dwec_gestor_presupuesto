@@ -187,7 +187,6 @@ function filtrarGastos(opciones) {
                     filtro = false;
                 }
             }
-
             return filtro;
         }
         
@@ -196,8 +195,37 @@ function filtrarGastos(opciones) {
         return gastosFiltrados;
 }
 
-function agruparGastos() {
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
+    if (periodo===undefined) {
+        periodo = "mes";
+    }
+    if (fechaDesde===undefined) {
+        fechaDesde = "1970-01-01" ;
+    }
+    if (fechaHasta===undefined) {
+        fechaHasta = new Date();
+    }
+
+    let etiquetasTiene = etiquetas;
+    let opciones = {fechaDesde, fechaHasta, etiquetasTiene};
+
+    let filtro = filtrarGastos(opciones);
+
+    function acumulador(acc, gasto) {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        if (acc[periodoAgrupacion]) {
+            acc[periodoAgrupacion] = acc[periodoAgrupacion] + gasto.valor;
+        } else {
+            acc[periodoAgrupacion] = gasto.valor;
+        }
+        return acc;
+    }
+
+    let agrupados = filtro.reduce(acumulador, {});
+
+    return agrupados;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
