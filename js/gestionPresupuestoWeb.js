@@ -173,6 +173,6 @@ function BorrarEtiquetasHandle(){
 export  {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    nuevoGastoWeb
+    mostrarGastosAgrupadosWeb
+    
 };
