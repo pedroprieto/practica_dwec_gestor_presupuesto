@@ -36,7 +36,6 @@ for (let g of gespres.listarGastos()) {
 }
 
 // Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
-
 for (let g of gespres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})) {
     gespresweb.mostrarGastosWeb("listado-gastos-filtrado-1", g);
 }
