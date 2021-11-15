@@ -295,11 +295,11 @@ function EditarHandleFormulario(){
 
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
         let enviarGasto = new SubmitHandle();
-        enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
+        //enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
         enviarGasto.gasto = this.gasto;
         formulario.addEventListener("submit", enviarGasto);
 
