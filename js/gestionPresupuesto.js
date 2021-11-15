@@ -167,12 +167,11 @@ function mostrarPresupuesto() {
 }
 
 
-
-
 function listarGastos() {
 
     return gastos;    
 }
+
 
 function anyadirGasto(gasto) {
 

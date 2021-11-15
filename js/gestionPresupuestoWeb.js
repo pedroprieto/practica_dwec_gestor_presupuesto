@@ -2,10 +2,11 @@
 
 function mostrarDatoEnId(idElemento, valor){
 
-    let mostrar = document.getElementById(idElemento);
+    //let mostrar = document.getElementById(idElemento);
 
-    mostrar.innerHTML = valor;
+    //mostrar.innerHTML = valor;
     
+    document.getElementById(idElemento).innerHTML = valor;
        
 };
 
@@ -34,14 +35,15 @@ function mostrarGastoWeb(idElemento, gasto){
     let divGastoEtiquetas = document.createElement('div');
     divGastoEtiquetas.className = "gasto-etiquetas"
     
-    for (let etiqueta of gasto.etiqueta) {
+    for (let etiqueta of gasto.etiquetas) {
         
         let span = document.createElement('span');
         span.className = "gasto-etiquetas-etiqueta";
-        span.append(etiqueta);
+        span.append(`${etiqueta}, `);
         divGastoEtiquetas.append(span);        
     }
 
+    
     divGasto.append(divGastoDescripcion);
     divGasto.append(divGastoFecha);
     divGasto.append(divGastoValor);
@@ -52,15 +54,17 @@ function mostrarGastoWeb(idElemento, gasto){
 };
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+   
+    let divPrincipal = document.getElementById(idElemento);
 
-    let divPrincipal = getElementById(idElemento);
 
     let divAgrupacion = document.createElement('div');
     divAgrupacion.className = "agrupacion";
     
     let h1Titulo = document.createElement('h1');
-    h1Titulo.append(`Gastos agrupados por ${periodo}`);
-    divAgrupacion.append(h1);
+    
+    h1Titulo.innerHTML = "Gastos agrupados por" + periodo;
+    divAgrupacion.append(h1Titulo);
 
     for (let [key, value] of Object.entries(agrup)) {
         
@@ -68,22 +72,20 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divAgrupacionDato.className = "agrupacion-dato";
 
         let spanAgrupacionDatoClave = document.createElement('span');
-        divAgrupacionDatoClave.className = "agrupacion-dato-clave";
-        divAgrupacionDatoClave.append(key);
+        spanAgrupacionDatoClave.className = "agrupacion-dato-clave";
+        spanAgrupacionDatoClave.append(key);
 
         let spanAgrupacionDatoValor = document.createElement('span');
-        divAgrupacionDatoValor.className = "agrupacion-dato-valor";
-        divAgrupacionDatoValor.append(valor);
+        spanAgrupacionDatoValor.className = "agrupacion-dato-valor";
+        spanAgrupacionDatoValor.append(value);
 
-        divAgrupacionDato.append(divAgrupacionDatoClave);
-        divAgrupacionDato.append(divAgrupacionDatoValor);
+        divAgrupacionDato.append(spanAgrupacionDatoClave);
+        divAgrupacionDato.append(spanAgrupacionDatoValor);
+        divAgrupacion.append(divAgrupacionDato);        
 
-        divPrincipal.append(divAgrupacion);
+    }    
 
-    }
-
-    
-
+    divPrincipal.append(divAgrupacion);
 
 };
 
