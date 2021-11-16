@@ -6,13 +6,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 gestionPresupuesto.actualizarPresupuesto( 1500 );
 
 // Mostrar el presupuesto en el div#presupuesto
-let mpresupuesto = document.getElementById('presupuesto');
-
-mpresupuesto.innerHTML = `
-    ${gestionPresupuesto.mostrarPresupuesto()}
-`;
-
-//gestionPresupuestoWeb.mostrarDatoEnId( "presupuesto", gestionPresupuesto.mostrarPresupuesto() );
+gestionPresupuestoWeb.mostrarDatoEnId( "presupuesto", gestionPresupuesto.mostrarPresupuesto() );
 
 // Crear los siguientes gastos
 let gasto1 = new gestionPresupuesto.CrearGasto( "Compra carne", 23.44, "2021-10-06", "casa", "comida" );

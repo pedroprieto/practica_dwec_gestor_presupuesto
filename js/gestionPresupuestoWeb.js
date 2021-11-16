@@ -24,7 +24,7 @@ function mostrarGastoWeb( idElemento, gasto ){
             <div class="gasto-fecha">${gasto.fecha}</div>
             <div class="gasto-valor">${gasto.valor}</div>
             <div class="gasto-etiquetas">${arrayEtiquetas}</div>
-        </div>
+        </div><br>
     `;
 
 }

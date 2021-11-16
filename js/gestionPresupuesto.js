@@ -233,13 +233,9 @@ function agruparGastos( periodo, etiquetas, fechaDesde, fechaHasta ) {
         // Ejecuta reduce sobre el subconjunto de gastos
         .reduce( function( acumulador, gasto ){
             // Para cada gasto se obtiene su período de agrupación
-            let agrupacion = gasto.obtenerPeriodoAgrupacion( periodo )
+            let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion( periodo )
 
-            if( !acumulador[agrupacion] ) {
-                acumulador[agrupacion] = 0;
-            }
-
-            acumulador[agrupacion] += gasto.valor;
+            acumulador[periodoAgrupacion] = ( acumulador[periodoAgrupacion] || 0 ) + gasto.valor;
 
             return acumulador;        
         }, 
