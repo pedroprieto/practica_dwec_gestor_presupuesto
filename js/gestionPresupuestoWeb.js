@@ -11,6 +11,9 @@ botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
 
+let eventoSubmitFiltrado = new filtrarGastosWeb();
+let formularioFiltrado = document.getElementById("formulario-filtrado");
+formularioFiltrado.addEventListener("submit", eventoSubmitFiltrado);
 
 
 function mostrarDatoEnId(idElemento, valor){
@@ -335,6 +338,49 @@ function SubmitHandle(){
     }
 }
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(e){
+        e.preventDefault();
+
+        let formulario = e.currentTarget;
+        let descripcion = formulario.elements['formulario-filtrado-descripcion'].value;
+        let valorMinimo = formulario.elements['formulario-filtrado-valor-minimo'].value;
+        let valorMaximo = formulario.elements['formulario-filtrado-valor-maximo'].value;
+        let fechaDesde = formulario.elements['formulario-filtrado-fecha-desde'].value;
+        let fechaHasta = formulario.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiquetas = formulario.elements['formulario-filtrado-etiquetas-tiene'].value;
+
+        if(etiquetas !== null){
+           etiquetas = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+        }
+
+        valorMinimo = parseFloat(valorMinimo);
+        valorMaximo = parseFloat(valorMaximo);
+
+        let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta,valorMinimo: valorMinimo,valorMaximo: valorMaximo,descripcionContiene: descripcion,etiquetasTiene: etiquetas});
+
+        //console.log(gastosFiltrados);
+        //console.log(descripcion);
+
+        /*let gastos = document.getElementsByClassName("gasto");
+        for (const gasto of gastos) {
+            gasto.remove();
+        }*/
+
+        //document.querySelectorAll(".gasto").forEach(gasto => gasto.remove());
+        let listaGastos = document.getElementById("listado-gastos-completo");
+        //listaGastos.innerHTML = '';
+        while(listaGastos.firstChild){
+            listaGastos.removeChild(listaGastos.firstChild);
+        }
+
+        for (let gasto of gastosFiltrados) {
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        }
+
+        //repintar()
+    }
+}
 
 export {
     mostrarDatoEnId,
