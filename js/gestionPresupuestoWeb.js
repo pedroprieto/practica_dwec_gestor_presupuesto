@@ -61,6 +61,10 @@ function mostrarGastosWeb(idElemento, gasto){
             div_etiqueta.appendChild(div_etiqs);
             // div_etiqs.append(etiq);
             div_etiqs.innerHTML = etiq;
+            let etiq_borrar = new borrarEtiquetasHandle();
+            etiq_borrar.gasto_actual = gasto;
+            etiq_borrar.etiqueta = etiq;
+            div_etiqs.addEventListener("click", etiq_borrar);
         }
     // }
 
@@ -86,6 +90,9 @@ function mostrarGastosWeb(idElemento, gasto){
     let borrar_gasto = new borrarHandle();
     borrar_gasto.gasto_actual = gasto;
     btn_borrar.addEventListener("click", borrar_gasto);
+
+    // Para borrar las etiquetas de cada gasto
+
 
 }
 
@@ -250,6 +257,14 @@ function borrarHandle() {
         //console.log(gasto_actual);
         gespres.borrarGasto(this.gasto_actual.id);
 
+        repintar();
+    }
+}
+
+function borrarEtiquetasHandle() {
+    this.handleEvent = function(e){
+
+        this.gasto_actual.borrarEtiquetas(this.etiqueta);
         repintar();
     }
 }
