@@ -23,7 +23,7 @@ gesPres.anyadirGasto(g6);
 gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
 gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
-let gastos = gesPes.listarGastos();
+let gastos = gesPres.listarGastos();
 for(let g of gastos)
 {
     gesPresWeb.mostrarGastoWeb("listado-gastos-completo", g);
@@ -61,4 +61,4 @@ for (let g of gastosFiltrados4)
 
 gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
 gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
-gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "anyo");
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");

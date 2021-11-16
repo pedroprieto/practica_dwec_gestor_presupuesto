@@ -2,7 +2,9 @@ import * as gesPres from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(idElemento, valor)
 {
-    document.getElementById("idElemento").innerHTML = valor;
+    let contenedor = document.getElementById(idElemento);
+    
+    contenedor.innerHTML = valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto)
@@ -47,7 +49,6 @@ function mostrarGastoWeb(idElemento, gasto)
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
-
     let div1 = document.createElement("div");
     let h1 = document.createElement("h1");
     
