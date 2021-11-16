@@ -71,7 +71,7 @@ function mostrarGastosWeb(idElemento, gasto){
     btn_editar.type = "button";
     btn_editar.className = "gasto-editar"
     btn_editar.innerHTML = "Editar";
-    contenedor.append(btn_editar);
+    div_gasto.append(btn_editar);
     let editar_gasto = new editarHandle();
     editar_gasto.gasto_actual = gasto;
     btn_editar.addEventListener("click", editar_gasto);   
@@ -82,7 +82,10 @@ function mostrarGastosWeb(idElemento, gasto){
     btn_borrar.type = "button";
     btn_borrar.className = "gasto-borrar";
     btn_borrar.innerHTML = "Borrar";
-    contenedor.append(btn_borrar);
+    div_gasto.append(btn_borrar);
+    let borrar_gasto = new borrarHandle();
+    borrar_gasto.gasto_actual = gasto;
+    btn_borrar.addEventListener("click", borrar_gasto);
 
 }
 
@@ -240,6 +243,16 @@ function editarHandle() {
 
     };
 };
+
+function borrarHandle() {
+    this.handleEvent = function(e) {
+
+        //console.log(gasto_actual);
+        gespres.borrarGasto(this.gasto_actual.id);
+
+        repintar();
+    }
+}
 
 // Exportamos las funciones del documento
 export {
