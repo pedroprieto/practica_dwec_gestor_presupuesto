@@ -5,6 +5,8 @@ import * as gp from './gestionPresupuesto.js';
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+let evFiltrar = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", evFiltrar);
 
 function mostrarDatoEnId(idElemento, valor){
     let mostrar = document.getElementById(idElemento);
@@ -306,6 +308,59 @@ function SubmitHandleGasto(){
        this.gasto.anyadirEtiquetas(...etiq);
 
        repintar();
+    }
+}
+
+function filtrarGastosWeb(){
+    this.handleEvent = function(e){
+        e.preventDefault();
+        
+        let form = e.currentTarget;
+        let desc = form.elements['formulario-filtrado-descripcion'].value;
+        let vMinimo = form.elements['formulario-filtrado-valor-minimo'].value;
+        let vMaximo = form.elements['formulario-filtrado-valor-maximo'].value;
+        let fDesde = form.elements['formulario-filtrado-fecha-desde'].value;
+        let fHasta = form.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiq = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+
+        vMinimo = parseFloat(vMinimo);
+        vMaximo = parseFloat(vMaximo);
+
+        if(etiq != null){
+            etiq = gp.transformarListadoEtiquetas(etiq);
+        }
+
+        let filtro = {
+            etiquetasTiene: etiq,
+            fechaDesde: fDesde,
+            fechaHasta: fHasta,
+            valorMinimo: vMinimo,
+            valorMaximo: vMaximo,
+            descripcionContiene: desc,
+        }
+
+        let gastosFiltro = gp.filtrarGastos(filtro);
+
+        console.log(gastosFiltro);
+
+        //Borramos todos los gastos
+        let lista = document.getElementById('listado-gastos-completo');
+
+        lista.innerHTML = '';
+
+        //Otras opciones para borrar los gastos
+        /*
+        while(lista.firstChild){
+            lista.removeChild(lista.firstChild);
+        }
+
+        document.querySelectorAll(".gasto").forEach(el => el.remove());
+        */
+
+        for(let gasto of gastosFiltro){
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        }
+
     }
 }
 
