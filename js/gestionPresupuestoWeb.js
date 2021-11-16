@@ -200,21 +200,43 @@ btn_anyadir_gasto.addEventListener("click", nuevoGastoWeb);
 function editarHandle() {
     this.handleEvent = function(e) {
 
-        let nueva_descripcion = prompt("Nueva descripcion para el gasto");
+        let nueva_descripcion = prompt("Nueva descripcion para el gasto (Actual: " + this.gasto_actual.descripcion +")");
         // this.gasto_actual.CrearGasto.actu
-        this.gasto_actual.descripcion = gespres.actualizarDescripcion(nueva_descripcion);
+        // this.gasto_actual.descripcion = gespres.actualizarDescripcion(nueva_descripcion);
+        if (nueva_descripcion != ""){
+            if (nueva_descripcion != this.gasto_actual.descripcion) {
+                this.gasto_actual.actualizarDescripcion(nueva_descripcion);
+            };
+        }; 
+        
+        
+        let nuevo_valor = prompt("Nueva cantidad para el gasto (Actual: " + this.gasto_actual.valor +")");
+        nuevo_valor = parseFloat(nuevo_valor);
+        // this.gasto_actual.valor = gespres.actualizarValor(nuevo_valor);
+        if (nuevo_valor != "") {
+            if (nuevo_valor != this.gasto_actual.valor) {
+                this.gasto_actual.actualizarValor(nuevo_valor);
+            }
+        } 
         
 
-        let nuevo_valor = prompt("Nueva cantidad para el gasto");
-        nuevo_valor = parseFloat(nuevo_valor);
-        this.gasto_actual.valor = gespres.actualizarValor(nuevo_valor);
+        let nueva_fecha = prompt("Nueva fecha del gasto (Formato: AAAA-MM-DD) (Actual: " + this.gasto_actual.fecha +")");
+        // this.gasto_actual.fecha = gespres.actualizarFecha(nueva_fecha);
+        if (nueva_fecha != "") {
+            if (nueva_fecha != this.gasto_actual.fecha) {
+                this.gasto_actual.actualizarFecha(nueva_fecha);
+            }
+        } 
+        
 
-        let nueva_fecha = prompt("Nueva fecha del gasto (AAAA-MM-DD)");
-        this.gasto_actual.fecha = gespres.actualizarFecha(nueva_fecha);
-
-        let nuevas_etiquetas = prompt("Nuevas etiquetas del gasto (separadas por coma");
+        let nuevas_etiquetas = prompt("Nuevas etiquetas del gasto (separadas por coma) (Actual: " + this.gasto_actual.etiquetas +")");
         nuevas_etiquetas = nuevas_etiquetas.split(",");
-        this.gasto_actual.etiquetas = gespres.anyadirEtiquetas(nuevas_etiquetas);
+        // this.gasto_actual.etiquetas = gespres.anyadirEtiquetas(nuevas_etiquetas);
+        if (nuevas_etiquetas != "") {
+            this.gasto_actual.anyadirEtiquetas(nuevas_etiquetas);
+        }
+        
+        repintar();
 
     };
 };
