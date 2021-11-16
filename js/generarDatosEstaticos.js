@@ -30,9 +30,7 @@ for(let g of gastos)
 }
 
 //Listado septiembre 2021
-let fechaDesde = "2021-09-01";
-let fechaHasta = "2021-09-30";
-let gastosFiltrados = gesPres.filtrarGastos(fechaDesde, fechaHasta);
+let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
 for(let g of gastosFiltrados)
 {
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", g);
@@ -46,14 +44,14 @@ for (let g of gastosFiltrados2)
 }
 
 //Listado +200€ y etiqueta seguros
-let gastosFiltrados3 = gesPres.filtrarGastos({valorMaximo: 200, etiquetasTiene: "seguros"});
+let gastosFiltrados3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
 for (let g of gastosFiltrados3)
 {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-2", g);
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-3", g);
 }
 
 //etiquetas comido O transporte -50€
-let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: "comida, transporte"});
+let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
 for (let g of gastosFiltrados4)
 {
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
