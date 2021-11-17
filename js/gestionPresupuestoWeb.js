@@ -1,11 +1,54 @@
+import * as gesPres from "./gestionPresupuesto.js";
+
+
+let btnActualizar = document.getElementById("actualizarpresupuesto");
+btnActualizar.addEventListener('click', actualizarPresupuestoWeb);
+
+
+
+function repintar() {
+    
+    mostrarDatoEnId("presupuesto",gesPres.mostrarPresupuesto());
+    mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
+    mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    for (let gasto of gesPres.listarGastos()) {
+
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+
+    }    
+
+}
+
+function actualizarPresupuestoWeb() {
+    
+    let newPresupuesto = prompt("Introduce un Presupuesto");
+    parseInt(newPresupuesto, 10);
+    gesPres.actualizarPresupuesto(newPresupuesto);
+    repintar();
+    calcularBalance();  
+    
+}
+
+function nuevoGastoWeb() {
+    
+    let newDescripcion = prompt("Introduce una descripción");
+    let newValor = prompt("Introduce un Valor");
+    parseInt(newValor, 10);
+    let newFecha = prompt("Introduce una fecha");
+    let newEtiqueta = prompt("Introduce las etiquetas separadas por comas");
+    
+    
+
+
+}
 
 
 function mostrarDatoEnId(idElemento, valor){
 
-    //let mostrar = document.getElementById(idElemento);
-
-    //mostrar.innerHTML = valor;
-    
+       
     document.getElementById(idElemento).innerHTML = valor;
        
 };
