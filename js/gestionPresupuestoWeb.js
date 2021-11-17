@@ -44,7 +44,9 @@ function mostrarGastosWeb(idElemento, gasto){
     div_fecha.className = "gasto-fecha";
     div_gasto.appendChild(div_fecha);
     // div_fecha.append(gasto.fecha);
-    div_fecha.innerHTML = gasto.fecha;
+    let fecha_convertida = gasto.fecha;
+    // div_fecha.innerHTML = gasto.fecha;
+    div_fecha.innerHTML = fecha_convertida;
     
     let div_etiqueta = document.createElement("div");
     // div_etiqueta.setAttribute("class", "gasto-etiquetas");
@@ -258,47 +260,7 @@ function borrarEtiquetasHandle() {
     }
 };
 
-function nuevoGastoWebFormulario() {
-    this.handleEvent = function(e) {
-        
-        // Creamos copia del formulario desde la plantilla
-        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-        // Asignamos el nuevo formulario a una variable
-        // let formulario = plantillaFormulario.querySelector("form");
-        let formulario = plantillaFormulario.cloneNode(true);
-        // Insertamos el formulario en el div correspondiente 
-        document.getElementById("formulario_nuevo_gasto").append(formulario);
 
-        // DEsactivar boton de abrir formulario
-        e.target.disabled = "disabled";
-
-        // Funcionalidad para boton enviar
-        let btn_enviar_formulario = new enviar_formulario();
-        // let boton_envio = formulario.querySelector("button[type=submit");
-        let boton_envio = formulario.querySelector("form");
-        // boton_envio.addEventListener("click", btn_enviar_formulario);
-        boton_envio.addEventListener("submit", btn_enviar_formulario);
-        // Pasamos el gasto al boton enviar
-        btn_enviar_formulario.gasto = this.gasto;
-
-        // Funcionalidad para boton cancelar
-        let btn_cancelar_formulario = new cancelar_formulario();
-    };
-};
-
-function enviar_formulario() {
-    this.handleEvent = function(e) {
-        // Prevenir que la pagina se recarge
-        e.preventDefault();
-
-    }
-}
-
-function cancelar_formulario() {
-    this.handleEvent = function(e) {
-        
-    }
-}
 
 // Captura de click de botones 
 // Capturamos el click del boton actualizar presupuesto, y si se presiona 
@@ -307,10 +269,7 @@ btn_act_presupuesto.addEventListener("click", actualizarPresupuestoWeb);
 // Capturamos el click del boton actualizar presupuesto, y si se presiona 
 let btn_anyadir_gasto = document.getElementById('anyadirgasto');
 btn_anyadir_gasto.addEventListener("click", nuevoGastoWeb);
-// Capturamos el click del boton anyadirgasto-formulario
-let btn_anyadirgasto_formulario = document.getElementById('anyadirgasto-formulario');
-let boton_formulario = new nuevoGastoWebFormulario();
-btn_anyadirgasto_formulario.addEventListener("click", boton_formulario);
+
 
 
 
