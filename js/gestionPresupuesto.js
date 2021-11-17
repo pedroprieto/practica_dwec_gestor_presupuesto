@@ -111,16 +111,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
                     return 'Periodo erroneo';
             }
             return aux.slice(0, cont);
-            // if (periodo == "dia") {
-            //     console.log(aux);
-            //     console.log (aux.toISOString().slice(0, 10));
-            //     //aux = fecha.slice();
-            // }else if (periodo == "mes") {
-            //     aux = fecha.slice(0, 7);
-            // }else if (periodo == "anyo") {
-            //     aux = fecha.slice(0, 4)
-            // }
-            // return aux;
         }
 
 }
@@ -160,12 +150,59 @@ function calcularBalance() {
     return balance;
     
 }
-function filtrarGastos() {
+function filtrarGastos(opciones) {
 
+    let filtradoComplejo = [];
+    filtradoComplejo = gastos.filter(function(gasto) {
+            let resultado = true;
+            if (opciones.fechaDesde) {
+                if (gasto.fecha < date.parse(opciones.fechaDesde)) {
+                    resultado = false;
+                }
+            }
+            if (opciones.fechaHasta) {
+                if (gasto.fecha > Date.parse(opciones.fechaHasta)) {
+                    resultado = false;
+                }
+            }
+            if (opciones.valorMinimo) {
+                if (gasto.valor < opciones.valorMinimo) {
+                    resultado = false;
+                }
+            }
+            if (opciones.valorMaximo) {
+                if (gasto.valor > opciones.valorMaximo) {
+                    resultado = false;
+                }
+            }
+            if (opciones.descripcionContiene) {
+                if (!gasto.descripcion.includes(opciones.descripcionContiene)) {
+                    resultado = false;
+                }
+            }
+            if (opciones.etiquetasTiene) {
+                let count = 0;
+                for (let etq of opciones.etiquetasTiene) {
+                    if (gasto.etiquetas.indexOf) {
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    resultado = false;
+                }
+            }
+            return resultado;
+        });
+        return filtradoComplejo;
 }
 
-function agruparGastos() {
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     
+    let filtro = [];
+    //obtener el subconjunto de gastos creados entre las fechas 
+    //indicadas y que tengan alguna de las etiquetas proporcionadas en el parámetro correspondiente.
+    filtro = filtrarGastos({fechaDesde: fechaDesde, fechaHasta : fechaHasta, etiquetasTiene: etiquetas});
+
 }
 // pruebas de consola
 let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
