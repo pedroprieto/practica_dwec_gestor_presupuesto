@@ -30,17 +30,32 @@ function mostrarGastoWeb(idElemento, gasto)
     div.append(div3);
     div.append(div4);
 
+    //Eventos para los span de etiquetas (no crearemos botón de borrar: el borrado se producirá si el usuario hace clic encima de una etiqueta):
     for (let etiqueta of gasto.etiquetas)
     {
         let span = document.createElement('span');
         span.className = "gasto-etiquetas-etiqueta";
         span.append(`${etiqueta},`);
         div4.append(span);
-    }
+        
+        //Igual que los otros dos manejadores:
+        //Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+        let manejadorBorrarEtiq =  new BorrarEtiquetasHandle();
+
+        //Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
+        manejadorBorrarEtiq.gasto = gasto;
+
+        //Establecer la propiedad etiqueta del objeto creado al texto de la etiqueta que se esté procesando 
+        //(seguramente este valor lo tendrás disponible dentro del bucle que se encarga de pintar un elemento span para cada etiqueta).
+        manejadorBorrarEtiq.etiqueta = etiqueta;
+
+        //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+        span.addEventListener("click", manejadorBorrarEtiq);
+    }   
 
     let contenido = document.getElementById(idElemento);
     
-    contenido.append(div);   
+    contenido.append(div);  
 
     /*Ejemplo tutoria 8 nov.
     Lo haces sobre nuevoGastoWeb en vez de mostrarGastoWeb como pide el ejercicio.
@@ -62,7 +77,7 @@ function mostrarGastoWeb(idElemento, gasto)
     let butEdit = document.createElement("button");
     butEdit.className = "gasto-editar";
     butEdit.type = "button";
-    //No lo muestras en el ejemplo, pero hay que darle un nombre al cuadro del botón.
+    //No lo muestras en el ejemplo, pero hay que darle un nombre al cuadro del botón, si no, se queda un cuadrado pequeño y "feo".
     butEdit.innerHTML = "Editar";
 
     //Crear un nuevo objeto a partir de la función constructora EditarHandle.
@@ -74,10 +89,33 @@ function mostrarGastoWeb(idElemento, gasto)
     //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
     //element.addEventListener(event, handler, [options]);
     //elem.addEventListener('click', obj);
-    butEdit.addEventListener("Click", manejadorEdit);
+    butEdit.addEventListener("click", manejadorEdit);
+    //Tras darle vueltas y no encontrar porque no hace nada el boton editar, hago el de borrar al día siguiente y este sí que funciona y lo he trabajado igual 
+    //porque pones un ejemplo en la tutoría muy "mascadito". Pongo uno al lado del otro y veo que he puesto "Click" y esa mayúscula hace que no reconozca el evento 
+    //click del raton. Al revisar una y otra vez lo mismo dejo de ver errores y parece que está todo perfecto. Si es un toro me embiste...
 
     //Añadir el botón al DOM a continuación de las etiquetas
-    contenido.append(butEdit); 
+    //contenido.append(butEdit); Si lo añadimos al contenido no esta dentro del div class="gasto" como muestra la imagen de la estructura HTML.
+    div.append(butEdit);
+
+    //Botón borrar:
+    //Crear un botón con texto Borrar de tipo button (<button type="button"~) con clase ~gasto-borrar.
+    let butBorrar = document.createElement("button");
+    butBorrar.className = "gasto-borrar";
+    butBorrar.type = "button";
+    butBorrar.innerHTML = "Borrar";
+
+    //Crear un nuevo objeto a partir de la función constructora BorrarHandle.
+    let manejadorBorrar = new BorrarHandle();
+
+    //Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
+    manejadorBorrar.gasto = gasto;
+
+    //Añadir el objeto recién creado como objeto manejador del evento click al botón Borrar recién creado.
+    butBorrar.addEventListener("click", manejadorBorrar);
+
+    //Añadir el botón al DOM a continuación del botón Editar.
+    div.append(butBorrar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -145,8 +183,8 @@ function actualizarPresupuestoWeb()
     //Pedir al usuario que introduzca un presupuesto mediante un prompt.
     let presupuestoActualizado = prompt("Introduce un nuevo presupuesto");
 
-    //Convertir el valor a número (recuerda que prompt siempre devuelve un string).
-    presupuestoActualizado = parseInt(presupuestoActualizado);
+    //Convertir el valor a número (recuerda que prompt siempre devuelve un string). Aprovecho el error de EditarHandle con parseInt para cambiarlo a parseFloat.
+    presupuestoActualizado = parseFloat(presupuestoActualizado);
 
     //Actualicar el presupuesto (función actualizarPresupuesto)
     gesPres.actualizarPresupuesto(presupuestoActualizado);
@@ -165,13 +203,14 @@ butActualizar.addEventListener('click', actualizarPresupuestoWeb);
 //Esta función se utilizará como manejadora de eventos del botón anyadirgasto del código HTML. Realizará las siguientes tareas:
 function nuevoGastoWeb()
 {
+    //Pedir al usuario la información necesaria para crear un nuevo gasto mediante sucesivas preguntas con prompt.
     let descripcionGastoNuevo = prompt("Introduce la descripción");
     let valorGastoNuevo = prompt("Introduce el gasto");
     let fechaGastoNuevo = prompt("Introduce la fecha");
     let etiquetasGastoNuevo = prompt("Introduce la etiqueta");
 
-    //Convertir el valor a número (recuerda que prompt siempre devuelve un string).
-    valorGastoNuevo = parseInt(valorGastoNuevo);
+    //Convertir el valor a número (recuerda que prompt siempre devuelve un string). Aprovecho el error de de EditarHandle con parseInt para cambiarlo a parseFloat.
+    valorGastoNuevo = parseFloat(valorGastoNuevo);
 
     //Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
     //es.javascript.info/array-methods#split-y-join
@@ -192,7 +231,7 @@ function nuevoGastoWeb()
 let butAnyadirGasto = document.getElementById("anyadirgasto");
 butAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
-//Ejemplo tutoria 3 noviembre
+//Ejemplo tutoria 3 noviembre.
 /*
 function EditarHandle()
 {
@@ -200,7 +239,6 @@ function EditarHandle()
         //pedir al usuario datos del gasto, etc
         var desc = prompt("Por favor, introduce la descripción");
         this.gasto.actualizarDescripcion(desc);
-
         
 let e = new CrearGasto("a", 24);
 
@@ -229,30 +267,34 @@ function mostrarGastoWeb(g){
         repintar();
     }
 }
+
+tutoria 8 nov
+preguntar nuevos datos al usuario
+a guardar en el gasto: ¿que gasto?
+si tengo el id, buscar por getElementById
+e.target.parentNode.id ????
+this.migasto!!! 
+this.migasto.actualizarDescripcion
+this.migasto.valor, etc
+
+Con toda esta información de las tutorías empezamos a trabajar.
 */
 
 //Esta función se utilizará como objeto manejador de eventos para editar un gasto.
 //La función EditarHandle será una función constructora que definirá exclusivamente un método llamado handleEvent
 function EditarHandle()
-//tutoria 8 nov
-//preguntar nuevos datos al usuario
-//a guardar en el gasto: ¿que gasto?
-// si tengo el id, buscar por getElementById
-//e.target.parentNode.id ????
-//this.migasto!!! 
-//this.migasto.actualizarDescripcion
-//this.migasto.valor, etc
 {
-    this.handleEvent =  function(e)
+    this.handleEvent = function(e)
     {
         //Pedir al usuario la información necesaria para editar el gasto mediante sucesivas preguntas con prompt.
         let desc = prompt("Por favor, introduce la descripción");
         let valor = prompt("Por favor, introduce el gasto");
         let fecha = prompt("Por favor, introduce la fecha");
-        let etiqueta = prompt("por favor, introduce la etiqueta");
+        let etiqueta = prompt("Por favor, introduce la etiqueta");
 
         //Convertir el valor a número (recuerda que prompt siempre devuelve un string).
-        valor = parseInt(valor);
+        //valor = parseInt(valor) funciona pero números enteros. La prueba espera 95,78 y le ofrecemos 95, por eso da error el test.
+        valor = parseFloat(valor);
 
         //Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
         //es.javascript.info/array-methods#split-y-join
@@ -266,6 +308,34 @@ function EditarHandle()
         //Se comenta en la tutoría del 8 nov el error de actualizarEtiquetas
         this.gasto.anyadirEtiquetas(etiquetasSeparadasSplit);
 
+        repintar();
+    }
+}
+
+//Esta función se utilizará como objeto manejador de eventos para borrar un gasto.
+//El funcionamiento de esta función es muy parecido a la anterior, con la excepción de su funcionamiento interno.
+function BorrarHandle() 
+{
+    this.handleEvent = function (e) 
+    {
+        //Borrar el gasto asociado. Para ello utilizará la función borrarGasto y como parámetro utilizará el id del gasto seleccionado, disponible en this.gasto.
+        gesPres.borrarGasto(this.gasto.id);
+
+        //Llamar a la función repintar para que se muestre la lista actualizada de gastos.
+        repintar();
+    }
+}
+
+//Esta función se utilizará como objeto manejador de eventos para borrar etiquetas de un gasto.
+function BorrarEtiquetasHandle()
+{
+    this.handleEvent = function (e)
+    {
+        //Borrar la etiqueta seleccionada del gasto asociado. Para ello utilizará la función borrarEtiquetas del gasto asociado (this.gasto)
+        //y como parámetro utilizará la etiqueta seleccionada, disponible en this.etiqueta.
+        this.gasto.borrarEtiquetas(this.etiqueta);
+
+        //Llamar a la función repintar para que se muestre la lista actualizada de gastos.
         repintar();
     }
 }
