@@ -188,13 +188,47 @@ function nuevoGastoWeb(){
 
     let gasto = new CrearGasto(nuevadesc, nuevovalor, nuevafecha, arrEtiquetas);
     anyadirGasto(gasto);
-    console.log(nuevaetiqueta);
     repintar();
 
 }
 
 let botAnaydir = document.getElementById("anyadirgasto");
 botAnaydir.addEventListener("click", nuevoGastoWeb);
+
+
+function submitHandle() {
+    this.handleEvent = function(e){
+
+        e.preventDefault();
+
+        let nuevadesc = e.currentTarget(form.elements.name[0]);
+        let nuevovalor = e.currentTarget(form.elements.name[1]);
+        let nuevafecha = e.currentTarget(form.elements.name[2]);
+        let nuevaetiqueta = e.currentTarget(form.elements.name[3]);
+
+        let gasto = new CrearGasto(nuevadesc, nuevovalor, nuevafecha, nuevaetiqueta);
+        anyadirGasto(gasto);
+        repintar();
+
+        getElementById("")
+    }
+}
+
+function nuevoGastoWebFormulario(){
+
+    this.handleEvent = function(e){
+        
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
+
+        document.getElementByID("controlesprincipales").append(formulario);
+    }
+}
+
+let crearFormulario = new nuevoGastoWebFormulario();
+
+let botonCrear = document.getElementById("anyadirgasto-formulario")
+botonCrear.addEventListener("click", crearFormulario);
 
 export {
     mostrarDatoEnId,
