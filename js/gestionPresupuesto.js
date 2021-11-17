@@ -73,7 +73,39 @@ function calcularBalance() {
     return balance;
     
 }
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+
+    if (periodo == undefined) {
+        periodo = "mes";
+    }
+    if (fechaDesde == undefined) {
+        fechaDesde = "1970-01-01" ;
+    }
+    if (fechaHasta == undefined) {
+        fechaHasta = new Date();
+    }
+
+    let etiquetasTiene = etiquetas;
+    let opciones = {fechaDesde, fechaHasta, etiquetasTiene};
+
+    let filtro = filtrarGastos(opciones);
+
+    function acumulador(acc, gasto) {
+        let periodoAgr = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        if (acc[periodoAgr])
+         {
+            acc[periodoAgr] = acc[periodoAgr] + gasto.valor;
+
+        } else {
+            acc[periodoAgr] = gasto.valor;
+        }
+        return acc;
+    }
+
+    let agrupados = filtro.reduce(acumulador, {});
+
+    return agrupados;
 
 }
 
@@ -226,27 +258,21 @@ this.borrarEtiquetas = function(...borrarEtiquetas){
 }
 this.obtenerPeriodoAgrupacion = function(periodo){
 
-    let res = "";
-    let fecha2 = "";
-    fecha2 = fecha.toLocaleString();
+    let fecha = new Date(this.fecha);
+    let fecha2 = fecha.toISOString();
 
-    if (periodo == "dia"){
+        if (periodo.toLowerCase()=="dia") {            
+            let dia = fecha2.substring(0,10);
+            return dia;
 
-        res = fecha2.slice(0,10);
+        } else if (periodo.toLowerCase()=="mes") {
+            let mes = fecha2.substring(0,7);
+            return mes;
 
-    }
-    if (periodo == "mes"){
-
-        res = fecha2.slice(0,7);
-
-    }
-    if (periodo == "anyo"){
-
-        res = fecha2.slice(0,4);
-
-    }
-    return res;
-
+        } else if (periodo.toLowerCase()=="anyo") {
+            let anyo = fecha2.substring(0,4);
+            return anyo;
+        }
 }
 }
 
