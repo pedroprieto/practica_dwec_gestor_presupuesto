@@ -19,7 +19,6 @@ function mostrarGastosWeb(idElemento, gasto){
     let contenedor = document.getElementById(idElemento);
 
     // for (let g of gasto){
-
     let div_gasto = document.createElement("div");
     div_gasto.className = "gasto";
     // div_gasto.setAttribute("class", "gasto");
@@ -56,7 +55,6 @@ function mostrarGastosWeb(idElemento, gasto){
     //let listado_etiquetas = g.etiquetas.split(",");
 
     for (let etiq of gasto.etiquetas) {
-
         let div_etiqs = document.createElement("span");
         // div_etiqs.setAttribute("class", "gasto-etiquetas-etiqueta");
         div_etiqs.className = "gasto-etiquetas-etiqueta";
@@ -92,10 +90,6 @@ function mostrarGastosWeb(idElemento, gasto){
     let borrar_gasto = new borrarHandle();
     borrar_gasto.gasto_actual = gasto;
     btn_borrar.addEventListener("click", borrar_gasto);
-
-    // Para borrar las etiquetas de cada gasto
-
-
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -260,7 +254,70 @@ function borrarEtiquetasHandle() {
     }
 };
 
+function nuevoGastoWebFormulario() {
+    this.handleEvent = function(e) {
+        //alert("Boton form");
 
+        let plantillaFormulario = document.getElementById("formulario-template");
+
+        let formularioNuevoGasto = plantillaFormulario.content.cloneNode("true");
+
+        // Funcionalidad para boton enviar formulario
+        let manejadorEnvio = new manejadorEnvioNuevoGastoWeb();
+        // let botonEnvio = formularioNuevoGasto.querySelector("button[type=submit");
+        // botonEnvio.addEventListener("click", manejadorEnvio);
+        let botonEnvio = formularioNuevoGasto.querySelector("form");
+        botonEnvio.addEventListener("submit", manejadorEnvio);
+
+        // manejadorEnvio.g = formularioNuevoGasto.getElementById("descripcion");
+
+        
+        // manejadorEnvio.desc = formularioNuevoGasto.getElementById("descripcion").value;
+        
+        manejadorEnvio.desc = formularioNuevoGasto.getElementById("descripcion").value;
+
+        // Descativamos el boton de crear formulario
+        e.target.disabled = "disabled";
+
+        // Añadimos el formualrio a la web
+        document.getElementById("formulario_nuevo_gasto").append(formularioNuevoGasto);
+
+        
+
+        // let gasto = new gespres.CrearGasto(descripcion, valor, fecha, etiquetas);
+        // formulario_nuevo_gasto.getElementById("descripcion");
+        // let desc = formularioNuevoGasto.getElementById("descripcion").value;
+        // let g = new gespres.CrearGasto(desc);
+        // Funcionalidad para el boton cancelar
+        // manejadorEnvio.desc = this.desc;
+        // console.log(desc);
+        // manejadorEnvio.prueba = "prueba2"
+        // console.log(this.prueba);
+    }
+}
+
+function manejadorEnvioNuevoGastoWeb() {
+    this.handleEvent = function(e) {
+        // Prevenir la recarga de la web
+        e.preventDefault();
+
+        // alert("enviar form");
+        
+        alert("descripcion: " + this.desc);
+        // alert(e.target.getElementById("descripcion").value);
+        // console.log("hola");
+
+    }
+}
+
+function manejadorCancelarNuevoGastoWeb() {
+    this.handleEvent = function (e) {
+
+        e.target.form.remove();
+        // desactivamos el boton de neuvo formulario
+        e.target.disabled = "";
+    }
+}
 
 // Captura de click de botones 
 // Capturamos el click del boton actualizar presupuesto, y si se presiona 
@@ -269,7 +326,10 @@ btn_act_presupuesto.addEventListener("click", actualizarPresupuestoWeb);
 // Capturamos el click del boton actualizar presupuesto, y si se presiona 
 let btn_anyadir_gasto = document.getElementById('anyadirgasto');
 btn_anyadir_gasto.addEventListener("click", nuevoGastoWeb);
-
+// Capturamos el click del boton Añadir Gasto por Formulario
+let botonNuevoGastoWebFormulario = document.getElementById("anyadirgasto-formulario");
+let manejadorBotonFormularioNuevoGastoWeb = new nuevoGastoWebFormulario();
+botonNuevoGastoWebFormulario.addEventListener("click", manejadorBotonFormularioNuevoGastoWeb);
 
 
 
