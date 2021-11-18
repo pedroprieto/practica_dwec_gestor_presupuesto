@@ -202,27 +202,33 @@ function filtrarGastos(opciones) {
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     
     
-    if (!fechaDesde)
-    {
-        fechaDesde = "1971-01-01";
-    }
+    // if (!fechaDesde)
+    // {
+    //     fechaDesde = "1971-01-01";
+    // }
 
-    if (!fechaHasta)
-    {
-        fechaHasta = new Date(Date.now()).toISOString().substr(0,10);
-    }
+    // if (!fechaHasta)
+    // {
+    //     fechaHasta = new Date(Date.now()).toISOString().substr(0,10);
+    // }
+    // ya no falla mes
+    let etiquetasTiene = etiquetas;
+    //Ya no falla etiquetas agrupar
 
-    let filtro = filtrarGastos({fechaDesde, fechaHasta, etiquetas});
+    let filtro = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene});
     return filtro.reduce(function(indice, gasto) {
         let pA = gasto.obtenerPeriodoAgrupacion(periodo);
-        console.log(indice);
+        //console.log(indice);
         // if (!indice[pA]) {
         //     indice[pA] = gasto.valor;
         // }
         indice[pA] =( indice[pA] || 0 ) + gasto.valor;
         console.log(indice);
         return indice;
-    },{});
+    },
+    // Esto me ha llevado loco y no lo entiendo le ponia el objeto vacio en indice
+    {}
+    );
 };
 // pruebas de consola
 
