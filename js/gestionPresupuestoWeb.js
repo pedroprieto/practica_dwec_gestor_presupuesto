@@ -66,6 +66,26 @@ function EditarHandle()
     }
 }
 
+function BorrarHandle()
+{
+    this.handleEvent = function()
+    {
+        gesPres.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+}
+
+function BorrarEtiquetasHandle()
+{
+    this.handleEvent = function()
+    {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+
+        repintar();
+    }
+}
+
 function mostrarDatoEnId(idElemento, valor)
 {
     let contenedor = document.getElementById(idElemento);
