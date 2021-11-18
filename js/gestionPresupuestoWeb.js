@@ -1,5 +1,18 @@
 import * as gesPres from "./gestionPresupuesto.js";
 
+function repintar()
+{
+    mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
+    mostrarDatoEnId("gasos-totales", gesPres.calcularTotalGastos());
+    mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+
+    let borrar = document.getElementById("listado-gastos-completo");
+
+    borrar.innerHTML = "";
+
+    mostrarGastoWeb("listado-gastos-completo", gesPres.listarGastos());
+}
+
 function mostrarDatoEnId(idElemento, valor)
 {
     let contenedor = document.getElementById(idElemento);
