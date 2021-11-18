@@ -181,36 +181,6 @@ function BorrarEtiquetasHandle(){
 }
 
 //------------------------------------------------------------//
-// Esta función se utilizará como objeto manejador de eventos cuando se envie el formulario de un gasto
-function submitHandle(){
-    this.habdleEvent = function(e){
-        // Prevenir el envío del formulario
-        e.preventDefault();
-
-        // Crear un nuevo gasto con la información de los campos del formulario
-        let formulario = e.currentTarget;
-        let descripcion = formulario.elements.descripcion.value;
-        let valor = formulario.elements.valor.value;
-        let fecha = formulario.elements.fecha.value;
-        let etiquetas = formulario.elements.etiquetas.value;
-
-        valor = parseFloat(valor);
-
-        // Añadir el gasto a la lista de gastos
-        let gastoNuevo = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, etiquetas);
-        gestionPresupuesto.anyadirGasto(gastoNuevo);
-
-        // Llamar a la función repintar
-        repintar();
-
-        // Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
-        document.getElementById("anyadirgasto-formulario").disabled = false;
-    }
-}
-
-//------------------------------------------------------------//
-
-//------------------------------------------------------------//
 // ACTUALIZAR PRESUPUESTO
 function actualizarPresupuestoWeb() {
 
@@ -265,41 +235,6 @@ function nuevoGastoWeb() {
     // Manejadora del evento click del botón nuevoGastoWeb mediante addEventListener
     buttonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 //------------------------------------------------------------//
-
-//------------------------------------------------------------//
-// NUEVO GASTO FORMULARIO
-function nuevoGastoWebFormulario() {
-
-    // Crear una copia del formulario web definido en la plantilla HTML
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-
-    // Acceder al elemento <form> dentro de ese fragmento de documento
-    var formulario = plantillaFormulario.querySelector("form");
-
-    // Desactivar (añadir atributo disabled) el botón anyadirgasto-formulario
-    document.getElementById("anyadirgasto-formulario").disabled = true;
-    
-    // Añadir el fragmento de documento al final del <div id="controlesprincipales"> para que se muestre en la página
-    document.getElementById("controlesprincipales").append(formulario);
-    
-    // Crear un manejador de evento para el evento submit del formulario
-    let evEnviar = new submitHandle();
-    formulario.addEventListener("submit", evEnviar);
-
-    // Crear un manejador de evento para el evento click del botón Cancelar del formulario
-    let evCancelar = new cancelarHandle();
-    let botonCancelar = formulario.querySelector("button.cancelar");
-    botonCancelar.addEventListener("click", evCancelar);
-}
-
-// BOTÓN Añadir Nuevo Gasto FORMULARIO-----
-    // Obtengo el elemento botón correspondiente previamente
-    let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
-
-    // Manejadora del evento click del botón botonAnyadirGastoFormulario mediante addEventListener
-    botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
-//------------------------------------------------------------//    
-
 
 //------------------------------------------------------------//
 function repintar() {
