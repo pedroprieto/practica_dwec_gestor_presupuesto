@@ -44,6 +44,28 @@ function nuevoGastoWeb()
     repintar();
 }
 
+//Constructora y eventos
+function EditarHandle()
+{
+    this.handleEvent = function()
+    {
+        let des = prompt("Introduce una descripcion");
+        let val = parseInt(prompt("Introduce un valor"));
+        let fech = prompt("introduce una fecha");
+
+        let etiqsPrompt = prompt("introduce las etiquetas");
+
+        let etiq = etiqsPrompt.split(",");
+
+        this.gasto.actualizarValor(val);
+        this.gasto.actualizarDescripcion(des);
+        this.gasto.actualizarFecha(fech);
+        this.gasto.anyadirEtiquetas(...etiq);
+
+        repintar();
+    }
+}
+
 function mostrarDatoEnId(idElemento, valor)
 {
     let contenedor = document.getElementById(idElemento);
