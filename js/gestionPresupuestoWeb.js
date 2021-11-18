@@ -250,11 +250,13 @@ function submitHandleEditar() {
 function cancelarHandle(){
     this.handleEvent = function(e){
 
-        e.currentTarget.remove();
+        e.currentTarget.parentNode.remove();
         document.getElementById("anyadirgasto-formulario").disabled = false;
-
+        
+        repintar();
     }
 }
+
 
 function EditarHandleFormulario(){
     this.handleEvent = function(e){
@@ -267,12 +269,6 @@ function EditarHandleFormulario(){
 
         boton.disabled = true;
 
-       /* let form = e.currentTarget;
-        form.elements.descripcion.value = this.gasto.actualizarDescripcion;
-        form.elements.valor.value = this.gasto.actualizarValor;
-        form.elements.fecha.value = this.gasto.actualizarFecha;
-        form.elements.etiquetas.value = this.gasto.anyadirEtiquetas;*/
-
         let editarGasto = new submitHandleEditar();
         editarGasto.gasto = this.gasto;
         
@@ -280,7 +276,7 @@ function EditarHandleFormulario(){
         botonEditar.addEventListener("submit", editarGasto);
 
         let cancelarGasto = new cancelarHandle();
-        let botonCancelar = document.querySelector("button[type = button]");
+        let botonCancelar = formulario.querySelector("button[type = button]");
         botonCancelar.addEventListener("click", cancelarGasto);
 
     }
