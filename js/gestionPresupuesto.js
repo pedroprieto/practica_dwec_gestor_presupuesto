@@ -67,7 +67,7 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
                     this.etiquetas.splice(pos, 1);
                 }
 
-            } 
+           } 
         }
     }
         
