@@ -195,21 +195,37 @@ function filtrarGastos(opciones) {
             }
             return resultado;
         });
+        //console.log(gastosFiltrados);
         return gastosFiltrados;
 };
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     
-    let filtro = [];
-    //obtener el subconjunto de gastos creados entre las fechas 
-    //indicadas y que tengan alguna de las etiquetas proporcionadas en el parámetro correspondiente.
-    filtro = filtrarGastos({fechaDesde: fechaDesde, fechaHasta : fechaHasta, etiquetasTiene: etiquetas});
+    
+    if (!fechaDesde)
+    {
+        fechaDesde = "1971-01-01";
+    }
 
-}
+    if (!fechaHasta)
+    {
+        fechaHasta = new Date(Date.now()).toISOString().substr(0,10);
+    }
+
+    let filtro = filtrarGastos({fechaDesde, fechaHasta, etiquetas});
+    return filtro.reduce(function(indice, gasto) {
+        let pA = gasto.obtenerPeriodoAgrupacion(periodo);
+        console.log(indice);
+        // if (!indice[pA]) {
+        //     indice[pA] = gasto.valor;
+        // }
+        indice[pA] =( indice[pA] || 0 ) + gasto.valor;
+        console.log(indice);
+        return indice;
+    },{});
+};
 // pruebas de consola
-let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
-let agrupacion = gasto1.obtenerPeriodoAgrupacion('anyo');        
-console.log(agrupacion);
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
