@@ -227,6 +227,10 @@ function submitHandle() {
 
 function cancelarHandle(){
     this.handleEvent = function(e){
+
+        e.currentTarget.remove();
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        
     }
 }
 
