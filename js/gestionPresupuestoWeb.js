@@ -10,7 +10,38 @@ function repintar()
 
     borrar.innerHTML = "";
 
-    mostrarGastoWeb("listado-gastos-completo", gesPres.listarGastos());
+    for (let g of gesPres.listarGastos())
+    {
+        mostrarGastoWeb("listado-gastos-completo", g);
+    }
+}
+
+//Manejadora de eventos
+function actualizarPresupuestoWeb()
+{
+    let presu = parseInt(prompt("Introduzca un presupuesto"));
+
+    gesPres.actualizarPresupuesto(presu);
+
+    repintar();
+}
+
+//Manejadora de eventos
+function nuevoGastoWeb()
+{
+    let desc = prompt("Introduce una descripcion");
+    let valor = parseInt(prompt("Introduce un valor"));
+    let fecha = prompt("introduce una fecha");
+
+    let etiqsPrompt = prompt("introduce las etiquetas");
+
+    let etiqs = etiqsPrompt.split(",");
+
+    let g1 = new gesPres.CrearGasto(desc, valor, fecha, ...etiqs);
+
+    gesPres.anyadirGasto(g1);
+
+    repintar();
 }
 
 function mostrarDatoEnId(idElemento, valor)
