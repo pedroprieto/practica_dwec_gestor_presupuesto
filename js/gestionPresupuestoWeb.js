@@ -70,7 +70,7 @@ function mostrarGastoWeb(idElemento, gasto){
     botBorrar.addEventListener("click", manejadorBorrar);
     div.append(botBorrar);
 
-    /*let botEditForm = document.createElement('button');
+    let botEditForm = document.createElement('button');
     botEditForm.className = "gasto-editar-formulario";
     botEditForm.type = "button";
     botEditForm.textContent = "Editar (formulario)";
@@ -78,7 +78,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let manEditForm = new EditarHandleFormulario();
     manEditForm.gasto = gasto;
     botEditForm.addEventListener("click", manEditForm);
-    div.append(botEditForm);*/
+    div.append(botEditForm);
 
     let raiz = document.getElementById(idElemento);
 
@@ -230,25 +230,36 @@ function cancelarHandle(){
 
         e.currentTarget.remove();
         document.getElementById("anyadirgasto-formulario").disabled = false;
-        
+
     }
 }
 
 function EditarHandleFormulario(){
     this.handleEvent = function(e){
 
-        formulario.elements.descripcion.value = this.gasto.descripcion;
-        formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
-        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
 
-        /*let editarGasto = new submitHandle();
-        let botonCrear = document.querySelector("button[type = submit");
-        botonCrear.addEventListener("click", editarGasto);
+        let boton = e.currentTarget;
+        boton.after(formulario);
+
+        boton.disabled = true;
+
+       /* let form = e.currentTarget;
+        form.elements.descripcion.value = this.gasto.actualizarDescripcion;
+        form.elements.valor.value = this.gasto.actualizarValor;
+        form.elements.fecha.value = this.gasto.actualizarFecha;
+        form.elements.etiquetas.value = this.gasto.anyadirEtiquetas;*/
+
+        let editarGasto = new submitHandle();
+        editarGasto.gasto = this.gasto;
+        
+        let botonEditar = formulario; //He cambiado el nombre del botón respecto al que tenía puesto que no se el motivo por el cual en su día puse crear y este lo define mejor.
+        botonEditar.addEventListener("click", editarGasto);
 
         let cancelarGasto = new cancelarHandle();
         let botonCancelar = document.querySelector("button[type = button]");
-        botonCancelar.addEventListener("click", cancelarGasto);*/
+        botonCancelar.addEventListener("click", cancelarGasto);
 
     }
 }
