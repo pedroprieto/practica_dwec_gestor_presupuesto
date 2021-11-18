@@ -125,12 +125,42 @@ function mostrarGastoWeb(idElemento, gasto)
 
         span.append(e);
         div5.append(span);
+
+        //Borrado etiquetas
+        let evEtiquetas = new BorrarEtiquetasHandle();
+        evEtiquetas.gasto = gasto;
+        evEtiquetas.etiqueta = e;
+
+        span.addEventListener("click", evEtiquetas);
     }
 
     div1.append(div5);
 
     let contenido = document.getElementById(idElemento);
     contenido.append(div1);
+
+    //Boton Editar
+    let evEditar = new EditarHandle();
+    evEditar.gasto = gasto;
+
+    let btnEditar = document.createElement("button");
+    btnEditar.type = "button";
+    btnEditar.className = "gasto-editar";
+    btnEditar.textContent = "Editar";
+    btnEditar.addEventListener("click", evEditar);
+
+    //Boton borrar
+    let evBorrar = new BorrarHandle();
+    evBorrar.gasto = gasto;
+
+    let btnBorrar = document.createElement("button");
+    btnBorrar.type = "button";
+    btnBorrar.className = "gasto-borrar";
+    btnBorrar.textContent = "Borrar";
+    btnBorrar.addEventListener("click", evBorrar);
+
+    div1.append(btnEditar);
+    div1.append(btnBorrar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
