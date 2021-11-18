@@ -225,6 +225,28 @@ function submitHandle() {
     }
 }
 
+function submitHandleEditar() {
+    this.handleEvent = function(e){
+
+        e.preventDefault();
+        let form = e.currentTarget;
+
+        let nuevadesc = form.elements.descripcion.value;
+        let nuevovalor = form.elements.valor.value;
+        let nuevafecha = form.elements.fecha.value;
+        let nuevaetiqueta = form.elements.etiquetas.value;
+
+        nuevovalor = parseFloat(nuevovalor);
+
+        this.gasto.actualizarDescripcion(nuevadesc);
+        this.gasto.actualizarValor(nuevovalor);
+        this.gasto.actualizarFecha(nuevafecha);
+        this.gasto.anyadirEtiquetas(...nuevaetiqueta);
+
+        repintar();
+        
+    }
+}
 function cancelarHandle(){
     this.handleEvent = function(e){
 
@@ -251,11 +273,11 @@ function EditarHandleFormulario(){
         form.elements.fecha.value = this.gasto.actualizarFecha;
         form.elements.etiquetas.value = this.gasto.anyadirEtiquetas;*/
 
-        let editarGasto = new submitHandle();
+        let editarGasto = new submitHandleEditar();
         editarGasto.gasto = this.gasto;
         
         let botonEditar = formulario; //He cambiado el nombre del botón respecto al que tenía puesto que no se el motivo por el cual en su día puse crear y este lo define mejor.
-        botonEditar.addEventListener("click", editarGasto);
+        botonEditar.addEventListener("submit", editarGasto);
 
         let cancelarGasto = new cancelarHandle();
         let botonCancelar = document.querySelector("button[type = button]");
