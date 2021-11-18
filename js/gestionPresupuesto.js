@@ -152,11 +152,13 @@ function calcularBalance() {
 }
 function filtrarGastos(opciones) {
 
-    let filtradoComplejo = [];
-    filtradoComplejo = gastos.filter(function(gasto) {
+    
+            let gastosFiltrados = [];
+            gastosFiltrados =  gastos.filter(function(gasto) {
+
             let resultado = true;
             if (opciones.fechaDesde) {
-                if (gasto.fecha < date.parse(opciones.fechaDesde)) {
+                if (gasto.fecha < Date.parse(opciones.fechaDesde)) {
                     resultado = false;
                 }
             }
@@ -183,18 +185,18 @@ function filtrarGastos(opciones) {
             if (opciones.etiquetasTiene) {
                 let count = 0;
                 for (let etq of opciones.etiquetasTiene) {
-                    if (gasto.etiquetas.indexOf) {
+                    if (gasto.etiquetas.indexOf(etq)  > -1) {
                         count++;
                     }
                 }
-                if (count > 0) {
+                if (count == 0) {
                     resultado = false;
-                }
+                } 
             }
             return resultado;
         });
-        return filtradoComplejo;
-}
+        return gastosFiltrados;
+};
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     
