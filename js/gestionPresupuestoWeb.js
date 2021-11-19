@@ -218,7 +218,7 @@ function submitHandler(){
         this.gasto.actualizarFecha(fecha);
 
         let etiquetas = formulario.elements.etiquetas.value;
-        this.gasto.anyadirEtiquetas(etiquetas);
+        this.gasto.anyadirEtiquetas(...etiquetas);
 
 
         repintar();
@@ -246,8 +246,6 @@ function EnviarGastoHandle(){
         valor = parseFloat(valor);
         let fecha = formulario.elements.fecha.value;
         let etiquetas = formulario.elements.etiquetas.value;
-        etiquetas.split(',');
-        
 
         let nuevoGasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
         gp.anyadirGasto(nuevoGasto);
