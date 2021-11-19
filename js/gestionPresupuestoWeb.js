@@ -218,8 +218,7 @@ function submitHandler(){
         this.gasto.actualizarFecha(fecha);
 
         let etiquetas = formulario.elements.etiquetas.value;
-        etiquetas.split(',');
-        this.gasto.anyadirEtiquetas(...etiquetas);
+        this.gasto.anyadirEtiquetas(etiquetas);
 
 
         repintar();
