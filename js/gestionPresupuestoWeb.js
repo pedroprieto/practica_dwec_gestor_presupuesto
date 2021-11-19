@@ -1,6 +1,5 @@
 import * as gp from './gestionPresupuesto.js';
 
-
 function mostrarDatoEnId(idElemento,valor){
     document.getElementById(idElemento).append(valor);
 }
@@ -71,6 +70,7 @@ function mostrarGastoWeb(idElemento,gasto){
     manejadorEventoformulario.gasto = gasto;
     botonEditarFormulario.addEventListener("click",manejadorEventoformulario);
     tag.append(botonEditarFormulario);
+
     
     document.getElementById(idElemento).append(tag);
     
@@ -181,8 +181,6 @@ function BorrarEtiquetasHandle(){
 
 function nuevoGastoWebFormulario(){
 
-    this.handleEvent = function(e){
-
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
         let controlesPrincipales = document.getElementById("controlesprincipales");
@@ -192,14 +190,13 @@ function nuevoGastoWebFormulario(){
         document.getElementById("anyadirgasto-formulario").disabled = true;
 
         let enviarHandle = new EnviarGastoHandle();
-        enviarHandle.formulario = formulario;
         formulario.addEventListener("submit", enviarHandle);
 
         let botonCancelar =formulario.querySelector("button.cancelar");
         let cancelarEvento = new cancelarHandle();
         botonCancelar.addEventListener("click",cancelarEvento);
 
-    }
+    
 }
 
 function submitHandler(){
@@ -212,6 +209,7 @@ function submitHandler(){
         let descripcion = formulario.elements.descripcion.value;
         this.gasto.actualizarDescripcion(descripcion);
 
+        
         let valor = formulario.elements.valor.value;
         valor= parseFloat(valor);
         this.gasto.actualizarValor(valor);
@@ -219,8 +217,9 @@ function submitHandler(){
         let fecha = formulario.elements.fecha.value;
         this.gasto.actualizarFecha(fecha);
 
-        let etiquetas = formulario.etiquetas.value;
-        this.gasto.anyadirEtiquetas(etiquetas);
+        let etiquetas = formulario.elements.etiquetas.value;
+        etiquetas.split(',');
+        this.gasto.anyadirEtiquetas(...etiquetas);
 
 
         repintar();
@@ -245,10 +244,11 @@ function EnviarGastoHandle(){
         let formulario = e.currentTarget;
         let descripcion = formulario.elements.descripcion.value;
         let valor = formulario.elements.valor.value;
+        valor = parseFloat(valor);
         let fecha = formulario.elements.fecha.value;
         let etiquetas = formulario.elements.etiquetas.value;
-
-        valor = parseFloat(valor);
+        etiquetas.split(',');
+        
 
         let nuevoGasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
         gp.anyadirGasto(nuevoGasto);
@@ -274,7 +274,6 @@ function EditarHandleFormulario(){
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
         let submitGasto = new submitHandler();
-        submitGasto.formulario = formulario;
         submitGasto.gasto = this.gasto;
         formulario.addEventListener("submit",submitGasto);
 
@@ -287,8 +286,8 @@ function EditarHandleFormulario(){
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
-let botonNuevoGasto  = document.getElementById('anyadirgasto');
-botonNuevoGasto.addEventListener("click", nuevoGastoWeb);;
+let botonNuevoGasto  = document.getElementById("anyadirgasto");
+botonNuevoGasto.addEventListener("click", nuevoGastoWeb);
 
 let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
