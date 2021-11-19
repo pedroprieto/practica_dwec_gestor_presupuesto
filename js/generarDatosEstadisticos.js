@@ -24,10 +24,10 @@ gespres.anyadirGasto(gasto5);
 gespres.anyadirGasto(gasto6);
 
 // Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
-gespresweb.mostrarDatoEnId("gastos-totales", gespres.calcularTotalGastos());
+gespresweb.mostrarDatoEnId("gastos-totales", "Total gastos: " + gespres.calcularTotalGastos() + " €");
 
 // Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
-gespresweb.mostrarDatoEnId("balance-total", gespres.calcularBalance());
+gespresweb.mostrarDatoEnId("balance-total", "Balance actual: " + gespres.calcularBalance() + " €");
 
 // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
 

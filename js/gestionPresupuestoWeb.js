@@ -90,7 +90,45 @@ function mostrarGastosWeb(idElemento, gasto){
     let borrar_gasto = new borrarHandle();
     borrar_gasto.gasto_actual = gasto;
     btn_borrar.addEventListener("click", borrar_gasto);
+
+    // Boton editar formulario
+    let btn_editar_form = document.createElement("button");
+    btn_editar_form.type = "button";
+    btn_editar_form.className ="gasto-editar-formulario";
+    btn_editar_form.innerHTML = "Editar (formulario)";
+    div_gasto.append(btn_editar_form);
+    let editar_gasto_form = new editarHandleFormulario();
+    editar_gasto_form.gasto_actual = gasto;
+    editar_gasto_form.div_actual = document.getElementById("gasto");
+    btn_editar_form.addEventListener("click", editar_gasto_form);
+
 }
+
+function editarHandleFormulario() {
+    this.handleEvent = function(e) {
+
+        let plantillaFormulario_editar_gasto = document.getElementById("formulario-template");
+
+        let formularioEditarGasto = plantillaFormulario_editar_gasto.content.cloneNode("true");
+
+
+        // Descativamos el boton de crear formulario
+        e.target.disabled = "disabled";
+
+        // Añadimos el formualrio a la web
+        // document.getElementById("formulario_nuevo_gasto").append(formularioNuevoGasto);
+        // document.getElementById(this.idElemento).appendChild(formularioEditarGasto);
+        // document.append(formularioEditarGasto);
+        // formularioEditarGasto.getElementById(this.div_actual).append(formularioNuevoGasto);
+        this.div_gasto.appendChild(formularioEditarGasto);
+        // let edit_gasto_form = document.createElement("div");
+
+        // edit_gasto_form.append(plantillaFormulario_editar_gasto.content.cloneNode(true));
+        // div_gasto.append(formularioEditarGasto);
+
+        
+    };
+};
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
@@ -142,10 +180,10 @@ function repintar() {
     mostrarDatoEnId("presupuesto", gespres.mostrarPresupuesto());
 
     // Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
-    mostrarDatoEnId("gastos-totales", gespres.calcularTotalGastos());
+    mostrarDatoEnId("gastos-totales", "Total gastos: " + gespres.calcularTotalGastos() + " €");
 
     // Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
-    mostrarDatoEnId("balance-total", gespres.calcularBalance());
+    mostrarDatoEnId("balance-total", "Balance actual: " + gespres.calcularBalance() + " €");
 
     // Borrar el contenido de div#listado-gastos-completo
     // gespresweb.mostrarGastosAgrupadosWeb("listado-gastos-completo");
@@ -310,7 +348,7 @@ function manejadorEnvioNuevoGastoWeb() {
         // "\netiquetas: " + document.getElementById("etiquetas").value);
 
         let descripcion = document.getElementById("descripcion").value;
-        let valor = document.getElementById("valor").value;
+        let valor = parseInt(document.getElementById("valor").value);
         let fecha = document.getElementById("fecha").value;
         let etiquetas = document.getElementById("etiquetas").value;
 
@@ -321,10 +359,7 @@ function manejadorEnvioNuevoGastoWeb() {
         gespres.anyadirGasto(gasto);
 
         // manejadorCancelarNuevoGastoWeb();
-
-        
-        
-        
+   
         repintar();
 
         // e.target.form.remove();
