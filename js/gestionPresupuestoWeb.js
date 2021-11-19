@@ -264,25 +264,25 @@ function nuevoGastoWebFormulario() {
 
         // Funcionalidad para boton enviar formulario
         let manejadorEnvio = new manejadorEnvioNuevoGastoWeb();
+        manejadorEnvio.botonCrearFormulario = e.target;
         // let botonEnvio = formularioNuevoGasto.querySelector("button[type=submit");
-        // botonEnvio.addEventListener("click", manejadorEnvio);
+        // botonEnvio.addEventListener("click", manejadorEnvio); 
         let botonEnvio = formularioNuevoGasto.querySelector("form");
         botonEnvio.addEventListener("submit", manejadorEnvio);
 
-        // manejadorEnvio.g = formularioNuevoGasto.getElementById("descripcion");
-
-        
-        // manejadorEnvio.desc = formularioNuevoGasto.getElementById("descripcion").value;
-        
-        manejadorEnvio.desc = formularioNuevoGasto.getElementById("descripcion").value;
+        // Funcionalidad para boton cancelar
+        let manejadorCancelar = new manejadorCancelarNuevoGastoWeb();
+        // Le pasamos al boton cancelar el boton de nuevo formulario para que lo pueda
+        // volver a activar
+        manejadorCancelar.botonCrearFormulario = e.target;
+        let botonCancelar = formularioNuevoGasto.querySelector("button.cancelar");
+        botonCancelar.addEventListener("click", manejadorCancelar);
 
         // Descativamos el boton de crear formulario
         e.target.disabled = "disabled";
 
         // Añadimos el formualrio a la web
         document.getElementById("formulario_nuevo_gasto").append(formularioNuevoGasto);
-
-        
 
         // let gasto = new gespres.CrearGasto(descripcion, valor, fecha, etiquetas);
         // formulario_nuevo_gasto.getElementById("descripcion");
@@ -300,22 +300,44 @@ function manejadorEnvioNuevoGastoWeb() {
     this.handleEvent = function(e) {
         // Prevenir la recarga de la web
         e.preventDefault();
+       
+        // alert("descripcion: " + document.getElementById("descripcion").value + 
+        // "\nvalor: " + document.getElementById("valor").value + 
+        // "\nfecha: " + document.getElementById("fecha").value + 
+        // "\netiquetas: " + document.getElementById("etiquetas").value);
 
-        // alert("enviar form");
+        let descripcion = document.getElementById("descripcion").value;
+        let valor = document.getElementById("valor").value;
+        let fecha = document.getElementById("fecha").value;
+        let etiquetas = document.getElementById("etiquetas").value;
+
+        let gasto = new gespres.CrearGasto(descripcion,valor, fecha, etiquetas);
+
+        // alert("Gasto: " + gasto);
+
+        gespres.anyadirGasto(gasto);
+
+        // manejadorCancelarNuevoGastoWeb();
+
         
-        alert("descripcion: " + this.desc);
-        // alert(e.target.getElementById("descripcion").value);
-        // console.log("hola");
+        // this.botonCrearFormulario.form.remove();
+        // this.botonCrearFormulario.disabled = "";
+        repintar();
 
+        e.target.form.remove();
+        // e.target.form.remove();
+        
     }
 }
 
 function manejadorCancelarNuevoGastoWeb() {
-    this.handleEvent = function (e) {
+    this.handleEvent = function(e) {
 
+        // alert("cancelar");
+        // Borramos el formulario
         e.target.form.remove();
-        // desactivamos el boton de neuvo formulario
-        e.target.disabled = "";
+        // Activamos el boton de nuevo formulario
+        this.botonCrearFormulario.disabled = "";
     }
 }
 
