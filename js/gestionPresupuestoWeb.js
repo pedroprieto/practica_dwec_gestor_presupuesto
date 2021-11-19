@@ -369,11 +369,11 @@ function filtrarGastosWeb(){
 
         //document.querySelectorAll(".gasto").forEach(gasto => gasto.remove());
         let listaGastos = document.getElementById("listado-gastos-completo");
-        //listaGastos.innerHTML = '';
-        while(listaGastos.firstChild){
+        listaGastos.innerHTML = '';
+        /*while(listaGastos.firstChild){
             listaGastos.removeChild(listaGastos.firstChild);
-        }
-
+        }*/
+        
         for (let gasto of gastosFiltrados) {
             mostrarGastoWeb("listado-gastos-completo", gasto);
         }

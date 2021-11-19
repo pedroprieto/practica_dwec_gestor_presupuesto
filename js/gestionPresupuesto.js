@@ -213,11 +213,21 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     }
 
     let gastosCreados = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene});
-    
-    let resultado = gastosCreados.reduce((acc, item) => {
+
+    let resultado = gastosCreados.reduce((acc , gasto) => {
+
+        let propiedad = gasto.obtenerPeriodoAgrupacion(periodo);
+        
+        acc[propiedad] = ( acc[propiedad] || 0) + gasto.valor;
+
+        return acc;
+
+    }, {});
+
+    /*let resultado = gastosCreados.reduce((acc, item) => {
             acc[item.obtenerPeriodoAgrupacion(periodo)] = (acc[item.obtenerPeriodoAgrupacion(periodo)] || 0) + item.valor;
             return acc;
-    }, {});
+    }, {});/*
     
     /*
     let resultado = gastosCreados.reduce((acc, gasto) => ({       
@@ -229,11 +239,11 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 }
 
 
-// Practica expresiones regulares
+// Practica 7 expresiones regulares
 
 function transformarListadoEtiquetas(etiquetas){
 
-    let arrayFiltrado = etiquetas.match(/[a-z0-9]+/gi);
+    let arrayFiltrado = etiquetas.match(/[a-zA-Z0-9]+/gi);
     return arrayFiltrado;
 }
 
