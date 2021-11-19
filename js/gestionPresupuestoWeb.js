@@ -205,7 +205,25 @@ function nuevoGastoWebFormulario(){
 function submitHandler(){
     this.handleEvent = function(e){
 
-       
+        e.preventDefault()
+
+        let formulario = e.currentTarget;
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = formulario.elements.valor.value;
+        valor= parseFloat(valor);
+        this.gasto.actualizarValor(valor);
+
+        let fecha = formulario.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = formulario.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiquetas);
+
+
+        repintar();
 
     }
 } 
