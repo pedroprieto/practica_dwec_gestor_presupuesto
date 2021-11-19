@@ -231,7 +231,7 @@ function cancelarHandle(){
     this.handleEvent = function(e){ 
 
         document.getElementById("anyadirgasto-formulario").disabled = false;
-        
+
         e.currentTarget.parentNode.remove(); 
         repintar(); 
     }
@@ -240,7 +240,21 @@ function cancelarHandle(){
 function EnviarGastoHandle(){
 
     this.handleEvent = function(e){
-       
+        e.preventDefault();
+
+        
+        let formulario = e.currentTarget;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = formulario.elements.valor.value;
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+
+        valor = parseFloat(valor);
+
+        let nuevoGasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
+        gp.anyadirGasto(nuevoGasto);
+        repintar();
+        document.getElementById("anyadirgasto-formulario").disabled = false;
     }
 }
 
