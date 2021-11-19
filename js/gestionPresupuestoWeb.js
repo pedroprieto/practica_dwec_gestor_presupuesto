@@ -42,7 +42,7 @@ function nuevoGastoWeb() {
 
     let etiquetasSueltas = newEtiqueta.split(', ');
 
-    let gastoNuevo = new gesPres.CrearGasto(newDescripcion, newValor, newFecha, ...etiquetasSueltas);
+    let gastoNuevo = new gesPres.CrearGasto(newDescripcion, newValor, newFecha, etiquetasSueltas);
     
     gesPres.anyadirGasto(gastoNuevo);
 
@@ -56,16 +56,16 @@ function EditarHandle(){
     this.handleEvent= function(e){
 
         let descripcion = prompt("Introduce una descripción");
-        let valor = prompt("Introduce el valor");
-        valor = parseFloat(valor);
+        let valor = prompt("Introduce el gasto");        
         let fecha = prompt("Introduce la fecha");
         let etiqueta = prompt("Introduce las etiquetas");
-        let etiquetasSueltas = etiqueta.split(', ');
+        valor = parseFloat(valor);
+        let etiquetasSueltas = etiqueta.split(',');
 
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarFecha(fecha);
-        this.gasto.actualizarEtiuetas(etiquetasSueltas);
+        this.gasto.anyadirEtiquetas(etiquetasSueltas);
 
         repintar();
     }
@@ -128,14 +128,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let divGastoEtiquetas = document.createElement('div');
     divGastoEtiquetas.className = "gasto-etiquetas"
     
-    for (let etiqueta of gasto.etiquetas) {
-        
-        let span = document.createElement('span');
-        span.className = "gasto-etiquetas-etiqueta";
-        span.append(etiqueta +", " );
-        divGastoEtiquetas.append(span);        
-    }
-
+    
     let btnEditar = document.createElement('button');
     btnEditar.type = "button";
     btnEditar.id = "gasto-editar";
@@ -145,6 +138,8 @@ function mostrarGastoWeb(idElemento, gasto){
     let eventoEditar = new EditarHandle();
     eventoEditar.gasto = gasto;
     btnEditar.addEventListener('click', eventoEditar);
+
+
 
     let btnBorrar = document.createElement('button');
     btnBorrar.type = "button";
@@ -156,11 +151,13 @@ function mostrarGastoWeb(idElemento, gasto){
     eventoBorrar.gasto = gasto;
     btnBorrar.addEventListener('click', eventoBorrar);
 
+    
+
     for (let etiqueta of gasto.etiquetas) {
         
         let spanEtiqueta = document.createElement('span');
         spanEtiqueta.className = "gasto-etiquetas-etiqueta";
-        spanEtiqueta.textContent = etiqueta;
+        spanEtiqueta.textContent = etiqueta + ", ";
         divGastoEtiquetas.append(spanEtiqueta);
 
         let eventoBorrarEtiqueta = new BorrarEtiquetasHandle();
