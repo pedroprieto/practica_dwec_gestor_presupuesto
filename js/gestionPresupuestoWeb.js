@@ -282,7 +282,8 @@ function nuevoGastoWebFormulario() {
         e.target.disabled = "disabled";
 
         // Añadimos el formualrio a la web
-        document.getElementById("formulario_nuevo_gasto").append(formularioNuevoGasto);
+        // document.getElementById("formulario_nuevo_gasto").append(formularioNuevoGasto);
+        document.getElementById("controlesprincipales").append(formularioNuevoGasto);
 
         // let gasto = new gespres.CrearGasto(descripcion, valor, fecha, etiquetas);
         // formulario_nuevo_gasto.getElementById("descripcion");
@@ -293,6 +294,8 @@ function nuevoGastoWebFormulario() {
         // console.log(desc);
         // manejadorEnvio.prueba = "prueba2"
         // console.log(this.prueba);
+
+
     }
 }
 
@@ -320,13 +323,14 @@ function manejadorEnvioNuevoGastoWeb() {
         // manejadorCancelarNuevoGastoWeb();
 
         
-        // this.botonCrearFormulario.form.remove();
-        // this.botonCrearFormulario.disabled = "";
+        
+        
         repintar();
 
-        e.target.form.remove();
         // e.target.form.remove();
-        
+        e.target.remove();
+        // this.botonCrearFormulario.form.remove();
+        this.botonCrearFormulario.disabled = "";
     }
 }
 
