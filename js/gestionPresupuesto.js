@@ -196,7 +196,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
            });
            
            
-                return gastosFiltrados;  
+        return gastosFiltrados;  
        
 }
 

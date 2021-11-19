@@ -71,7 +71,7 @@ function mostrarGastoWeb(idElemento, gasto){
     // segundo boton editar form
     let botonEditarForm = document.createElement("button");
     botonEditarForm.className = "gasto-editar-formulario";
-    botonBorrar.id = "gasto-editar-formulario";
+    botonEditarForm.id = "gasto-editar-formulario";
     botonEditarForm.type = "button";
     botonEditarForm.textContent = "Editar (formulario)";
     // evento editar form
@@ -281,9 +281,24 @@ function CancelarFormularioHandle(){
         
         document.getElementById("anyadirgasto-formulario").disabled = false;
         e.currentTarget.parentNode.remove(); // con parentNode borramos el formulario que es el padre del boton
+        //e.currentTarget.setAttribute("disabled", "false");
+        //e.target.setAttribute("disabled", "false");
+        //this.gasto.botonEditarForm.disabled = false;
         repintar();
     }
 }
+
+/*function CancelarFormularioIndividualHandle(){
+
+    this.handleEvent = function(e){
+        
+        e.target.btnEditarF.disabled = false;
+        e.currentTarget.parentNode.remove(); // con parentNode borramos el formulario que es el padre del boton
+        //e.currentTarget.setAttribute("disabled", "false");
+        //e.target.setAttribute("disabled", "false")
+        //repintar();
+    }
+}*/
 
 function EditarHandleFormulario(){
 
