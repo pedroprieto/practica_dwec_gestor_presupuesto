@@ -8,8 +8,8 @@ function mostrarGastoWeb(idElemento, gasto) {
     id.document.write(gasto);
 }
 
-function mostrarGastosAgrupadosWeb() {
-    
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+
 }
 
 export {
