@@ -63,7 +63,7 @@ Etiquetas:${etiquetasStr}
 
     this.anyadirEtiquetas = function(...newEtiquetas) {
         for(let newEtiqueta of newEtiquetas) {
-            if(!this.etiquetas.find(e => e == newEtiqueta)) {
+            if(newEtiqueta && (newEtiqueta != "") && !this.etiquetas.find(e => e == newEtiqueta)) {
                 this.etiquetas.push(newEtiqueta);
             }
         }
