@@ -145,37 +145,61 @@ function filtrarGastos(filtro){
         for(let prop in filtro){
             switch(prop){
                 case 'fechaDesde':
-                    let fechaDesdeFiltro = Date.parse(filtro.fechaDesde);
-                    itemMatches = item.fecha >= fechaDesdeFiltro;
+                    if(filtro.fechaDesde == "") {
+                        itemMatches = true;
+                    } else {
+                        let fechaDesdeFiltro = Date.parse(filtro.fechaDesde);
+                        itemMatches = item.fecha >= fechaDesdeFiltro;
+                    }
                     break;
                 case 'fechaHasta':
-                    let fechaHastaFiltro = Date.parse(filtro.fechaHasta);
-                    itemMatches = item.fecha <= fechaHastaFiltro;
+                    if(filtro.fechaHasta == "") {
+                        itemMatches = true;
+                    } else {
+                        let fechaHastaFiltro = Date.parse(filtro.fechaHasta);
+                        itemMatches = item.fecha <= fechaHastaFiltro;
+                    }
                     break;
                 case 'valorMinimo':
                     let valorMinimoFiltro = filtro.valorMinimo;
-                    itemMatches = item.valor >= valorMinimoFiltro;
+                    if(valorMinimoFiltro) {
+                        itemMatches = item.valor >= valorMinimoFiltro;
+                    } else {
+                        itemMatches = true;
+                    }
                     break;
                 case 'valorMaximo':
                     let valorMaximoFiltro = filtro.valorMaximo;
-                    itemMatches = item.valor <= valorMaximoFiltro;
+                    if(valorMaximoFiltro) {
+                        itemMatches = item.valor <= valorMaximoFiltro;
+                    } else {
+                        itemMatches = true;
+                    }
                     break;
                 case 'descripcionContiene':
-                    let descripcionContieneFiltro = filtro.descripcionContiene;
-                    itemMatches = item.descripcion.includes(descripcionContieneFiltro);
+                    if(filtro.descripcionContiene == "") {
+                        itemMatches = true;
+                    } else {
+                        let descripcionContieneFiltro = filtro.descripcionContiene;
+                        itemMatches = item.descripcion.includes(descripcionContieneFiltro);
+                    }
                     break;
                 case 'etiquetasTiene':
                     let etiquetasTiene = filtro.etiquetasTiene;
-                    if(etiquetasTiene.length > 0) {
-                        let tieneAlgunaEtiqueta = false;
-                        for (let etiqueta  of etiquetasTiene) {
-                            let indexEtiqueta = item.etiquetas.findIndex(e => e == etiqueta);
-                            if(indexEtiqueta > -1) {
-                                tieneAlgunaEtiqueta = true;
-                                break;
-                            } 
+                    if(etiquetasTiene) {
+                        if(etiquetasTiene.length > 0) {
+                            let tieneAlgunaEtiqueta = false;
+                            for (let etiqueta  of etiquetasTiene) {
+                                let indexEtiqueta = item.etiquetas.findIndex(e => e == etiqueta);
+                                if(indexEtiqueta > -1) {
+                                    tieneAlgunaEtiqueta = true;
+                                    break;
+                                } 
+                            }
+                            itemMatches = tieneAlgunaEtiqueta;
+                        } else {
+                            itemMatches = true;
                         }
-                        itemMatches = tieneAlgunaEtiqueta;
                     } else {
                         itemMatches = true;
                     }
@@ -215,6 +239,10 @@ function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta){
     return gastosAgrupados;
 }
 
+function transformarListadoEtiquetas(etiquetas){
+    return etiquetas.match(/\w+/g);
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -228,5 +256,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }

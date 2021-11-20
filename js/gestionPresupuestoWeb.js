@@ -299,12 +299,62 @@ function SubmitGastoEditHandle(e){
     }
 }
 
+function filtrarGastosWeb(event) {
+    event.preventDefault();
+
+    let formulario = event.currentTarget;
+    let descripcion = formulario.elements['formulario-filtrado-descripcion'].value;
+    let valorMinimoStr = formulario.elements['formulario-filtrado-valor-minimo'].value;
+    let valorMaximoStr = formulario.elements['formulario-filtrado-valor-maximo'].value;
+    let valorMinimo = (valorMinimoStr == "") ? null : parseFloat(valorMinimoStr);
+    let valorMaximo = (valorMaximoStr == "") ? null : parseFloat(valorMaximoStr);
+    let fechaDesdeStr = formulario.elements['formulario-filtrado-fecha-desde'].value;
+    let fechaHastaStr = formulario.elements['formulario-filtrado-fecha-hasta'].value;
+
+    let etiquetasStr = formulario.elements['formulario-filtrado-etiquetas-tiene'].value;
+    let etiquetasArray;
+    if(etiquetasStr != "") {
+        etiquetasArray = gestionPresupuesto.transformarListadoEtiquetas(etiquetasStr);
+    }
+
+    let filtro = {fechaDesde: fechaDesdeStr, fechaHasta: fechaHastaStr, valorMinimo: valorMinimo, valorMaximo: valorMaximo, descripcionContiene: descripcion, etiquetasTiene: etiquetasArray};
+    let listaGastos = gestionPresupuesto.filtrarGastos(filtro);
+    let gastosCompleto = document.getElementById('listado-gastos-completo');
+    gastosCompleto.innerHTML = '';
+    let gastosFiltrado1 = document.getElementById('listado-gastos-filtrado-1');
+    gastosFiltrado1.innerHTML = '';
+    let gastosFiltrado2 = document.getElementById('listado-gastos-filtrado-2');
+    gastosFiltrado2.innerHTML = '';
+    let gastosFiltrado3 = document.getElementById('listado-gastos-filtrado-3');
+    gastosFiltrado3.innerHTML = '';
+    let gastosFiltrado4 = document.getElementById('listado-gastos-filtrado-4');
+    gastosFiltrado4.innerHTML = '';
+    for (let gasto of listaGastos) {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+    }
+}
+
+function limpiarFiltro() {
+    document.getElementById('formulario-filtrado-descripcion').value = "";
+    document.getElementById('formulario-filtrado-valor-minimo').value = "";
+    document.getElementById('formulario-filtrado-valor-maximo').value = "";
+    document.getElementById('formulario-filtrado-fecha-desde').value = "";
+    document.getElementById('formulario-filtrado-fecha-hasta').value = "";
+    document.getElementById('formulario-filtrado-etiquetas-tiene').value = "";
+    repintar();
+}
+
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 let botonAnyadirGasto  = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
+
+let formularioFiltrado = document.getElementById("formulario-filtrado");
+formularioFiltrado.addEventListener("submit", filtrarGastosWeb);
+let botonLimpiarFiltro = document.getElementById("limpiarFiltroBtn");
+botonLimpiarFiltro.addEventListener("click", limpiarFiltro);
 
 export {
     mostrarDatoEnId,
