@@ -118,27 +118,40 @@ function actualizarPresupuestoWeb() {
 
 function nuevoGastoWeb() {
     let descripcion = pedirDescripcionGasto();
-    let valor = pedirValorGasto();
-    let fechaStr = pedirFechaGasto();
-    let etiquetas = pedirEtiquetasGasto();
-
-    let newGasto = etiquetas ? new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, ...etiquetas) : new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr);
-    gestionPresupuesto.anyadirGasto(newGasto);
-
+    if(descripcion != null) {
+        let valor = pedirValorGasto();
+        if(valor != null) {
+            let fechaStr = pedirFechaGasto();
+            if(fechaStr != null) {
+                let etiquetas = pedirEtiquetasGasto();
+                if(etiquetas != null) {
+                    let newGasto = etiquetas ? new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, ...etiquetas) : new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr);
+                    gestionPresupuesto.anyadirGasto(newGasto);
+                }
+            }
+        }
+    }
     repintar();
 }
 
 function EditarHandle() {
     this.handleEvent = function(e) {
         let descripcion = pedirDescripcionGasto(this.gasto.descripcion);
-        let valor = pedirValorGasto(this.gasto.valor);
-        let fechaStr = pedirFechaGasto(this.gasto.fecha);
-        let etiquetas = pedirEtiquetasGasto();
-        
-        this.gasto.actualizarDescripcion(descripcion);
-        this.gasto.actualizarFecha(fechaStr);
-        this.gasto.actualizarValor(valor);
-        this.gasto.anyadirEtiquetas(etiquetas);
+        if(descripcion != null) {
+            let valor = pedirValorGasto(this.gasto.valor);
+            if(valor != null) {
+                let fechaStr = pedirFechaGasto(this.gasto.fecha);
+                if(fechaStr != null) {
+                    let etiquetas = pedirEtiquetasGasto();
+                    if(etiquetas != null) {
+                        this.gasto.actualizarDescripcion(descripcion);
+                        this.gasto.actualizarFecha(fechaStr);
+                        this.gasto.actualizarValor(valor);
+                        this.gasto.anyadirEtiquetas(etiquetas);
+                    }
+                }
+            }
+        }
 
         repintar();
     }
@@ -165,6 +178,9 @@ function pedirDescripcionGasto(datoActual = "") {
 
 function pedirValorGasto(datoActual = "") {
     let valorStr = prompt('Introduzca el valor', datoActual);
+    if(valorStr == null) {
+        return null;
+    }
     let valor = parseFloat(valorStr);
     return valor;
 }
