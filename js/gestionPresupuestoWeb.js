@@ -1,6 +1,6 @@
 function mostrarDatoEnId(idElemento, valor) {
     let id = document.getElementById(idElemento);
-    id.innerHTML(valor);
+    id.innerHTML= valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
