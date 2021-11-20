@@ -5,6 +5,7 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
+//funciones práctica 1
 function actualizarPresupuesto(cantidad) {
     let numError= -1;
 
@@ -26,33 +27,70 @@ function mostrarPresupuesto() {
     return(mensaje);
 }
 
-function CrearGasto(descrip,cantid, fec, etiq) {
+
+
+//funciones práctica 2
+
+function listarGastos(){
+    for(let i = '0'; i < gastos.length;i++){
+        console.log(gastos[i]);
+    }
+    return(gastos);
+}
+
+
+function anyadirGasto(paramGasto){
+    paramGasto.id= idGasto;
+    idGasto++; 
+    gastos.push(paramGasto);
+}
+
+function borrarGasto(id){
+    gastos.splice(id, 1);
+    if(idGasto > 0){
+        idGasto = idGasto - 1;
+    }
+}
+
+function calcularTotalGastos(){
+    let totalGastos = 0;
+    for(let i=0; i < gastos.length;i++){
+        totalGastos += parseInt(gastos[i]);
+    }
+
+    return(totalGastos);
+}
+
+function calcularBalance(){
+    let tG;
+    let balance;
+
+    tG = calcularTotalGastos();
+    balance = presupuesto - tG;
+
+    return(balance);
+}
+
+
+
+//funcion constructora
+function CrearGasto(descrip,cantid, fec, ...etiq) {
     // TODO
     this.descripcion= descrip;
     this.valor = 0;
-    this.fecha = fec;
     this.etiquetas = [];
+    this.fecha = new Date().getTime();
+
 
     if(cantid >= 0)
     {
         this.valor = cantid;
-    }else
-        this.valor = 0;
-
-    if (etiq == null){
-        this.etiquetas= [];
-    }else{
-        this.etiquetas= etiq;
-    }
-
-    if(fec == null){
-        this.fecha = new Date();
-    }else{
-        this.fecha = new Date(Date.parse(fec));
     }
 
 
 
+
+    //métodos práctica 1
     this.mostrarGasto = function(){
         return("Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €");
     }
@@ -64,33 +102,62 @@ function CrearGasto(descrip,cantid, fec, etiq) {
     this.actualizarValor = function(val){
         if(val >= 0)
             this.valor = val;
-        else
-            return;
+    }
+
+    //métodos práctica 2
+    this.mostrarGastoCompleto = function(){      
+        this.mostrarGasto();
+        console.log("Fecha: " + this.fecha);
+        console.log("Etiquetas:");
+        for(let i = 0;i < this.etiquetas.length; i++){
+            console.log("- " + this.etiquetas[i]);
+        }
+    }
+    
+    this.actualizarFecha = function(paramFecha){
+        let data = Date.parse(paramFecha);
+
+        if(data != NaN){
+            this.fecha = data;
+        }
+
+
+    }
+    
+    this.anyadirEtiquetas = function(...argumentos){
+        for(let i = 0; i < this.etiquetas.length; i++){
+            if(this.etiquetas.includes(argumentos[i], 0)){
+                gastos.push(argumentos[i]);
+                idGasto++;
+            }  
+        }
+    }
+    
+    this.borrarEtiquetas = function(...argumen){
+        let entrada;
+    
+        for(let i = 0; i < this.etiquetas.length; i++){
+            if(this.etiquetas.includes(argumen[i], 0)){
+                entrada = this.etiquetas.indexOf(argumen[i],0);
+                this.etiquetas.splice(entrada, 1); 
+                idGasto--;
+            }  
+        }
+    } 
+
+
+
+    if(fec){
+        this.actualizarFecha(fec);
+    }
+
+    if(etiq){
+        this.anyadirEtiquetas(etiq);
     }
 
 }
 
 
-function listarGastos(){
-
-}
-
-
-function anyadirGasto(paramGasto){
-
-}
-
-function borrarGasto(id){
-
-}
-
-function calcularTotalGastos(){
-
-}
-
-function calcularBalance(){
-
-}
 
 
 
