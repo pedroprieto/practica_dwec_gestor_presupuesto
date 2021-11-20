@@ -113,7 +113,7 @@ function nuevoGastoWeb() {
     let fechaStr = pedirFechaGasto();
     let etiquetas = pedirEtiquetasGasto();
 
-    let newGasto = etiquetas ? new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, etiquetas) : new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr);
+    let newGasto = etiquetas ? new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, ...etiquetas) : new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr);
     gestionPresupuesto.anyadirGasto(newGasto);
 
     repintar();
@@ -175,10 +175,60 @@ function pedirEtiquetasGasto(datoActual = "") {
     return etiquetas;
 }
 
+function nuevoGastoWebFormulario(event) {
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector("form");
+
+    formulario.addEventListener("submit", submitGastoHandle);
+
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    let cancelarGastoEvent = new CancelGastoHandle();
+    cancelarGastoEvent.formulario = formulario;
+    let botonAnyadirGastoFormulario = event.currentTarget;
+    cancelarGastoEvent.botonAnyadir = botonAnyadirGastoFormulario;
+    botonCancelar.addEventListener("click", cancelarGastoEvent);
+
+    botonAnyadirGastoFormulario.disabled = true;
+
+    let controles = document.getElementById("controlesprincipales")
+    controles.append(formulario);
+}
+
+function submitGastoHandle(e){
+    e.preventDefault();
+
+    let formulario = e.currentTarget;
+    let descripcion = formulario.elements.descripcion.value;
+    let valorStr = formulario.elements.valor.value;
+    let valor = parseFloat(valorStr);
+    let fechaStr = formulario.elements.fecha.value;
+    let etiquetasStr = formulario.elements.etiquetas.value;
+
+    let etiquetas;
+    if(etiquetasStr != "") {
+        etiquetas = etiquetasStr.split(',');
+    }
+
+    let newGasto = etiquetas ? new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, ...etiquetas) : new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr);
+    gestionPresupuesto.anyadirGasto(newGasto);
+    repintar();
+
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+}
+
+function CancelGastoHandle(){
+    this.handleEvent = function(e){
+        this.botonAnyadir.removeAttribute("disabled");
+        this.formulario.remove();
+    }
+}
+
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 let botonAnyadirGasto  = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
+botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
 
 export {
     mostrarDatoEnId,
