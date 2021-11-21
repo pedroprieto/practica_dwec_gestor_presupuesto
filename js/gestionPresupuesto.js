@@ -1,8 +1,9 @@
-
 'use strict'
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
+
+
 function actualizarPresupuesto(cantidad) {
     if (CompruebaCantidad(cantidad) <= 0) {
         console.log('No se pueden introducir números negativos');
@@ -217,6 +218,12 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     return gastos;
 }
 
+
+function transformarListadoEtiquetas(listaEtiquetas){ 
+    let regexp = /\w*[^;,.:\s]/gm;
+    let result = listaEtiquetas.match(regexp) || [];
+    return result;
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -230,5 +237,6 @@ export {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
