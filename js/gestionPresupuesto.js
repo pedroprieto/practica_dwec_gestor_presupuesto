@@ -2,12 +2,15 @@
 
 // TODO: Variable global
 var presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(valor) {
   if (valor >= 0) {
     presupuesto = valor;
     return valor;
   }
+
   console.log("Error valor negativo: " + valor);
   return -1;
 }
