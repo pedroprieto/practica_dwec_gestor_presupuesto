@@ -37,3 +37,8 @@ let filtrado2 = gesPres.filtrarGastos({valorMinimo: 50});
 for (let elemento of filtrado2) {
     gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-2', elemento);
 }
+
+let filtrado3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetas:"seguros"});
+for (let elemento of filtrado3) {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-3', elemento);
+}
