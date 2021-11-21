@@ -1,12 +1,8 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+
 'use strict'
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
-
-// TODO: Variable global
-
-
 function actualizarPresupuesto(cantidad) {
     if (CompruebaCantidad(cantidad) <= 0) {
         console.log('No se pueden introducir números negativos');
@@ -133,6 +129,7 @@ function listarGastos() {
 }
 
 function anyadirGasto(gasto) {
+    debugger;
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);

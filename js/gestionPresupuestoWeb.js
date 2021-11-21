@@ -14,9 +14,13 @@ export {
 debugger;
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
+let botonAnyadirGastoForm = document.getElementById('anyadirgasto-formulario');
+let formulario = document.forms[0];
 
 function mostrarDatoEnId(idElemento, valor) {
+    debugger;
     let elemento = document.getElementById(idElemento);
+    elemento.innerHTML = "";
     elemento.append(valor); 
 }
 
@@ -73,6 +77,14 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener("click", objBorrar);
     divBloque.prepend(botonBorrar);
 
+    let botonEditarForm = document.createElement('button');
+    botonEditarForm.className ='gasto-editar-formulario';
+    botonEditarForm.innerText = 'Editar (formulario)';
+    // let objEditarForm = EditarHandleFormulario();
+    // objEditarForm.gasto = gasto;
+    // botonEditarForm.addEventListener('click',objEditarForm);
+    divBloque.prepend(botonEditarForm);
+
     mostrarDatoEnId(idElemento, divBloque);
 }
 
@@ -106,6 +118,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar() {
+    debugger;
     mostrarDatoEnId("presupuesto", gestion.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gestion.calcularBalance());
@@ -136,8 +149,31 @@ function nuevoGastoWeb() {
     repintar();
 }
 
+function nuevoGastoWebFormulario(){
+    debugger;
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+    formulario.addEventListener("submit",anyadirNuevoGastoFormulario);
+    document.getElementById('controlesprincipales').append(formulario);
+    document.getElementById("anyadirgasto-formulario").disabled = true;
+}
+
+
+function anyadirNuevoGastoFormulario(event){
+    debugger;
+    event.preventDefault();
+    let formulario = event.currentTarget;
+    // Obtenemos los datos del formulario y creamos un gasto con ellos.
+    let etiquetasSplit = formulario.elements.etiquetas.value.split(',');
+    let gasto = etiquetasSplit.length > 0 ? new gestion.CrearGasto(formulario.elements.descripcion.value, parseFloat(formulario.elements.valor.value), formulario.elements.fecha.value, ...etiquetasSplit) :  new gestion.CrearGasto(formulario.elements.descripcion.value, formulario.elements.valor.value, formulario.elements.fecha.value);
+    gestion.anyadirGasto(gasto);
+    repintar();
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+}
+
 botonActualizar.addEventListener("click", actualizarPresupuestoWeb);
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+botonAnyadirGastoForm.addEventListener("click",nuevoGastoWebFormulario);
 
 function EditarHandle() {
     this.handleEvent = function (evento) {
@@ -153,6 +189,13 @@ function EditarHandle() {
         repintar();
     }
 }
+
+function EditarHandleFormulario(){
+    this.handleEvent = function(evento){
+        //TODO: Terminar esta función
+    }
+}
+
 
 function BorrarHandle() {
     debugger;
