@@ -32,3 +32,8 @@ let filtrado1 = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "20
 for (let elemento of filtrado1) {
     gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-1', elemento);
 }
+
+let filtrado2 = gesPres.filtrarGastos({valorMinimo: 50});
+for (let elemento of filtrado2) {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-2', elemento);
+}
