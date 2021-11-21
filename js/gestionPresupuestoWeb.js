@@ -200,7 +200,8 @@ function nuevoGastoWebFormulario(){
    
     formu.append(formulario);
     //document.body.append(formulario);
-    document.getElementById("anyadirgasto-formulario").disabled = true;
+    let btnAnyadir = document.getElementById("anyadirgasto-formulario");
+    btnAnyadir.disabled = true;
 
     let enviarGasto = new EnviarGastoHandle();
     //enviarGasto.formulario = formulario; // le creamos una propiedad al manejador que se llame formulario y le asignamos el elemento formulario
@@ -208,6 +209,7 @@ function nuevoGastoWebFormulario(){
 
     let cancelarFormBoton = formulario.querySelector("button.cancelar");
     let eventCancelar = new CancelarFormularioHandle();
+    eventCancelar.botonAnyadir = btnAnyadir;
     cancelarFormBoton.addEventListener("click", eventCancelar)
 }
 
@@ -275,30 +277,31 @@ function EnviarGastoHandle(){
     }
 }
 
-function CancelarFormularioHandle(){
+function CancelarFormularioHandle(){ // manejador de eventos para cancelar del boton añadir gasto (formulario)
 
     this.handleEvent = function(e){
         
-        document.getElementById("anyadirgasto-formulario").disabled = false;
+        this.botonAnyadir.disabled = false;
         e.currentTarget.parentNode.remove(); // con parentNode borramos el formulario que es el padre del boton
+        //btnAnyadir.disabled = false;
         //e.currentTarget.setAttribute("disabled", "false");
         //e.target.setAttribute("disabled", "false");
         //this.gasto.botonEditarForm.disabled = false;
-        repintar();
+        //repintar();
     }
 }
 
-/*function CancelarFormularioIndividualHandle(){
+function CancelarFormularioIndividualHandle(){ // // manejador de eventos para cancelar del boton editar gasto (formulario)
 
     this.handleEvent = function(e){
         
-        e.target.btnEditarF.disabled = false;
+        this.botonEditar.disabled = false;
         e.currentTarget.parentNode.remove(); // con parentNode borramos el formulario que es el padre del boton
         //e.currentTarget.setAttribute("disabled", "false");
         //e.target.setAttribute("disabled", "false")
         //repintar();
     }
-}*/
+}
 
 function EditarHandleFormulario(){
 
@@ -323,7 +326,8 @@ function EditarHandleFormulario(){
         formulario.addEventListener("submit", enviarGasto);
 
         let cancelarFormBoton = formulario.querySelector("button.cancelar");
-        let eventCancelar = new CancelarFormularioHandle();
+        let eventCancelar = new CancelarFormularioIndividualHandle();
+        eventCancelar.botonEditar = btnEditarF;
         cancelarFormBoton.addEventListener("click", eventCancelar);
     }
 }
