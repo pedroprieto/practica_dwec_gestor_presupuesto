@@ -223,11 +223,11 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
         //     indice[pA] = gasto.valor;
         // }
         indice[pA] =( indice[pA] || 0 ) + gasto.valor;
-        console.log(indice);
+        //console.log(indice);
         return indice;
     },
     // Esto me ha llevado loco y no lo entiendo le ponia el objeto vacio en indice
-    {}
+    {}, ""
     );
 };
 // pruebas de consola
