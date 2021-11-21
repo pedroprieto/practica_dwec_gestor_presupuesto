@@ -27,3 +27,8 @@ let listaCompleta = gesPres.listarGastos();
 for (let elemento of listaCompleta) {
     gesPresWeb.mostrarGastoWeb('listado-gastos-completo', elemento);
 }
+
+let filtrado1 = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
+for (let elemento of filtrado1) {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-1', elemento);
+}

@@ -23,12 +23,16 @@ function mostrarGastoWeb(idElemento, gasto) {
     
     let div4 = document.createElement('div');
     div4.className = 'gasto-etiquetas';
+
+    if (gasto.etiquetas) {
     for (let etiqueta of gasto.etiquetas) {
         let span = document.createElement('span');
         span.className ='gasto-etiquetas-etiqueta';
         span.innerHTML = etiqueta;
         div4.append(span);
     }
+    }
+    
     divPadre.append(div1);
     divPadre.append(div2);
     divPadre.append(div3);
