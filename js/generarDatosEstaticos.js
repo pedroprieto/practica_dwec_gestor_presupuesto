@@ -47,3 +47,5 @@ let filtrado4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida"
 for (let elemento of filtrado4) {
     gesPresWeb.mostrarGastoWeb('listado-gastos-filtrado-4', elemento);
 }
+
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
