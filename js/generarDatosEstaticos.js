@@ -22,3 +22,8 @@ gesPres.anyadirGasto(gasto6);
 gesPresWeb.mostrarDatoEnId('gastos-totales', gesPres.calcularTotalGastos());
 
 gesPresWeb.mostrarDatoEnId('balance-total', gesPres.calcularBalance());
+
+let listaCompleta = gesPres.listarGastos();
+for (let elemento of listaCompleta) {
+    gesPresWeb.mostrarGastoWeb('listado-gastos-completo', elemento);
+}

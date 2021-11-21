@@ -7,62 +7,63 @@ function mostrarGastoWeb(idElemento, gasto) {
     let id = document.getElementById(idElemento);
 
     let divPadre = document.createElement('div');
-    divPadre.classList.add('gasto')
-    id.append(divPadre);
+    divPadre.className = 'gasto';
 
     let div1 = document.createElement('div');
-    div1.classList.add('gasto-descripcion');
-    div1.createTextNode(gasto.descripcion);
-    divPadre.append(div1);
+    div1.className = 'gasto-descripcion';
+    div1.innerHTML = gasto.descripcion;
 
     let div2 = document.createElement('div');
-    div1.classList.add('gasto-fecha');
-    div1.createTextNode(gasto.fecha);
-    divPadre.append(div2);
+    div2.className = 'gasto-fecha';
+    div2.innerHTML = gasto.fecha;
 
     let div3 = document.createElement('div');
-    div1.classList.add('gasto-valor');
-    div1.createTextNode(gasto.valor);
-    divPadre.append(div3);
-
+    div3.className = 'gasto-valor';
+    div3.innerHTML = gasto.valor;
+    
     let div4 = document.createElement('div');
-    div1.classList.add('gasto-etiquetas');
+    div4.className = 'gasto-etiquetas';
     for (let etiqueta of gasto.etiquetas) {
         let span = document.createElement('span');
-        span.classList.add('gasto-etiquetas-etiqueta');
-        span.createTextNode(etiqueta);
+        span.className ='gasto-etiquetas-etiqueta';
+        span.innerHTML = etiqueta;
         div4.append(span);
     }
+    divPadre.append(div1);
+    divPadre.append(div2);
+    divPadre.append(div3);
     divPadre.append(div4);
+    id.append(divPadre);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     let id = document.getElementById(idElemento);
 
     let divPadre = document.createElement('div');
-    divPadre.classList.add('agrupación');
-    id.append(divPadre);
+    divPadre.className = 'agrupación';
 
     let titulo = document.createElement('h1');
-    titulo.createTextNode('Gastos agrupados por '+periodo);
+    titulo.innerHTML = 'Gastos agrupados por '+periodo;
     divPadre.append(titulo);
 
     for(let key in agrup) {
         let divAgrup = document.createElement('div');
-        divAgrup.classList.add('agrupacion-dato');
+        divAgrup.className = 'agrupacion-dato';
         
         let spanClave = document.createElement('span');
-        spanClave.classList.add('agrupacion-dato-clave');
-        spanClave.createTextNode(key);
+        spanClave.className = 'agrupacion-dato-clave';
+        spanClave.innerHTML = key;
         divAgrup.append(spanClave);
 
         let spanValor = document.createElement('span');
-        spanValor.classList.add('agrupacion-dato-valor');
-        spanValor.createTextNode(agrup[key]);
+        spanValor.className = 'agrupacion-dato-valor';
+        spanValor.innerHTML = agrup[key];
         divAgrup.append(spanValor);
-    }
 
-    divPadre.append(divAgrup);
+        divPadre.append(divAgrup);
+    }
+    
+    id.append(divPadre);
 }
 
 export {
