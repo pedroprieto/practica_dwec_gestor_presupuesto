@@ -75,14 +75,21 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.anyadirEtiquetas = function (...etiquetas) {
     for (let i = 0; i < etiquetas.length; i++) {
       let etiqueta = etiquetas[i];
-      if (this.etiquetas.indexOf(etiqueta) == -1) {
+      if (this.etiquetas.indexOf(etiqueta) < 0) {
         this.etiquetas.push(etiqueta);
       }
     }
   };
 
   this.borrarEtiquetas = function (...etiquetas) {
+    for (let i = 0; i < etiquetas.length; i++) {
+      let etiqueta = etiquetas[i];
+      let posicion = this.etiquetas.indexOf(etiqueta);
 
+      if (posicion >= 0) {
+        this.etiquetas.splice(posicion, 1);
+      }
+    }
   };
 }
 
