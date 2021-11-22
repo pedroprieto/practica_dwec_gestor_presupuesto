@@ -9,26 +9,30 @@ function mostrarDatoEnId( idElemento, valor ){
 function mostrarGastosAgrupadosWeb( idElemento, agrup, periodo ){
     // Crea dentro del elemento HTML con id idElemento indicado una estructura HTML para el objeto agrup que se pase como parámetro
     
-        let mostrarAgrupacion = document.getElementById(idElemento);
-        let arrayAgrupacion = "";
-    
-        // Añado el array de los gastos agrupados por un periodo
+        let mostrarAgrupacion = document.getElementById(idElemento);     
+
+        let h1 = document.createElement("h1");
+        h1.innerHTML = `Gastos agrupados por ${periodo}`;        
+
+        let divAgru = document.createElement("div");
+        divAgru.className = "agrupacion-dato";
+
         for( let [nombre, valor] of Object.entries( agrup ) ){
-            arrayAgrupacion += `
-                <div class="agrupacion-dato">
-                    <span class="agrupacion-dato-clave">${nombre}</span>
-                    <span class="agrupacion-dato-valor">${valor}</span>
-                </div>
-            `;
+
+            let spanNombre = document.createElement("span");
+            spanNombre.className = "agrupacion-dato-clave";
+            spanNombre.innerHTML = `${nombre}`;
+
+            let spanValor = document.createElement("span");
+            spanValor.className = "agrupacion-dato-clave";
+            spanValor.innerHTML = `${valor}`;
+                
+            divAgru.append(spanNombre);
+            divAgru.append(spanValor);
         }
-    
-        // Voy añadiendo la agrupacones de gastos
-        mostrarAgrupacion.innerHTML = `
-            <div class="agrupacion">
-                <h1>Gastos agrupados por ${periodo}</h1>
-                ${arrayAgrupacion}
-            </div>
-        `;
+
+        mostrarAgrupacion.append(h1);
+        mostrarAgrupacion.append(divAgru);
     }
 
 function mostrarGastoWeb( idElemento, gasto ){
@@ -44,15 +48,15 @@ function mostrarGastoWeb( idElemento, gasto ){
 
         let divDescripcion = document.createElement('div');
         divDescripcion.className = "gasto-descripcion";
-        divDescripcion.textContent = `${gasto.descripcion}`;
+        divDescripcion.innerHTML = `${gasto.descripcion}`;
 
         let divFecha = document.createElement('div');
         divFecha.className = "gasto-fecha";
-        divFecha.textContent = `${gasto.fecha}`;
+        divFecha.innerHTML = `${gasto.fecha}`;
 
         let divValor = document.createElement('div');
         divValor.className = "gasto-valor";
-        divValor.textContent = `${gasto.valor}`;
+        divValor.innerHTML = `${gasto.valor}`;
 
         let divEtiquetas = document.createElement('div');
         divEtiquetas.className = "gasto-etiquetas";
@@ -65,7 +69,7 @@ function mostrarGastoWeb( idElemento, gasto ){
         botonEditar.className = "gasto-editar";
         botonEditar.id = "gasto-editar";
         botonEditar.type = "button";
-        botonEditar.textContent = "Editar gasto";
+        botonEditar.innerHTML = "Editar gasto";
 
         // Crear un nuevo objeto a partir de la función constructora EditarHandle
         let evEditar = new EditarHandle();
@@ -84,7 +88,7 @@ function mostrarGastoWeb( idElemento, gasto ){
         botonBorrar.className = "gasto-borrar";
         botonBorrar.id = "gasto-borrar";
         botonBorrar.type = "button";
-        botonBorrar.textContent = "Borrar gasto";
+        botonBorrar.innerHTML = "Borrar gasto";
 
         // Crear un nuevo objeto a partir de la función constructora BorrarHandle
         let evBorrar = new BorrarHandle();
@@ -103,7 +107,7 @@ function mostrarGastoWeb( idElemento, gasto ){
             // Crear un elemento HTML <span></span> para las etiquetas
             let spanEtiqueta = document.createElement("span");
             spanEtiqueta.className = "gasto-etiquetas-etiqueta";
-            spanEtiqueta.textContent = `${e}`;        
+            spanEtiqueta.innerHTML = `${e}`;        
             divEtiquetas.append(spanEtiqueta);
 
             // Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle
