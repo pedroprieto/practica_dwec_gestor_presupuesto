@@ -24,12 +24,12 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
     if (fecha) {
         
         fecha = Date.parse(fecha);
-        this.fecha = fecha;
+        this.fecha = new Date(fecha).toISOString().substring(0,10);
 
     } else {
         
         fecha = Date.now();
-        this.fecha = Date.parse(fecha);
+        this.fecha = new Date(fecha).toISOString().substring(0, 10);
 
     }
 
