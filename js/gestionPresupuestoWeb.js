@@ -73,11 +73,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar() {
-
     mostrarDatoEnId('presupuesto', gesPres.mostrarPresupuesto());
-
     mostrarDatoEnId('gastos-totales', gesPres.calcularTotalGastos());
-
     mostrarDatoEnId('balance-total', gesPres.calcularBalance());
 
     let id = document.getElementById('listado-gastos-completo');
@@ -89,9 +86,20 @@ function repintar() {
     }
 }
 
+function actualizarPresupuestoWeb() {
+    let introducir = prompt("Introduce un presupuesto");
+    let convertir = parseInt(introducir);
+    gesPres.actualizarPresupuesto(convertir);
+    repintar();
+}
+
+document.getElementById('actualizarpresupuesto').addEventListener('click', actualizarPresupuestoWeb);
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar
+    repintar,
+    actualizarPresupuestoWeb
 }
