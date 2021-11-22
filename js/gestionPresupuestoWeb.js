@@ -99,7 +99,7 @@ function mostrarGastosWeb(idElemento, gasto){
     div_gasto.append(btn_editar_form);
     let editar_gasto_form = new editarHandleFormulario();
     editar_gasto_form.gasto_actual = gasto;
-    editar_gasto_form.div_actual = document.getElementById("gasto");
+    // editar_gasto_form.div_actual = e.currentTarget.parentNode.getElementById("gasto");
     btn_editar_form.addEventListener("click", editar_gasto_form);
 
 }
@@ -111,24 +111,76 @@ function editarHandleFormulario() {
 
         let formularioEditarGasto = plantillaFormulario_editar_gasto.content.cloneNode("true");
 
-
         // Descativamos el boton de crear formulario
         e.target.disabled = "disabled";
+
+
+        // Funcionalidad para boton enviar formulario
+        let manejadorEditarGasto = new editarGastoHandle();
+        manejadorEditarGasto.botonCrearFormulario = e.target;
+        // let botonEnvio = formularioNuevoGasto.querySelector("button[type=submit");
+        // botonEnvio.addEventListener("click", manejadorEnvio); 
+        manejadorEditarGasto.gasto_actual = this.gasto;
+        let botonEditarGasto = formularioEditarGasto.querySelector("form");
+        botonEditarGasto.addEventListener("submit", manejadorEditarGasto);
+
+
+        // Funcionalidad para boton cancelar - SE REUTILIZA EL CODIGO DEL BOTON CANCELAR
+        // DEL FORMULARIO DE NUEVO GASTO -> TAMBIEN REUTILIZA EL HANDLEEVENT
+        let manejadorCancelar = new manejadorCancelarNuevoGastoWeb();
+        // Le pasamos al boton cancelar el boton de nuevo formulario para que lo pueda
+        // volver a activar
+        manejadorCancelar.botonCrearFormulario = e.target;
+        let botonCancelar = formularioEditarGasto.querySelector("button.cancelar");
+        botonCancelar.addEventListener("click", manejadorCancelar);
+
+        // Desactivar el boton de borrar gasto
+        // formularioEditarGasto.querySelector("button.gasto-borrar").disabled = "disabled";
+        // btn_editar_form.disabled = "disabled";
+
+        // Mostramos en el formulario los datos del gasto
+        formularioEditarGasto.getElementById("descripcion").value = this.gasto_actual.descripcion;
+        formularioEditarGasto.getElementById("valor").value = this.gasto_actual.valor;
+        formularioEditarGasto.getElementById("fecha").value = this.gasto_actual.fecha.toLocaleString();
+        // formularioEditarGasto.getElementById("fecha").value = this.gasto_actual.fecha.format('yyy-mm-dd');
+        // formularioEditarGasto.getElementById("fecha").value = toLocaleString(this.gasto_actual.fecha);
+        formularioEditarGasto.getElementById("etiquetas").value = this.gasto_actual.etiquetas;
 
         // Añadimos el formualrio a la web
         // document.getElementById("formulario_nuevo_gasto").append(formularioNuevoGasto);
         // document.getElementById(this.idElemento).appendChild(formularioEditarGasto);
         // document.append(formularioEditarGasto);
         // formularioEditarGasto.getElementById(this.div_actual).append(formularioNuevoGasto);
-        this.div_gasto.appendChild(formularioEditarGasto);
+        // e.append(formularioEditarGasto);
         // let edit_gasto_form = document.createElement("div");
-
-        // edit_gasto_form.append(plantillaFormulario_editar_gasto.content.cloneNode(true));
+        e.target.append(formularioEditarGasto);
+        // this.div_actual.append(formularioEditarGasto.content.cloneNode(true));
         // div_gasto.append(formularioEditarGasto);
 
         
     };
 };
+
+function editarGastoHandle() {
+    this.handleEvent = function(e) {
+
+        // Prevenir la recarga de la web
+        e.preventDefault();
+
+         
+        // this.gasto_actual.actualizarDescripcion(formularioEditarGasto.getElementById("descripcion").value);
+        // this.gasto_actual.actualizarValor(parseFloat(formularioEditarGasto.getElementById("valor").value));
+        // this.gasto_actual.actualizarFecha(formularioEditarGasto.getElementById("fecha").value);
+        // this.gasto_actual.anyadirEtiquetas(formularioEditarGasto.getElementById("etiquetas").value);
+
+        repintar();
+
+        // e.target.form.remove();
+        e.target.remove();
+        // this.botonCrearFormulario.form.remove();
+        // this.botonCrearFormulario.disabled = "";
+    }
+}
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
