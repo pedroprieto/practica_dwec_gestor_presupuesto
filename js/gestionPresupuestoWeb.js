@@ -36,18 +36,29 @@ function mostrarGastoWeb(idElemento, gasto) {
     }
 
     //botón editar
-    let boton1 = document.createElement('button')
+    let boton1 = document.createElement('button');
     boton1.className = 'gasto-editar';
+    boton1.type = 'button';
     boton1.innerHTML = "Editar";
     let editar = new EditarHandle();
     editar.gasto = gasto;
     boton1.addEventListener('click', editar);
+
+    //botón borrar
+    let boton2 = document.createElement('button');
+    boton2.className = 'gasto-borrar';
+    boton2.type = 'button';
+    boton2.innerHTML = "Borrar";
+    let borrar = new BorrarHandle();
+    borrar.gasto = gasto;
+    boton2.addEventListener('click', borrar);
     
     divPadre.append(div1);
     divPadre.append(div2);
     divPadre.append(div3);
     divPadre.append(div4);
-    divPadre.append(boton1)
+    divPadre.append(boton1);
+    divPadre.append(boton2);
     id.append(divPadre);
 }
 
