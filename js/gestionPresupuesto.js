@@ -60,12 +60,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       let etiqueta = this.etiquetas[i];
       s += " - " + etiqueta;
     }
-    
+
     return s;
   };
 
   this.actualizarFecha = function (fecha) {
+    fecha = Date.parse(fecha);
 
+    if (!isNaN(fecha)) {
+      this.fecha = fecha;
+    }
   };
 
   this.anyadirEtiquetas = function (...etiquetas) {
