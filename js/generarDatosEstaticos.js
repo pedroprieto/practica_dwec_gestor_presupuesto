@@ -51,7 +51,7 @@ for (let g of gastosFil3)
 }
 
 
-let gastosFils4 = gestionPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
+let gastosFil4 = gestionPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
 for (let g of gastosFil4)
 {
     gestionPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
