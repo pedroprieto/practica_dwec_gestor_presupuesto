@@ -43,9 +43,11 @@ function mostrarGastosWeb(idElemento, gasto){
     div_fecha.className = "gasto-fecha";
     div_gasto.appendChild(div_fecha);
     // div_fecha.append(gasto.fecha);
-    let fecha_convertida = gasto.fecha;
+    let fecha_convertida = new Date(gasto.fecha);
+    // let fecha = new Date(this.gasto_actual.fecha);
+    // formularioEditarGasto.getElementById("fecha").value = fecha.toISOString().substr(0,10);
     // div_fecha.innerHTML = gasto.fecha;
-    div_fecha.innerHTML = fecha_convertida;
+    div_fecha.innerHTML = fecha_convertida.toLocaleString().substr(0,10);
     
     let div_etiqueta = document.createElement("div");
     // div_etiqueta.setAttribute("class", "gasto-etiquetas");
@@ -120,7 +122,7 @@ function editarHandleFormulario() {
         manejadorEditarGasto.botonCrearFormulario = e.target;
         // let botonEnvio = formularioNuevoGasto.querySelector("button[type=submit");
         // botonEnvio.addEventListener("click", manejadorEnvio); 
-        manejadorEditarGasto.gasto_actual = this.gasto;
+        manejadorEditarGasto.gasto_actual = this.gasto_actual;
         let botonEditarGasto = formularioEditarGasto.querySelector("form");
         botonEditarGasto.addEventListener("submit", manejadorEditarGasto);
 
@@ -141,7 +143,8 @@ function editarHandleFormulario() {
         // Mostramos en el formulario los datos del gasto
         formularioEditarGasto.getElementById("descripcion").value = this.gasto_actual.descripcion;
         formularioEditarGasto.getElementById("valor").value = this.gasto_actual.valor;
-        formularioEditarGasto.getElementById("fecha").value = this.gasto_actual.fecha.toLocaleString();
+        let fecha = new Date(this.gasto_actual.fecha);
+        formularioEditarGasto.getElementById("fecha").value = fecha.toISOString().substr(0,10);
         // formularioEditarGasto.getElementById("fecha").value = this.gasto_actual.fecha.format('yyy-mm-dd');
         // formularioEditarGasto.getElementById("fecha").value = toLocaleString(this.gasto_actual.fecha);
         formularioEditarGasto.getElementById("etiquetas").value = this.gasto_actual.etiquetas;
@@ -153,7 +156,7 @@ function editarHandleFormulario() {
         // formularioEditarGasto.getElementById(this.div_actual).append(formularioNuevoGasto);
         // e.append(formularioEditarGasto);
         // let edit_gasto_form = document.createElement("div");
-        e.target.append(formularioEditarGasto);
+        e.target.parentNode.append(formularioEditarGasto);
         // this.div_actual.append(formularioEditarGasto.content.cloneNode(true));
         // div_gasto.append(formularioEditarGasto);
 
@@ -167,12 +170,36 @@ function editarGastoHandle() {
         // Prevenir la recarga de la web
         e.preventDefault();
 
-         
-        // this.gasto_actual.actualizarDescripcion(formularioEditarGasto.getElementById("descripcion").value);
-        // this.gasto_actual.actualizarValor(parseFloat(formularioEditarGasto.getElementById("valor").value));
-        // this.gasto_actual.actualizarFecha(formularioEditarGasto.getElementById("fecha").value);
-        // this.gasto_actual.anyadirEtiquetas(formularioEditarGasto.getElementById("etiquetas").value);
+        if (e.target.elements.descripcion.value != this.gasto_actual.descripcion || 
+            e.target.elements.descripcion.value != "") {
+                this.gasto_actual.actualizarDescripcion(e.target.elements.descripcion.value);
+        }
+        
+        if (parseFloat(e.target.elements.valor.value) != this.gasto_actual.valor || 
+            parseFloat(e.target.elements.valor.value) != "") {
+                this.gasto_actual.actualizarValor(parseFloat(e.target.elements.valor.value));
+            }
+        
+        if (e.target.elements.fecha.value != this.gasto_actual.fecha || 
+            e.target.elements.fecha.value != "") {
+                this.gasto_actual.actualizarFecha(e.target.elements.fecha.value);
+            }
+        
+        
+        // let nuevas_etiquetas = prompt("Nuevas etiquetas del gasto (separadas por coma) (Actual: " + this.gasto_actual.etiquetas +")");
+        // nuevas_etiquetas = nuevas_etiquetas.split(",");
+        // this.gasto_actual.etiquetas = gespres.anyadirEtiquetas(nuevas_etiquetas);
+        // console.log("etiq: " + e.target.elements.etiquetas.value);
+        let nuevas_etiquetas = e.target.elements.etiquetas.value;
+        nuevas_etiquetas = nuevas_etiquetas.split(",");
+        // console.log(nuevas_etiquetas);
+        if (e.target.elements.etiquetas.value != "") {
+            this.gasto_actual.anyadirEtiquetas(nuevas_etiquetas);
+        }
 
+        
+        // this.gasto_actual.anyadirEtiquetas(e.target.elements.etiquetas.value);
+        // this.gasto_actual.anyadirEtiquetas(nuevas_etiquetas.value);
         repintar();
 
         // e.target.form.remove();
