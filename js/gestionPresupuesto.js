@@ -53,12 +53,12 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.mostrarGastoCompleto = function () {
     let s = "";
     s += this.mostrarGasto() + ".\n";
-    s += "Fecha: " + this.fecha.toLocaleString() + "\n";
-    s += "Etiquetas: \n";
+    s += "Fecha: " + new Date(this.fecha).toLocaleString() + "\n";
+    s += "Etiquetas:\n";
 
     for (let i = 0; i < this.etiquetas.length; i++) {
       let etiqueta = this.etiquetas[i];
-      s += " - " + etiqueta;
+      s += "- " + etiqueta + "\n";
     }
 
     return s;
