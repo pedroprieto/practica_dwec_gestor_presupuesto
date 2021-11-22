@@ -18,7 +18,7 @@ gestionPres.anyadirGasto(gasto2);
 gestionPres.anyadirGasto(gasto3);
 gestionPres.anyadirGasto(gasto4);
 gestionPres.anyadirGasto(gasto5);
-gestionPres.anyadirGasto(gasto6);
+gestionPres.anyadirGasto(gasto6); 
 
 gestionPresWeb.mostrarDatoEnId("gastos-totales", gestionPres.calcularTotalGastos());
 gestionPresWeb.mostrarDatoEnId("balance-total", gestionPres.calcularBalance());

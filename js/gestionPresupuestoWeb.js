@@ -56,7 +56,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
     h1.innerHTML = `Gastos agrupados por ${periodo}`;
 
-    div1.append(h1);
+    div1.append(h1); 
 
     for (let [clave, valor] of Object.entries(agrup))
     {
@@ -88,3 +88,4 @@ export   {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
 }
+
