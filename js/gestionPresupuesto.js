@@ -77,22 +77,29 @@ function listarGastos() {
 }
 
 function anyadirGasto(gasto) {
- gasto.id = idGasto;
- idGasto++;
- gastos.push(gasto);
+  gasto.id = idGasto;
+  idGasto++;
+  gastos.push(gasto);
 }
 
 function borrarGasto(id) {
- for (let i = 0; i < gastos.length; i++) {
-   let gasto = gastos[i];
-   if (gasto.id == id) {
-     gastos.splice(i, 1);
-   }
- }
+  for (let i = 0; i < gastos.length; i++) {
+    let gasto = gastos[i];
+    if (gasto.id == id) {
+      gastos.splice(i, 1);
+    }
+  }
 }
 
 function calcularTotalGastos() {
+  let suma = 0;
 
+  for (let i = 0; i < gastos.length; i++) {
+    let gasto = gastos[i];
+    suma += gasto.valor;
+  }
+
+  return suma;
 }
 
 function calcularBalance() {
