@@ -119,6 +119,26 @@ function nuevoGastoWeb() {
 //evento click que hace funcionar el botón anyadirgasto
 document.getElementById('anyadirgasto').addEventListener('clic', nuevoGastoWeb);
 
+//función constructora
+function EditarHandle() {
+    this.handleEvent = function(evento) {
+        let descripcion = prompt("Introduce una descripción");
+        let valor = prompt("Introduce un valor");
+        let fecha = prompt("Introduce una fecha");
+        let etiquetas = prompt("Introduce las etiquetas");
+
+        let convertirValor = parseFloat(valor);
+        let etiquetasArray = etiquetas.split(',');
+
+        this.gasto.gesPres.actualizarValor(convertirValor);
+        this.gasto.gesPres.actualizarDescripcion(descripcion);
+        this.gasto.gesPres.actualizarFecha(fecha);
+        this.gasto.gesPres.anyadirEtiquetas(etiquetasArray);
+
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
