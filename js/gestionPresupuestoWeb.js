@@ -139,10 +139,10 @@ function EditarHandle() {
         let convertirValor = parseFloat(valor);
         let etiquetasArray = etiquetas.split(',');
 
-        this.gasto.gesPres.actualizarValor(convertirValor);
-        this.gasto.gesPres.actualizarDescripcion(descripcion);
-        this.gasto.gesPres.actualizarFecha(fecha);
-        this.gasto.gesPres.anyadirEtiquetas(etiquetasArray);
+        this.gasto.actualizarValor(convertirValor);
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(etiquetasArray);
 
         repintar();
     }
