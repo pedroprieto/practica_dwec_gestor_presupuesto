@@ -50,8 +50,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
   };
 
-  this.mostrarGastoCompleto = function (fecha) {
+  this.mostrarGastoCompleto = function () {
+    let s = "";
+    s += this.mostrarGasto() + ".\n";
+    s += "Fecha: " + this.fecha.toLocaleString() + "\n";
+    s += "Etiquetas: \n";
 
+    for (let i = 0; i < this.etiquetas.length; i++) {
+      let etiqueta = this.etiquetas[i];
+      s += " - " + etiqueta;
+    }
+    
+    return s;
   };
 
   this.actualizarFecha = function (fecha) {
