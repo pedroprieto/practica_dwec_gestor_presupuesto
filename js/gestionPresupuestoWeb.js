@@ -73,7 +73,20 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar() {
+
     mostrarDatoEnId('presupuesto', gesPres.mostrarPresupuesto());
+
+    mostrarDatoEnId('gastos-totales', gesPres.calcularTotalGastos());
+
+    mostrarDatoEnId('balance-total', gesPres.calcularBalance());
+
+    let id = document.getElementById('listado-gastos-completo');
+    id.innerHTML = "";
+
+    let listaCompleta = gesPres.listarGastos();
+    for (let elemento of listaCompleta) {
+    mostrarGastoWeb('listado-gastos-completo', elemento);
+    }
 }
 
 export {
