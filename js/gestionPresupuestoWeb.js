@@ -230,7 +230,11 @@ function eventoCancelForm()
 {
     this.handleEvent = function(e)
     {
+        //eliminar formulario
+        e.target.form.remove();
 
+        //activar boton crear
+        this.botonCrear.disabled = "";
     }
 }
 
@@ -247,12 +251,25 @@ function nuevoGastoWebFormulario()
         let botonEnviar = formulario;
         botonEnviar.addEventListener("submit", manejadorEnvio);
 
+        //boton cancelar
+        let manejadorCancelar = new eventoCancelForm();
+        manejadorCancelar.botonCrear = e.target;
+        let botonCancelar = plantillaFormulario.querySelector("button.cancelar");
+        botonCancelar.addEventListener("click", manejadorCancelar);
+
         //desactivar el boton formulario
         e.target.disabled = "disabled";
 
         //añadimos el documento
         document.getElementById("controlesprincipales").append(formulario);
     }
+
+    let crearFormulario = new nuevoGastoWebFormulario();
+
+    let manejadorBoton = document.getElementById("anyadir-formulario");
+
+    manejadorBoton.addEventListener("click", crearFormulario);
+
 }
 
 export
