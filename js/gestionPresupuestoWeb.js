@@ -146,6 +146,14 @@ function BorrarHandle() {
     }
 }
 
+
+function BorrarEtiquetasHandle() {
+    this.handleEvent = function(evento) {
+        this.gasto.gesPres.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
