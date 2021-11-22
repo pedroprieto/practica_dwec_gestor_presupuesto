@@ -31,6 +31,10 @@ function mostrarGastoWeb(idElemento, gasto) {
         let span = document.createElement('span');
         span.className ='gasto-etiquetas-etiqueta';
         span.innerHTML = etiqueta;
+        let obj_eti = new BorrarEtiquetasHandle();
+        obj_eti.gasto = gasto;
+        obj_eti.etiqueta = etiqueta;
+        span.addEventListener('click', obj_eti)
         div4.append(span);
     }
     }
@@ -169,7 +173,7 @@ function BorrarHandle() {
 
 function BorrarEtiquetasHandle() {
     this.handleEvent = function(evento) {
-        this.gasto.gesPres.borrarEtiquetas(this.etiqueta);
+        this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
     }
 }
