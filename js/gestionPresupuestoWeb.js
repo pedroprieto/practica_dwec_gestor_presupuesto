@@ -2,7 +2,7 @@ import * as gesPres from "./gestionPresupuesto.js";
 
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
-//document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 function mostrarDatoEnId(idElemento, valor)
 {
@@ -335,12 +335,6 @@ function editarHandleGasto()
         repintar();
     }
 }
-
-let crearFormulario = new nuevoGastoWebFormulario();
-
-let manejadorBoton = document.getElementById("anyadirgasto-formulario");
-
-manejadorBoton.addEventListener("click", crearFormulario);
 
 export
 {
