@@ -2,7 +2,7 @@ import * as gesPres from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor) {
     let id = document.getElementById(idElemento);
-    id.innerHTML= valor;
+    id.innerHTML = valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
@@ -133,7 +133,7 @@ function nuevoGastoWeb() {
     let etiquetasArray = etiquetas.split(',');
 
     //crear el gasto
-    let gastoNuevo = new gesPres.CrearGasto(descripcion, convertirValor, fecha, etiquetasArray);
+    let gastoNuevo = new gesPres.CrearGasto(descripcion,convertirValor,fecha,etiquetasArray);
 
     //añadir el gasto
     gesPres.anyadirGasto(gastoNuevo);
