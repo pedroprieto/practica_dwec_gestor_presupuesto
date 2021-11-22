@@ -201,7 +201,59 @@ function repintar()
     }
 }
 
-//Constructora y eventos
+function eventoEnviarForm()
+{
+    this.handleEvent = function(e)
+    {
+        e.preventDefault();
+        let actual = e.currentTarget;
+
+        let nuevaDesc = actual.elements.descripcion.value;
+        let nuevoValor = actual.elements.valor.value;
+        let nuevaFecha = actual.elements.fecha.value;
+        let nuevasEtiquetas = actual.elements.etiquetas.value;
+
+        nuevoValor = parseFloat(nuevoValor);
+        //creamos el nuevo gasto
+        let gasto = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, nuevasEtiquetas);
+        gesPres.anyadirGasto(gasto);
+
+        repintar();
+
+        let anyadirGasto = document.getElementById("anyadirgasto-formulario");
+
+        anyadirGasto.disabled = "";
+    }
+}
+
+function eventoCancelForm()
+{
+    this.handleEvent = function(e)
+    {
+
+    }
+}
+
+function nuevoGastoWebFormulario()
+{
+    this.handleEvent = function(e)
+    {
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+        var formulario = plantillaFormulario.querySelector("form");
+
+        //Boton de enviar
+        let manejadorEnvio = new eventoEnviarForm();
+        let botonEnviar = formulario;
+        botonEnviar.addEventListener("submit", manejadorEnvio);
+
+        //desactivar el boton formulario
+        e.target.disabled = "disabled";
+
+        //añadimos el documento
+        document.getElementById("controlesprincipales").append(formulario);
+    }
+}
 
 export
 {
@@ -213,5 +265,8 @@ export
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquetasHandle
+    BorrarEtiquetasHandle,
+    nuevoGastoWebFormulario,
+    eventoEnviarForm,
+    eventoCancelForm
 }
