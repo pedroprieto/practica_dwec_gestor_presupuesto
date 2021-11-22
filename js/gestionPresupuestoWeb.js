@@ -8,32 +8,33 @@ function mostrarDatoEnId( idElemento, valor ){
 
 function mostrarGastosAgrupadosWeb( idElemento, agrup, periodo ){
     // Crea dentro del elemento HTML con id idElemento indicado una estructura HTML para el objeto agrup que se pase como parámetro
-    
-        let mostrarAgrupacion = document.getElementById(idElemento);     
+        
+    let mostrarAgrupacion = document.getElementById(idElemento);     
 
-        let h1 = document.createElement("h1");
-        h1.innerHTML = `Gastos agrupados por ${periodo}`;        
+    let h1 = document.createElement("h1");
+    h1.innerHTML = `Gastos agrupados por ${periodo}`;        
 
-        let divAgru = document.createElement("div");
-        divAgru.className = "agrupacion-dato";
+    let divAgru = document.createElement("div");
+    divAgru.className = "agrupacion-dato";
 
-        for( let [nombre, valor] of Object.entries( agrup ) ){
+    for( let [nombre, valor] of Object.entries( agrup ) ){
 
-            let spanNombre = document.createElement("span");
-            spanNombre.className = "agrupacion-dato-clave";
-            spanNombre.innerHTML = `${nombre}`;
+        let spanNombre = document.createElement("span");
+        spanNombre.className = "agrupacion-dato-clave agrupacion-bold";
+        spanNombre.innerHTML = `${nombre} `;
 
-            let spanValor = document.createElement("span");
-            spanValor.className = "agrupacion-dato-clave";
-            spanValor.innerHTML = `${valor}`;
-                
-            divAgru.append(spanNombre);
-            divAgru.append(spanValor);
-        }
-
-        mostrarAgrupacion.append(h1);
-        mostrarAgrupacion.append(divAgru);
+        let spanValor = document.createElement("span");
+        spanValor.className = "agrupacion-dato-clave";
+        valor = valor.toFixed(2);
+        spanValor.innerHTML = `${valor} €<br>`;
+            
+        divAgru.append(spanNombre);
+        divAgru.append(spanValor);
     }
+
+    mostrarAgrupacion.append(h1);
+    mostrarAgrupacion.append(divAgru);
+}
 
 function mostrarGastoWeb( idElemento, gasto ){
 // Añade dentro del elemento HTML con id idElemento indicado una estructura HTML para el gasto que se pase como parámetro 

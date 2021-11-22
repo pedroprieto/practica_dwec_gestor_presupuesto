@@ -84,7 +84,7 @@ button:disabled, button:disabled:hover {
 }
 
 .gasto-valor:after {
-    content: "€";
+    content: " €";
 }
 
 /* Formulario filtrado */
@@ -103,6 +103,9 @@ button:disabled, button:disabled:hover {
     color: red;
 }
 
+.agrupacion-bold {
+    font-weight: bold;
+}
 
 /* Pantallas grandes */
 @media screen and (min-width: 600px) {
