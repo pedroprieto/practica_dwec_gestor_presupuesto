@@ -1,62 +1,62 @@
-import * as gesPres from "./gestionPresupuesto.js";
-import * as gesPresWeb from "./gestionPresupuestoWeb.js";
+import * as gestionPres from "./gestionPresupuesto.js";
+import * as gestionPresWeb from "./gestionPresupuestoWeb.js";
 
-gesPres.actualizarPresupuesto(1500);
+gestionPres.actualizarPresupuesto(1500);
 
-gesPresWeb.mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
+gestionPresWeb.mostrarDatoEnId("presupuesto", gestionPres.mostrarPresupuesto());
 
 //Creamos gastos
-let g1 = new gesPres.CrearGasto("compra carne", 23.44, "2021-10-06", "casa", "comida");
-let g2 = new gesPres.CrearGasto("compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
-let g3 = new gesPres.CrearGasto("bonobus", 18.60, "2020-05-26", "transporte");
-let g4 = new gesPres.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
-let g5 = new gesPres.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
-let g6 = new gesPres.CrearGasto("seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
+let gasto1 = new gestionPres.CrearGasto("compra carne", 23.44, "2021-10-06", "casa", "comida");
+let gasto2 = new gestionPres.CrearGasto("compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
+let gasto3 = new gestionPres.CrearGasto("bonobus", 18.60, "2020-05-26", "transporte");
+let gasto4 = new gestionPres.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
+let gasto5 = new gestionPres.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
+let gasto6 = new gestionPres.CrearGasto("seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
-gesPres.anyadirGasto(g1);
-gesPres.anyadirGasto(g2);
-gesPres.anyadirGasto(g3);
-gesPres.anyadirGasto(g4);
-gesPres.anyadirGasto(g5);
-gesPres.anyadirGasto(g6);
+gestionPres.anyadirGasto(gasto1);
+gestionPres.anyadirGasto(gasto2);
+gestionPres.anyadirGasto(gasto3);
+gestionPres.anyadirGasto(gasto4);
+gestionPres.anyadirGasto(gasto5);
+gestionPres.anyadirGasto(gasto6);
 
-gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
-gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+gestionPresWeb.mostrarDatoEnId("gastos-totales", gestionPres.calcularTotalGastos());
+gestionPresWeb.mostrarDatoEnId("balance-total", gestionPres.calcularBalance());
 
-let gastos = gesPres.listarGastos();
+let gastos = gestionPres.listarGastos(); 
 for(let g of gastos)
 {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-completo", g);
+    gestionPresWeb.mostrarGastoWeb("listado-gastos-completo", g);
 }
 
-//Listado septiembre 2021
-let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
-for(let g of gastosFiltrados)
+
+let gastosFil = gestionPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
+for(let g of gastosFil)
 {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", g);
+    gestionPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", g);
 }
 
-//Listado mas de 50€
-let gastosFiltrados2 = gesPres.filtrarGastos({valorMinimo: 50});
-for (let g of gastosFiltrados2)
+
+let gastosFil2 = gestionPres.filtrarGastos({valorMinimo: 50});
+for (let g of gastosFil2)
 {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-2", g);
+    gestionPresWeb.mostrarGastoWeb("listado-gastos-filtrado-2", g);
 }
 
-//Listado +200€ y etiqueta seguros
-let gastosFiltrados3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
-for (let g of gastosFiltrados3)
+
+let gastosFil3 = gestionPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+for (let g of gastosFil3)
 {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-3", g);
+    gestionPresWeb.mostrarGastoWeb("listado-gastos-filtrado-3", g);
 }
 
-//etiquetas comido O transporte -50€
-let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
-for (let g of gastosFiltrados4)
+
+let gastosFils4 = gestionPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
+for (let g of gastosFil4)
 {
-    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
+    gestionPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
 }
 
-gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
-gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
-gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año"); 
+gestionPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPres.agruparGastos("dia"), "día");
+gestionPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPres.agruparGastos("mes"), "mes");
+gestionPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPres.agruparGastos("anyo"), "año"); 

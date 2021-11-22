@@ -1,4 +1,4 @@
-import * as gesPres from "./gestionPresupuesto.js";
+import * as gestionPres from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(idElemento, valor)
 {
