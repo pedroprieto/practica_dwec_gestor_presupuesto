@@ -34,11 +34,20 @@ function mostrarGastoWeb(idElemento, gasto) {
         div4.append(span);
     }
     }
+
+    //botón editar
+    let boton1 = document.createElement('button')
+    boton1.className = 'gasto-editar';
+    boton1.innerHTML = "Editar";
+    let editar = new EditarHandle();
+    editar.gasto = gasto;
+    boton1.addEventListener('click', editar);
     
     divPadre.append(div1);
     divPadre.append(div2);
     divPadre.append(div3);
     divPadre.append(div4);
+    divPadre.append(boton1)
     id.append(divPadre);
 }
 
