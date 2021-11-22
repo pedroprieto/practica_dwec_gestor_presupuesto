@@ -150,14 +150,14 @@ function filtrarGastos(objecto){
 		filtrogastos=filtrogastos.filter((x) => x.valor < objecto.valorMaximo);
 	}
     if ( objecto.fechaDesde ){
-		filtrogastos=filtrogastos.filter((x) => x.fecha >= Date.parse( objecto["fechaDesde"] ));
+		filtrogastos=filtrogastos.filter((x) => x.fecha >= Date.parse( objecto.fechaDesde ));
     }
     if (objecto.fechaHasta){
 		filtrogastos=filtrogastos.filter((x) => x.fecha <= Date.parse(objecto.fechaHasta));
 	}
     if (objecto.etiquetasTiene){
 		filtrogastos=filtrogastos.filter((x) => {
-			for(let etiqueta of x["etiquetas"]){
+			for(let etiqueta of x.etiquetas){
 				if (objecto.etiquetasTiene.indexOf(etiqueta) > -1){
 					return x;
 				}

@@ -26,7 +26,7 @@ function mostrarGastoWeb(idElemento,gasto){
     
     if ( gasto.etiquetas ){
         
-        for(let etiqueta of gasto["etiquetas"]){
+        for(let etiqueta of gasto.etiquetas){
             let span=document.createElement('span');
             span.className="gasto-etiquetas-etiqueta"
             
@@ -183,11 +183,7 @@ function nuevoGastoWebFormulario(){
 
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
-        let controlesPrincipales = document.getElementById("controlesprincipales");
-
-        controlesPrincipales.append(formulario);
-
-        document.getElementById("anyadirgasto-formulario").disabled = true;
+        
 
         let enviarHandle = new EnviarGastoHandle();
         formulario.addEventListener("submit", enviarHandle);
@@ -196,7 +192,10 @@ function nuevoGastoWebFormulario(){
         let cancelarEvento = new cancelarHandle();
         botonCancelar.addEventListener("click",cancelarEvento);
 
-    
+        document.getElementById("anyadirgasto-formulario").disabled = true;
+        let controlesPrincipales = document.getElementById("controlesprincipales");
+
+        controlesPrincipales.append(formulario);
 }
 
 function submitHandler(){
@@ -218,7 +217,7 @@ function submitHandler(){
         this.gasto.actualizarFecha(fecha);
 
         let etiquetas = formulario.elements.etiquetas.value;
-        this.gasto.anyadirEtiquetas(...etiquetas);
+        this.gasto.anyadirEtiquetas(etiquetas);
 
 
         repintar();
@@ -258,7 +257,7 @@ function EditarHandleFormulario(){
 
     this.handleEvent = function(e){
 
-        let plantillaFormulario = document.getElementById("formlario-template").content.cloneNode(true);
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         let formulario = plantillaFormulario.querySelector("form");
 
         let botonEditarFormulario = e.currentTarget;
