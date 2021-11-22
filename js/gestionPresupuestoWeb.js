@@ -86,20 +86,41 @@ function repintar() {
     }
 }
 
+//función para el evento click del botón actualizarpresupuesto
 function actualizarPresupuestoWeb() {
-    let introducir = prompt("Introduce un presupuesto");
-    let convertir = parseInt(introducir);
+    let introducir = prompt("Introduce un nuevo presupuesto");
+    let convertir = parseFloat(introducir);
     gesPres.actualizarPresupuesto(convertir);
     repintar();
 }
 
+//evento click que hace funcionar el botón actualizarpresupuesto
 document.getElementById('actualizarpresupuesto').addEventListener('click', actualizarPresupuestoWeb);
 
+//función para el evento click del botón anyadir gasto
+function nuevoGastoWeb() {
+    let descripcion = prompt("Añade la descripción del gasto");
+    let valor = prompt("Introduce el valor");
+    let fecha = prompt("Introduce la fecha");
+    let etiquetas = prompt("Introduce las etiquetas");
+
+    //convertir valores
+    let convertirValor = parseFloat(valor);
+    let etiquetasArray = etiquetas.split(',');
+
+    //crear el gasto
+    let gastoNuevo = new gesPres.CrearGasto(descripcion, convertirValor, fecha, etiquetasArray);
+
+    //añadir el gasto
+    gesPres.anyadirGasto(gastoNuevo);
+    repintar();
+}
+
+//evento click que hace funcionar el botón anyadirgasto
+document.getElementById('anyadirgasto').addEventListener('clic', nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    repintar,
-    actualizarPresupuestoWeb
+    mostrarGastosAgrupadosWeb
 }
