@@ -16,7 +16,8 @@ let botonActualizar = document.getElementById('actualizarpresupuesto');
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 let botonAnyadirGastoForm = document.getElementById('anyadirgasto-formulario');
 let botonFiltrarGastos = document.getElementById('formulario-filtrado');
-
+let botonGuardarGastos = document.getElementById('guardar-gastos');
+let botonCargarGastos = document.getElementById('cargar-gastos');
 
 function mostrarDatoEnId(idElemento, valor) {
     let elemento = document.getElementById(idElemento);
@@ -116,13 +117,17 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar() {
+    debugger;
     mostrarDatoEnId("presupuesto", gestion.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gestion.calcularBalance());
     // Borrar los datos de listado-gastos-completo. 
     document.getElementById("listado-gastos-completo").innerHTML = "";
+    let listaGastos = gestion.listarGastos();
     for (let gasto of gestion.listarGastos()) {
-        mostrarGastoWeb("listado-gastos-completo", gasto);
+        // if(gasto.length > 0){
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        // }
     }
 }
 
@@ -181,6 +186,9 @@ botonActualizar.addEventListener("click", actualizarPresupuestoWeb);
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 botonFiltrarGastos.addEventListener("submit", filtrarGastosWeb);
+botonGuardarGastos.addEventListener("click",guardarGastosWeb);
+botonCargarGastos.addEventListener("click",cargarGastosWeb);
+
 
 function EditarHandle() {
     this.handleEvent = function (evento) {
@@ -272,4 +280,24 @@ function filtrarGastosWeb(event) {
     for (let gasto1 of gestion.filtrarGastos(objeto)) {
         mostrarGastoWeb("listado-gastos-completo", gasto1);
     }
+}
+
+function guardarGastosWeb(){
+    debugger;
+    localStorage.GestorGastosDWEC = JSON.stringify(gestion.listarGastos());
+}
+
+function cargarGastosWeb(){
+    debugger;
+    let datos = [];
+    if(typeof(localStorage.GestorGastosDWEC) != "undefined"){
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        datos = JSON.parse(localStorage.GestorGastosDWEC);
+        gestion.cargarGastos(datos);
+
+    } else{
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        gestion.cargarGastos(datos);
+    }
+    repintar();
 }
