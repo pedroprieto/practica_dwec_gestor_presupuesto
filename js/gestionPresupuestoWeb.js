@@ -72,8 +72,13 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     id.append(divPadre);
 }
 
+function repintar() {
+    mostrarDatoEnId('presupuesto', gesPres.mostrarPresupuesto());
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 }
