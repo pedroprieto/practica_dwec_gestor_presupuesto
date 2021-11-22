@@ -141,7 +141,7 @@ function nuevoGastoWeb() {
 }
 
 //evento click que hace funcionar el botón anyadirgasto
-document.getElementById('anyadirgasto').addEventListener('clic', nuevoGastoWeb);
+document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb);
 
 //función constructora
 function EditarHandle() {
