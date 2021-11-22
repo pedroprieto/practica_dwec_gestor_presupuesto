@@ -139,6 +139,13 @@ function EditarHandle() {
     }
 }
 
+function BorrarHandle() {
+    this.handleEvent = function(evento) {
+        gesPres.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
