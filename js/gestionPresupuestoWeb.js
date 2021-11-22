@@ -15,6 +15,12 @@ let eventoSubmitFiltrado = new filtrarGastosWeb();
 let formularioFiltrado = document.getElementById("formulario-filtrado");
 formularioFiltrado.addEventListener("submit", eventoSubmitFiltrado);
 
+let botonGuardarGastosWeb = document.getElementById("guardar-gastos");
+botonGuardarGastosWeb.addEventListener("click", guardarGastosWeb);
+
+let botonCargarGastosWeb = document.getElementById("cargar-gastos");
+botonCargarGastosWeb.addEventListener("click", cargarGastosWeb);
+
 
 function mostrarDatoEnId(idElemento, valor){
 
@@ -400,6 +406,29 @@ function filtrarGastosWeb(){
         //repintar()
     }
 }
+
+
+// practica 8 almacenamiento
+function guardarGastosWeb(){
+
+    let listaGastos = gestionPresupuesto.listarGastos();
+    localStorage.setItem('GestorGastosDWEC', JSON.stringify(listaGastos));
+}
+
+function cargarGastosWeb(){
+
+    let listaGastosStorage = localStorage.getItem('GestorGastosDWEC');
+    listaGastosStorage = JSON.parse(listaGastosStorage);
+
+    if(listaGastosStorage){
+        gestionPresupuesto.cargarGastos(listaGastosStorage);
+    }else{
+        listaGastosStorage = [];
+        gestionPresupuesto.cargarGastos(listaGastosStorage);
+    }
+    repintar();
+}
+
 
 export {
     mostrarDatoEnId,
