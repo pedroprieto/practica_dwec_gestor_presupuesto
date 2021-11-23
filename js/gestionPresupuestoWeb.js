@@ -3,6 +3,7 @@ import * as gesPres from "./gestionPresupuesto.js";
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 
 function mostrarDatoEnId(idElemento, valor)
 {
@@ -196,21 +197,22 @@ function nuevoGastoWebFormulario()
     botonCancelar.addEventListener("click", manejadorCancelar);
 }
 
+//Manejadores de eventos
 function filtrarGastosWeb()
 {
     this.handleEvent = function(e)
     {
         e.preventDefault();
-        
-        let formFiltrado = document.getElementById("formulario-filtrado");
 
         //Cogemos los datos del formulario
-        let descFilt = formFiltrado.elements.formulario-filtrado-descripcion.value;
-        let valMinFilt = formFiltrado.elements.formulario-filtrado-valor-minimo.value;
-        let valMaxFilt = formFiltrado.elements.formulario-filtrado-valor-maximo.value;
-        let fechaInicialFilt = formFiltrado.elements.filtrado-fecha-desde.value;
-        let fechaFinalFilt = formFiltrado.elements.fecha-hasta.value;
-        let etiqFilt = formFiltrado.elements.etiquetas-tiene.value;
+        let actual = e.currentTarget;
+        
+        let descFilt = actual.elements.formulario-filtrado-descripcion.value;
+        let valMinFilt = actual.elements.formulario-filtrado-valor-minimo.value;
+        let valMaxFilt = actual.elements.formulario-filtrado-valor-maximo.value;
+        let fechaInicialFilt = actual.elements.filtrado-fecha-desde.value;
+        let fechaFinalFilt = actual.elements.fecha-hasta.value;
+        let etiqFilt = actual.elements.etiquetas-tiene.value;
 
         valMinFilt = parseFloat(valMinFilt);
         valMaxFilt = parseFloat(valMaxFilt);
@@ -224,13 +226,12 @@ function filtrarGastosWeb()
 
         //crear un objeto al evento pasandole los parametros para filtrar al objeto
         let objetoFiltrado = gesPres.filtrarGastos({fechaDesde: fechaInicialFilt, fechaHasta: fechaFinalFilt, valorMinimo: valMinFilt, valorMaximo: valMaxFilt, descripcionContiene: descFilt, etiquetasTiene: etiqFilt});
+        
         gesPres.filtrarGastos();
-        //asociar el evento
-        objetoFiltrado.addEventListener("submit", formFiltrado);
     
         //Actualizamos la lista. Primero la dejamos vacia y luego los vamos mostrando
         document.getElementById("listado-gastos-completo").innerHTML = "";
-        
+
         for (let g of listaGastos)
         {
             mostrarGastoWeb("listado-gastos-completo", g);
@@ -238,7 +239,6 @@ function filtrarGastosWeb()
     }
 }
 
-//Manejadores de eventos
 function enviarGastoHandle()
 {
     this.handleEvent = function(e)
