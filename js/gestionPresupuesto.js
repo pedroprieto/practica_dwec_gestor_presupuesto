@@ -42,21 +42,6 @@ function listarGastos(){
 }
 function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     this.descripcion = descripcion;
-    
-    this.actualizarDescripcion  = function(descripcion){
-        this.descripcion = descripcion;
-    }
-    
-    
-    this.mostrarGasto = function () {
-        return  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-        
-    }
-    this.actualizarValor = function (valor){
-        if (valor > 0 ){
-        this.valor = valor;
-        }
-    }
     if (valor > 0 ){
         this.valor = valor; 
     } 
@@ -72,15 +57,6 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         fecha = Date.now();
         this.fecha = fecha;
     }
-    
-    this.actualizarFecha = function(fecha){
-    
-        fecha = Date.parse(fecha);
-        if (fecha){
-            this.fecha = fecha;
-        }
-    }
-    
     
     this.anyadirEtiquetas = function(...etiquetas){
         let posicion;
@@ -103,10 +79,34 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
         
     }
+    
+    this.actualizarDescripcion  = function(descripcion){
+        this.descripcion = descripcion;
+    }
+    
+    
+    this.actualizarValor = function (valor){
+        if (valor > 0 ){
+            this.valor = valor;
+        }
+    }
+    
+    this.actualizarFecha = function(fecha){
+        
+        fecha = Date.parse(fecha);
+        if (fecha){
+            this.fecha = fecha;
+        }
+    }
+    
+    this.mostrarGasto = function () {
+        return  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        
+    }
     this.mostrarGastoCompleto = function(){
         let fecha = new Date(this.fecha);
         let fechaTexto = fecha.toLocaleString();
-    
+        
         let etiqueta = "";
         for (let i = 0; i < this.etiquetas.length; i++) {
             etiqueta += `- ${this.etiquetas[i]}\n`;
@@ -185,6 +185,15 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
                 return acumula;
             },{});     
         }
+
+        function transformarListadoEtiquetas(etiquetas){
+
+            let filtro = etiquetas.match(/[a-z0-9]+/gi);
+            return filtro;
+        }
+        
+        
+
         // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
         // Las funciones y objetos deben tener los nombres que se indican en el enunciado
         // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -199,5 +208,6 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
             calcularBalance,
             filtrarGastos,
             agruparGastos,
-            gastos
+            gastos,
+            transformarListadoEtiquetas
         }
