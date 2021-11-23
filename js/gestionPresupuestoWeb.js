@@ -196,8 +196,49 @@ function nuevoGastoWebFormulario()
     botonCancelar.addEventListener("click", manejadorCancelar);
 }
 
-//Manejadores de eventos
+function filtrarGastosWeb()
+{
+    this.handleEvent = function(e)
+    {
+        e.preventDefault();
+        
+        let formFiltrado = document.getElementById("formulario-filtrado");
 
+        //Cogemos los datos del formulario
+        let descFilt = formFiltrado.elements.formulario-filtrado-descripcion.value;
+        let valMinFilt = formFiltrado.elements.formulario-filtrado-valor-minimo.value;
+        let valMaxFilt = formFiltrado.elements.formulario-filtrado-valor-maximo.value;
+        let fechaInicialFilt = formFiltrado.elements.filtrado-fecha-desde.value;
+        let fechaFinalFilt = formFiltrado.elements.fecha-hasta.value;
+        let etiqFilt = formFiltrado.elements.etiquetas-tiene.value;
+
+        valMinFilt = parseFloat(valMinFilt);
+        valMaxFilt = parseFloat(valMaxFilt);
+        etiqFilt = etiqFilt.split(",");
+
+        //Si tiene etiquetas
+        if(etiqFilt != null)
+        {
+            gesPres.transformarListadoEtiquetas(etiqFilt);
+        }
+
+        //crear un objeto al evento pasandole los parametros para filtrar al objeto
+        let objetoFiltrado = gesPres.filtrarGastos({fechaDesde: fechaInicialFilt, fechaHasta: fechaFinalFilt, valorMinimo: valMinFilt, valorMaximo: valMaxFilt, descripcionContiene: descFilt, etiquetasTiene: etiqFilt});
+        gesPres.filtrarGastos();
+        //asociar el evento
+        objetoFiltrado.addEventListener("submit", formFiltrado);
+    
+        //Actualizamos la lista. Primero la dejamos vacia y luego los vamos mostrando
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        
+        for (let g of listaGastos)
+        {
+            mostrarGastoWeb("listado-gastos-completo", g);
+        }
+    }
+}
+
+//Manejadores de eventos
 function enviarGastoHandle()
 {
     this.handleEvent = function(e)
