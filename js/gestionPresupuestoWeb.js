@@ -127,6 +127,7 @@ function actualizarPresupuestoWeb() {
     gesPres.actualizarPresupuesto(convertir);
     repintar();
 }
+
 //evento click que hace funcionar el botón actualizarpresupuesto
 document.getElementById('actualizarpresupuesto').addEventListener('click', actualizarPresupuestoWeb);
 
@@ -136,15 +137,19 @@ function nuevoGastoWeb() {
     let valor = prompt("Introduce el valor");
     let fecha = prompt("Introduce la fecha");
     let etiquetas = prompt("Introduce las etiquetas");
+
     //convertir valores
     let convertirValor = parseFloat(valor);
     let etiquetasArray = etiquetas.split(',');
+
     //crear el gasto
     let gastoNuevo = new gesPres.CrearGasto(descripcion, convertirValor, fecha, ...etiquetasArray);
+    
     //añadir el gasto
     gesPres.anyadirGasto(gastoNuevo);
     repintar();
 }
+
 //evento click que hace funcionar el botón anyadirgasto
 document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb);
 
@@ -152,12 +157,16 @@ document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb)
 function nuevoGastoWebFormulario(evento) {
     let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);;
     var formulario = plantillaFormulario.querySelector('form');
+
     //Desactivar botón formulario
     document.getElementById('anyadirgasto-formulario').disabled = true;
+
     //añadir el formulario al final de controlesprincipales
     document.getElementById('controlesprincipales').append(formulario);
+
     //evento submit en botón submit
     formulario.addEventListener('submit', ManejadorSubmit);
+
     //botón cancelar
     let botonCancelar = formulario.querySelector("button.cancelar");
     let cancelar = new ManejadorCancelar();
@@ -171,16 +180,21 @@ document.getElementById('anyadirgasto-formulario').addEventListener('click', nue
 //función para manejar el evento submit
 function ManejadorSubmit(evento) {
     evento.preventDefault(); //para no abandonar la página al pulsar
+
     //acceder a los datos del formulario
     let accederFormulario = evento.currentTarget;
     let descripcion = accederFormulario.elements.descripcion.value;
     let valor = accederFormulario.elements.valor.value;
+    let fecha = accederFormulario.elements.fecha.value;
     let etiquetas = accederFormulario.elements.etiquetas.value;
+
     //convertir valores
     let convertirValor = parseFloat(valor);
     let etiquetasArray = etiquetas.split(',');
+
     //crear el gasto
     let gastoNuevo = new gesPres.CrearGasto(descripcion, convertirValor, fecha, ...etiquetasArray);
+    
     //añadir el gasto
     gesPres.anyadirGasto(gastoNuevo);
     repintar();
@@ -223,6 +237,54 @@ function BorrarHandle() {
 function BorrarEtiquetasHandle() {
     this.handleEvent = function(evento) {
         this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
+}
+
+function EditarHandleFormulario() {
+    this.handleEvent = function(evento) {
+        let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);;
+        var formulario = plantillaFormulario.querySelector('form');
+
+        //Desactivar botón editar
+        document.getElementsByClassName('gasto-editar').disabled = true;
+
+        //asignarle por defecto los valores actuales
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+        //añadir el formulario 
+        document.getElementsByClassName('gasto').append(formulario);
+
+        //evento submit en botón submit
+        let editarFormulario = new ManejadorSubmitEditar();
+        editarFormulario.gasto = gasto;
+        formulario.addEventListener('submit', editarFormulario);
+
+        //botón cancelar
+        let botonCancelar = formulario.querySelector("button.cancelar");
+        let cancelar = new ManejadorCancelar();
+        cancelar.formulario = formulario;
+        botonCancelar.addEventListener('click', cancelar);
+    }
+}
+
+function ManejadorSubmitEditar() {
+    this.handleEvent = function(evento) {
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = formulario.elements.valor.value;
+        let fecha =  formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+
+        let convertirValor = parseFloat(valor);
+        let etiquetasArray = etiquetas.split(',');
+
+        this.gasto.actualizarValor(convertirValor);
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(etiquetasArray);
         repintar();
     }
 }
