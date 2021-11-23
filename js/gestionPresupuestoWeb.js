@@ -208,12 +208,12 @@ function filtrarGastosWeb()
         //Cogemos los datos del formulario
         let actual = e.currentTarget;
         
-        let descFilt = actual.elementsformulario-filtrado-descripcion.value;
-        let valMinFilt = actual.elements.formulario-filtrado-valor-minimo.value;
-        let valMaxFilt = actual.elements.formulario-filtrado-valor-maximo.value;
-        let fechaInicialFilt = actual.elements.filtrado-fecha-desde.value;
-        let fechaFinalFilt = actual.elements.fecha-hasta.value;
-        let etiqFilt = actual.elements.etiquetas-tiene.value;
+        let descFilt = actual.elements["formulario-filtrado-descripcion"].value;
+        let valMinFilt = actual.elements["formulario-filtrado-valor-minimo"].value;
+        let valMaxFilt = actual.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaInicialFilt = actual.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaFinalFilt = actual.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiqFilt = actual.elements["formulario-filtrado-etiquetas-tiene"].value;
 
         valMinFilt = parseFloat(valMinFilt);
         valMaxFilt = parseFloat(valMaxFilt);
@@ -226,13 +226,11 @@ function filtrarGastosWeb()
 
         //crear un objeto al evento pasandole los parametros para filtrar al objeto
         let objetoFiltrado = gesPres.filtrarGastos({fechaDesde: fechaInicialFilt, fechaHasta: fechaFinalFilt, valorMinimo: valMinFilt, valorMaximo: valMaxFilt, descripcionContiene: descFilt, etiquetasTiene: etiqFilt});
-        
-        gesPres.filtrarGastos();
     
         //Actualizamos la lista. Primero la dejamos vacia y luego los vamos mostrando
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
-        for (let g of listaGastos)
+        for (let g of objetoFiltrado)
         {
             mostrarGastoWeb("listado-gastos-completo", g);
         }
