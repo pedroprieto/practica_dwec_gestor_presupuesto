@@ -64,6 +64,9 @@ function mostrarGastoWeb(idElemento, gasto) {
     boton3.className = 'gasto-editar-formulario';
     boton3.type = 'button';
     boton3.innerHTML = "Editar (Formulario)";
+    let editarFormulario = new EditarHandleFormulario();
+    editarFormulario.gasto = gasto;
+    boton3.addEventListener('click', editarFormulario);
 
     divPadre.append(div1);
     divPadre.append(div2);
@@ -212,7 +215,7 @@ function EditarHandle() {
     this.handleEvent = function(evento) {
         let descripcion = prompt("Introduce una descripción", this.gasto.descripcion);
         let valor = prompt("Introduce un valor", this.gasto.valor);
-        let fecha = prompt("Introduce una fecha", this.gasto.fecha);
+        let fecha = prompt("Introduce una fecha", new Date(this.gasto.fecha).toISOString().substring(0,10));
         let etiquetas = prompt("Introduce las etiquetas", this.gasto.etiquetas);
 
         let convertirValor = parseFloat(valor);
@@ -244,10 +247,10 @@ function BorrarEtiquetasHandle() {
 function EditarHandleFormulario() {
     this.handleEvent = function(evento) {
         let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);;
-        var formulario = plantillaFormulario.querySelector('form');
+        let formulario = plantillaFormulario.querySelector('form');
 
         //Desactivar botón editar
-        document.getElementsByClassName('gasto-editar').disabled = true;
+        evento.currentTarget.disabled = true;
 
         //asignarle por defecto los valores actuales
         formulario.elements.descripcion.value = this.gasto.descripcion;
@@ -255,13 +258,13 @@ function EditarHandleFormulario() {
         formulario.elements.fecha.value = this.gasto.fecha;
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
-        //añadir el formulario 
-        document.getElementsByClassName('gasto').append(formulario);
+        //añadir el formulario al final del botón editar
+        evento.currentTarget.after(formulario);
 
-        //evento submit en botón submit
-        let editarFormulario = new ManejadorSubmitEditar();
-        editarFormulario.gasto = gasto;
-        formulario.addEventListener('submit', editarFormulario);
+        //botón submit
+        let botonSubmit = new ManejadorSubmitEditar();
+        botonSubmit.gasto = this.gasto;
+        formulario.addEventListener('submit', botonSubmit);
 
         //botón cancelar
         let botonCancelar = formulario.querySelector("button.cancelar");
@@ -273,6 +276,9 @@ function EditarHandleFormulario() {
 
 function ManejadorSubmitEditar() {
     this.handleEvent = function(evento) {
+        evento.preventDefault();
+
+        let formulario = evento.currentTarget;
         let descripcion = formulario.elements.descripcion.value;
         let valor = formulario.elements.valor.value;
         let fecha =  formulario.elements.fecha.value;
