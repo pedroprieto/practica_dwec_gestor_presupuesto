@@ -17,8 +17,9 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let div2 = document.createElement('div');
     div2.className = 'gasto-fecha';
-    let fecha = new Date(gasto.fecha);
-    div2.innerHTML = fecha;
+    let formato_fecha = new Date(gasto.fecha);
+    let isoString = formato_fecha.toISOString();
+    div2.innerHTML = isoString.substring(0,10);
 
     let div3 = document.createElement('div');
     div3.className = 'gasto-valor';
