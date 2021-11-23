@@ -145,17 +145,21 @@ document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb)
 function nuevoGastoWebFormulario(evento) {
     let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);;
     var formulario = plantillaFormulario.querySelector('form');
-
     //Desactivar botón formulario
     document.getElementById('anyadirgasto-formulario').disabled = true;
-
+    //añadir el formulario al final de controlesprincipales
+    document.getElementById('controlesprincipales').append(formulario);
+    //evento submit en botón submit
     formulario.addEventListener('submit', ManejadorSubmit);
-    
+    //botón cancelar
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    let cancelar = new ManejadorCancelar();
+    botonCancelar.addEventListener('click', cancelar);
 }
 
 //función para manejar el evento submit
 function ManejadorSubmit(evento) {
-    evento.prevenDefault(); //para no abandonar la página al pulsar
+    evento.preventDefault(); //para no abandonar la página al pulsar
     //acceder a los datos del formulario
     let accederFormulario = evento.currentTarget;
     let descripcion = accederFormulario.elements.descripcion.value;
@@ -170,6 +174,13 @@ function ManejadorSubmit(evento) {
     gesPres.anyadirGasto(gastoNuevo);
     repintar();
     document.getElementById('anyadirgasto-formulario').disabled = false;
+}
+
+function ManejadorCancelar() {
+    this.handleEvent = function(evento) {
+        formulario.remove();
+        document.getElementById('anyadirgasto-formulario').disabled = false;
+    }
 }
 //evento click que hace funcionar el botón anyadirgasto-formulario
 document.getElementById('anyadirgasto-formulario').addEventListener('click', nuevoGastoWebFormulario);
