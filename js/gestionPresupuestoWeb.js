@@ -59,12 +59,19 @@ function mostrarGastoWeb(idElemento, gasto) {
     borrar.gasto = gasto;
     boton2.addEventListener('click', borrar);
     
+    //botón editar formulario
+    let boton3 = document.createElement('button');
+    boton3.className = 'gasto-editar-formulario';
+    boton3.type = 'button';
+    boton3.innerHTML = "Editar (Formulario)";
+
     divPadre.append(div1);
     divPadre.append(div2);
     divPadre.append(div3);
     divPadre.append(div4);
     divPadre.append(boton1);
     divPadre.append(boton2);
+    divPadre.append(boton3);
     id.append(divPadre);
 }
 
@@ -157,7 +164,10 @@ function nuevoGastoWebFormulario(evento) {
     cancelar.formulario = formulario;
     botonCancelar.addEventListener('click', cancelar);
 }
+//evento click que hace funcionar el botón anyadirgasto-formulario
+document.getElementById('anyadirgasto-formulario').addEventListener('click', nuevoGastoWebFormulario);
 
+/* FUNCIONES PARA LOS BOTONES SECUNDARIOS DE LOS FORMULARIOS*/
 //función para manejar el evento submit
 function ManejadorSubmit(evento) {
     evento.preventDefault(); //para no abandonar la página al pulsar
@@ -176,17 +186,14 @@ function ManejadorSubmit(evento) {
     repintar();
     document.getElementById('anyadirgasto-formulario').disabled = false;
 }
-
 function ManejadorCancelar() {
     this.handleEvent = function(evento) {
         this.formulario.remove();
         document.getElementById('anyadirgasto-formulario').disabled = false;
     }
 }
-//evento click que hace funcionar el botón anyadirgasto-formulario
-document.getElementById('anyadirgasto-formulario').addEventListener('click', nuevoGastoWebFormulario);
 
-//FUNCIONES HANDLE
+//FUNCIONES HANDLE PARA LOS BOTONES DEL FORMULARIO CREADO EN MOSTRARGASTOWEB
 function EditarHandle() {
     this.handleEvent = function(evento) {
         let descripcion = prompt("Introduce una descripción", this.gasto.descripcion);
@@ -205,12 +212,14 @@ function EditarHandle() {
         repintar();
     }
 }
+
 function BorrarHandle() {
     this.handleEvent = function(evento) {
         gesPres.borrarGasto(this.gasto.id);
         repintar();
     }
 }
+
 function BorrarEtiquetasHandle() {
     this.handleEvent = function(evento) {
         this.gasto.borrarEtiquetas(this.etiqueta);
