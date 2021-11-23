@@ -194,8 +194,11 @@ function editarGastoHandle() {
         nuevas_etiquetas = nuevas_etiquetas.split(",");
         // console.log(nuevas_etiquetas);
         if (e.target.elements.etiquetas.value != "") {
-            this.gasto_actual.anyadirEtiquetas(nuevas_etiquetas);
+            this.gasto_actual.anyadirEtiquetas(...nuevas_etiquetas);
         }
+        // if (!this.gasto_actual.anyadirEtiquetas(nuevas_etiquetas)) {
+        //     this.gasto_actual.anyadirEtiquetas(nuevas_etiquetas);
+        // }
 
         
         // this.gasto_actual.anyadirEtiquetas(e.target.elements.etiquetas.value);
