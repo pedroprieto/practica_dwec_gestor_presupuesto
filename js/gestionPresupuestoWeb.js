@@ -154,6 +154,7 @@ function nuevoGastoWebFormulario(evento) {
     //botón cancelar
     let botonCancelar = formulario.querySelector("button.cancelar");
     let cancelar = new ManejadorCancelar();
+    cancelar.formulario = formulario;
     botonCancelar.addEventListener('click', cancelar);
 }
 
@@ -178,7 +179,7 @@ function ManejadorSubmit(evento) {
 
 function ManejadorCancelar() {
     this.handleEvent = function(evento) {
-        formulario.remove();
+        this.formulario.remove();
         document.getElementById('anyadirgasto-formulario').disabled = false;
     }
 }
