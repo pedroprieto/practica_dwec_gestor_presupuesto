@@ -311,10 +311,9 @@ function filtrarGastoWeb(){
         let plantillaFormulario = document.getElementById("filtrar-gastos");
         var datosFormulario = plantillaFormulario.querySelector("form");
 
-        if (datosFormulario.elements["formulario-filtrado-etiquetas-tiene"].value)
+        if (datosFormulario.elements["formulario-filtrado-etiquetas-tiene"].value != "")
         {
             var etiquetasValidas = transformarListadoEtiquetas(datosFormulario.elements["formulario-filtrado-etiquetas-tiene"].value);
-            return etiquetasValidas;
         }
 
         let descripcion = datosFormulario.elements["formulario-filtrado-descripcion"].value;
@@ -324,7 +323,7 @@ function filtrarGastoWeb(){
         let fechaHasta = datosFormulario.elements["formulario-filtrado-fecha-hasta"].value;
         let etiquetas = etiquetasValidas;
         
-        let gastosFiltrados = filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcion, etiquetas});
+        let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, valorMinimo: valorMinimo, valorMaximo: valorMaximo, descripcionContiene: descripcion, etiquetasTiene: etiquetas});
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
