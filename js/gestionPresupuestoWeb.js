@@ -3,7 +3,8 @@ import * as gesPres from "./gestionPresupuesto.js";
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
-document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
+let filtrado = new filtrarGastosWeb(); 
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrado); //recordar crear el objeto para poder asociar despues el evento
 
 function mostrarDatoEnId(idElemento, valor)
 {
@@ -207,7 +208,7 @@ function filtrarGastosWeb()
         //Cogemos los datos del formulario
         let actual = e.currentTarget;
         
-        let descFilt = actual.elements.formulario-filtrado-descripcion.value;
+        let descFilt = actual.elementsformulario-filtrado-descripcion.value;
         let valMinFilt = actual.elements.formulario-filtrado-valor-minimo.value;
         let valMaxFilt = actual.elements.formulario-filtrado-valor-maximo.value;
         let fechaInicialFilt = actual.elements.filtrado-fecha-desde.value;
@@ -216,10 +217,9 @@ function filtrarGastosWeb()
 
         valMinFilt = parseFloat(valMinFilt);
         valMaxFilt = parseFloat(valMaxFilt);
-        etiqFilt = etiqFilt.split(",");
 
         //Si tiene etiquetas
-        if(etiqFilt != null)
+        if(etiqFilt != null) //no puedo decir que sea distinto de 0 sino que este vacio o no
         {
             gesPres.transformarListadoEtiquetas(etiqFilt);
         }

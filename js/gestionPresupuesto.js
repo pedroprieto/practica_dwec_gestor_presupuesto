@@ -299,7 +299,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
 
 function transformarListadoEtiquetas(etiquetasTiene) 
 {
-    let palabras = /[a-z]/gi; //Todas las coincidencias de letras sin distinguir mayus y minusculas
+    let palabras = /[a-z0-9]/gi; //Todas las coincidencias de letras sin distinguir mayus y minusculas. Tambien pueden llevar numeros
     let resul = etiquetasTiene.match(palabras);
 
     return resul;
