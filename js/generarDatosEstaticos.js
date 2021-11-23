@@ -29,6 +29,7 @@ anyadirGasto(gasto6);
 mostrarDatoEnId("gastos-totales", calcularTotalGastos());
 mostrarDatoEnId("balance-total", calcularBalance());
 
+
 let gastosLista = listarGastos();
 
 for (let gasto of gastosLista)

@@ -1,4 +1,4 @@
-import * as gesPres from "/gestionPresupuesto.js";
+import * as gesPres from "./gestionPresupuesto.js";
 
 
 function mostrarDatoEnId(idElemento,valor){
@@ -124,6 +124,8 @@ function botonactualizarpresupuesto(){
 
     gesPres.actualizarPresupuesto(nuevopresupuesto);
     
+
+
     repintar();
 }
 
@@ -177,7 +179,7 @@ function EditarHandle(){
 
     this.gasto.actualizarDescripcion(descripcion);
     this.gasto.actualizarValor(valorbien);
-    this.gasto.actualizarfecha(fechabien);
+    this.gasto.actualizarFecha(fechabien);
     this.gasto.anyadirEtiquetas(...arrEtiquetas);
 
         
@@ -211,7 +213,8 @@ this.gasto.borrarEtiquetas(this.etiqueta);
 export  {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    
 }
 
 
