@@ -17,7 +17,8 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let div2 = document.createElement('div');
     div2.className = 'gasto-fecha';
-    div2.innerHTML = gasto.fecha;
+    let fecha = new Date(gasto.fecha);
+    div2.innerHTML = fecha;
 
     let div3 = document.createElement('div');
     div3.className = 'gasto-valor';
@@ -146,10 +147,10 @@ document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb)
 //función constructora
 function EditarHandle() {
     this.handleEvent = function(evento) {
-        let descripcion = prompt("Introduce una descripción");
-        let valor = prompt("Introduce un valor");
-        let fecha = prompt("Introduce una fecha");
-        let etiquetas = prompt("Introduce las etiquetas");
+        let descripcion = prompt("Introduce una descripción", this.gasto.descripcion);
+        let valor = prompt("Introduce un valor", this.gasto.valor);
+        let fecha = prompt("Introduce una fecha", this.gasto.fecha);
+        let etiquetas = prompt("Introduce las etiquetas", this.gasto.etiquetas);
 
         let convertirValor = parseFloat(valor);
         let etiquetasArray = etiquetas.split(',');
