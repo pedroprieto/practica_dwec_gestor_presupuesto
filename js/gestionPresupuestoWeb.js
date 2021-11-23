@@ -290,13 +290,13 @@ function filtrarGastosWeb(){
         let valorMinimoForm = formulario.elements['formulario-filtrado-valor-minimo'].value;
         let valorMaximoForm = formulario.elements['formulario-filtrado-valor-maximo'].value;
         let etiquetasForm = formulario.elements['formulario-filtrado-etiquetas-tiene'].value;
+        
+        valorMaximoForm = parseFloat(valorMaximoForm);
+        valorMinimoForm = parseFloat(valorMinimoForm);
 
         if(etiquetasForm !== null){
             etiquetasForm = gp.transformarListadoEtiquetas(etiquetasForm);
         }
-
-        valorMaximoForm = parseFloat(valorMaximoForm);
-        valorMinimoForm = parseFloat(valorMinimoForm);
 
         let gastosFiltrados = gp.filtrarGastos({fechaDesde: fechaDesdeForm,fechaHasta: fechaHastaForm,valorMinimo: valorMinimoForm,valorMaximo: valorMaximoForm,descripcionContiene: descripcionForm,etiquetasTiene: etiquetasForm});
 
