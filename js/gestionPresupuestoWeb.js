@@ -162,7 +162,8 @@ function nuevoGastoWebFormulario(evento) {
     var formulario = plantillaFormulario.querySelector('form');
 
     //Desactivar botón formulario
-    document.getElementById('anyadirgasto-formulario').disabled = true;
+    let botonEvento = evento.currentTarget;
+    botonEvento.disabled = true;
 
     //añadir el formulario al final de controlesprincipales
     document.getElementById('controlesprincipales').append(formulario);
@@ -174,6 +175,7 @@ function nuevoGastoWebFormulario(evento) {
     let botonCancelar = formulario.querySelector("button.cancelar");
     let cancelar = new ManejadorCancelar();
     cancelar.formulario = formulario;
+    cancelar.botonEvento = botonEvento;
     botonCancelar.addEventListener('click', cancelar);
 }
 //evento click que hace funcionar el botón anyadirgasto-formulario
@@ -206,7 +208,8 @@ function ManejadorSubmit(evento) {
 function ManejadorCancelar() {
     this.handleEvent = function(evento) {
         this.formulario.remove();
-        document.getElementById('anyadirgasto-formulario').disabled = false;
+        //accedo al boton del evento en el que use el objeto para poder usarlo en los dos botones sin problema
+        this.botonEvento.removeAttribute('disabled');
     }
 }
 
@@ -250,12 +253,13 @@ function EditarHandleFormulario() {
         let formulario = plantillaFormulario.querySelector('form');
 
         //Desactivar botón editar
-        evento.currentTarget.disabled = true;
+        let botonEvento = evento.currentTarget;
+        botonEvento.disabled = true;
 
         //asignarle por defecto los valores actuales
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);;
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
         //añadir el formulario al final del botón editar
@@ -270,6 +274,8 @@ function EditarHandleFormulario() {
         let botonCancelar = formulario.querySelector("button.cancelar");
         let cancelar = new ManejadorCancelar();
         cancelar.formulario = formulario;
+        //hago referencia al evento del boton porque con ClassName no me funcionaba el disabled
+        cancelar.botonEvento = botonEvento;
         botonCancelar.addEventListener('click', cancelar);
     }
 }
