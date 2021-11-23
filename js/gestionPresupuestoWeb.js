@@ -1,14 +1,14 @@
 import * as gp from './gestionPresupuesto.js';
 
-function mostrarDatoEnId(idElemento,valor){
-    document.getElementById(idElemento).append(valor);
-}
-
 function auxCrearElemento(tagHTML,clase,contenido){
     let etiqueta=document.createElement(tagHTML);
     etiqueta.className=clase;
     etiqueta.innerHTML=contenido;
     return etiqueta;
+}
+
+function mostrarDatoEnId(idElemento,valor){
+    document.getElementById(idElemento).append(valor);
 }
 
 function mostrarGastoWeb(idElemento,gasto){
@@ -20,7 +20,6 @@ function mostrarGastoWeb(idElemento,gasto){
     tag.prepend(auxCrearElemento('div',"gasto-fecha", `${gasto.fecha}`));
     tag.prepend(auxCrearElemento('div',"gasto-valor",  `${gasto.valor}`));
     
-    
     let etiquetas=document.createElement('div');
     etiquetas.className="gasto-etiquetas";
     
@@ -28,7 +27,7 @@ function mostrarGastoWeb(idElemento,gasto){
         
         for(let etiqueta of gasto.etiquetas){
             let span=document.createElement('span');
-            span.className="gasto-etiquetas-etiqueta"
+            span.className="gasto-etiquetas-etiqueta";
             
             let handleEtiqueta = new BorrarEtiquetasHandle();
             handleEtiqueta.gasto = gasto;
@@ -71,7 +70,6 @@ function mostrarGastoWeb(idElemento,gasto){
     botonEditarFormulario.addEventListener("click",manejadorEventoformulario);
     tag.append(botonEditarFormulario);
 
-    
     document.getElementById(idElemento).append(tag);
     
 }
@@ -85,12 +83,13 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     elemento.prepend(h1);
     
     for(let gasto in agrup){
+
         let agrupa=auxCrearElemento('div','agrupacion-dato',"");
         agrupa.prepend(auxCrearElemento('span','agrupacion-dato-clave',gasto[0]));
         agrupa.prepend(auxCrearElemento('span','agrupacion-dato-valor',gasto[1]));
         elemento.prepend(agrupa);
-
     }
+
     document.getElementById(idElemento).append(elemento);
 }
 
@@ -121,7 +120,6 @@ function actualizarPresupuestoWeb(){
     repintar();
 }
 
-
 function nuevoGastoWeb(){
 
     let descripcionN = prompt("Introduce la descripción del gasto, por favor");
@@ -139,7 +137,6 @@ function nuevoGastoWeb(){
 
     repintar();
 }
-
 
 function EditarHandle(){
 
@@ -164,12 +161,14 @@ function EditarHandle(){
 }
 
 function BorrarHandle(){
+
     this.handleEvent = function(e){
 
         gp.borrarGasto(this.gasto.id);
         repintar();
     }
 }
+
 function BorrarEtiquetasHandle(){
 
     this.handleEvent = function(e){
@@ -184,7 +183,6 @@ function nuevoGastoWebFormulario(){
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
         
-
         let enviarHandle = new EnviarGastoHandle();
         formulario.addEventListener("submit", enviarHandle);
 
@@ -208,7 +206,6 @@ function submitHandler(){
         let descripcion = formulario.elements.descripcion.value;
         this.gasto.actualizarDescripcion(descripcion);
 
-        
         let valor = formulario.elements.valor.value;
         valor= parseFloat(valor);
         this.gasto.actualizarValor(valor);
@@ -219,11 +216,11 @@ function submitHandler(){
         let etiquetas = formulario.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(etiquetas);
 
-
         repintar();
 
     }
 } 
+
 function cancelarHandle(){
     this.handleEvent = function(e){ 
 
@@ -238,17 +235,22 @@ function EnviarGastoHandle(){
     this.handleEvent = function(e){
         e.preventDefault();
 
-        
         let formulario = e.currentTarget;
+
         let descripcion = formulario.elements.descripcion.value;
+
         let valor = formulario.elements.valor.value;
         valor = parseFloat(valor);
+
         let fecha = formulario.elements.fecha.value;
+
         let etiquetas = formulario.elements.etiquetas.value;
 
         let nuevoGasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
         gp.anyadirGasto(nuevoGasto);
+        
         repintar();
+
         document.getElementById("anyadirgasto-formulario").disabled = false;
     }
 }
@@ -285,16 +287,22 @@ function filtrarGastosWeb(){
 
         let formulario = e.currentTarget;
         let descripcionForm = formulario.elements['formulario-filtrado-descripcion'].value;
+
         let fechaDesdeForm = formulario.elements['formulario-filtrado-fecha-desde'].value;
+
         let fechaHastaForm= formulario.elements['formulario-filtrado-fecha-hasta'].value;
+
         let valorMinimoForm = formulario.elements['formulario-filtrado-valor-minimo'].value;
+
         let valorMaximoForm = formulario.elements['formulario-filtrado-valor-maximo'].value;
+        
         let etiquetasForm = formulario.elements['formulario-filtrado-etiquetas-tiene'].value;
         
         valorMaximoForm = parseFloat(valorMaximoForm);
         valorMinimoForm = parseFloat(valorMinimoForm);
 
         if(etiquetasForm !== null){
+
             etiquetasForm = gp.transformarListadoEtiquetas(etiquetasForm);
         }
 
@@ -309,10 +317,9 @@ function filtrarGastosWeb(){
         for (let gasto of gastosFiltrados) {
             mostrarGastoWeb("listado-gastos-completo", gasto);
         }
-
-        
     }
 }
+
 function guardarGastosWeb(){
 
     let listadoGastos = gp.listarGastos();
@@ -329,14 +336,13 @@ function cargarGastosWeb(){
         gp.cargarGastos(listadoGastosAlmacenados);
     }
     else{
+
         listadoGastosAlmacenados = [];
         gp.cargarGastos(listadoGastosAlmacenados);
     }
     
     repintar();
 }
-
-
 
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
@@ -346,7 +352,6 @@ botonNuevoGasto.addEventListener("click", nuevoGastoWeb);
 
 let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
-
 
 let handleFiltrarSubmit = new filtrarGastosWeb();
 let formularioFiltrado = document.getElementById("formulario-filtrado");

@@ -18,9 +18,11 @@ function actualizarPresupuesto(numero) {
 }
 
 function anyadirGasto(gasto){
+
     gasto.id = idGasto;
     idGasto = idGasto +1;
     gastos.push(gasto);
+
 }
 
 function borrarGasto(id) {
@@ -31,6 +33,7 @@ function borrarGasto(id) {
 }
 
 function calcularTotalGastos (){
+
     let suma = 0;
     for (let gasto of gastos) {
         suma += gasto.valor;
@@ -39,12 +42,14 @@ function calcularTotalGastos (){
 }
 
 function calcularBalance (){
+
     let gastosTotales = calcularTotalGastos();
     let balance = presupuesto - gastosTotales;
     return balance
 }
 
 function listarGastos(){
+
     return gastos
 }
 
@@ -60,7 +65,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         this.valor = 0;
     }
     
-    this.etiquetas = [];
+    
     if(fecha){
         fecha = Date.parse(fecha)
         this.fecha = fecha;
@@ -69,8 +74,11 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         fecha = Date.now();
         this.fecha = fecha;
     }
+
+    this.etiquetas = [];
     
     this.anyadirEtiquetas = function(...etiquetas){
+
         let posicion;
         for (let etiqueta of etiquetas){
             posicion = this.etiquetas.lastIndexOf(etiqueta);
@@ -82,6 +90,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     this.anyadirEtiquetas(...etiquetas) 
     
     this.borrarEtiquetas = function(...etiquetas){
+
         let posicion;
         for (let etiqueta of etiquetas){
             posicion = this.etiquetas.indexOf(etiqueta);
@@ -93,11 +102,12 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
     
     this.actualizarDescripcion  = function(descripcion){
+
         this.descripcion = descripcion;
     }
     
-    
     this.actualizarValor = function (valor){
+
         if (valor > 0 ){
             this.valor = valor;
         }
@@ -115,7 +125,9 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         return  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         
     }
+
     this.mostrarGastoCompleto = function(){
+
         let fecha = new Date(this.fecha);
         let fechaTexto = fecha.toLocaleString();
         
@@ -125,9 +137,11 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${etiqueta}`;    
     }
+
     this.obtenerPeriodoAgrupacion=function(periodo){
 
         let fecha=new Date(this.fecha);
+
         let diaPeriodo=fecha.getDate();
         let mesPeriodo=fecha.getMonth()+1;
         let anyoPeriodo=fecha.getFullYear();
@@ -152,80 +166,87 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
         }
     }
 }
+
 function filtrarGastos(objecto){
     
     let filtrogastos=gastos.slice();
-    if (objecto.valorMinimo){
-		filtrogastos=filtrogastos.filter((x) => x.valor > objecto.valorMinimo);
-	}
-	if (objecto.valorMaximo){
-		filtrogastos=filtrogastos.filter((x) => x.valor < objecto.valorMaximo);
-	}
-    if ( objecto.fechaDesde ){
-		filtrogastos=filtrogastos.filter((x) => x.fecha >= Date.parse( objecto.fechaDesde ));
+    
+    if (objecto.descripcionContiene){
+        filtrogastos=filtrogastos.filter((gasto) => gasto.descripcion.indexOf(objecto.descripcionContiene
+        ) > -1 );
     }
-    if (objecto.fechaHasta){
-		filtrogastos=filtrogastos.filter((x) => x.fecha <= Date.parse(objecto.fechaHasta));
+
+    if (objecto.valorMinimo){
+		filtrogastos=filtrogastos.filter((gasto) => gasto.valor > objecto.valorMinimo);
 	}
+
+	if (objecto.valorMaximo){
+		filtrogastos=filtrogastos.filter((gasto) => gasto.valor < objecto.valorMaximo);
+	}
+
+    if ( objecto.fechaDesde ){
+		filtrogastos=filtrogastos.filter((gasto) => gasto.fecha >= Date.parse( objecto.fechaDesde ));
+    }
+
+    if (objecto.fechaHasta){
+		filtrogastos=filtrogastos.filter((gasto) => gasto.fecha <= Date.parse(objecto.fechaHasta));
+	}
+
     if (objecto.etiquetasTiene){
-		filtrogastos=filtrogastos.filter((x) => {
-			for(let etiqueta of x.etiquetas){
+		filtrogastos=filtrogastos.filter((gasto) => {
+
+			for(let etiqueta of gasto.etiquetas){
 				if (objecto.etiquetasTiene.indexOf(etiqueta) > -1){
-					return x;
+					return gasto;
 				}
 			}
 		});
 	}
-    if (objecto.descripcionContiene){
-		filtrogastos=filtrogastos.filter((x) => x.descripcion.indexOf(objecto.descripcionContiene
-        ) > -1 );
-	}
-	
+    
 	return filtrogastos;
 }
 
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
 
-
     return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
-            .reduce(function(acumula,objeto){
-                let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo)
-                if(!acumula[objPerAgru]){
-                    acumula[objPerAgru]=0;
-                }
-                acumula[objPerAgru]+=objeto.valor;
-                return acumula;
-            },{});     
-        }
+        .reduce(function(acumula,objeto){
+            let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo)
+            if(!acumula[objPerAgru]){
+                acumula[objPerAgru]=0;
+            }
+            acumula[objPerAgru]+=objeto.valor;
+        return acumula;
+    },{});     
+}
 
 function transformarListadoEtiquetas(etiquetas){
 
     let filtro = etiquetas.match(/[a-z0-9]+/gi);
-        return filtro;
-    }
+
+    return filtro;
+}
         
 
 function cargarGastos(nuevosGastos){
 
     gastos = nuevosGastos;
-    
 }       
 
-        // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-        // Las funciones y objetos deben tener los nombres que se indican en el enunciado
-        // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-        export   {
-            mostrarPresupuesto,
-            actualizarPresupuesto,
-            CrearGasto,
-            listarGastos,
-            anyadirGasto,
-            borrarGasto,
-            calcularTotalGastos,
-            calcularBalance,
-            filtrarGastos,
-            agruparGastos,
-            gastos,
-            transformarListadoEtiquetas,
-            cargarGastos
-        }
+// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
+// Las funciones y objetos deben tener los nombres que se indican en el enunciado
+// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
+export   {
+    mostrarPresupuesto,
+    actualizarPresupuesto,
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos,
+    gastos,
+    transformarListadoEtiquetas,
+    cargarGastos
+}
