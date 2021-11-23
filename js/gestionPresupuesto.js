@@ -1,10 +1,12 @@
 let presupuesto = 0;
 let gastos= [];
 let idGasto = 0;
+
 function mostrarPresupuesto() {
     
     return `Tu presupuesto actual es de ${presupuesto} €`
 }
+
 function actualizarPresupuesto(numero) {
     if(numero > 0){
     
@@ -14,17 +16,20 @@ function actualizarPresupuesto(numero) {
         return -1
     }
 }
+
 function anyadirGasto(gasto){
     gasto.id = idGasto;
     idGasto = idGasto +1;
     gastos.push(gasto);
 }
+
 function borrarGasto(id) {
     let pos = gastos.findIndex(gasto => gasto.id === id);
     if (pos != -1) {
         gastos.splice(pos, 1);
     }
 }
+
 function calcularTotalGastos (){
     let suma = 0;
     for (let gasto of gastos) {
@@ -32,22 +37,29 @@ function calcularTotalGastos (){
     }
     return suma
 }
+
 function calcularBalance (){
     let gastosTotales = calcularTotalGastos();
     let balance = presupuesto - gastosTotales;
     return balance
 }
+
 function listarGastos(){
     return gastos
 }
+
+
 function CrearGasto(descripcion,valor,fecha,...etiquetas) {
+
     this.descripcion = descripcion;
+
     if (valor > 0 ){
         this.valor = valor; 
     } 
     else {
         this.valor = 0;
     }
+    
     this.etiquetas = [];
     if(fecha){
         fecha = Date.parse(fecha)
@@ -186,13 +198,18 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
             },{});     
         }
 
-        function transformarListadoEtiquetas(etiquetas){
+function transformarListadoEtiquetas(etiquetas){
 
-            let filtro = etiquetas.match(/[a-z0-9]+/gi);
-            return filtro;
-        }
+    let filtro = etiquetas.match(/[a-z0-9]+/gi);
+        return filtro;
+    }
         
-        
+
+function cargarGastos(nuevosGastos){
+
+    gastos = nuevosGastos;
+    
+}       
 
         // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
         // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -209,5 +226,6 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
             filtrarGastos,
             agruparGastos,
             gastos,
-            transformarListadoEtiquetas
+            transformarListadoEtiquetas,
+            cargarGastos
         }
