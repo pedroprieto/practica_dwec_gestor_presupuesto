@@ -1,4 +1,4 @@
-import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, CrearGasto, filtrarGastos, listarGastos, mostrarPresupuesto, transformarListadoEtiquetas } from "./gestionPresupuesto.js";
+import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, cargarGastos, CrearGasto, filtrarGastos, listarGastos, mostrarPresupuesto, transformarListadoEtiquetas } from "./gestionPresupuesto.js";
 
 
 function mostrarDatoEnId(idElemento, valor){
@@ -321,9 +321,9 @@ function filtrarGastoWeb(){
         let valorMaximo = datosFormulario.elements["formulario-filtrado-valor-maximo"].value;
         let fechaDesde = datosFormulario.elements["formulario-filtrado-fecha-desde"].value;
         let fechaHasta = datosFormulario.elements["formulario-filtrado-fecha-hasta"].value;
-        let etiquetas = etiquetasValidas;
         
-        let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, valorMinimo: valorMinimo, valorMaximo: valorMaximo, descripcionContiene: descripcion, etiquetasTiene: etiquetas});
+        
+        let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, valorMinimo: valorMinimo, valorMaximo: valorMaximo, descripcionContiene: descripcion, etiquetasTiene: etiquetasValidas});
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
@@ -331,6 +331,27 @@ function filtrarGastoWeb(){
         {
             mostrarGastoWeb("listado-gastos-completo", filtro);
         }
+    }
+}
+
+function guardarGastosWeb(){
+    this.handleEvent = function(e){
+        localStorage.GestorGastosDWEC = JSON.stringify(listarGastos());
+    }
+}
+function cargarGastosWeb(){
+    this.handleEvent = function(e){
+
+        let gastosGuardados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+        cargarGastos(gastosGuardados);
+        
+        if(!gastosGuardados)
+        {
+            cargarGastos([]);
+        }
+
+        repintar();
     }
 }
 
@@ -343,6 +364,14 @@ let gastoWebFiltrado = new filtrarGastoWeb();
 
 let botonFiltrar = document.getElementById("formulario-filtrado");
 botonFiltrar.addEventListener("submit", gastoWebFiltrado);
+
+let guardar = new guardarGastosWeb();
+let botonGuardar = document.getElementById("guardar-gastos");
+botonGuardar.addEventListener("click", guardar);
+
+let cargar = new cargarGastosWeb();
+let botonCargar = document.getElementById("cargar-gastos");
+botonCargar.addEventListener("click", cargar);
 
 export {
     mostrarDatoEnId,

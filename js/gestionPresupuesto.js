@@ -270,7 +270,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
 function transformarListadoEtiquetas(etiquetasUsuario){
 
-    let regexp = /[a-z][a-z0-9]*/ig;
+    let regexp = /[a-z][a-z0-9]*/gi;
     let resultado = etiquetasUsuario.match(regexp);
 
 
@@ -280,6 +280,10 @@ function transformarListadoEtiquetas(etiquetasUsuario){
     resultado = resultado.split(', ');*/
 
     return resultado;
+}
+
+function cargarGastos(arrGasto){
+    gastos = arrGasto; 
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -296,5 +300,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    transformarListadoEtiquetas
+    transformarListadoEtiquetas,
+    cargarGastos,
 }
