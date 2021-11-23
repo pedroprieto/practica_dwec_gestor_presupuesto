@@ -280,6 +280,7 @@ function BorrarEtiquetasHandle()
     }
 }
 
+
 function EditarHandleformulario()
 {
     this.handleEvent = function(e)
@@ -288,6 +289,7 @@ function EditarHandleformulario()
 
         var formulario = plantillaFormulario.querySelector("form");
 
+        //Boton de editar(formulario)
         let btnActual = e.currentTarget;
         btnActual.after(formulario);
         btnActual.disabled = true;
@@ -298,10 +300,10 @@ function EditarHandleformulario()
         formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
+        //Boton de enviar
         let enviar = new EditarHandleGasto();
         enviar.gasto = this.gasto;
 
-        //Boton de editar
         formulario.addEventListener("submit", enviar);
 
         //boton cancelar
