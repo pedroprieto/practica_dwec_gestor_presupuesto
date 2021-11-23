@@ -174,7 +174,6 @@ function nuevoGastoWebFormulario(evento) {
     //botón cancelar
     let botonCancelar = formulario.querySelector("button.cancelar");
     let cancelar = new ManejadorCancelar();
-    cancelar.formulario = formulario;
     cancelar.botonEvento = botonEvento;
     botonCancelar.addEventListener('click', cancelar);
 }
@@ -207,7 +206,7 @@ function ManejadorSubmit(evento) {
 }
 function ManejadorCancelar() {
     this.handleEvent = function(evento) {
-        this.formulario.remove();
+        evento.currentTarget.parentNode.remove();
         //accedo al boton del evento en el que use el objeto para poder usarlo en los dos botones sin problema
         this.botonEvento.removeAttribute('disabled');
     }
@@ -273,7 +272,6 @@ function EditarHandleFormulario() {
         //botón cancelar
         let botonCancelar = formulario.querySelector("button.cancelar");
         let cancelar = new ManejadorCancelar();
-        cancelar.formulario = formulario;
         //hago referencia al evento del boton porque con ClassName no me funcionaba el disabled
         cancelar.botonEvento = botonEvento;
         botonCancelar.addEventListener('click', cancelar);
