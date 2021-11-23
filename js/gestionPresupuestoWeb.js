@@ -1,4 +1,4 @@
-import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, CrearGasto, listarGastos, mostrarPresupuesto } from "./gestionPresupuesto.js";
+import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, CrearGasto, filtrarGastos, listarGastos, mostrarPresupuesto, transformarListadoEtiquetas } from "./gestionPresupuesto.js";
 
 
 function mostrarDatoEnId(idElemento, valor){
@@ -303,10 +303,45 @@ function nuevoGastoWebFormulario(){
     }
 }
 
+function filtrarGastoWeb(){
+    this.handleEvent = function(e){
+
+        e.preventDefault();
+
+        let plantillaFormulario = document.getElementById("filtrar-gastos");
+        var datosFormulario = plantillaFormulario.querySelector("form");
+
+        if (datosFormulario.elements["formulario-filtrado-etiquetas-tiene"].value)
+        {
+            var etiquetasValidas = transformarListadoEtiquetas(datosFormulario.elements["formulario-filtrado-etiquetas-tiene"].value);
+            return etiquetasValidas;
+        }
+
+        let descripcion = datosFormulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMinimo = datosFormulario.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximo = datosFormulario.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaDesde = datosFormulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = datosFormulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = etiquetasValidas;
+        
+        let gastosFiltrados = filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcion, ...etiquetas});
+
+        for(let filtro of gastosFiltrados)
+        {
+            mostrarGastoWeb("listado-gastos-completo", filtro);
+        }
+    }
+}
+
 let crearFormulario = new nuevoGastoWebFormulario();
 
 let botonCrear = document.getElementById("anyadirgasto-formulario");
 botonCrear.addEventListener("click", crearFormulario);
+
+let gastoWebFiltrado = new filtrarGastoWeb();
+
+let botonFiltrar = document.getElementById("formulario-filtrado");
+botonFiltrar.addEventListener("submit", gastoWebFiltrado);
 
 export {
     mostrarDatoEnId,
