@@ -1,4 +1,4 @@
-import * as gesPres from "./gestionPresupuesto";
+import * as gesPres from "/gestionPresupuesto.js";
 
 
 function mostrarDatoEnId(idElemento,valor){
@@ -29,7 +29,7 @@ function mostrarGastoWeb (idElemento, gasto){
     divEti.className = "gasto-etiquetas";
 
     divGen.append(divDes, divFech, divVal, divEti);
-  
+   
 
 
     for (let etiqueta of gasto.etiquetas)
@@ -44,10 +44,10 @@ function mostrarGastoWeb (idElemento, gasto){
 
 
         
-    let elimitaretiquetassobre = new BorrarEtiquetasHandle();
-    elimitaretiquetassobre.gasto = gasto;
-    elimitaretiquetassobre.etiqueta = etiqueta;
-    span.addEventListener("click", elimitaretiquetassobre);
+      let elimitaretiquetassobre = new BorrarEtiquetasHandle();
+     elimitaretiquetassobre.gasto = gasto;
+        elimitaretiquetassobre.etiqueta = etiqueta;
+        spanEti.addEventListener("click", elimitaretiquetassobre);
 
     }
 
@@ -67,17 +67,17 @@ function mostrarGastoWeb (idElemento, gasto){
 
 let botonborrar = document.createElement("button");
     botonborrar.type ="button";
-    botonborrar.className = "gasto-editar";
-    botonborrar.textContent = "Editar";
+    botonborrar.className = "gasto-borrar";
+    botonborrar.textContent = "Borrar";
     let btnborrar = new BorrarHandle();
     btnborrar.gasto = gasto;
     botonborrar.addEventListener("click", btnborrar);
 
-
+    divGen.append(botoneditar);
+    divGen.append(botonborrar);
 
 }
-    DivGen.append(botoneditar);
-    DivGen.append(botonborrar);
+   
 
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -118,8 +118,9 @@ document.getElementById("actualizarpresupuesto").addEventListener("click", boton
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
 function botonactualizarpresupuesto(){
-    let promt = prompt("Introduzca nuevo presupuesto");
-    let nuevopresupuesto = parsefloat(promt);
+    let promtpresupuesto = prompt("Introduzca nuevo presupuesto");
+    promtpresupuesto = parseFloat(promtpresupuesto);
+    let nuevopresupuesto = promtpresupuesto;
 
     gesPres.actualizarPresupuesto(nuevopresupuesto);
     
@@ -130,7 +131,7 @@ function nuevoGastoWeb(){
 
     let descripcion = prompt("Introduzca descripcion");
     let valor = prompt("Introduzca valor");
-    let valorbien = parsefloat(valor);
+    let valorbien = parseFloat(valor);
 
     let fecha = prompt("Introduzca fecha");
     let fechabien = new Date(fecha);
@@ -138,7 +139,7 @@ function nuevoGastoWeb(){
     let etiquetas = prompt("Introduzca etiquetas");
     let arrEtiquetas = etiquetas.split(', ');
 
-    let gastonuevo = new CrearGasto(descripcion,valorbien,fechabien,...arrEtiquetas);
+    let gastonuevo = new gesPres.CrearGasto(descripcion,valorbien,fechabien,...arrEtiquetas);
     
     gesPres.anyadirGasto(gastonuevo);
     
@@ -166,7 +167,7 @@ function EditarHandle(){
 
     let descripcion = prompt("Introduzca descripcion");
     let valor = prompt("Introduzca valor");
-    let valorbien = parsefloat(valor);
+    let valorbien = parseFloat(valor);
 
     let fecha = prompt("Introduzca fecha");
     let fechabien = new Date(fecha);
