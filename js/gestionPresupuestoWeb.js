@@ -324,7 +324,9 @@ function filtrarGastoWeb(){
         let fechaHasta = datosFormulario.elements["formulario-filtrado-fecha-hasta"].value;
         let etiquetas = etiquetasValidas;
         
-        let gastosFiltrados = filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcion, ...etiquetas});
+        let gastosFiltrados = filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcion, etiquetas});
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
 
         for(let filtro of gastosFiltrados)
         {
