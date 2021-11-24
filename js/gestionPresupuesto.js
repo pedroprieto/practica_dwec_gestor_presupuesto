@@ -326,7 +326,14 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
     
 }
 
+function transformarListadoEtiquetas(etiquetas) {
+    
+    let expresionRegular = /[a-z][a-z0-9]+/gi;
+    let resultado = etiquetas.match(expresionRegular);
 
+    return resultado;
+
+}
 
 
 
@@ -344,4 +351,5 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    transformarListadoEtiquetas,
 }
