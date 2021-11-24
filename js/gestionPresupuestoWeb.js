@@ -209,6 +209,58 @@ this.gasto.borrarEtiquetas(this.etiqueta);
          repintar();
     }
 }
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+
+function nuevoGastoWebFormulario(){
+
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    var formulario = plantillaFormulario.querySelector("form");
+
+    let formhandleEnvio = new submitformHandle();
+    formulario.addEventListener("submit", formhandleEnvio);
+
+    let botonhandleCancelar = new botoncancelarHandle();
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    botonCancelar.addEventListener("click", botonhandleCancelar);
+
+}
+function botoncancelarHandle(){
+
+    this.handleEvent = function(event){
+
+        event.currentTarget.parentNode.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute('disabled');
+
+        repintar();      
+    }
+    }
+}
+function submitformHandle(){
+    this.handleEvent = function(event){
+
+        event.preventDefault();
+        let botonFormulatio = document.getElementById("anyadirgasto-formulario");
+        botonFormulatio.disabled = true;
+        let valoresGasto = event.currentTarget;
+
+        let ndescripcion = valoresGasto.elements.descripcion.value;
+        let nvalor = valoresGasto.elements.valor.value;
+        let nfecha = valoresGasto.elements.fecha.value;
+        let nvalor = parseFloat(nvalor);
+        let netiquetas = valoresGasto.elements.etiquetas.value;
+
+        let gastoFORM = new gesPres.CrearGasto(ndescripcion, nvalor, nfecha,...netiquetas);
+        gesPres.anyadirGasto(gastoFORM);
+
+        repintar();
+
+        botonFormulatio.disabled = false;
+
+    }
+
+}
+
+
 
 export  {
     mostrarDatoEnId,
