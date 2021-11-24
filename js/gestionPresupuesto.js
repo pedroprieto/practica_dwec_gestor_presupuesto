@@ -63,6 +63,29 @@ function CrearGasto(descripcion, cantidad, fecha, ...etiquetas) {
     this.borrarEtiquetas = function(...etiquetas) {
         this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetas.includes(etiqueta));
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        const fecha = new Date(this.fecha);
+        const mes = fecha.getUTCMonth() < 9 ? `0${fecha.getUTCMonth() + 1}` : fecha.getUTCMonth() + 1;
+        const dia = fecha.getUTCDate() < 10 ? `0${fecha.getUTCDate()}` : fecha.getUTCDate();
+        const anyo = fecha.getUTCFullYear();
+
+        let agrupacion = "";
+
+        switch (periodo) {
+            case "dia":
+                agrupacion = `${anyo}-${mes}-${dia}`;
+                break;
+            case "mes":
+                agrupacion = `${anyo}-${mes}`;
+                break;
+            case "anyo":
+                agrupacion = anyo;
+                break;
+        }
+
+        return agrupacion;
+    }
 }
 
 function listarGastos() {
