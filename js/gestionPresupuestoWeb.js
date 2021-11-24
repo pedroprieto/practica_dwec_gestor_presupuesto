@@ -302,37 +302,36 @@ boton.addEvenListener("click", manejadorboton1);
 */
 
 //Esta función se utilizará como manejadora de eventos del botón anyadirgasto-formulario del código HTML. Realizará las siguientes tareas:
-function nuevoGastoWebFormulario()
-{
-        //Crear una copia del formulario web definido en la plantilla HTML. El código a utilizar es el siguiente:
-        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
-        //Desde este momento, la variable plantillaFormulario almacena un nuevo fragmento de documento correspondiente al elemento <template>. 
-        //Posteriormente lo añadiremos a la página y se insertará su contenido (el elemento <form> que hay en su interior).
+function nuevoGastoWebFormulario() {
+    //Crear una copia del formulario web definido en la plantilla HTML. El código a utilizar es el siguiente:
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    //Desde este momento, la variable plantillaFormulario almacena un nuevo fragmento de documento correspondiente al elemento <template>. 
+    //Posteriormente lo añadiremos a la página y se insertará su contenido (el elemento <form> que hay en su interior).
 
-        //Acceder al elemento <form> dentro de ese fragmento de documento. Para ello podemos utilizar por ejemplo:
-        var formulario = plantillaFormulario.querySelector("form");
-        //Desde este momento, la variable formulario almacena el nodo formulario que vamos a crear.
+    //Acceder al elemento <form> dentro de ese fragmento de documento. Para ello podemos utilizar por ejemplo:
+    var formulario = plantillaFormulario.querySelector("form");
+    //Desde este momento, la variable formulario almacena el nodo formulario que vamos a crear.
 
-        //Crear un manejador de evento para el evento submit del formulario. Utilizaremos addEventListener.
-        let manEnvio1 = new manejadorEnvioForm();
-        formulario.addEventListener("submit", manEnvio1);
+    //Crear un manejador de evento para el evento submit del formulario. Utilizaremos addEventListener.
+    let manEnvio1 = new manejadorEnvioForm();
+    formulario.addEventListener("submit", manEnvio1);
 
-        //Crear un manejador de evento para el evento click del botón Cancelar del formulario. Para ello deberemos localizar dicho botón 
-        //(por ejemplo, mediante formulario.querySelector("button.cancelar")). Utilizaremos addEventListener junto con un objeto manejador 
-        //de eventos siguiendo la técnica de la práctica anterior
-        //Ejemplo tutoria: let botonCancelar = nuevoEl.querySelector("button.cancelar");
-        let manBorrar1 = new manejadorCancelForm(); 
-        let botonCancelar = formulario.querySelector("button.cancelar");
-        botonCancelar.addEventListener("click", manBorrar1);
+    //Crear un manejador de evento para el evento click del botón Cancelar del formulario. Para ello deberemos localizar dicho botón 
+    //(por ejemplo, mediante formulario.querySelector("button.cancelar")). Utilizaremos addEventListener junto con un objeto manejador 
+    //de eventos siguiendo la técnica de la práctica anterior
+    //Ejemplo tutoria: let botonCancelar = nuevoEl.querySelector("button.cancelar");
+    let manBorrar1 = new manejadorCancelForm();
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    botonCancelar.addEventListener("click", manBorrar1);
 
-        //Desactivar (añadir atributo disabled) el botón anyadirgasto-formulario.
-        //Probando el porque no iba, he probado a darle la propiedad disabled directamente. Seguía sin ir, pero es más "limpio".
-        document.getElementById("anyadirgasto-formulario").disabled = true;
+    //Desactivar (añadir atributo disabled) el botón anyadirgasto-formulario.
+    //Probando el porque no iba, he probado a darle la propiedad disabled directamente. Seguía sin ir, pero es más "limpio".
+    document.getElementById("anyadirgasto-formulario").disabled = true;
 
-        //Por último, añadir el fragmento de documento (variable plantillaFormulario) al final del 
-        //<div id="controlesprincipales"> para que se muestre en la página.
-        //Ejemplo tutoria: document.getElementById("componentes").append(nuevoEl);
-        document.getElementById("controlesprincipales").append(formulario);       
+    //Por último, añadir el fragmento de documento (variable plantillaFormulario) al final del 
+    //<div id="controlesprincipales"> para que se muestre en la página.
+    //Ejemplo tutoria: document.getElementById("componentes").append(nuevoEl);
+    document.getElementById("controlesprincipales").append(formulario);
 }
 
 //Esta función se utilizará como manejadora de eventos del botón anyadirgasto-formulario
@@ -390,6 +389,12 @@ function manejadorCancelForm()
         e.target.form.remove();  
         //volvemos a activar el boton añadir gasto (formulario).
         document.getElementById("anyadirgasto-formulario").disabled = "";
+
+        //El último test estaba dando error porque no lo estamos habilitando después de cancelar. 
+        //Podemos devolverlo a su estado por defecto que será activo después de repintar.
+        //En la tutoría del 15 hablas de que lo ideal sería hacer una función global para el estado normal o estado editando 
+        //y que los manejadores sólo cambien el estado y se encargue el repintar para componer la interfaz en función del estado.
+        repintar();   
     }
 }
 
