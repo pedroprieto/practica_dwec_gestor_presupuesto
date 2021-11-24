@@ -60,239 +60,45 @@ function calcularBalance() {
 }
 
 function filtrarGastos(objeto) {
-  let fechaDesde,
-    fechaHasta,
-    valorMinimo,
-    valorMaximo,
-    descripcionContiene,
-    etiquetasTiene,
-    num;
-  let nuevaMatriz = [];
-  if (Object.keys(objeto).length === 0) {
-    nuevaMatriz = gastos;
-  } else {
-    for (const propiedad in objeto) {
-      if (propiedad == "fechaDesde") {
-        fechaDesde = objeto[propiedad];
-      } else if (propiedad == "fechaHasta") {
-        fechaHasta = objeto[propiedad];
-      } else if (propiedad == "valorMinimo") {
-        valorMinimo = objeto[propiedad];
-      } else if (propiedad == "valorMaximo") {
-        valorMaximo = objeto[propiedad];
-      } else if (propiedad == "descripcionContiene") {
-        descripcionContiene = objeto[propiedad];
-      } else if (propiedad == "etiquetasTiene") {
-        etiquetasTiene = objeto[propiedad];
+  let nuevaMatriz = gastos.filter((filtro) => {
+    let result = true;
+
+    if (Date.parse(objeto.fechaDesde) > filtro.fecha) {
+      return (result = false);
+    }
+
+    if (Date.parse(objeto.fechaHasta) < filtro.fecha) {
+      return (result = false);
+    }
+
+    if (objeto.valorMinimo > filtro.valor) {
+      return (result = false);
+    }
+
+    if (objeto.valorMaximo < filtro.valor) {
+      return (result = false);
+    }
+
+    if (objeto.descripcionContiene === undefined) {
+      result = true;
+    } else if (filtro.descripcion.indexOf(objeto.descripcionContiene) == -1) {
+      return (result = false);
+    }
+
+    if (objeto.etiquetasTiene === undefined) {
+      return (result = true);
+    } else {
+      result = false;
+
+      for (let x of objeto.etiquetasTiene) {
+        if (filtro.etiquetas.indexOf(x) != -1) {
+          return (result = true);
+        }
       }
     }
-  }
 
-  if (
-    fechaDesde != undefined &&
-    fechaHasta === undefined &&
-    valorMinimo === undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene === undefined
-  ) {
-    nuevaMatriz = gastos.filter(
-      (filtro) => filtro.fecha >= Date.parse(fechaDesde)
-    );
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde != undefined &&
-    fechaHasta != undefined &&
-    valorMinimo === undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene === undefined
-  ) {
-    nuevaMatriz = gastos.filter(
-      (filtro) =>
-        filtro.fecha >= Date.parse(fechaDesde) &&
-        filtro.fecha <= Date.parse(fechaHasta)
-    );
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo != undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene === undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => filtro.valor > valorMinimo);
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo != undefined &&
-    valorMaximo != undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene === undefined
-  ) {
-    nuevaMatriz = gastos.filter(
-      (filtro) => filtro.valor > valorMinimo && filtro.valor < valorMaximo
-    );
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde != undefined &&
-    fechaHasta != undefined &&
-    valorMinimo === undefined &&
-    valorMaximo != undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene === undefined
-  ) {
-    nuevaMatriz = gastos.filter(
-      (filtro) =>
-        filtro.fecha >= Date.parse(fechaDesde) &&
-        filtro.fecha <= Date.parse(fechaHasta) &&
-        filtro.valor < valorMaximo
-    );
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo === undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (filtro.etiquetas.indexOf(x) != -1) {
-          return filtro;
-        }
-      }
-    });
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo === undefined &&
-    valorMaximo != undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (filtro.etiquetas.indexOf(x) != -1 && filtro.valor < valorMaximo) {
-          return filtro;
-        }
-      }
-    });
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde != undefined &&
-    fechaHasta === undefined &&
-    valorMinimo === undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (
-          filtro.etiquetas.indexOf(x) != -1 &&
-          filtro.fecha >= Date.parse(fechaDesde)
-        ) {
-          return filtro;
-        }
-      }
-    });
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta != undefined &&
-    valorMinimo === undefined &&
-    valorMaximo != undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (
-          filtro.etiquetas.indexOf(x) != -1 &&
-          filtro.fecha <= Date.parse(fechaHasta) &&
-          filtro.valor <= valorMaximo
-        ) {
-          return filtro;
-        }
-      }
-    });
-    num = nuevaMatriz.length;
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo != undefined &&
-    valorMaximo != undefined &&
-    descripcionContiene != undefined &&
-    etiquetasTiene === undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      if (
-        filtro.descripcion.indexOf(descripcionContiene) != -1 &&
-        filtro.valor >= valorMinimo &&
-        filtro.valor <= valorMaximo
-      ) {
-        return filtro;
-      }
-    });
-  } else if (
-    fechaDesde != undefined &&
-    fechaHasta != undefined &&
-    valorMinimo === undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (
-          filtro.etiquetas.indexOf(x) != -1 &&
-          filtro.fecha >= Date.parse(fechaDesde) &&
-          filtro.fecha <= Date.parse(fechaHasta)
-        ) {
-          return filtro;
-        }
-      }
-    });
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta != undefined &&
-    valorMinimo === undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (
-          filtro.etiquetas.indexOf(x) != -1 &&
-          filtro.fecha <= Date.parse(fechaHasta)
-        ) {
-          return filtro;
-        }
-      }
-    });
-  } else if (
-    fechaDesde === undefined &&
-    fechaHasta === undefined &&
-    valorMinimo != undefined &&
-    valorMaximo === undefined &&
-    descripcionContiene === undefined &&
-    etiquetasTiene != undefined
-  ) {
-    nuevaMatriz = gastos.filter((filtro) => {
-      for (let x of etiquetasTiene) {
-        if (filtro.etiquetas.indexOf(x) != -1 && filtro.valor >= valorMinimo) {
-          return filtro;
-        }
-      }
-    });
-    num = nuevaMatriz.length;
-  }
+    return result;
+  });
 
   return nuevaMatriz;
 }

@@ -334,12 +334,12 @@ function filtraGastosWeb() {
   let valorMaximoForm = parseFloat(
     formulario.elements["formulario-filtrado-valor-maximo"].value
   );
-  let fechaDesdeForm = Date.parse(
-    formulario.elements["formulario-filtrado-fecha-desde"].value
-  );
-  let fechaHastaForm = Date.parse(
-    formulario.elements["formulario-filtrado-fecha-hasta"].value
-  );
+  let fechaDesdeForm =
+    formulario.elements["formulario-filtrado-fecha-desde"].value;
+
+  let fechaHastaForm =
+    formulario.elements["formulario-filtrado-fecha-hasta"].value;
+
   let etiquetasTieneForm =
     formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
   let EtiquetasArray;
@@ -360,11 +360,11 @@ function filtraGastosWeb() {
 
   var cell = document.getElementById("listado-gastos-completo");
 
-  /*if (cell.hasChildNodes()) {
+  if (cell.hasChildNodes()) {
     while (cell.childNodes.length >= 1) {
       cell.removeChild(cell.firstChild);
     }
-  }*/
+  }
 
   let filtro = datosPresupuesto.filtrarGastos(objetoAFiltrar);
 
