@@ -246,18 +246,6 @@ function filtrarGastos (opciones)
             {
                 resultado = false;
             }
-
-            /*Otra opción vista en tutoria 8 nov.
-            var tieneAlguna=false;
-            for(let et of opciones.etiquetasTiene) {
-                if (gasto.etiquetas.indexOf(et) > -1 {
-                    tieneAlguna = true;
-                    break;
-                })
-            }
-            if (!tieneAgluna)
-                resultado = false;
-            */
         }
         
         return resultado;
@@ -273,26 +261,13 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
     {
         
         let pA = gasto.obtenerPeriodoAgrupacion(periodo);   
-        /*
-        if (!acc[pA])
-        {
-            acc[pA] = 0;
-        }
-        
-        acc[pA] = acc[pA] + gasto.valor; 
-        */
 
-        //Tras ver la tutoria de 3 de noviembre. Se puede simplificar todo con el if encubierto:
-        //ejemplo del vídeo: acum[item.desc] = acum[item.desc] + item.valor; extrapolamos y comprobamos que funciona
         acc[pA] = (acc[pA] || 0) + gasto.valor;
     
         return acc;       
     }, {});
 }
 
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
