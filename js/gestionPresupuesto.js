@@ -88,8 +88,6 @@ function filtrarGastos(objeto) {
     }
   }
 
-  
-
   if (
     fechaDesde != undefined &&
     fechaHasta === undefined &&
@@ -353,6 +351,11 @@ function agruparGastos(periodo, etiquetasTiene, fechaDesde, fechaHasta) {
   return result;
 }
 
+function transformarListadoEtiquetas(transformacion) {
+  let expresionRegular = /[a-zA-Z0-9]+/gi;
+  let transformacionArray = transformacion.match(expresionRegular);
+  return transformacionArray;
+}
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   // TODO
@@ -433,7 +436,6 @@ Etiquetas:` + "\n";
     }
   };
 
-
   this.obtenerPeriodoAgrupacion = function (periodo) {
     let dia = new Date(this.fecha).getDate();
     let anyo = new Date(this.fecha).getFullYear();
@@ -477,4 +479,5 @@ export {
   calcularBalance,
   filtrarGastos,
   agruparGastos,
+  transformarListadoEtiquetas,
 };
