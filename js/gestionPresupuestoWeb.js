@@ -61,8 +61,8 @@ function mostrarGastoWeb(idElemento, gasto)
     let evEditarForm = new EditarHandleformulario();
     evEditarForm.gasto = gasto;
 
-    let div1 = document.createElement("div");
-    let div2 = document.createElement("div");
+    let div1 = document.createElement("div"); //div gasto
+    let div2 = document.createElement("div"); //div descripcion
     let div3 = document.createElement("div");
     let div4 = document.createElement("div");
     let div5 = document.createElement("div");
@@ -88,7 +88,7 @@ function mostrarGastoWeb(idElemento, gasto)
     {
         let span = document.createElement("span");
         span.className = "gasto-etiquetas-etiqueta";
-        span.append(gasto.etiquetas);
+        span.innerHTML = `${e}`; //para que haya un span de cada
 
         div5.append(span);
 
@@ -219,14 +219,15 @@ function filtrarGastosWeb()
         valMaxFilt = parseFloat(valMaxFilt);
 
         //Si tiene etiquetas
-        if(etiqFilt != null) //no puedo decir que sea distinto de 0 sino que este vacio o no
+        if(etiqFilt != null) //no puedo decir que sea distinto de 0 sino que este vacio o no, una etiqueta no son numeros
         {
-            gesPres.transformarListadoEtiquetas(etiqFilt);
+            etiqFilt = gesPres.transformarListadoEtiquetas(etiqFilt);
         }
 
-        //crear un objeto al evento pasandole los parametros para filtrar al objeto
+        //pasandole los parametros para filtrar al objeto
         let objetoFiltrado = gesPres.filtrarGastos({fechaDesde: fechaInicialFilt, fechaHasta: fechaFinalFilt, valorMinimo: valMinFilt, valorMaximo: valMaxFilt, descripcionContiene: descFilt, etiquetasTiene: etiqFilt});
-    
+
+        //gesPres.filtrarGastos();
         //Actualizamos la lista. Primero la dejamos vacia y luego los vamos mostrando
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
@@ -250,7 +251,7 @@ function enviarGastoHandle()
         let nuevasEtiquetas = actual.elements.etiquetas.value;
 
         nuevoValor = parseFloat(nuevoValor);
-        nuevasEtiquetas = nuevasEtiquetas.split(",");
+        //nuevasEtiquetas = nuevasEtiquetas.split(",");
 
         //creamos el nuevo gasto
         let gasto1 = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, nuevasEtiquetas);
@@ -366,7 +367,7 @@ function EditarHandleGasto()
         let nEtiquetas = actual.elements.etiquetas.value;
 
         nValor = parseFloat(nValor);
-        nEtiquetas.split(",");
+        //nEtiquetas.split(",");
 
         //actualizamos los nuevos valores
         this.gasto.actualizarDescripcion(nDesc);
