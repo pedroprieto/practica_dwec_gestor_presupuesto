@@ -24,7 +24,8 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
     if (fecha) {
         
         fecha = Date.parse(fecha);
-        this.fecha = new Date(fecha).toISOString().substring(0,10);
+        //this.fecha = new Date(fecha).toISOString().substring(0, 10);
+        this.fecha = fecha;
 
     } else {
         
