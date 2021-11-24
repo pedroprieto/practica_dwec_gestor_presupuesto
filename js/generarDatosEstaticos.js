@@ -1,8 +1,6 @@
 import * as datosPresupuesto from "./gestionPresupuesto.js";
 import * as datosPresupuestoWeb from "./gestionPresupuestoWeb.js";
 
-
-
 let number = datosPresupuesto.actualizarPresupuesto(1500);
 let mostrar = datosPresupuesto.mostrarPresupuesto();
 let datoPresupuesto = datosPresupuestoWeb.mostrarDatoEnId(
@@ -30,7 +28,6 @@ let gasto3 = new datosPresupuesto.CrearGasto(
   "2020-05-26",
   "transporte"
 );
-
 
 let gasto4 = new datosPresupuesto.CrearGasto(
   "Gasolina",
@@ -126,4 +123,3 @@ datosPresupuestoWeb.mostrarGastosAgrupadosWeb(
   agrupacion3,
   "año"
 );
-
