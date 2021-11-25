@@ -14,3 +14,8 @@ gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarP
 gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
 gestionPresupuestoWeb.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
 
+const listadoGastos = gestionPresupuesto.listarGastos();
+listadoGastos.forEach(gasto => {
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
+});
+
