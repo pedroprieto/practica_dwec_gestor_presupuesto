@@ -299,41 +299,48 @@ function ManejadorSubmitEditar() {
     }
 }
 
-function filtrarGastosWeb(evento) {
-    evento.preventDefault();
+function filtrarGastosWeb() {
+    this.handleEvent = function(evento) {
+        evento.preventDefault();
 
-    //recoger datos del formulario
-    let accederFormulario = evento.currentTarget;
-    let descripcion = accederFormulario.elements.formulario-filtrado-descripcion.value;
-    let valorMinimo = accederFormulario.elements.formulario-filtrado-valor-minimo.value;
-    let valorMaximo = accederFormulario.elements.formulario-filtrado-valor-maximo.value;
-    let fechaDesde = accederFormulario.elements.formulario-filtrado-fecha-desde.value;
-    let fechaHasta = accederFormulario.elements.formulario-filtrado-fecha-hasta.value;
-    let etiquetas = accederFormulario.elements.formulario-filtrado-etiquetas-tiene.value;
+        //recoger datos del formulario
+        let formularioFiltrado = document.getElementById('filtrar-gastos').querySelector('form');
 
-    if (etiquetas) {
-        gesPres.transformarListadoEtiquetas(etiquetas);
-    }
+        let descripcion = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
+        let valorMinimo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
+        let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
+        let fechaDesde = formularioFiltrado.elements['formulario-filtrado-fecha-desde'].value;
+        let fechaHasta = formularioFiltrado.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiquetas = formularioFiltrado.elements['formulario-filtrado-etiquetas-tiene'].value;
 
-    let filtro = {
-        fechaDesde : fechaDesde;
-        fechaHasta : fechaHasta;
-        valorMinimo : valorMinimo;
-        valorMaximo : valorMaximo;
-        descripcioContiene : descripcion;
-        etiquetasTiene : etiquetas;
-    }
+        valorMinimo = parseFloat(valorMinimo);
+        valorMaximo = parseFloat(valorMaximo);
 
-    gesPres.filtrarGastos(filtro);
+        if (etiquetas) {
+            etiquetas = gesPres.transformarListadoEtiquetas(etiquetas);
+        }
 
-    let listaCompleta = gesPres.listarGastos();
-    for (let elemento of listaCompleta) {
-    mostrarGastoWeb('listado-gastos-completo', elemento);
+        let filtro = {
+            fechaDesde : fechaDesde,
+            fechaHasta : fechaHasta,
+            valorMinimo : valorMinimo,
+            valorMaximo : valorMaximo,
+            descripcionContiene : descripcion,
+            etiquetasTiene : etiquetas
+        }
+
+        gesPres.filtrarGastos(filtro);
+
+        let listaCompleta = gesPres.listarGastos();
+        for (let elemento of listaCompleta) {
+        mostrarGastoWeb('listado-gastos-completo', elemento);
+        }
     }
 }
 
-let formularioFiltrado = getElementById('formulario-filtrado');
-formularioFiltrado.addEventListener('submit', filtrarGastosWeb);
+let filtrado = document.getElementById('formulario-filtrado');
+let objFiltrar = new filtrarGastosWeb();
+filtrado.addEventListener('submit', objFiltrar);
 
 export {
     mostrarDatoEnId,
