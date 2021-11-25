@@ -16,6 +16,14 @@ let filtrarGastos = new filtrarGastosWeb();
 let btnFiltrar = document.getElementById("formulario-filtrado");
 btnFiltrar.addEventListener('submit', filtrarGastos);
 
+let guardarGastos = new guardarGastosWeb();
+let btnGuardarGastos = document.getElementById("guardar-gastos");
+btnGuardarGastos.addEventListener('click', guardarGastos);
+
+
+let cargarGastos = new cargarGastosWeb();
+let btnCargarGastos = document.getElementById("cargar-gastos");
+btnCargarGastos.addEventListener('click', cargarGastos);
 
 function repintar() {
     
@@ -269,6 +277,35 @@ function filtrarGastosWeb() {
 
 }
 
+function guardarGastosWeb() {
+
+    this.handleEvent = function (e) {
+
+        localStorage.GestorGastosDWEC = JSON.stringify(gesPres.listarGastos());
+
+    }
+}
+
+function cargarGastosWeb() {
+
+    this.handleEvent = function (e) {
+
+        let datosCargados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+        gesPres.cargarGastos(datosCargados);
+
+        if (!datosCargados) {
+            
+            cargarGastos([]);
+        }                   
+            
+    }
+
+    repintar();
+
+}
+
+
 function mostrarGastoWeb(idElemento, gasto){
 
     let divPrincipal = document.getElementById(idElemento);   
@@ -389,6 +426,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     divPrincipal.append(divAgrupacion);
 
 };
+
+
 
 
 export {

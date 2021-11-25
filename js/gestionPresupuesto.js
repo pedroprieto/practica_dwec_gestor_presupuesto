@@ -338,6 +338,14 @@ function transformarListadoEtiquetas(etiquetas) {
 
 }
 
+function cargarGastos(arrGastos) {
+    
+    gastos = arrGastos;
+
+}
+
+
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -355,4 +363,5 @@ export   {
     filtrarGastos,
     agruparGastos,
     transformarListadoEtiquetas,
+    cargarGastos,
 }
