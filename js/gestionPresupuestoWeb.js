@@ -385,7 +385,7 @@ botoncargargastos.addEventListener("submit", accioncargargastos);
 function guardarGastosWeb(){
   this.handleEvent = function(event){
 
-        listagatosaguardar = gesPres.listarGastos();
+      let  listagatosaguardar = gesPres.listarGastos();
 
         localStorage.setItem('GestorGastosDWE',JSON.stringify(listagatosaguardar)); 
 
@@ -395,6 +395,20 @@ function guardarGastosWeb(){
 function cargarGastosWeb(){
 this.handleEvent = function(event){
 
+    let listadegastosguardados = localStorage.getItem('GestorGastosDWEC');
+    listadegastosguardados = JSON.parse(listadegastosguardados);
+    let arrayvacio = [];
+
+    if(listadegastosguardados == null){
+
+        gesPres.cargarGastos(arrayvacio);
+    }
+    else{
+
+        gesPres.cargarGastos(listadegastosguardados)
+    }
+
+    repintar();
 
 }
 }

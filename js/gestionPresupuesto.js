@@ -5,7 +5,7 @@ var arraygastos = []
 
 function cargarGastos(gatosarray){
 
-gastostotales = gatosarray
+ arraygastos = gatosarray
 
 }
 
