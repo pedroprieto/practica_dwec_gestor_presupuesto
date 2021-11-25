@@ -3,6 +3,12 @@ var presupuesto = 0;
 var idGastos = 0;
 var arraygastos = []
 
+function cargarGastos(gatosarray){
+
+gastostotales = gatosarray
+
+}
+
 function actualizarPresupuesto(pre) {
 
     
@@ -286,5 +292,5 @@ export  {
     filtrarGastos,
     agruparGastos,
     transformarListadoEtiquetas,
-    
+    cargarGastos
 }
