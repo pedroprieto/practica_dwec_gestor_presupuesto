@@ -14,6 +14,11 @@ form, .gasto {
     box-shadow: 5px 5px 5px #555555;
     border: 1px solid #555555;
     padding: 0.5em;
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
 }
 
 .form-control {
@@ -35,11 +40,14 @@ button {
     color: #555555;
     background-color: white;
     box-shadow: 2px 2px #e6e6e6;
+    border-radius: 5px;
 }
 
 button:hover {
     border: 1px solid #888888;
-    color: #888888;
+    color: #fafafa;
+    background-color: #555555;
+    cursor: pointer;
 }
 
 button:active:enabled {
@@ -62,6 +70,35 @@ button:disabled, button:disabled:hover {
     border-color: #999999;
     background-color: #999999;
     box-shadow: none;
+}
+
+#presupuesto {
+    margin: 15px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    color:#fafafa;
+    background-color: #555555;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#gastos-totales {
+    width: 50%;
+    text-align: center;
+    float: left;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    color: red;
+}
+
+#balance-total {
+    width: 50%;
+    text-align: center;
+    float: right;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    color: seagreen;
 }
 
 .gasto-etiquetas-etiqueta {
