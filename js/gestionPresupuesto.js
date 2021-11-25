@@ -114,7 +114,34 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos() {}
+function filtrarGastos(filtros) {
+    let gastosFiltrados = gastos;
+
+    for (const filtro in filtros) {
+        switch (filtro) {
+            case "fechaDesde":
+                gastosFiltrados = gastosFiltrados.filter(gasto => new Date(gasto.fecha) >= new Date(filtros[filtro]));
+                break;
+            case "fechaHasta":
+                gastosFiltrados = gastosFiltrados.filter(gasto => new Date(gasto.fecha) <= new Date(filtros[filtro]));
+                break; 
+            case "valorMinimo":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= filtros[filtro]);
+                break; 
+            case "valorMaximo":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= filtros[filtro]);
+                break; 
+            case "descripcionContiene":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.toLowerCase().includes(filtros[filtro].toLowerCase()));
+                break;
+            case "etiquetasTiene":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.etiquetas.some(etiqueta => filtros[filtro].includes(etiqueta)));
+                break; 
+        }
+    }
+
+    return gastosFiltrados;
+}
 
 function agruparGastos() {}
 
