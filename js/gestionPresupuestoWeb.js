@@ -376,19 +376,19 @@ function submiteditformHandle(){
 //bguardargastos
 let accionguardargastos = new guardarGastosWeb();
 let botonguardargastos = document.getElementById("guardar-gastos");
-botonguardargastos.addEventListener("submit", accionguardargastos);
+botonguardargastos.addEventListener("click", accionguardargastos);
 //bcargargastos
 let accioncargargastos = new cargarGastosWeb();
 let botoncargargastos = document.getElementById("cargar-gastos");
-botoncargargastos.addEventListener("submit", accioncargargastos);
+botoncargargastos.addEventListener("click", accioncargargastos);
 
 function guardarGastosWeb(){
   this.handleEvent = function(event){
 
-      let  listagatosaguardar = gesPres.listarGastos();
+      let listagatosaguardar = gesPres.listarGastos();
+      localStorage.setItem('GestorGastosDWEC', JSON.stringify(listagatosaguardar)); 
 
-        localStorage.setItem('GestorGastosDWE',JSON.stringify(listagatosaguardar)); 
-
+      
   }
 
 }
@@ -408,7 +408,7 @@ this.handleEvent = function(event){
         gesPres.cargarGastos(listadegastosguardados)
     }
 
-    repintar();
+    repintar()
 
 }
 }
