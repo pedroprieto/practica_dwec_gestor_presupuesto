@@ -329,11 +329,12 @@ function filtrarGastosWeb() {
             etiquetasTiene : etiquetas
         }
 
-        gesPres.filtrarGastos(filtro);
+        let gastosFiltrados = gesPres.filtrarGastos(filtro);
 
-        let listaCompleta = gesPres.listarGastos();
-        for (let elemento of listaCompleta) {
-        mostrarGastoWeb('listado-gastos-completo', elemento);
+        document.getElementById('listado-gastos-completo').innerHTML = "";
+        
+        for (let elemento of gastosFiltrados) {
+            mostrarGastoWeb('listado-gastos-completo', elemento);
         }
     }
 }
