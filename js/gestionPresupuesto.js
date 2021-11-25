@@ -63,6 +63,29 @@ function CrearGasto(descripcion, cantidad, fecha, ...etiquetas) {
     this.borrarEtiquetas = function(...etiquetas) {
         this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetas.includes(etiqueta));
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        const fecha = new Date(this.fecha);
+        const mes = fecha.getUTCMonth() < 9 ? `0${fecha.getUTCMonth() + 1}` : fecha.getUTCMonth() + 1;
+        const dia = fecha.getUTCDate() < 10 ? `0${fecha.getUTCDate()}` : fecha.getUTCDate();
+        const anyo = fecha.getUTCFullYear();
+
+        let agrupacion = "";
+
+        switch (periodo) {
+            case "dia":
+                agrupacion = `${anyo}-${mes}-${dia}`;
+                break;
+            case "mes":
+                agrupacion = `${anyo}-${mes}`;
+                break;
+            case "anyo":
+                agrupacion = anyo;
+                break;
+        }
+
+        return agrupacion;
+    }
 }
 
 function listarGastos() {
@@ -91,9 +114,52 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
+function filtrarGastos(filtros) {
+    let gastosFiltrados = gastos;
+
+    for (const filtro in filtros) {
+        switch (filtro) {
+            case "fechaDesde":
+                gastosFiltrados = gastosFiltrados.filter(gasto => new Date(gasto.fecha) >= new Date(filtros[filtro]));
+                break;
+            case "fechaHasta":
+                gastosFiltrados = gastosFiltrados.filter(gasto => new Date(gasto.fecha) <= new Date(filtros[filtro]));
+                break; 
+            case "valorMinimo":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= filtros[filtro]);
+                break; 
+            case "valorMaximo":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= filtros[filtro]);
+                break; 
+            case "descripcionContiene":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.toLowerCase().includes(filtros[filtro].toLowerCase()));
+                break;
+            case "etiquetasTiene":
+                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.etiquetas.some(etiqueta => filtros[filtro].includes(etiqueta)));
+                break; 
+        }
+    }
+
+    return gastosFiltrados;
+}
+
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+    let filtros = {};
+    if (etiquetas !== undefined) filtros["etiquetasTiene"] = etiquetas;
+    if (fechaDesde !== undefined) filtros["fechaDesde"] = fechaDesde;
+    if (fechaHasta !== undefined) filtros["fechaHasta"] = fechaHasta;
+
+    const gastosFiltrados = filtrarGastos(filtros);
+
+    const agrupacion = gastosFiltrados.reduce((acumulador, gasto, index, array) => {
+        const periodoGasto = gasto.obtenerPeriodoAgrupacion(periodo);
+        acumulador[periodoGasto] = (acumulador[periodoGasto] === undefined) ? gasto.valor : acumulador[periodoGasto] + gasto.valor;
+        return acumulador;
+    }, {});
+
+    return agrupacion;
+}
+
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
@@ -102,5 +168,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
