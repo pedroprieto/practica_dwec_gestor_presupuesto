@@ -322,6 +322,12 @@ function EditarHandleCopiaForm()
     }
 }
 
+//Esta función se utilizará como manejadora de eventos del formulario formulario-filtrado. Realizará las siguientes tareas:
+function filtrarGastoWeb() 
+{
+
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,

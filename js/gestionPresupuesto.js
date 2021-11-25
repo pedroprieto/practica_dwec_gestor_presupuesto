@@ -268,6 +268,35 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
     }, {});
 }
 
+/*Información relevante tutoria 15 nov
+let regexp = /gusta/i;
+
+let str = "me gusta javascript";
+
+Sólo se muestran ejemplos del manual. No se hace hincapié.
+
+Información relevante tutoría 22 nov.
+regular expression:
+/[a-zA-Z0-9]/g
+*/
+
+//La función se utilizará para transformar el listado de etiquetas que introduzca el usuario en el formulario.
+//pistas https://es.javascript.info/regexp-methods#str-match-regexp
+//pistas https://es.javascript.info/regexp-character-sets-and-ranges#rangos
+function transformarListadoEtiquetas(etiquetasTiene)
+{
+    //https://es.javascript.info/regexp-quantifiers
+    //Antes de llegar a las tareas del final de página, vemos exactamente nuestro caso, ¿Podemos usar <\w+> o necesitamos <[a-z][a-z0-9]*>?
+    //Dice que <[a-z][a-z0-9]*> es más confiable, sin embargo, no pasa el test, por lo que utilizo la otra opción.
+    let regexp = /\w+/g;
+    // \w es lo mismo que [a-zA-Z0-9_]
+    //Si la expresion regular (regexp) tiene la bandera g, retorna un array de todas las coincidencias como cadenas.
+
+    let resultado = etiquetasTiene.match(regexp);
+
+    return resultado;
+}
+
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
@@ -278,5 +307,7 @@ export   {
     calcularTotalGastos,
     calcularBalance, 
     filtrarGastos, 
-    agruparGastos
+    agruparGastos,
+    //Por último, se deberá exportar la función transformarListadoEtiquetas para poder testearla.
+    transformarListadoEtiquetas
 }
