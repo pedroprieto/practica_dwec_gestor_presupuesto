@@ -385,6 +385,9 @@ botoncargargastos.addEventListener("submit", accioncargargastos);
 function guardarGastosWeb(){
   this.handleEvent = function(event){
 
+        listagatosaguardar = gesPres.listarGastos();
+
+        localStorage.setItem('GestorGastosDWE',JSON.stringify(listagatosaguardar)); 
 
   }
 
