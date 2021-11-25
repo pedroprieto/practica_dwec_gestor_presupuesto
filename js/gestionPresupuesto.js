@@ -137,7 +137,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 }
 
+function transformarListadoEtiquetas(etiquetas){
 
+    let filtroEtiquetas = /[a-z0-9]+/gi; 
+    let etiquetasSeparadas = etiquetas.match(filtroEtiquetas);
+
+    return etiquetasSeparadas;
+}
 
 function listarGastos(){
 
@@ -279,5 +285,6 @@ export  {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    transformarListadoEtiquetas,
     
 }

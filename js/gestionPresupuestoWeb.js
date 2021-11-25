@@ -87,7 +87,52 @@ let botonborrar = document.createElement("button");
     divGen.append(botoneditarform);
 
 }
-   
+
+let accionSubmitparafiltrarform = new filtrarGastosWeb();
+let botonFormularioFiltr = document.getElementById("formulario-filtrado");
+botonFormularioFiltr.addEventListener("submit", accionSubmitparafiltrarform);
+
+function filtrarGastosWeb(){
+
+  this.handleEvent = function(event){
+
+    event.preventDefault()
+    let formfiltr = event.currentTarget;
+
+    let descipcionformfilt = formfiltr.elements["formulario-filtrado-descripcion"].value;
+    let valorminformfilt = formfiltr.elements["formulario-filtrado-valor-minimo"].value;
+    valorminformfilt = parseFloat(valorminformfilt);
+    let valormaxformfilt = formfiltr.elements["formulario-filtrado-valor-maximo"].value;
+    valormaxformfilt = parseFloat(valormaxformfilt);
+    let fechadesdeformfilt = formfiltr.elements["formulario-filtrado-fecha-desde"].value;
+    let fechahastaformfilt = formfiltr.elements["formulario-filtrado-fecha-hasta"].value;
+    let etiquetasformfilt = formfiltr.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+
+    if(etiquetasformfilt == "")
+    {
+        //
+    }
+    else{
+
+        etiquetasformfilt = gesPres.transformarListadoEtiquetas(etiquetasformfilt);
+
+    }
+
+    let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: fechadesdeformfilt, fechaHasta: fechahastaformfilt, valorMinimo: valorminformfilt, valorMaximo: valormaxformfilt, descripcionContiene: descipcionformfilt, etiquetasTiene: etiquetasformfilt});
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
+        for (let gasto of gastosFiltrados) {
+            
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        }
+
+
+  }
+}  
+
+
 function EditarHandleFormulario(){
 
     this.handleEvent = function(event){
@@ -273,15 +318,15 @@ function nuevoGastoWebFormulario(){
 }
 function enviarnuevoGastoHandleform()
 {
-    this.handleEvent = function(e)
+    this.handleEvent = function(event)
     {
-        e.preventDefault();
-        let actual = e.currentTarget;
+        event.preventDefault();
+        let formactivo = event.currentTarget;
 
-        let nuevaDesc = actual.elements.descripcion.value;
-        let nuevoValor = actual.elements.valor.value;
-        let nuevaFecha = actual.elements.fecha.value;
-        let nuevasEtiquetas = actual.elements.etiquetas.value;
+        let nuevaDesc = formactivo.elements.descripcion.value;
+        let nuevoValor = formactivo.elements.valor.value;
+        let nuevaFecha = formactivo.elements.fecha.value;
+        let nuevasEtiquetas = formactivo.elements.etiquetas.value;
 
         nuevoValor = parseFloat(nuevoValor);
       
