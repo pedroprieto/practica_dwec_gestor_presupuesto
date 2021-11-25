@@ -143,7 +143,22 @@ function filtrarGastos(filtros) {
     return gastosFiltrados;
 }
 
-function agruparGastos() {}
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+    let filtros = {};
+    if (etiquetas !== undefined) filtros["etiquetasTiene"] = etiquetas;
+    if (fechaDesde !== undefined) filtros["fechaDesde"] = fechaDesde;
+    if (fechaHasta !== undefined) filtros["fechaHasta"] = fechaHasta;
+
+    const gastosFiltrados = filtrarGastos(filtros);
+
+    const agrupacion = gastosFiltrados.reduce((acumulador, gasto, index, array) => {
+        const periodoGasto = gasto.obtenerPeriodoAgrupacion(periodo);
+        acumulador[periodoGasto] = (acumulador[periodoGasto] === undefined) ? gasto.valor : acumulador[periodoGasto] + gasto.valor;
+        return acumulador;
+    }, {});
+
+    return agrupacion;
+}
 
 export   {
     mostrarPresupuesto,
