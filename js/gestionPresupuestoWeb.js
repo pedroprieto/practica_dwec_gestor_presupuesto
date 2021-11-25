@@ -329,7 +329,7 @@ function enviarnuevoGastoHandleform()
 
         nuevoValor = parseFloat(nuevoValor);
       
-        let gasto1 = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, nuevasEtiquetas);
+        let gasto1 = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, ...nuevasEtiquetas);
         gesPres.anyadirGasto(gasto1);
 
         let anyadirGasto = document.getElementById("anyadirgasto-formulario");
