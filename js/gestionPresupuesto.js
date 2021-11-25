@@ -41,7 +41,7 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
     } else {
         
         this.etiquetas = etiquetas;
-    }  
+    }   
     
     this.anyadirEtiquetas = function (...etiqueta) {
         
@@ -54,6 +54,8 @@ function CrearGasto(descripcion, valor, fecha , ...etiquetas) {
             } 
         }
     }
+
+    
 
     this.borrarEtiquetas = function (...etiqueta) {
         

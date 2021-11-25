@@ -50,9 +50,9 @@ function nuevoGastoWeb() {
     let newFecha = prompt("Introduce una fecha");
     let newEtiqueta = prompt("Introduce las etiquetas separadas por comas");
 
-    let etiquetasSueltas = newEtiqueta.split(', ');
+    let etiquetas = newEtiqueta.split(', ');
 
-    let gastoNuevo = new gesPres.CrearGasto(newDescripcion, newValor, newFecha, etiquetasSueltas);
+    let gastoNuevo = new gesPres.CrearGasto(newDescripcion, newValor, newFecha, etiquetas);
     
     gesPres.anyadirGasto(gastoNuevo);
 
@@ -153,7 +153,10 @@ function submitHandle(){
         let etiquetas = formulario.elements.etiquetas.value;
         let etiquetasSueltas = etiquetas.split(', ');                      
 
-        let gasto = new gesPres.CrearGasto(descripcion, valor, fecha, etiquetasSueltas);        
+        let gasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetasSueltas);
+        
+        // aquí estaba el fallo, me faltaba anyadir el operador spread a las etiquetas.
+
         gesPres.anyadirGasto(gasto);   
         
         repintar();
