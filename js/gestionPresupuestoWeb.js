@@ -332,13 +332,14 @@ function filtrarGastosWeb() {
         let gastosFiltrados = gesPres.filtrarGastos(filtro);
 
         document.getElementById('listado-gastos-completo').innerHTML = "";
-        
+
         for (let elemento of gastosFiltrados) {
             mostrarGastoWeb('listado-gastos-completo', elemento);
         }
     }
 }
 
+//botón de filtrado
 let filtrado = document.getElementById('formulario-filtrado');
 let objFiltrar = new filtrarGastosWeb();
 filtrado.addEventListener('submit', objFiltrar);
