@@ -3,7 +3,6 @@ function mostrarDatoEnId(idElemento, valor) {
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
-
     // Elemento raiz del gasto
     const gastoHTLM = document.createElement('div');
     gastoHTLM.className = 'gasto';
@@ -45,9 +44,43 @@ function mostrarGastoWeb(idElemento, gasto) {
     document.getElementById(idElemento).append(gastoHTLM);
 }
 
-function mostrarGastosAgrupadosWeb(idElemento, agrup, agrupacion) {
-    let agrupacionHTLM = document.createElement('div', {class: 'agrupacion'});
-    document.getElementById(idElemento).innerHTML = agrupacionHTLM;
+function mostrarGastosAgrupadosWeb(idElemento, agrupacion, periodo) {
+    // Elemento raiz de la agrupación
+    const agrupacionHTLM = document.createElement('div');
+    agrupacionHTLM.className = 'agrupacion';
+
+    // Titulo
+    const tituloHTML = document.createElement('h1');
+    const tituloText = document.createTextNode(`Gastos agrupados por ${periodo}`);
+    tituloHTML.appendChild(tituloText);
+    agrupacionHTLM.appendChild(tituloHTML);
+
+    // Agrupación
+    for (const agrupacionDato in agrupacion) {
+
+        // Elemento raiz del dato de la agrupación
+        const agrupacionDatoHTML = document.createElement('div');
+        agrupacionDatoHTML.className = 'agrupacion-dato';
+
+        // Clave dato agrupación
+        const agrupacionDatoClaveHTML = document.createElement('span');
+        agrupacionDatoClaveHTML.className = 'agrupacion-dato-clave';
+        const agrupacionDatoClaveText = document.createTextNode(agrupacionDato);
+        agrupacionDatoClaveHTML.appendChild(agrupacionDatoClaveText);
+        agrupacionDatoHTML.appendChild(agrupacionDatoClaveHTML);
+
+        // Valor dato agrupación
+        const agrupacionDatoValorHTML = document.createElement('span');
+        agrupacionDatoValorHTML.className = 'agrupacion-dato-valor';
+        const agrupacionDatoValorText = document.createTextNode(agrupacion[agrupacionDato]);
+        agrupacionDatoValorHTML.appendChild(agrupacionDatoValorText);
+        agrupacionDatoHTML.appendChild(agrupacionDatoValorHTML);
+
+        // Añadir dato agrupación al elemento raiz.
+        agrupacionHTLM.appendChild(agrupacionDatoHTML);
+    }
+    
+    document.getElementById(idElemento).append(agrupacionHTLM);
 }
 
 export {
