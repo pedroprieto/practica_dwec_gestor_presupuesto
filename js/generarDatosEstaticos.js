@@ -1,3 +1,5 @@
+"use strict";
+
 import * as gestionPres from "./gestionPresupuesto.js";
 import * as gestionPresWeb from "./gestionPresupuestoWeb.js";
 
@@ -60,3 +62,9 @@ for (let g of gastosFil4)
 gestionPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPres.agruparGastos("dia"), "día");
 gestionPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPres.agruparGastos("mes"), "mes");
 gestionPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPres.agruparGastos("anyo"), "año"); 
+
+document.getElementById("actualizarpresupuesto").addEventListener("click", gestionPresWeb.actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", gestionPresWeb.nuevoGastoWeb);
+
+
+
