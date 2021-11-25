@@ -70,7 +70,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let etiquetasFormato = "";
 
         etiquetasFormato += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
-        etiquetasFormato += `Fecha: ${fechaFormato.toLocaleString('es-ES')}\n`;
+        etiquetasFormato += `Fecha: ${fechaFormato.toLocaleString()}\n`;
         etiquetasFormato += `Etiquetas:\n`;
 
         this.etiquetas.forEach(etiq => {
