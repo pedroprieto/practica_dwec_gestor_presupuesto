@@ -304,7 +304,6 @@ function nuevoGastoWebFormulario(){
 
     let botonanyadirform = document.getElementById("anyadirgasto-formulario");
     botonanyadirform.disabled = true;
-
     let formhandleEnvioboton = new enviarnuevoGastoHandleform();
    
     form.addEventListener("submit", formhandleEnvioboton);
@@ -374,8 +373,28 @@ function submiteditformHandle(){
     }
 
 }
+//bguardargastos
+let accionguardargastos = new guardarGastosWeb();
+let botonguardargastos = document.getElementById("guardar-gastos");
+botonguardargastos.addEventListener("submit", accionguardargastos);
+//bcargargastos
+let accioncargargastos = new cargarGastosWeb();
+let botoncargargastos = document.getElementById("cargar-gastos");
+botoncargargastos.addEventListener("submit", accioncargargastos);
+
+function guardarGastosWeb(){
+  this.handleEvent = function(event){
 
 
+  }
+
+}
+function cargarGastosWeb(){
+this.handleEvent = function(event){
+
+
+}
+}
 
 export  {
     mostrarDatoEnId,
