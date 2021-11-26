@@ -110,10 +110,8 @@ function EditarHandleFormulario() {
       .getElementById("formulario-template")
       .content.cloneNode(true);
     let divGasto = this.div;
-    divGasto.append(plantillaFormulario);
 
-    let datos = document.getElementById("gree");
-    //let datos = document.body.querySelector("form");
+    let datos = plantillaFormulario.querySelector("form");
 
     datos.elements.descripcion.value = this.gasto.descripcion;
     datos.elements.valor.value = this.gasto.valor;
@@ -147,6 +145,7 @@ function EditarHandleFormulario() {
     objetoCancelar.asignacion = event.currentTarget;
 
     datos.lastElementChild.addEventListener("click", objetoCancelar);
+    divGasto.append(plantillaFormulario);
   };
 }
 
@@ -311,20 +310,9 @@ function nuevoGastoWebFormulario() {
     .content.cloneNode(true);
 
   let control = document.getElementById("controlesprincipales");
-  control.append(plantillaFormulario);
 
-  /* let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    var datos = plantillaFormulario.querySelector("form");
-    */
+  var datos = plantillaFormulario.querySelector("form");
 
-  /* let plantillaFormulario = document.getElementById("formulario-template");
-    var formulario = plantillaFormulario.querySelector("form");
-    */
-
-  /*let plantillaFormularioHijos = document.getElementById("formulario-template");
-  let datos = plantillaFormularioHijos.content.children[0];*/
-
-  let datos = document.getElementById("gree");
   datos.addEventListener("submit", submitBoton);
 
   let cancelar = new CancelarHandle();
@@ -332,6 +320,7 @@ function nuevoGastoWebFormulario() {
   cancelar.asignacion = event.currentTarget;
 
   datos.lastElementChild.addEventListener("click", cancelar);
+  control.append(plantillaFormulario);
 }
 
 let anyadirFormulario = document.getElementById("anyadirgasto-formulario");
