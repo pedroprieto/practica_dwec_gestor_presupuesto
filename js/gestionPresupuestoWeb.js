@@ -322,17 +322,12 @@ function EditarHandleCopiaForm()
     }
 }
 
-//Esta función se utilizará como manejadora de eventos del formulario formulario-filtrado. Realizará las siguientes tareas:
 function filtrarGastoWeb() 
 {
     this.handleEvent = function(e)
     {
-        //Prevenir el envío del formulario (comportamiento por defecto) mediante event.preventDefault(). Ten en cuenta que el 
-        //evento submit de un formulario provoca su envío a una URL y por tanto el abandono (o la recarga) de la página: en este 
-        //caso no queremos enviar nada, sino que queremos ejecutar un código JavaScript sin abandonar la página.
         e.preventDefault();
 
-        //Recoger los datos del formulario formulario-filtrado. El primer div en interaccionHTML es filtrar-gastos.
         let plantillaFormulario = document.getElementById("filtrar-gastos");
         var formulario = plantillaFormulario.querySelector("form");
 
@@ -343,26 +338,17 @@ function filtrarGastoWeb()
         let descripcionContiene = formulario.elements["formulario-filtrado-descripcion"].value;    
         let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
 
-        //Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a la función transformarListadoEtiquetas
-        //(recordad que está en el paquete gestionpresupuesto.js) para que devuelva un array de etiquetas válidas.
         if (etiquetasTiene != "")
         {
             etiquetasTiene = gesPres.transformarListadoEtiquetas(etiquetasTiene);
         }
 
-        //Crear el objeto necesario para llamar a la función filtrarGastos del paquete gestionPresupuesto.js.
-        //Recuerda que dicha función admite un solo parámetro que es un objeto con varias propiedades (valorMinimo, valorMaximo, etiquetasTiene,…).
-        //Para ello podemos utilizar la misma que utilizamos en generarDatosEstaticos. Guardamos todo en un objeto y se lo pasamos o lo pasamos directamente.
         let opciones = ({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene});
 
-        //Al igual que hicimos para repintar, borramos el contenido de div#listado-gastos-completo para el paso siguiente. 
-        //Arreglamos así el test de devolver todos los gastos.
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
-        //Llamar a la función filtrarGastos
         let gastosFiltrados = gesPres.filtrarGastos(opciones);
 
-        //Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb.
         for (let g of gastosFiltrados)
         {   
             mostrarGastoWeb("listado-gastos-completo", g);
@@ -370,10 +356,20 @@ function filtrarGastoWeb()
     }   
 }
 
-//Una vez definida la función deberás añadirla como manejadora del evento submit del formulario formulario-filtrado.
 let manejadorFiltrado = new filtrarGastoWeb();
 let butFiltrado = document.getElementById("formulario-filtrado");
 butFiltrado.addEventListener("submit", manejadorFiltrado);
+
+
+/*
+tutoria 22 nov
+    let usuario = {nombre: "pedro", apellido: "Prieto"}
+    JSON.stringify(usuario) 
+    JSON.parse(usuario_texto).nombre
+    objetos a textos y al revés
+
+    localStorage.NOMBRECLAVE = "texto";
+*/
 
 export {
     mostrarDatoEnId,
