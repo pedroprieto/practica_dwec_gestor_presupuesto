@@ -290,18 +290,21 @@ function cargarGastosWeb() {
 
     this.handleEvent = function (e) {
 
-        let datosCargados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+        let datosCargados = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
 
-        gesPres.cargarGastos(datosCargados);
+        if (datosCargados){
+            
+            gesPres.cargarGastos(datosCargados);
 
-        if (!datosCargados) {
+        } else {
             
             gesPres.cargarGastos([]);
-        }                   
-            
+        }
+        
+        repintar();
     }
 
-    repintar();
+    
 
 }
 
