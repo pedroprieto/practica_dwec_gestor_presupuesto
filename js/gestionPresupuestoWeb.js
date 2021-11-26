@@ -47,6 +47,41 @@ function nuevoGastoWeb() {
 }
 
 //------------------------------------------------------------//
+// --------------NUEVO GASTO FORMULARIO------------------------
+function nuevoGastoWebFormulario(){
+
+    // Crear una copia del formulario web definido en la plantilla HTML
+    let template = document.getElementById("formulario-template").content.cloneNode(true);
+
+    // Acceder al elemento <form> dentro de ese fragmento de documento
+    let form = template.querySelector("form");
+
+    let formTemplate = document.getElementById("controlesprincipales");
+    formTemplate.append(form);
+
+    // DESHABILITAR BOTÓN
+        // Buscamos el botón mediante su id
+        let botonanyadirform = document.getElementById("anyadirgasto-formulario");
+        botonanyadirform.disabled = true;
+
+    // BOTÓN SUBMIT
+        // Crear un manejador de evento para el evento submit del formulario
+        let SubmitNuevoHandle = new SubmitNuevoHandleForm();
+        form.addEventListener("submit", SubmitNuevoHandle);
+
+    // BOTÓN CANCELAR
+        // Crear un manejador de evento para el evento click del botón Cancelar del formulario
+        let handleCancel = new cancelHandleForm();        
+
+        // Localizamos el botón 
+        let btnCancelar = form.querySelector("button.cancelar");
+        btnCancelar.addEventListener("click", handleCancel);
+
+    repintar();
+
+}
+
+//------------------------------------------------------------//
 //-------------------------BOTONES----------------------------
 //
 // BOTONES Y SUS MANEJADORES DE EVENTOS
@@ -175,8 +210,8 @@ function mostrarGastoWeb( idElemento, gasto ){
         botonEditarForm.className = "gasto-editar-formulario";
         botonEditarForm.textContent = "Editar (formulario)";
 
-        // Crear un nuevo objeto a partir de la función constructora EditarHandleFormulario
-        let evEditarForm = new EditarHandleFormulario();
+        // Crear un nuevo objeto a partir de la función constructora EditarHandleForm
+        let evEditarForm = new EditarHandleForm();
 
         // Establecer la propiedad gasto del objeto creado al objeto gasto
         evEditarForm.gasto = gasto;
@@ -194,8 +229,92 @@ function mostrarGastoWeb( idElemento, gasto ){
 //------------------------------------------------------------//
 // ---------------FUNCIONES CONSTRUCTORAS----------------------
 
+// EVENTO <BOTÓN> ENVIAR NUEVO GASTO FORMULARIO
+function SubmitNuevoHandleForm()
+{
+    this.handleEvent = function(e){
+
+        // Prevenir el envío del formulario
+        e.preventDefault();
+
+        // Acceso al formulario
+        let actual = e.currentTarget;
+
+        // Recojo las propiedades del gasto
+        let newDesc = actual.elements.descripcion.value;
+        let newValor = actual.elements.valor.value;
+        let newFecha = actual.elements.fecha.value;
+        let newEtiquetas = actual.elements.etiquetas.value;
+
+        // Convertir el valor a número
+        newValor = parseFloat(newValor);
+
+        // Convertir string a array
+        newEtiquetas = newEtiquetas.split(',');
+
+        // Creo un nuevo gasto
+        let gasto = new gestionPresupuesto.CrearGasto(newDesc, newValor, newFecha, newEtiquetas);
+        gestionPresupuesto.anyadirGasto(gasto);
+
+        // Habilito el botón 
+        let anyadirGasto = document.getElementById("anyadirgasto-formulario");
+        anyadirGasto.disabled = false;
+
+        // Llamar a la función repintar
+        repintar();
+    }
+}
+//------------------------------------------------------------//
+// EVENTO <BOTÓN> CANCELAR ENVÍO FORMULARIO
+function cancelHandleForm()
+{
+    this.handleEvent = function(event){
+
+        // Borro los datos actuales del formulario
+        event.currentTarget.parentNode.remove();
+
+        // Habilito el botón
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+
+        // Llamar a la función repintar
+        repintar();
+    }
+}
+//------------------------------------------------------------//
+// EVENTO <BOTÓN> SUBMIT EDITAR GASTO FORMULARIO
+function SubmitEditarHandleForm(){
+    this.handleEvent = function(event){
+        
+        // Prevenir el envío del formulario
+        event.preventDefault();
+
+        // Acceso al formulario
+        let form = event.currentTarget;
+
+        // Recojo las propiedades del gasto
+        let ndescripcion = form.elements.descripcion.value;
+        let nvalor = form.elements.valor.value;
+        let nfecha =  form.elements.fecha.value;
+        let netiquetas = form.elements.etiquetas.value;
+
+        // Convertir el valor a número
+        nvalor = parseFloat(nvalor);
+
+        // Actualizo el gasto
+        let netiquetasArray = netiquetas.split(',');
+
+        this.gasto.actualizarDescripcion(ndescripcion);
+        this.gasto.actualizarValor(nvalor);
+        this.gasto.actualizarFecha(nfecha);
+        this.gasto.anyadirEtiquetas(...netiquetasArray);
+
+        // Llamar a la función repintar
+        repintar();
+    }
+}
+//------------------------------------------------------------//
 // EVENTO <BOTÓN> EDITAR GASTO FORMULARIO
-function EditarHandleFormulario(){
+function EditarHandleForm(){
 
     this.handleEvent = function(event){
 
@@ -217,7 +336,7 @@ function EditarHandleFormulario(){
         form.elements.etiquetas.value = this.gasto.etiquetas;
 
         //  Función constructora para acceder al gasto y actualizarlo
-        let Submit = new SubmitEditarHandle();
+        let Submit = new SubmitEditarHandleForm();
 
         // Establecer la propiedad gasto del objeto creado al objeto gasto
         Submit.gasto = this.gasto;
@@ -226,7 +345,7 @@ function EditarHandleFormulario(){
         form.addEventListener('submit', Submit);
 
         //  Función constructora para cancelar la edición
-        let handleCancel = new cancelHandle(); 
+        let handleCancel = new cancelHandleForm(); 
 
         // Busco en el formulario el botton cuya clase es cancelar 
         let btnCancelar = form.querySelector("button.cancelar");
@@ -236,6 +355,7 @@ function EditarHandleFormulario(){
     }
 }
 
+//------------------------------------------------------------//
 // EVENTO <BOTÓN> EDITAR GASTO
 function EditarHandle(){
 
