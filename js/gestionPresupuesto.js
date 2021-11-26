@@ -98,6 +98,29 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     if (etiquetas.length > 0) {
         this.anyadirEtiquetas(...etiquetas);
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        let fechaGasto = new Date(this.fecha);
+        fechaGasto = fechaGasto.toISOString();
+
+        let periodoAgrupacion = "";
+
+        switch (periodo) {
+            case 'anyo':
+                periodoAgrupacion = fechaGasto.slice(0, 4);
+                break;
+            case 'mes':
+                periodoAgrupacion = fechaGasto.slice(0, 7);
+                break;
+            case 'dia':
+                periodoAgrupacion = fechaGasto.slice(0, 10);
+                break;
+            default:
+                break;
+        }
+
+        return periodoAgrupacion;
+    }
 }
 
 function listarGastos() {
