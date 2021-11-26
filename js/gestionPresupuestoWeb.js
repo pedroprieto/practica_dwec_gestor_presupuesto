@@ -168,7 +168,7 @@ function mostrarGastoWeb( idElemento, gasto ){
     //------------------------------------------------------------//    
 
     //------------------------------------------------------------//
-    // BOTÓN BORRAR GASTO 
+    // BOTÓN EDITAR FORMULARIO 
         // Crear un botón con texto Editar Formulario de tipo button
         let botonEditarForm = document.createElement("button");
         botonEditarForm.type ="button";
@@ -193,6 +193,48 @@ function mostrarGastoWeb( idElemento, gasto ){
 
 //------------------------------------------------------------//
 // ---------------FUNCIONES CONSTRUCTORAS----------------------
+
+// EVENTO <BOTÓN> EDITAR GASTO FORMULARIO
+function EditarHandleFormulario(){
+
+    this.handleEvent = function(event){
+
+        // Crear una copia del formulario web definido en la plantilla HTML
+        let plantillaForm = document.getElementById('formulario-template').content.cloneNode(true);
+
+        // Acceder al elemento <form> dentro de ese fragmento de documento
+        let form = plantillaForm.querySelector('form');
+
+        // Elemento que provoca el evento
+        event.currentTarget.after(form);
+        let botonEditar = event.currentTarget;
+        botonEditar.disabled = true;
+
+        // Actualizar los campos del formulario con la información del gasto que se está editando
+        form.elements.descripcion.value = this.gasto.descripcion;
+        form.elements.valor.value = this.gasto.valor;
+        form.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+        form.elements.etiquetas.value = this.gasto.etiquetas;
+
+        //  Función constructora para acceder al gasto y actualizarlo
+        let Submit = new SubmitEditarHandle();
+
+        // Establecer la propiedad gasto del objeto creado al objeto gasto
+        Submit.gasto = this.gasto;
+
+        // Añade el objeto al manejador del evento click del botón Submit
+        form.addEventListener('submit', Submit);
+
+        //  Función constructora para cancelar la edición
+        let handleCancel = new cancelHandle(); 
+
+        // Busco en el formulario el botton cuya clase es cancelar 
+        let btnCancelar = form.querySelector("button.cancelar");
+
+        // Añade el objeto al manejador del evento click del botón Cancelar
+        btnCancelar.addEventListener("click", handleCancel);
+    }
+}
 
 // EVENTO <BOTÓN> EDITAR GASTO
 function EditarHandle(){
