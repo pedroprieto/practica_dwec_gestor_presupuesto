@@ -115,32 +115,18 @@ function calcularBalance() {
 }
 
 function filtrarGastos(filtros) {
-    let gastosFiltrados = gastos;
+    return gastos.filter(gasto => {
+        let resultado = true;
 
-    for (const filtro in filtros) {
-        switch (filtro) {
-            case "fechaDesde":
-                gastosFiltrados = gastosFiltrados.filter(gasto => new Date(gasto.fecha) >= new Date(filtros[filtro]));
-                break;
-            case "fechaHasta":
-                gastosFiltrados = gastosFiltrados.filter(gasto => new Date(gasto.fecha) <= new Date(filtros[filtro]));
-                break; 
-            case "valorMinimo":
-                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= filtros[filtro]);
-                break; 
-            case "valorMaximo":
-                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= filtros[filtro]);
-                break; 
-            case "descripcionContiene":
-                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.toLowerCase().includes(filtros[filtro].toLowerCase()));
-                break;
-            case "etiquetasTiene":
-                gastosFiltrados = gastosFiltrados.filter(gasto => gasto.etiquetas.some(etiqueta => filtros[filtro].includes(etiqueta)));
-                break; 
-        }
-    }
+        if (filtros.fechaDesde && new Date(gasto.fecha) < new Date(filtros.fechaDesde))resultado = false;
+        if (filtros.fechaHasta && new Date(gasto.fecha) > new Date(filtros.fechaHasta)) resultado = false;
+        if (filtros.valorMinimo && gasto.valor < filtros.valorMinimo) resultado = false;
+        if (filtros.valorMaximo && gasto.valor > filtros.valorMaximo) resultado = false;
+        if (filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) resultado = false;
+        if (filtros.etiquetasTiene && !gasto.etiquetas.some(etiqueta => filtros.etiquetasTiene.includes(etiqueta))) resultado = false;
 
-    return gastosFiltrados;
+        return resultado;
+    });
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
