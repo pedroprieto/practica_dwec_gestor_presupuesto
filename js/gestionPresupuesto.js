@@ -115,10 +115,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
   };
-
-  function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
-
-  }
 }
 
 function listarGastos() {
@@ -156,14 +152,66 @@ function calcularBalance() {
 }
 
 function filtrarGastos(filtro) {
+  return gastos.filter(function (element) {
+    let fecha = element.fecha;
+    let valor = element.valor;
+    let descripcion = element.descripcion;
+    let etiquetas = element.etiquetas;
 
+    // Tratar parametros
+    let fechaDesde = Date.parse(filtro.fechaDesde);
+    let fechaHasta = Date.parse(filtro.fechaHasta);
+    let valorMinimo = filtro.valorMinimo;
+    let valorMaximo = filtro.valorMaximo;
+    let descripcionContiene = filtro.descripcionContiene;
+    let etiquetasTiene = filtro.etiquetasTiene;
+
+    let incluir = true; // Por excluir seria muy largo de comprobar
+
+    // Fecha
+    if (fecha < fechaDesde || fecha > fechaHasta) {
+      incluir = false;
+    }
+
+    // // Valor
+    if (valor < valorMinimo || valor > valorMaximo) {
+      incluir = false;
+    }
+
+    // Descripcion
+    if (descripcionContiene && !descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())) {
+      incluir = false;
+    }
+
+    // Etiquetas
+    if (etiquetasTiene) {
+      var econtrado = false;
+
+      for (let etiqueta of etiquetasTiene) {
+        etiquetas.map(function (e) {
+          if (e.toLowerCase() == etiqueta.toLowerCase()) {        
+            econtrado = true;
+          }
+        });
+      }
+
+      if(!econtrado) {
+        incluir = false;
+      }
+    }
+
+    // Objeto vacio
+    if (Object.keys(filtro).length == 0) {
+      incluir = true;
+    }
+
+    return incluir;
+  });
 }
 
-function agruparGastos() {
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
 }
-
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
