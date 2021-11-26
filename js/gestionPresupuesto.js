@@ -1,6 +1,6 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+// TODO: Crear las funciones, objetos y letiables indicadas en el enunciado
 
-// TODO: Variable global
+// TODO: letiable global
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
@@ -91,6 +91,34 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       }
     }
   };
+
+  this.obtenerPeriodoAgrupacion = function (periodo) {
+    let d = new Date(this.fecha);
+    let mes = d.getMonth() + 1;
+
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    let dia = d.getDate();
+
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+
+    if (periodo == "dia") {
+      return `${d.getFullYear()}-${mes}-${dia}`;
+    } else if (periodo == "mes") {
+      return `${d.getFullYear()}-${mes}`;
+    } else if (periodo == "anyo") {
+      return `${d.getFullYear()}`;
+    }
+
+  };
+
+  function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+
+  }
 }
 
 function listarGastos() {
@@ -126,6 +154,17 @@ function calcularTotalGastos() {
 function calcularBalance() {
   return presupuesto - calcularTotalGastos();
 }
+
+function filtrarGastos(filtro) {
+
+}
+
+function agruparGastos() {
+
+}
+
+
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -137,7 +176,9 @@ export {
   anyadirGasto,
   borrarGasto,
   calcularTotalGastos,
-  calcularBalance
+  calcularBalance,
+  filtrarGastos,
+  agruparGastos
 }
 
 
