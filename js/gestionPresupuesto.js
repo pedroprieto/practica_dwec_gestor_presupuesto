@@ -173,7 +173,7 @@ function filtrarGastos(filtro) {
       incluir = false;
     }
 
-    // // Valor
+    // Valor
     if (valor < valorMinimo || valor > valorMaximo) {
       incluir = false;
     }
