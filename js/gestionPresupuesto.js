@@ -146,7 +146,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     return agrupacion;
 }
 
-export   {
+export {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
