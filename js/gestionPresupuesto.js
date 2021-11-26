@@ -188,11 +188,11 @@ function filtrarGastos(filtro) {
       var econtrado = false;
 
       for (let etiqueta of etiquetasTiene) {
-        etiquetas.map(function (e) {
+        for (let e of etiquetas) {
           if (e.toLowerCase() == etiqueta.toLowerCase()) {        
             econtrado = true;
           }
-        });
+        }
       }
 
       if(!econtrado) {
