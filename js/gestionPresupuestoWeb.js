@@ -1,35 +1,9 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
-
 function mostrarDatoEnId( idElemento, valor ){
 // Escribe el valor (texto) en el elemento HTML con id idElemento indicado
     let mostrarGasto = document.getElementById(idElemento);
     mostrarGasto.innerHTML = `${valor}`;
-}
-
-//------------------------------------------------------------//
-// ------------------------NUEVO GASTO------------------------
-function nuevoGastoWeb() {
-
-    // Pedir al usuario la información necesaria para crear un nuevo gasto
-    let desc = prompt("Introduce una descripción");
-    let valorString = prompt("Introduce un valor");
-    let fecha = prompt("Introduce una fecha");
-    let etiquetaString = prompt("Introduce una/s etiqueta/s");
-
-    // Conversión de string a float
-    let valorNumber = parseFloat(valorString);
-
-    // Separo el string y guardo cada elemento en un array
-    let arrayEtiquetas = etiquetaString.split(', ');
-
-    // Crear el nevo gasto
-    let gasto = new gestionPresupuesto.CrearGasto( desc, valorNumber, fecha, arrayEtiquetas );
-    gestionPresupuesto.anyadirGasto(gasto);
-
-    // Llamar a la función repintar
-    repintar();
-
 }
 
 //------------------------------------------------------------//
@@ -48,21 +22,38 @@ function actualizarPresupuestoWeb() {
 }
 
 //------------------------------------------------------------//
+// ------------------------NUEVO GASTO------------------------
+function nuevoGastoWeb() {
+
+    // Pedir al usuario la información necesaria para crear un nuevo gasto
+    let desc = prompt("Introduce una descripción");
+    let valorString = prompt("Introduce un valor");
+    let fecha = prompt("Introduce una fecha");
+    let etiquetaString = prompt("Introduce una/s etiqueta/s");
+
+    // Conversión de string a float
+    let valorNumber = parseFloat(valorString);
+
+    // Separo el string y guardo cada elemento en un array
+    let arrayEtiquetas = etiquetaString.split(', ');
+
+    // Crear el nuevo gasto
+    let gasto = new gestionPresupuesto.CrearGasto( desc, valorNumber, fecha, arrayEtiquetas );
+    gestionPresupuesto.anyadirGasto(gasto);
+
+    // Llamar a la función repintar
+    repintar();
+
+}
+
+//------------------------------------------------------------//
 //-------------------------BOTONES----------------------------
 //
-// BOTÓN ACTUALIZAR PRESUPUESTO 
-    // Obtengo el elemento botón correspondiente previamente
-    let buttonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+// BOTONES Y SUS MANEJADORES DE EVENTOS
 
-    // Manejadora del evento click del botón actualizarpresupuesto mediante addEventListener
-    buttonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
-    
-// BOTÓN AÑADIR GASTO 
-    // Obtengo el elemento botón correspondiente previamente
-    let buttonAnyadirGasto = document.getElementById("anyadirgasto");
-
-    // Manejadora del evento click del botón nuevoGastoWeb mediante addEventListener
-    buttonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+    document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+    document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+    document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 //------------------------------------------------------------//
 // ------------------MOSTRAR UN GASTO-------------------------
@@ -76,7 +67,6 @@ function mostrarGastoWeb( idElemento, gasto ){
         // <div class="gasto">        
         let divGasto = document.createElement('div');
         divGasto.className = "gasto";
-        divGasto.id = "gasto-editar";
 
             // <div  class="gasto-descripcion">
             let divDescripcion = document.createElement('div');
@@ -107,6 +97,30 @@ function mostrarGastoWeb( idElemento, gasto ){
         divGasto.append(divFecha);
         divGasto.append(divValor);
         divGasto.append(divEtiquetas);
+    //------------------------------------------------------------//
+
+    //------------------------------------------------------------//
+    // MOSTRAR Y BORRAR ETIQUETAS 
+    for (let e of gasto.etiquetas) {
+
+        // Crear un elemento HTML <span></span> para las etiquetas
+        let spanEtiqueta = document.createElement("span");
+        spanEtiqueta.className = "gasto-etiquetas-etiqueta";
+
+        spanEtiqueta.innerHTML = `${e}`;     
+           
+        divEtiquetas.append(spanEtiqueta);
+
+        // Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle
+        let evBorrarEti = new BorrarEtiquetasHandle();
+
+        // Establecer las propiedades gasto y etiqueta  
+        evBorrarEti.gasto = gasto;
+        evBorrarEti.etiqueta = e;
+
+        // Añade el objeto al manejador del evento click del span de la etiqueta
+        spanEtiqueta.addEventListener('click', evBorrarEti);
+    }
     //------------------------------------------------------------//
 
     //------------------------------------------------------------//
@@ -151,29 +165,27 @@ function mostrarGastoWeb( idElemento, gasto ){
 
         // Añade al DOM
         divGasto.append(botonBorrar);
-    //------------------------------------------------------------//
+    //------------------------------------------------------------//    
 
     //------------------------------------------------------------//
-    // MOSTRAR Y BORRAR ETIQUETAS 
-        for (let e of gasto.etiquetas) {
+    // BOTÓN BORRAR GASTO 
+        // Crear un botón con texto Editar Formulario de tipo button
+        let botonEditarForm = document.createElement("button");
+        botonEditarForm.type ="button";
+        botonEditarForm.className = "gasto-editar-formulario";
+        botonEditarForm.textContent = "Editar (formulario)";
 
-            // Crear un elemento HTML <span></span> para las etiquetas
-            let spanEtiqueta = document.createElement("span");
-            spanEtiqueta.className = "gasto-etiquetas-etiqueta";
-            spanEtiqueta.innerHTML = `${e}`;        
-            divEtiquetas.append(spanEtiqueta);
+        // Crear un nuevo objeto a partir de la función constructora EditarHandleFormulario
+        let evEditarForm = new EditarHandleFormulario();
 
-            // Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle
-            let evBorrarEti = new BorrarEtiquetasHandle();
+        // Establecer la propiedad gasto del objeto creado al objeto gasto
+        evEditarForm.gasto = gasto;
 
-            // Establecer las propiedades gasto y etiqueta  
-            evBorrarEti.gasto = gasto;
-            evBorrarEti.etiqueta = e;
+        // Añade el objeto al manejador del evento click del botón Borrar
+        botonEditarForm.addEventListener("click", evEditarForm);
 
-            // Añade el objeto al manejador del evento click del span de la etiqueta
-            spanEtiqueta.addEventListener('click', evBorrarEti);
-        }
-    //------------------------------------------------------------//
+        // Añade al DOM
+        divGasto.append(botonEditarForm);
 
     // Añado todo al DOM
     body.append(divGasto);
@@ -181,7 +193,7 @@ function mostrarGastoWeb( idElemento, gasto ){
 
 //------------------------------------------------------------//
 // ---------------FUNCIONES CONSTRUCTORAS----------------------
-//
+
 // EVENTO <BOTÓN> EDITAR GASTO
 function EditarHandle(){
 
