@@ -43,7 +43,6 @@ function nuevoGastoWeb() {
 
     // Llamar a la función repintar
     repintar();
-
 }
 
 //------------------------------------------------------------//
@@ -78,13 +77,10 @@ function nuevoGastoWebFormulario(){
         btnCancelar.addEventListener("click", handleCancel);
 
     repintar();
-
 }
 
 //------------------------------------------------------------//
-//-------------------------BOTONES----------------------------
-//
-// BOTONES Y SUS MANEJADORES DE EVENTOS
+//------------BOTONES Y SUS MANEJADORES DE EVENTOS------------
 
     document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
     document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
@@ -176,7 +172,7 @@ function mostrarGastoWeb( idElemento, gasto ){
         // Añade el objeto al manejador del evento click del botón Editar
         botonEditar.addEventListener("click", evEditar);
 
-        // ñade al DOM
+        // Añade al DOM
         divGasto.append(botonEditar);
     //------------------------------------------------------------//
 
@@ -230,8 +226,7 @@ function mostrarGastoWeb( idElemento, gasto ){
 // ---------------FUNCIONES CONSTRUCTORAS----------------------
 
 // EVENTO <BOTÓN> ENVIAR NUEVO GASTO FORMULARIO
-function SubmitNuevoHandleForm()
-{
+function SubmitNuevoHandleForm(){
     this.handleEvent = function(e){
 
         // Prevenir el envío del formulario
@@ -264,10 +259,10 @@ function SubmitNuevoHandleForm()
         repintar();
     }
 }
+
 //------------------------------------------------------------//
 // EVENTO <BOTÓN> CANCELAR ENVÍO FORMULARIO
-function cancelHandleForm()
-{
+function cancelHandleForm(){
     this.handleEvent = function(event){
 
         // Borro los datos actuales del formulario
@@ -280,6 +275,7 @@ function cancelHandleForm()
         repintar();
     }
 }
+
 //------------------------------------------------------------//
 // EVENTO <BOTÓN> SUBMIT EDITAR GASTO FORMULARIO
 function SubmitEditarHandleForm(){
@@ -312,10 +308,10 @@ function SubmitEditarHandleForm(){
         repintar();
     }
 }
+
 //------------------------------------------------------------//
 // EVENTO <BOTÓN> EDITAR GASTO FORMULARIO
 function EditarHandleForm(){
-
     this.handleEvent = function(event){
 
         // Crear una copia del formulario web definido en la plantilla HTML
@@ -358,7 +354,6 @@ function EditarHandleForm(){
 //------------------------------------------------------------//
 // EVENTO <BOTÓN> EDITAR GASTO
 function EditarHandle(){
-
     this.handleEvent = function(e){
 
        // Pedir al usuario la información necesaria para editar el gasto
@@ -405,7 +400,6 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
-
 
 //------------------------------------------------------------//
 // --------------ACTUALIZAR LISTADO GASTOS---------------------
