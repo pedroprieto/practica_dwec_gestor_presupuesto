@@ -296,7 +296,7 @@ function cargarGastosWeb() {
 
         if (!datosCargados) {
             
-            cargarGastos([]);
+            gesPres.cargarGastos([]);
         }                   
             
     }
