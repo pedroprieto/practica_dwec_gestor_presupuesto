@@ -17,3 +17,5 @@ gestion.anyadirGasto(gasto3);
 gestion.anyadirGasto(gasto4);
 gestion.anyadirGasto(gasto5);
 gestion.anyadirGasto(gasto6);
+
+web.mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
