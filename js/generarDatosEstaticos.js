@@ -31,3 +31,9 @@ for (let gasto of gestion.filtrarGastos({
 })) {
   web.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 }
+
+for (let gasto of gestion.filtrarGastos({
+  valorMinimo: 50
+})) {
+  web.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
