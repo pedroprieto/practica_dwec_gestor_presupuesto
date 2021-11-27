@@ -1,3 +1,21 @@
+import * as gestion from "./gestionPresupuesto.js";
+
+function repintar() {
+  document.getElementById("presupuesto").innerHTML = "";
+  web.mostrarDatoEnId("presupuesto", gestion.mostrarPresupuesto());
+
+  document.getElementById("gastos-totales").innerHTML = "";
+  web.mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
+
+  document.getElementById("balance-total").innerHTML = "";
+  web.mostrarDatoEnId("balance-total", gestion.calcularBalance());
+
+  document.getElementById("listado-gastos-completo").innerHTML = "";
+  for (let gasto of gestion.listarGastos()) {
+    web.mostrarGastoWeb("listado-gastos-completo", gasto);
+  }
+}
+
 function mostrarDatoEnId(idElemento, valor) {
   document.getElementById(idElemento).innerHTML += valor;
 }
