@@ -10,3 +10,10 @@ var gasto3 = new gestion.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte
 var gasto4 = new gestion.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
 var gasto5 = new gestion.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
 var gasto6 = new gestion.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
+
+gestion.anyadirGasto(gasto1);
+gestion.anyadirGasto(gasto2);
+gestion.anyadirGasto(gasto3);
+gestion.anyadirGasto(gasto4);
+gestion.anyadirGasto(gasto5);
+gestion.anyadirGasto(gasto6);
