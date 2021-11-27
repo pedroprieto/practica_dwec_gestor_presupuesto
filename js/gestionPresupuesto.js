@@ -185,17 +185,22 @@ function filtrarGastos(filtro) {
 
     // Etiquetas
     if (etiquetasTiene) {
-      var econtrado = false;
+      var encontrado = false;
 
       for (let etiqueta of etiquetasTiene) {
         for (let e of etiquetas) {
           if (e.toLowerCase() == etiqueta.toLowerCase()) {
-            econtrado = true;
+            encontrado = true;
+            break;
           }
+        }
+
+        if (encontrado) {
+          break;
         }
       }
 
-      if (!econtrado) {
+      if (!encontrado) {
         incluir = false;
       }
     }
