@@ -5,6 +5,8 @@ document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb)
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 let filtrado = new filtrarGastosWeb(); 
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrado); //recordar crear el objeto para poder asociar despues el evento
+let guardar = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener("click", guardar);
 
 function mostrarDatoEnId(idElemento, valor)
 {
@@ -196,6 +198,21 @@ function nuevoGastoWebFormulario()
     let manejadorCancelar = new cancelarGastoHandle();
     let botonCancelar = formulario.querySelector("button.cancelar");
     botonCancelar.addEventListener("click", manejadorCancelar);
+}
+
+function guardarGastosWeb()
+{
+    this.handleEvent = function(e)
+    {
+        let gastosGuardados = gesPres.listarGastos();
+
+        localStorage.setItem("GestorGastosDWEC", JSON.stringify(gastosGuardados));
+    }
+}
+
+function cargarGastosWeb()
+{
+
 }
 
 //Manejadores de eventos
