@@ -1,3 +1,5 @@
+import * as gestionPresupuesto from './gestionPresupuesto.js';
+
 function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
 }
@@ -38,9 +40,39 @@ function mostrarGastoWeb(idElemento, gasto) {
         const etiquetaText = document.createTextNode(etiqueta);
         etiquetaHTML.appendChild(etiquetaText);
         etiquetasHTML.appendChild(etiquetaHTML);
+
+        const borrarEtiquetasHandler = new BorrarEtiquetasHandle();
+        borrarEtiquetasHandler.gasto = gasto;
+        borrarEtiquetasHandler.etiqueta = etiqueta;
+        etiquetaHTML.addEventListener('click', borrarEtiquetasHandler);
     });
     gastoHTLM.appendChild(etiquetasHTML);
 
+
+
+    // Botón editar
+    const botonEditarHTLM = document.createElement('button');
+    botonEditarHTLM.className = 'gasto-editar';
+    const botonEditarText = document.createTextNode('Editar');
+    botonEditarHTLM.appendChild(botonEditarText);
+    gastoHTLM.appendChild(botonEditarHTLM);
+
+    const editarHandler = new EditarHandle();
+    editarHandler.gasto = gasto;
+    botonEditarHTLM.addEventListener('click', editarHandler);
+
+    // Botón borrar
+    const botonBorrarHTLM = document.createElement('button');
+    botonBorrarHTLM.className = 'gasto-borrar';
+    const botonBorrarText = document.createTextNode('Borrar');
+    botonBorrarHTLM.appendChild(botonBorrarText);
+    gastoHTLM.appendChild(botonBorrarHTLM);
+
+    const borrarHandler = new BorrarHandle();
+    borrarHandler.gasto = gasto;
+    botonBorrarHTLM.addEventListener('click', borrarHandler);
+
+    // Agregar el elemento gasto al ID objetivo
     document.getElementById(idElemento).append(gastoHTLM);
 }
 
@@ -82,6 +114,66 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupacion, periodo) {
     
     document.getElementById(idElemento).append(agrupacionHTLM);
 }
+
+function repintar() {
+    // Actualizar datos.
+    mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
+    mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
+    mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
+
+    // Limpiar listado de gastos.
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+
+    // Listado completo de gastos.
+    const listadoGastos = gestionPresupuesto.listarGastos();
+    listadoGastos.forEach(gasto => {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+    });
+}
+
+function actualizarPresupuestoWeb() {
+    gestionPresupuesto.actualizarPresupuesto(parseInt(prompt('Nuevo presupuesto:', gestionPresupuesto.presupuesto)));
+    repintar();
+}
+
+function nuevoGastoWeb() {
+    gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto(
+        prompt('Descripción'),
+        parseFloat(prompt('Valor')),
+        prompt('Fecha (yyyy-mm-dd)'),
+        prompt('Etiquetas (separadas por coma)', '').split(',')
+    ));
+
+    repintar();
+}
+
+function EditarHandle() {
+    this.handleEvent = function(event) {
+        this.gasto.actualizarDescripcion(prompt('Descripcion', this.gasto.descripcion));
+        this.gasto.actualizarValor(parseFloat(prompt('Valor', this.gasto.valor)));
+        this.gasto.actualizarFecha(prompt('Fecha (yyyy-mm-dd)', new Date(this.gasto.fecha).toLocaleString()));
+        this.gasto.anyadirEtiquetas(prompt('Etiquetas (separadas por coma)', '').split(','));
+        repintar();
+    }
+}
+
+function BorrarHandle() {
+    this.handleEvent = function(event) {
+        gestionPresupuesto.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
+
+function BorrarEtiquetasHandle() {
+    this.handleEvent = function(event) {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
+}
+
+// Eventos
+document.getElementById('actualizarpresupuesto').addEventListener('click', actualizarPresupuestoWeb);
+document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
