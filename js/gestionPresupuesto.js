@@ -212,8 +212,29 @@ function filtrarGastos(filtro) {
     });
 }
 
-function agruparGastos() {
-    
+function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = "", fechaHasta = Date.now()) {
+    let filtro = {
+        fechaDesde,
+        fechaHasta,
+        etiquetasTiene: etiquetas,
+    };
+
+    if (filtro.etiquetasTiene.length == 0) {
+        delete filtro.etiquetasTiene;
+    }
+
+    let gastosFiltrados = filtrarGastos(filtro);
+
+    return gastosFiltrados.reduce(function(total, gasto) {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        if (periodoAgrupacion in total) {
+            total[periodoAgrupacion] = total[periodoAgrupacion] + gasto.valor;            
+        } else {
+            total[periodoAgrupacion] = gasto.valor;
+        }
+        return total;
+    }, {});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
