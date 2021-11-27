@@ -364,6 +364,9 @@ function cargarGastosWeb() {
     }
 }
 
+let botonCargar = document.getElementById('cargar-gastos');
+botonCargar.addEventListener('click', cargarGastosWeb);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
