@@ -349,6 +349,9 @@ function guardarGastosWeb(evento) {
     localStorage.GestorGastosDWEC = JSON.stringify(guardarLista);
 }
 
+let botonGuardar = document.getElementById('guardar-gastos');
+botonGuardar.addEventListener('click', botonGuardar);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
