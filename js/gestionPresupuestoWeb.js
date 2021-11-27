@@ -153,11 +153,6 @@ function EditarHandle() {
         this.gasto.actualizarValor(parseFloat(prompt('Valor', this.gasto.valor)));
         this.gasto.actualizarFecha(prompt('Fecha (yyyy-mm-dd)', new Date(this.gasto.fecha).toLocaleString()));
         this.gasto.anyadirEtiquetas(prompt('Etiquetas (separadas por coma)', '').split(','));
-
-        //const etiquetas = this.gasto.etiquetas;
-        //this.gasto.borrarEtiquetas();
-        //this.gasto.anyadirEtiquetas(prompt('Etiquetas (separadas por coma)', etiquetas.join(',')).split(','));
-
         repintar();
     }
 }
