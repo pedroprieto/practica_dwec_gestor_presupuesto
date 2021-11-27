@@ -344,13 +344,25 @@ let filtrado = document.getElementById('formulario-filtrado');
 let objFiltrar = new filtrarGastosWeb();
 filtrado.addEventListener('submit', objFiltrar);
 
-function guardarGastosWeb(evento) {
+/*ALMACENAMIENTO EN EL NAVEGADOR*/
+
+//Botón guardar
+function guardarGastosWeb() {
     let guardarLista = gesPres.listarGastos();
     localStorage.GestorGastosDWEC = JSON.stringify(guardarLista);
 }
 
 let botonGuardar = document.getElementById('guardar-gastos');
 botonGuardar.addEventListener('click', guardarGastosWeb);
+
+//Botón cargar
+function cargarGastosWeb() {
+    if (localStorage.GestorGastosDWEC) {
+        gesPres.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
+    } else {
+        gesPres.cargarGastos([]);
+    }
+}
 
 export {
     mostrarDatoEnId,
