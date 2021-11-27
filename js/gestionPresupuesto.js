@@ -189,13 +189,13 @@ function filtrarGastos(filtro) {
 
       for (let etiqueta of etiquetasTiene) {
         for (let e of etiquetas) {
-          if (e.toLowerCase() == etiqueta.toLowerCase()) {        
+          if (e.toLowerCase() == etiqueta.toLowerCase()) {
             econtrado = true;
           }
         }
       }
 
-      if(!econtrado) {
+      if (!econtrado) {
         incluir = false;
       }
     }
@@ -210,7 +210,15 @@ function filtrarGastos(filtro) {
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
-
+  return filtrarGastos({
+    etiquetasTiene: etiquetas, // Cuidado la propiedad de filtro es etiquetasTiene no etiquetas
+    fechaDesde,
+    fechaHasta
+  }).reduce(function (acc, gasto) {
+    let agrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+    acc[agrupacion] = acc[agrupacion] ? acc[agrupacion] + gasto.valor : gasto.valor;
+    return acc;
+  }, {});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
