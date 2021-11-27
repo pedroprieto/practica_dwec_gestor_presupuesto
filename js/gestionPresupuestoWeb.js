@@ -54,8 +54,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     divAgrupacion.append(h1);
 
 
-    divAgrupacion.innerHTML = `Gastos agrupados por ${periodo}`;
-
     for(let [fecha, valor] of Object.entries(agrup)){
         let divAgrupado = document.createElement('div');
         divAgrupado.className = "agrupacion-dato";
