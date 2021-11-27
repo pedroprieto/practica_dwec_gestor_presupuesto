@@ -363,7 +363,7 @@ function filtraGastosWeb() {
   };
 
   var borrarGastosPantalla = document.getElementById("listado-gastos-completo");
-  borrarGastosPantalla = innerHTML = "";
+  borrarGastosPantalla.innerHTML = "";
 
   let filtro = datosPresupuesto.filtrarGastos(objetoAFiltrar);
 
