@@ -23,3 +23,28 @@ function mostrarGastoWeb(idElemento, gasto) {
   </div> 
   </div>`);
 }
+
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+  let agrupaciones = ``;
+
+  for (let agrupacion in agrup) {
+    agrupaciones += `
+    <div class="agrupacion-dato">
+      <span class="agrupacion-dato-clave">${agrupacion}</span>
+      <span class="agrupacion-dato-valor">${agrup[agrupacion]}</span>
+    </div>
+    `;
+  }
+
+  mostrarDatoEnId(idElemento, `
+  <div class="agrupacion">
+  <h1>Gastos agrupados por ${periodo}</h1>
+  ${agrupaciones}
+  </div>`);
+}
+
+export {
+  mostrarDatoEnId,
+  mostrarGastoWeb,
+  mostrarGastosAgrupadosWeb
+};
