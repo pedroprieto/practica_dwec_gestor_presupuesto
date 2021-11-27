@@ -54,3 +54,4 @@ for (let gasto of gestion.filtrarGastos({
 }
 
 web.mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "día"); 
+web.mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes"); 
