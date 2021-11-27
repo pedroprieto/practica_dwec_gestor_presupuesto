@@ -7,6 +7,8 @@ let filtrado = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrado); //recordar crear el objeto para poder asociar despues el evento
 let guardar = new guardarGastosWeb();
 document.getElementById("guardar-gastos").addEventListener("click", guardar);
+let cargar = new cargarGastosWeb();
+document.getElementById("cargar-gastos").addEventListener("click", cargar);
 
 function mostrarDatoEnId(idElemento, valor)
 {
@@ -212,7 +214,24 @@ function guardarGastosWeb()
 
 function cargarGastosWeb()
 {
+    this.handleEvent = function(e)
+    {
+        let listaGuardados = localStorage.getItem("GestorGastosDWEC"); //obtenemos los valores guardados a través de la clave
+        listaGuardados = JSON.parse(listaGuardados); //convertimos los valores a array, porque los guardamos antes en strings
 
+        let array = [];
+
+        if(listaGuardados == null)
+        {
+            gesPres.cargarGastos(array);
+        }
+        else
+        {
+            gesPres.cargarGastos(listaGuardados);
+        }
+
+        repintar();
+    }
 }
 
 //Manejadores de eventos
