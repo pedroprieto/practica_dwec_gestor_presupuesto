@@ -157,8 +157,59 @@ function calcularBalance() {
     return balance;
 }
 
-function filtrarGastos() {
-    
+function filtrarGastos(filtro) {
+    return gastos.filter(function(gasto) {
+        let resultado = true;
+
+        if (filtro.fechaDesde && ! isNaN(Date.parse(filtro.fechaDesde))) {
+            let fechaFiltro = new Date(filtro.fechaDesde);
+
+            if (fechaFiltro.getTime() > gasto.fecha) {
+                resultado = false;
+            }
+        }
+
+        if (filtro.fechaHasta && ! isNaN(Date.parse(filtro.fechaHasta))) {
+            let fechaFiltro = new Date(filtro.fechaHasta);
+
+            if (fechaFiltro.getTime() < gasto.fecha) {
+                resultado = false;
+            }
+        }
+
+        if (filtro.valorMinimo && filtro.valorMinimo > 0) {
+            
+            if (filtro.valorMinimo > gasto.valor) {
+                resultado = false;
+            }
+        }
+
+        if (filtro.valorMaximo && filtro.valorMaximo > 0) {
+            
+            if (filtro.valorMaximo  < gasto.valor) {
+                resultado = false;
+            }
+        }
+
+        if (filtro.descripcionContiene) {
+
+            if (gasto.descripcion.toLowerCase().indexOf(filtro.descripcionContiene.toLowerCase()) == -1) {
+                resultado = false;
+            }
+        }
+
+        if (filtro.etiquetasTiene) {
+            let etiqMinusc = gasto.etiquetas.map(etiq => etiq.toLowerCase());
+            let filtroMinusc = filtro.etiquetasTiene.map(etiq => etiq.toLowerCase());
+            
+            let tieneEtiqueta = etiqMinusc.find(etiq => filtroMinusc.includes(etiq));
+
+            if ( !tieneEtiqueta) {
+                resultado = false;
+            }
+        }
+        return resultado;
+    });
 }
 
 function agruparGastos() {
