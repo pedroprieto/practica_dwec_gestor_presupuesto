@@ -2,18 +2,24 @@ import * as gestion from "./gestionPresupuesto.js";
 
 function repintar() {
   document.getElementById("presupuesto").innerHTML = "";
-  web.mostrarDatoEnId("presupuesto", gestion.mostrarPresupuesto());
+  mostrarDatoEnId("presupuesto", gestion.mostrarPresupuesto());
 
   document.getElementById("gastos-totales").innerHTML = "";
-  web.mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
+  mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
 
   document.getElementById("balance-total").innerHTML = "";
-  web.mostrarDatoEnId("balance-total", gestion.calcularBalance());
+  mostrarDatoEnId("balance-total", gestion.calcularBalance());
 
   document.getElementById("listado-gastos-completo").innerHTML = "";
   for (let gasto of gestion.listarGastos()) {
-    web.mostrarGastoWeb("listado-gastos-completo", gasto);
+    mostrarGastoWeb("listado-gastos-completo", gasto);
   }
+}
+
+function actualizarPresupuestoWeb() {
+  let presupesto = Number(prompt("Introduzca prespuesto"));
+  gestion.actualizarPresupuesto(presupesto);
+  repintar();
 }
 
 function mostrarDatoEnId(idElemento, valor) {
@@ -60,6 +66,9 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
   ${agrupaciones}
   </div>`);
 }
+
+// Eventos
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 
 export {
   mostrarDatoEnId,
