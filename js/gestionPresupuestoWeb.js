@@ -350,7 +350,7 @@ function guardarGastosWeb(evento) {
 }
 
 let botonGuardar = document.getElementById('guardar-gastos');
-botonGuardar.addEventListener('click', botonGuardar);
+botonGuardar.addEventListener('click', guardarGastosWeb);
 
 export {
     mostrarDatoEnId,
