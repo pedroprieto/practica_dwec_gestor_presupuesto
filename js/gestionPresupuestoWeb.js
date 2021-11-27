@@ -344,6 +344,11 @@ let filtrado = document.getElementById('formulario-filtrado');
 let objFiltrar = new filtrarGastosWeb();
 filtrado.addEventListener('submit', objFiltrar);
 
+function guardarGastosWeb(evento) {
+    let guardarLista = gesPres.listarGastos();
+    localStorage.GestorGastosDWEC = JSON.stringify(guardarLista);
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
