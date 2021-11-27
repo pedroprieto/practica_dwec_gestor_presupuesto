@@ -45,3 +45,10 @@ for (let gasto of gestion.filtrarGastos({
 })) {
   web.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
+
+for (let gasto of gestion.filtrarGastos({
+  valorMaximo: 50,
+  etiquetasTiene: ["comida", "transporte"]
+})) {
+  web.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}
