@@ -48,8 +48,6 @@ function mostrarGastoWeb(idElemento, gasto) {
     });
     gastoHTLM.appendChild(etiquetasHTML);
 
-
-
     // Botón editar
     const botonEditarHTLM = document.createElement('button');
     botonEditarHTLM.className = 'gasto-editar';
@@ -71,6 +69,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     const borrarHandler = new BorrarHandle();
     borrarHandler.gasto = gasto;
     botonBorrarHTLM.addEventListener('click', borrarHandler);
+
+    // Botón editar (Formulario)
+    const botonEditarFormularioHTLM = document.createElement('button');
+    botonEditarFormularioHTLM.className = 'gasto-editar-formulario';
+    const botonEditarFormularioText = document.createTextNode('Editar (Formulario)');
+    botonEditarFormularioHTLM.appendChild(botonEditarFormularioText);
+    gastoHTLM.appendChild(botonEditarFormularioHTLM);
+
+    const editarHandlerformulario = new EditarHandleformulario();
+    editarHandlerformulario.gasto = gasto;
+    botonEditarFormularioHTLM.addEventListener('click', editarHandlerformulario);
 
     // Agregar el elemento gasto al ID objetivo
     document.getElementById(idElemento).append(gastoHTLM);
@@ -148,11 +157,16 @@ function nuevoGastoWeb() {
 }
 
 function nuevoGastoWebFormulario(event) {
-    let botonAnyadirGasto = event.currentTarget;
+
+    // Identificamos y desactivamos el botón 
+    const botonAnyadirGasto = event.currentTarget;
     botonAnyadirGasto.disabled = true;
+
+    // Clonamos la plantilla
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
 
+    // Evento de envío
     formulario.addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -170,11 +184,13 @@ function nuevoGastoWebFormulario(event) {
         repintar();
     });
 
+    // Creación del manejador y evento de cancelación.
     const cerrarFormularioHandler = new CerrarFormularioHandle();
     cerrarFormularioHandler.formulario = formulario;
-    cerrarFormularioHandler.botonAnyadirGasto = botonAnyadirGasto;
+    cerrarFormularioHandler.botonActivar = botonAnyadirGasto;
     formulario.querySelector("button.cancelar").addEventListener('click', cerrarFormularioHandler);
 
+    // Añadimos el formulario al dom.
     document.getElementById('controlesprincipales').appendChild(plantillaFormulario);
 }
 
@@ -205,7 +221,34 @@ function BorrarEtiquetasHandle() {
 function CerrarFormularioHandle() {
     this.handleEvent = (event) => {
         this.formulario.remove();
-        this.botonAnyadirGasto.disabled = false;
+        this.botonActivar.disabled = false;
+    }
+}
+
+function EditarHandleformulario() {
+    this.handleEvent = (event) => {
+        // Identificamos y desactivamos el botón 
+        const botonEditarGasto = event.currentTarget;
+        botonEditarGasto.disabled = true;
+
+        // Clonamos la plantilla
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
+
+        // Valores actuales del gasto
+        formulario.descripcion.value = this.gasto.descripcion;
+        formulario.valor.value = this.gasto.valor;
+        formulario.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+        formulario.etiquetas.value = this.gasto.etiquetas.join(',');
+
+        // Creación del manejador y evento de cancelación.
+        const cerrarFormularioHandler = new CerrarFormularioHandle();
+        cerrarFormularioHandler.formulario = formulario;
+        cerrarFormularioHandler.botonActivar = botonEditarGasto;
+        formulario.querySelector("button.cancelar").addEventListener('click', cerrarFormularioHandler);
+
+        // Añadimos el formulario como último elemento del gasto.
+        event.currentTarget.after(formulario);
     }
 }
 
