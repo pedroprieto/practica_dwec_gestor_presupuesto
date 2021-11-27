@@ -37,3 +37,11 @@ for (let gasto of gestion.filtrarGastos({
 })) {
   web.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
 }
+
+for (let gasto of gestion.filtrarGastos({
+  valorMinimo: 200,
+  etiquetasTiene: ["seguros"]
+  
+})) {
+  web.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
