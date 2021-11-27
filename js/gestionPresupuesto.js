@@ -163,6 +163,10 @@ function transformarListadoEtiquetas(transformacion) {
   return transformacionArray;
 }
 
+function cargarGastos(arrayGastos) {
+  gastos = arrayGastos;
+}
+
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   // TODO
   this.descripcion = descripcion;
@@ -286,4 +290,5 @@ export {
   filtrarGastos,
   agruparGastos,
   transformarListadoEtiquetas,
+  cargarGastos,
 };

@@ -375,4 +375,27 @@ function filtraGastosWeb() {
 let formulario = document.getElementById("formulario-filtrado");
 formulario.addEventListener("submit", filtraGastosWeb);
 
+function guardarGastosWeb() {
+  let listaGasto = datosPresupuesto.listarGastos();
+  localStorage.GestorGastosDWEC = JSON.stringify(listaGasto);
+}
+let guardarGastos = document.getElementById("guardar-gastos");
+guardarGastos.addEventListener("click", guardarGastosWeb);
+
+function cargarGastosWeb() {
+  let cargarLocal, cargar;
+
+  if (localStorage.GestorGastosDWEC) {
+    cargarLocal = JSON.parse(localStorage.GestorGastosDWEC);
+    cargar = datosPresupuesto.cargarGastos(cargarLocal);
+  } else {
+    cargarLocal = [];
+    cargar = datosPresupuesto.cargarGastos(cargarLocal);
+  }
+
+  repintar();
+}
+let cargarGastos = document.getElementById("cargar-gastos");
+cargarGastos.addEventListener("click", cargarGastosWeb);
+
 export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb };
