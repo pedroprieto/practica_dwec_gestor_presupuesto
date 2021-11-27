@@ -61,11 +61,11 @@ function mostrarGastoWeb(idElemento, gasto)
     let evEditarForm = new EditarHandleformulario();
     evEditarForm.gasto = gasto;
 
-    let div1 = document.createElement("div"); //div gasto
+    let div1 = document.createElement("div"); //div gasto global
     let div2 = document.createElement("div"); //div descripcion
-    let div3 = document.createElement("div");
-    let div4 = document.createElement("div");
-    let div5 = document.createElement("div");
+    let div3 = document.createElement("div"); //fecha
+    let div4 = document.createElement("div"); //valor
+    let div5 = document.createElement("div"); //etiquetas
 
     div1.className = "gasto";
 
