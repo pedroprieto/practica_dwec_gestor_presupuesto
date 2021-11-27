@@ -54,3 +54,12 @@ gesPresWeb.mostrarDatoEnId('presupuesto', gesPres.mostrarPresupuesto());
   {
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
   }
+
+  let perDia = "dia";
+  gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos(perDia), "día");
+
+  let perMes = "mes";
+  gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos(perMes), "mes");
+
+  let perAnyo = "anyo";
+  gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos(perAnyo), "año");
