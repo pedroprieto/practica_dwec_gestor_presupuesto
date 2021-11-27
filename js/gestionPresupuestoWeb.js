@@ -362,6 +362,7 @@ function cargarGastosWeb() {
     } else {
         gesPres.cargarGastos([]);
     }
+    repintar();
 }
 
 let botonCargar = document.getElementById('cargar-gastos');
