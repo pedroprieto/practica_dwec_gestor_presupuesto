@@ -7,6 +7,22 @@ function mostrarDatoEnId( idElemento, valor ){
 }
 
 //------------------------------------------------------------//
+//------------BOTONES Y SUS MANEJADORES DE EVENTOS------------
+
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+
+let filtrado = new filtrarGastosWeb(); 
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrado);
+
+let guardar = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener("click", guardar);
+
+let cargar = new cargarGastosWeb();
+document.getElementById("cargar-gastos").addEventListener("click", cargar);
+
+//------------------------------------------------------------//
 // -----------------ACTUALIZAR PRESUPUESTO---------------------
 function actualizarPresupuestoWeb() {
 
@@ -78,13 +94,6 @@ function nuevoGastoWebFormulario(){
 
     repintar();
 }
-
-//------------------------------------------------------------//
-//------------BOTONES Y SUS MANEJADORES DE EVENTOS------------
-
-    document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
-    document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
-    document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 //------------------------------------------------------------//
 // ------------------MOSTRAR UN GASTO-------------------------
@@ -453,14 +462,82 @@ function mostrarGastosAgrupadosWeb( idElemento, agrup, periodo ){
         `;
 }
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(e)
+    {
+        e.preventDefault();
+    
+        //Cogemos los datos del formulario
+        let form = e.currentTarget;
+
+        let descripcion = form.elements['formulario-filtrado-descripcion'].value;
+        let valorMinimo = form.elements['formulario-filtrado-valor-minimo'].value;
+        let valorMaximo = form.elements['formulario-filtrado-valor-maximo'].value;
+        let fechaDesde = form.elements['formulario-filtrado-fecha-desde'].value;
+        let fechaHasta = form.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiquetas = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+
+        // Convertir el valor a número
+        valorMinimo = parseFloat(valorMinimo);
+        valorMaximo = parseFloat(valorMaximo);
+
+        //Si tiene etiquetas
+        if( etiquetas != null ){
+            etiquetas = gestionPresupuesto.transformarListadoEtiquetas ( etiquetas );
+        }
+
+        // Pasandole los parametros para filtrar al objeto
+        let gastosFiltro = gestionPresupuesto.filtrarGastos({
+            etiquetasTiene: etiquetas,
+            fechaDesde: fechaDesde,
+            fechaHasta: fechaHasta,
+            valorMinimo: valorMinimo,
+            valorMaximo: valorMaximo,
+            descripcionContiene: descripcion,
+        });
+
+        // Limpiamos el listado de gastos
+        let lista = document.getElementById('listado-gastos-completo');
+        lista.innerHTML = '';
+
+         // Mostrar el listado filtrado de gastos
+        for(let gasto of gastosFiltro){
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        }
+    }
+}
+
+//------------------------------------------------------------//
+// GUARDAR Y CARGAR GASTOS
+
+function guardarGastosWeb(){ 
+    this.handleEvent = function(e){
+
+        localStorage.GestorGastosDWEC = JSON.stringify(gestionPresupuesto.listarGastos());
+    }
+}    
+
+function cargarGastosWeb(){
+    this.handleEvent = function(e){
+
+        // Recoge el listado de gastos por medio de la clave
+        let cargarGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+        gestionPresupuesto.cargarGastos( cargarGastos );
+
+        // Si no existe la clave, llama con un array vacio
+        if( !cargarGastos )
+        {
+            gestionPresupuesto.cargarGastos([]);
+        }
+
+        // Lamamos a la función repintar
+        repintar();
+    }
+}
+
 export   { 
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    repintar,
-    actualizarPresupuestoWeb,
-    nuevoGastoWeb,
-    EditarHandle,
-    BorrarHandle,
-    BorrarEtiquetasHandle
+    mostrarGastosAgrupadosWeb
 } 
