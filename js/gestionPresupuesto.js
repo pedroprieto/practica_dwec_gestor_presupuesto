@@ -158,7 +158,7 @@ function agruparGastos(periodo, etiquetasTiene, fechaDesde, fechaHasta) {
 }
 
 function transformarListadoEtiquetas(transformacion) {
-  let expresionRegular = /[a-zA-Z0-9]+/gi;
+  let expresionRegular = /[a-z0-9]+/gi;
   let transformacionArray = transformacion.match(expresionRegular);
   return transformacionArray;
 }

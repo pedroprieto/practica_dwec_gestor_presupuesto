@@ -362,13 +362,8 @@ function filtraGastosWeb() {
     etiquetasTiene: EtiquetasArray,
   };
 
-  var cell = document.getElementById("listado-gastos-completo");
-
-  if (cell.hasChildNodes()) {
-    while (cell.childNodes.length >= 1) {
-      cell.removeChild(cell.firstChild);
-    }
-  }
+  var borrarGastosPantalla = document.getElementById("listado-gastos-completo");
+  borrarGastosPantalla = innerHTML = "";
 
   let filtro = datosPresupuesto.filtrarGastos(objetoAFiltrar);
 
