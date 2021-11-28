@@ -22,7 +22,7 @@ function actualizarPresupuestoWeb() {
   repintar();
 }
 
-function nuevoGastoWeb() {  
+function nuevoGastoWeb() {
   let descripcion = prompt("Introduzca descripción");
   let valor = Number(prompt("Introduzca valor"));
   let fecha = prompt("Introduzca fecha");
@@ -30,7 +30,7 @@ function nuevoGastoWeb() {
 
   // Tener en cuenta el caso vacio
   etiquetas = etiquetas == "" ? [] : etiquetas.split(",");
-  gestion.anyadirGasto(new gestion.CrearGasto(descripcion, valor, fecha, etiquetas));  
+  gestion.anyadirGasto(new gestion.CrearGasto(descripcion, valor, fecha, ...etiquetas));
   repintar();
 }
 
@@ -49,15 +49,42 @@ function mostrarGastoWeb(idElemento, gasto) {
     `;
   }
 
-  mostrarDatoEnId(idElemento, `
-  <div class="gasto">
+  let gastoEl = document.createElement("div");
+  gastoEl.classList.add("gasto");
+
+  gastoEl.innerHTML = `
   <div class="gasto-descripcion">${gasto.descripcion}</div>
   <div class="gasto-fecha">${gasto.obtenerPeriodoAgrupacion("dia")}</div> 
   <div class="gasto-valor">${gasto.valor}</div> 
   <div class="gasto-etiquetas">
     ${etiquetasText}
-  </div> 
-  </div>`);
+  </div>`;
+
+  let botonEditar = document.createElement("button");
+  botonEditar.type = "button";
+  botonEditar.classList.add("gasto-editar");
+  botonEditar.innerHTML = "Editar";
+
+  let manejadorEditar = new EditarHandle();
+  manejadorEditar.gasto = gasto;
+
+  botonEditar.addEventListener("click", manejadorEditar);
+
+  gastoEl.appendChild(botonEditar);
+
+  let botonBorrar = document.createElement("button");
+  botonBorrar.type = "button";
+  botonBorrar.classList.add("gasto-borrar");
+  botonBorrar.innerHTML = "Borrar";
+
+  let manejadorBorrar = new BorrarHandle();
+  manejadorBorrar.gasto = gasto;
+
+  botonBorrar.addEventListener("click", manejadorBorrar);
+
+  gastoEl.appendChild(botonBorrar);
+  
+  document.getElementById(idElemento).appendChild(gastoEl);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -68,8 +95,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     <div class="agrupacion-dato">
       <span class="agrupacion-dato-clave">${agrupacion}</span>
       <span class="agrupacion-dato-valor">${agrup[agrupacion]}</span>
-    </div>
-    `;
+    </div>`;
   }
 
   mostrarDatoEnId(idElemento, `
@@ -77,6 +103,38 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
   <h1>Gastos agrupados por ${periodo}</h1>
   ${agrupaciones}
   </div>`);
+}
+
+function EditarHandle() {
+  this.handleEvent = function () {
+    let descripcion = prompt("Introduzca descripción");
+    let valor = Number(prompt("Introduzca valor"));
+    let fecha = prompt("Introduzca fecha");
+    let etiquetas = prompt("Introduzca etiquetas separas por commas");
+
+    // Tener en cuenta el caso vacio
+    etiquetas = etiquetas == "" ? [] : etiquetas.split(",");
+
+    this.gasto.actualizarDescripcion(descripcion);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(fecha);
+    this.gasto.anyadirEtiquetas(...etiquetas);
+    repintar();
+  };
+}
+
+function BorrarHandle() {
+  this.handleEvent = function () {
+    gestion.borrarGasto(this.gasto.id);
+    repintar();
+  };
+}
+
+function BorrarEtiquetasHandle() {
+  this.handleEvent = function () {
+    gestion.borrarGasto(this.gasto.id);
+    repintar();
+  };
 }
 
 // Eventos
