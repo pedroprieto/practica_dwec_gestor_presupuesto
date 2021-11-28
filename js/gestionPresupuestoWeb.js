@@ -34,6 +34,45 @@ function nuevoGastoWeb() {
   repintar();
 }
 
+function nuevoGastoWebFormulario(event) {
+  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+  let formulario = plantillaFormulario.querySelector("form");
+
+  formulario.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    let form = event.currentTarget;
+
+    let descripcion = form.elements.descripcion.value;
+    let valor = Number(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+
+    etiquetas = etiquetas == "" ? [] : etiquetas.split(",");
+    gestion.anyadirGasto(new gestion.CrearGasto(descripcion, valor, fecha, ...etiquetas));
+    repintar();
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+  });
+
+  let manejadorCancelarFormulario = new CancelarFormularioHandle();
+  manejadorCancelarFormulario.formulario = formulario;
+  manejadorCancelarFormulario.botonAnyadirFormulario = event.currentTarget;
+  
+  formulario.querySelector("button.cancelar").addEventListener("click", manejadorCancelarFormulario);
+
+  event.currentTarget.setAttribute("disabled", "");
+
+  let controles = document.getElementById("controlesprincipales");
+  controles.appendChild(plantillaFormulario);
+}
+
+function CancelarFormularioHandle() {
+  this.handleEvent = function() {
+    this.formulario.remove();
+    this.botonAnyadirFormulario.removeAttribute("disabled");
+  };
+}
+
 function mostrarDatoEnId(idElemento, valor) {
   document.getElementById(idElemento).innerHTML += valor;
 }
@@ -47,7 +86,7 @@ function mostrarGastoWeb(idElemento, gasto) {
   <div class="gasto-fecha">${gasto.obtenerPeriodoAgrupacion("dia")}</div> 
   <div class="gasto-valor">${gasto.valor}</div>`;
 
- 
+
   let gastoEtiquetas = document.createElement("div");
   gastoEtiquetas.classList.add("gasto-etiquetas");
 
@@ -61,7 +100,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     manejadorBorrarEtiquetas.etiqueta = etiqueta;
 
     span.addEventListener("click", manejadorBorrarEtiquetas);
-    gastoEtiquetas.appendChild(span);    
+    gastoEtiquetas.appendChild(span);
   }
 
   gastoEl.appendChild(gastoEtiquetas);
@@ -89,7 +128,7 @@ function mostrarGastoWeb(idElemento, gasto) {
   botonBorrar.addEventListener("click", manejadorBorrar);
 
   gastoEl.appendChild(botonBorrar);
-  
+
   document.getElementById(idElemento).appendChild(gastoEl);
 }
 
@@ -146,6 +185,7 @@ function BorrarEtiquetasHandle() {
 // Eventos
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 export {
   mostrarDatoEnId,
