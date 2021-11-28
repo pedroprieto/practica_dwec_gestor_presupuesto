@@ -135,9 +135,10 @@ function nuevoGastoWeb(){
     let etiNuevas = prompt("Introduce nuevas etiquetas");
 
     valorNuevo = parseFloat(valorNuevo);
-    let etiquetas = etiNuevas.split(' ');
+    let etiquetas = etiNuevas.split(', ');
+    
 
-    let gasto = new gesPres.CrearGasto(descNueva, valorNuevo, fechaNueva, etiquetas);
+    let gasto = new gesPres.CrearGasto(descNueva, valorNuevo, fechaNueva, ...etiquetas);
     gesPres.anyadirGasto(gasto);
     repintar();
 }
@@ -161,8 +162,8 @@ function EditarHandle(){
     this.gasto.actualizarFecha(fechaNueva);
 
     let nuevaEtiqueta = prompt("Introduce nuevas etiquetas");
-    nuevaEtiqueta = nuevaEtiqueta.split(' ');
-    this.gasto.anyadirEtiquetas(nuevaEtiqueta);
+    nuevaEtiqueta = nuevaEtiqueta.split(', ');
+    this.gasto.anyadirEtiquetas(...nuevaEtiqueta);
 
         repintar();
     }   
