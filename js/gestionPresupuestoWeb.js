@@ -57,7 +57,7 @@ function nuevoGastoWebFormulario(event) {
   let manejadorCancelarFormulario = new CancelarFormularioHandle();
   manejadorCancelarFormulario.formulario = formulario;
   manejadorCancelarFormulario.botonAnyadirFormulario = event.currentTarget;
-  
+
   formulario.querySelector("button.cancelar").addEventListener("click", manejadorCancelarFormulario);
 
   event.currentTarget.setAttribute("disabled", "");
@@ -67,7 +67,7 @@ function nuevoGastoWebFormulario(event) {
 }
 
 function CancelarFormularioHandle() {
-  this.handleEvent = function() {
+  this.handleEvent = function () {
     this.formulario.remove();
     this.botonAnyadirFormulario.removeAttribute("disabled");
   };
@@ -129,6 +129,19 @@ function mostrarGastoWeb(idElemento, gasto) {
 
   gastoEl.appendChild(botonBorrar);
 
+  let botonEditarFormulario = document.createElement("button");
+  botonEditarFormulario.type = "button";
+  botonEditarFormulario.classList.add("gasto-editar-formulario");
+  botonEditarFormulario.innerHTML = "Editar (formulario)";
+
+  let manejadorEditarFormulario = new EditarHandleFormulario();
+  manejadorEditarFormulario.gasto = gasto;
+  manejadorEditarFormulario.gastoEl = gastoEl;
+
+  botonEditarFormulario.addEventListener("click", manejadorEditarFormulario);
+
+  gastoEl.appendChild(botonEditarFormulario);
+
   document.getElementById(idElemento).appendChild(gastoEl);
 }
 
@@ -148,6 +161,56 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
   <h1>Gastos agrupados por ${periodo}</h1>
   ${agrupaciones}
   </div>`);
+}
+
+function EditarHandleFormularioSubmit() {
+  this.handleEvent = function(event) {
+    event.preventDefault();
+
+    let form = event.currentTarget;
+  
+    let descripcion = form.elements.descripcion.value;
+    let valor = Number(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+  
+    etiquetas = etiquetas == "" ? [] : etiquetas.split(",");
+    
+    this.gasto.actualizarDescripcion(descripcion);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(fecha);
+    // gasto.actualizarEtiquetas(etiquetas); // No hay actualizar etiquetas en la logica de negocio
+  
+    repintar();
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+  };
+}
+
+function EditarHandleFormulario() {
+  this.handleEvent = function (event) {
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    let formulario = plantillaFormulario.querySelector("form");
+
+    formulario.elements.descripcion.value = this.gasto.descripcion;
+    formulario.elements.valor.value = this.gasto.valor;
+    formulario.elements.fecha.value = this.gasto.obtenerPeriodoAgrupacion("dia");
+    formulario.elements.etiquetas.value = this.gasto.etiquetas.join(",");
+    
+    let manejadorEditarFormulario = new EditarHandleFormularioSubmit();
+    manejadorEditarFormulario.gasto = this.gasto;
+
+    formulario.addEventListener("submit", manejadorEditarFormulario);
+
+    let manejadorCancelarFormulario = new CancelarFormularioHandle();
+    manejadorCancelarFormulario.formulario = formulario;
+    manejadorCancelarFormulario.botonAnyadirFormulario = event.currentTarget;
+
+    formulario.querySelector("button.cancelar").addEventListener("click", manejadorCancelarFormulario);
+
+    event.currentTarget.setAttribute("disabled", "");
+
+    this.gastoEl.appendChild(plantillaFormulario);
+  };
 }
 
 function EditarHandle() {
