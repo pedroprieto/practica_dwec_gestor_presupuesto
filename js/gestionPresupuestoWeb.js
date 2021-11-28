@@ -219,14 +219,14 @@ function BorrarEtiquetasHandle() {
 }
 
 function CerrarFormularioHandle() {
-    this.handleEvent = (event) => {
+    this.handleEvent = event => {
         this.formulario.remove();
         this.botonActivar.disabled = false;
     }
 }
 
 function EditarHandleformulario() {
-    this.handleEvent = (event) => {
+    this.handleEvent = event => {
         // Identificamos y desactivamos el botón 
         const botonEditarGasto = event.currentTarget;
         botonEditarGasto.disabled = true;
@@ -239,7 +239,12 @@ function EditarHandleformulario() {
         formulario.descripcion.value = this.gasto.descripcion;
         formulario.valor.value = this.gasto.valor;
         formulario.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
-        formulario.etiquetas.value = this.gasto.etiquetas.join(',');
+        formulario.etiquetas.value = this.gasto.etiquetas;
+
+        // Creación del manejador y evento de envío.
+        const enviarEditarHandler = new EnviarEditarHandle();
+        enviarEditarHandler.gasto = this.gasto;
+        formulario.addEventListener('submit', enviarEditarHandler);
 
         // Creación del manejador y evento de cancelación.
         const cerrarFormularioHandler = new CerrarFormularioHandle();
@@ -249,6 +254,22 @@ function EditarHandleformulario() {
 
         // Añadimos el formulario como último elemento del gasto.
         event.currentTarget.after(formulario);
+    }
+}
+
+function EnviarEditarHandle() {
+    this.handleEvent = event => {
+        event.preventDefault();
+        let formulario = event.currentTarget;
+
+        this.gasto.actualizarDescripcion(formulario.descripcion.value);
+        this.gasto.actualizarValor(parseFloat(formulario.valor.value));
+        this.gasto.actualizarFecha(formulario.fecha.value);
+
+        const etiquetas = formulario.etiquetas.value.split(',');
+        etiquetas.forEach(etiqueta => { this.gasto.anyadirEtiquetas(etiqueta); });
+
+        repintar();
     }
 }
 
