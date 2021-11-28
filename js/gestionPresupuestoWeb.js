@@ -5,8 +5,7 @@ function mostrarDatoEnId(idElemento, valor) {
 function crearElementoConTexto(tipo ,clase, texto) {
     let elemento = document.createElement(tipo);
     elemento.className = clase;
-    let nodoTexto = document.createTextNode(texto);
-    elemento.append(nodoTexto);
+    elemento.innerHTML = texto;
     return elemento;
 }
 
