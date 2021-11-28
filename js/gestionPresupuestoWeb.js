@@ -1,6 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
-document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+anyadirgasto.addEventListener("click", nuevoGastoWeb);
 
 function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
@@ -68,7 +69,7 @@ function repintar() {
     mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
-    document.getElementsByClassName("listado-gastos-completo").innerHTML = "";
+    document.getElementById("listado-gastos-completo").innerHTML = "";
 
     gestionPresupuesto.listarGastos().forEach(function(gasto) {
         mostrarGastoWeb("listado-gastos-completo", gasto);
@@ -81,6 +82,20 @@ function actualizarPresupuestoWeb() {
     valor = Number(valor);
 
     gestionPresupuesto.actualizarPresupuesto(valor);
+    repintar();
+}
+
+function nuevoGastoWeb() {
+    let descripcion = prompt("Nuevo gasto: introduce una descripción:", "alquiler");
+    let valor = prompt("Nuevo gasto: valor:", "650.00");
+    let fecha = prompt("Nuevo gasto: fecha:", "2021-01-01");
+    let etiquetas = prompt("Nuevo gasto: etiquetas", "fijo,casa");
+    valor = Number(valor);
+    let arrayEtiquetas = etiquetas.split(",");
+
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+
     repintar();
 }
 
