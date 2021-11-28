@@ -44,8 +44,8 @@ gastosFiltro1.forEach(function(gasto) {
 });
 gastosFiltro2.forEach(function(gasto) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
-})
-;gastosFiltro3.forEach(function(gasto) {
+});
+gastosFiltro3.forEach(function(gasto) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 });
 gastosFiltro4.forEach(function(gasto) {
@@ -53,7 +53,10 @@ gastosFiltro4.forEach(function(gasto) {
 });
 
 /* Datos agrupados */
+let grupoGastosDia = gestionPresupuesto.agruparGastos("dia");
+let grupoGastosMes = gestionPresupuesto.agruparGastos();
+let grupoGastosAnyo = gestionPresupuesto.agruparGastos("anyo");
 
-gestionPresupuestoWeb.mostrarDatoEnId("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"));
-gestionPresupuestoWeb.mostrarDatoEnId("agrupacion-mes", gestionPresupuesto.agruparGastos());
-gestionPresupuestoWeb.mostrarDatoEnId("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"));
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", grupoGastosDia, "día");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", grupoGastosMes, "mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", grupoGastosAnyo, "año");
