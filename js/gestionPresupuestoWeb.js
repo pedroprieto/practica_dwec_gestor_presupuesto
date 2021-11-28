@@ -39,26 +39,32 @@ function mostrarDatoEnId(idElemento, valor) {
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
-  var etiquetasText = ``;
-
-  for (let etiqueta of gasto.etiquetas) {
-    etiquetasText += `
-      <span class="gasto-etiquetas-etiqueta">
-        ${etiqueta}
-      </span>
-    `;
-  }
-
   let gastoEl = document.createElement("div");
   gastoEl.classList.add("gasto");
 
   gastoEl.innerHTML = `
   <div class="gasto-descripcion">${gasto.descripcion}</div>
   <div class="gasto-fecha">${gasto.obtenerPeriodoAgrupacion("dia")}</div> 
-  <div class="gasto-valor">${gasto.valor}</div> 
-  <div class="gasto-etiquetas">
-    ${etiquetasText}
-  </div>`;
+  <div class="gasto-valor">${gasto.valor}</div>`;
+
+ 
+  let gastoEtiquetas = document.createElement("div");
+  gastoEtiquetas.classList.add("gasto-etiquetas");
+
+  for (let etiqueta of gasto.etiquetas) {
+    let span = document.createElement("span");
+    span.classList.add("gasto-etiquetas-etiqueta");
+    span.innerHTML = etiqueta;
+
+    let manejadorBorrarEtiquetas = new BorrarEtiquetasHandle();
+    manejadorBorrarEtiquetas.gasto = gasto;
+    manejadorBorrarEtiquetas.etiqueta = etiqueta;
+
+    span.addEventListener("click", manejadorBorrarEtiquetas);
+    gastoEtiquetas.appendChild(span);    
+  }
+
+  gastoEl.appendChild(gastoEtiquetas);
 
   let botonEditar = document.createElement("button");
   botonEditar.type = "button";
@@ -132,8 +138,7 @@ function BorrarHandle() {
 
 function BorrarEtiquetasHandle() {
   this.handleEvent = function () {
-    gestion.borrarGasto(this.gasto.id);
-    
+    this.gasto.borrarEtiquetas(this.etiqueta);
     repintar();
   };
 }
