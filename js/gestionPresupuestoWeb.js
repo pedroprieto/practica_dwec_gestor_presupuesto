@@ -61,7 +61,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let bBorrar = document.createElement('button');
     bBorrar.className = "gasto-borrar";
     bBorrar.type = "button";
-    bEditar.textContent = "Borrar";
+    bBorrar.textContent = "Borrar";
 
     let handleBorrar = new BorrarHandle();
     handleBorrar.gasto = gasto;
@@ -171,7 +171,7 @@ function EditarHandle(){
 function BorrarHandle(){
     this.handleEvent = function(e){
 
-        borrarGasto(this.gasto.id);
+        gesPres.borrarGasto(this.gasto.id);
 
         repintar();
     }
@@ -185,11 +185,6 @@ this.handleEvent = function(e){
 }
 
 }
-
-
-
-
-
 
 
 
