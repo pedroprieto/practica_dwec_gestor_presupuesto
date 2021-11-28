@@ -22,6 +22,18 @@ function actualizarPresupuestoWeb() {
   repintar();
 }
 
+function nuevoGastoWeb() {  
+  let descripcion = prompt("Introduzca descripción");
+  let valor = Number(prompt("Introduzca valor"));
+  let fecha = prompt("Introduzca fecha");
+  let etiquetas = prompt("Introduzca etiquetas separas por commas");
+
+  // Tener en cuenta el caso vacio
+  etiquetas = etiquetas == "" ? [] : etiquetas.split(",");
+  gestion.anyadirGasto(new gestion.CrearGasto(descripcion, valor, fecha, etiquetas));  
+  repintar();
+}
+
 function mostrarDatoEnId(idElemento, valor) {
   document.getElementById(idElemento).innerHTML += valor;
 }
@@ -69,6 +81,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 
 // Eventos
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
 export {
   mostrarDatoEnId,
