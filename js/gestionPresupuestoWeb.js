@@ -37,11 +37,37 @@ function mostrarGastoWeb(idElemento, gasto){
         let spanEtiqueta = document.createElement('span');
         spanEtiqueta.className="gasto-etiquetas-etiqueta";
 
-        spanEtiqueta.innerHTML = etiqueta + "<br>";
+        let handleBEtiqueta = new BorrarEtiquetasHandle();
+        handleBEtiqueta.gasto = gasto;
+        handleBEtiqueta.etiqueta = etiqueta;
+        spanEtiqueta.addEventListener('click', handleBEtiqueta);
+
+        spanEtiqueta.append(etiqueta);
         divGasEtiqueta.append(spanEtiqueta);
     }
     
     divGasto.append(divGasEtiqueta);
+
+    let bEditar = document.createElement('button');
+    bEditar.className = "gasto-editar";
+    bEditar.type = "button";
+    bEditar.textContent = "Editar";
+
+    let handleEditar = new EditarHandle();
+    handleEditar.gasto = gasto;
+    bEditar.addEventListener('click', handleEditar);
+    divGasto.append(bEditar);
+
+    let bBorrar = document.createElement('button');
+    bBorrar.className = "gasto-borrar";
+    bBorrar.type = "button";
+    bEditar.textContent = "Borrar";
+
+    let handleBorrar = new BorrarHandle();
+    handleBorrar.gasto = gasto;
+    bBorrar.addEventListener('click', handleBorrar);
+    divGasto.append(bBorrar);
+
 
     document.getElementById(idElemento).append(divGasto);
 
@@ -86,7 +112,7 @@ function repintar(){
 
     let listaGastos = gesPres.listarGastos();
     for(let gasto of listaGastos){
-    gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+    mostrarGastoWeb("listado-gastos-completo", gasto);
   }
 }
 
@@ -149,6 +175,15 @@ function BorrarHandle(){
 
         repintar();
     }
+}
+
+function BorrarEtiquetasHandle(){
+this.handleEvent = function(e){
+    this.gasto.BorrarEtiquetas(this.etiqueta);
+
+    repintar();
+}
+
 }
 
 
