@@ -133,6 +133,7 @@ function BorrarHandle() {
 function BorrarEtiquetasHandle() {
   this.handleEvent = function () {
     gestion.borrarGasto(this.gasto.id);
+    
     repintar();
   };
 }
