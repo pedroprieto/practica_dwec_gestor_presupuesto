@@ -198,8 +198,8 @@ function EditarHandle() {
     this.handleEvent = function(event) {
         this.gasto.actualizarDescripcion(prompt('Descripcion', this.gasto.descripcion));
         this.gasto.actualizarValor(parseFloat(prompt('Valor', this.gasto.valor)));
-        this.gasto.actualizarFecha(prompt('Fecha (yyyy-mm-dd)', new Date(this.gasto.fecha).toLocaleString()));
-        this.gasto.anyadirEtiquetas(prompt('Etiquetas (separadas por coma)', '').split(','));
+        this.gasto.actualizarFecha(prompt('Fecha (yyyy-mm-dd)', new Date(this.gasto.fecha).toISOString().substr(0,10)));
+        this.gasto.anyadirEtiquetas(...prompt('Etiquetas (separadas por coma)', this.gasto.etiquetas).split(','));
         repintar();
     }
 }
@@ -265,9 +265,7 @@ function EnviarEditarHandle() {
         this.gasto.actualizarDescripcion(formulario.descripcion.value);
         this.gasto.actualizarValor(parseFloat(formulario.valor.value));
         this.gasto.actualizarFecha(formulario.fecha.value);
-
-        const etiquetas = formulario.etiquetas.value.split(',');
-        etiquetas.forEach(etiqueta => { this.gasto.anyadirEtiquetas(etiqueta); });
+        this.gasto.anyadirEtiquetas(...formulario.etiquetas.value.split(','));
 
         repintar();
     }
