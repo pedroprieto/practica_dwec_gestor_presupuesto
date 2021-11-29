@@ -92,6 +92,10 @@ function listarGastos() {
     return gastos;
 }
 
+function cargarGastos(listaGastos) {
+    gastos = listaGastos;
+}
+
 function anyadirGasto(gasto) {
     gasto.id = idGasto;
     idGasto++;
@@ -155,6 +159,7 @@ export {
     actualizarPresupuesto,
     CrearGasto,
     listarGastos,
+    cargarGastos,
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,

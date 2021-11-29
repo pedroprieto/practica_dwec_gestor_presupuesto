@@ -225,6 +225,14 @@ function filtrarGastosWeb(event) {
     
 }
 
+function guardarGastosWeb() {
+
+}
+
+function cargarGastosWeb() {
+
+}
+
 function EditarHandle() {
     this.handleEvent = function(event) {
         this.gasto.actualizarDescripcion(prompt('Descripcion', this.gasto.descripcion));
@@ -307,6 +315,8 @@ document.getElementById('actualizarpresupuesto').addEventListener('click', actua
 document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb);
 document.getElementById('anyadirgasto-formulario').addEventListener('click', nuevoGastoWebFormulario);
 document.getElementById('formulario-filtrado').addEventListener('submit', filtrarGastosWeb);
+document.getElementById('guardar-gastos').addEventListener('click', guardarGastosWeb);
+document.getElementById('cargar-gastos').addEventListener('click', cargarGastosWeb);
 
 export {
     mostrarDatoEnId,
