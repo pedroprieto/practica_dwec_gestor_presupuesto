@@ -118,7 +118,7 @@ function filtrarGastos(filtros) {
     return gastos.filter(gasto => {
         let resultado = true;
 
-        if (filtros.fechaDesde && new Date(gasto.fecha) < new Date(filtros.fechaDesde))resultado = false;
+        if (filtros.fechaDesde && new Date(gasto.fecha) < new Date(filtros.fechaDesde)) resultado = false;
         if (filtros.fechaHasta && new Date(gasto.fecha) > new Date(filtros.fechaHasta)) resultado = false;
         if (filtros.valorMinimo && gasto.valor < filtros.valorMinimo) resultado = false;
         if (filtros.valorMaximo && gasto.valor > filtros.valorMaximo) resultado = false;
@@ -146,6 +146,10 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     return agrupacion;
 }
 
+function transformarListadoEtiquetas(etiquetas) {
+    return etiquetas.match(/[A-zÀ-ÿ0-9]+/g) || null;
+}
+
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
@@ -156,5 +160,6 @@ export {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }

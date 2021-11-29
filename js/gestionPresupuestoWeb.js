@@ -194,6 +194,37 @@ function nuevoGastoWebFormulario(event) {
     document.getElementById('controlesprincipales').appendChild(plantillaFormulario);
 }
 
+function filtrarGastosWeb(event) {
+    event.preventDefault();
+
+    const elementosFormulario = event.currentTarget.elements;
+    const etiquetas = elementosFormulario['formulario-filtrado-etiquetas-tiene'].value;
+
+    // Objeto filtro.
+    const filtros = {
+        descripcionContiene: elementosFormulario['formulario-filtrado-descripcion'].value || undefined,
+        valorMinimo: elementosFormulario['formulario-filtrado-valor-minimo'].value || undefined,
+        valorMaximo: elementosFormulario['formulario-filtrado-valor-maximo'].value || undefined,
+        fechaDesde: elementosFormulario['formulario-filtrado-fecha-desde'].value || undefined,
+        fechaHasta: elementosFormulario['formulario-filtrado-fecha-hasta'].value || undefined,
+        etiquetasTiene: gestionPresupuesto.transformarListadoEtiquetas(etiquetas) || undefined
+    }
+
+    console.log(filtros);
+
+    // Borramos listado actual.
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+
+    // Filtramos los gastos.
+    const gastosFiltrados = gestionPresupuesto.filtrarGastos(filtros);
+
+    // Pintamos los gastos filtrados.
+    gastosFiltrados.forEach(gasto => {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+    });
+    
+}
+
 function EditarHandle() {
     this.handleEvent = function(event) {
         this.gasto.actualizarDescripcion(prompt('Descripcion', this.gasto.descripcion));
@@ -275,6 +306,7 @@ function EnviarEditarHandle() {
 document.getElementById('actualizarpresupuesto').addEventListener('click', actualizarPresupuestoWeb);
 document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb);
 document.getElementById('anyadirgasto-formulario').addEventListener('click', nuevoGastoWebFormulario);
+document.getElementById('formulario-filtrado').addEventListener('submit', filtrarGastosWeb);
 
 export {
     mostrarDatoEnId,
