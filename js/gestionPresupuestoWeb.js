@@ -99,6 +99,30 @@ function nuevoGastoWeb() {
     repintar();
 }
 
+function EditarHandle() {
+    gasto,
+
+    this.handleEvent = function() {
+        let descripcion = prompt("Nuevo gasto: introduce una descripción:", this.gasto["descripcion"]);
+        let valor = prompt("Nuevo gasto: valor:", this.gasto["valor"]);
+        valor = Number(valor);
+        
+        let fechaGasto = new Date(this.gasto["fecha"]);
+        fechaGasto = fechaGasto.toISOString();
+        let fecha = prompt("Nuevo gasto: fecha:", fechaGasto);
+        
+        let etiquetas = prompt("Nuevo gasto: etiquetas", this.gasto["etiquetas"].join(", "));
+        let arrayEtiquetas = etiquetas.split(",");
+
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...arrayEtiquetas);
+
+        repintar();
+    };
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
