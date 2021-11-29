@@ -164,7 +164,15 @@ function filtrarGastos(filtro) {
     let valorMinimo = filtro.valorMinimo;
     let valorMaximo = filtro.valorMaximo;
     let descripcionContiene = filtro.descripcionContiene;
-    let etiquetasTiene = filtro.etiquetasTiene;
+    let etiquetasTiene;
+
+    if(filtro.etiquetasTiene) {
+      if(Array.isArray(filtro.etiquetasTiene)) {
+        etiquetasTiene = filtro.etiquetasTiene;
+      } else {
+        etiquetasTiene = transformarListadoEtiquetas(filtro.etiquetasTiene);
+      }
+    }
 
     let incluir = true; // Por excluir seria muy largo de comprobar
 
@@ -226,6 +234,10 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
   }, {});
 }
 
+function transformarListadoEtiquetas(etiquetas) {
+  return etiquetas ? etiquetas.replace(/[:;,\.\s]+/g, ",").split(",") : [];  
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -239,7 +251,8 @@ export {
   calcularTotalGastos,
   calcularBalance,
   filtrarGastos,
-  agruparGastos
+  agruparGastos,
+  transformarListadoEtiquetas
 }
 
 

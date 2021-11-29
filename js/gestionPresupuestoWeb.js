@@ -164,23 +164,23 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function EditarHandleFormularioSubmit() {
-  this.handleEvent = function(event) {
+  this.handleEvent = function (event) {
     event.preventDefault();
 
     let form = event.currentTarget;
-  
+
     let descripcion = form.elements.descripcion.value;
     let valor = Number(form.elements.valor.value);
     let fecha = form.elements.fecha.value;
     let etiquetas = form.elements.etiquetas.value;
-  
+
     etiquetas = etiquetas == "" ? [] : etiquetas.split(",");
-    
+
     this.gasto.actualizarDescripcion(descripcion);
     this.gasto.actualizarValor(valor);
     this.gasto.actualizarFecha(fecha);
     // gasto.actualizarEtiquetas(etiquetas); // No hay actualizar etiquetas en la logica de negocio
-  
+
     repintar();
     document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
   };
@@ -195,7 +195,7 @@ function EditarHandleFormulario() {
     formulario.elements.valor.value = this.gasto.valor;
     formulario.elements.fecha.value = this.gasto.obtenerPeriodoAgrupacion("dia");
     formulario.elements.etiquetas.value = this.gasto.etiquetas.join(",");
-    
+
     let manejadorEditarFormulario = new EditarHandleFormularioSubmit();
     manejadorEditarFormulario.gasto = this.gasto;
 
@@ -245,10 +245,44 @@ function BorrarEtiquetasHandle() {
   };
 }
 
+function filtrarGastosWeb(event) {
+  event.preventDefault();
+
+  let formulario = event.currentTarget;
+
+  let descripcionContiene = formulario.elements["formulario-filtrado-descripcion"].value;
+  let valorMinimo = formulario.elements["formulario-filtrado-valor-minimo"].value;
+  let valorMaximo =formulario.elements["formulario-filtrado-valor-maximo"].value;
+  let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
+  let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+  let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+  let filtro = {};
+
+  descripcionContiene != "" ? filtro.descripcionContiene = descripcionContiene : null,
+  valorMinimo != "" ? filtro.valorMinimo = Number(valorMinimo) : null,
+  valorMaximo != "" ? filtro.valorMaximo = Number(valorMaximo): null,
+  fechaDesde != "" ? filtro.fechaDesde = fechaDesde : null,
+  fechaHasta != "" ? filtro.fechaHasta = fechaHasta : null,
+  etiquetasTiene != "" ? filtro.etiquetasTiene = etiquetasTiene : null
+
+  let gastos = gestion.filtrarGastos(filtro);
+
+  console.dir(filtro);
+  console.dir(gastos);
+
+  document.getElementById("listado-gastos-completo").innerHTML = "";
+
+  for (let gasto of gastos) {
+    mostrarGastoWeb("listado-gastos-completo", gasto);
+  }
+}
+
 // Eventos
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 
 export {
   mostrarDatoEnId,
