@@ -252,7 +252,7 @@ function filtrarGastosWeb(event) {
 
   let descripcionContiene = formulario.elements["formulario-filtrado-descripcion"].value;
   let valorMinimo = formulario.elements["formulario-filtrado-valor-minimo"].value;
-  let valorMaximo =formulario.elements["formulario-filtrado-valor-maximo"].value;
+  let valorMaximo = formulario.elements["formulario-filtrado-valor-maximo"].value;
   let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
   let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
   let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
@@ -260,11 +260,11 @@ function filtrarGastosWeb(event) {
   let filtro = {};
 
   descripcionContiene != "" ? filtro.descripcionContiene = descripcionContiene : null,
-  valorMinimo != "" ? filtro.valorMinimo = Number(valorMinimo) : null,
-  valorMaximo != "" ? filtro.valorMaximo = Number(valorMaximo): null,
-  fechaDesde != "" ? filtro.fechaDesde = fechaDesde : null,
-  fechaHasta != "" ? filtro.fechaHasta = fechaHasta : null,
-  etiquetasTiene != "" ? filtro.etiquetasTiene = etiquetasTiene : null
+    valorMinimo != "" ? filtro.valorMinimo = Number(valorMinimo) : null,
+    valorMaximo != "" ? filtro.valorMaximo = Number(valorMaximo) : null,
+    fechaDesde != "" ? filtro.fechaDesde = fechaDesde : null,
+    fechaHasta != "" ? filtro.fechaHasta = fechaHasta : null,
+    etiquetasTiene != "" ? filtro.etiquetasTiene = etiquetasTiene : null
 
   let gastos = gestion.filtrarGastos(filtro);
 
@@ -278,11 +278,40 @@ function filtrarGastosWeb(event) {
   }
 }
 
+function guardarGastosWeb() {
+  localStorage.setItem("GestorGastosDWEC", JSON.stringify(gestion.listarGastos()));
+}
+
+function cargarGastosWeb() {
+  let gastosAlamacenados = localStorage.getItem("GestorGastosDWEC");  
+  gastosAlamacenados = gastosAlamacenados ? JSON.parse(gastosAlamacenados) : [];
+
+  // Regenerar funciones del objeto serializado
+  let gastosRegenerados = [];
+  
+  for (let gastoAlmacenado of gastosAlamacenados) {
+    gastosRegenerados.push(new gestion.CrearGasto(
+      gastoAlmacenado.descripcion,
+      gastoAlmacenado.valor,
+      gastoAlmacenado.fecha,
+      gastoAlmacenado.etiquetas
+      ));
+  }
+
+  gestion.cargarGastos(gastosRegenerados);
+  repintar();
+}
+
 // Eventos
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
+
+document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
+
+document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
+
 
 export {
   mostrarDatoEnId,
