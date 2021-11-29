@@ -50,6 +50,9 @@ function mostrarGastoWeb(idElemento, gasto) {
     divPadre.append(btnEditar);
 
     let btnBorrar = crearElementoConTextoYClase("button", "gasto-borrar", "Borrar", {"type": "button"});
+    let borrarGasto = new BorrarHandle();
+    borrarGasto.gasto = gasto;
+    btnBorrar.addEventListener("click", borrarGasto);
     divPadre.append(btnBorrar);
 
     let espacio = document.createElement("br");
@@ -139,8 +142,6 @@ function EditarHandle() {
 }
 
 function BorrarHandle() {
-    gasto,
-
     this.handleEvent = function() {
         gestionPresupuesto.borrarGasto(this.gasto.id);
         
