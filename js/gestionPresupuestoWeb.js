@@ -123,6 +123,16 @@ function EditarHandle() {
     };
 }
 
+function BorrarHandle() {
+    gasto,
+
+    this.handleEvent = function() {
+        gestionPresupuesto.borrarGasto(this.gasto.id);
+        
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
