@@ -38,9 +38,15 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGEtiquetas.className = "gasto-etiquetas";
     divPadre.append(divGEtiquetas);
 
+    let borrarEtiqueta = new BorrarEtiquetasHandle();
+    borrarEtiqueta.gasto = gasto;
+
     for (const etiqueta of gasto.etiquetas) {
         let spanEtiqueta = crearElementoConTextoYClase("span", "gasto-etiquetas-etiqueta", etiqueta);
         divGEtiquetas.append(spanEtiqueta);
+        
+        borrarEtiqueta.etiqueta = etiqueta;
+        spanEtiqueta.addEventListener("click", borrarEtiqueta);
     }
 
     let btnEditar = crearElementoConTextoYClase("button", "gasto-editar", "Editar", {"type": "button"});
@@ -150,11 +156,10 @@ function BorrarHandle() {
 }
 
 function BorrarEtiquetasHandle() {
-    gasto,
-    etiqueta,
-
     this.handleEvent = function() {
         this.gasto.borrarEtiquetas(this.etiqueta);
+        
+        repintar();
     };
 }
 
