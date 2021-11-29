@@ -7,10 +7,15 @@ function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
 }
 
-function crearElementoConTextoYClase(tipo ,clase, texto) {
+function crearElementoConTextoYClase(tipo ,clase, texto, atributos = {}) {
     let elemento = document.createElement(tipo);
     elemento.className = clase;
     elemento.innerHTML = texto;
+
+    for (const atributo in atributos) {
+        elemento.setAttribute(atributo, atributos[atributo]);
+    }
+
     return elemento;
 }
 
@@ -37,6 +42,18 @@ function mostrarGastoWeb(idElemento, gasto) {
         let spanEtiqueta = crearElementoConTextoYClase("span", "gasto-etiquetas-etiqueta", etiqueta);
         divGEtiquetas.append(spanEtiqueta);
     }
+
+    let btnEditar = crearElementoConTextoYClase("button", "gasto-editar", "Editar", {"type": "button"});
+    let editarGasto = new EditarHandle();
+    editarGasto.gasto = gasto;
+    btnEditar.addEventListener("click", editarGasto);
+    divPadre.append(btnEditar);
+
+    let btnBorrar = crearElementoConTextoYClase("button", "gasto-borrar", "Borrar", {"type": "button"});
+    divPadre.append(btnBorrar);
+
+    let espacio = document.createElement("br");
+    elemento.append(espacio);
 
     elemento.append(divPadre);
 }
@@ -100,8 +117,6 @@ function nuevoGastoWeb() {
 }
 
 function EditarHandle() {
-    gasto,
-
     this.handleEvent = function() {
         let descripcion = prompt("Nuevo gasto: introduce una descripción:", this.gasto["descripcion"]);
         let valor = prompt("Nuevo gasto: valor:", this.gasto["valor"]);
