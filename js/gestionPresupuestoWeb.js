@@ -226,11 +226,14 @@ function filtrarGastosWeb(event) {
 }
 
 function guardarGastosWeb() {
-
+    const gastos = gestionPresupuesto.listarGastos();
+    localStorage.setItem('GestorGastosDWEC', JSON.stringify(gastos));
 }
 
 function cargarGastosWeb() {
-
+    const gastos = JSON.parse(localStorage.getItem('GestorGastosDWEC')) || [];
+    gestionPresupuesto.cargarGastos(gastos);
+    repintar();
 }
 
 function EditarHandle() {
