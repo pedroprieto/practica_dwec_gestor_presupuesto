@@ -130,7 +130,16 @@ function BorrarHandle() {
         gestionPresupuesto.borrarGasto(this.gasto.id);
         
         repintar();
-    }
+    };
+}
+
+function BorrarEtiquetasHandle() {
+    gasto,
+    etiqueta,
+
+    this.handleEvent = function() {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+    };
 }
 
 export {
