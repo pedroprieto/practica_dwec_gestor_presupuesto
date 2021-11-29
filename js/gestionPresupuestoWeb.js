@@ -170,8 +170,6 @@ function nuevoGastoWebFormulario(event) {
     formulario.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        console.log(formulario.valor);
-
         const gasto = new gestionPresupuesto.CrearGasto(
             formulario.descripcion.value,
             parseInt(formulario.valor.value),
@@ -209,8 +207,6 @@ function filtrarGastosWeb(event) {
         fechaHasta: elementosFormulario['formulario-filtrado-fecha-hasta'].value || undefined,
         etiquetasTiene: gestionPresupuesto.transformarListadoEtiquetas(etiquetas) || undefined
     }
-
-    console.log(filtros);
 
     // Borramos listado actual.
     document.getElementById('listado-gastos-completo').innerHTML = '';
