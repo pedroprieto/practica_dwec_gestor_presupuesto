@@ -470,6 +470,46 @@ function filtrarGastosWeb() {
 
 
 
+        let cadenaBusqueda;
+        // e.target.elements.descripcion.value
+        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+        if (descripcion != "") {
+            cadenaBusqueda = "descripcionContiene: " + descripcion;
+        }
+
+        let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo"));
+        if (valorMinimo != "") {
+            cadenaBusqueda += "valorMinimo: " + valorMinimo;
+        }
+
+        let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo"));
+        if (valorMaximo != "") {
+            cadenaBusqueda += "valorMaximo: " + valorMaximo;
+        }
+
+        let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde");
+        if (fechaDesde != "") {
+            cadenaBusqueda += "fechaDesde: " + fechaDesde;
+        }
+
+        let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta");
+        if (fechaHasta != "") {
+            cadenaBusqueda += "fechaHasta: " + fechaHasta;
+        }
+
+        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene");
+        if (etiquetas != "") {
+            cadenaBusqueda += "etiquetasTiene: " + etiquetas;
+        }
+        
+        // gespres.filtrarGastos(cadenaBusqueda);
+        // mostrarGastosWeb("listado-gastos-completo", gespres.filtrarGastos(cadenaBusqueda))
+        // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+        document.removeChild(document.getElementById("listado-gastos-completo"));
+        for (let g of gespres.filtrarGastos(cadenaBusqueda)) {
+            mostrarGastosWeb("listado-gastos-completo", g);
+        };
+
     }
 }
 
