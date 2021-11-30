@@ -462,6 +462,17 @@ function manejadorCancelarNuevoGastoWeb() {
     }
 }
 
+function filtrarGastosWeb() {
+    this.handleEvent = function(e) {
+
+        // Prevenir la recarga de la web
+        e.preventDefault();
+
+
+
+    }
+}
+
 // Captura de click de botones 
 // Capturamos el click del boton actualizar presupuesto, y si se presiona 
 let btn_act_presupuesto = document.getElementById('actualizarpresupuesto');
@@ -474,6 +485,10 @@ let botonNuevoGastoWebFormulario = document.getElementById("anyadirgasto-formula
 let manejadorBotonFormularioNuevoGastoWeb = new nuevoGastoWebFormulario();
 botonNuevoGastoWebFormulario.addEventListener("click", manejadorBotonFormularioNuevoGastoWeb);
 
+// Captura del click del botón Filtrar GAstos
+let botonFiltrarGastos = document.querySelector("form");
+let manejadorBotonFiltrarGastos = new filtrarGastosWeb();
+botonFiltrarGastos.addEventListener("submit", manejadorBotonFiltrarGastos);
 
 
 // Exportamos las funciones del documento
@@ -484,5 +499,6 @@ export {
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
-    editarHandle
+    editarHandle,
+    filtrarGastosWeb
 }
