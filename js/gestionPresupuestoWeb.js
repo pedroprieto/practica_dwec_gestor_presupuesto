@@ -1,9 +1,11 @@
 import * as gp from './gestionPresupuesto.js';
 
 function auxCrearElemento(tagHTML,clase,contenido){
+
     let etiqueta=document.createElement(tagHTML);
     etiqueta.className=clase;
     etiqueta.innerHTML=contenido;
+
     return etiqueta;
 }
 
@@ -26,6 +28,7 @@ function mostrarGastoWeb(idElemento,gasto){
     if ( gasto.etiquetas ){
         
         for(let etiqueta of gasto.etiquetas){
+
             let span=document.createElement('span');
             span.className="gasto-etiquetas-etiqueta";
             

@@ -80,9 +80,13 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     this.anyadirEtiquetas = function(...etiquetas){
 
         let posicion;
+
         for (let etiqueta of etiquetas){
+
             posicion = this.etiquetas.lastIndexOf(etiqueta);
+
             if(posicion == -1){
+
                 this.etiquetas.push(etiqueta)
             }
         }
@@ -210,11 +214,15 @@ function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
 
     return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
         .reduce(function(acumula,objeto){
-            let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo)
-            if(!acumula[objPerAgru]){
+
+            let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo);
+
+            if( !acumula[objPerAgru] ){
+
                 acumula[objPerAgru]=0;
             }
             acumula[objPerAgru]+=objeto.valor;
+
         return acumula;
     },{});     
 }
