@@ -218,11 +218,23 @@ function EditarHandleFormulario() {
         formulario.descripcion.value = this.gasto.descripcion;
         formulario.valor.value = this.gasto.valor;
 
-        let fechaGasto = new Date(this.gasto["fecha"]);
-        fechaGasto = fechaGasto.toLocaleString();
-        console.log(fechaGasto);
+        // Formato de fecha para HTML input date
+        let fechaFormato = new Date(this.gasto["fecha"]);
+        let dia = fechaFormato.getDate();
+        let mes = fechaFormato.getMonth() + 1;
+        let anyo = fechaFormato.getFullYear();
+    
+        if(dia < 10) {
+            dia = '0' + dia;
+        }
+    
+        if (mes < 10) {
+            mes = '0' + mes;
+        }
+    
+        fechaFormato = `${anyo}-${mes}-${dia}`;
+        formulario.fecha.value = fechaFormato;
 
-        formulario.fecha.value = fechaGasto;
         formulario.etiquetas.value = this.gasto["etiquetas"].join(", ");
 
         btnEditar.after(formulario);
