@@ -39,13 +39,12 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGEtiquetas.className = "gasto-etiquetas";
     divPadre.append(divGEtiquetas);
 
-    let borrarEtiqueta = new BorrarEtiquetasHandle();
-    borrarEtiqueta.gasto = gasto;
-
     for (const etiqueta of gasto.etiquetas) {
         let spanEtiqueta = crearElementoConTextoYClase("span", "gasto-etiquetas-etiqueta", etiqueta);
         divGEtiquetas.append(spanEtiqueta);
         
+        let borrarEtiqueta = new BorrarEtiquetasHandle();
+        borrarEtiqueta.gasto = gasto;
         borrarEtiqueta.etiqueta = etiqueta;
         spanEtiqueta.addEventListener("click", borrarEtiqueta);
     }
