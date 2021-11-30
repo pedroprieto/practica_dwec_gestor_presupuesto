@@ -1,7 +1,8 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
-actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
-anyadirgasto.addEventListener("click", nuevoGastoWeb);
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
@@ -125,6 +126,37 @@ function nuevoGastoWeb() {
     repintar();
 }
 
+function nuevoGastoWebFormulario(evento) {
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let btnAnyadirGasto = evento.currentTarget;
+    btnAnyadirGasto.disabled = true;
+
+    formulario.addEventListener("submit", function(evento) {
+        evento.preventDefault();
+
+        let descripcion = formulario.descripcion.value;
+        let valor = formulario.valor.value;
+        let fecha = formulario.fecha.value;
+        let etiquetas = formulario.etiquetas.value;
+        let arrayEtiquetas = etiquetas.split(",");
+
+        let gasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+
+        gestionPresupuesto.anyadirGasto(gasto);
+
+        repintar();
+    });
+
+    let cancelarNuevoGasto = new CancelarNuevoGastoHandle();
+    cancelarNuevoGasto.formulario = formulario;
+    cancelarNuevoGasto.btnAnyadirGasto = btnAnyadirGasto;
+    formulario.querySelector("button.cancelar").addEventListener("click", cancelarNuevoGasto);
+
+    document.getElementById("controlesprincipales").append(formulario);
+}
+
 function EditarHandle() {
     this.handleEvent = function() {
         let descripcion = prompt("Nuevo gasto: introduce una descripción:", this.gasto["descripcion"]);
@@ -160,6 +192,13 @@ function BorrarEtiquetasHandle() {
         this.gasto.borrarEtiquetas(this.etiqueta);
         
         repintar();
+    };
+}
+
+function CancelarNuevoGastoHandle() {
+    this.handleEvent = function(event) {
+        this.formulario.remove();
+        this.btnAnyadirGasto.disabled = false;
     };
 }
 
