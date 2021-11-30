@@ -142,7 +142,7 @@ function nuevoGastoWebFormulario(evento) {
         evento.preventDefault();
 
         let descripcion = formulario.descripcion.value;
-        let valor = formulario.valor.value;
+        let valor = Number(formulario.valor.value);
         let fecha = formulario.fecha.value;
         let etiquetas = formulario.etiquetas.value;
         let arrayEtiquetas = etiquetas.split(",");
@@ -226,6 +226,11 @@ function EditarHandleFormulario() {
         enviarFormulario.gasto = this.gasto;
         enviarFormulario.formulario = formulario;
         formulario.addEventListener("submit", enviarFormulario);
+
+        let cancelarFormulario = new CancelarNuevoGastoHandle();
+        cancelarFormulario.formulario = formulario;
+        cancelarFormulario.btnAnyadirGasto = btnEditar;
+        formulario.querySelector("button.cancelar").addEventListener("click", cancelarFormulario);
     };
 }
 
