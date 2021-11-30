@@ -217,28 +217,30 @@ function EditarHandleFormulario() {
 
         formulario.descripcion.value = this.gasto.descripcion;
         formulario.valor.value = this.gasto.valor;
-
-        // Formato de fecha para HTML input date
-        let fechaFormato = new Date(this.gasto["fecha"]);
-        let dia = fechaFormato.getDate();
-        let mes = fechaFormato.getMonth() + 1;
-        let anyo = fechaFormato.getFullYear();
-    
-        if(dia < 10) {
-            dia = '0' + dia;
-        }
-    
-        if (mes < 10) {
-            mes = '0' + mes;
-        }
-    
-        fechaFormato = `${anyo}-${mes}-${dia}`;
-        formulario.fecha.value = fechaFormato;
-
+        formulario.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
         formulario.etiquetas.value = this.gasto["etiquetas"].join(", ");
 
         btnEditar.after(formulario);
+
+        let enviarFormulario = new EnviarEditarHandleFormulario();
+        enviarFormulario.gasto = this.gasto;
+        enviarFormulario.formulario = formulario;
+        formulario.addEventListener("submit", enviarFormulario);
     };
+}
+
+function EnviarEditarHandleFormulario() {
+    this.handleEvent = function() {
+        this.gasto.actualizarDescripcion(this.formulario.descripcion.value);
+        this.gasto.actualizarValor(Number(this.formulario.valor.value));
+        this.gasto.actualizarFecha(this.formulario.fecha.value);
+
+        let etiquetas = this.formulario.etiquetas.value;
+        let arrayEtiquetas = etiquetas.split(",");
+        this.gasto.anyadirEtiquetas(...arrayEtiquetas);
+
+        repintar();
+    }
 }
 
 export {
