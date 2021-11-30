@@ -474,7 +474,9 @@ function transformarListadoEtiquetas(etiquetas){
 
     let resultado;
 
-    resultado = etiquetas.split(/[ .,;:]\s*/igm);
+    // resultado = etiquetas.split(/[ .,;:]\s*/igm);
+    resultado = etiquetas.match(/[a-z0-9]\w*/igm);
+    // resultado = etiquetas.split(/[\s|.,;:]/igm);
 
     // console.log(resultado);
 

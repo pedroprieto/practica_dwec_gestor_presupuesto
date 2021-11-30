@@ -505,7 +505,7 @@ function filtrarGastosWeb() {
         // gespres.filtrarGastos(cadenaBusqueda);
         // mostrarGastosWeb("listado-gastos-completo", gespres.filtrarGastos(cadenaBusqueda))
         // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
-        document.removeChild(document.getElementById("listado-gastos-completo"));
+        // document.removeChild(document.getElementById("listado-gastos-completo"));
         for (let g of gespres.filtrarGastos(cadenaBusqueda)) {
             mostrarGastosWeb("listado-gastos-completo", g);
         };
