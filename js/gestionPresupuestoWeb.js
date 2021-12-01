@@ -5,6 +5,7 @@ document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb)
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
+document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
 
 function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
@@ -197,6 +198,21 @@ function filtrarGastosWeb(evento) {
 function guardarGastosWeb() {
     let jsonGastos = JSON.stringify(gestionPresupuesto.listarGastos());
     localStorage.setItem("GestorGastosDWEC", jsonGastos);
+}
+
+function cargarGastosWeb() {
+    let gastos = localStorage.getItem("GestorGastosDWEC");
+
+    if (gastos) {
+        gastos = JSON.parse(gastos);
+    }
+    else {
+        gastos = [];
+    }
+    
+    gestionPresupuesto.cargarGastos(gastos);
+
+    repintar();
 }
 
 function EditarHandle() {
