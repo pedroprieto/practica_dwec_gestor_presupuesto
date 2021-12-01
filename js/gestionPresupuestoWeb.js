@@ -152,6 +152,8 @@ function nuevoGastoWebFormulario(evento) {
         gestionPresupuesto.anyadirGasto(gasto);
 
         repintar();
+
+        document.getElementById("anyadirgasto-formulario").disabled = false;
     });
 
     let cancelarNuevoGasto = new CancelarNuevoGastoHandle();
