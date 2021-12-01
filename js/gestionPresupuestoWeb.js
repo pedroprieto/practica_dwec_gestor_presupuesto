@@ -3,6 +3,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 
 function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
@@ -162,6 +163,34 @@ function nuevoGastoWebFormulario(evento) {
     formulario.querySelector("button.cancelar").addEventListener("click", cancelarNuevoGasto);
 
     document.getElementById("controlesprincipales").append(formulario);
+}
+
+function filtrarGastosWeb(evento) {
+    evento.preventDefault();
+
+    let filtro = {
+        fechaDesde: document.getElementById("formulario-filtrado-fecha-desde").value,
+        fechaHasta: document.getElementById("formulario-filtrado-fecha-hasta").value,
+        valorMinimo: document.getElementById("formulario-filtrado-valor-minimo").value,
+        valorMaximo: document.getElementById("formulario-filtrado-valor-maximo").value,
+        descripcionContiene: document.getElementById("formulario-filtrado-descripcion").value,
+    }
+
+    let etiquetasFiltro = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
+    if (etiquetasFiltro) {
+        filtro.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasFiltro);
+    }
+
+    let gastosFiltrados = gestionPresupuesto.filtrarGastos(filtro);
+    console.log(gastosFiltrados);
+    console.log(etiquetasFiltro);
+
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    gastosFiltrados.forEach(function(gasto) {
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    });    
 }
 
 function EditarHandle() {
