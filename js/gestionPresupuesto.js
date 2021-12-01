@@ -242,8 +242,8 @@ function transformarListadoEtiquetas(listaEtiquetas) {
     return listaEtiquetas.split(expRegular);
 }
 
-function cargarGastos(gastos) {
-    gastos = gastos;
+function cargarGastos(nuevosGastos) {
+    gastos = nuevosGastos;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
