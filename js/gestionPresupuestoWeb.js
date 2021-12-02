@@ -482,9 +482,9 @@ function filtrarGastosWeb() {
         let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         if (document.getElementById("formulario-filtrado-valor-minimo").value != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "valorMinimo: " + valorMinimo;
+                cadenaBusqueda += "valorMinimo:" + valorMinimo;
             } else {
-                cadenaBusqueda += ", valorMinimo: " + valorMinimo;
+                cadenaBusqueda += ",valorMinimo:" + valorMinimo;
             }
             
         }
@@ -492,53 +492,67 @@ function filtrarGastosWeb() {
         let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
         if (document.getElementById("formulario-filtrado-valor-maximo").value != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "valorMaximo: " + valorMaximo;
+                cadenaBusqueda += "valorMaximo:" + valorMaximo;
             } else {
-                cadenaBusqueda += ", valorMaximo: " + valorMaximo;
+                cadenaBusqueda += ",valorMaximo:" + valorMaximo;
             }
         }
 
         let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
         if (fechaDesde != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "fechaDesde: " + fechaDesde;
+                cadenaBusqueda += "fechaDesde:" + fechaDesde;
             } else {
-                cadenaBusqueda += ", fechaDesde: " + fechaDesde;
+                cadenaBusqueda += ",fechaDesde:" + fechaDesde;
             }
         }
 
         let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
         if (fechaHasta != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "fechaHasta: " + fechaHasta;
+                cadenaBusqueda += "fechaHasta:" + fechaHasta;
             } else {
-                cadenaBusqueda += ", fechaHasta: " + fechaHasta;
+                cadenaBusqueda += ",fechaHasta:" + fechaHasta;
             }
         }
 
         let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
         if (etiquetas != "") {
             etiquetas = gespres.transformarListadoEtiquetas(document.getElementById("formulario-filtrado-etiquetas-tiene").value);
+            // if (cadenaBusqueda == ""){
+            //     cadenaBusqueda += "etiquetasTiene:[" + etiquetas.split(",") + "]";
+            // } else {
+            //     cadenaBusqueda += ",etiquetasTiene:[" + etiquetas.split(",") + "]";
+            // }
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "etiquetasTiene: " + etiquetas;
+                cadenaBusqueda += "etiquetasTiene:" + etiquetas;
             } else {
-                cadenaBusqueda += ", etiquetasTiene: " + etiquetas;
+                cadenaBusqueda += ",etiquetasTiene:"+ etiquetas;
             }
         }
 
         //fechaDesde: "2021-09-15", fechaHasta: "2021-10-06"
-        // console.log(cadenaBusqueda);
+        console.log(cadenaBusqueda);
         // gespres.filtrarGastos(cadenaBusqueda);
         // mostrarGastosWeb("listado-gastos-completo", gespres.filtrarGastos(cadenaBusqueda))
         // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
         // document.removeChild(document.getElementById("listado-gastos-completo"));
         //e.target.form.remove();
+
+        // Borramos el contenido del div para mostrar el resultado del filtrado
         document.getElementById("listado-gastos-completo").innerHTML = "";
-        let resultado = gespres.filtrarGastos(cadenaBusqueda);
+
+        // Filtramos los datos según los valores introducidos en el formulario
+        // cadenaBusqueda = JSON.parse(cadenaBusqueda);
+        // cadenaBusqueda = "{" + cadenaBusqueda + "}"
+        // let resultado = gespres.filtrarGastos(cadenaBusqueda);
+        // let listado_etiquetas = g.etiquetas.split(",");
+        let resultado = gespres.filtrarGastos(cadenaBusqueda.split(","));
+        
+        // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
             mostrarGastosWeb("listado-gastos-completo", g);
         };
-
     }
 }
 
