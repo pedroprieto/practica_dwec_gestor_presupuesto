@@ -470,7 +470,7 @@ function filtrarGastosWeb() {
 
 
 
-        let cadenaBusqueda = "";
+        let cadenaBusqueda = [];
         // e.target.elements.descripcion.value
         let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
         if (descripcion != "") {
@@ -547,7 +547,8 @@ function filtrarGastosWeb() {
         // cadenaBusqueda = "{" + cadenaBusqueda + "}"
         // let resultado = gespres.filtrarGastos(cadenaBusqueda);
         // let listado_etiquetas = g.etiquetas.split(",");
-        let resultado = gespres.filtrarGastos(cadenaBusqueda.split(","));
+        let resultado = "({" + gespres.filtrarGastos(cadenaBusqueda.split(",")) + "})";
+        // resultado = gespres.filtrarGastos({etiquetasTiene: ["comida", "gasolina"], fechaDesde: "2021-10-06"});
         
         // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
