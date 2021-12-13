@@ -470,7 +470,7 @@ function filtrarGastosWeb() {
 
 
 
-        let cadenaBusqueda = [];
+        let cadenaBusqueda = "";
         // e.target.elements.descripcion.value
         let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
         if (descripcion != "") {
@@ -482,9 +482,9 @@ function filtrarGastosWeb() {
         let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         if (document.getElementById("formulario-filtrado-valor-minimo").value != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "valorMinimo:" + valorMinimo;
+                cadenaBusqueda += "valorMinimo: " + valorMinimo;
             } else {
-                cadenaBusqueda += ",valorMinimo:" + valorMinimo;
+                cadenaBusqueda += ", valorMinimo: " + valorMinimo;
             }
             
         }
@@ -492,27 +492,27 @@ function filtrarGastosWeb() {
         let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
         if (document.getElementById("formulario-filtrado-valor-maximo").value != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "valorMaximo:" + valorMaximo;
+                cadenaBusqueda += "valorMaximo: " + valorMaximo;
             } else {
-                cadenaBusqueda += ",valorMaximo:" + valorMaximo;
+                cadenaBusqueda += ", valorMaximo: " + valorMaximo;
             }
         }
 
         let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
         if (fechaDesde != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "fechaDesde:" + fechaDesde;
+                cadenaBusqueda += "fechaDesde: " + fechaDesde;
             } else {
-                cadenaBusqueda += ",fechaDesde:" + fechaDesde;
+                cadenaBusqueda += ", fechaDesde: " + fechaDesde;
             }
         }
 
         let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
         if (fechaHasta != "") {
             if (cadenaBusqueda == ""){
-                cadenaBusqueda += "fechaHasta:" + fechaHasta;
+                cadenaBusqueda += "fechaHasta: " + fechaHasta;
             } else {
-                cadenaBusqueda += ",fechaHasta:" + fechaHasta;
+                cadenaBusqueda += ", fechaHasta: " + fechaHasta;
             }
         }
 
@@ -527,12 +527,12 @@ function filtrarGastosWeb() {
             if (cadenaBusqueda == ""){
                 cadenaBusqueda += "etiquetasTiene:" + etiquetas;
             } else {
-                cadenaBusqueda += ",etiquetasTiene:"+ etiquetas;
+                cadenaBusqueda += ", etiquetasTiene:" + etiquetas;
             }
         }
 
         //fechaDesde: "2021-09-15", fechaHasta: "2021-10-06"
-        console.log(cadenaBusqueda);
+        
         // gespres.filtrarGastos(cadenaBusqueda);
         // mostrarGastosWeb("listado-gastos-completo", gespres.filtrarGastos(cadenaBusqueda))
         // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
@@ -547,9 +547,14 @@ function filtrarGastosWeb() {
         // cadenaBusqueda = "{" + cadenaBusqueda + "}"
         // let resultado = gespres.filtrarGastos(cadenaBusqueda);
         // let listado_etiquetas = g.etiquetas.split(",");
-        let resultado = "({" + gespres.filtrarGastos(cadenaBusqueda.split(",")) + "})";
+        // let resultado = "({" + gespres.filtrarGastos(cadenaBusqueda.split(",")) + "})";
+        let cadenaBusqueda1 = cadenaBusqueda.split(",");
+        cadenaBusqueda1 = "{" + cadenaBusqueda1 + "}";
+        console.log(cadenaBusqueda1);
+        let resultado =  gespres.filtrarGastos(cadenaBusqueda1);
         // resultado = gespres.filtrarGastos({etiquetasTiene: ["comida", "gasolina"], fechaDesde: "2021-10-06"});
-        
+        // let resultado = gespres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["transporte"]});
+        console.log(resultado);
         // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
             mostrarGastosWeb("listado-gastos-completo", g);
