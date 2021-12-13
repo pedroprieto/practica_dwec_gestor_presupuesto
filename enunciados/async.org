@@ -76,6 +76,8 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
     #+begin_quote
     ¡IMPORTANTE! La API será compartida por todas las personas que estén realizando la práctica, por lo que cada persona deberá realizar las operaciones y pruebas *exclusivamente* sobre su *identificador de usuario*. Se debe evitar en todo momento borrar o modificar datos de otras personas o poner textos o contenido inadecuado.
     #+end_quote
+
+    Para los interesados en el código de la API (hecha con NodeJS, [[https://www.claudiajs.com/][ClaudiaJS]] y alojada en AWS), está disponible en el siguiente repositorio: https://github.com/pedroprieto/practica_dwec_gestor_presupuesto_api_server
     
 *** Fichero ~interaccionHTML.html~
 **** Modificación de controles principales
