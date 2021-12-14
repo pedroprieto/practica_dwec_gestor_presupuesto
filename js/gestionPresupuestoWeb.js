@@ -76,6 +76,15 @@ let botonborrar = document.createElement("button");
     divGen.append(botoneditar);
     divGen.append(botonborrar);
 
+    let botonborrarAPI = document.createElement("button");
+    botonborrarAPI.type ="button";
+    botonborrarAPI.className = "gasto-borrar-api";
+    botonborrarAPI.textContent = "Borrar (API)";
+    let btnborrarAPI = new BorrarHandleAPI();
+    botonborrarAPI.gasto = gasto;
+    botonborrarAPI.addEventListener("click", btnborrarAPI);
+    divGen.append(botonborrarAPI);
+
     let botoneditarform = document.createElement("button");
     botoneditarform.type ="button";
     botoneditarform.className = "gasto-editar-formulario";
@@ -156,11 +165,29 @@ function EditarHandleFormulario(){
         bSubmit.gasto = this.gasto;
         form.addEventListener('submit', bSubmit);
 
+        
+
         let handleCancel = new cancelHandle();        
         let btnCancelar = form.querySelector("button.cancelar");
         btnCancelar.addEventListener("click", handleCancel);
+
+
+        let botoneEnviarAPI = document.getElementById("gasto-enviar-api");
+        botoneEnviarAPI.addEventListener('click', enviareditadoaAPI)
+        let enviareditadoaAPI = new handleenviareditadoaAPI();    
         
     }
+}
+function handleenviareditadoaAPI(){
+    this.handleEvent = function(event){
+
+        //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API.
+        // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
+        //  y el id del gasto actual.
+        // El contenido de la petición PUT se obtendrá a partir del formulario de edición.
+
+        cargarGastosApi();
+    }    
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -272,6 +299,16 @@ function EditarHandle(){
       
 
 }
+function BorrarHandleAPI(){
+    this.handleEvent = function(e){
+
+      //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
+            
+        cargarGastosApi();
+        
+           } 
+
+}
 function BorrarHandle(){
     this.handleEvent = function(e){
 
@@ -308,12 +345,22 @@ function nuevoGastoWebFormulario(){
    
     form.addEventListener("submit", formhandleEnvioboton);
 
+    let botoneEnviarAPI = document.getElementById("gasto-enviar-api")
+    botoneEnviarAPI.addEventListener("click", solicitudAPI);
+    cargarGastosApi();
+
     let handleCancel = new cancelHandle();        
     let btnCancelar = form.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", handleCancel);
 
     repintar();
 
+}
+function solicitudAPI(){
+
+    //Se encargará de realizar mediante fetch una solicitud POST a la URL correspondiente de la API.
+    // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario.
+    // El contenido de la petición POST se obtendrá a partir del formulario de creación.
 }
 function enviarnuevoGastoHandleform()
 {
@@ -411,6 +458,25 @@ this.handleEvent = function(event){
     repintar()
 
 }
+
+let accioncargargastosAPI = new cargarGastosApi();
+let botoncargargastosAPI = document.getElementById("cargar-gastos-api");
+botoncargargastosAPI.addEventListener("click", accioncargargastosAPI);
+}
+function cargarGastosApi(){
+    this.handleEvent = function(event){
+
+        //Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
+        // Para ello tendrá que hacer una solicitud GET a la URL correspondiente de la API.
+        //  Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario.
+        let arrayGastosAPI;
+
+        gesPres.cargarGastos(arrayGastosAPI);
+
+    
+        repintar()
+    
+    } 
 }
 
 export  {
