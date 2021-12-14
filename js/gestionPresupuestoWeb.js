@@ -433,8 +433,11 @@ function manejadorEnvioNuevoGastoWeb() {
         let valor = parseInt(document.getElementById("valor").value);
         let fecha = document.getElementById("fecha").value;
         let etiquetas = document.getElementById("etiquetas").value;
-
+        // let etiquetas = gespres.transformarListadoEtiquetas(document.getElementById("etiquetas").value);
+        // let etiquetas = document.getElementById("etiquetas").value;
+        // etiquetas = etiquetas.split(",");
         let gasto = new gespres.CrearGasto(descripcion,valor, fecha, etiquetas);
+        console.log(gasto);
 
         // alert("Gasto: " + gasto);
 
@@ -470,8 +473,9 @@ function filtrarGastosWeb() {
 
 
 
-        let cadenaBusqueda = "";
-        let busqueda = new Object();
+        // let cadenaBusqueda = "";
+        // let busqueda = new Object();
+        let busqueda = {};
         // e.target.elements.descripcion.value
         // let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
         if (document.getElementById("formulario-filtrado-descripcion").value != "") {
@@ -524,7 +528,12 @@ function filtrarGastosWeb() {
         // let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
         if (document.getElementById("formulario-filtrado-etiquetas-tiene").value != "") {
             // etiquetas = gespres.transformarListadoEtiquetas(document.getElementById("formulario-filtrado-etiquetas-tiene").value);
-            busqueda.etiquetasTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+            // busqueda.etiquetasTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+            let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+            etiquetas = gespres.transformarListadoEtiquetas(etiquetas);
+            busqueda.etiquetas = etiquetas;
+
+
 
             // if (cadenaBusqueda == ""){
             //     cadenaBusqueda += "etiquetasTiene:[" + etiquetas.split(",") + "]";
@@ -564,15 +573,15 @@ function filtrarGastosWeb() {
         // busqueda.valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         // busqueda.valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
 
-        console.log(busqueda);
-        let resultado = gespres.filtrarGastos({busqueda});
+        // console.log(busqueda);
+        let resultado = gespres.filtrarGastos(busqueda);
         
         // let cadenaBusqueda1 = cadenaBusqueda.split(",");
         // cadenaBusqueda1 = "{" + cadenaBusqueda1 + "}";
         // console.log(cadenaBusqueda1);
         // let resultado =  gespres.filtrarGastos({cadenaBusqueda1});
 
-        console.log(resultado);
+        // console.log(resultado);
         // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
             mostrarGastosWeb("listado-gastos-completo", g);
