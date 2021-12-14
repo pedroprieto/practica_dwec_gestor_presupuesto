@@ -471,64 +471,71 @@ function filtrarGastosWeb() {
 
 
         let cadenaBusqueda = "";
+        let busqueda = new Object();
         // e.target.elements.descripcion.value
-        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
-        if (descripcion != "") {
-            cadenaBusqueda += "descripcionContiene: " + descripcion;
+        // let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+        if (document.getElementById("formulario-filtrado-descripcion").value != "") {
+            // cadenaBusqueda += "descripcionContiene: " + descripcion;
+            busqueda.descripcionContiene = document.getElementById("formulario-filtrado-descripcion").value;
         }
 
         // console.log(document.getElementById("formulario-filtrado-descripcion").value);
 
-        let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+        // let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         if (document.getElementById("formulario-filtrado-valor-minimo").value != "") {
-            if (cadenaBusqueda == ""){
-                cadenaBusqueda += "valorMinimo: " + valorMinimo;
-            } else {
-                cadenaBusqueda += ", valorMinimo: " + valorMinimo;
-            }
-            
+            busqueda.valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+            // if (cadenaBusqueda == ""){
+            //     cadenaBusqueda += "valorMinimo: " + valorMinimo;
+            // } else {
+            //     cadenaBusqueda += ", valorMinimo: " + valorMinimo;
+            // }            
         }
 
-        let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+        // let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
         if (document.getElementById("formulario-filtrado-valor-maximo").value != "") {
-            if (cadenaBusqueda == ""){
-                cadenaBusqueda += "valorMaximo: " + valorMaximo;
-            } else {
-                cadenaBusqueda += ", valorMaximo: " + valorMaximo;
-            }
+            busqueda.valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+            // if (cadenaBusqueda == ""){
+            //     cadenaBusqueda += "valorMaximo: " + valorMaximo;
+            // } else {
+            //     cadenaBusqueda += ", valorMaximo: " + valorMaximo;
+            // }
         }
 
-        let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
-        if (fechaDesde != "") {
-            if (cadenaBusqueda == ""){
-                cadenaBusqueda += "fechaDesde: " + fechaDesde;
-            } else {
-                cadenaBusqueda += ", fechaDesde: " + fechaDesde;
-            }
+        // let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
+        if (document.getElementById("formulario-filtrado-fecha-desde").value != "") {
+            busqueda.fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value
+            // if (cadenaBusqueda == ""){
+            //     cadenaBusqueda += "fechaDesde: " + fechaDesde;
+            // } else {
+            //     cadenaBusqueda += ", fechaDesde: " + fechaDesde;
+            // }
         }
 
-        let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
-        if (fechaHasta != "") {
-            if (cadenaBusqueda == ""){
-                cadenaBusqueda += "fechaHasta: " + fechaHasta;
-            } else {
-                cadenaBusqueda += ", fechaHasta: " + fechaHasta;
-            }
+        // let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+        if (document.getElementById("formulario-filtrado-fecha-hasta").value != "") {
+            busqueda.fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value
+            // if (cadenaBusqueda == ""){
+            //     cadenaBusqueda += "fechaHasta: " + fechaHasta;
+            // } else {
+            //     cadenaBusqueda += ", fechaHasta: " + fechaHasta;
+            // }
         }
 
-        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-        if (etiquetas != "") {
-            etiquetas = gespres.transformarListadoEtiquetas(document.getElementById("formulario-filtrado-etiquetas-tiene").value);
+        // let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+        if (document.getElementById("formulario-filtrado-etiquetas-tiene").value != "") {
+            // etiquetas = gespres.transformarListadoEtiquetas(document.getElementById("formulario-filtrado-etiquetas-tiene").value);
+            busqueda.etiquetasTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
             // if (cadenaBusqueda == ""){
             //     cadenaBusqueda += "etiquetasTiene:[" + etiquetas.split(",") + "]";
             // } else {
             //     cadenaBusqueda += ",etiquetasTiene:[" + etiquetas.split(",") + "]";
             // }
-            if (cadenaBusqueda == ""){
-                cadenaBusqueda += "etiquetasTiene:" + etiquetas;
-            } else {
-                cadenaBusqueda += ", etiquetasTiene:" + etiquetas;
-            }
+            // if (cadenaBusqueda == ""){
+            //     cadenaBusqueda += "etiquetasTiene:" + etiquetas;
+            // } else {
+            //     cadenaBusqueda += ", etiquetasTiene:" + etiquetas;
+            // }
         }
 
         //fechaDesde: "2021-09-15", fechaHasta: "2021-10-06"
@@ -548,18 +555,37 @@ function filtrarGastosWeb() {
         // let resultado = gespres.filtrarGastos(cadenaBusqueda);
         // let listado_etiquetas = g.etiquetas.split(",");
         // let resultado = "({" + gespres.filtrarGastos(cadenaBusqueda.split(",")) + "})";
-        let cadenaBusqueda1 = cadenaBusqueda.split(",");
-        cadenaBusqueda1 = "{" + cadenaBusqueda1 + "}";
-        console.log(cadenaBusqueda1);
-        let resultado =  gespres.filtrarGastos(cadenaBusqueda1);
         // resultado = gespres.filtrarGastos({etiquetasTiene: ["comida", "gasolina"], fechaDesde: "2021-10-06"});
         // let resultado = gespres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["transporte"]});
+
+
+        // let busqueda = new Object();
+        // busqueda.descripcionContiene = document.getElementById("formulario-filtrado-descripcion").value;
+        // busqueda.valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+        // busqueda.valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+
+        console.log(busqueda);
+        let resultado = gespres.filtrarGastos({busqueda});
+        
+        // let cadenaBusqueda1 = cadenaBusqueda.split(",");
+        // cadenaBusqueda1 = "{" + cadenaBusqueda1 + "}";
+        // console.log(cadenaBusqueda1);
+        // let resultado =  gespres.filtrarGastos({cadenaBusqueda1});
+
         console.log(resultado);
         // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
             mostrarGastosWeb("listado-gastos-completo", g);
         };
     }
+}
+
+function guardarGastosWeb() {
+
+}
+
+function cargarGastosWeb() {
+
 }
 
 // Captura de click de botones 
@@ -579,6 +605,13 @@ let botonFiltrarGastos = document.querySelector("form");
 let manejadorBotonFiltrarGastos = new filtrarGastosWeb();
 botonFiltrarGastos.addEventListener("submit", manejadorBotonFiltrarGastos);
 
+// Captura del click del botón guardar-gastos
+let btn_guardar_gastos = document.getElementById("guardar-gastos");
+btn_guardar_gastos.addEventListener("click", guardarGastosWeb);
+
+// CAptura del click del botón cargar-gastos
+let btn_cargar_gastos = document.getElementById("cargar-gastos");
+btn_cargar_gastos.addEventListener("click", cargarGastosWeb);
 
 // Exportamos las funciones del documento
 export {
@@ -589,5 +622,8 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     editarHandle,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
+
 }
