@@ -181,6 +181,8 @@ function EditarHandleFormulario(){
 function handleenviareditadoaAPI(){
     this.handleEvent = function(event){
 
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.gasto.id;
+        fetch(url, {method: 'PUT', body: new FormData(form)});
         //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API.
         // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
         //  y el id del gasto actual.
@@ -302,7 +304,11 @@ function EditarHandle(){
 function BorrarHandleAPI(){
     this.handleEvent = function(e){
 
-      //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.gasto.id;
+      //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API.
+      fetch(url, {  method: 'DELETE',})       
+      // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
+       // y el id del gasto actual.
             
         cargarGastosApi();
         
@@ -358,6 +364,8 @@ function nuevoGastoWebFormulario(){
 }
 function solicitudAPI(){
 
+    let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
+    fetch(url, {method: 'POST',body: new FormData(form)});
     //Se encargará de realizar mediante fetch una solicitud POST a la URL correspondiente de la API.
     // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario.
     // El contenido de la petición POST se obtendrá a partir del formulario de creación.
