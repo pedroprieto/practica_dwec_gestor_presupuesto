@@ -427,9 +427,13 @@ function BorrarAPIHandle(){
 
         if(nombreUsuario != ''){
             let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+
             fetch(url, {
                 method: "DELETE",
-            });
+            })
+            /*.then(response => response.json())*/
+            .then(response => alert(response.status))
+            .catch(err => alert(err));
     
             cargarGastosApi();
     
