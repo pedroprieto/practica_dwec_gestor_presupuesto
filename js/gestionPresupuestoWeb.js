@@ -466,10 +466,13 @@ botoncargargastosAPI.addEventListener("click", accioncargargastosAPI);
 function cargarGastosApi(){
     this.handleEvent = function(event){
 
+        let usuario = document.getElementById("nombre_usuario").textContent;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
         //Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
+        let datos = fetch(url)
         // Para ello tendrá que hacer una solicitud GET a la URL correspondiente de la API.
         //  Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario.
-        let arrayGastosAPI;
+        let arrayGastosAPI = datos.arrayBuffer();
 
         gesPres.cargarGastos(arrayGastosAPI);
 
