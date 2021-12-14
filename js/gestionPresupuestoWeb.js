@@ -531,7 +531,7 @@ function filtrarGastosWeb() {
             // busqueda.etiquetasTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
             let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
             etiquetas = gespres.transformarListadoEtiquetas(etiquetas);
-            busqueda.etiquetas = etiquetas;
+            busqueda.etiquetasTiene = etiquetas;
 
 
 
@@ -573,7 +573,7 @@ function filtrarGastosWeb() {
         // busqueda.valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         // busqueda.valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
 
-        // console.log(busqueda);
+        console.log(busqueda);
         let resultado = gespres.filtrarGastos(busqueda);
         
         // let cadenaBusqueda1 = cadenaBusqueda.split(",");
@@ -581,7 +581,7 @@ function filtrarGastosWeb() {
         // console.log(cadenaBusqueda1);
         // let resultado =  gespres.filtrarGastos({cadenaBusqueda1});
 
-        // console.log(resultado);
+        console.log(resultado);
         // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
             mostrarGastosWeb("listado-gastos-completo", g);
