@@ -30,6 +30,11 @@
           <button type="button" id="cargar-gastos">
             Cargar gastos
           </button>
+          <button type="button" id="cargar-gastos-api">
+            Cargar gastos (API)
+          </button>
+          <input type="text" name="nombre_usuario" id="nombre_usuario">
+
           </div>
 
             <div id="presupuesto">
@@ -100,12 +105,7 @@
 
         </div>
 
-        <!--
-             TODO: Cargar el script js/generarDatosEstaticos.js
-             Cargar script al final para que se haya cargado todo el HTML previo.
-             El script se debe cargar con el atributo type="module" porque vamos a utilizar "import"
-             https://es.javascript.info/modules-intro#que-es-un-modulo
-        -->
+        
         <script type="module" src="js/generarDatosEstaticos.js">
             
             
@@ -130,6 +130,8 @@
         </div>
         <button type="submit">Enviar</button>
         <button class="cancelar" type="button">Cancelar</button>
+        
+        <button type="button" class="gasto-enviar-api">Enviar (API)</button>
     </form>
   </template>
     </body>
