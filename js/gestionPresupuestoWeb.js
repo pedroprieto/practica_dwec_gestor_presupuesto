@@ -9,6 +9,8 @@ let evFiltrar = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", evFiltrar);
 document.getElementById("guardar-gastos").addEventListener('click', guardarGastosWeb);
 document.getElementById("cargar-gastos").addEventListener('click', cargarGastosWeb);
+/**/
+document.getElementById("cargar-gastos-api").addEventListener('click', cargarGastosApi);
 
 function mostrarDatoEnId(idElemento, valor){
     let mostrar = document.getElementById(idElemento);
@@ -30,6 +32,10 @@ function mostrarGastoWeb(idElemento, gasto){
     //Botón editar gasto formulario
     let evEditarFormulario = new EditarHandleFormulario();
     evEditarFormulario.gasto = gasto;
+
+    //Botón borrar API
+    let evBorrarAPI = new BorrarAPIHandle();
+    evBorrarAPI.gasto = gasto;
 
     let div = document.createElement("div");
     div.className = "gasto";
@@ -73,6 +79,12 @@ function mostrarGastoWeb(idElemento, gasto){
     btnBorrar.textContent = "Borrar";
     btnBorrar.addEventListener("click", evBorrar);
 
+    let btnBorrarAPI = document.createElement("button");
+    btnBorrarAPI.className = "gasto-borrar-api";
+    btnBorrarAPI.type = "button";
+    btnBorrarAPI.textContent = "Borrar (API)";
+    btnBorrarAPI.addEventListener('click', evBorrarAPI);
+
     let btnEditaFormulario = document.createElement("button");
     btnEditaFormulario.className = "gasto-editar-formulario";
     btnEditaFormulario.type = "button";
@@ -85,6 +97,7 @@ function mostrarGastoWeb(idElemento, gasto){
     div.append(divEtiq);
     div.append(btnEditar);
     div.append(btnBorrar);
+    div.append(btnBorrarAPI);
     div.append(btnEditaFormulario);
     mostrar.append(div);  
 }
@@ -382,6 +395,49 @@ function cargarGastosWeb(){
     gp.cargarGastos(gastosLS);
 
     repintar();
+}
+
+async function cargarGastosApi(){
+    let nombreUsuario = document.getElementById('nombre_usuario').value;
+
+    if(nombreUsuario != ''){
+        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+        let response = await fetch(url);
+
+        if(response.ok){
+            let gastosAPI = await response.json();
+
+            console.log(gastosAPI);
+
+            gp.cargarGastos(gastosAPI);
+    
+            repintar();
+        }else{
+            alert('Rechazado');
+        }
+
+    }else{
+        alert('No has introducido un nombre de usuario');
+    }
+}
+
+function BorrarAPIHandle(){
+    this.handleEvent = function(e){
+        let nombreUsuario = document.getElementById('nombre_usuario').value;
+
+        if(nombreUsuario != ''){
+            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+            fetch(url, {
+                method: "DELETE",
+            });
+    
+            cargarGastosApi();
+    
+        }else{
+            alert('No has introducido un nombre de usuario');
+        }
+        
+    }
 }
 
 export   { 
