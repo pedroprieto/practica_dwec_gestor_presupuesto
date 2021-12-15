@@ -201,6 +201,15 @@ function nuevoGastoWebFormulario(){
 
     let btnCancelar = formulario.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", cancelar);
+
+    /**/
+    /*let btnEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
+    btnEnviarAPI.addEventListener("click", enviarAPIHandle);*/
+
+    let enviarAPI = new enviarAPIHandle();
+    /*enviarAPI.gasto = gasto;*/
+    let btnEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
+    btnEnviarAPI.addEventListener("click", enviarAPI);
 }
 
 function enviarGastoHandle(){
@@ -301,6 +310,7 @@ function EditarHandleFormulario(){
     
         let btnCancelar = formulario.querySelector("button.cancelar");
         btnCancelar.addEventListener("click", cancelar);
+
     }
 }
 
@@ -419,6 +429,7 @@ async function cargarGastosApi(){
     }else{
         alert('No has introducido un nombre de usuario');
     }
+
 }
 
 function BorrarAPIHandle(){
@@ -426,23 +437,84 @@ function BorrarAPIHandle(){
         let nombreUsuario = document.getElementById('nombre_usuario').value;
 
         if(nombreUsuario != ''){
-            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+
+            console.log(this.gasto.gastoId);
 
             fetch(url, {
                 method: "DELETE",
             })
-            /*.then(response => response.json())*/
-            .then(response => alert(response.status))
+            .then(function(response){
+                if(response.status != 200 && response.status != 201){
+                    alert("Error "+response.status+": en la API no hay ningún gasto con ese id");
+                }
+            })
             .catch(err => alert(err));
-    
-            cargarGastosApi();
+
+            //Le damos 1 segundo para que la API sincronice
+            setTimeout(function(){
+                cargarGastosApi();
+            },1000);
     
         }else{
             alert('No has introducido un nombre de usuario');
         }
+
         
     }
 }
+
+function enviarAPIHandle(){
+    this.handleEvent = function(e){
+        let nombreUsuario = document.getElementById('nombre_usuario').value;
+
+        if(nombreUsuario != ''){
+            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+
+            var form = document.querySelector("form");
+            let desc = form.elements.descripcion.value;
+            let val = form.elements.valor.value;
+            let fech = form.elements.fecha.value;
+            let etiq = form.elements.etiquetas.value;
+    
+            val = parseFloat(val);
+            etiq = etiq.split(',');
+    
+            let gastoAPI = {
+                descripcion: desc,
+                valor: val,
+                fecha: fech,
+                etiquetas: etiq
+            };
+
+            console.log(gastoAPI);
+
+            fetch(url, {
+                method: "POST",
+                headers:{
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(gastoAPI)
+            })
+            .then(function(response){
+                if(response.status != 200 && response.status != 201){
+                    alert("Error "+response.status+": en la API no hay ningún gasto con ese id");
+                }
+            })
+            .catch(err => alert(err));
+    
+            //Le damos 1 segundo para que la API sincronice
+            setTimeout(function(){
+                cargarGastosApi();
+            },1000);
+    
+        }else{
+            alert('No has introducido un nombre de usuario');
+        }
+
+    }
+}
+
 
 export   { 
     mostrarDatoEnId,
