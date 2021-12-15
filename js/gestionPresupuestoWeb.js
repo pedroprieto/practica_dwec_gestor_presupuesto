@@ -435,8 +435,8 @@ function manejadorEnvioNuevoGastoWeb() {
         let etiquetas = document.getElementById("etiquetas").value;
         // let etiquetas = gespres.transformarListadoEtiquetas(document.getElementById("etiquetas").value);
         // let etiquetas = document.getElementById("etiquetas").value;
-        // etiquetas = etiquetas.split(",");
-        let gasto = new gespres.CrearGasto(descripcion,valor, fecha, etiquetas);
+        etiquetas = etiquetas.split(",");
+        let gasto = new gespres.CrearGasto(descripcion,valor, fecha, ...etiquetas);
         console.log(gasto);
 
         // alert("Gasto: " + gasto);
