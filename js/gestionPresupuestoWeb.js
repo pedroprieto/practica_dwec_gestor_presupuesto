@@ -21,6 +21,9 @@ botonGuardarGastosWeb.addEventListener("click", guardarGastosWeb);
 let botonCargarGastosWeb = document.getElementById("cargar-gastos");
 botonCargarGastosWeb.addEventListener("click", cargarGastosWeb);
 
+let botonGastosApi = document.getElementById("cargar-gastos-api");
+botonGastosApi.addEventListener("click", cargarGastosApi);
+
 
 function mostrarDatoEnId(idElemento, valor){
 
@@ -429,6 +432,25 @@ function cargarGastosWeb(){
     repintar();
 }
 
+// practica 9 funciones asincronas
+
+function cargarGastosApi(){
+
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    
+    fetch(url, {
+        method: 'GET',
+        mode: 'no-cors',
+    })
+    .then(response => response.json())
+    .then((result) => { 
+        let resultado = result;
+        console.log(result);
+        gestionPresupuesto.cargarGastos(resultado);
+        repintar();
+    });
+}
 
 export {
     mostrarDatoEnId,
