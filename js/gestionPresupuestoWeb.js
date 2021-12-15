@@ -438,19 +438,38 @@ function cargarGastosApi(){
 
     let usuario = document.getElementById("nombre_usuario").value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-    
-    fetch(url, {
-        method: 'GET',
-        mode: 'no-cors',
-    })
+
+    fetch(url, {method: 'GET'})
     .then(response => response.json())
     .then((result) => { 
         let resultado = result;
-        console.log(result);
+        //debugger
+        //console.log(result);
         gestionPresupuesto.cargarGastos(resultado);
         repintar();
-    });
+    })
+    .catch(err => console.error(err));
 }
+
+/*async function cargarGastosApi(){
+
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+    let response = await fetch(url, {method: 'GET'});
+
+    //console.log(response);
+    
+    if(response.ok && response.status == 200){
+        let resultado = await response.json();
+        console.log(resultado);
+        gestionPresupuesto.cargarGastos(resultado);
+        repintar();
+    }else{
+        console.log(`Error: ${response.status}`);
+    }
+    
+}*/
 
 export {
     mostrarDatoEnId,
