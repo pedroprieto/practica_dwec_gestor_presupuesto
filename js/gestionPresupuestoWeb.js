@@ -311,6 +311,12 @@ function EditarHandleFormulario(){
         let btnCancelar = formulario.querySelector("button.cancelar");
         btnCancelar.addEventListener("click", cancelar);
 
+        /**/
+        let actualizarAPI = new actualizarAPIHandle();
+        actualizarAPI.gasto = this.gasto;
+        let btnActualizarAPI = formulario.querySelector("button.gasto-enviar-api");
+        btnActualizarAPI.addEventListener("click", actualizarAPI);
+
     }
 }
 
@@ -417,8 +423,6 @@ async function cargarGastosApi(){
         if(response.ok){
             let gastosAPI = await response.json();
 
-            console.log(gastosAPI);
-
             gp.cargarGastos(gastosAPI);
     
             repintar();
@@ -439,14 +443,14 @@ function BorrarAPIHandle(){
         if(nombreUsuario != ''){
             let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
 
-            console.log(this.gasto.gastoId);
-
             fetch(url, {
                 method: "DELETE",
             })
             .then(function(response){
-                if(response.status != 200 && response.status != 201){
+                if(!response.ok){
                     alert("Error "+response.status+": en la API no hay ningún gasto con ese id");
+                }else{
+                    alert("Gasto borrado correctamente");
                 }
             })
             .catch(err => alert(err));
@@ -471,7 +475,7 @@ function enviarAPIHandle(){
         if(nombreUsuario != ''){
             let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
-            var form = document.querySelector("form");
+            var form = document.querySelector("#controlesprincipales form");
             let desc = form.elements.descripcion.value;
             let val = form.elements.valor.value;
             let fech = form.elements.fecha.value;
@@ -487,8 +491,6 @@ function enviarAPIHandle(){
                 etiquetas: etiq
             };
 
-            console.log(gastoAPI);
-
             fetch(url, {
                 method: "POST",
                 headers:{
@@ -497,8 +499,10 @@ function enviarAPIHandle(){
                 body: JSON.stringify(gastoAPI)
             })
             .then(function(response){
-                if(response.status != 200 && response.status != 201){
-                    alert("Error "+response.status+": en la API no hay ningún gasto con ese id");
+                if(!response.ok){
+                    alert("Error "+response.status+": no se ha podido crear el gasto en la API");
+                }else{
+                    alert("Gasto creado correctamente");
                 }
             })
             .catch(err => alert(err));
@@ -512,6 +516,56 @@ function enviarAPIHandle(){
             alert('No has introducido un nombre de usuario');
         }
 
+    }
+}
+
+function actualizarAPIHandle(){
+    this.handleEvent = function(e){
+        let nombreUsuario = document.getElementById('nombre_usuario').value;
+
+        if(nombreUsuario != ''){
+            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+
+            var form = document.querySelector(".gasto form");
+            let desc = form.elements.descripcion.value;
+            let val = form.elements.valor.value;
+            let fech = form.elements.fecha.value;
+            let etiq = form.elements.etiquetas.value;
+    
+            val = parseFloat(val);
+            etiq = etiq.split(',');
+    
+            let gastoAPI = {
+                descripcion: desc,
+                valor: val,
+                fecha: fech,
+                etiquetas: etiq
+            };
+
+            fetch(url, {
+                method: "PUT",
+                headers:{
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(gastoAPI)
+            })
+            .then(function(response){
+                if(!response.ok){
+                    alert("Error "+response.status+": no se ha podido actualizar el gasto de la API");
+                }else{
+                    alert("Gasto actualizado correctamente");
+                }
+            })
+            .catch(err => alert(err));
+    
+            //Le damos 1 segundo para que la API sincronice
+            setTimeout(function(){
+                cargarGastosApi();
+            },1000);
+    
+        }else{
+            alert('No has introducido un nombre de usuario');
+        }
     }
 }
 
