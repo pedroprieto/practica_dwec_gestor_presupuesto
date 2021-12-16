@@ -423,14 +423,11 @@ function cargarGastosApi(){
             method: "GET",
         })
         .then(response => response.json())
-        .then(gastosAPI => {
-
-                gp.cargarGastos(gastosAPI);
+        .then(function(gastosAPI){
+            gp.cargarGastos(gastosAPI);
     
-                repintar();
+            repintar();
         })
-        .catch(err => alert(err));
-
     }else{
         alert('No has introducido un nombre de usuario');
     }
