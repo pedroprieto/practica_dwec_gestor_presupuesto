@@ -567,7 +567,7 @@ function enviarGastoApi(){
                 
                 if(response.ok){
                     //response.JSON.stringify(nuevoObjeto);
-                    console.log("La peticion de añadir ha sido erronea");
+                    console.log("La peticion de añadir ha sido correcta");
                     cargarGastosApi();
                 }else{
                     console.log("La peticion de añadir ha sido erronea");
