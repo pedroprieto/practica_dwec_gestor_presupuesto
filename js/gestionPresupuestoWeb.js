@@ -231,7 +231,12 @@ function nuevoGastoWebFormulario(){
     let cancelarFormBoton = formulario.querySelector("button.cancelar");
     let eventCancelar = new CancelarFormularioHandle();
     eventCancelar.botonAnyadir = btnAnyadir;
-    cancelarFormBoton.addEventListener("click", eventCancelar)
+    cancelarFormBoton.addEventListener("click", eventCancelar);
+
+    let enviarApi = formulario.querySelector("button.gasto-enviar-api");
+    //let evenEnviarApi = new EnviarGastoApi();
+    enviarApi.formulario = formulario;
+    enviarApi.addEventListener("click", enviarGastoApi);
 }
 
 
@@ -466,8 +471,8 @@ function cargarGastosApi(){
             gestionPresupuesto.cargarGastos(resultado);
             repintar();
         }
-    })
-    .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err));
     }
 }
 
@@ -514,6 +519,66 @@ function borrarGastoApiHandle(){
         }
     }
 }
+
+function enviarGastoApi(){
+
+    //this.handleEvent = function(e){
+
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        
+        let formulario = this.formulario; //document.querySelector("#controlesprincipales form");
+        let descripcionN = formulario.elements.descripcion.value;
+        let valorN = formulario.elements.valor.value;
+        let fechaN = formulario.elements.fecha.value;
+        let etiquetasN = formulario.elements.etiquetas.value;
+
+        valorN = parseFloat(valorN);
+        etiquetasN = etiquetasN.split(",");
+    
+        let nuevoObjeto = {
+            descripcion: descripcionN,
+            fecha: fechaN,
+            valor: valorN,
+            etiquetas: etiquetasN
+        }
+    
+        console.log(nuevoObjeto);
+
+        if(usuario == ""){
+            console.log("El input del nombre de usuario esta vacio");
+        }else{
+            fetch(url, {
+                method: 'POST', 
+                body: JSON.stringify(nuevoObjeto),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                
+                if(response.ok){
+                    //response.JSON.stringify(nuevoObjeto);
+                    cargarGastosApi();
+                }else{
+                    console.log("La peticion ha sido erronea");
+                }
+            })
+            .catch(err => console.error(err));
+            /*.then(datos => {
+                //console.log(datos);
+                if(!datos.errorMessage){
+                    cargarGastosApi();
+                }else{
+                    console.log(datos.errorMessage);
+                }
+            })
+            .catch(err => console.error(err));*/
+        }
+    //}
+}
+
+
 
 export {
     mostrarDatoEnId,
