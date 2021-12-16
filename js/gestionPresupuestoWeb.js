@@ -67,6 +67,13 @@ function mostrarGastoWeb(idElemento, gasto) {
   buttonBorrar.addEventListener("click", nuevoObjBorrar);
   divGasto.append(buttonBorrar);
 
+  let BorrarApi = document.createElement("button");
+  BorrarApi.type = "button";
+  BorrarApi.innerText = "Borrar (API)";
+  BorrarApi.className = "gasto-borrar-api";
+  BorrarApi.addEventListener("click", nuevoObj);
+  divGasto.append(BorrarApi);
+
   let nuevoObjFormulario = new EditarHandleFormulario();
   nuevoObjFormulario.gasto = gasto;
   nuevoObjFormulario.div = divGasto;
@@ -397,5 +404,24 @@ function cargarGastosWeb() {
 }
 let cargarGastos = document.getElementById("cargar-gastos");
 cargarGastos.addEventListener("click", cargarGastosWeb);
+
+function cargarGastosApi() {
+  let nombre = document.getElementById("nombre_usuario");
+  let usuarioApi = nombre.value
+    .match(/[a-z]+/gi)
+    .join("")
+    .toLowerCase();
+  fetch(
+    `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuarioApi}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      datosPresupuesto.cargarGastos(data);
+      repintar();
+    });
+  nombre.value = "";
+}
+let GastosApi = document.getElementById("cargar-gastos-api");
+GastosApi.addEventListener("click", cargarGastosApi);
 
 export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb };
