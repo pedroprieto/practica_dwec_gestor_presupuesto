@@ -587,21 +587,34 @@ function filtrarGastosWeb() {
 }
 
 function guardarGastosWeb() {
-    this.handleEvent = function(e) {
+    // this.handleEvent = function(e) {
 
-        console.log("Pulsado guardar");
-        localStorage.GestorGastosDWEC = JSON.stringify(gespres.listarGastos());
-    }
+        // console.log("Pulsado guardar");
+        // localStorage.GestorGastosDWEC = JSON.stringify(gespres.listarGastos());
+        localStorage.setItem('GestorGastosDWEC', JSON.stringify(gespres.listarGastos()));
+    // }
 }
 
 function cargarGastosWeb() {
-    this.handleEvent = function(e){
+    // this.handleEvent = function(e){
 
-        console.log("Pulsado cargar");
+        // let GestorGastosDWEC;
+        // console.log("Pulsado cargar");
+        // gespres.cargarGastos(JSON.parse(GestorGastosDWEC));
+        // let gastos_guardados = JSON.parse(GestorGastosDWEC.descripcion);
+        // gespres.cargarGastos(gastos_guardados);
+        // let gastos_guardados = localStorage.getItem('GestorGastosDWEC');
 
+        // let gastos_guardados = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+
+        // gespres.cargarGastos(gastos_guardados);
+
+        gespres.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
+
+        console.log(gespres.listarGastos());
 
         repintar();
-    }
+    // }
 }
 
 // Captura de click de botones 
