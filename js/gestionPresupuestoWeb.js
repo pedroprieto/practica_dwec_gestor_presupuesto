@@ -355,6 +355,14 @@ function EditarHandleFormulario(){
         let eventCancelar = new CancelarFormularioIndividualHandle();
         eventCancelar.botonEditar = btnEditarF;
         cancelarFormBoton.addEventListener("click", eventCancelar);
+
+        let editarFormApi = formulario.querySelector("button.gasto-enviar-api");
+        let evenEditar = new EditarGastoApi();
+        evenEditar.gasto = this.gasto;
+        evenEditar.formulario = formulario;
+        editarFormApi.addEventListener("click", evenEditar);
+
+
     }
 }
 
@@ -559,9 +567,10 @@ function enviarGastoApi(){
                 
                 if(response.ok){
                     //response.JSON.stringify(nuevoObjeto);
+                    console.log("La peticion de añadir ha sido erronea");
                     cargarGastosApi();
                 }else{
-                    console.log("La peticion ha sido erronea");
+                    console.log("La peticion de añadir ha sido erronea");
                 }
             })
             .catch(err => console.error(err));
@@ -578,6 +587,65 @@ function enviarGastoApi(){
     //}
 }
 
+
+function EditarGastoApi(){
+
+    this.handleEvent = function(e){
+
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        
+        let formulario = this.formulario; //document.querySelector("#controlesprincipales form");
+        let descripcionN = formulario.elements.descripcion.value;
+        let valorN = formulario.elements.valor.value;
+        let fechaN = formulario.elements.fecha.value;
+        let etiquetasN = formulario.elements.etiquetas.value;
+
+        valorN = parseFloat(valorN);
+        etiquetasN = etiquetasN.split(",");
+    
+        let nuevoObjeto = {
+            descripcion: descripcionN,
+            fecha: fechaN,
+            valor: valorN,
+            etiquetas: etiquetasN
+        }
+    
+        console.log(nuevoObjeto);
+
+        if(usuario == ""){
+            console.log("El input del nombre de usuario esta vacio");
+        }else{
+            fetch(url, {
+                method: 'PUT', 
+                body: JSON.stringify(nuevoObjeto),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                
+                if(response.ok){
+                    //response.JSON.stringify(nuevoObjeto);
+                    console.log("La peticion de modificacion ha sido correcta");
+                    cargarGastosApi();
+                }else{
+                    console.log("La peticion de modificacion ha sido erronea");
+                }
+            })
+            .catch(err => console.error(err));
+            /*.then(datos => {
+                //console.log(datos);
+                if(!datos.errorMessage){
+                    cargarGastosApi();
+                }else{
+                    console.log(datos.errorMessage);
+                }
+            })
+            .catch(err => console.error(err));*/
+        }
+    }
+}
 
 
 export {
