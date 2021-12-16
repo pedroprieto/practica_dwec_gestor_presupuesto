@@ -202,12 +202,8 @@ function nuevoGastoWebFormulario(){
     let btnCancelar = formulario.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", cancelar);
 
-    /**/
-    /*let btnEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
-    btnEnviarAPI.addEventListener("click", enviarAPIHandle);*/
 
     let enviarAPI = new enviarAPIHandle();
-    /*enviarAPI.gasto = gasto;*/
     let btnEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
     btnEnviarAPI.addEventListener("click", enviarAPI);
 }
@@ -428,6 +424,7 @@ function cargarGastosApi(){
     
             repintar();
         })
+        .catch(err => alert(err));
     }else{
         alert('No has introducido un nombre de usuario');
     }
@@ -449,14 +446,10 @@ function BorrarAPIHandle(){
                     alert("Error "+response.status+": en la API no hay ningún gasto con ese id");
                 }else{
                     alert("Gasto borrado correctamente");
+                    cargarGastosApi();
                 }
             })
             .catch(err => alert(err));
-
-            //Le damos 1 segundo para que la API sincronice
-            setTimeout(function(){
-                cargarGastosApi();
-            },1000);
     
         }else{
             alert('No has introducido un nombre de usuario');
@@ -501,15 +494,10 @@ function enviarAPIHandle(){
                     alert("Error "+response.status+": no se ha podido crear el gasto en la API");
                 }else{
                     alert("Gasto creado correctamente");
+                    cargarGastosApi();
                 }
             })
-            .catch(err => alert(err));
-    
-            //Le damos 1 segundo para que la API sincronice
-            setTimeout(function(){
-                cargarGastosApi();
-            },1000);
-            
+            .catch(err => alert(err));         
     
         }else{
             alert('No has introducido un nombre de usuario');
@@ -553,14 +541,10 @@ function actualizarAPIHandle(){
                     alert("Error "+response.status+": no se ha podido actualizar el gasto de la API");
                 }else{
                     alert("Gasto actualizado correctamente");
+                    cargarGastosApi();
                 }
             })
             .catch(err => alert(err));
-    
-            //Le damos 1 segundo para que la API sincronice
-            setTimeout(function(){
-                cargarGastosApi();
-            },1000);
     
         }else{
             alert('No has introducido un nombre de usuario');
@@ -573,11 +557,4 @@ export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    /*repintar,
-    actualizarPresupuestoWeb,
-    nuevoGastoWeb,
-    EditarHandle,
-    BorrarHandle,
-    BorrarEtiquetasHandle,
-    nuevoGastoWebFormulario,*/
 }
