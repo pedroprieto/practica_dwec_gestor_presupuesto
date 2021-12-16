@@ -378,6 +378,7 @@ function nuevoGastoWebFormulario() {
     this.handleEvent = function(e) {
         //alert("Boton form");
 
+        // console.log("formulario");
         let plantillaFormulario = document.getElementById("formulario-template");
 
         let formularioNuevoGasto = plantillaFormulario.content.cloneNode("true");
@@ -471,8 +472,6 @@ function filtrarGastosWeb() {
         // Prevenir la recarga de la web
         e.preventDefault();
 
-
-
         // let cadenaBusqueda = "";
         // let busqueda = new Object();
         let busqueda = {};
@@ -533,8 +532,6 @@ function filtrarGastosWeb() {
             etiquetas = gespres.transformarListadoEtiquetas(etiquetas);
             busqueda.etiquetasTiene = etiquetas;
 
-
-
             // if (cadenaBusqueda == ""){
             //     cadenaBusqueda += "etiquetasTiene:[" + etiquetas.split(",") + "]";
             // } else {
@@ -573,7 +570,7 @@ function filtrarGastosWeb() {
         // busqueda.valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         // busqueda.valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
 
-        console.log(busqueda);
+        // console.log(busqueda);
         let resultado = gespres.filtrarGastos(busqueda);
         
         // let cadenaBusqueda1 = cadenaBusqueda.split(",");
@@ -581,7 +578,7 @@ function filtrarGastosWeb() {
         // console.log(cadenaBusqueda1);
         // let resultado =  gespres.filtrarGastos({cadenaBusqueda1});
 
-        console.log(resultado);
+        // console.log(resultado);
         // Iteramos los resultados para mostrarlos en el div
         for (let g of resultado) {
             mostrarGastosWeb("listado-gastos-completo", g);
@@ -590,11 +587,21 @@ function filtrarGastosWeb() {
 }
 
 function guardarGastosWeb() {
+    this.handleEvent = function(e) {
 
+        console.log("Pulsado guardar");
+        localStorage.GestorGastosDWEC = JSON.stringify(gespres.listarGastos());
+    }
 }
 
 function cargarGastosWeb() {
+    this.handleEvent = function(e){
 
+        console.log("Pulsado cargar");
+
+
+        repintar();
+    }
 }
 
 // Captura de click de botones 
@@ -615,7 +622,7 @@ let manejadorBotonFiltrarGastos = new filtrarGastosWeb();
 botonFiltrarGastos.addEventListener("submit", manejadorBotonFiltrarGastos);
 
 // Captura del click del botón guardar-gastos
-let btn_guardar_gastos = document.getElementById("guardar-gastos");
+let btn_guardar_gastos = document.getElementById('guardar-gastos');
 btn_guardar_gastos.addEventListener("click", guardarGastosWeb);
 
 // CAptura del click del botón cargar-gastos
