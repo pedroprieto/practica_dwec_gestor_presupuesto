@@ -413,22 +413,23 @@ function cargarGastosWeb(){
     repintar();
 }
 
-async function cargarGastosApi(){
+function cargarGastosApi(){
     let nombreUsuario = document.getElementById('nombre_usuario').value;
 
     if(nombreUsuario != ''){
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
-        let response = await fetch(url);
 
-        if(response.ok){
-            let gastosAPI = await response.json();
+        fetch(url, {
+            method: "GET",
+        })
+        .then(response => response.json())
+        .then(gastosAPI => {
 
-            gp.cargarGastos(gastosAPI);
+                gp.cargarGastos(gastosAPI);
     
-            repintar();
-        }else{
-            alert('Rechazado');
-        }
+                repintar();
+        })
+        .catch(err => alert(err));
 
     }else{
         alert('No has introducido un nombre de usuario');
@@ -511,6 +512,7 @@ function enviarAPIHandle(){
             setTimeout(function(){
                 cargarGastosApi();
             },1000);
+            
     
         }else{
             alert('No has introducido un nombre de usuario');
