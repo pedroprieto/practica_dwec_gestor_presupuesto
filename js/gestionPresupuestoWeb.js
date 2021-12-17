@@ -235,7 +235,7 @@ function nuevoGastoWebFormulario(){
 
     let enviarApi = formulario.querySelector("button.gasto-enviar-api");
     //let evenEnviarApi = new EnviarGastoApi();
-    enviarApi.formulario = formulario;
+    //enviarApi.formulario = formulario;
     enviarApi.addEventListener("click", enviarGastoApi);
 }
 
@@ -359,7 +359,7 @@ function EditarHandleFormulario(){
         let editarFormApi = formulario.querySelector("button.gasto-enviar-api");
         let evenEditar = new EditarGastoApi();
         evenEditar.gasto = this.gasto;
-        evenEditar.formulario = formulario;
+        //evenEditar.formulario = formulario;
         editarFormApi.addEventListener("click", evenEditar);
 
 
@@ -528,14 +528,14 @@ function borrarGastoApiHandle(){
     }
 }
 
-function enviarGastoApi(){
+function enviarGastoApi(e){
 
     //this.handleEvent = function(e){
 
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         
-        let formulario = this.formulario; //document.querySelector("#controlesprincipales form");
+        let formulario = e.currentTarget.form;
         let descripcionN = formulario.elements.descripcion.value;
         let valorN = formulario.elements.valor.value;
         let fechaN = formulario.elements.fecha.value;
@@ -595,7 +595,7 @@ function EditarGastoApi(){
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
         
-        let formulario = this.formulario; //document.querySelector("#controlesprincipales form");
+        let formulario = e.currentTarget.form; //document.querySelector("#controlesprincipales form");
         let descripcionN = formulario.elements.descripcion.value;
         let valorN = formulario.elements.valor.value;
         let fechaN = formulario.elements.fecha.value;
