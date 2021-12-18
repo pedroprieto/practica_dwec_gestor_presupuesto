@@ -78,6 +78,7 @@ function mostrarGastoWeb(idElemento, gasto) {
   divGasto.append(BorrarApi);
 
   let nuevoObjFormulario = new EditarHandleFormulario();
+  nuevoObjFormulario.id = gasto.gastoId;
   nuevoObjFormulario.gasto = gasto;
   nuevoObjFormulario.div = divGasto;
 
@@ -104,6 +105,47 @@ function BorrarApiHandle() {
         headers: {
           "Content-Type": "application/json",
         },
+      });
+    } catch (error) {
+      alert(error);
+    }
+    cargarGastosApi();
+  };
+}
+
+function ActualizarApiHandle() {
+  this.handleEvent = async function (e) {
+    let number = this.id;
+    let nombre = document.getElementById("nombre_usuario");
+    let usuarioApi = nombre.value
+      .match(/[a-z]+/gi)
+      .join("")
+      .toLowerCase();
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuarioApi}/${number}`;
+    let disparador = event.currentTarget;
+    let formulario = disparador.parentNode;
+
+    let descripcionFormularioGasto = formulario.elements.descripcion.value;
+    let valorFormularioGasto = parseFloat(formulario.elements.valor.value);
+    let fechaFormularioGasto = formulario.elements.fecha.value;
+    let etiquetasFormularioGasto = formulario.elements.etiquetas.value;
+
+    let arrFormularioGasto = etiquetasFormularioGasto.split(",");
+
+    let gasto = new datosPresupuesto.CrearGasto(
+      descripcionFormularioGasto,
+      valorFormularioGasto,
+      fechaFormularioGasto,
+      ...arrFormularioGasto
+    );
+
+    try {
+      let response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(gasto),
       });
     } catch (error) {
       alert(error);
@@ -179,6 +221,15 @@ function EditarHandleFormulario() {
     datos
       .querySelector("button.cancelar")
       .addEventListener("click", objetoCancelar);
+
+    let objetoActualizarApi = new ActualizarApiHandle();
+    objetoActualizarApi.id = this.id;
+    objetoActualizarApi.gasto = this.gasto;
+
+    datos
+      .querySelector("button.gasto-enviar-api")
+      .addEventListener("click", objetoActualizarApi);
+
     divGasto.append(plantillaFormulario);
   };
 }
@@ -353,8 +404,6 @@ async function enviarApi(event) {
   let etiquetasFormulario = formulario.elements.etiquetas.value;
 
   let arrFormulario = etiquetasFormulario.split(",");
-
-  let id = 0;
 
   let gasto = new datosPresupuesto.CrearGasto(
     descripcionFormulario,
