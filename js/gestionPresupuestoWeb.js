@@ -182,14 +182,19 @@ function handleenviareditadoaAPI(){
     this.handleEvent = function(event){
 
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.gasto.id;
-        fetch(url, {method: 'PUT', body: new FormData(form)});
+       
         //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API.
         // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
         //  y el id del gasto actual.
         // El contenido de la petición PUT se obtendrá a partir del formulario de edición.
-
-        cargarGastosApi();
+        editargastoAPI(url);
+        
     }    
+}
+async function editargastoAPI(url){
+
+    cargarGastosApi();
+    fetch(url, {method: 'PUT', body: new FormData(form)});
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -356,13 +361,8 @@ function nuevoGastoWebFormulario(){
 
     let botonanyadirform = document.getElementById("anyadirgasto-formulario");
     botonanyadirform.disabled = true;
-    let formhandleEnvioboton = new enviarnuevoGastoHandleform();
-   
+    let formhandleEnvioboton = new enviarnuevoGastoHandleform();   
     form.addEventListener("submit", formhandleEnvioboton);
-
-    let botoneEnviarAPI = document.getElementById("gasto-enviar-api")
-    botoneEnviarAPI.addEventListener("click", solicitudAPI);
-    cargarGastosApi();
 
     let handleCancel = new cancelHandle();        
     let btnCancelar = form.querySelector("button.cancelar");
@@ -370,14 +370,45 @@ function nuevoGastoWebFormulario(){
 
     repintar();
 
-}
-function solicitudAPI(){
+    let solicitudAPI = new solicitudAPIHandler();
+    let botoneEnviarAPI = form.querySelector("button.gasto-enviar-api");   
+    botoneEnviarAPI.addEventListener("click", solicitudAPI);    
+   
+     
+    
 
-    let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
-    fetch(url, {method: 'POST',body: new FormData(form)});
-    //Se encargará de realizar mediante fetch una solicitud POST a la URL correspondiente de la API.
-    // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario.
-    // El contenido de la petición POST se obtendrá a partir del formulario de creación.
+   
+}
+function solicitudAPIHandler(){
+    this.handleEvent = function (event){
+        let usuario = document.getElementById("nombre_usuario");
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
+       
+        
+
+        NuevoGastoFormAPI(event,url)
+    }
+    
+    
+}
+async function NuevoGastoFormAPI(event,url){
+
+    let form = event.currentTarget.parentNode;
+
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayetiquetas = etiquetas.split(',')
+
+    let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
+    //  let json = await gastoAPI.json();
+
+    alert(JSON.stringify(gastoAPI))
+  // let enviarGastoaAPI = await fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI)});
+
+   cargarGastosApi();
+
 }
 function enviarnuevoGastoHandleform()
 {
