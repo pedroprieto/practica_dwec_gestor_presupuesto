@@ -81,7 +81,7 @@ let botonborrar = document.createElement("button");
     botonborrarAPI.className = "gasto-borrar-api";
     botonborrarAPI.textContent = "Borrar (API)";
     let btnborrarAPI = new BorrarHandleAPI();
-    botonborrarAPI.gasto = gasto;
+    btnborrarAPI.id = gasto.gastoId;
     botonborrarAPI.addEventListener("click", btnborrarAPI);
     divGen.append(botonborrarAPI);
 
@@ -172,30 +172,48 @@ function EditarHandleFormulario(){
         btnCancelar.addEventListener("click", handleCancel);
 
 
-        let botoneEnviarAPI = document.getElementById("gasto-enviar-api");
-        botoneEnviarAPI.addEventListener('click', enviareditadoaAPI)
-        let enviareditadoaAPI = new handleenviareditadoaAPI();    
+        let solicitudAPIEDITAR = new handleenviareditadoaAPI();
+        let botoneEnviarAPIeditar = form.querySelector("button.gasto-enviar-api");   
+        botoneEnviarAPIeditar.addEventListener("click", solicitudAPIEDITAR);    
+        botoneEnviarAPIeditar.gasto = gasto;    
         
     }
 }
 function handleenviareditadoaAPI(){
     this.handleEvent = function(event){
-
-        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.gasto.id;
-       
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.id;
+       alert(url)
         //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API.
         // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
         //  y el id del gasto actual.
         // El contenido de la petición PUT se obtendrá a partir del formulario de edición.
-        editargastoAPI(url);
+        editargastoAPI(event,url);
         
     }    
 }
-async function editargastoAPI(url){
+async function editargastoAPI(event,url){
 
-    cargarGastosApi();
-    fetch(url, {method: 'PUT', body: new FormData(form)});
+    let form = event.currentTarget.parentNode;
+
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayetiquetas = etiquetas.split(',')
+
+    let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
+    //  let json = await gastoAPI.json();
+
+    alert(JSON.stringify(gastoAPI))
+  // let enviarGastoaAPI = await fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI)});
+    
+   cargarGastosApi();
+
 }
+    
+   
+
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
@@ -309,9 +327,9 @@ function EditarHandle(){
 function BorrarHandleAPI(){
     this.handleEvent = function(e){
         let usuario = document.getElementById('nombre_usuario').value;
-        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}` ;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.id}` ;
         alert(url)
-       // fetchURLborrarDATOS(url);
+        fetchURLborrarDATOS(url);
       //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API.
         
       // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
@@ -405,8 +423,8 @@ async function NuevoGastoFormAPI(event,url){
     //  let json = await gastoAPI.json();
 
     alert(JSON.stringify(gastoAPI))
-  // let enviarGastoaAPI = await fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI)});
-
+  enviarGastoaAPI = await fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI)});
+    
    cargarGastosApi();
 
 }
