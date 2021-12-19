@@ -474,20 +474,31 @@ botoncargargastosAPI.addEventListener("click", accioncargargastosAPI);
 function cargarGastosApi(){
     this.handleEvent = function(event){
 
-        let usuario = document.getElementById("nombre_usuario").textContent;
+        let usuario = document.getElementById('nombre_usuario').value;
+        
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
-        //Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
-        let datos = fetch(url)
-        // Para ello tendrá que hacer una solicitud GET a la URL correspondiente de la API.
-        //  Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario.
-        let arrayGastosAPI = datos.arrayBuffer();
-
-        gesPres.cargarGastos(arrayGastosAPI);
-
-    
-        repintar()
-    
+       
+      //Aqui mando la URL a la funcion asincrona porque sino no podia convertirlo a json() y si ponia el "await" me decia
+      // que era una palabra reservada asi que los he mandado a otra funcion,
+      // si hay alguna forma de hacerlo en 1 sola para ahorrar espacio me la notifica
+      
+        fetchURLcargarDATOS(url)
+        
     } 
+}
+async function fetchURLcargarDATOS(url){
+ 
+    let datos = await fetch(url);
+    if(datos.ok){
+    let json = await datos.json();
+        gesPres.cargarGastos(json)
+        repintar()
+    }
+    else {
+        alert("Error-HTTP: "+ datos.status);
+    }
+    
+
 }
 
 export  {
