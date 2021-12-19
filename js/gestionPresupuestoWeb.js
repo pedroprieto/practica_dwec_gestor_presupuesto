@@ -303,16 +303,25 @@ function EditarHandle(){
 }
 function BorrarHandleAPI(){
     this.handleEvent = function(e){
-
-        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.gasto.id;
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}` ;
+        alert(url)
+       // fetchURLborrarDATOS(url);
       //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API.
-      fetch(url, {  method: 'DELETE',})       
+        
       // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
        // y el id del gasto actual.
             
-        cargarGastosApi();
+     
         
            } 
+
+}
+async function fetchURLborrarDATOS(url){
+ 
+    let datos = await fetch(url,{  method: 'DELETE',});
+    cargarGastosApi();
+    
 
 }
 function BorrarHandle(){
