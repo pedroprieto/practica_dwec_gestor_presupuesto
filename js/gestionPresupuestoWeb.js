@@ -613,14 +613,30 @@ function cargarGastosWeb() {
 
         let resultado = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
 
-        if (resultado.length = 0){
+        // if (resultado.length === 0){
+        if (Object.entries(resultado).length === 0){
+        // if (resultado === null){
             resultado = {};
         }
 
-        console.log(gespres.listarGastos());
+        gespres.cargarGastos(resultado);
+
+        console.log(resultado + " -- " + resultado.length);
 
         repintar();
     // }
+}
+
+function cargarGastosAPI() {
+
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+    url += document.getElementById("nombre_usuario").value;
+    let carga_datos_API = fetch(url);
+
+    gespres.cargarGastos(carga_datos_API);
+
+    repintar();
+
 }
 
 // Captura de click de botones 
@@ -659,6 +675,7 @@ export {
     editarHandle,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosAPI
 
 }
