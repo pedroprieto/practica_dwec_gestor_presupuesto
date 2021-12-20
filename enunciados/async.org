@@ -39,6 +39,10 @@ Para poder realizar esta práctica será necesario *instalar el siguiente softwa
     - https://es.javascript.info/fetch-crossorigin
     - https://es.javascript.info/network (resto de secciones: opcional)
       
+    Videotutoriales:
+    - [[https://youtu.be/8mim_Ya2xHg][Programación asíncrona con JavaScript]]
+    - [[https://youtu.be/ncHxikUokFA][Trabajando con APIs REST]]
+
 *** Ficheros de la aplicación
     Vamos a utilizar los ficheros de la práctica anterior realizando modificaciones sobre el archivo ~js/gestionPresupuestoWeb.js~.
 
