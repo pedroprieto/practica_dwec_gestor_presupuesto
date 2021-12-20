@@ -609,7 +609,13 @@ function cargarGastosWeb() {
 
         // gespres.cargarGastos(gastos_guardados);
 
-        gespres.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
+        // gespres.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
+
+        let resultado = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+
+        if (resultado.length = 0){
+            resultado = {};
+        }
 
         console.log(gespres.listarGastos());
 
