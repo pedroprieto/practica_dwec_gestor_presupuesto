@@ -249,13 +249,16 @@ function repintar(){
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 
-    let gastosDia = gestionPresupuesto.agruparGastos("dia");
+    let periodo = "dia";
+    let gastosDia = gestionPresupuesto.agruparGastos(periodo);
     mostrarGastosAgrupadosWeb("agrupacion-dia", gastosDia, "día");
 
-    let gastosMes = gestionPresupuesto.agruparGastos("mes");
+    let periodo2 = "mes";
+    let gastosMes = gestionPresupuesto.agruparGastos(periodo2);
     mostrarGastosAgrupadosWeb("agrupacion-mes", gastosMes, "mes");
 
-    let gastosAnyo = gestionPresupuesto.agruparGastos("anyo");
+    let periodo3 = "anyo";
+    let gastosAnyo = gestionPresupuesto.agruparGastos(periodo3);
     mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAnyo, "año");
 
 }
