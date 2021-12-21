@@ -24,7 +24,7 @@ function mostrarPresupuesto() {
 }
 
 // OBJETO GASTO
-function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     // TODO
 
     this.anyadirEtiquetas = function(...etiquetasNuevas){
@@ -47,7 +47,7 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
     if(!isNaN(fechaValida)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
         this.fecha = fechaValida;
     }else{
-        this.fecha = new Date(fecha.now());
+        this.fecha = Date.parse(new Date().now());
     }        
     //this.fecha = Date.parse(fecha);
     
