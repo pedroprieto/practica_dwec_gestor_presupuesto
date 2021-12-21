@@ -47,7 +47,7 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     if(!isNaN(fechaValida)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
         this.fecha = fechaValida;
     }else{
-        this.fecha = Date.parse(new Date().now());
+        this.fecha = Date.now();
     }        
     //this.fecha = Date.parse(fecha);
     
