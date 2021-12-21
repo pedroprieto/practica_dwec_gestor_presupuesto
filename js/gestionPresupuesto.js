@@ -46,7 +46,9 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
     let fechaValida = Date.parse(fecha);
     if(!isNaN(fechaValida)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
         this.fecha = fechaValida;
-    }         
+    }else{
+        this.fecha = new Date(fecha.now());
+    }        
     //this.fecha = Date.parse(fecha);
     
 
