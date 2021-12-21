@@ -172,38 +172,31 @@ function EditarHandleFormulario(){
         btnCancelar.addEventListener("click", handleCancel);
 
 
-        let solicitudAPIEDITAR = new handleenviareditadoaAPI();
-        let botoneEnviarAPIeditar = form.querySelector("button.gasto-enviar-api");   
-        botoneEnviarAPIeditar.addEventListener("click", solicitudAPIEDITAR);    
-        botoneEnviarAPIeditar.gasto = gasto;    
-        
+        let editarFormApi = form.querySelector("button.gasto-enviar-api");
+        editarFormApi.gasto = this.gasto;
+        editarFormApi.addEventListener("click", handleenviareditadoaAPI);
     }
 }
-function handleenviareditadoaAPI(){
-    this.handleEvent = async function(event){
-        let usuario = document.getElementById('nombre_usuario').value;
-        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.id;
-       
-        let form = event.currentTarget.parentNode;
 
-        let descripcion = form.elements.descripcion.value;
-        let valor = parseFloat(form.elements.valor.value);
-        let fecha = form.elements.fecha.value;
-        let etiquetas = form.elements.etiquetas.value;
-        let arrayetiquetas = etiquetas.split(',')
+function handleenviareditadoaAPI(event){
+
+
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
     
-        let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
-        //  let json = await gastoAPI.json();
-    
-        alert(JSON.stringify(gastoAPI))
-       let enviarGastoaAPI = await fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI)});
-        
-       cargarGastosApi();
-    
-        
-    }    
+    let form = event.currentTarget.form;
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value)
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayetiquetas = etiquetas.split(",");
+
+    let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
+    fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+      
+    cargarGastosApi();
+
 }
-
    
 
 
@@ -325,11 +318,7 @@ function BorrarHandleAPI(){
             method: "DELETE",
         })
         cargarGastosApi();
-      //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API.
-        
-      // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
-       // y el id del gasto actual.
-            
+              
      
         
            } 
@@ -374,43 +363,35 @@ function nuevoGastoWebFormulario(){
     let btnCancelar = form.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", handleCancel);
 
-    repintar();
 
-    let solicitudAPI = new solicitudAPIHandler();
-    let botoneEnviarAPI = form.querySelector("button.gasto-enviar-api");   
-    botoneEnviarAPI.addEventListener("click", solicitudAPI);    
-   
+    let enviarApi = form.querySelector("button.gasto-enviar-api");
+
+    enviarApi.addEventListener("click", enviarhandlerGastoApi);
      
     
 
    
 }
-function solicitudAPIHandler(){
-    this.handleEvent = async  function (event){
-        let usuario = document.getElementById("nombre_usuario");
+function enviarhandlerGastoApi(event){
+
+
+        let usuario = document.getElementById("nombre_usuario").value;
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
-       
-        let form = event.currentTarget.parentNode;
+        
+        let form = event.currentTarget.form;
+        let descripcion = form.elements.descripcion.value;
+        let valor = form.elements.valor.value;
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;
+        arrayetiquetas = etiquetas.split(",");
 
-    let descripcion = form.elements.descripcion.value;
-    let valor = parseFloat(form.elements.valor.value);
-    let fecha = form.elements.fecha.value;
-    let etiquetas = form.elements.etiquetas.value;
-    let arrayetiquetas = etiquetas.split(',')
-
-    let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
-    //  let json = await gastoAPI.json();
-
-    alert(JSON.stringify(gastoAPI))
-    enviarGastoaAPI = await fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI)});
-    
-   cargarGastosApi();
-
-
-    }
-    
-    
+        let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
+        fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+          
+        
+        cargarGastosApi();
 }
+
 
 function enviarnuevoGastoHandleform()
 {
