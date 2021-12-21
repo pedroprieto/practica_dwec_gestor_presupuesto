@@ -218,7 +218,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
         let propiedad = gasto.obtenerPeriodoAgrupacion(periodo);
         
-        acc[propiedad + ": "] = (acc[propiedad] || 0) + gasto.valor;
+        acc[propiedad + ": "] = (acc[propiedad + ": "] || 0) + gasto.valor;
 
         return acc;
 
