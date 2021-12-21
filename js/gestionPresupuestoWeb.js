@@ -81,7 +81,7 @@ let botonborrar = document.createElement("button");
     botonborrarAPI.className = "gasto-borrar-api";
     botonborrarAPI.textContent = "Borrar (API)";
     let btnborrarAPI = new BorrarHandleAPI();
-    btnborrarAPI.id = gasto.gastoId;
+    btnborrarAPI.gasto = gasto;
     botonborrarAPI.addEventListener("click", btnborrarAPI);
     divGen.append(botonborrarAPI);
 
@@ -180,38 +180,30 @@ function EditarHandleFormulario(){
     }
 }
 function handleenviareditadoaAPI(){
-    this.handleEvent = function(event){
+    this.handleEvent = async function(event){
         let usuario = document.getElementById('nombre_usuario').value;
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + this.id;
-       alert(url)
-        //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API.
-        // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
-        //  y el id del gasto actual.
-        // El contenido de la petición PUT se obtendrá a partir del formulario de edición.
-        editargastoAPI(event,url);
+       
+        let form = event.currentTarget.parentNode;
+
+        let descripcion = form.elements.descripcion.value;
+        let valor = parseFloat(form.elements.valor.value);
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;
+        let arrayetiquetas = etiquetas.split(',')
+    
+        let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
+        //  let json = await gastoAPI.json();
+    
+        alert(JSON.stringify(gastoAPI))
+       let enviarGastoaAPI = await fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI)});
+        
+       cargarGastosApi();
+    
         
     }    
 }
-async function editargastoAPI(event,url){
 
-    let form = event.currentTarget.parentNode;
-
-    let descripcion = form.elements.descripcion.value;
-    let valor = parseFloat(form.elements.valor.value);
-    let fecha = form.elements.fecha.value;
-    let etiquetas = form.elements.etiquetas.value;
-    let arrayetiquetas = etiquetas.split(',')
-
-    let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
-    //  let json = await gastoAPI.json();
-
-    alert(JSON.stringify(gastoAPI))
-  // let enviarGastoaAPI = await fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI)});
-    
-   cargarGastosApi();
-
-}
-    
    
 
 
@@ -325,11 +317,14 @@ function EditarHandle(){
 
 }
 function BorrarHandleAPI(){
-    this.handleEvent = function(e){
+    this.handleEvent = async function(e){
         let usuario = document.getElementById('nombre_usuario').value;
-        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.id}` ;
-        alert(url)
-        fetchURLborrarDATOS(url);
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}` ;
+
+        fetch(url, {
+            method: "DELETE",
+        })
+        cargarGastosApi();
       //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API.
         
       // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
@@ -338,13 +333,6 @@ function BorrarHandleAPI(){
      
         
            } 
-
-}
-async function fetchURLborrarDATOS(url){
- 
-    let datos = await fetch(url,{  method: 'DELETE',});
-    cargarGastosApi();
-    
 
 }
 function BorrarHandle(){
@@ -398,20 +386,11 @@ function nuevoGastoWebFormulario(){
    
 }
 function solicitudAPIHandler(){
-    this.handleEvent = function (event){
+    this.handleEvent = async  function (event){
         let usuario = document.getElementById("nombre_usuario");
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
        
-        
-
-        NuevoGastoFormAPI(event,url)
-    }
-    
-    
-}
-async function NuevoGastoFormAPI(event,url){
-
-    let form = event.currentTarget.parentNode;
+        let form = event.currentTarget.parentNode;
 
     let descripcion = form.elements.descripcion.value;
     let valor = parseFloat(form.elements.valor.value);
@@ -423,11 +402,16 @@ async function NuevoGastoFormAPI(event,url){
     //  let json = await gastoAPI.json();
 
     alert(JSON.stringify(gastoAPI))
-  enviarGastoaAPI = await fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI)});
+    enviarGastoaAPI = await fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI)});
     
    cargarGastosApi();
 
+
+    }
+    
+    
 }
+
 function enviarnuevoGastoHandleform()
 {
     this.handleEvent = function(event)
@@ -525,38 +509,32 @@ this.handleEvent = function(event){
 
 }
 
-let accioncargargastosAPI = new cargarGastosApi();
 let botoncargargastosAPI = document.getElementById("cargar-gastos-api");
-botoncargargastosAPI.addEventListener("click", accioncargargastosAPI);
+botoncargargastosAPI.addEventListener("click", cargarGastosApi);
 }
-function cargarGastosApi(){
-    this.handleEvent = function(event){
+async function cargarGastosApi(){
+
 
         let usuario = document.getElementById('nombre_usuario').value;
         
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
        
-      //Aqui mando la URL a la funcion asincrona porque sino no podia convertirlo a json() y si ponia el "await" me decia
-      // que era una palabra reservada asi que los he mandado a otra funcion,
-      // si hay alguna forma de hacerlo en 1 sola para ahorrar espacio me la notifica
+       try{let datos = await fetch(url);
+        if(datos.ok){
+        let json = await datos.json();
+            gesPres.cargarGastos(json)
+            repintar()
+        }
+        else {
+            alert("Error-HTTP: "+ datos.status);
+        }}  
       
-        fetchURLcargarDATOS(url)
+         catch(e) {
+        console.log(e);
+    
+      
         
     } 
-}
-async function fetchURLcargarDATOS(url){
- 
-    let datos = await fetch(url);
-    if(datos.ok){
-    let json = await datos.json();
-        gesPres.cargarGastos(json)
-        repintar()
-    }
-    else {
-        alert("Error-HTTP: "+ datos.status);
-    }
-    
-
 }
 
 export  {
