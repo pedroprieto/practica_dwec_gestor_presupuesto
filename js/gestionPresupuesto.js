@@ -92,11 +92,11 @@ function CrearGasto(descripcion, valor, fecha = new Date(), ... etiquetas) {
         let fechaModificada = "";
 
         if(periodo == "dia"){
-            fechaModificada = fechaNueva.substr(0,10);
+            fechaModificada = fechaNueva.substring(0,10);
         }else if(periodo == "mes"){
-            fechaModificada = fechaNueva.substr(0,7);
+            fechaModificada = fechaNueva.substring(0,7);
         }else if(periodo == "anyo"){
-            fechaModificada = fechaNueva.substr(0,4);
+            fechaModificada = fechaNueva.substring(0,4);
         }
         return fechaModificada;
     }
@@ -209,7 +209,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
         fechaDesde = "2020-01-01";
     }
     if(!fechaHasta){
-        fechaHasta =  new Date(Date.now()).toISOString().substr(0,10);
+        fechaHasta =  new Date(Date.now()).toISOString().substring(0,10);
     }
 
     let gastosCreados = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene});
