@@ -34,6 +34,9 @@ Para poder realizar esta práctica será necesario *instalar el siguiente softwa
 *** Lectura
     Lee atentamente los siguientes artículos y sus correspondientes subsecciones en caso de que las tengan:
     - https://es.javascript.info/loading
+
+    Videotutoriales:
+    - [[https://youtu.be/NFGztTbk9Hs][Introducción a WebPack]]
       
 *** Ficheros de la aplicación
     Vamos a utilizar los ficheros de la práctica anterior realizando modificaciones sobre el archivo ~js/gestionPresupuestoWeb.js~.
