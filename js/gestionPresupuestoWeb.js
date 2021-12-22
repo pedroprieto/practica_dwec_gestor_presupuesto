@@ -223,15 +223,15 @@ function repintar(){
     //*//
     let gastosAgruparDia = gp.agruparGastos("dia");
 
-    gpw.mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgruparDia, "día");
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgruparDia, "día");
 
     let gastosAgruparMes = gp.agruparGastos("mes");
 
-    gpw.mostrarGastosAgrupadosWeb("agrupacion-mes", gastosAgruparMes, "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gastosAgruparMes, "mes");
 
     let gastosAgruparAnyo = gp.agruparGastos("anyo");
 
-    gpw.mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAgruparAnyo, "año");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAgruparAnyo, "año");
 }
 
 function actualizarPresupuestoWeb(){
