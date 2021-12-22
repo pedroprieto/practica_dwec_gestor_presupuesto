@@ -44,7 +44,7 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     this.anyadirEtiquetas(...etiquetas);
     
     let fechaValida = Date.parse(fecha);
-    if(!isNaN(fechaValida)){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
+    if(!isNaN(fechaValida) || fecha != ""){ // si el valor no es un numero dejamos como esta la fecha, en caso contrario la actualizamos
         this.fecha = fechaValida;
     }else{
         this.fecha = Date.now();
@@ -95,7 +95,7 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
 
     this.obtenerPeriodoAgrupacion = function(periodo){
 
-        let fechaNueva = new Date(fecha).toISOString();
+        let fechaNueva = new Date(this.fecha).toISOString();
         let fechaModificada = "";
 
         if(periodo == "dia"){
@@ -285,9 +285,10 @@ function cargarGastos(gastosAlmacenamiento) {
         // almacenado y además tiene acceso a los métodos de "CrearGasto"
           
         // Añadimos el gasto rehidratado a "gastos"
-        gastos.push(gastoRehidratado)
+        gastos.push(gastoRehidratado);
     }
 }
+    
 
 
 
