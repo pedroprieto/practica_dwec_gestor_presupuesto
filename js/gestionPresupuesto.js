@@ -273,7 +273,7 @@ function cargarGastos(gastosAlmacenamiento) {
         // almacenado y además tiene acceso a los métodos de "CrearGasto"
           
         // Añadimos el gasto rehidratado a "gastos"
-        gastos.push(gastoRehidratado)
+        gastos.push(gastoRehidratado);
     }
 }
 
