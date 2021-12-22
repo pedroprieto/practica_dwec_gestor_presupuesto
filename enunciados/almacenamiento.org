@@ -78,7 +78,7 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
      - El código necesario se muestra a continuación:
        #+begin_src javascript
          function cargarGastos(gastosAlmacenamiento) {
-             // gastos_almacenamiento es un array de objetos "planos"
+             // gastosAlmacenamiento es un array de objetos "planos"
              // No tienen acceso a los métodos creados con "CrearGasto":
              // "anyadirEtiquetas", "actualizarValor",...
              // Solo tienen guardadas sus propiedades: descripcion, valor, fecha y etiquetas
