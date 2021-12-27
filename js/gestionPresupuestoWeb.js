@@ -614,14 +614,14 @@ function cargarGastosWeb() {
         let resultado = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
 
         // if (resultado.length === 0){
-        if (Object.entries(resultado).length === 0){
-        // if (resultado === null){
-            resultado = {};
+        // if (Object.entries(resultado).length === 0){
+        if (resultado === null){
+            resultado = [];
         }
 
         gespres.cargarGastos(resultado);
 
-        console.log(resultado + " -- " + resultado.length);
+        // console.log(resultado + " -- " + resultado.length);
 
         repintar();
     // }
@@ -632,6 +632,10 @@ function cargarGastosAPI() {
     let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
     url += document.getElementById("nombre_usuario").value;
     let carga_datos_API = fetch(url);
+
+    // console.log(url);
+
+    // carga_datos_API = JSON.parse(carga_datos_API);
 
     gespres.cargarGastos(carga_datos_API);
 
@@ -663,6 +667,10 @@ btn_guardar_gastos.addEventListener("click", guardarGastosWeb);
 // CAptura del click del botón cargar-gastos
 let btn_cargar_gastos = document.getElementById("cargar-gastos");
 btn_cargar_gastos.addEventListener("click", cargarGastosWeb);
+
+// Captura del click del boton cargar datos de API
+let btn_carga_gastos_API = document.getElementById("cargar-gastos-api");
+btn_carga_gastos_API.addEventListener("click", cargarGastosAPI);
 
 // Exportamos las funciones del documento
 export {
