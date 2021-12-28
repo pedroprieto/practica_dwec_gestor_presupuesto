@@ -68,6 +68,15 @@ function mostrarGastoWeb(idElemento, gasto){
     bBorrar.addEventListener('click', handleBorrar);
     divGasto.append(bBorrar);
 
+    let bEditarForm = document.createElement('button');
+    bEditarForm.className = "gasto-editar-formulario";
+    bEditarForm.type = "button";
+    bEditarForm.textContent = "Editar (formulario)";
+
+    let handleEditarForm = new EditarHandleFormulario();
+    handleEditarForm.gasto = gasto;
+    bEditarForm.addEventListener("click", handleEditarForm);
+    divGasto.append(bEditarForm);
 
     document.getElementById(idElemento).append(divGasto);
 
@@ -209,6 +218,33 @@ function submitHandle(){
     }
 }
 
+function submitHandleEditar(){
+    this.handleEvent = function(e){
+        e.preventDefault();
+    let form = e.currentTarget;
+
+    let descNew = form.elements.descripcion.value;
+    let valNew = form.elements.valor.value;
+    let fechaNew = form.elements.fecha.value;
+    let eticNew = form.elements.etiquetas.value;
+        
+    valNew = parseFloat(valNew);
+    eticNew = eticNew.split(', ');
+
+    this.gasto.actualizarDescripcion(descNew);
+    this.gasto.actualizarValor(valNew);
+    this.gasto.actualizarFecha(fechaNew);
+    this.gasto.anyadirEtiquetas(...eticNew);
+
+    repintar();
+
+    }
+
+}
+
+
+
+
 function cancelHandle(){
     this.handleEvent = function(e){
         e.currentTarget.parentNode.remove();
@@ -217,6 +253,31 @@ function cancelHandle(){
         repintar();
     }
 }
+
+function EditarHandleFormulario(){
+    this.handleEvent = function(e){
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
+
+        let boton = e.currentTarget;
+        boton.after(formulario);
+
+        boton.disabled = true;
+
+        let editarGasto = new submitHandleEditar();
+        editarGasto.gasto = this.gasto; 
+
+        let bEditarGasto = formulario;
+        bEditarGasto.addEventListener("submit", editarGasto);
+
+        let manejadorCancelar = new cancelHandle();
+        let botonCancelar = formulario.querySelector("button[type = button]");
+        botonCancelar.addEventListener("click", manejadorCancelar);
+    }
+
+
+}
+
 
 
 function nuevoGastoWebFormulario(){
