@@ -247,8 +247,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.fecha = fechaNueva;
         }
     }
-    
-    
+ 
+}
+
+function transformarListadoEtiquetas(etiquetasTotal){
+    let regexp = /[a-z][a-z0-9]*/gi;
+    let resultado = etiquetasTotal.match(regexp);
+
+    return resultado;
 }
 
 
@@ -265,5 +271,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos 
+    agruparGastos,
+    transformarListadoEtiquetas
 }

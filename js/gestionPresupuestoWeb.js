@@ -197,7 +197,7 @@ this.handleEvent = function(e){
 
 function submitHandle(){
     this.handleEvent = function(e){
-    e.preventDefault();
+    e.preventDefault(); //evita recargar la página, evita el comportamiento por defecto de
     let form = e.currentTarget;
 
     let descNew = form.elements.descripcion.value;
