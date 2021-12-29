@@ -337,6 +337,27 @@ function filtrarGastosWeb(){
     }
 }
 
+function guardarGastosWeb(){
+    this.handleEvent = function(e){
+        localStorage.GestorGastosDWEC = JSON.stringify(gesPres.listarGastos());
+    }
+}
+function cargarGastosWeb(){
+    this.handleEvent = function(e){
+
+        let gastosGuardados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+        gesPres.cargarGastos(gastosGuardados);
+        
+        if(!gastosGuardados)
+        {
+            gesPres.cargarGastos([]);
+        }
+
+        repintar();
+    }
+}
+
 
 
 let crearFormulario = new nuevoGastoWebFormulario();
@@ -349,7 +370,13 @@ let gastosFiltradosWeb = new filtrarGastosWeb();
 let botonFiltro = document.getElementById("formulario-filtrado");
 botonFiltro.addEventListener("submit", gastosFiltradosWeb);
 
+let guardar = new guardarGastosWeb();
+let botonGuardar = document.getElementById("guardar-gastos");
+botonGuardar.addEventListener("click", guardar);
 
+let cargar = new cargarGastosWeb();
+let botonCargar = document.getElementById("cargar-gastos");
+botonCargar.addEventListener("click", cargar);
 
 
 
