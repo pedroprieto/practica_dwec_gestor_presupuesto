@@ -309,24 +309,23 @@ function filtrarGastosWeb(){
         let plantillaFormFiltrar = document.getElementById("filtrar-gastos");
         var datosForm = plantillaFormFiltrar.querySelector("form");
 
-        if(datosForm.elements["formulario-filtrado-etiquetas-tiene"].value != ""){
-            var etiquetasFiltro = gesPres.transformarListadoEtiquetas(datosForm.elements["formulario-filtrado-etiquetas-tiene"].value);
-        }
 
         let descripcionFiltro = datosForm.elements["formulario-filtrado-descripcion"].value;
         let valorMinimoFiltro = datosForm.elements["formulario-filtrado-valor-minimo"].value;
         let valorMaximoFiltro = datosForm.elements["formulario-filtrado-valor-maximo"].value;
         let fechaDesdeFiltro = datosForm.elements["formulario-filtrado-fecha-desde"].value;
         let fechaHastaFiltro = datosForm.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetasFiltro = datosForm.elements["formulario-filtrado-etiquetas-tiene"].value;
 
-        let gastosFiltrados = gesPres.filtrarGastos({
-            fechaDesde: fechaDesdeFiltro, 
-            fechaHasta: fechaHastaFiltro, 
-            valorMinimo: valorMinimoFiltro, 
-            valorMaximo: valorMaximoFiltro, 
-            descripcionContiene: descripcionFiltro,
-            etiquetasTiene: etiquetasFiltro
-            });
+        
+        if(etiquetasFiltro != ""){
+            etiquetasFiltro = gesPres.transformarListadoEtiquetas(etiquetasFiltro);
+        }
+
+        valorMinimoFiltro = parseFloat(valorMinimoFiltro);
+        valorMaximoFiltro = parseFloat(valorMaximoFiltro);
+
+        let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: fechaDesdeFiltro, fechaHasta: fechaHastaFiltro, valorMinimo: valorMinimoFiltro, valorMaximo: valorMaximoFiltro, descripcionContiene: descripcionFiltro, etiquetasTiene: etiquetasFiltro});
 
         document.getElementById("listado-gastos-completo").innerHTML="";
 
@@ -338,24 +337,26 @@ function filtrarGastosWeb(){
 }
 
 function guardarGastosWeb(){
-    this.handleEvent = function(e){
-        localStorage.GestorGastosDWEC = JSON.stringify(gesPres.listarGastos());
-    }
+    let liGastos = gesPres.listarGastos();
+    localStorage.setItem('GestorGastosDWEC', JSON.stringify(liGastos));
+    
 }
 function cargarGastosWeb(){
-    this.handleEvent = function(e){
-
-        let gastosGuardados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
-
-        gesPres.cargarGastos(gastosGuardados);
+    
+        let gastosGuardados = localStorage.getItem('GestorGastosDWEC');
+        gastosGuardados = JSON.parse(gastosGuardados);
         
-        if(!gastosGuardados)
+        
+        if(gastosGuardados)
         {
-            gesPres.cargarGastos([]);
+           gesPres.cargarGastos(gastosGuardados);
+        }else{
+            gastosGuardados = [];
+            gesPres.cargarGastos(gastosGuardados);
         }
 
         repintar();
-    }
+    
 }
 
 
@@ -370,13 +371,13 @@ let gastosFiltradosWeb = new filtrarGastosWeb();
 let botonFiltro = document.getElementById("formulario-filtrado");
 botonFiltro.addEventListener("submit", gastosFiltradosWeb);
 
-let guardar = new guardarGastosWeb();
-let botonGuardar = document.getElementById("guardar-gastos");
-botonGuardar.addEventListener("click", guardar);
 
-let cargar = new cargarGastosWeb();
+let botonGuardar = document.getElementById("guardar-gastos");
+botonGuardar.addEventListener("click", guardarGastosWeb);
+
+
 let botonCargar = document.getElementById("cargar-gastos");
-botonCargar.addEventListener("click", cargar);
+botonCargar.addEventListener("click", cargarGastosWeb);
 
 
 
