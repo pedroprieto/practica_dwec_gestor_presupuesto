@@ -32,7 +32,7 @@ gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 for (let gasto of gesPres.listarGastos()) {
     
     gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
-}
+} 
 
 
 
