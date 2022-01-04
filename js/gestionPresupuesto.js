@@ -27,8 +27,6 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
-
-
     
     this.descripcion = descripcion;
 
@@ -52,7 +50,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.fecha = fecha;
     }
 
-    this.etiquetas = (etiquetas.length === 0) ? etiquetas = [] : etiquetas;
+    if (etiquetas == 0)
+    {
+        this.etiquetas = [];
+    }
+    else 
+    {
+        this.etiquetas = etiquetas;
+    }
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${descripcion} con valor ${valor} €`
