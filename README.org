@@ -32,4 +32,10 @@
   - [[./enunciados/eventos.org][Eventos en JavaScript]]
   - [[./enunciados/formularios.org][Formularios y JavaScript]]
   - [[./enunciados/regexp.org][Expresiones regulares]]
+<<<<<<< HEAD
 >>>>>>> 5e5b905b3912c92e5eaf40afe1c166dec1af6b09
+=======
+  - [[./enunciados/almacenamiento.org][Almacenamiento en el navegador]]
+  - [[./enunciados/async.org][Comunicación asíncrona]]
+  - [[./enunciados/librerias_externas.org][Librerías externas]]
+>>>>>>> f6927480a8eb6c67ab85d217e856ab19d320aeb1

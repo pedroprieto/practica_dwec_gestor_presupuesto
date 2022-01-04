@@ -199,6 +199,9 @@ function nuevoGastoWebFormulario(){
         let cancelarEvento = new cancelarHandle();
         botonCancelar.addEventListener("click",cancelarEvento);
 
+        let enviarApi = form.querySelector("button.gasto-enviar-api");
+
+        enviarApi.addEventListener("click", enviarhandlerGastoApi);
     }
 }
 
@@ -281,6 +284,10 @@ function EditarHandleFormulario(){
         let botonCancelar = formulario.querySelector("button.cancelar");
         let eventoCancelar = new cancelarHandle();
         botonCancelar.addEventListener("click", eventoCancelar);
+
+        let editarApiFormulario = form.querySelector("button.gasto-enviar-api");
+        editarApiFormulario.gasto = this.gasto;
+        editarApiFormulario.addEventListener("click", handleenviareditadoaAPI);
     }
 }
 
@@ -293,6 +300,57 @@ botonNuevoGasto.addEventListener("click", nuevoGastoWeb);;
 let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
 
+let botoncargargastosAPI = document.getElementById("cargar-gastos-api");
+botoncargargastosAPI.addEventListener("click", cargarGastosApi);
+
+async function cargarGastosApi(){
+        let usuario = document.getElementById('nombre_usuario').value;
+        
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
+        try{let datos = await fetch(url);
+        if(datos.ok){
+        let json = await datos.json();
+            gp.cargarGastos(json)
+            repintar()
+        }
+        else {
+            alert("Error-HTTP: "+ datos.status);
+        }}  
+        catch(e) {
+        console.log(e);
+        
+    } 
+}
+
+function enviarhandlerGastoApi(e){
+
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
+
+    let form = e.currentTarget.form;
+    let descripcion = form.elements.descripcion.value;
+    let valor = form.elements.valor.value;
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    arrayetiquetas = etiquetas.split(",");
+
+}
+function BorrarHandleAPI(){
+    this.handleEvent = async function(e){
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}` ;
+        fetch(url, {
+            method: "DELETE",
+        })
+        cargarGastosApi();
+    }
+}
+
+let gastoAPI = new gp.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
+fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+
+
+cargarGastosApi();
 
 export  {
     mostrarDatoEnId,
