@@ -10,7 +10,7 @@
     </head>
 
     <body>
-      <!-- Vamos a añadir dos botones a la capa <div id="controlesprincipales">: -->
+      <!-- Vamos a añadir dos controles a la capa <div id="controlesprincipales">:  -->  
         <div id="aplicacion">      
             <div id="controlesprincipales">
                 <button type="button" id="actualizarpresupuesto">
@@ -27,7 +27,15 @@
               </button>
               <button type="button" id="cargar-gastos">
                 Cargar gastos
-            </button>
+              </button>
+              
+              <!-- Un botón de tipo button con id cargar-gastos-api y texto Cargar gastos (API). -->
+              <button type="button" id="cargar-gastos-api">
+                Cargar gastos (API)
+              </button>
+
+              <!--  Un cuadro de texto con id nombre_usuario. -->
+              <input type="text" name="nombre_usuario" id="nombre_usuario">
             </div>
             
             <div id="presupuesto">
@@ -100,6 +108,7 @@
         </div>
         <script type="module" src="js/generarDatosEstaticos.js"></script>
 
+        <!-- Modificación de la plantilla para crear un formulario -->
         <template id="formulario-template">
             <form>
                 <div class="form-control">
@@ -120,6 +129,9 @@
                 </div>
                 <button type="submit">Enviar</button>
                 <button class="cancelar" type="button">Cancelar</button>
+
+                <!-- Vamos a añadir un tercer botón a la plantilla #formulario-template -->
+                <button type ="button" class="gasto-enviar-api">Enviar (API)</button>
             </form>
         </template> 
     </body>

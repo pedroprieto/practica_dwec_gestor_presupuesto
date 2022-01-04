@@ -360,47 +360,26 @@ let manejadorFiltrado = new filtrarGastoWeb();
 let butFiltrado = document.getElementById("formulario-filtrado");
 butFiltrado.addEventListener("submit", manejadorFiltrado);
 
-
-/*
-tutoria 22 nov
-    let usuario = {nombre: "pedro", apellido: "Prieto"}
-    JSON.stringify(usuario) 
-    JSON.parse(usuario_texto).nombre
-    objetos a textos y al revés
-
-    localStorage.NOMBRECLAVE = "texto";
-*/
-
-//Esta función se utilizará como manejadora de eventos del evento click del botón guardar-gastos.
 function guardarGastosWeb()
 {
     this.handleEvent = function(e)
     {
-        //Se encargará de guardar el listado de gastos (disponible en la función listarGastos del paquete js/gestionPresupuesto.js)
-        //en la clave de almacenamiento de localstorage denominada GestorGastosDWEC. Ten en cuenta que solo se pueden almacenar strings.
-        //localStorage.user = JSON.stringify({name: "John"});
         localStorage.GestorGastosDWEC = JSON.stringify(gesPres.listarGastos());
     }
 }
 
-//Manejador de eventos del evento click del botón guardar-gastos.
 let manejadorGuardar = new guardarGastosWeb();
 let butGuardar = document.getElementById("guardar-gastos");
 butGuardar.addEventListener("click", manejadorGuardar);
 
-//Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos.
 function cargarGastoWeb()
 {
     this.handleEvent = function(e)
     {
-        //Se encargará de cargar el listado de gastos (función cargarGastos del paquete js/gestionPresupuesto.js) 
-        //desde la clave de almacenamiento de localstorage denominada GestorGastosDWEC. Ten en cuenta que solo se pueden almacenar strings.
-        //getItem(clave) – obtener el valor por medio de la clave.
+
         let cargarListado = localStorage.getItem("GestorGastosDWEC");
-        //let user = JSON.parse( localStorage.user );
         cargarListado = JSON.parse(cargarListado);
 
-        //Si no existe la clave en el almacenamiento, llamará a cargarGastos con un array vacío.
         if(cargarListado)
         {
             gesPres.cargarGastos(cargarListado);
@@ -410,12 +389,10 @@ function cargarGastoWeb()
             gesPres.cargarGastos([]);
         }
 
-        //Una vez cargados los gastos deberá llamar a la función repintar para que se muestren correctamente en el HTML.
         repintar();
     }
 }
 
-//Manejador de eventos del evento click del botón cargar-gastos.
 let manejadorCargar = new cargarGastoWeb();
 let butCargar = document.getElementById("cargar-gastos");
 butCargar.addEventListener("click", manejadorCargar);
