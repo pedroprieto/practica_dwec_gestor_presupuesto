@@ -236,6 +236,7 @@ function EditarHandleFormulario() {
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
   let identificador = document.getElementById(idElemento);
+  identificador.innerHTML = "";
 
   let divAgrupacion = document.createElement("div");
   divAgrupacion.className = "agrupacion";
@@ -276,11 +277,6 @@ function repintar() {
   let borrarDatos = (document.getElementById(
     "listado-gastos-completo"
   ).innerHTML = "");
-
-  let matrizGasto = datosPresupuesto.listarGastos();
-  for (const x of matrizGasto) {
-    mostrarGastoWeb("listado-gastos-completo", x);
-  }
 }
 
 function actualizarPresupuestoWeb() {
