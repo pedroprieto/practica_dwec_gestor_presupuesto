@@ -297,7 +297,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     divP.append(chart);
 
 }
-}
+
 
 document.getElementById("actualizarpresupuesto").addEventListener("click", botonactualizarpresupuesto);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
