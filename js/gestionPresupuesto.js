@@ -195,14 +195,97 @@ function calcularBalance() {
 }
 
 
-function filtrarGastos() {
+function filtrarGastos(opciones) {
 
+    function isObjEmpty(opciones) {
+        return Object.keys(opciones).length === 0;
+    }
+
+    if (isObjEmpty(opciones))
+    {
+
+        return gastos;
+    }
+    else 
+    {
+        return gastos.filter(function(gasto) {
+
+            let resultado = true;
+
+            if(opciones.fechaDesde) 
+            {
+
+                if(isNaN(Date.parse(opciones.fechaDesde))) 
+                {
+                    if(gasto.fecha < opciones.fechaDesde)
+                    {
+                        
+                        resultado = false;
+                        
+                    }
+                   
+                }   
+                
+            }
+
+            if(opciones.fechaHasta)
+            {
+                
+
+                if(isNaN(Date.parse(opciones.fechaHasta)))
+                {
+                    resultado = false;
+                }
+                else
+                {
+                    if(gasto.fecha > opciones.fechaHasta){
+                        resultado = false;
+                    }
+                    else {resultado = true;}
+                }
+
+            }
+
+            if(opciones.valorMinimo)
+            {
+                if(gasto.valor < opciones.valorMinimo) {
+                    resultado = false;
+                }
+            }
+            if(opciones.valorMaximo)
+            {
+                if(gasto.valor > opciones.valorMaximo) {
+                    resultado = false;
+                }
+            }
+            if(opciones.descripcionContiene)
+            {
+                if(!gasto.descripcion.includes(opciones.descripcionContiene))
+                {
+                    resultado = false;
+                }
+            }
+            if(opciones.etiquetasTiene)
+            {
+                if(!gasto.etiquetas.includes(opciones.etiquetasTiene))
+                {
+                    resultado = false;
+                }
+            } 
+
+            return resultado;
+            
+        });
+
+        
+    }
+    
 }
 
 function agruparGastos() {
 
 }
-
+ 
 
 
 
