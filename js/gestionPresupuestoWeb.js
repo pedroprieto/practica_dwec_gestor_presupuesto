@@ -18,6 +18,7 @@ let botonAnyadirGastoForm = document.getElementById('anyadirgasto-formulario');
 let botonFiltrarGastos = document.getElementById('formulario-filtrado');
 let botonGuardarGastos = document.getElementById('guardar-gastos');
 let botonCargarGastos = document.getElementById('cargar-gastos');
+let botonObtenerDatosApi = document.getElementById('cargar-gastos-api');
 
 function mostrarDatoEnId(idElemento, valor) {
     let elemento = document.getElementById(idElemento);
@@ -77,6 +78,14 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener("click", objBorrar);
     divBloque.prepend(botonBorrar);
 
+    let botonBorrarApi = document.createElement('button');
+    botonBorrar.className = 'gasto-borrar-api';
+    botonBorrar.innerText = 'Borrar (API)';
+    let objBorrarApi = new BorrarApiHandle();
+    objBorrarApi.gasto = gasto;
+    botonBorrarApi.addEventListener("click",objBorrarApi);
+    divBloque.prepend(botonBorrarApi);
+    
     let botonEditarForm = document.createElement('button');
     botonEditarForm.className = 'gasto-editar-formulario';
     botonEditarForm.innerText = 'Editar (formulario)';
@@ -153,6 +162,8 @@ function nuevoGastoWebFormulario(event) {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
     formulario.addEventListener("submit", anyadirNuevoGastoFormulario);
+    // añadimos el event listener del click.
+
     let cancelarHandle = new cancelarFormulario();
     cancelarHandle.formulario = formulario;
     cancelarHandle.botonSubmit = event.currentTarget;
@@ -188,7 +199,7 @@ botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 botonFiltrarGastos.addEventListener("submit", filtrarGastosWeb);
 botonGuardarGastos.addEventListener("click",guardarGastosWeb);
 botonCargarGastos.addEventListener("click",cargarGastosWeb);
-
+botonObtenerDatosApi.addEventListener("click",cargarGastosApi);
 
 function EditarHandle() {
     this.handleEvent = function (evento) {
@@ -260,6 +271,11 @@ function BorrarEtiquetasHandle() {
     }
 }
 
+function BorrarApiHandle(){
+    this.handleEvent = function(evento){
+
+    }
+}
 function filtrarGastosWeb(event) {
     debugger;
     event.preventDefault();
@@ -300,4 +316,22 @@ function cargarGastosWeb(){
         gestion.cargarGastos(datos);
     }
     repintar();
+}
+
+function cargarGastosApi(){
+    // Obtenemos el usuario del que queremos obtener los gastos.
+    var usuario = document.getElementById('nombre-usuario');
+    // Ahora realizamos una petición para obtener los datos.
+    if(usuario != ""){
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`,{method:'GET'})
+        .then(response => response.json())
+        .then(result => {
+            if(result != ""){
+                gestion.cargarGastos(result);
+                repintar();
+            }
+        })
+        .catch(error => console.log(error));
+    }
+    
 }
