@@ -425,7 +425,7 @@ function repintar() {
     mostrarDatoEnId( "balance-total", gestionPresupuesto.calcularBalance() );
 
     // Borro el anterior listado completo de gastos de div#listado-gastos-completo
-    document.getElementById("listado-gastos-completo").innerHTML = '';
+    document.getElementById("listado-gastos-completo").innerHTML = ``;
 
     // Mostrar el listado completo de gastos en div#listado-gastos-completo
     let gastos = gestionPresupuesto.listarGastos();
