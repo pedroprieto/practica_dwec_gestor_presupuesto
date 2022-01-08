@@ -85,7 +85,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     objBorrarApi.gasto = gasto;
     botonBorrarApi.addEventListener("click",objBorrarApi);
     divBloque.prepend(botonBorrarApi);
-    
+
     let botonEditarForm = document.createElement('button');
     botonEditarForm.className = 'gasto-editar-formulario';
     botonEditarForm.innerText = 'Editar (formulario)';
@@ -273,7 +273,14 @@ function BorrarEtiquetasHandle() {
 
 function BorrarApiHandle(){
     this.handleEvent = function(evento){
-
+        let usuario = document.getElementById("nombre_usuario").value;
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`,{method:'DELETE'})
+        .then(response=> response.json())
+        .then(result => {
+            if(result != ""){
+                cargarGastosApi();
+            }
+        })
     }
 }
 function filtrarGastosWeb(event) {
