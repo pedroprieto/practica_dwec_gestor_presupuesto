@@ -12,6 +12,7 @@ function mostrarDatoEnId( idElemento, valor ){
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
 
 let filtrado = new filtrarGastosWeb(); 
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrado);
@@ -91,6 +92,11 @@ function nuevoGastoWebFormulario(){
         // Localizamos el botón 
         let btnCancelar = form.querySelector("button.cancelar");
         btnCancelar.addEventListener("click", handleCancel);
+
+    // BOTÓN ENVIAR API
+        // Localizamos el botón 
+        let enviarApi = form.querySelector("button.gasto-enviar-api");
+        enviarApi.addEventListener("click", enviarHandlerGastoApi);
 
     repintar();
 }
@@ -208,6 +214,26 @@ function mostrarGastoWeb( idElemento, gasto ){
     //------------------------------------------------------------//    
 
     //------------------------------------------------------------//
+    // BOTÓN BORRAR API 
+        // Crear un botón con texto Borrar (API) de tipo button
+        let botonBorrarAPI = document.createElement("button");
+        botonBorrarAPI.type ="button";
+        botonBorrarAPI.className = "gasto-borrar-api";
+        botonBorrarAPI.textContent = "Borrar (API)";
+
+        // Crear un nuevo objeto a partir de la función constructora BorrarHandleAPI
+        let evBorrarAPI = new BorrarHandleAPI();
+
+        // Establecer la propiedad gasto del objeto creado al objeto gasto
+        evBorrarAPI.gasto = gasto;
+
+        // Añade el objeto al manejador del evento click del botón Borrar
+        botonBorrarAPI.addEventListener("click", evBorrarAPI);
+
+        // Añade al DOM
+        divGasto.append(botonBorrarAPI);
+
+    //------------------------------------------------------------//
     // BOTÓN EDITAR FORMULARIO 
         // Crear un botón con texto Editar Formulario de tipo button
         let botonEditarForm = document.createElement("button");
@@ -226,6 +252,7 @@ function mostrarGastoWeb( idElemento, gasto ){
 
         // Añade al DOM
         divGasto.append(botonEditarForm);
+    //------------------------------------------------------------//    
 
     // Añado todo al DOM
     body.append(divGasto);
@@ -357,6 +384,15 @@ function EditarHandleForm(){
 
         // Añade el objeto al manejador del evento click del botón Cancelar
         btnCancelar.addEventListener("click", handleCancel);
+
+        // Busco en el formulario el botton cuya clase es gasto-enviar-api 
+        let editarFormApi = form.querySelector("button.gasto-enviar-api");
+
+        // Establecer la propiedad gasto del objeto creado al objeto gasto
+        editarFormApi.gasto = this.gasto;
+
+        // Añade el objeto al manejador del evento click del botón editarFormApi
+        editarFormApi.addEventListener("click", handleEnviarEditarAPI);
     }
 }
 
@@ -534,6 +570,139 @@ function cargarGastosWeb(){
         // Lamamos a la función repintar
         repintar();
     }
+}
+
+//------------------------------------------------------------//
+// API
+
+async function cargarGastosApi(){
+
+    // Obtener el usuario
+    let usuario = document.getElementById('nombre_usuario').value;
+
+    // Creo la URL con el usuario introducido en el control input#nombre_usuario
+    let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
+
+    // LISTA DE GASTOS DE LA API
+    try 
+    {
+        // Obtengo mediante fetch el listado de gastos a través de la API de servidor
+        let datos = await fetch(url);
+
+        // Una vez obtenida la lista de gastos de la API
+            // llamo a cargarGastos para actualizar el array de gastos
+        if( datos.ok ){
+            let json = await datos.json();            
+            gestionPresupuesto.cargarGastos(json);
+
+            // Una vez cargados los gastos llamo a repintar
+            repintar()
+        }
+        else {
+            alert("Error-HTTP: "+ datos.status);
+        }
+    }  
+    catch(e) {
+        console.log(e);
+    }
+}
+
+function BorrarHandleAPI(){
+    this.handleEvent = async function(e){
+
+        // Obtener el usuario
+        let usuario = document.getElementById('nombre_usuario').value;
+
+        // Creo la URL con el usuario introducido en el control input#nombre_usuario y el id del gasto actual
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}`;
+
+        // Realiza mediante fectch una solicitud Delete a la url de la API
+        fetch( url, {
+            method: "DELETE"
+        })
+
+        // Llamar a la función cargarGastosApi para actualizar la lista en la página
+        cargarGastosApi();
+    }
+}
+
+function enviarHandlerGastoApi(event){
+
+    // Obtener el usuario
+    let usuario = document.getElementById("nombre_usuario").value;
+
+    // Creo la URL con el usuario introducido en el control input#nombre_usuario
+    let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario;
+
+    //------------------------------------------------------------//
+    // El contenido de la petición POST se obtiene a partir del formulario de creación
+        // Acceso al formulario
+        let form = event.currentTarget.form;
+
+        // Recojo las propiedades del gasto
+        let descripcion = form.elements.descripcion.value;
+        let valor = form.elements.valor.value;
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;    
+
+        // Convertir el valor a número
+        let valor = parseFloat(valor);
+
+        // Recojo las etiquetas
+        let arrayetiquetas = etiquetas.split(",");
+
+        // Crear un nuevo gasto API
+        let gastoAPI = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
+
+    //------------------------------------------------------------//
+    // Realiza mediente fetch una solicitud POST a la url correspondiente de la API
+    fetch( url, {
+        method: 'POST', 
+        body: JSON.stringify(gastoAPI),
+        headers:{'Content-Type': 'application/json'}
+    })
+
+    // Llamar a la función cargarGastosApi para actualizar la lista en la página
+    cargarGastosApi();
+}
+
+function handleEnviarEditarAPI(event){
+    
+    // Obtener el usuario
+    let usuario = document.getElementById("nombre_usuario").value;
+
+    // Creo la URL con el usuario introducido en el control input#nombre_usuario y el id del gasto actual
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+
+    //------------------------------------------------------------//
+    // El contenido de la petición PUT se obtiene a partir del formulario de edición
+        // Acceso al formulario
+        let form = event.currentTarget.form;
+
+        // Recojo las propiedades del gasto
+        let descripcion = form.elements.descripcion.value;
+        let valor = form.elements.valor.value;
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;    
+
+        // Convertir el valor a número
+        let valor = parseFloat(valor);
+
+        // Recojo las etiquetas
+        let arrayetiquetas = etiquetas.split(",");
+
+        // Crear un nuevo gasto API
+        let gastoAPI = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...arrayetiquetas);
+
+    // Realiza mediente fetch una solicitud PUT a la url correspondiente de la API
+    fetch( url, {
+        method: 'PUT', 
+        body: JSON.stringify(gastoAPI),
+        headers:{'Content-Type': 'application/json'}
+    })
+
+    // Llamar a la función cargarGastosApi  para actualizar la lista en la página
+    cargarGastosApi();
 }
 
 export   { 
