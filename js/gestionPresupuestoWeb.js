@@ -79,8 +79,8 @@ function mostrarGastoWeb(idElemento, gasto) {
     divBloque.prepend(botonBorrar);
 
     let botonBorrarApi = document.createElement('button');
-    botonBorrar.className = 'gasto-borrar-api';
-    botonBorrar.innerText = 'Borrar (API)';
+    botonBorrarApi.className = 'gasto-borrar-api';
+    botonBorrarApi.innerText = 'Borrar (API)';
     let objBorrarApi = new BorrarApiHandle();
     objBorrarApi.gasto = gasto;
     botonBorrarApi.addEventListener("click", objBorrarApi);
