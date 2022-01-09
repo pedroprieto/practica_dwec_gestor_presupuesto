@@ -447,6 +447,49 @@ function cargarGastosApi(){
         .catch(err => console.error(err));
     }
 }
+function enviarhandlerGastoApi(e){
+
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+    let formulario = e.currentTarget.form;
+    let descripcionN = formulario.elements.descripcion.value;
+    let valorN = formulario.elements.valor.value;
+    let fechaN = formulario.elements.fecha.value;
+    let etiquetasN = formulario.elements.etiquetas.value;
+
+    valorN = parseFloat(valorN);
+    etiquetasN = etiquetasN.split(",");
+
+    let newObject = {
+        descripcion: descripcionN,
+        fecha: fechaN,
+        valor: valorN,
+        etiquetas: etiquetasN
+    }
+
+    if(usuario == ""){
+        console.log("No hay nombre de usuario/a");
+    }else{
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(newObject),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            if(res.ok){
+                cargarGastosApi();
+            }else{
+                console.log("Error en la peticion de añadir");
+            }
+        })
+        .catch(err => console.error(err));
+        
+    }
+}
+
 
 export  {
     mostrarDatoEnId,
