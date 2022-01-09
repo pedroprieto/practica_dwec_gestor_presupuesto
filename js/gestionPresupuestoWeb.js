@@ -510,7 +510,48 @@ function BorrarHandleAPI(){
         }
     }
 }
+function EditarGastoApi(){
+    this.handleEvent = function(e){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        
+        let formulario = e.currentTarget.form; 
+        let descripcionN = formulario.elements.descripcion.value;
+        let valorN = formulario.elements.valor.value;
+        let fechaN = formulario.elements.fecha.value;
+        let etiquetasN = formulario.elements.etiquetas.value;
+        valorN = parseFloat(valorN);
+        etiquetasN = etiquetasN.split(",");
+    
+        let newObject = {
+            descripcion: descripcionN,
+            fecha: fechaN,
+            valor: valorN,
+            etiquetas: etiquetasN
+        }
 
+        if(usuario == ""){
+            console.log("No hay nombre de usuario/a");
+        }else{
+            fetch(url, {
+                method: 'PUT', 
+                body: JSON.stringify(newObject),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {           
+                if(response.ok){
+                    console.log("La peticion de modificacion es correcta");
+                    cargarGastosApi();
+                }else{
+                    console.log("Error en la peticion de modificacion");
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    }
+}
 export  {
     mostrarDatoEnId,
     mostrarGastoWeb,
