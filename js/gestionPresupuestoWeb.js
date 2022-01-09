@@ -489,7 +489,27 @@ function enviarhandlerGastoApi(e){
         
     }
 }
+function BorrarHandleAPI(){
+    this.handleEvent = async function(e){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
 
+        if(usuario == ""){
+            console.log("No hay nombre de usuario/a");
+        }else{
+            fetch(url, {method: 'DELETE'})
+            .then(res => res.json())
+            .then(data => {
+                if(!data.errorMessage){
+                    cargarGastosApi();
+                }else{
+                    console.log(data.errorMessage);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    }
+}
 
 export  {
     mostrarDatoEnId,
