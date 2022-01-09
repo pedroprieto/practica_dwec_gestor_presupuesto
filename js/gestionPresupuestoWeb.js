@@ -169,11 +169,10 @@ function nuevoGastoWebFormulario(event) {
     cancelarHandle.botonSubmit = event.currentTarget;
     let botonCancelar = formulario.querySelector("button.cancelar");
     botonCancelar.addEventListener("click", cancelarHandle);
-    document.getElementById('controlesprincipales').append(formulario);
-    document.getElementById("anyadirgasto-formulario").disabled = true;
-
     let botonEnviarApi = formulario.querySelector("button.gasto-enviar-api");
     botonEnviarApi.addEventListener("click", AnyadirGastoApiHandle);
+    document.getElementById('controlesprincipales').append(formulario);
+    document.getElementById("anyadirgasto-formulario").disabled = true;
 }
 
 
@@ -295,9 +294,10 @@ function BorrarApiHandle() {
 }
 
 function AnyadirGastoApiHandle(e) {
+    debugger;
     let usuario = document.getElementById("nombre-usuario").value;
     // Vamos a obtener los datos del formulario para enviarlos en el body
-    let formulario = e.currentTarget;
+    let formulario = e.currentTarget.form;
     let etiquetasSplit = formulario.elements.etiquetas.value.split(',');
 
     let bodyGasto =
@@ -407,10 +407,12 @@ function cargarGastosWeb() {
 
 function cargarGastosApi() {
     // Obtenemos el usuario del que queremos obtener los gastos.
-    var usuario = document.getElementById('nombre-usuario');
+    debugger;
+    var usuario = document.getElementById('nombre-usuario').value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
     // Ahora realizamos una petición para obtener los datos.
     if (usuario != "") {
-        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`, { method: 'GET' })
+        fetch(url, {method: 'GET'})
             .then(response => response.json())
             .then(result => {
                 if (result != "") {
