@@ -93,6 +93,17 @@ function mostrarGastosWeb(idElemento, gasto){
     borrar_gasto.gasto_actual = gasto;
     btn_borrar.addEventListener("click", borrar_gasto);
 
+    // Boton borrrar API
+    let btn_borrar_api = document.createElement("button");
+    // btn_borrar.setAttribute("type", "button");
+    btn_borrar_api.type = "button";
+    btn_borrar_api.className = "gasto-borrar-api";
+    btn_borrar_api.innerHTML = "Borrar (API)";
+    div_gasto.append(btn_borrar_api);
+    let borrar_gasto_api = new borrarApiHandle();
+    borrar_gasto_api.gasto_actual = gasto;
+    btn_borrar_api.addEventListener("click", borrar_gasto_api);
+
     // Boton editar formulario
     let btn_editar_form = document.createElement("button");
     btn_editar_form.type = "button";
@@ -632,11 +643,15 @@ function cargarGastosAPI() {
     let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
     url += document.getElementById("nombre_usuario").value;
     
-    let carga_datos_API = await fetch(url).then(function(response) {
-        return response.json();
-    }).then(function(data) {
-        return data;
-    });
+    async function cargarGastosApi() {
+
+        let carga_datos_API = await fetch(url).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            return data;
+        });
+
+    }
 
     console.log(carga_datos_API);
     // console.log(url);
@@ -647,6 +662,21 @@ function cargarGastosAPI() {
 
     repintar();
 
+}
+
+function borrarApiHandle() {
+    this.handleEvent = function(e) {
+
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+        url += document.getElementById("nombre_usuario").value;
+
+        async function borrarApiHandle() {
+
+        }
+
+        
+        cargarGastosAPI();
+    }
 }
 
 // Captura de click de botones 
