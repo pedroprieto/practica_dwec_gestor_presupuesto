@@ -78,8 +78,8 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrarApi.id = "gasto-borrar-api";
     botonBorrarApi.type = "button";
     botonBorrarApi.textContent = "Borrar (Api)";
-    // evento borrar gasto api
-    let eventBorrarGastoApi = new BorrarHandleAPI()();
+
+    let eventBorrarGastoApi = new BorrarHandleAPI();
 
     eventBorrarGastoApi.gasto = gasto;
     botonBorrarApi.addEventListener("click", eventBorrarGastoApi)
@@ -109,12 +109,12 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
         // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
-    var divP = document.getElementById(id);
+    
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
-    divP.innerHTML = "";
+    elemento.innerHTML = "";
         // Estilos
-    divP.style.width = "33%";
-    divP.style.display = "inline-block";
+        elemento.style.width = "33%";
+        elemento.style.display = "inline-block";
     // Crear elemento <canvas> necesario para crear la gráfica
     // https://www.chartjs.org/docs/latest/getting-started/
     let chart = document.createElement("canvas");
@@ -170,7 +170,7 @@ const myChart = new Chart(chart.getContext("2d"), {
     }
 });
 // Añadimos la gráfica a la capa
-divP.append(chart);
+elemento.append(chart);
 }
 
 function repintar(){
@@ -272,8 +272,6 @@ function BorrarEtiquetasHandle(){
 
 function nuevoGastoWebFormulario(){
 
-    this.handleEvent = function(e){
-
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
         let controlesPrincipales = document.getElementById("controlesprincipales");
@@ -293,7 +291,7 @@ function nuevoGastoWebFormulario(){
         let enviarApi = form.querySelector("button.gasto-enviar-api");
 
         enviarApi.addEventListener("click", enviarhandlerGastoApi);
-    }
+    
 }
 
 function submitHandler(){
@@ -355,7 +353,7 @@ function EditarHandleFormulario(){
 
     this.handleEvent = function(e){
 
-        let plantillaFormulario = document.getElementById("formlario-template").content.cloneNode(true);
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         let formulario = plantillaFormulario.querySelector("form");
 
         let botonEditarFormulario = e.currentTarget;
@@ -386,24 +384,6 @@ function EditarHandleFormulario(){
         editarFormularioApi.addEventListener("click", editarEvento);
     }
 }
-
-let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
-botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
-
-let botonNuevoGasto  = document.getElementById('anyadirgasto');
-botonNuevoGasto.addEventListener("click", nuevoGastoWeb);
-
-let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
-botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
-
-let botonCargarGastosWeb = document.getElementById("cargar-gastos");
-botonCargarGastosWeb.addEventListener("click", cargarGastosWeb);
-
-let botonGuardarGastosWeb = document.getElementById("guardar-gastos");
-botonGuardarGastosWeb.addEventListener("click", guardarGastosWeb);
-
-let botoncargargastosAPI = document.getElementById("cargar-gastos-api");
-botoncargargastosAPI.addEventListener("click", cargarGastosApi);
 
 function guardarGastosWeb(){
 
@@ -551,6 +531,24 @@ function EditarGastoApi(){
             .catch(err => console.error(err));
         }
     }
+
+    let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
+let botonNuevoGasto  = document.getElementById('anyadirgasto');
+botonNuevoGasto.addEventListener("click", nuevoGastoWeb);
+
+let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
+botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
+
+let botonCargarGastosWeb = document.getElementById("cargar-gastos");
+botonCargarGastosWeb.addEventListener("click", cargarGastosWeb);
+
+let botonGuardarGastosWeb = document.getElementById("guardar-gastos");
+botonGuardarGastosWeb.addEventListener("click", guardarGastosWeb);
+
+let botoncargargastosAPI = document.getElementById("cargar-gastos-api");
+botoncargargastosAPI.addEventListener("click", cargarGastosApi);
 }
 export  {
     mostrarDatoEnId,
