@@ -226,17 +226,11 @@ function BorrarHandleApi() {
        
         fetch(url , { 
             method: 'DELETE'
-        })
-            
+        })            
             .then(res => res.json())
             .then(data => {
-                cargarGastosApi();
-                
-            }) 
-        
-            
-         
-         
+                cargarGastosApi();                
+        })                
     } 
     
 }
