@@ -306,19 +306,17 @@ function filtrarGastosWeb(){
     this.handleEvent = function(e){
         e.preventDefault();
 
-        let plantillaFormFiltrar = document.getElementById("filtrar-gastos");
-        var datosForm = plantillaFormFiltrar.querySelector("form");
-
-
-        let descripcionFiltro = datosForm.elements["formulario-filtrado-descripcion"].value;
-        let valorMinimoFiltro = datosForm.elements["formulario-filtrado-valor-minimo"].value;
-        let valorMaximoFiltro = datosForm.elements["formulario-filtrado-valor-maximo"].value;
-        let fechaDesdeFiltro = datosForm.elements["formulario-filtrado-fecha-desde"].value;
-        let fechaHastaFiltro = datosForm.elements["formulario-filtrado-fecha-hasta"].value;
-        let etiquetasFiltro = datosForm.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let form = e.currentTarget;
+        
+        let descripcionFiltro = form.elements["formulario-filtrado-descripcion"].value;
+        let valorMinimoFiltro = form.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximoFiltro = form.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaDesdeFiltro = form.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHastaFiltro = form.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetasFiltro = form.elements["formulario-filtrado-etiquetas-tiene"].value;
 
         
-        if(etiquetasFiltro != ""){
+        if(etiquetasFiltro !== null){
             etiquetasFiltro = gesPres.transformarListadoEtiquetas(etiquetasFiltro);
         }
 
@@ -327,10 +325,11 @@ function filtrarGastosWeb(){
 
         let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: fechaDesdeFiltro, fechaHasta: fechaHastaFiltro, valorMinimo: valorMinimoFiltro, valorMaximo: valorMaximoFiltro, descripcionContiene: descripcionFiltro, etiquetasTiene: etiquetasFiltro});
 
-        document.getElementById("listado-gastos-completo").innerHTML="";
+        let listaGastos = document.getElementById("listado-gastos-completo");
+        listaGastos.innerHTML="";
 
-        for(let filtro of gastosFiltrados){
-            mostrarGastoWeb("listado-gastos-completo", filtro);
+        for(let gasto of gastosFiltrados){
+            mostrarGastoWeb("listado-gastos-completo", gasto);
         }
 
     }

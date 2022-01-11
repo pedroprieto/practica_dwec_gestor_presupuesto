@@ -251,11 +251,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 function transformarListadoEtiquetas(etiquetasTotal){
-    let regexp = /[a-zA-Z0-9]+/gi;
-    let resultado = etiquetasTotal.match(regexp);
 
-
-    return resultado;
+    let arrayFiltrado = etiquetasTotal.match(/[a-z][a-z0-9]*/gi);
+    return arrayFiltrado;
 }
 
 function cargarGastos(gastosAlmacenamiento) {
