@@ -638,12 +638,12 @@ function cargarGastosWeb() {
     // }
 }
 
-function cargarGastosAPI() {
+async function cargarGastosAPI() {
 
     let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
     url += document.getElementById("nombre_usuario").value;
     
-    async function cargarGastosApi() {
+    // async function cargarGastosApi() {
 
         let carga_datos_API = await fetch(url).then(function(response) {
             return response.json();
@@ -651,9 +651,9 @@ function cargarGastosAPI() {
             return data;
         });
 
-    }
+    // }
 
-    console.log(carga_datos_API);
+    // console.log(carga_datos_API);
     // console.log(url);
 
     // carga_datos_API = JSON.parse(carga_datos_API);
@@ -674,7 +674,7 @@ function borrarApiHandle() {
 
         }
 
-        
+
         cargarGastosAPI();
     }
 }
