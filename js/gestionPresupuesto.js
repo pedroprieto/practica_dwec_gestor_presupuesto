@@ -179,18 +179,29 @@ function transformarListadoEtiquetas(etiquetas){
 }
 
 function agruparGastos(periodo,etiquetas,fechaDesde, fechaHasta){
-
-
+    if(!fechaDesde){
+        fechaDesde = "2020-01-01";
+    }
+    if(!fechaHasta){
+        fechaHasta =  new Date(Date.now()).toISOString().substring(0,10);
+    }
+    
     return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta})
-            .reduce(function(acumula,objeto){
-                let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo)
-                if(!acumula[objPerAgru]){
-                    acumula[objPerAgru]=0;
-                }
-                acumula[objPerAgru]+=objeto.valor;
-                return acumula;
-            },{});     
+    .reduce(function(acumula,objeto){
+
+        let objPerAgru=objeto.obtenerPeriodoAgrupacion(periodo);
+
+        if( !acumula[objPerAgru] ){
+
+            acumula[objPerAgru]=0;
+        }
+        acumula[objPerAgru]+=objeto.valor;
+
+    return acumula;
+},{});     
 }
+
+  
 function cargarGastos(nuevosGastos){
 
     gastos = nuevosGastos;

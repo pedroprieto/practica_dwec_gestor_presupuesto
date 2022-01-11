@@ -2,6 +2,29 @@
 
 import * as gp from './gestionPresupuesto.js';
 
+let bActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+bActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
+let bNuevoGasto  = document.getElementById('anyadirgasto');
+bNuevoGasto.addEventListener("click", nuevoGastoWeb);
+
+let bAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
+bAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
+
+let bCargarGastosWeb = document.getElementById("cargar-gastos");
+bCargarGastosWeb.addEventListener("click", cargarGastosWeb);
+
+let bGuardarGastosWeb = document.getElementById("guardar-gastos");
+bGuardarGastosWeb.addEventListener("click", guardarGastosWeb);
+
+let bcargargastosAPI = document.getElementById("cargar-gastos-api");
+bcargargastosAPI.addEventListener("click", cargarGastosApi);
+
+
+let filtrado = new filtrarGastosWeb();
+let formFiltrado = document.getElementById("formulario-filtrado");
+formFiltrado.addEventListener("submit", filtrado);
+
 function mostrarDatoEnId(idElemento,valor){
     document.getElementById(idElemento).append(valor);
 }
@@ -374,14 +397,53 @@ function EditarHandleFormulario(){
         let eventoCancelar = new cancelarHandle();
         botonCancelar.addEventListener("click", eventoCancelar);
 
-        let editarApiFormulario = form.querySelector("button.gasto-enviar-api");
+        let editarApiFormulario = formulario.querySelector("button.gasto-enviar-api");
         editarApiFormulario.gasto = this.gasto;
-        editarApiFormulario.addEventListener("click", handleenviareditadoaAPI);
+        editarApiFormulario.addEventListener("click", EditarGastoApi);
 
         let editarFormularioApi = formulario.querySelector("button.gasto-enviar-api");
         let editarEvento = new EditarGastoApi();
         editarEvento.gasto = this.gasto;
         editarFormularioApi.addEventListener("click", editarEvento);
+    }
+}
+
+function filtrarGastosWeb(){
+    this.handleEvent = function(e){
+        e.preventDefault();
+
+        let formulario = e.currentTarget;
+        let descripcionForm = formulario.elements['formulario-filtrado-descripcion'].value;
+
+        let fechaDesdeForm = formulario.elements['formulario-filtrado-fecha-desde'].value;
+
+        let fechaHastaForm= formulario.elements['formulario-filtrado-fecha-hasta'].value;
+
+        let valorMinimoForm = formulario.elements['formulario-filtrado-valor-minimo'].value;
+
+        let valorMaximoForm = formulario.elements['formulario-filtrado-valor-maximo'].value;
+        
+        let etiquetasForm = formulario.elements['formulario-filtrado-etiquetas-tiene'].value;
+        
+        valorMaximoForm = parseFloat(valorMaximoForm);
+        valorMinimoForm = parseFloat(valorMinimoForm);
+
+        if(etiquetasForm !== null){
+
+            etiquetasForm = gp.transformarListadoEtiquetas(etiquetasForm);
+        }
+
+        let gastosFiltrados = gp.filtrarGastos({fechaDesde: fechaDesdeForm,fechaHasta: fechaHastaForm,valorMinimo: valorMinimoForm,valorMaximo: valorMaximoForm,descripcionContiene: descripcionForm,etiquetasTiene: etiquetasForm});
+
+        let listaGastos = document.getElementById("listado-gastos-completo");
+
+        while(listaGastos.firstChild){
+            listaGastos.removeChild(listaGastos.firstChild);
+        }
+
+        for (let gasto of gastosFiltrados) {
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        }
     }
 }
 
@@ -427,7 +489,7 @@ function cargarGastosApi(){
         .catch(err => console.error(err));
     }
 }
-function enviarhandlerGastoApi(e){
+function enviarhandlerGastoApi(){
 
     let usuario = document.getElementById("nombre_usuario").value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
@@ -451,6 +513,7 @@ function enviarhandlerGastoApi(e){
     if(usuario == ""){
         console.log("No hay nombre de usuario/a");
     }else{
+        console.log('Carga completada')
         fetch(url, {
             method: 'POST', 
             body: JSON.stringify(newObject),
@@ -532,23 +595,7 @@ function EditarGastoApi(){
         }
     }
 
-    let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
-botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
-let botonNuevoGasto  = document.getElementById('anyadirgasto');
-botonNuevoGasto.addEventListener("click", nuevoGastoWeb);
-
-let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
-botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario);
-
-let botonCargarGastosWeb = document.getElementById("cargar-gastos");
-botonCargarGastosWeb.addEventListener("click", cargarGastosWeb);
-
-let botonGuardarGastosWeb = document.getElementById("guardar-gastos");
-botonGuardarGastosWeb.addEventListener("click", guardarGastosWeb);
-
-let botoncargargastosAPI = document.getElementById("cargar-gastos-api");
-botoncargargastosAPI.addEventListener("click", cargarGastosApi);
 }
 export  {
     mostrarDatoEnId,
