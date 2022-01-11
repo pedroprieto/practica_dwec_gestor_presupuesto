@@ -192,9 +192,9 @@ function handleenviareditadoaAPI(event){
     let arrayetiquetas = etiquetas.split(",");
 
     let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
-    fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+    fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}}).then(cargarGastosApi())
       
-    cargarGastosApi();
+    
 
 }
    
@@ -386,14 +386,11 @@ function BorrarHandleAPI(){
         let usuario = document.getElementById('nombre_usuario').value;
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}` ;
 
-        fetch(url, {
-            method: "DELETE",
-        })
-        cargarGastosApi();
+        fetch(url, {method: "DELETE",}).then(cargarGastosApi())
               
      
         
-           } 
+    } 
 
 }
 function BorrarHandle(){
@@ -458,10 +455,10 @@ function enviarhandlerGastoApi(event){
         arrayetiquetas = etiquetas.split(",");
 
         let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
-        fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+        fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}}).then(cargarGastosApi())
           
         
-        cargarGastosApi();
+        
 }
 
 
