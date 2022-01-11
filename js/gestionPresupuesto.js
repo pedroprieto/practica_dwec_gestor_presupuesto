@@ -163,8 +163,14 @@ function transformarListadoEtiquetas(transformacion) {
   return transformacionArray;
 }
 
-function cargarGastos(arrayGastos) {
-  gastos = arrayGastos;
+function cargarGastos(gastosAlmacenamiento) {
+  gastos = [];
+
+  for (let g of gastosAlmacenamiento) {
+    let gastoRehidratado = new CrearGasto();
+    Object.assign(gastoRehidratado, g);
+    gastos.push(gastoRehidratado);
+  }
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {

@@ -329,14 +329,15 @@ function repintar() {
   for (const x of matrizGasto) {
     mostrarGastoWeb("listado-gastos-completo", x);
   }
-  let agrupacion1 = datosPresupuesto.agruparGastos("dia");
-  mostrarGastosAgrupadosWeb("agrupacion-dia", agrupacion1, "día");
 
-  let agrupacion2 = datosPresupuesto.agruparGastos("mes");
-  mostrarGastosAgrupadosWeb("agrupacion-mes", agrupacion2, "mes");
+  let agrupacionDia = datosPresupuesto.agruparGastos("dia");
+  mostrarGastosAgrupadosWeb("agrupacion-dia", agrupacionDia, "día");
 
-  let agrupacion3 = datosPresupuesto.agruparGastos("anyo");
-  mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupacion3, "año");
+  let agrupacionMes = datosPresupuesto.agruparGastos("mes");
+  mostrarGastosAgrupadosWeb("agrupacion-mes", agrupacionMes, "mes");
+
+  let agrupacionAnyo = datosPresupuesto.agruparGastos("anyo");
+  mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupacionAnyo, "año");
 }
 
 function actualizarPresupuestoWeb() {
@@ -577,6 +578,7 @@ function cargarGastosWeb() {
 
   repintar();
 }
+
 let cargarGastos = document.getElementById("cargar-gastos");
 cargarGastos.addEventListener("click", cargarGastosWeb);
 
