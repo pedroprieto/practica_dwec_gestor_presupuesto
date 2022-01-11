@@ -686,7 +686,7 @@ function handleEnviarEditarAPI(event){
         let etiquetas = form.elements.etiquetas.value;    
 
         // Convertir el valor a número
-        let valor = parseFloat(valor);
+        valor = parseFloat(valor);
 
         // Recojo las etiquetas
         let arrayetiquetas = etiquetas.split(",");
