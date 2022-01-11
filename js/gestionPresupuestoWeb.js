@@ -394,7 +394,7 @@ function cargarGastosWeb(){
 }
 
 function cargarGastosApi(){
-    this.handleEvent = function(e){
+    this.handleEvent = async function(e){
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
@@ -434,7 +434,7 @@ botonCargar.addEventListener("click", cargar);
 
 let cargarAPI = new cargarGastosApi();
 let btnCargarAPI = document.getElementById("cargar-gastos-api");
-btnCargarAPI.addEventListener("click", btnCargarAPI);
+btnCargarAPI.addEventListener("click", cargarAPI);
 
 export {
     mostrarDatoEnId,
