@@ -70,6 +70,26 @@ function mostrarGastoWeb(idElemento, gasto){
     botBorrar.addEventListener("click", manejadorBorrar);
     div.append(botBorrar);
 
+    /*let botBorrarAPI = document.createElement('button');
+    botBorrarAPI.className = "gasto-borrar-api";
+    botBorrarAPI.type = "button";
+    botBorrarAPI.textContent = "Borrar (API)";
+
+    let manBorrarAPI = new BorrarAPI();
+    manBorrarAPI.gasto = gasto;
+    botBorrarAPI.addEventListener("click", manBorrarAPI);
+    div.append(botBorrarAPI);*/
+
+    /*let botEnviarAPI = document.createElement('button');
+    botEnviarAPI.className = "gasto-enviar-api";
+    botEnviarAPI.type = "button";
+    botEnviarAPI.textContent = "Enviar (API)";
+
+    let manEditarAPI = new BorrarAPI();
+    manBorrarAPI.gasto = gasto;
+    botBorrarAPI.addEventListener("click", manBorrarAPI);
+    div.append(botBorrarAPI);*/
+
     let botEditForm = document.createElement('button');
     botEditForm.className = "gasto-editar-formulario";
     botEditForm.type = "button";
@@ -172,6 +192,24 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+
+/*function BorrarAPI(){
+    this.handleEvent = function(e){
+        let usuario = document.getElementById("nombre_usuario").value;
+        idGasto = this.gasto.idGasto;
+        let response = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}` , [DELETE]);
+
+        if (response.ok)
+        {
+            let resultado = response.json();
+            cargarGastos(resultado);
+        }
+        else
+        {
+            alert("Error: " + response.status);
+        }
+    }
+}*/
 
 function actualizarPresupuestoWeb(){
 
@@ -355,6 +393,27 @@ function cargarGastosWeb(){
     }
 }
 
+function cargarGastosApi(){
+    this.handleEvent = function(e){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+        let response = await fetch(url);
+
+        if(response.ok)
+        {
+            let resultado = await response.json();
+            cargarGastos(resultado);
+        }
+        else
+        {
+            alert("Error: " + response.status);
+        }
+
+        repintar();
+    }
+}
+
 let crearFormulario = new nuevoGastoWebFormulario();
 
 let botonCrear = document.getElementById("anyadirgasto-formulario");
@@ -372,6 +431,10 @@ botonGuardar.addEventListener("click", guardar);
 let cargar = new cargarGastosWeb();
 let botonCargar = document.getElementById("cargar-gastos");
 botonCargar.addEventListener("click", cargar);
+
+let cargarAPI = new cargarGastosApi();
+let btnCargarAPI = document.getElementById("cargar-gastos-api");
+btnCargarAPI.addEventListener("click", btnCargarAPI);
 
 export {
     mostrarDatoEnId,
