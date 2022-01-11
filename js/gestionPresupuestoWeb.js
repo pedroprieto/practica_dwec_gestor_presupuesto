@@ -410,6 +410,12 @@ function nuevoGastoWebFormulario() {
         let botonCancelar = formularioNuevoGasto.querySelector("button.cancelar");
         botonCancelar.addEventListener("click", manejadorCancelar);
 
+        // Funcionalidad para boton enviar API
+        let manejadorAPI = new manejadorEnviarAPI();
+        manejadorAPI.botonCrearFormulario = e.target;
+        let botonEnviarAPI = formularioNuevoGasto.querySelector("button.gasto-enviar-api")
+        botonEnviarAPI.addEventListener("click", manejadorEnviarAPI);
+
         // Descativamos el boton de crear formulario
         e.target.disabled = "disabled";
 
@@ -429,6 +435,25 @@ function nuevoGastoWebFormulario() {
 
 
     }
+}
+
+function manejadorEnviarAPI() {
+
+    // this.handleEvent = function(e) {
+
+        // e.preventDefault();
+
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+        url += document.getElementById("nombre_usuario").value
+        // url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
+        
+        
+        console.log("Boton enviar API formulario - nuevo gasto");
+
+
+
+        // cargarGastosAPI();
+    // } 
 }
 
 function manejadorEnvioNuevoGastoWeb() {
