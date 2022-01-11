@@ -666,20 +666,20 @@ function borrarApiHandle() {
     this.handleEvent = function(e) {
 
         let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
-        url += document.getElementById("nombre_usuario").value;
+        url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
 
-        let id = this.gasto_actual.id;
-        url += "/" + id;
+        // let id = this.gasto_actual.id;
+        // url += "/" + id;
 
-        console.log(url);
+        // console.log(url);
 
-        fetch('url', {
+        fetch(url, {
             method: 'DELETE',
             // headers: {
             //   'Content-Type': 'application/json;charset=utf-8'
             // },
             // body: JSON.stringify(user)
-          });
+        });
 
         cargarGastosAPI();
     }
