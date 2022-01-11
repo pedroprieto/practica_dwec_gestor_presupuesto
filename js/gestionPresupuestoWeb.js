@@ -93,17 +93,6 @@ function mostrarGastosWeb(idElemento, gasto){
     borrar_gasto.gasto_actual = gasto;
     btn_borrar.addEventListener("click", borrar_gasto);
 
-    // Boton borrrar API
-    let btn_borrar_api = document.createElement("button");
-    // btn_borrar.setAttribute("type", "button");
-    btn_borrar_api.type = "button";
-    btn_borrar_api.className = "gasto-borrar-api";
-    btn_borrar_api.innerHTML = "Borrar (API)";
-    div_gasto.append(btn_borrar_api);
-    let borrar_gasto_api = new borrarApiHandle();
-    borrar_gasto_api.gasto_actual = gasto;
-    btn_borrar_api.addEventListener("click", borrar_gasto_api);
-
     // Boton editar formulario
     let btn_editar_form = document.createElement("button");
     btn_editar_form.type = "button";
@@ -114,6 +103,17 @@ function mostrarGastosWeb(idElemento, gasto){
     editar_gasto_form.gasto_actual = gasto;
     // editar_gasto_form.div_actual = e.currentTarget.parentNode.getElementById("gasto");
     btn_editar_form.addEventListener("click", editar_gasto_form);
+
+    // Boton borrar API
+    let btn_borrar_api = document.createElement("button");
+    // btn_borrar.setAttribute("type", "button");
+    btn_borrar_api.type = "button";
+    btn_borrar_api.className = "gasto-borrar-api";
+    btn_borrar_api.innerHTML = "Borrar (API)";
+    div_gasto.append(btn_borrar_api);
+    let borrar_gasto_api = new borrarApiHandle();
+    borrar_gasto_api.gasto_actual = gasto;
+    btn_borrar_api.addEventListener("click", borrar_gasto_api);
 
 }
 
@@ -652,10 +652,8 @@ async function cargarGastosAPI() {
         });
 
     // }
-
     // console.log(carga_datos_API);
     // console.log(url);
-
     // carga_datos_API = JSON.parse(carga_datos_API);
 
     gespres.cargarGastos(carga_datos_API);
@@ -670,10 +668,18 @@ function borrarApiHandle() {
         let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
         url += document.getElementById("nombre_usuario").value;
 
-        async function borrarApiHandle() {
+        let id = this.gasto_actual.id;
+        url += "/" + id;
 
-        }
+        console.log(url);
 
+        fetch('url', {
+            method: 'DELETE',
+            // headers: {
+            //   'Content-Type': 'application/json;charset=utf-8'
+            // },
+            // body: JSON.stringify(user)
+          });
 
         cargarGastosAPI();
     }
