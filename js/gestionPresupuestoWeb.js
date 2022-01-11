@@ -192,7 +192,15 @@ function handleenviareditadoaAPI(event){
     let arrayetiquetas = etiquetas.split(",");
 
     let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
-    fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}}).then(cargarGastosApi())
+    fetch(url, {method: 'PUT', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+    .then(Response => {
+           
+        if(Response){
+            cargarGastosApi();
+        }else{
+            alert("No se han podido actualizar los datos")
+        }
+    })
       
     
 
@@ -386,7 +394,17 @@ function BorrarHandleAPI(){
         let usuario = document.getElementById('nombre_usuario').value;
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + `/${this.gasto.gastoId}` ;
 
-        fetch(url, {method: "DELETE",}).then(cargarGastosApi())
+       // fetch(url, {method: "DELETE",}).then(cargarGastosApi())
+       fetch(url, {method: 'DELETE'})       
+       .then(Response => {
+           
+           if(Response){
+               cargarGastosApi();
+           }else{
+               alert("No se han podido actualizar los datos")
+           }
+       })
+      
               
      
         
@@ -452,10 +470,18 @@ function enviarhandlerGastoApi(event){
         let valor = form.elements.valor.value;
         let fecha = form.elements.fecha.value;
         let etiquetas = form.elements.etiquetas.value;
-        arrayetiquetas = etiquetas.split(",");
+        let arrayetiquetas = etiquetas.split(",");
 
         let gastoAPI = new gesPres.CrearGasto(descripcion,valor,fecha,...arrayetiquetas)        
-        fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}}).then(cargarGastosApi())
+        fetch(url, {method: 'POST', body: JSON.stringify(gastoAPI),headers:{'Content-Type': 'application/json'}})
+        .then(Response => {
+           
+            if(Response){
+                cargarGastosApi();
+            }else{
+                alert("No se han podido actualizar los datos")
+            }
+        })
           
         
         
