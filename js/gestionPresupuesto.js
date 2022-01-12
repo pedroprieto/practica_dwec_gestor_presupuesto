@@ -251,12 +251,12 @@ function transformarListadoEtiquetas( etiquetas ){
     return arrayFiltrado;
 }
 
-function cargarGastos( gastosNuevos ){
+function cargarGastos( gastosAlmacenamiento ){
     // gastosAlmacenamiento es un array de objetos "planos"
     // No tienen acceso a los métodos creados con "CrearGasto":
     // "anyadirEtiquetas", "actualizarValor",...
     // Solo tienen guardadas sus propiedades: descripcion, valor, fecha y etiquetas
-  
+
     // Reseteamos la variable global "gastos"
     gastos = [];
     // Procesamos cada gasto del listado pasado a la función
@@ -271,9 +271,9 @@ function cargarGastos( gastosNuevos ){
         Object.assign(gastoRehidratado, g);
         // Ahora "gastoRehidratado" tiene las propiedades del gasto
         // almacenado y además tiene acceso a los métodos de "CrearGasto"
-          
+
         // Añadimos el gasto rehidratado a "gastos"
-        gastos.push(gastoRehidratado)
+        gastos.push(gastoRehidratado);
     }
 }
 

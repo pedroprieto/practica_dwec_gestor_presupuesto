@@ -620,9 +620,16 @@ function BorrarHandleAPI(){
         fetch( url, {
             method: "DELETE"
         })
-
-        // Llamar a la función cargarGastosApi para actualizar la lista en la página
-        cargarGastosApi();
+        .then( Response => {
+            // .then -> Debo esperar a que termine el fetch pata que la lista se actualice correctamente
+            if( Response ){
+                // Llamar a la función cargarGastosApi para actualizar la lista en la página
+                cargarGastosApi();
+            }
+            else{
+                alert("Error al actualizar los gastos");
+            }
+        })
     }
 }
 
@@ -661,9 +668,16 @@ function enviarHandlerGastoApi(event){
         body: JSON.stringify(gastoAPI),
         headers:{'Content-Type': 'application/json'}
     })
-
-    // Llamar a la función cargarGastosApi para actualizar la lista en la página
-    cargarGastosApi();
+    .then( Response => {
+        // .then -> Debo esperar a que termine el fetch pata que la lista se actualice correctamente
+        if( Response ){
+            // Llamar a la función cargarGastosApi para actualizar la lista en la página
+            cargarGastosApi();
+        }
+        else{
+            alert("Error al actualizar los gastos");
+        }
+    })
 }
 
 function handleEnviarEditarAPI(event){
@@ -700,10 +714,16 @@ function handleEnviarEditarAPI(event){
         body: JSON.stringify(gastoAPI),
         headers:{'Content-Type': 'application/json'}
     })
-
-    // Llamar a la función cargarGastosApi  para actualizar la lista en la página
-    cargarGastosApi();
-}
+    .then( Response => {
+        // .then -> Debo esperar a que termine el fetch pata que la lista se actualice correctamente
+        if( Response ){
+            // Llamar a la función cargarGastosApi para actualizar la lista en la página
+            cargarGastosApi();
+        }
+        else{
+            alert("Error al actualizar los gastos");
+        }
+    })
 
 export   { 
     mostrarDatoEnId,
