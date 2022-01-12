@@ -1,5 +1,8 @@
 import * as gesPres from "./gestionPresupuesto.js";
 
+//variable global
+let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`;
+
 function mostrarDatoEnId(idElemento, valor)
 {   
     document.getElementById(idElemento).innerHTML = valor;
@@ -72,6 +75,25 @@ function mostrarGastoWeb(idElemento, gasto)
     butBorrar.addEventListener("click", manejadorBorrar);
 
     div.append(butBorrar);
+
+    /*
+    Modificación de la función mostrarGastoWeb
+    Añade un segundo botón de borrado a la estructura HTML de cada gasto.
+    La estructura HTML final que debe quedar para cada gasto es la siguiente:
+    <!-- Este botón tendrá un manejador de eventos -->
+    <button class="gasto-borrar-api" type="button">Borrar (API)</button>
+    Este botón se utilizará para borrar el gasto seleccionado a través de la API de servidor.
+    */
+    let butBorrarApi = document.createElement("button");
+    butBorrarApi.className = "gasto-borrar-api";
+    butBorrarApi.type = "button";
+    butBorrarApi.innerHTML = "Borrar (API)";
+
+    let manejadorBorrarApi = new BorrarApiHandle();
+    manejadorBorrarApi.gasto = gasto;
+    butBorrarApi.addEventListener("click", manejadorBorrarApi);
+
+    div.append(butBorrarApi);
 
     let butEditForm = document.createElement("button");
     butEditForm.className = "gasto-editar-formulario";
@@ -396,6 +418,198 @@ function cargarGastoWeb()
 let manejadorCargar = new cargarGastoWeb();
 let butCargar = document.getElementById("cargar-gastos");
 butCargar.addEventListener("click", manejadorCargar);
+
+/*
+Tutoria 13 de diciembre
+informacion relevante
+
+let url ="https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pedroprieto/";
+
+fetch (url)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(dataJson) {
+        console.log(`Nombre de usuario: ${dataJson[0].usuario}`);
+        console.log(`Descripción: ${dataJson[0].descripcion}`);
+    })
+    .catch(function(error) {
+        console.log("Ha habido un error");
+    });
+
+---
+
+let response = await fetch(url);
+let datos = await response.json();
+
+async function programa() {
+    try{
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pedroprieto/";
+        let response = await fetch (url);
+        if (response.ok {
+            let datos = await response.json();
+            console.log(datos[0].usuario);
+        } else {
+            alert("Error-HTTP: " + response.status);
+        }
+    } catch (error) {
+        alert("Error-HTTP: " + response.status);
+        }
+    }
+
+    programa();
+}
+*/
+
+/*
+tutoria 20 diciembre
+    fetch('flores.jpg').then(function(response) {
+  if(response.ok) {
+    response.blob().then(function(miBlob) {
+      var objectURL = URL.createObjectURL(miBlob);
+      miImagen.src = objectURL;
+    });
+  } else {
+    console.log('Respuesta de red OK pero respuesta HTTP no OK');
+  }
+})
+.catch(function(error) {
+  console.log('Hubo un problema con la petición Fetch:' + error.message);
+});
+
+---
+
+fetch (".../latest/pedroprieto").then(function(response)
+{
+    return response.json();
+}).then(function(data)
+{
+    //return data;
+    //trabajar con data
+}).catch(function(error)
+{
+    //Aquí si que procesas el error!!!
+});
+
+//Mientras tanto, otras cosas...
+//El codigo que venga aqui se ejecuta antes de que termine fetch.
+//Aqui datos no existe!!
+
+
+---
+LAS DOS FORMAS DE TRABAJAR (sin duda Betis y sin duda Barça jeje)
+async function cargarDatos(){
+    try{
+        var datos = await fetch ("...latest/pedroprieto").then(function(response)
+        {
+            return response.json();
+        }).then(function(data)
+        {
+            return data;
+        });
+    }
+
+    // NO se ejecuta hasta que termine fetch y json()
+
+    // trabajar con datos
+} catch (error)
+{
+    //Si que captura el error!!!
+}
+
+Promise.all([
+    fetch("url2"),
+    fetch("url1")
+]).then(function(arrayRespuestas){
+    //Aqui han terminado las 2 promesas
+})
+
+tutoria 10 de enero
+Utilizar una variable global URL para no tener que ir copiando todo el "troncho" de enlace que se repite.
+*/
+
+//Nueva función cargarGastosApi
+function cargarGastosApi() 
+{
+    //Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor. Para ello tendrá que hacer una solicitud GET 
+    //a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido 
+    //en el control input#nombre_usuario. 
+    let nombreUsuario = document.getElementById("nombre_usuario").value;
+    //Podemos sustituir todo el enlace por la suma del enlace "generico" y el nombre de usuario que deseemos.
+    //let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+    let urlcargar = `${url}/${nombreUsuario}`;
+
+    /*Info manual
+    fetch(url, options)
+    .then(response => response.json())
+    .then(result => procesa resultado )*/
+
+    //fetch(url, {method: "GET",})
+    //Si no especificamos ningún options, se ejecutará una simple petición GET, la cual descargará el contenido de lo especificado en el url.
+    fetch(urlcargar)
+        .then(response => response.json())
+        .then(result => {
+            //Una vez obtenida la lista de gastos de la API deberá llamar a la función cargarGastos del 
+            //paquete js/gestionPresupuesto.js para actualizar el array de gastos.
+            gesPres.cargarGastos(result)
+
+            //Por último, una vez cargados los gastos deberá llamar a la función repintar para que se muestren correctamente en el HTML.
+            repintar();
+        })
+        .catch(function(error) {
+            console.log('Hubo un problema con la petición Fetch:' + error.message);
+        });
+
+}
+
+//Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos-api.
+let butCargarGastosApi = document.getElementById("cargar-gastos-api");
+butCargarGastosApi.addEventListener("click", cargarGastosApi);
+
+
+//Este botón se utilizará para borrar el gasto seleccionado a través de la API de servidor.
+//Añade un objeto manejador de eventos necesario para gestionar el evento click de los botones .gasto-borrar-api. Lo hacemos en mostrarGastoWeb como el que tenemos
+//de editar.
+function BorrarApiHandle() 
+{
+    this.handleEvent = function (e) 
+    {
+        //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        //DELETE /{USUARIO}/{GASTOID} - La API borrará el gasto indicado en GASTOID.
+        //ejemplo de "gastoId": "533f038b-b0ea-4253-a159-2452648b8a2e", estamos cogiendo este gasto y no el idGasto del local.
+        //let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoID}`;
+        let urlBorrar = `${url}/${nombreUsuario}/${this.gasto.gastoId}`;
+
+        //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. 
+        fetch(urlBorrar, {
+            method: "DELETE",
+        })
+            /* Guia videotutorial
+            if (response.ok {
+                let datos = await response.json();
+                console.log(datos[0].usuario);
+            } else {
+                alert("Error-HTTP: " + response.status);
+            }
+            } catch (error) {
+            alert("Error-HTTP: " + response.status);
+            }
+            */
+            .then(function (response) {
+                if (response.ok) {
+                    //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
+                    (cargarGastosApi())
+                } else {
+                    //Si solo dejamos /${this.gastoId}` en la url, nos dará este error y mostrará 401
+                    alert("Error-HTTP: " + response.status);
+                }
+            })
+            .catch(function (error) {
+                alert("Error-HTTP: " + response.status);
+            });
+    }
+}
 
 export {
     mostrarDatoEnId,
