@@ -414,7 +414,7 @@ function nuevoGastoWebFormulario() {
         let manejadorAPI = new manejadorEnviarAPI();
         manejadorAPI.botonCrearFormulario = e.target;
         let botonEnviarAPI = formularioNuevoGasto.querySelector("button.gasto-enviar-api")
-        botonEnviarAPI.addEventListener("click", manejadorEnviarAPI);
+        botonEnviarAPI.addEventListener("click", manejadorAPI);
 
         // Descativamos el boton de crear formulario
         e.target.disabled = "disabled";
@@ -432,14 +432,12 @@ function nuevoGastoWebFormulario() {
         // console.log(desc);
         // manejadorEnvio.prueba = "prueba2"
         // console.log(this.prueba);
-
-
     }
 }
 
 function manejadorEnviarAPI() {
 
-    // this.handleEvent = function(e) {
+    this.handleEvent = function(e) {
 
         // e.preventDefault();
 
@@ -448,12 +446,35 @@ function manejadorEnviarAPI() {
         // url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
         
         
-        console.log("Boton enviar API formulario - nuevo gasto");
+        // console.log("Boton enviar API formulario - nuevo gasto");
 
+        let descripcion = document.getElementById("descripcion").value;
+        let valor = parseInt(document.getElementById("valor").value);
+        let fecha = document.getElementById("fecha").value;
+        let etiquetas = document.getElementById("etiquetas").value;
+        etiquetas = etiquetas.split(",");
+        // let gasto = new gespres.CrearGasto(descripcion,valor, fecha, ...etiquetas);
+       
+        let gasto = "{" + '"descripcion": ' + descripcion + '"valor": ' + valor + "}"; 
+        // {
+        //     "descripcion": "desc1",
+        //     "valor": "20"
+        //   }
 
+        url += "/" + gasto;
+
+        console.log(url);
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(gasto)
+          });
 
         // cargarGastosAPI();
-    // } 
+    } 
 }
 
 function manejadorEnvioNuevoGastoWeb() {
