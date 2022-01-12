@@ -281,8 +281,12 @@ function BorrarEtiquetasHandle() {
 function BorrarApiHandle() {
     this.handleEvent = function (evento) {
         let usuario = document.getElementById("nombre-usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
         if (usuario != "") {
-            fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`, { method: 'DELETE' })
+            fetch(url,
+                {
+                    method: 'DELETE'
+                })
                 .then(response => response.json())
                 .then(result => {
                     if (result != "") {
@@ -329,21 +333,20 @@ function AnyadirGastoApiHandle(e) {
 }
 
 function EditarGastoApi() {
+    debugger;
     this.handleEvent = function (e) {
         let usuario = document.getElementById("nombre-usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
         // Vamos a obtener los datos del formulario para enviarlos en el body
-        let formulario = e.currentTarget;
-        let etiquetasSplit = formulario.elements.etiquetas.value.split(',');
-
-        let bodyGasto =
-        {
+        let formulario = e.currentTarget.form;
+        let bodyGasto = {
             descripcion: formulario.elements.descripcion.value,
+            valor: formulario.elements.valor.value,
             fecha: formulario.elements.fecha.value,
-            valor: parseFloat(formulario.elements.valor.value),
-            etiquetas: etiquetasSplit
+            etiquetas: formulario.elements.etiquetas.value
         };
         if (usuario != "") {
-            fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`,
+            fetch(url,
                 {
                     method: 'PUT',
                     body: JSON.stringify(bodyGasto),
@@ -412,13 +415,11 @@ function cargarGastosApi() {
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
     // Ahora realizamos una petición para obtener los datos.
     if (usuario != "") {
-        fetch(url, {method: 'GET'})
+        fetch(url, { method: 'GET' })
             .then(response => response.json())
             .then(result => {
-                if (result != "") {
-                    gestion.cargarGastos(result);
-                    repintar();
-                }
+                gestion.cargarGastos(result);
+                repintar();
             })
             .catch(error => console.log(error));
     }
