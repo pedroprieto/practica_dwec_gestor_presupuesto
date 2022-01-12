@@ -197,6 +197,8 @@ function calcularBalance() {
 
 function filtrarGastos(opciones) {
 
+    
+
     function isObjEmpty(opciones) {
         return Object.keys(opciones).length === 0;
     }
@@ -212,38 +214,31 @@ function filtrarGastos(opciones) {
 
             let resultado = true;
 
+
             if(opciones.fechaDesde) 
             {
 
-                if(isNaN(Date.parse(opciones.fechaDesde))) 
+                if(typeof(opciones.fechaDesde) === 'string' && Date.parse(opciones.fechaDesde))
                 {
-                    if(gasto.fecha < opciones.fechaDesde)
+
+                    if(gasto.fecha < Date.parse(opciones.fechaDesde))
                     {
-                        
                         resultado = false;
-                        
                     }
-                   
-                }   
-                
+                }
+
             }
 
             if(opciones.fechaHasta)
             {
-                
-
-                if(isNaN(Date.parse(opciones.fechaHasta)))
+            
+                if(typeof(opciones.fechaHasta) === 'string' && Date.parse(opciones.fechaHasta))
                 {
+                    if(gasto.fecha > Date.parse(opciones.fechaHasta))
+                    {
                     resultado = false;
-                }
-                else
-                {
-                    if(gasto.fecha > opciones.fechaHasta){
-                        resultado = false;
                     }
-                    else {resultado = true;}
                 }
-
             }
 
             if(opciones.valorMinimo)
@@ -267,17 +262,32 @@ function filtrarGastos(opciones) {
             }
             if(opciones.etiquetasTiene)
             {
-                if(!gasto.etiquetas.includes(opciones.etiquetasTiene))
+
+                let incluye = false;
+
+                for(let i in gasto.etiquetas)
+                {
+                    for(let j in opciones.etiquetasTiene)
+                    {
+                        if(gasto.etiquetas[i] == opciones.etiquetasTiene[j]) 
+                        {
+                            incluye = true;
+                        }
+                    }
+                }
+
+                if(incluye == false)
                 {
                     resultado = false;
                 }
+              
+                   
             } 
 
             return resultado;
             
         });
 
-        
     }
     
 }
