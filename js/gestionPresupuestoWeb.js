@@ -626,9 +626,6 @@ function BorrarHandleAPI(){
                 // Llamar a la función cargarGastosApi para actualizar la lista en la página
                 cargarGastosApi();
             }
-            else{
-                alert("Error al actualizar los gastos");
-            }
         })
     }
 }
@@ -724,6 +721,7 @@ function handleEnviarEditarAPI(event){
             alert("Error al actualizar los gastos");
         }
     })
+}
 
 export   { 
     mostrarDatoEnId,
