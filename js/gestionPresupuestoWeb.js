@@ -27,6 +27,7 @@ function mostrarDatoEnId(idElemento, valor) {
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
+    debugger;
     let divBloque = document.createElement('div');
     divBloque.className = 'gasto';
 
