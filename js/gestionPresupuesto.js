@@ -163,10 +163,10 @@ function transformarListadoEtiquetas(transformacion) {
   return transformacionArray;
 }
 
-function cargarGastos(gastosAlmacenamiento) {
+function cargarGastos(arrayGastos) {
   gastos = [];
 
-  for (let g of gastosAlmacenamiento) {
+  for (let g of arrayGastos) {
     let gastoRehidratado = new CrearGasto();
     Object.assign(gastoRehidratado, g);
     gastos.push(gastoRehidratado);
