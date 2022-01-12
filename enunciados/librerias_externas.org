@@ -34,6 +34,9 @@ Para poder realizar esta práctica será necesario *instalar el siguiente softwa
 *** Lectura
     Lee atentamente los siguientes artículos y sus correspondientes subsecciones en caso de que las tengan:
     - https://es.javascript.info/loading
+
+    Videotutoriales:
+    - [[https://youtu.be/NFGztTbk9Hs][Introducción a WebPack]]
       
 *** Ficheros de la aplicación
     Vamos a utilizar los ficheros de la práctica anterior realizando modificaciones sobre el archivo ~js/gestionPresupuestoWeb.js~.
@@ -65,6 +68,10 @@ Para poder realizar esta práctica será necesario *instalar el siguiente softwa
     La primera librería importa [[https://www.chartjs.org/docs/latest/][Chart.js]], una librería para generar *gráficas*. La segunda es [[https://momentjs.com/][moment]], una librería para manipular fechas de manera avanzada. Y la última es un adaptador para poder utilizar ejes de tiempo en las gráficas.
 
     Al importar las librerías mediante etiquetas ~script~, sus funciones estarán disponibles en el objeto global, y por tanto disponibles en nuestro script ~js/gestionPresupuestoWeb.js~ sin necesidad de hacer ningún ~import~ adicional.
+
+    #+begin_quote
+    Una alternativa al método de utilizar etiquetas ~<script>~ es emplear una herramienta como WebPack para empaquetar las dependencias. Tienes disponible un [[https://youtu.be/NFGztTbk9Hs][tutorial de Introducción a Webpack]] en Youtube.
+    #+end_quote
     
 *** Fichero ~js/gestionPresupuestoWeb.js~ 
     Vamos a hacer una serie de modificaciones sobre este fichero con respecto a la práctica anterior.
