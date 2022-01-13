@@ -110,7 +110,8 @@
 
         <!-- Modificación de la plantilla para crear un formulario -->
         <template id="formulario-template">
-            <form>
+        <!--He añadido un nombre al <form> para comprobar que lo encuentra en querySelector como dice el manual (function enviarApi()) -->
+            <form name="prueba">
                 <div class="form-control">
                     <label for="descripcion">Descripción</label>
                     <input type="text" name="descripcion" id="descripcion">

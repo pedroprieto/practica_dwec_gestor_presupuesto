@@ -248,6 +248,11 @@ function nuevoGastoWebFormulario() {
     document.getElementById("anyadirgasto-formulario").disabled = true;
 
     document.getElementById("controlesprincipales").append(formulario);
+
+    //Manejador de eventos del botón .gasto-enviar-api dentro de nuevoGastoWebFormulario
+    //Añade un manejador de eventos necesario para gestionar el evento click del botón .gasto-enviar-api.
+    let butEnviarApi = formulario.querySelector("button.gasto-enviar-api");
+    butEnviarApi.addEventListener("click", enviarApi)
 }
 
 let butNuevoGastoForm = document.getElementById("anyadirgasto-formulario");
@@ -557,6 +562,7 @@ function cargarGastosApi()
             repintar();
         })
         .catch(function(error) {
+            //Este error nos lo muestra por ejemplo si no introducimos ningun nombre de usuario. El mensaje será: failed to fetch
             console.log('Hubo un problema con la petición Fetch:' + error.message);
         });
 
@@ -609,6 +615,70 @@ function BorrarApiHandle()
                 alert("Error-HTTP: " + response.status);
             });
     }
+}
+
+function enviarApi()
+{
+    //El contenido de la petición POST se obtendrá a partir del formulario de creación.
+
+    //let form = document.querySelector("form");
+    //Manual querySelector--> En caso de tener nombre del form: document.querySelector('form[name="search"]') 
+    //He aprovechado para añadir un nombre al form de interaccionHTML y comprobar que es correcto también. También he pasado los test antiguos por si acaso al modificar el template
+    //alguno no lo pasaba pero no hay problema, así que lo dejo con esta prueba.
+    let form = document.querySelector('form[name="prueba"]');
+
+    let descripcionApi = form.elements.descripcion.value;
+    let valorApi = form.elements.valor.value;
+    let fechaApi = form.elements.fecha.value;
+    let etiquetaApi = form.elements.etiquetas.value;
+    
+    valorApi = parseFloat(valorApi);
+    let etiquetasSeparadasSplit = etiquetaApi.split(',');
+ 
+    let nuevoGastoApi = {
+        descripcion: descripcionApi,
+        valor: valorApi,
+        fecha: fechaApi,
+        etiquetas: etiquetasSeparadasSplit
+    };
+
+    //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario. 
+    let nombreUsuario = document.getElementById("nombre_usuario").value;
+    let urlEnviar = `${url}/${nombreUsuario}`;
+
+    /* ejemplo manual para peticiones post
+    let user = {
+        nombre: 'Juan',
+        apellido: 'Perez'
+    };
+    let response = await fetch('/article/fetch/post/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(user)
+    });
+    */
+
+    //Se encargará de realizar mediante fetch una solicitud POST a la URL correspondiente de la API. 
+    fetch(urlEnviar, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(nuevoGastoApi)
+    })
+    .then(function (response) {
+        if (response.ok) {
+            //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
+            (cargarGastosApi())
+        } else {
+            alert("Error-HTTP: " + response.status);
+        }
+    })
+    .catch(function (error) {
+        alert("Error-HTTP: " + response.status);
+    }); 
 }
 
 export {
