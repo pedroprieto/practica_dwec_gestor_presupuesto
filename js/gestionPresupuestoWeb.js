@@ -80,16 +80,6 @@ function mostrarGastoWeb(idElemento, gasto){
     botBorrarAPI.addEventListener("click", manBorrarAPI);
     div.append(botBorrarAPI);
 
-    /*let botEnviarAPI = document.createElement('button');
-    botEnviarAPI.className = "gasto-enviar-api";
-    botEnviarAPI.type = "button";
-    botEnviarAPI.textContent = "Enviar (API)";
-
-    let manEditarAPI = new BorrarAPI();
-    manBorrarAPI.gasto = gasto;
-    botBorrarAPI.addEventListener("click", manBorrarAPI);
-    div.append(botBorrarAPI);*/
-
     let botEditForm = document.createElement('button');
     botEditForm.className = "gasto-editar-formulario";
     botEditForm.type = "button";
@@ -316,6 +306,17 @@ function EditarHandleFormulario(){
         let cancelarGasto = new cancelarHandle();
         let botonCancelar = formulario.querySelector("button[type = button]");
         botonCancelar.addEventListener("click", cancelarGasto);
+    
+
+        let botEditarAPI = document.createElement('button');
+        botEditarAPI.className = "gasto-editar-api";
+        botEditarAPI.type = "button";
+        botEditarAPI.textContent = "Editar (API)";
+    
+        let manEditarAPI = new EditarApi();
+        botEditarAPI.formulario = formulario;
+        botEditarAPI.gasto = gasto;
+        botEditarAPI.addEventListener("click", manEditarAPI);
 
     }
 }
@@ -337,6 +338,16 @@ function nuevoGastoWebFormulario(){
         let manCancelar = new cancelarHandle();
         let botCancelar = formulario.querySelector("button[type = button]");
         botCancelar.addEventListener("click", manCancelar);
+
+        let botEnviarAPI = document.createElement('button');
+        botEnviarAPI.className = "gasto-enviar-api";
+        botEnviarAPI.type = "button";
+        botEnviarAPI.textContent = "Enviar (API)";
+    
+        let manEnviarAPI = new EnviarApi();
+        botEnviarAPI.formulario = formulario;
+        botEnviarAPI.gasto = gasto;
+        botEnviarAPI.addEventListener("click", manEnviarAPI);
 
     }
 }
@@ -411,6 +422,80 @@ function cargarGastosApi(){
         }
 
         repintar();
+    }
+}
+function EnviarApi(){
+    this.handleEvent = async function(e){
+
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        
+        let form = e.currentTarget;
+
+        let nuevadesc = form.elements.descripcion.value;
+        let nuevovalor = form.elements.valor.value;
+        let nuevafecha = form.elements.fecha.value;
+        let nuevaetiqueta = form.elements.etiquetas.value;
+
+        let objetoform = {
+            descripcion: nuevadesc,
+            valor: nuevovalor,
+            fecha: nuevafecha,
+            etiquetas: nuevaetiqueta
+        };
+        
+        let response = await fetch(url, {method: 'POST',
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+        body: JSON.stringify(objetoform)
+        });
+
+        if (response.status == 200 || response.status == 201)
+        {
+        cargarGastosApi();
+        }
+        else
+        {
+        alert("Error: " + response.status);
+        }
+
+    }
+}
+
+function EditarApi(){
+    this.handleEvent = async function(e){
+
+        let usuario = document.getElementById("nombre_usuario").value;
+        let idGasto = this.gasto.gastoId;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`;
+        
+        let form = e.currentTarget;
+
+        let nuevadesc = form.elements.descripcion.value;
+        let nuevovalor = form.elements.valor.value;
+        let nuevafecha = form.elements.fecha.value;
+        let nuevaetiqueta = form.elements.etiquetas.value;
+
+        let objetoform = {
+            descripcion: nuevadesc,
+            valor: nuevovalor,
+            fecha: nuevafecha,
+            etiquetas: nuevaetiqueta
+        };
+        
+        let response = await fetch(url, {method: 'PUT',
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+        body: JSON.stringify(objetoform)
+        });
+
+        if (response.status == 200 || response.status == 201)
+        {
+        cargarGastosApi();
+        }
+        else
+        {
+        alert("Error: " + response.status);
+        }
+
     }
 }
 
