@@ -304,18 +304,13 @@ function EditarHandleFormulario(){
         botonEditar.addEventListener("submit", editarGasto);
 
         let cancelarGasto = new cancelarHandle();
-        let botonCancelar = formulario.querySelector("button[type = button]");
+        let botonCancelar = formulario.querySelector("button[class = cancelar]");
         botonCancelar.addEventListener("click", cancelarGasto);
     
-
-        let botEditarAPI = document.createElement('button');
-        botEditarAPI.className = "gasto-editar-api";
-        botEditarAPI.type = "button";
-        botEditarAPI.textContent = "Editar (API)";
-    
         let manEditarAPI = new EditarApi();
+        let botEditarAPI = formulario.querySelector("button[class = gasto-enviar-api]");
         botEditarAPI.formulario = formulario;
-        botEditarAPI.gasto = gasto;
+        botEditarAPI.gasto = this.gasto;
         botEditarAPI.addEventListener("click", manEditarAPI);
 
     }
@@ -336,17 +331,13 @@ function nuevoGastoWebFormulario(){
         botonEnviar.addEventListener("submit", manEnviar);
 
         let manCancelar = new cancelarHandle();
-        let botCancelar = formulario.querySelector("button[type = button]");
+        let botCancelar = formulario.querySelector("button[class = cancelar]");
         botCancelar.addEventListener("click", manCancelar);
-
-        let botEnviarAPI = document.createElement('button');
-        botEnviarAPI.className = "gasto-enviar-api";
-        botEnviarAPI.type = "button";
-        botEnviarAPI.textContent = "Enviar (API)";
     
         let manEnviarAPI = new EnviarApi();
+        let botEnviarAPI = formulario.querySelector("button[class = gasto-enviar-api]");
         botEnviarAPI.formulario = formulario;
-        botEnviarAPI.gasto = gasto;
+        botEnviarAPI.gasto = this.gasto;
         botEnviarAPI.addEventListener("click", manEnviarAPI);
 
     }
@@ -428,14 +419,18 @@ function EnviarApi(){
     this.handleEvent = async function(e){
 
         let usuario = document.getElementById("nombre_usuario").value;
+
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         
-        let form = e.currentTarget;
+        var form = document.querySelector("form");
 
         let nuevadesc = form.elements.descripcion.value;
         let nuevovalor = form.elements.valor.value;
         let nuevafecha = form.elements.fecha.value;
         let nuevaetiqueta = form.elements.etiquetas.value;
+
+        nuevovalor = parseFloat(nuevovalor);
+        nuevaetiqueta = nuevaetiqueta.split(",")
 
         let objetoform = {
             descripcion: nuevadesc,
@@ -468,12 +463,15 @@ function EditarApi(){
         let idGasto = this.gasto.gastoId;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`;
         
-        let form = e.currentTarget;
+        var form = document.querySelector("form");
 
         let nuevadesc = form.elements.descripcion.value;
         let nuevovalor = form.elements.valor.value;
         let nuevafecha = form.elements.fecha.value;
         let nuevaetiqueta = form.elements.etiquetas.value;
+
+        nuevovalor = parseFloat(nuevovalor);
+        nuevaetiqueta = nuevaetiqueta.split(",")
 
         let objetoform = {
             descripcion: nuevadesc,
