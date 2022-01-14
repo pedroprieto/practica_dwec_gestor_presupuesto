@@ -321,6 +321,15 @@ function EditarHandleFormulario()
         let manBorrar1 = new manejadorCancelForm();
         let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener("click", manBorrar1);
+
+        // Manejador de eventos del botón .gasto-enviar-api dentro de EditarHandleFormulario
+        // Añade un objeto manejador de eventos necesario para gestionar el evento click del botón .gasto-enviar-api.
+        let manEditarApi = new EditarApi();
+        // Añadimos el gasto como propiedad adicional del objeto para poder acceder a el.
+        // En caso de no añadirlo nos dira que no podemos leer la propiedad undefined (reading 'gastoId')
+        manEditarApi.gasto = this.gasto;
+        let btnEditarApi = formulario.querySelector("button.gasto-enviar-api");
+        btnEditarApi.addEventListener("click", manEditarApi);
     }
 }
 
@@ -680,6 +689,56 @@ function enviarApi()
         alert("Error-HTTP: " + response.status);
     }); 
 }
+
+function EditarApi()
+{
+    this.handleEvent = function (e) 
+    {
+        //El contenido de la petición PUT se obtendrá a partir del formulario de edición.
+        let form = document.querySelector('form[name="prueba"]');
+
+        let descripcionApi = form.elements.descripcion.value;
+        let valorApi = form.elements.valor.value;
+        let fechaApi = form.elements.fecha.value;
+        let etiquetaApi = form.elements.etiquetas.value;
+    
+        valorApi = parseFloat(valorApi);
+        let etiquetasSeparadasSplit = etiquetaApi.split(',');
+ 
+        let editarApi = {
+            descripcion: descripcionApi,
+            valor: valorApi,
+            fecha: fechaApi,
+            etiquetas: etiquetasSeparadasSplit
+        };
+
+        //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        let urlEditar = `${url}/${nombreUsuario}/${this.gasto.gastoId}`;
+
+
+        //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API. 
+        fetch(urlEditar, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(editarApi)
+        })
+        .then(function (response) {
+            if (response.ok) {
+                //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
+                (cargarGastosApi())
+            } else {
+                alert("Error-HTTP: " + response.status);
+            }
+        })
+        .catch(function (error) {
+            alert("Error-HTTP: " + response.status);
+        }); 
+    }
+}
+
 
 export {
     mostrarDatoEnId,
