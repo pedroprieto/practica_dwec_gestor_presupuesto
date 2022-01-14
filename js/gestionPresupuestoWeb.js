@@ -115,6 +115,7 @@ function mostrarGastoWeb(idElemento,gasto){
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
     let elemento = document.createElement('div');
+    elemento.innerHTML = "";
     elemento.className='agrupacion';
     let h1=document.createElement('h1');
     h1.innerHTML=`Gastos agrupados por ${periodo}`;
@@ -134,7 +135,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
     
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
-    elemento.innerHTML = "";
+    
         // Estilos
         elemento.style.width = "33%";
         elemento.style.display = "inline-block";
