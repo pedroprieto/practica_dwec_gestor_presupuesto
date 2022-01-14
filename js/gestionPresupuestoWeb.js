@@ -1,4 +1,4 @@
-import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, cargarGastos, CrearGasto, filtrarGastos, listarGastos, mostrarPresupuesto, transformarListadoEtiquetas } from "./gestionPresupuesto.js";
+import { actualizarPresupuesto, anyadirGasto, borrarGasto, calcularBalance, calcularTotalGastos, cargarGastos, CrearGasto, filtrarGastos, agruparGastos, listarGastos, mostrarPresupuesto, transformarListadoEtiquetas } from "./gestionPresupuesto.js";
 
 
 function mostrarDatoEnId(idElemento, valor){
@@ -123,8 +123,61 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
     }
 
     let raiz = document.getElementById(idElemento);
-    raiz.append(div);
+    raiz.innerHTML = "";
+    
 
+    raiz.style.width = "33%";
+    raiz.style.display = "inline-block";
+
+    let chart = document.createElement("canvas");
+
+    let unit = "";
+    switch (periodo) {
+        case "anyo":
+        unit = "year";
+        break;
+        case "mes":
+        unit = "month";
+        break;
+        case "dia":
+        default:
+        unit = "day";
+        break;
+    }
+
+    const myChart = new Chart(chart.getContext("2d"), {
+        type: 'bar',
+    data: {
+        datasets: [
+            {
+                // Título de la gráfica
+                label: `Gastos por ${periodo}`,
+                // Color de fondo
+                backgroundColor: "#555555",
+                // Datos de la gráfica
+                // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                data: agrup
+            }
+        ],
+    },
+    options: {
+        scales: {
+            x: {
+                // El eje X es de tipo temporal
+                type: 'time',
+                time: {
+                    // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                    unit: unit
+                }
+            },
+            y: {
+                // Para que el eje Y empieza en 0
+                beginAtZero: true
+            }
+        }
+    }
+});
+div.append(chart);
 }
 
 function repintar(){
@@ -132,6 +185,10 @@ function repintar(){
     mostrarDatoEnId("presupuesto", mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", calcularTotalGastos());
     mostrarDatoEnId("balance-total", calcularBalance());
+
+    mostrarGastoAgrupadosWeb("agrupar-dia", agruparGastos("dia"), "dia")
+    mostrarGastoAgrupadosWeb("agrupar-mes", agruparGastos("mes"), "mes")
+    mostrarGastoAgrupadosWeb("agrupar-anyo", agruparGastos("anyo"), "anyo")
 
     document.getElementById("listado-gastos-completo").innerHTML = "";
     let listagastos = listarGastos();
