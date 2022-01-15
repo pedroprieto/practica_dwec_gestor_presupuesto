@@ -611,11 +611,11 @@ function BorrarApiHandle()
 
         if (nombreUsuario != "")
         {
-        //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. 
-        fetch(urlBorrar, {
-            //method: "DELET", metodo realizado para probar si llegabamos a catch correctamente.
-            method: "DELETE",
-        })
+            //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. 
+            fetch(urlBorrar, {
+                //method: "DELET", metodo realizado para probar si llegabamos a catch correctamente.
+                method: "DELETE",
+                })
             /* Guia videotutorial
             if (response.ok {
                 let datos = await response.json();
@@ -633,6 +633,7 @@ function BorrarApiHandle()
                     (cargarGastosApi())
                 } else {
                     //Si solo dejamos /${this.gastoId}` en la url, nos dará este error y mostrará 401
+                    //También nos mostrará el error 401 si intentamos eliminar de la API un gasto que tenemos en los datos locales.
                     alert("Error-HTTP: " + response.status);
                 }
             })
