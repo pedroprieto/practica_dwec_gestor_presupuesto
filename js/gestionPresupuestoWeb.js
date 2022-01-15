@@ -63,8 +63,10 @@ function mostrarGastoWeb(idElemento, gasto) {
     let boton4 = document.createElement('button');
     boton4.className = 'gasto-borrar-api';
     boton4.type = 'button';
-    boton2.innerHTML = "Borrar (API)";
-    //FALTA
+    boton4.innerHTML = "Borrar (API)";
+    let borrarApi = new HandleBorrarApi();
+    borrarApi.gasto = gasto;
+    boton4.addEventListener('click', borrarApi);
     
     //botón editar formulario
     let boton3 = document.createElement('button');
@@ -384,26 +386,52 @@ async function cargarGastosApi() {
         let usuario = document.getElementById('nombre_usuario').value;
         let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/';
 
-        var listadoGastos = await fetch(url).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            return data;
-        });
-
-        gesPres.cargarGastos(listadoGastos);
-
-        repintar();
-        console.log(listadoGastos);
+        if (usuario === "") {
+            alert ('introduce un usuario');
+        } else {  
+            var listadoGastos = await fetch(url).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                return data;
+            });
+    
+            gesPres.cargarGastos(listadoGastos);
+    
+            repintar();
+            
+        }
     }
 
     catch(error){
         console.log("Ha ocurrido un error: "+ error);
     }
-
 }
 
 let btnCargarApi = document.getElementById('cargar-gastos-api');
 btnCargarApi.addEventListener('click', cargarGastosApi);
+
+function HandleBorrarApi() {
+    this.handleEvent = async function(evento) {
+        try {
+                let id = this.gasto.id;
+                let usuario = document.getElementById('nombre_usuario').value;
+                let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + id;
+        
+                fetch(url, {
+                    method:'DELETE',
+                }).then(function(response) {
+                    return response.json();
+                })
+
+                cargarGastosApi();
+            }
+
+        catch(error) {
+            console.log("Ha ocurrido un error: "+ error);
+        }
+        
+    };
+}
 
 export {
     mostrarDatoEnId,
