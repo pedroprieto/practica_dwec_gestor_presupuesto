@@ -58,6 +58,13 @@ function mostrarGastoWeb(idElemento, gasto) {
     let borrar = new BorrarHandle();
     borrar.gasto = gasto;
     boton2.addEventListener('click', borrar);
+
+    //botón borrar API
+    let boton4 = document.createElement('button');
+    boton4.className = 'gasto-borrar-api';
+    boton4.type = 'button';
+    boton2.innerHTML = "Borrar (API)";
+    //FALTA
     
     //botón editar formulario
     let boton3 = document.createElement('button');
@@ -74,6 +81,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     divPadre.append(div4);
     divPadre.append(boton1);
     divPadre.append(boton2);
+    divPadre.append(boton4);
     divPadre.append(boton3);
     id.append(divPadre);
 }
