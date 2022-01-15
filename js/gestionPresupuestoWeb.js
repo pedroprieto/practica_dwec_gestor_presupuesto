@@ -368,6 +368,35 @@ function cargarGastosWeb() {
 let botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', cargarGastosWeb);
 
+/*API*/
+
+async function cargarGastosApi() {
+    
+    try{
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/';
+
+        var listadoGastos = await fetch(url).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            return data;
+        });
+
+        gesPres.cargarGastos(listadoGastos);
+
+        repintar();
+        console.log(listadoGastos);
+    }
+
+    catch(error){
+        console.log("Ha ocurrido un error: "+ error);
+    }
+
+}
+
+let btnCargarApi = document.getElementById('cargar-gastos-api');
+btnCargarApi.addEventListener('click', cargarGastosApi);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
