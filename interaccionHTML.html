@@ -10,7 +10,6 @@
     </head>
 
     <body>
-      <!-- Vamos a añadir dos controles a la capa <div id="controlesprincipales">:  -->  
         <div id="aplicacion">      
             <div id="controlesprincipales">
                 <button type="button" id="actualizarpresupuesto">
@@ -29,12 +28,10 @@
                 Cargar gastos
               </button>
               
-              <!-- Un botón de tipo button con id cargar-gastos-api y texto Cargar gastos (API). -->
               <button type="button" id="cargar-gastos-api">
                 Cargar gastos (API)
               </button>
 
-              <!--  Un cuadro de texto con id nombre_usuario. -->
               <input type="text" name="nombre_usuario" id="nombre_usuario">
             </div>
             
@@ -106,11 +103,14 @@
             </div>
 
         </div>
+        <!-- Vamos a añadir 3 scripts adicionales para cargar librerías externas que nos permitan generar gráficas para mostrar los datos agrupados -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0/dist/chartjs-adapter-moment.min.js"></script>
+        
         <script type="module" src="js/generarDatosEstaticos.js"></script>
 
-        <!-- Modificación de la plantilla para crear un formulario -->
         <template id="formulario-template">
-        <!--He añadido un nombre al <form> para comprobar que lo encuentra en querySelector como dice el manual (function enviarApi()) -->
             <form name="prueba">
                 <div class="form-control">
                     <label for="descripcion">Descripción</label>
@@ -131,7 +131,6 @@
                 <button type="submit">Enviar</button>
                 <button class="cancelar" type="button">Cancelar</button>
 
-                <!-- Vamos a añadir un tercer botón a la plantilla #formulario-template -->
                 <button type ="button" class="gasto-enviar-api">Enviar (API)</button>
             </form>
         </template> 
