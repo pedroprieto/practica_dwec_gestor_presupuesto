@@ -1,6 +1,5 @@
 import * as gesPres from "./gestionPresupuesto.js";
 
-//variable global
 let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`;
 
 function mostrarDatoEnId(idElemento, valor)
@@ -76,14 +75,6 @@ function mostrarGastoWeb(idElemento, gasto)
 
     div.append(butBorrar);
 
-    /*
-    Modificación de la función mostrarGastoWeb
-    Añade un segundo botón de borrado a la estructura HTML de cada gasto.
-    La estructura HTML final que debe quedar para cada gasto es la siguiente:
-    <!-- Este botón tendrá un manejador de eventos -->
-    <button class="gasto-borrar-api" type="button">Borrar (API)</button>
-    Este botón se utilizará para borrar el gasto seleccionado a través de la API de servidor.
-    */
     let butBorrarApi = document.createElement("button");
     butBorrarApi.className = "gasto-borrar-api";
     butBorrarApi.type = "button";
@@ -249,8 +240,6 @@ function nuevoGastoWebFormulario() {
 
     document.getElementById("controlesprincipales").append(formulario);
 
-    //Manejador de eventos del botón .gasto-enviar-api dentro de nuevoGastoWebFormulario
-    //Añade un manejador de eventos necesario para gestionar el evento click del botón .gasto-enviar-api.
     let butEnviarApi = formulario.querySelector("button.gasto-enviar-api");
     butEnviarApi.addEventListener("click", enviarApi)
 }
@@ -322,11 +311,7 @@ function EditarHandleFormulario()
         let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener("click", manBorrar1);
 
-        // Manejador de eventos del botón .gasto-enviar-api dentro de EditarHandleFormulario
-        // Añade un objeto manejador de eventos necesario para gestionar el evento click del botón .gasto-enviar-api.
         let manEditarApi = new EditarApi();
-        // Añadimos el gasto como propiedad adicional del objeto para poder acceder a el.
-        // En caso de no añadirlo nos dirá que no podemos leer la propiedad undefined (reading 'gastoId')
         manEditarApi.gasto = this.gasto;
         let btnEditarApi = formulario.querySelector("button.gasto-enviar-api");
         btnEditarApi.addEventListener("click", manEditarApi);
@@ -433,225 +418,52 @@ let manejadorCargar = new cargarGastoWeb();
 let butCargar = document.getElementById("cargar-gastos");
 butCargar.addEventListener("click", manejadorCargar);
 
-/*
-Tutoria 13 de diciembre
-informacion relevante
-
-let url ="https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pedroprieto/";
-
-fetch (url)
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(dataJson) {
-        console.log(`Nombre de usuario: ${dataJson[0].usuario}`);
-        console.log(`Descripción: ${dataJson[0].descripcion}`);
-    })
-    .catch(function(error) {
-        console.log("Ha habido un error");
-    });
-
----
-
-let response = await fetch(url);
-let datos = await response.json();
-
-async function programa() {
-    try{
-        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/pedroprieto/";
-        let response = await fetch (url);
-        if (response.ok {
-            let datos = await response.json();
-            console.log(datos[0].usuario);
-        } else {
-            alert("Error-HTTP: " + response.status);
-        }
-    } catch (error) {
-        alert("Error-HTTP: " + response.status);
-        }
-    }
-
-    programa();
-}
-*/
-
-/*
-tutoria 20 diciembre
-    fetch('flores.jpg').then(function(response) {
-  if(response.ok) {
-    response.blob().then(function(miBlob) {
-      var objectURL = URL.createObjectURL(miBlob);
-      miImagen.src = objectURL;
-    });
-  } else {
-    console.log('Respuesta de red OK pero respuesta HTTP no OK');
-  }
-})
-.catch(function(error) {
-  console.log('Hubo un problema con la petición Fetch:' + error.message);
-});
-
----
-
-fetch (".../latest/pedroprieto").then(function(response)
-{
-    return response.json();
-}).then(function(data)
-{
-    //return data;
-    //trabajar con data
-}).catch(function(error)
-{
-    //Aquí si que procesas el error!!!
-});
-
-//Mientras tanto, otras cosas...
-//El codigo que venga aqui se ejecuta antes de que termine fetch.
-//Aqui datos no existe!!
-
-
----
-LAS DOS FORMAS DE TRABAJAR (sin duda Betis y sin duda Barça jeje)
-async function cargarDatos(){
-    try{
-        var datos = await fetch ("...latest/pedroprieto").then(function(response)
-        {
-            return response.json();
-        }).then(function(data)
-        {
-            return data;
-        });
-    }
-
-    // NO se ejecuta hasta que termine fetch y json()
-
-    // trabajar con datos
-} catch (error)
-{
-    //Si que captura el error!!!
-}
-
-Promise.all([
-    fetch("url2"),
-    fetch("url1")
-]).then(function(arrayRespuestas){
-    //Aqui han terminado las 2 promesas
-})
-
-tutoria 10 de enero
-Utilizar una variable global URL para no tener que ir copiando todo el "troncho" de enlace que se repite.
-*/
-
-//Nueva función cargarGastosApi
 function cargarGastosApi() 
 {
-    //Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor. Para ello tendrá que hacer una solicitud GET 
-    //a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido 
-    //en el control input#nombre_usuario. 
     let nombreUsuario = document.getElementById("nombre_usuario").value;
-    //Podemos sustituir todo el enlace por la suma del enlace "generico" y el nombre de usuario que deseemos.
-    //let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
     let urlcargar = `${url}/${nombreUsuario}`;
 
-    //Pese a que no lo pide expresamente la práctica, si dejamos el campo de nombreUsuario vacio nos dará un error de CORS y luego mostrará el error 403 y
-    //y el catch de failed to fetch. Para arreglar esto, podemos añadirle que si deja el campo vacio, salte una alerta antes de cargar los gastos de la API
     if(nombreUsuario != "")
     {
-    /*Info manual
-    fetch(url, options)
-    .then(response => response.json())
-    .then(result => procesa resultado )*/
-
-    //fetch(url, {method: "GET",})
-    //Si no especificamos ningún options, se ejecutará una simple petición GET, la cual descargará el contenido de lo especificado en el url.
     fetch(urlcargar)
         .then(response => response.json())
         .then(result => {
-            //Una vez obtenida la lista de gastos de la API deberá llamar a la función cargarGastos del 
-            //paquete js/gestionPresupuesto.js para actualizar el array de gastos.
             gesPres.cargarGastos(result)
 
-            //Por último, una vez cargados los gastos deberá llamar a la función repintar para que se muestren correctamente en el HTML.
             repintar();
         })
         .catch(function(error) {
-            //Este error nos lo muestra por ejemplo si no introducimos ningun nombre de usuario. El mensaje será: failed to fetch
             console.log('Hubo un problema con la petición Fetch:' + error.message);
         });   
     }
     else
     {
-        //De esta forma le informamos al usuario que introduzca un nombre.
-        //No me parece nada "elegante" las alerts, pero supongo que un console.log no tiene porque mirarlo un usuario "estándar".
         alert("Introduzca un nombre de usuario para cargar sus datos.")
     }
     
 }
-//Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos-api.
 let butCargarGastosApi = document.getElementById("cargar-gastos-api");
 butCargarGastosApi.addEventListener("click", cargarGastosApi);
 
-//Este botón se utilizará para borrar el gasto seleccionado a través de la API de servidor.
-//Añade un objeto manejador de eventos necesario para gestionar el evento click de los botones .gasto-borrar-api. Lo hacemos en mostrarGastoWeb como el que tenemos
-//de editar.
 function BorrarApiHandle() 
 {
     this.handleEvent = function (e) 
     {
-        //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
         let nombreUsuario = document.getElementById("nombre_usuario").value;
-        //DELETE /{USUARIO}/{GASTOID} - La API borrará el gasto indicado en GASTOID.
-        //ejemplo de "gastoId": "533f038b-b0ea-4253-a159-2452648b8a2e", estamos cogiendo este gasto y no el idGasto del local.
-        //let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoID}`;
         let urlBorrar = `${url}/${nombreUsuario}/${this.gasto.gastoId}`;
-
-        //Tal y como hacemos en cargar los datos de la API, añadimos aquí el if. Es raro que una vez escrito el usuario, lo borre, pero si esto sucediese, 
-        //nos mostrará el error de CORS otra vez, junto con ERR_FAILED de DELETE al no poder acceder a la URL y luego el mensaje que hemos puesto en catch.
-        //En nuevo y editar lo añadiremos también para solucionar este error.
 
         if (nombreUsuario != "")
         {
-            //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. 
             fetch(urlBorrar, {
-                //method: "DELET", metodo realizado para probar si llegabamos a catch correctamente.
                 method: "DELETE",
                 })
-            /* Guia videotutorial
-            if (response.ok {
-                let datos = await response.json();
-                console.log(datos[0].usuario);
-            } else {
-                alert("Error-HTTP: " + response.status);
-            }
-            } catch (error) {
-            alert("Error-HTTP: " + response.status);
-            }
-            */
             .then(function (response) {
                 if (response.ok) {
-                    //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
                     (cargarGastosApi())
                 } else {
-                    //Si solo dejamos /${this.gastoId}` en la url, nos dará este error y mostrará 401
-                    //También nos mostrará el error 401 si intentamos eliminar de la API un gasto que tenemos en los datos locales.
                     alert("Error-HTTP: " + response.status);
                 }
             })
-            /* 
-            .catch(function (error) {
-                alert("Error-HTTP: " + response.status);
-            })
-            De esta forma, nunca llegamos a response si salta el error en fetch. He hecho pruebas para ver como llegar, si utilizo DELET por ejemplo, 
-            llega al catch donde estaría el error pero me dice que response is not defined, por lo que no estoy llegando correctamente al error que deseo mostrar.
-            
-            Por lo que podemos dejarlo como en la petición GET que sí que funciona:    
-            .catch(function(error) {
-            console.log('Hubo un problema con la petición Fetch:' + error.message);
-            });
-            o como dice el manual en: manejos de errores con promesas, copiando la siguiente línea. Ambas son básicamente lo mismo.
-            .catch(error => alert(error.message));
-            En los siguientes también copie el mismo resultado del tutorial, por lo que lo modifico añadiendole un mensaje para dejarlo correctamente. 
-            */
             .catch(function(error) {
                 console.log('Hubo un problema con la petición Fetch: ' + error.message); 
             });  
@@ -666,12 +478,6 @@ function BorrarApiHandle()
 
 function enviarApi()
 {
-    //El contenido de la petición POST se obtendrá a partir del formulario de creación.
-
-    //let form = document.querySelector("form");
-    //Manual querySelector--> En caso de tener nombre del form: document.querySelector('form[name="search"]') 
-    //He aprovechado para añadir un nombre al form de interaccionHTML y comprobar que es correcto también. También he pasado los test antiguos 
-    //por si acaso al modificar el template alguno no lo pasaba pero no hay problema, así que lo dejo con esta prueba.
     let form = document.querySelector('form[name="prueba"]');
 
     let descripcionApi = form.elements.descripcion.value;
@@ -689,27 +495,11 @@ function enviarApi()
         etiquetas: etiquetasSeparadasSplit
     };
 
-    //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario. 
     let nombreUsuario = document.getElementById("nombre_usuario").value;
     let urlEnviar = `${url}/${nombreUsuario}`;
 
     if (nombreUsuario != "")
     {
-        /* ejemplo manual para peticiones post
-        let user = {
-            nombre: 'Juan',
-            apellido: 'Perez'
-        };
-        let response = await fetch('/article/fetch/post/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(user)
-        });
-        */
-
-        //Se encargará de realizar mediante fetch una solicitud POST a la URL correspondiente de la API. 
         fetch(urlEnviar, {
             method: 'POST',
             headers: {
@@ -719,7 +509,6 @@ function enviarApi()
         })
         .then(function (response) {
             if (response.ok) {
-                //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
                 (cargarGastosApi())
             } else {
                 alert("Error-HTTP: " + response.status);
@@ -739,7 +528,6 @@ function EditarApi()
 {
     this.handleEvent = function (e) 
     {
-        //El contenido de la petición PUT se obtendrá a partir del formulario de edición.
         let form = document.querySelector('form[name="prueba"]');
 
         let descripcionApi = form.elements.descripcion.value;
@@ -757,13 +545,11 @@ function EditarApi()
             etiquetas: etiquetasSeparadasSplit
         };
 
-        //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
         let nombreUsuario = document.getElementById("nombre_usuario").value;
         let urlEditar = `${url}/${nombreUsuario}/${this.gasto.gastoId}`;
 
         if (nombreUsuario != "")
         {
-            //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API. 
             fetch(urlEditar, {
             method: 'PUT',
             headers: {
@@ -773,7 +559,6 @@ function EditarApi()
             })
             .then(function (response) {
             if (response.ok) {
-               //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
                (cargarGastosApi())
             } else {
                 alert("Error-HTTP: " + response.status);
