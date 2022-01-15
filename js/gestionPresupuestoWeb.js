@@ -573,8 +573,7 @@ function cargarGastosApi()
         .catch(function(error) {
             //Este error nos lo muestra por ejemplo si no introducimos ningun nombre de usuario. El mensaje será: failed to fetch
             console.log('Hubo un problema con la petición Fetch:' + error.message);
-        });
-
+        });   
 }
 
 //Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos-api.
@@ -598,6 +597,7 @@ function BorrarApiHandle()
 
         //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API. 
         fetch(urlBorrar, {
+            //method: "DELET", metodo realizado para probar si llegabamos a catch correctamente.
             method: "DELETE",
         })
             /* Guia videotutorial
@@ -620,9 +620,24 @@ function BorrarApiHandle()
                     alert("Error-HTTP: " + response.status);
                 }
             })
+            /* 
             .catch(function (error) {
                 alert("Error-HTTP: " + response.status);
+            })
+            De esta forma, nunca llegamos a response si salta el error en fetch. He hecho pruebas para ver como llegar, si utilizo DELET por ejemplo, 
+            llega al catch donde estaría el error pero me dice que response is not defined, por lo que no estoy llegando correctamente al error que deseo mostrar.
+            
+            Por lo que podemos dejarlo como en la petición GET que sí que funciona:    
+            .catch(function(error) {
+            console.log('Hubo un problema con la petición Fetch:' + error.message);
             });
+            o como dice el manual en: manejos de errores con promesas, copiando la siguiente línea. Ambas son básicamente lo mismo.
+            .catch(error => alert(error.message));
+            En los siguientes también copie el mismo resultado del tutorial, por lo que lo modifico añadiendole un mensaje para dejarlo correctamente. 
+            */
+            .catch(function(error) {
+                console.log('Hubo un problema con la petición Fetch: ' + error.message); 
+            });  
     }
 }
 
@@ -685,56 +700,56 @@ function enviarApi()
             alert("Error-HTTP: " + response.status);
         }
     })
-    .catch(function (error) {
-        alert("Error-HTTP: " + response.status);
-    }); 
+    .catch(function(error) {
+        console.log('Hubo un problema con la petición Fetch: ' + error.message); 
+    });  
 }
 
 function EditarApi()
 {
     this.handleEvent = function (e) 
     {
-        //El contenido de la petición PUT se obtendrá a partir del formulario de edición.
-        let form = document.querySelector('form[name="prueba"]');
+       //El contenido de la petición PUT se obtendrá a partir del formulario de edición.
+       let form = document.querySelector('form[name="prueba"]');
 
-        let descripcionApi = form.elements.descripcion.value;
-        let valorApi = form.elements.valor.value;
-        let fechaApi = form.elements.fecha.value;
-        let etiquetaApi = form.elements.etiquetas.value;
-    
-        valorApi = parseFloat(valorApi);
-        let etiquetasSeparadasSplit = etiquetaApi.split(',');
- 
-        let editarApi = {
-            descripcion: descripcionApi,
-            valor: valorApi,
-            fecha: fechaApi,
-            etiquetas: etiquetasSeparadasSplit
-        };
+       let descripcionApi = form.elements.descripcion.value;
+       let valorApi = form.elements.valor.value;
+       let fechaApi = form.elements.fecha.value;
+       let etiquetaApi = form.elements.etiquetas.value;
+   
+       valorApi = parseFloat(valorApi);
+       let etiquetasSeparadasSplit = etiquetaApi.split(',');
 
-        //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
-        let nombreUsuario = document.getElementById("nombre_usuario").value;
-        let urlEditar = `${url}/${nombreUsuario}/${this.gasto.gastoId}`;
+       let editarApi = {
+           descripcion: descripcionApi,
+           valor: valorApi,
+           fecha: fechaApi,
+           etiquetas: etiquetasSeparadasSplit
+       };
+
+       //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario y el id del gasto actual.
+       let nombreUsuario = document.getElementById("nombre_usuario").value;
+       let urlEditar = `${url}/${nombreUsuario}/${this.gasto.gastoId}`;
 
 
-        //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API. 
-        fetch(urlEditar, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(editarApi)
-        })
-        .then(function (response) {
-            if (response.ok) {
-                //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
-                (cargarGastosApi())
-            } else {
-                alert("Error-HTTP: " + response.status);
-            }
-        })
-        .catch(function (error) {
-            alert("Error-HTTP: " + response.status);
+       //Se encargará de realizar mediante fetch una solicitud PUT a la URL correspondiente de la API. 
+       fetch(urlEditar, {
+           method: 'PUT',
+           headers: {
+               'Content-Type': 'application/json;charset=utf-8'
+           },
+           body: JSON.stringify(editarApi)
+       })
+       .then(function (response) {
+           if (response.ok) {
+               //Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
+               (cargarGastosApi())
+           } else {
+               alert("Error-HTTP: " + response.status);
+           }
+       })
+       .catch(function(error) {
+            console.log('Hubo un problema con la petición Fetch: ' + error.message); 
         }); 
     }
 }
