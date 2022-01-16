@@ -6,6 +6,7 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click", nue
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
 document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
+document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
 
 function mostrarDatoEnId(idElemento, valor) {
     document.getElementById(idElemento).innerHTML = valor;
@@ -299,6 +300,26 @@ function EnviarEditarHandleFormulario() {
 
         repintar();
     }
+}
+
+function cargarGastosApi() {
+    let urlApi = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+    let usuarioApi = document.getElementById("nombre_usuario").value;
+
+    async function obtenerDatosApi() {
+        let respuestaApi = await fetch(urlApi + usuarioApi);
+        
+        if (respuestaApi.ok) {
+            let respuestaJson = await respuestaApi.json();
+            console.log(respuestaJson);
+        } else {
+            alert("Error-Http: " + respuestaApi.status);
+        }        
+    }
+
+    obtenerDatosApi();
+
+    repintar();
 }
 
 export {
