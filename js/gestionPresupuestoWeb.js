@@ -183,6 +183,7 @@ function nuevoGastoWebFormulario(evento) {
     //evento submit en botón submit
     formulario.addEventListener('submit', ManejadorSubmit);
 
+    //botón enviar Api
     let btnEnviarApi = formulario.querySelector('button.gasto-enviar-api');
     btnEnviarApi.addEventListener('click', EnviarApi);
 
@@ -283,6 +284,12 @@ function EditarHandleFormulario() {
         let botonSubmit = new ManejadorSubmitEditar();
         botonSubmit.gasto = this.gasto;
         formulario.addEventListener('submit', botonSubmit);
+
+        //botón enviar Api
+        let btnEnviarApi = formulario.querySelector('button.gasto-enviar-api');
+        let enviar = new EnviarApiEditar();
+        enviar.gasto = this.gasto;
+        btnEnviarApi.addEventListener('click', enviar);
 
         //botón cancelar
         let botonCancelar = formulario.querySelector("button.cancelar");
@@ -476,7 +483,40 @@ async function EnviarApi(evento) {
     });
 }
 
+//botón enviar api dentro de editarHandleFormulario
+function EnviarApiEditar() {
+    this.handleEvent = function(evento) {
+        let id = this.gasto.gastoId;
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/' + usuario + '/' + id;
+        
+        let formulario = evento.currentTarget.form;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = formulario.elements.valor.value;
+        let fecha =  formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
 
+        let convertirValor = parseFloat(valor);
+        let etiquetasArray = etiquetas.split(',');
+
+        let gasto = new gesPres.CrearGasto(descripcion,convertirValor,fecha,...etiquetasArray);
+
+        fetch(url, {
+            method:'PUT',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify(gasto),
+        }).then(function(response) {
+            if(response.ok) {
+                console.log("Respuesta de red OK");
+                cargarGastosApi();
+            } else {
+                console.log("Error HTTP");
+            }
+        }).catch(function(error) {
+            console.log('Ha ocurrido un error al editar el gasto: ' + error.message);
+        });
+    }
+}
 
 export {
     mostrarDatoEnId,
