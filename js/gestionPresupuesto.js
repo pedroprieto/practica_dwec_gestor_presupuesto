@@ -84,14 +84,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.actualizarDescripcion = function(descripcion) {
-        this.descripcion=descripcion;
+        this.descripcion = descripcion;
     }
 
     this.actualizarValor = function(valor){
         if (valor>=0) {
-            this.valor=valor;
+            this.valor = valor;
         } else {
-            this.valor=this.valor;
+            this.valor = this.valor;
         }
     }
 
