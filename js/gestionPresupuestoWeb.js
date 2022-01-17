@@ -358,6 +358,28 @@ function cargarGastosWeb(){
     
 }
 
+function cargarGastosApi(){
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+    if(usuario == ""){
+        console.log("Nombre de usuario no introducido");
+    }else{
+        fetch(url, {method: 'GET'})
+        .then(response => response.json())
+        .then((result) => { 
+        let resultado = result;
+        if(resultado == ""){
+            console.log("El usuario no ha introducido gastos")
+        }else{
+            gesPres.cargarGastos(resultado);
+            repintar();
+        }
+        }); 
+    }
+
+}
+
 
 
 let crearFormulario = new nuevoGastoWebFormulario();
@@ -377,6 +399,9 @@ botonGuardar.addEventListener("click", guardarGastosWeb);
 
 let botonCargar = document.getElementById("cargar-gastos");
 botonCargar.addEventListener("click", cargarGastosWeb);
+
+let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
+botonCargarGastosApi.addEventListener("click", cargarGastosApi);
 
 
 
