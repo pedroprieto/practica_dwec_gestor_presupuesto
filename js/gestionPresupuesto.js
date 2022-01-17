@@ -154,7 +154,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let temp = "";
         //console.log(periodo);
         //console.log(fecha.toLocaleString());
-        temp = fecha.toLocaleString();
+        temp = this.fecha.toLocaleString();
 
         //for (let objeto of gastos){
             
