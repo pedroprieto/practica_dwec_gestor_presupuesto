@@ -149,8 +149,8 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     
         // Estilos
-        tag.style.width = "33%";
-        tag.style.display = "inline-block";
+        elemento.style.width = "33%";
+        elemento.style.display = "inline-block";
     // Crear elemento <canvas> necesario para crear la gráfica
     // https://www.chartjs.org/docs/latest/getting-started/
     let chart = document.createElement("canvas");
