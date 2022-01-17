@@ -240,7 +240,9 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
     let resultado = gastosCreados.reduce((acc, gasto) => {
 
-        acc[gasto.obtenerPeriodoAgrupacion(periodo)] = (acc[gasto.obtenerPeriodoAgrupacion(periodo)] || 0) + gasto.valor;
+        let propiedad = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        acc[propiedad] = (propiedad || 0) + gasto.valor;
 
         return acc;
 

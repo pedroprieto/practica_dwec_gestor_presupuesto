@@ -42,6 +42,7 @@ function repintar() {
     mostrarDatoEnId("presupuesto",gesPres.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+    
 
     document.getElementById("listado-gastos-completo").innerHTML = "";
 
@@ -52,7 +53,11 @@ function repintar() {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
     
-
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
+    
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
+    
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");
 
 }
 
@@ -169,8 +174,41 @@ function nuevoGastoWebFormulario() {
 function ActualizarHandleApiPut() {
     
     this.handleEvent = function (e) {
+
+        //console.log("funcionaPut")        
         
-        console.log("funcionaPut");
+        let nombreUsuario = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+
+
+        let form = e.currentTarget.form;
+
+        let newDescripcion = form.elements.descripcion.value;
+        let newValor = form.elements.valor.value;
+        let newFecha = form.elements.fecha.value;
+        let newEtiqueta = form.elements.etiquetas.value;
+
+        newValor = parseFloat(valor);
+        newEtiqueta = newEtiqueta.split(",");
+
+        let newObjeto = {
+            desripcion: newDescripcion,
+            valor: newValor,
+            fecha: newFecha,
+            etiquetas: newEtiqueta
+        }
+
+        fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(newObjeto),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+
+                cargarGastosApi();
+            })
 
     }
     
@@ -180,7 +218,7 @@ function EnviarHandleApiPost() {
 
     this.handleEvent = function (e) {
 
-        console.log("funcionaPost");               
+        //console.log("funcionaPost");               
         let formulario = e.currentTarget.form;
         let nombreUsuario = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
@@ -416,11 +454,13 @@ function borrarGastoApi() {
 
 function mostrarGastoWeb(idElemento, gasto){
 
+    let divGasto = document.createElement('div');
+    divGasto.className = "gasto";
+
     let divPrincipal = document.getElementById(idElemento);   
     
 
-    let divGasto = document.createElement('div');
-    divGasto.className = "gasto";
+    
     
     
     let divGastoDescripcion = document.createElement('div');
@@ -513,9 +553,9 @@ function mostrarGastoWeb(idElemento, gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
    
-    let divPrincipal = document.getElementById(idElemento);
-
-
+    let divP = document.getElementById(idElemento);
+    divP.innerHTML = "";    
+    
     let divAgrupacion = document.createElement('div');
     divAgrupacion.className = "agrupacion";
     
@@ -541,9 +581,73 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divAgrupacionDato.append(spanAgrupacionDatoValor);
         divAgrupacion.append(divAgrupacionDato);        
 
-    }    
+    }
 
-    divPrincipal.append(divAgrupacion);
+    
+    // Estilos
+    divP.style.width = "33%";
+    divP.style.display = "inline-block";
+    // Crear elemento <canvas> necesario para crear la gráfica
+    // https://www.chartjs.org/docs/latest/getting-started/
+    let chart = document.createElement("canvas");
+    // Variable para indicar a la gráfica el período temporal del eje X
+    // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+    let unit = "";
+    switch (periodo) {
+        case "anyo":
+            unit = "year";
+            break;
+        case "mes":
+            unit = "month";
+            break;
+        case "dia":
+        default:
+            unit = "day";
+            break;
+    }
+
+    // Creación de la gráfica
+    // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+    const myChart = new Chart(chart.getContext("2d"), {
+        // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+        type: 'bar',
+        data: {
+            datasets: [
+                {
+                    // Título de la gráfica
+                    label: `Gastos por ${periodo}`,
+                    // Color de fondo
+                    backgroundColor: "#555555",
+                    // Datos de la gráfica
+                    // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                    data: agrup
+                }
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    // El eje X es de tipo temporal
+                    type: 'time',
+                    time: {
+                        // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                        unit: unit
+                    }
+                },
+                y: {
+                    // Para que el eje Y empieza en 0
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // Añadimos la gráfica a la capa
+    divP.append(chart);
+        
+    
+    //divP.append(divAgrupacion);
+
+    
 
 };
 
