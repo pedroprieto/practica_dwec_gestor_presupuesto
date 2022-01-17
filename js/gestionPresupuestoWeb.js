@@ -114,19 +114,19 @@ function mostrarGastoWeb(idElemento,gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
-    let tag = document.getElementById(idElemento);
-    tag.innerHTML = "";
+    let elemento = document.getElementById(idElemento);
+    elemento.innerHTML = "";
     
-    let tagAgrupacion = document.createElement('div');
-    tagAgrupacion.className = "agrupacion";
+    let eleAgrupacion = document.createElement('div');
+    eleAgrupacion.className = "agrupacion";
     let h1 = document.createElement('h1');
     h1.textContent = `Gastos agrupados por ${periodo}`;
-    tagAgrupacion.append(h1);
+    eleAgrupacion.append(h1);
     
     for (const[key, value] of Object.entries(agrup)) {
         
-        let tagAgruDato = document.createElement('div');
-        tagAgruDato.className = "agrupacion-dato";
+        let eleAgruDato = document.createElement('div');
+        eleAgruDato.className = "agrupacion-dato";
     
         let span = document.createElement('span');
         span.className = "agrupacion-dato-clave";
@@ -136,11 +136,11 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
         spanValor.className = "agrupacion-dato-valor";
         spanValor.textContent = `${value}`;
     
-        tagAgruDato.append(span);
-        tagAgruDato.append(spanValor);
-        tagAgrupacion.append(tagAgruDato);
+        eleAgruDato.append(span);
+        eleAgruDato.append(spanValor);
+        eleAgrupacion.append(eleAgruDato);
     }  
-     tag.append(tagAgrupacion);
+     elemento.append(eleAgrupacion);
 
         // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
@@ -206,7 +206,7 @@ const myChart = new Chart(chart.getContext("2d"), {
     }
 });
 // Añadimos la gráfica a la capa
-tag.append(chart);
+elemento.append(chart);
 }
 
 function repintar(){
