@@ -559,12 +559,13 @@ function cargarGastosWeb(){
         // Recoge el listado de gastos por medio de la clave
         let cargarGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
 
-        gestionPresupuesto.cargarGastos( cargarGastos );
-
         // Si no existe la clave, llama con un array vacio
         if( !cargarGastos )
         {
             gestionPresupuesto.cargarGastos([]);
+        }
+        else {
+            gestionPresupuesto.cargarGastos( cargarGastos );
         }
 
         // Lamamos a la función repintar
