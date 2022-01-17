@@ -114,21 +114,33 @@ function mostrarGastoWeb(idElemento,gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
-    let elemento = document.createElement('div');
-    elemento.innerHTML = "";
-    elemento.className='agrupacion';
-    let h1=document.createElement('h1');
-    h1.innerHTML=`Gastos agrupados por ${periodo}`;
-    elemento.prepend(h1);
+    let tag = document.getElementById(idElemento);
+    tag.innerHTML = "";
     
-    for(let gasto in agrup){
-        let agrupa=auxCrearElemento('div','agrupacion-dato',"");
-        agrupa.prepend(auxCrearElemento('span','agrupacion-dato-clave',gasto[0]));
-        agrupa.prepend(auxCrearElemento('span','agrupacion-dato-valor',gasto[1]));
-        elemento.prepend(agrupa);
-
-    }
-    document.getElementById(idElemento).append(elemento);
+    let tagAgrupacion = document.createElement('div');
+    tagAgrupacion.className = "agrupacion";
+    let h1 = document.createElement('h1');
+    h1.textContent = `Gastos agrupados por ${periodo}`;
+    tagAgrupacion.append(h1);
+    
+    for (const[key, value] of Object.entries(agrup)) {
+        
+        let tagAgruDato = document.createElement('div');
+        tagAgruDato.className = "agrupacion-dato";
+    
+        let span = document.createElement('span');
+        span.className = "agrupacion-dato-clave";
+        span.textContent = `${key}`;
+    
+        let spanValor = document.createElement('span');
+        spanValor.className = "agrupacion-dato-valor";
+        spanValor.textContent = `${value}`;
+    
+        tagAgruDato.append(span);
+        tagAgruDato.append(spanValor);
+        tagAgrupacion.append(tagAgruDato);
+    }  
+     tag.append(tagAgrupacion);
 
         // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
@@ -137,8 +149,8 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     
         // Estilos
-        elemento.style.width = "33%";
-        elemento.style.display = "inline-block";
+        tag.style.width = "33%";
+        tag.style.display = "inline-block";
     // Crear elemento <canvas> necesario para crear la gráfica
     // https://www.chartjs.org/docs/latest/getting-started/
     let chart = document.createElement("canvas");
@@ -194,7 +206,7 @@ const myChart = new Chart(chart.getContext("2d"), {
     }
 });
 // Añadimos la gráfica a la capa
-elemento.append(chart);
+tag.append(chart);
 }
 
 function repintar(){
@@ -313,8 +325,8 @@ function nuevoGastoWebFormulario(){
         botonCancelar.addEventListener("click",cancelarEvento);
 
         let enviarApi = formulario.querySelector("button.gasto-enviar-api");
-
-        enviarApi.addEventListener("click", enviarhandlerGastoApi);
+        let objEventoGastoApi = new enviarhandlerGastoApi
+        enviarApi.addEventListener("click", objEventoGastoApi);
     
 }
 
@@ -491,7 +503,7 @@ function cargarGastosApi(){
     }
 }
 function enviarhandlerGastoApi(){
-
+    this.handleEvent = async function(e){
     let usuario = document.getElementById("nombre_usuario").value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
@@ -532,6 +544,7 @@ function enviarhandlerGastoApi(){
         .catch(err => console.error(err));
         
     }
+}
 }
 function BorrarHandleAPI(){
     this.handleEvent = async function(e){
