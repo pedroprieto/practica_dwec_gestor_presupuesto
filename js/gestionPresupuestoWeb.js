@@ -469,6 +469,13 @@ function repintar() {
     for ( let gasto of gastos ){
         mostrarGastoWeb( "listado-gastos-completo", gasto );
     }
+
+    // Librerías externas
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
+
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");
 }
 
 //------------------------------------------------------------//
