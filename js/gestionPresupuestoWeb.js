@@ -536,7 +536,9 @@ function manejadorEnviarAPI() {
         // let gasto = "{" + '"descripcion": ' + descripcion + '",valor": ' + valor + "}"; 
         let gasto = {
             "descripcion": descripcion,
-            "valor": valor
+            "valor": valor,
+            "fecha": fecha,
+            "etiquetas": etiquetas
         };
         // {
         //     "descripcion": "desc1",
@@ -547,7 +549,7 @@ function manejadorEnviarAPI() {
         //     apellido: 'Perez'
         // };
 
-        url += "/" + gasto;
+        // url += "/" + gasto;
 
         console.log(url);
 
