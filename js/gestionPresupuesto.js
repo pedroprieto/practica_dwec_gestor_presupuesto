@@ -154,7 +154,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let temp = "";
         //console.log(periodo);
         //console.log(fecha.toLocaleString());
-        temp = this.fecha.toLocaleString();
+        // let fecha_convertida = new Date(gasto.fecha);
+        // // let fecha = new Date(this.gasto_actual.fecha);
+        // // formularioEditarGasto.getElementById("fecha").value = fecha.toISOString().substr(0,10);
+        // // div_fecha.innerHTML = gasto.fecha;
+        // div_fecha.innerHTML = fecha_convertida.toLocaleString().substr(0,10);
+        // temp = this.fecha.toISOString;
+        temp = new Date(this.fecha);
+        temp = temp.toISOString();
 
         //for (let objeto of gastos){
             
