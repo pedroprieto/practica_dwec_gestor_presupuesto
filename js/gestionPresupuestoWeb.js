@@ -62,6 +62,9 @@ function mostrarGastoWeb(idElemento, gasto)
     let evBorrar = new BorrarHandle();
     evBorrar.gasto = gasto;
 
+    let evBorrarAPI = new BorrarApiHandle(); //--------------------//
+    evBorrarAPI.gasto = gasto;
+
     let evEditarForm = new EditarHandleformulario();
     evEditarForm.gasto = gasto;
 
@@ -119,6 +122,13 @@ function mostrarGastoWeb(idElemento, gasto)
     btnBorrar.className = "gasto-borrar";
     btnBorrar.textContent = "Borrar";
     btnBorrar.addEventListener("click", evBorrar);
+
+    //Boton Borrar2 API
+    let btnBorrarAPI = document.createElement("button");
+    btnBorrarAPI.type = "button";
+    btnBorrarAPI.className = "gasto-borrar-api";
+    btnBorrarAPI.textContent = "Borrar (API)";
+    btnBorrarAPI.addEventListener("click", evBorrarAPI); //----------------------------//
 
     //Boton editar formulario
     let btnEditarForm = document.createElement("button");
@@ -445,6 +455,20 @@ async function cargarGastosApi()
     catch(e)
     {
         console.log(e);
+    }
+}
+
+function BorrarApiHandle()
+{
+    this.handleEvent = async function(e)
+    {
+        let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
+
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
+
+        gesPres.borrarGasto(this.gasto.id);
+
+        repintar();
     }
 }
 
