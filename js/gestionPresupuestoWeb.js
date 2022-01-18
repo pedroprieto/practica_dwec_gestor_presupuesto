@@ -206,6 +206,10 @@ function nuevoGastoWebFormulario()
     let manejadorEnvio = new enviarGastoHandle();
     formulario.addEventListener("submit", manejadorEnvio);
 
+    //Boton de enviar2 API
+    let envioApi = formulario.querySelector("button.gasto-enviar-api"); //-----------------------//
+    envioApi.addEventListener("click", enviarGastoApiHandle);
+
     //boton cancelar
     let manejadorCancelar = new cancelarGastoHandle();
     let botonCancelar = formulario.querySelector("button.cancelar");
@@ -466,7 +470,7 @@ function BorrarApiHandle()
 
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
 
-        fetch(url, {method: "DELETE"})
+        fetch(url, {method: "DELETE"}) //metodo delete
         .then(Response => 
             {
                 if(Response)
@@ -475,6 +479,33 @@ function BorrarApiHandle()
                 }
             })
         .catch(err => alert(err));
+    }
+}
+
+function enviarGastoApiHandle()
+{
+    this.handleEvent = function(e)
+    {
+        e.preventDefault();
+        let actual = e.currentTarget;
+
+        let nuevaDesc = actual.elements.descripcion.value;
+        let nuevoValor = actual.elements.valor.value;
+        let nuevaFecha = actual.elements.fecha.value;
+        let nuevasEtiquetas = actual.elements.etiquetas.value;
+
+        nuevoValor = parseFloat(nuevoValor);
+        //nuevasEtiquetas = nuevasEtiquetas.split(",");
+
+        //creamos el nuevo gasto
+        let gasto1 = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, nuevasEtiquetas);
+        gesPres.anyadirGasto(gasto1);
+
+        let anyadirGasto = document.getElementById("anyadirgasto-formulario");
+
+        anyadirGasto.disabled = false;
+
+        repintar();
     }
 }
 
