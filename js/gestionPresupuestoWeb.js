@@ -283,6 +283,11 @@ function EditarHandleFormulario(){
         let manejadorCancelar = new cancelHandle();
         let botonCancelar = formulario.querySelector("button[type = button]");
         botonCancelar.addEventListener("click", manejadorCancelar);
+
+        let editarGasApi = formulario.querySelector("button.gasto-enviar-api");
+        let editarApi = new editarGastoApi();
+        editarApi.gasto = this.gasto;
+        editarGasApi.addEventListener("click", editarApi);
     }
 
 
@@ -452,12 +457,57 @@ function enviarGastoApi(e){
                 console.log("No se ha podido añadir la petición");
             }
         });
-
     }
-
-
 }
 
+
+
+function editarGastoApi(){
+
+    this.handleEvent = function(e){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+
+        let form = e.currentTarget.form;
+    let descripcionApi = form.elements.descripcion.value;
+    let valorApi = form.elements.valor.value;
+    let fechaApi = form.elements.fecha.value;
+    let etiquetasApi = form.elements.etiquetas.value;
+
+    valorApi = parseFloat(valorApi);
+    etiquetasApi = etiquetasApi.split(",");
+
+    let objetoApi = {
+        descripcion: descripcionApi,
+        fecha: fechaApi,
+        valor: valorApi,
+        etiquetas: etiquetasApi
+    }
+
+    if(usuario == ""){
+        console.log("Nombre de usuario no introducido")
+    }else{
+
+        fetch(url, {
+            method: 'PUT', 
+            body: JSON.stringify(objetoApi),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            
+            if(response.ok){
+                console.log("La petición de modificación se ha añadido correctamente");
+                cargarGastosApi();
+            }else{
+                console.log("No se ha podido añadir la petición de modificación");
+            }
+        });
+    }
+}
+
+}
 
 
 
@@ -481,6 +531,8 @@ botonCargar.addEventListener("click", cargarGastosWeb);
 
 let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
 botonCargarGastosApi.addEventListener("click", cargarGastosApi);
+
+
 
 
 
