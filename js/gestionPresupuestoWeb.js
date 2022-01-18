@@ -188,10 +188,10 @@ function ActualizarHandleApiPut() {
         let newFecha = form.elements.fecha.value;
         let newEtiqueta = form.elements.etiquetas.value;
 
-        newValor = parseFloat(valor);
+        newValor = parseFloat(newValor);
         newEtiqueta = newEtiqueta.split(",");
 
-        let newObjeto = {
+        let objeto = {
             desripcion: newDescripcion,
             valor: newValor,
             fecha: newFecha,
@@ -200,7 +200,7 @@ function ActualizarHandleApiPut() {
 
         fetch(url, {
             method: 'PUT',
-            body: JSON.stringify(newObjeto),
+            body: JSON.stringify(objeto),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -224,7 +224,7 @@ function EnviarHandleApiPost() {
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
         
-        let desripcion = formulario.elements.descripcion.value;
+        let descripcion = formulario.elements.descripcion.value;
         let valor = formulario.elements.valor.value;
         valor = parseFloat(valor);
         let fecha = formulario.elements.fecha.value;
@@ -232,7 +232,7 @@ function EnviarHandleApiPost() {
         etiquetas = etiquetas.split(",");
 
         let objeto = {
-            descripcion: desripcion,
+            descripcion: descripcion,
             valor: valor,
             fecha: fecha,
             etiquetas: etiquetas
@@ -366,6 +366,8 @@ function EditarHandleFormulario() {
         botonCancelar.addEventListener('click', cancelarGasto);
         
         let enviarApi = new ActualizarHandleApiPut();
+        enviarApi.gasto = this.gasto;
+
         let btnEnviarApi = document.getElementById("gasto-enviar-api");
         btnEnviarApi.addEventListener('click', enviarApi);
 
