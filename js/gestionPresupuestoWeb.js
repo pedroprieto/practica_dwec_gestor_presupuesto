@@ -177,7 +177,7 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
         }
     }
 });
-div.append(chart);
+raiz.append(chart);
 }
 
 function repintar(){
@@ -186,9 +186,9 @@ function repintar(){
     mostrarDatoEnId("gastos-totales", calcularTotalGastos());
     mostrarDatoEnId("balance-total", calcularBalance());
 
-    mostrarGastoAgrupadosWeb("agrupar-dia", agruparGastos("dia"), "dia")
-    mostrarGastoAgrupadosWeb("agrupar-mes", agruparGastos("mes"), "mes")
-    mostrarGastoAgrupadosWeb("agrupar-anyo", agruparGastos("anyo"), "anyo")
+    mostrarGastoAgrupadosWeb("agrupacion-dia", agruparGastos("dia"), "dia")
+    mostrarGastoAgrupadosWeb("agrupacion-mes", agruparGastos("mes"), "mes")
+    mostrarGastoAgrupadosWeb("agrupacion-anyo", agruparGastos("anyo"), "anyo")
 
     document.getElementById("listado-gastos-completo").innerHTML = "";
     let listagastos = listarGastos();
@@ -366,8 +366,8 @@ function EditarHandleFormulario(){
     
         let manEditarAPI = new EditarApi();
         let botEditarAPI = formulario.querySelector("button[class = gasto-enviar-api]");
-        botEditarAPI.formulario = formulario;
-        botEditarAPI.gasto = this.gasto;
+        manEditarAPI.formulario = formulario;
+        manEditarAPI.gasto = this.gasto;
         botEditarAPI.addEventListener("click", manEditarAPI);
 
     }
@@ -452,8 +452,7 @@ function cargarGastosWeb(){
     }
 }
 
-function cargarGastosApi(){
-    this.handleEvent = async function(e){
+async function cargarGastosApi(){
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
@@ -471,7 +470,6 @@ function cargarGastosApi(){
         }
 
         repintar();
-    }
 }
 function EnviarApi(){
     this.handleEvent = async function(e){
@@ -521,7 +519,7 @@ function EditarApi(){
         let idGasto = this.gasto.gastoId;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`;
         
-        var form = document.querySelector("form");
+        let form = this.formulario;
 
         let nuevadesc = form.elements.descripcion.value;
         let nuevovalor = form.elements.valor.value;
@@ -573,9 +571,8 @@ let cargar = new cargarGastosWeb();
 let botonCargar = document.getElementById("cargar-gastos");
 botonCargar.addEventListener("click", cargar);
 
-let cargarAPI = new cargarGastosApi();
 let btnCargarAPI = document.getElementById("cargar-gastos-api");
-btnCargarAPI.addEventListener("click", cargarAPI);
+btnCargarAPI.addEventListener("click", cargarGastosApi);
 
 export {
     mostrarDatoEnId,
