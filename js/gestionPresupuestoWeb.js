@@ -415,6 +415,39 @@ function EditarHandleGasto()
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------//
+
+document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
+
+
+async function cargarGastosApi()
+{
+    let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
+
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario; //URL del usuario introducido
+
+    try
+    {
+        let datos = await fetch(url);
+
+        if(datos.ok) //Si todo esta correcto
+        {
+            let json = await datos.json(); //obtenemos los gastos
+            gesPres.cargarGastos(json); //llamamos a la funcion para actualizar los gastos
+
+            repintar();
+        }
+        else
+        {
+            alert("Error-HTTP: " + datos.status);
+        }
+    }
+    catch(e)
+    {
+        console.log(e);
+    }
+}
+
 export
 {
     mostrarDatoEnId,
