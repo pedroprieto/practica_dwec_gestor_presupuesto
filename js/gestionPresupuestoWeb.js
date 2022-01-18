@@ -151,6 +151,15 @@ function editarHandleFormulario() {
         // formularioEditarGasto.querySelector("button.gasto-borrar").disabled = "disabled";
         // btn_editar_form.disabled = "disabled";
 
+
+        // Funcionalidad de enviar gasto editado a API 
+        let manejadorModificarAPI = new editarGastoAPI();
+        manejadorModificarAPI.botonCrearFormulario = e.target;
+        let botonEditarGastoAPI = formularioEditarGasto.querySelector("button.gasto-enviar-api");
+        botonEditarGastoAPI.addEventListener("click", manejadorModificarAPI);
+
+
+
         // Mostramos en el formulario los datos del gasto
         formularioEditarGasto.getElementById("descripcion").value = this.gasto_actual.descripcion;
         formularioEditarGasto.getElementById("valor").value = this.gasto_actual.valor;
@@ -174,6 +183,41 @@ function editarHandleFormulario() {
         
     };
 };
+
+function editarGastoAPI() {
+    this.handleEvent = function(e) {
+
+        e.preventDefault();
+
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+        url += document.getElementById("nombre_usuario").value;
+        console.log(idGasto); 
+
+        // let id_gasto = e.target.gastoId.value;
+        // console.log(id_gasto);
+        // console.log(document.getElementById("descripcion").value);
+
+
+
+
+        // let gasto = {
+        //     "descripcion": descripcion,
+        //     "valor": valor,
+        //     "fecha": fecha,
+        //     "etiquetas": etiquetas
+        // };
+
+        // fetch(url, {
+        //     method: 'PUT',
+        //     headers: {
+        //       'Content-Type': 'application/json;charset=utf-8'
+        //     },
+        //     body: JSON.stringify(gasto)
+        // });
+
+        cargarGastosAPI();
+    }
+}
 
 function editarGastoHandle() {
     this.handleEvent = function(e) {
@@ -551,7 +595,7 @@ function manejadorEnviarAPI() {
 
         // url += "/" + gasto;
 
-        console.log(url);
+        // console.log(url);
 
         fetch(url, {
             method: 'POST',
@@ -561,7 +605,7 @@ function manejadorEnviarAPI() {
             body: JSON.stringify(gasto)
           });
 
-        // cargarGastosAPI();
+        cargarGastosAPI();
     } 
 }
 
