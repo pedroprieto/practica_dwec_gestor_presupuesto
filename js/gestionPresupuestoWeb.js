@@ -230,7 +230,7 @@ function repintar(){
 
     let periodoDia = "dia";
     let gastosDia = gp.agruparGastos(periodoDia);
-    mostrarGastosAgrupadosWeb("agrupacion-dia", gastosDia, "día");
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gastosDia, "dia");
 
     let periodoMes = "mes";
     let gastosMes = gp.agruparGastos(periodoMes);
@@ -238,7 +238,7 @@ function repintar(){
 
     let periodoYear = "anyo";
     let gastosAnyo = gp.agruparGastos(periodoYear);
-    mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAnyo, "año");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAnyo, "anyo");
 }
 
 function actualizarPresupuestoWeb(){
