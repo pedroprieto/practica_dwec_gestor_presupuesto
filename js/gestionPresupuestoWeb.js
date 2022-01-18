@@ -462,6 +462,7 @@ function cargarGastosApi(){
         if(response.ok)
         {
             let resultado = await response.json();
+            
             cargarGastos(resultado);
         }
         else

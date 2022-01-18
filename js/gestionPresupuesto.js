@@ -287,8 +287,18 @@ function transformarListadoEtiquetas(etiquetasUsuario){
     return resultado;
 }
 
-function cargarGastos(arrGasto){
-    gastos = arrGasto; 
+function cargarGastos(almacenamientoGasto){
+    
+    gastos = []; 
+
+    for (let g of almacenamientoGasto){
+        
+        let gastoRehidratado = new CrearGasto();
+
+        Object.assign(gastoRehidratado, g);
+
+        gastos.push(gastoRehidratado);
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
