@@ -274,6 +274,11 @@ function EditarHandleFormulario(){
 
         boton.disabled = true;
 
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
         let editarGasto = new submitHandleEditar();
         editarGasto.gasto = this.gasto; 
 
@@ -468,11 +473,11 @@ function editarGastoApi(){
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
 
-        let form = e.currentTarget.form;
-    let descripcionApi = form.elements.descripcion.value;
-    let valorApi = form.elements.valor.value;
-    let fechaApi = form.elements.fecha.value;
-    let etiquetasApi = form.elements.etiquetas.value;
+    let formu = e.currentTarget.form;
+    let descripcionApi = formu.elements.descripcion.value;
+    let valorApi = formu.elements.valor.value;
+    let fechaApi = formu.elements.fecha.value;
+    let etiquetasApi = formu.elements.etiquetas.value;
 
     valorApi = parseFloat(valorApi);
     etiquetasApi = etiquetasApi.split(",");
