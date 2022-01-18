@@ -95,6 +95,9 @@ function mostrarGastoWeb(idElemento, gasto){
     raiz.append(div); 
 }
 function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
+
+    let raiz = document.getElementById(idElemento);
+    raiz.innerHTML = "";
         
     let div = document.createElement('div');
     div.className = "agrupacion";
@@ -120,10 +123,8 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo){
         div1.append(span1);
         div1.append(span2);
         div.append(div1);
+        raiz.append(div);
     }
-
-    let raiz = document.getElementById(idElemento);
-    raiz.innerHTML = "";
     
 
     raiz.style.width = "33%";
@@ -348,14 +349,21 @@ function EditarHandleFormulario(){
 
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
+        formulario.gasto = this.gasto;
 
         let boton = e.currentTarget;
         boton.after(formulario);
 
         boton.disabled = true;
 
+
         let editarGasto = new submitHandleEditar();
         editarGasto.gasto = this.gasto;
+
+        formulario.elements.descripcion.value = this.descripcion;
+        formulario.elements.valor.value = this.valor;
+        formulario.elements.fecha.value = this.fecha;
+        formulario.elements.etiquetas.value = this.etiquetas;
         
         let botonEditar = formulario; //He cambiado el nombre del botón respecto al que tenía puesto que no se el motivo por el cual en su día puse crear y este lo define mejor.
         botonEditar.addEventListener("submit", editarGasto);
