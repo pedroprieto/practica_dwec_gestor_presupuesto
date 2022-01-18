@@ -243,7 +243,11 @@ function transformarListadoEtiquetas(listaEtiquetas) {
 }
 
 function cargarGastos(nuevosGastos) {
-    gastos = nuevosGastos;
+    for (const gasto of nuevosGastos) {
+        let nuevoGasto = new CrearGasto(gasto.descripcion, gasto.valor, gasto.fecha, gasto.etiquetas);
+
+        gastos.push(nuevoGasto);
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
