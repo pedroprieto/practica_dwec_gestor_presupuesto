@@ -155,6 +155,7 @@ function editarHandleFormulario() {
         // Funcionalidad de enviar gasto editado a API 
         let manejadorModificarAPI = new editarGastoAPI();
         manejadorModificarAPI.botonCrearFormulario = e.target;
+        manejadorModificarAPI.gasto_actual = this.gasto_actual;
         let botonEditarGastoAPI = formularioEditarGasto.querySelector("button.gasto-enviar-api");
         botonEditarGastoAPI.addEventListener("click", manejadorModificarAPI);
 
@@ -189,31 +190,38 @@ function editarGastoAPI() {
 
         e.preventDefault();
 
-        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
-        url += document.getElementById("nombre_usuario").value;
-        console.log(idGasto); 
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + ocument.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
+        // url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
+        // console.log(this.gasto_actual.gastoId); 
 
         // let id_gasto = e.target.gastoId.value;
         // console.log(id_gasto);
         // console.log(document.getElementById("descripcion").value);
+        // url += url + "/" + this.gasto_actual.gastoId;
 
+        // console.log(url);
 
+        let descripcion = document.getElementById("descripcion").value;
+        let valor = parseInt(document.getElementById("valor").value);
+        let fecha = document.getElementById("fecha").value;
+        let etiquetas = document.getElementById("etiquetas").value;
+        etiquetas = etiquetas.split(",");
+        
+        let gasto = {
+            "descripcion": descripcion,
+            "valor": valor,
+            "fecha": fecha,
+            "etiquetas": etiquetas
+        };
 
-
-        // let gasto = {
-        //     "descripcion": descripcion,
-        //     "valor": valor,
-        //     "fecha": fecha,
-        //     "etiquetas": etiquetas
-        // };
-
-        // fetch(url, {
-        //     method: 'PUT',
-        //     headers: {
-        //       'Content-Type': 'application/json;charset=utf-8'
-        //     },
-        //     body: JSON.stringify(gasto)
-        // });
+        // console.log(gasto);
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(gasto)
+        });
 
         cargarGastosAPI();
     }
