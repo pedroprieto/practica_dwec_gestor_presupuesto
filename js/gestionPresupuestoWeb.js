@@ -135,6 +135,7 @@ function mostrarGastoWeb(idElemento, gasto)
     btnBorrarAPI.addEventListener("click", evBorrarAPI); //----------------------------//
     div1.append(btnBorrarAPI);
 
+
     //Boton editar formulario
     let btnEditarForm = document.createElement("button");
     btnEditarForm.type = "button";
@@ -402,8 +403,9 @@ function EditarHandleformulario()
         formulario.addEventListener("submit", enviar);
 
         //Boton de enviar2 API
-        let envioApi = formulario.querySelector("button.gasto-enviar-api"); //-----------------------//
-        envioApi.addEventListener("click", editarGastoApiHandle);
+        let editarApi = formulario.querySelector("button.gasto-enviar-api"); //-----------------------//
+        editarApi.gasto = this.gasto;
+        editarApi.addEventListener("click", editarGastoApiHandle);
 
         //boton cancelar
         let manCancelar = new cancelarGastoHandle();
@@ -480,92 +482,83 @@ function BorrarApiHandle()
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
 
         fetch(url, {method: "DELETE"}) //metodo delete
-        .then(Response => 
-            {
+        .then(Response => {
                 if(Response)
                 {
                     cargarGastosApi();
                 }
             })
-        .catch(err => alert(err));
     }
 }
 
-function enviarGastoApiHandle()
+function enviarGastoApiHandle(e)
 {
-    this.handleEvent = async function(e)
-    {
-        let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
+    let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
 
-        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario; //URL del usuario introducido
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario; //URL del usuario introducido
 
-        e.preventDefault();
-        let actual = e.currentTarget.form; //nos situamos en el formulario actual
+    let actual = e.currentTarget.form; //nos situamos en el formulario actual
 
-        //contenido de la peticion del formulario
-        let descripcion = actual.elements.descripcion.value;
-        let valor = actual.elements.valor.value;
-        let fecha = actual.elements.fecha.value;
-        let etiquetas = actual.elements.etiquetas.value;
-        let listaetiquetas = etiquetas.split(",");
+    //contenido de la peticion del formulario
+    let descripcion = actual.elements.descripcion.value;
+    let valor = actual.elements.valor.value;
+    let fecha = actual.elements.fecha.value;
+    let etiquetas = actual.elements.etiquetas.value;
+    let listaetiquetas = etiquetas.split(",");
 
-        valor = parseFloat(valor);
+    valor = parseFloat(valor);
 
-        //creamos el nuevo gasto
-        let gastoAPI = new gesPres.CrearGasto(descripcion, valor, fecha, ...listaetiquetas);
+    //creamos el nuevo gasto
+    let gastoAPI = new gesPres.CrearGasto(descripcion, valor, fecha, ...listaetiquetas);
         
-        //Peticion POST
-        fetch( url, 
-            {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify(gastoAPI)
-            }
-        )
-        .then(Response => {
-            if(Response)
-            {
-                cargarGastosApi();
-            }
+    //Peticion POST
+     fetch( url, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json;charset=utf-8'},
+            body: JSON.stringify(gastoAPI)
         })
-        .catch(err => alert(err));
-    }
+    .then(Response => {
+        if(Response)
+        {
+            cargarGastosApi();
+        }
+        else
+        {
+            alert("Error");
+        }
+    })
 }
 
-function editarGastoApiHandle()
+function editarGastoApiHandle(e)
 {
-    this.handleEvent = async function(e)
-    {
-        let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
+    let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
 
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
 
-        let actual = e.currentTarget.form;
+    let actual = e.currentTarget.form;
 
-        let descN = actual.elements.descripcion.value;
-        let valorN = actual.elements.valor.value;
-        let fechaN = actual.elements.fecha.value;
-        let etiquetasN = actual.elements.etiquetas.value;
-        let etiquetas = etiquetasN.split(",");
+    let descN = actual.elements.descripcion.value;
+    let valorN = actual.elements.valor.value;
+    let fechaN = actual.elements.fecha.value;
+    let etiquetasN = actual.elements.etiquetas.value;
+    let etiquetas = etiquetasN.split(",");
 
-        valorN = parseFloat(valorN);
+    valorN = parseFloat(valorN);
 
-        let gastoNApi = new gesPres.CrearGasto(descN, valorN, fechaN, ...etiquetas);
+    let gastoNApi = new gesPres.CrearGasto(descN, valorN, fechaN, ...etiquetas);
 
-        //Peticion PUT
-        fetch( url, {
-                method: "PUT",
-                headers: {'Content-Type': 'application/json;charset=utf-8'},
-                body: JSON.stringify(gastoNApi)
-            })
-        .then(Response => {
-            if(Response)
-            {
-                cargarGastosApi();
-            }
+    //Peticion PUT
+    fetch( url, {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json;charset=utf-8'},
+            body: JSON.stringify(gastoNApi)
         })
-        .catch(err => alert(err));
-    }
+    .then(Response => {
+        if(Response)
+        {
+            cargarGastosApi();
+        }
+    })
 }
 
 export
