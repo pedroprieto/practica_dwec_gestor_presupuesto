@@ -190,7 +190,7 @@ function editarGastoAPI() {
 
         e.preventDefault();
 
-        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + ocument.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
         // url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
         // console.log(this.gasto_actual.gastoId); 
 
