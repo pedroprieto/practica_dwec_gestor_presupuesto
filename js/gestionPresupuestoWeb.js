@@ -466,9 +466,15 @@ function BorrarApiHandle()
 
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
 
-        gesPres.borrarGasto(this.gasto.id);
-
-        repintar();
+        fetch(url, {method: "DELETE"})
+        .then(Response => 
+            {
+                if(Response)
+                {
+                    cargarGastosApi();
+                }
+            })
+        .catch(err => alert(err));
     }
 }
 
