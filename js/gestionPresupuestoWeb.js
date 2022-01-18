@@ -306,7 +306,8 @@ function nuevoGastoWebFormulario(){
         let botonCancelar = formulario.querySelector("button[type = button]");
         botonCancelar.addEventListener("click", manejadorCancelar);
 
-
+        let enviarApi = formulario.querySelector("button.gasto-enviar-api");
+        enviarApi.addEventListener("click", enviarGastoApi);
     }
 }
 
@@ -410,6 +411,54 @@ function borrarGastoApiHandle(){
         }
 }
 }
+
+function enviarGastoApi(e){
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+    let form = e.currentTarget.form;
+    let descripcionApi = form.elements.descripcion.value;
+    let valorApi = form.elements.valor.value;
+    let fechaApi = form.elements.fecha.value;
+    let etiquetasApi = form.elements.etiquetas.value;
+
+    valorApi = parseFloat(valorApi);
+    etiquetasApi = etiquetasApi.split(",");
+
+    let objetoApi = {
+        descripcion: descripcionApi,
+        fecha: fechaApi,
+        valor: valorApi,
+        etiquetas: etiquetasApi
+    }
+
+    if(usuario == ""){
+        console.log("Nombre de usuario no introducido")
+    }else{
+
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(objetoApi),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            
+            if(response.ok){
+                console.log("La petición se ha añadido correctamente");
+                cargarGastosApi();
+            }else{
+                console.log("No se ha podido añadir la petición");
+            }
+        });
+
+    }
+
+
+}
+
+
 
 
 let crearFormulario = new nuevoGastoWebFormulario();
