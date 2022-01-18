@@ -396,6 +396,10 @@ function EditarHandleformulario()
 
         formulario.addEventListener("submit", enviar);
 
+        //Boton de enviar2 API
+        let envioApi = formulario.querySelector("button.gasto-enviar-api"); //-----------------------//
+        envioApi.addEventListener("click", editarGastoApiHandle);
+
         //boton cancelar
         let manCancelar = new cancelarGastoHandle();
         
@@ -513,6 +517,42 @@ function enviarGastoApiHandle()
                 body: JSON.stringify(gastoAPI)
             }
         )
+        .then(Response => {
+            if(Response)
+            {
+                cargarGastosApi();
+            }
+        })
+        .catch(err => alert(err));
+    }
+}
+
+function editarGastoApiHandle()
+{
+    this.handleEvent = async function(e)
+    {
+        let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
+
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`; //URL del usuario introducido + id gasto
+
+        let actual = e.currentTarget.form;
+
+        let descN = actual.elements.descripcion.value;
+        let valorN = actual.elements.valor.value;
+        let fechaN = actual.elements.fecha.value;
+        let etiquetasN = actual.elements.etiquetas.value;
+        let etiquetas = etiquetasN.split(",");
+
+        valorN = parseFloat(valorN);
+
+        let gastoNApi = new gesPres.CrearGasto(descN, valorN, fechaN, ...etiquetas);
+
+        //Peticion PUT
+        fetch( url, {
+                method: "PUT",
+                headers: {'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify(gastoNApi)
+            })
         .then(Response => {
             if(Response)
             {
