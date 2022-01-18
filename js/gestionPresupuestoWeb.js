@@ -484,28 +484,42 @@ function BorrarApiHandle()
 
 function enviarGastoApiHandle()
 {
-    this.handleEvent = function(e)
+    this.handleEvent = async function(e)
     {
+        let usuario = document.getElementById("nombre_usuario").value; //Usuario del textbox
+
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario; //URL del usuario introducido
+
         e.preventDefault();
-        let actual = e.currentTarget;
+        let actual = e.currentTarget.form; //nos situamos en el formulario actual
 
-        let nuevaDesc = actual.elements.descripcion.value;
-        let nuevoValor = actual.elements.valor.value;
-        let nuevaFecha = actual.elements.fecha.value;
-        let nuevasEtiquetas = actual.elements.etiquetas.value;
+        //contenido de la peticion del formulario
+        let descripcion = actual.elements.descripcion.value;
+        let valor = actual.elements.valor.value;
+        let fecha = actual.elements.fecha.value;
+        let etiquetas = actual.elements.etiquetas.value;
+        let listaetiquetas = etiquetas.split(",");
 
-        nuevoValor = parseFloat(nuevoValor);
-        //nuevasEtiquetas = nuevasEtiquetas.split(",");
+        valor = parseFloat(valor);
 
         //creamos el nuevo gasto
-        let gasto1 = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, nuevasEtiquetas);
-        gesPres.anyadirGasto(gasto1);
-
-        let anyadirGasto = document.getElementById("anyadirgasto-formulario");
-
-        anyadirGasto.disabled = false;
-
-        repintar();
+        let gastoAPI = new gesPres.CrearGasto(descripcion, valor, fecha, ...listaetiquetas);
+        
+        //Peticion POST
+        fetch( url, 
+            {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json;charset=utf-8'},
+                body: JSON.stringify(gastoAPI)
+            }
+        )
+        .then(Response => {
+            if(Response)
+            {
+                cargarGastosApi();
+            }
+        })
+        .catch(err => alert(err));
     }
 }
 
