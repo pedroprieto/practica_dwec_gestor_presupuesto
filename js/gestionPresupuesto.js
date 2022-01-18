@@ -235,7 +235,13 @@ function transformarListadoEtiquetas(etiq) {
 }
 
 function cargarGastos(arrayGastos) {
-    gastos = arrayGastos;
+    //para que funcione bien el almacenamiento en el navegador
+    gastos = [];
+    for (let gasto of arrayGastos) {
+        let gastoNuevo = new CrearGasto();
+        gastoNuevo[gasto] = arrayGastos[gasto];
+        gastos.push(gastoNuevo);
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
