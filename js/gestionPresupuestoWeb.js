@@ -22,7 +22,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
     // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
-    var divP = document.getElementById(id);
+    var divP = document.getElementById(idElemento);
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     divP.innerHTML = "";
 
@@ -264,7 +264,7 @@ function repintar()
     //Actualizamos datos mostrandolos por agrupación para las tablas
     mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
     mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
-    mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "anyo");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");
 }
 
 function nuevoGastoWebFormulario()
