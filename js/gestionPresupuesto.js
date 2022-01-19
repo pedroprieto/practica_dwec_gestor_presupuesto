@@ -239,7 +239,7 @@ function cargarGastos(arrayGastos) {
     gastos = [];
     for (let gasto of arrayGastos) {
         let gastoNuevo = new CrearGasto();
-        gastoNuevo[gasto] = arrayGastos[gasto];
+        Object.assign(gastoNuevo, gasto)
         gastos.push(gastoNuevo);
     }
 }
