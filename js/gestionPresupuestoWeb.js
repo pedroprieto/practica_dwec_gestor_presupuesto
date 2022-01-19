@@ -349,7 +349,6 @@ function EditarHandleFormulario(){
 
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
-        formulario.gasto = this.gasto;
 
         let boton = e.currentTarget;
         boton.after(formulario);
@@ -360,10 +359,10 @@ function EditarHandleFormulario(){
         let editarGasto = new submitHandleEditar();
         editarGasto.gasto = this.gasto;
 
-        formulario.elements.descripcion.value = this.descripcion;
-        formulario.elements.valor.value = this.valor;
-        formulario.elements.fecha.value = this.fecha;
-        formulario.elements.etiquetas.value = this.etiquetas;
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
         
         let botonEditar = formulario; //He cambiado el nombre del botón respecto al que tenía puesto que no se el motivo por el cual en su día puse crear y este lo define mejor.
         botonEditar.addEventListener("submit", editarGasto);
@@ -448,12 +447,16 @@ function cargarGastosWeb(){
     this.handleEvent = function(e){
 
         let gastosGuardados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
-
-        cargarGastos(gastosGuardados);
         
-        if(!gastosGuardados)
+        if(gastosGuardados == null)
         {
-            cargarGastos([]);
+            gastosGuardados = [];
+            cargarGastos(gastosGuardados);
+        }
+
+        else
+        {
+            cargarGastos(gastosGuardados);
         }
 
         repintar();
