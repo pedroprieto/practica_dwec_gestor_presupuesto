@@ -471,11 +471,17 @@ function repintar() {
     }
 
     // Librerías externas
-    mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
+    let periodoDia = "dia";
+    let gastosDia = gestionPresupuesto.agruparGastos(periodoDia);
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gastosDia, "día");
 
-    mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+    let periodoMes = "mes";
+    let gastosMes = gestionPresupuesto.agruparGastos(periodoMes);
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gastosMes, "mes");
 
-    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");
+    let periodoAnyo = "anyo";
+    let gastosAnyo = gestionPresupuesto.agruparGastos(periodoAnyo);
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gastosAnyo, "año");
 }
 
 //------------------------------------------------------------//
@@ -486,11 +492,11 @@ function mostrarGastosAgrupadosWeb( idElemento, agrup, periodo ){
     // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
-    var divP = document.getElementById(id);
+    var divP = document.getElementById(idElemento);
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     divP.innerHTML = "";
         
-    let mostrarAgrupacion = document.getElementById(idElemento);
+    //let mostrarAgrupacion = document.getElementById(idElemento);
         let arrayAgrupacion = "";
 
         // Añado el array de los gastos agrupados por un periodo
@@ -504,7 +510,7 @@ function mostrarGastosAgrupadosWeb( idElemento, agrup, periodo ){
         }
 
         // Voy añadiendo la agrupacones de gastos
-        mostrarAgrupacion.innerHTML = `
+        divP.innerHTML = `
             <div class="agrupacion">
                 <h1>Gastos agrupados por ${periodo}</h1>
                 ${arrayAgrupacion}
