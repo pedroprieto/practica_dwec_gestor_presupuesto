@@ -19,6 +19,13 @@ function mostrarDatoEnId(idElemento, valor)
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
+    // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+    // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
+    // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
+    var divP = document.getElementById(id);
+    // Borrar el contenido de la capa para que no se duplique el contenido al repintar
+    divP.innerHTML = "";
+
     let div1 = document.createElement("div");
     let h1 = document.createElement("h1");
     
