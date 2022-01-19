@@ -192,7 +192,7 @@ function ActualizarHandleApiPut() {
         newEtiqueta = newEtiqueta.split(",");
 
         let objeto = {
-            desripcion: newDescripcion,
+            descripcion: newDescripcion,
             valor: newValor,
             fecha: newFecha,
             etiquetas: newEtiqueta
