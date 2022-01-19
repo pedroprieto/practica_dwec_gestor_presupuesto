@@ -93,6 +93,8 @@ function mostrarGastoWeb(idElemento, gasto) {
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     let id = document.getElementById(idElemento);
 
+    id.innerHTML = "";
+
     let divPadre = document.createElement('div');
     divPadre.className = 'agrupacion';
 
@@ -118,6 +120,63 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     }
     
     id.append(divPadre);
+
+    // AÑADIR GRÁFICA AL FINAL
+    id.style.width = "33%";
+    id.style.display = "inline-block";
+    // Crear elemento <canvas> necesario para crear la gráfica
+    let chart = document.createElement("canvas");
+    // Variable para indicar a la gráfica el período temporal del eje X
+    // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+    let unit = "";
+    switch (periodo) {
+        case "anyo":
+            unit = "year";
+            break;
+        case "mes":
+            unit = "month";
+            break;
+        case "dia":
+        default:
+            unit = "day";
+            break;
+    }
+
+    const myChart = new Chart(chart.getContext("2d"), {
+    // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+        type: 'bar',
+        data: {
+            datasets: [
+                {
+                    // Título de la gráfica
+                    label: `Gastos por ${periodo}`,
+                    // Color de fondo
+                    backgroundColor: "#555555",
+                    // Datos de la gráfica
+                    // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                    data: agrup
+                }
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    // El eje X es de tipo temporal
+                    type: 'time',
+                    time: {
+                        // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                        unit: unit
+                    }
+                },
+                y: {
+                    // Para que el eje Y empieza en 0
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // Añadimos la gráfica a la capa
+    id.append(chart);
 }
 
 function repintar() {
