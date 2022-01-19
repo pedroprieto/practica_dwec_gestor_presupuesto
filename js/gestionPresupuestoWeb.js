@@ -193,12 +193,10 @@ function editarGastoAPI() {
         let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
         // url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
         // console.log(this.gasto_actual.gastoId); 
-
         // let id_gasto = e.target.gastoId.value;
         // console.log(id_gasto);
         // console.log(document.getElementById("descripcion").value);
         // url += url + "/" + this.gasto_actual.gastoId;
-
         // console.log(url);
 
         let descripcion = document.getElementById("descripcion").value;
@@ -214,16 +212,23 @@ function editarGastoAPI() {
             "etiquetas": etiquetas
         };
 
-        // console.log(gasto);
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(gasto)
-        });
+
+        async function editaGastoAPI() {
+            // console.log(gasto);
+            let response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(gasto)
+            });
+        }
+
+        editaGastoAPI();
+
 
         cargarGastosAPI();
+
     }
 }
 
@@ -605,13 +610,17 @@ function manejadorEnviarAPI() {
 
         // console.log(url);
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(gasto)
-          });
+        async function guardaGastoAPI() {
+            let response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(gasto)
+            });
+        }
+
+        guardaGastoAPI();
 
         cargarGastosAPI();
     } 
@@ -859,13 +868,17 @@ function borrarApiHandle() {
 
         // console.log(url);
 
-        fetch(url, {
-            method: 'DELETE',
-            // headers: {
-            //   'Content-Type': 'application/json;charset=utf-8'
-            // },
-            // body: JSON.stringify(user)
-        });
+        async function borraGastoAPI() {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                // headers: {
+                //   'Content-Type': 'application/json;charset=utf-8'
+                // },
+                // body: JSON.stringify(user)
+            });
+        }
+
+        borraGastoAPI();
 
         cargarGastosAPI();
     }
