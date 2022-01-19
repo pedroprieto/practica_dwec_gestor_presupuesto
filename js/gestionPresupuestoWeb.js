@@ -191,6 +191,11 @@ function repintar() {
     for (let elemento of listaCompleta) {
     mostrarGastoWeb('listado-gastos-completo', elemento);
     }
+
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");
+
 }
 
 /* BOTONES PRINCIPALES*/
