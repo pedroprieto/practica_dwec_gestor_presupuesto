@@ -186,7 +186,7 @@ function editarHandleFormulario() {
 };
 
 function editarGastoAPI() {
-    this.handleEvent = function(e) {
+    this.handleEvent = async function(e) {
 
         e.preventDefault();
 
@@ -213,7 +213,7 @@ function editarGastoAPI() {
         };
 
 
-        async function editaGastoAPI() {
+        // async function editaGastoAPI() {
             // console.log(gasto);
             let response = await fetch(url, {
                 method: 'PUT',
@@ -222,9 +222,9 @@ function editarGastoAPI() {
                 },
                 body: JSON.stringify(gasto)
             });
-        }
+        // }
 
-        editaGastoAPI();
+        // editaGastoAPI();
 
 
         cargarGastosAPI();
@@ -572,7 +572,7 @@ function nuevoGastoWebFormulario() {
 
 function manejadorEnviarAPI() {
 
-    this.handleEvent = function(e) {
+    this.handleEvent = async function(e) {
 
         // e.preventDefault();
 
@@ -610,7 +610,7 @@ function manejadorEnviarAPI() {
 
         // console.log(url);
 
-        async function guardaGastoAPI() {
+        // async function guardaGastoAPI() {
             let response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -618,11 +618,12 @@ function manejadorEnviarAPI() {
                 },
                 body: JSON.stringify(gasto)
             });
-        }
+        // }
 
-        guardaGastoAPI();
+        // guardaGastoAPI();
 
         cargarGastosAPI();
+
     } 
 }
 
@@ -858,7 +859,7 @@ async function cargarGastosAPI() {
 }
 
 function borrarApiHandle() {
-    this.handleEvent = function(e) {
+    this.handleEvent = async function(e) {
 
         let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
         url += document.getElementById("nombre_usuario").value + "/" + this.gasto_actual.gastoId;
@@ -868,7 +869,7 @@ function borrarApiHandle() {
 
         // console.log(url);
 
-        async function borraGastoAPI() {
+        // async function borraGastoAPI() {
             let response = await fetch(url, {
                 method: 'DELETE',
                 // headers: {
@@ -876,9 +877,9 @@ function borrarApiHandle() {
                 // },
                 // body: JSON.stringify(user)
             });
-        }
+        // }
 
-        borraGastoAPI();
+        // borraGastoAPI();
 
         cargarGastosAPI();
     }
