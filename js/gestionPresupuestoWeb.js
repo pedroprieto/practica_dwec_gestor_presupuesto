@@ -622,7 +622,13 @@ function manejadorEnviarAPI() {
 
         // guardaGastoAPI();
 
+        e.target.remove();
+        // this.botonCrearFormulario.form.remove();
+        this.botonCrearFormulario.disabled = "";
+
         cargarGastosAPI();
+
+
 
     } 
 }
@@ -645,7 +651,7 @@ function manejadorEnvioNuevoGastoWeb() {
         // let etiquetas = document.getElementById("etiquetas").value;
         etiquetas = etiquetas.split(",");
         let gasto = new gespres.CrearGasto(descripcion,valor, fecha, ...etiquetas);
-        console.log(gasto);
+        // console.log(gasto);
 
         // alert("Gasto: " + gasto);
 
