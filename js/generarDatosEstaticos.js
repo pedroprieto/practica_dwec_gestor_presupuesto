@@ -59,3 +59,9 @@ for (let gasto of gastosFiltrados4)
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);  
 }
 
+
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "día");
+
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
+
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");
