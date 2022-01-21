@@ -177,10 +177,10 @@ function borrarGasto(idNueva) {
 
 function calcularTotalGastos() {
 
-    
+
     let resultado = gastos.map(gasto => gasto.valor).reduce((suma, actual) => suma + actual, 0); 
 
-    return resultado;  
+    return resultado;   
     
 
 }

@@ -1,5 +1,5 @@
-import * as gesPres from ("./gestionPresupuesto.js"); 
-import * as gesPresWeb from ("./gestionPresupuestoWeb.js"); 
+import * as gesPres from "./gestionPresupuesto.js";
+import * as gesPresWeb from "./gestionPresupuestoWeb.js"; 
 
 gesPres.actualizarPresupuesto(1500);
 gesPresWeb.mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
@@ -17,5 +17,18 @@ let g5 = new gesPres.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "s
 gesPres.anyadirGasto(g5);
 let g6 = new gesPres.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 gesPres.anyadirGasto(g6);
+
+
+gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos()); 
+gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+
+
+let gastos = gesPres.listarGastos();
+
+for (let gasto of gastos)
+{
+    gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+
 
 
