@@ -622,7 +622,7 @@ function manejadorEnviarAPI() {
 
         // guardaGastoAPI();
 
-        e.target.remove();
+        e.target.form.remove();
         // this.botonCrearFormulario.form.remove();
         this.botonCrearFormulario.disabled = "";
 
