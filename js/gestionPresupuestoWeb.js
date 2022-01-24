@@ -1,3 +1,7 @@
+import * as gesPres from "./gestionPresupuesto.js";
+
+
+
 function mostrarDatoEnId (idElemento, valor) {
 
     document.getElementById(idElemento).innerHTML = valor;
@@ -46,6 +50,8 @@ function mostrarGastoWeb (idElemento, gasto) {
 
     id.append(div);
 
+
+
 }
 
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
@@ -62,7 +68,7 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
     div.append(h1);
 
 
-    for (let [clave, valor] in Object.entries(agrup))
+    for (let [clave, valor] of Object.entries(agrup))
     {
 
         let div1 = document.createElement('div');
