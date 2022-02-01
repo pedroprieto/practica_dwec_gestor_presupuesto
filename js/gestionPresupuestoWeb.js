@@ -65,7 +65,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     btnBorrar.addEventListener("click", borrarGasto);
     divPadre.append(btnBorrar);
 
-    let btnEditarFormulario = crearElementoConTextoYClase("button", "gasto-editar-formulario", "Editar", {"type": "button"})
+    let btnEditarFormulario = crearElementoConTextoYClase("button", "gasto-editar-formulario", "Editar", {"type": "button"});
     let editarGastoFormulario = new EditarHandleFormulario();
     editarGastoFormulario.gasto = gasto;
     btnEditarFormulario.addEventListener("click", editarGastoFormulario);
@@ -302,23 +302,25 @@ function EnviarEditarHandleFormulario() {
     }
 }
 
-function cargarGastosApi() {
-    let urlApi = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
-    let usuarioApi = document.getElementById("nombre_usuario").value;
+const URL_API = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
 
+function cargarGastosApi() {
     async function obtenerDatosApi() {
-        let respuestaApi = await fetch(urlApi + usuarioApi);
+        const USUARIO_API = document.getElementById("nombre_usuario").value; //mariajosegomez
+        let respuestaApi = await fetch(URL_API + USUARIO_API);
         
         if (respuestaApi.ok) {
-            let respuestaJson = await respuestaApi.json();
-            console.log(respuestaJson);
+            return respuestaApi.json()
+                .then(function(resultado) {
+                    console.log(resultado);
+                    gestionPresupuesto.cargarGastos(resultado);
+                });
         } else {
             alert("Error-Http: " + respuestaApi.status);
         }        
     }
 
     obtenerDatosApi();
-
     repintar();
 }
 
