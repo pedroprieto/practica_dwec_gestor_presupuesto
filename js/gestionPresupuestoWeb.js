@@ -65,6 +65,9 @@ function mostrarGastoWeb(idElemento, gasto) {
     btnBorrar.addEventListener("click", borrarGasto);
     divPadre.append(btnBorrar);
 
+    let btnBorrarGastoApi = crearElementoConTextoYClase("button", "gasto-borrar-api", "Borrar (API)", {"type": "button"});
+    divPadre.append(btnBorrarGastoApi);
+
     let btnEditarFormulario = crearElementoConTextoYClase("button", "gasto-editar-formulario", "Editar", {"type": "button"});
     let editarGastoFormulario = new EditarHandleFormulario();
     editarGastoFormulario.gasto = gasto;
@@ -312,7 +315,6 @@ function cargarGastosApi() {
         if (respuestaApi.ok) {
             return respuestaApi.json()
                 .then(function(resultado) {
-                    console.log(resultado);
                     gestionPresupuesto.cargarGastos(resultado);
                 });
         } else {
