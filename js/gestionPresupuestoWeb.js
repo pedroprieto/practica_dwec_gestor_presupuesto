@@ -309,24 +309,25 @@ function EnviarEditarHandleFormulario() {
 }
 
 const URL_API = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+let usuario_api = document.getElementById("nombre_usuario").value; //mariajosegomez
 
 function cargarGastosApi() {
     async function obtenerDatosApi() {
-        const USUARIO_API = document.getElementById("nombre_usuario").value; //mariajosegomez
-        let respuestaApi = await fetch(URL_API + USUARIO_API);
+        let respuestaApi = await fetch(URL_API + usuario_api
+        );
         
         if (respuestaApi.ok) {
             return respuestaApi.json()
                 .then(function(resultado) {
                     gestionPresupuesto.cargarGastos(resultado);
-                });
+                })
+                .then(repintar);
         } else {
             alert("Error-Http: " + respuestaApi.status);
         }        
     }
 
     obtenerDatosApi();
-    repintar();
 }
 
 function BorrarGastoApiHandle() {
