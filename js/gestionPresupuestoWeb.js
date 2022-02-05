@@ -66,6 +66,9 @@ function mostrarGastoWeb(idElemento, gasto) {
     divPadre.append(btnBorrar);
 
     let btnBorrarGastoApi = crearElementoConTextoYClase("button", "gasto-borrar-api", "Borrar (API)", {"type": "button"});
+    let borrarGastoApi = new BorrarGastoApiHandle();
+    borrarGastoApi.gasto = gasto;
+    btnBorrarGastoApi.addEventListener("click", borrarGastoApi);
     divPadre.append(btnBorrarGastoApi);
 
     let btnEditarFormulario = crearElementoConTextoYClase("button", "gasto-editar-formulario", "Editar", {"type": "button"});
@@ -325,6 +328,17 @@ function cargarGastosApi() {
     obtenerDatosApi();
     repintar();
 }
+
+function BorrarGastoApiHandle() {
+    this.handleEvent = function() {
+        let promiseBorrarGasto = fetch(URL_API + USUARIO_API + "/" + this.gasto.id, {
+            method: 'DELETE',
+        })
+            .then(respuesta => respuesta.json())
+            .then(cargarGastosApi);
+    }
+}
+
 
 export {
     mostrarDatoEnId,
