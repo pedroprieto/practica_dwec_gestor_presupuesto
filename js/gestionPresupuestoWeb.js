@@ -332,7 +332,7 @@ function cargarGastosApi() {
 
 function BorrarGastoApiHandle() {
     this.handleEvent = function() {
-        let promiseBorrarGasto = fetch(URL_API + USUARIO_API + "/" + this.gasto.id, {
+        let promiseBorrarGasto = fetch(URL_API + usuario_api + "/" + this.gasto.gastoId, {
             method: 'DELETE',
         })
             .then(respuesta => respuesta.json())
