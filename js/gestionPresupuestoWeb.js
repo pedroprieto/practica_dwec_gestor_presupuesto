@@ -43,6 +43,11 @@ function mostrarGastoWeb (idElemento, gasto) {
         
         span.append(etiqueta);
         div4.append(span);
+
+        let evBorrarEti = new BorrarEtiquetasHandle();
+        evBorrarEti.gasto = gasto;
+        evBorrarEti.etiqueta = etiqueta;
+        span.addEventListener('click', evBorrarEti);
         
     }
 
@@ -68,6 +73,7 @@ function mostrarGastoWeb (idElemento, gasto) {
     evBorrar.gasto = gasto;
     botonBorrar.addEventListener('click', evBorrar);
     div.append(botonBorrar);
+
 
     let id = document.getElementById(idElemento);
     id.append(div);
@@ -173,6 +179,16 @@ function BorrarHandle() {
 
         repintar();
 
+    }
+}
+
+function BorrarEtiquetasHandle() {
+
+    this.handleEvent = function() {
+
+        this.gasto.borrarEtiquetas(this.etiqueta);
+
+        repintar();
     }
 }
 
