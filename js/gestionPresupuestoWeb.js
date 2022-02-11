@@ -47,7 +47,8 @@ function mostrarGastoWeb (idElemento, gasto) {
     }
 
     div4.className = "gasto-etiquetas";
-
+    
+    
     let botonEditar = document.createElement('button');
     botonEditar.className = "gasto-editar";
     botonEditar.type = "button";
@@ -130,43 +131,65 @@ function EditarHandle() {
     
     this.handleEvent = function () {
 
-        let descripcion = prompt("Introduce la descripción");
-        this.gasto.actualizarDescripcion(descripcion);
+        let nDescripcion = prompt("Introduce la descripción");
+        this.gasto.actualizarDescripcion(nDescripcion);
 
-        let valor = prompt("Introduce el valor");
-        valor = parseFloat(valor);
-        this.gasto.actualizarValor(valor);
+        let nValor = prompt("Introduce el valor");
+        nValor = parseFloat(nValor);
+        this.gasto.actualizarValor(nValor);
 
-        let fecha = prompt("Introduce la fecha");
-        this.gasto.actualizarFecha(fecha);
+        let nFecha = prompt("Introduce la fecha");
+        this.gasto.actualizarFecha(nFecha);
 
-        let etiquetas = prompt("Introduce las etiquetas");
-        this.gasto.actualizarEtiquetas(etiquetas);
+        let nEtiquetas = prompt("Introduce las etiquetas");
+        let arrEtiquetas = nEtiquetas.split(',');
+        this.gasto.anyadirEtiquetas(arrEtiquetas);
+        
         
         
         repintar();
         
 
     }
-
-    function actualizarPresupuestoWeb() {
-        
-        let presupuestoActualizado = prompt("Introduce el nuevo presupuesto");
-        presupuestoActualizado = parseFloat(presupuestoActualizado);
-
-        gesPres.actualizarPresupuesto(presupuestoActualizado);
-
-        repintar();
-
-    }
-
-    let actualizar = document.getElementById("actualizarpresupuesto");
-    actualizar.addEventListener("click", actualizarPresupuestoWeb);
-
 
 
 }
 
+function actualizarPresupuestoWeb() {
+        
+    let presupuestoActualizado = prompt("Introduce el nuevo presupuesto");
+    presupuestoActualizado = parseFloat(presupuestoActualizado);
+
+    gesPres.actualizarPresupuesto(presupuestoActualizado);
+
+    repintar();
+
+}
+
+let actualizar = document.getElementById("actualizarpresupuesto");
+actualizar.addEventListener("click", actualizarPresupuestoWeb);
+
+function nuevoGastoWeb() {
+
+    let nuevaDesc = prompt("Introduce una nueva descripción");
+    let nuevoValor = prompt("Introduce un nuevo valor");
+    let nuevaFecha = prompt("Introduce una nueva fecha");
+    let nuevaEtiquetas = prompt("Introduce las nuevas etiquetas");
+
+    nuevoValor = parseFloat(nuevoValor);
+
+    let arrEtiquetas = nuevaEtiquetas.split(',');
+
+    let gasto = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, arrEtiquetas);
+
+    gesPres.anyadirGasto(gasto);
+
+    repintar();
+
+}
+
+let anyadir = document.getElementById("anyadirgasto");
+anyadir.addEventListener("click", nuevoGastoWeb);
 
 
 export   {
