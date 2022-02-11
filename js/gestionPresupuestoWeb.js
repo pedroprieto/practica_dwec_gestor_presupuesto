@@ -50,14 +50,24 @@ function mostrarGastoWeb (idElemento, gasto) {
     
     
     let botonEditar = document.createElement('button');
-    botonEditar.className = "gasto-editar";
     botonEditar.type = "button";
+    botonEditar.className = "gasto-editar";
     botonEditar.textContent = "Editar";
 
     let evEditar = new EditarHandle();
     evEditar.gasto = gasto;
     botonEditar.addEventListener('click', evEditar);
     div.append(botonEditar);
+
+    let botonBorrar = document.createElement('button');
+    botonBorrar.type = "button";
+    botonBorrar.className = "gasto-borrar";
+    botonBorrar.textContent = "Borrar";
+
+    let evBorrar = new BorrarHandle();
+    evBorrar.gasto = gasto;
+    botonBorrar.addEventListener('click', evBorrar);
+    div.append(botonBorrar);
 
     let id = document.getElementById(idElemento);
     id.append(div);
@@ -153,6 +163,17 @@ function EditarHandle() {
     }
 
 
+}
+
+function BorrarHandle() {
+
+    this.handleEvent = function() {
+
+        gesPres.borrarGasto(this.gasto.id);
+
+        repintar();
+
+    }
 }
 
 function actualizarPresupuestoWeb() {
