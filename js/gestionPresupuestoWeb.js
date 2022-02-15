@@ -1,7 +1,7 @@
 import * as gesPres from "./gestionPresupuesto.js";
 
 
-
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 function mostrarDatoEnId (idElemento, valor) {
 
@@ -73,7 +73,6 @@ function mostrarGastoWeb (idElemento, gasto) {
     evBorrar.gasto = gasto;
     botonBorrar.addEventListener('click', evBorrar);
     div.append(botonBorrar);
-
 
     let id = document.getElementById(idElemento);
     id.append(div);
@@ -227,6 +226,54 @@ function nuevoGastoWeb() {
 
 let anyadir = document.getElementById("anyadirgasto");
 anyadir.addEventListener("click", nuevoGastoWeb);
+
+
+function nuevoGastoWebFormulario() {
+
+    this.handleEvent = function() {
+
+
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+        var formulario = plantillaFormulario.querySelector("form");
+        
+        document.getElementById("controlesprincipales").append(formulario);
+
+        document.getElementById("anyadirgasto-formulario").disabled = true;
+
+        let evSubmit = new SubmitHandle();
+        formulario.addEventListener("submit", evSubmit);
+        
+
+    }
+}
+
+function SubmitHandle() {
+    
+    this.handleEvent = function(event) {
+
+        event.preventDefault();
+
+        let accesoForm = event.currentTarget;
+
+        let nuevaDesc = accesoForm.elements.descripcion.value;
+        let nuevoValor = accesoForm.elements.valor.value;
+        nuevoValor = parseFloat(nuevoValor); 
+        let nuevaFecha = accesoForm.elements.fecha.value;
+        let nuevaEtiquetas = accesoForm.elements.etiquetas.value;
+
+        let gasto = new gesPres.CrearGasto(nuevaDesc, nuevoValor, nuevaFecha, nuevaEtiquetas);
+        gesPres.anyadirGasto(gasto);
+
+        
+        repintar();
+
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        
+    }
+}
+
+
 
 
 export   {
