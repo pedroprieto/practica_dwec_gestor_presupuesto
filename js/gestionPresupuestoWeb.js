@@ -78,6 +78,16 @@ function mostrarGastoWeb (idElemento, gasto) {
     botonBorrar.addEventListener('click', evBorrar);
     div.append(botonBorrar);
 
+    let botonEditForm = document.createElement('button');
+    botonEditForm.type = "button";
+    botonEditForm.className = "gasto-editar-formulario";
+    botonEditForm.textContent = "Editar (formulario)";
+
+    let evEditForm = new EditarHandleFormulario();
+    evEditForm.gasto = gasto;
+    botonEditForm.addEventListener("click", evEditForm);
+    div.append(botonEditForm);
+
     let id = document.getElementById(idElemento);
     id.append(div);
 
@@ -290,6 +300,58 @@ function CancelarFormHandle() {
         document.getElementById("anyadirgasto-formulario").disabled = false;
 
         repintar();
+    }
+}
+
+function EditarHandleFormulario() {
+
+    this.handleEvent = function(event) {
+
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
+
+        let bEditActivo = event.currentTarget;
+        bEditActivo.after(formulario);
+        bEditActivo.disabled = true;
+
+        let bEditarGasto = new SubmitEditarHandle();
+        bEditarGasto.gasto = this.gasto;
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+        formulario.addEventListener("submit", bEditarGasto);
+
+        let botonCancelar = new CancelarFormHandle();
+        formulario.querySelector("button.cancelar");
+        formulario.addEventListener("click", botonCancelar);
+    }
+}
+
+function SubmitEditarHandle() {
+
+    this.handleEvent = function(event) {
+
+        event.preventDefault();
+        
+        let accesoForm = event.currentTarget;
+
+        let nuevaDesc = accesoForm.elements.descripcion.value;
+        let nuevoValor = accesoForm.elements.valor.value;
+        nuevoValor = parseFloat(nuevoValor); 
+        let nuevaFecha = accesoForm.elements.fecha.value;
+        let nuevaEtiquetas = accesoForm.elements.etiquetas.value;
+
+        this.gasto.actualizarDescripcion(nuevaDesc);
+        this.gasto.actualizarValor(nuevoValor);
+        this.gasto.actualizarFecha(nuevaFecha);
+        this.gasto.anyadirEtiquetas(...nuevaEtiquetas);
+
+        repintar();
+
+
     }
 }
 
