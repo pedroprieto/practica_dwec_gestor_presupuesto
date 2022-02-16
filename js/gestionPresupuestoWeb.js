@@ -247,6 +247,10 @@ function nuevoGastoWebFormulario() {
 
         let evSubmit = new SubmitHandle();
         formulario.addEventListener("submit", evSubmit);
+
+        let evCancelar = new CancelarFormHandle();
+        let botonCancelar = formulario.querySelector("button.cancelar");
+        botonCancelar.addEventListener("click", evCancelar);
         
 
     }
@@ -277,7 +281,17 @@ function SubmitHandle() {
     }
 }
 
+function CancelarFormHandle() {
 
+    this.handleEvent = function(event) {
+
+        event.currentTarget.parentNode.remove();
+
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+
+        repintar();
+    }
+}
 
 
 export   {
