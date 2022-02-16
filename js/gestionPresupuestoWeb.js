@@ -1,7 +1,11 @@
 import * as gesPres from "./gestionPresupuesto.js";
 
 
-document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+let nuevoFormulario = new nuevoGastoWebFormulario();
+
+let bNuevoForm = document.getElementById("anyadirgasto-formulario");
+bNuevoForm.addEventListener("click", nuevoFormulario);
+
 
 function mostrarDatoEnId (idElemento, valor) {
 
