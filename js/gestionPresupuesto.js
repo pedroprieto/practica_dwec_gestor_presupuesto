@@ -135,7 +135,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.obtenerPeriodoAgrupacion = function(periodo) {
 
-        let fechaN = new Date(fecha).toISOString();
+        let fechaN = new Date(this.fecha).toISOString();
         
             
         if(periodo === "dia")
