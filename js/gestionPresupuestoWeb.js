@@ -172,6 +172,10 @@ function nuevoGastoWebFormulario(evento) {
     formulario.querySelector("button.cancelar").addEventListener("click", cancelarNuevoGasto);
 
     document.getElementById("controlesprincipales").append(formulario);
+
+    let enviarGastoApi = new EnviarGastoApiHandle();
+    enviarGastoApi.formulario = formulario;
+    formulario.querySelector("button.gasto-enviar-api").addEventListener("click", enviarGastoApi);
 }
 
 function filtrarGastosWeb(evento) {
@@ -309,12 +313,10 @@ function EnviarEditarHandleFormulario() {
 }
 
 const URL_API = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
-let usuario_api = document.getElementById("nombre_usuario").value; //mariajosegomez
 
 function cargarGastosApi() {
     async function obtenerDatosApi() {
-        let respuestaApi = await fetch(URL_API + usuario_api
-        );
+        let respuestaApi = await fetch(URL_API + document.getElementById("nombre_usuario").value);
         
         if (respuestaApi.ok) {
             return respuestaApi.json()
@@ -332,14 +334,33 @@ function cargarGastosApi() {
 
 function BorrarGastoApiHandle() {
     this.handleEvent = function() {
-        let promiseBorrarGasto = fetch(URL_API + usuario_api + "/" + this.gasto.gastoId, {
+        let promiseBorrarGasto = fetch(URL_API + document.getElementById("nombre_usuario").value + "/" + this.gasto.gastoId, {
             method: 'DELETE',
         })
-            .then(respuesta => respuesta.json())
-            .then(cargarGastosApi);
+        .then(respuesta => respuesta.json())
+        .then(cargarGastosApi);
     }
 }
 
+function EnviarGastoApiHandle() {
+    this.handleEvent = async function() {
+        let gasto = {
+            descripcion: this.formulario.descripcion.value,
+            valor: Number(this.formulario.valor.value),
+            fecha: this.formulario.fecha.value,
+            etiquetas: this.formulario.etiquetas.value.split(","),
+        };
+
+        let promiseEnviarGasto = await fetch(URL_API + document.getElementById("nombre_usuario").value, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(gasto),
+        })
+        .then(cargarGastosApi);
+    }
+}
 
 export {
     mostrarDatoEnId,
