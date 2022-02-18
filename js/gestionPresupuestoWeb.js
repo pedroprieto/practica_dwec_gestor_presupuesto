@@ -295,6 +295,11 @@ function EditarHandleFormulario() {
         cancelarFormulario.formulario = formulario;
         cancelarFormulario.btnAnyadirGasto = btnEditar;
         formulario.querySelector("button.cancelar").addEventListener("click", cancelarFormulario);
+
+        let enviarFormularioApi = new EnviarEditarApiHandleFormulario();
+        enviarFormularioApi.gasto = this.gasto;
+        enviarFormularioApi.formulario = formulario;
+        formulario.querySelector("button.gasto-enviar-api").addEventListener("click", enviarFormularioApi);
     };
 }
 
@@ -357,6 +362,25 @@ function EnviarGastoApiHandle() {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(gasto),
+        })
+        .then(cargarGastosApi);
+    }
+}
+
+function EnviarEditarApiHandleFormulario() {
+    this.handleEvent = async function() {
+        this.gasto.descripcion = this.formulario.descripcion.value;
+        this.gasto.valor = Number(this.formulario.valor.value);
+        this.gasto.fecha = this.formulario.fecha.value;
+        this.gasto.etiquetas = this.formulario.etiquetas.value.split(",");
+
+        let promiseEditarGasto = await fetch(URL_API + 
+            this.gasto.usuario + "/" + this.gasto.gastoId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(this.gasto),
         })
         .then(cargarGastosApi);
     }
