@@ -111,7 +111,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     }
 
     elemento.append(divPadre);
-    
+
     // Estilos
     divP.style.width = "33%";
     divP.style.display = "inline-block";
@@ -183,6 +183,14 @@ function repintar() {
     gestionPresupuesto.listarGastos().forEach(function(gasto) {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     });
+
+    let grupoGastosDia = gestionPresupuesto.agruparGastos("dia");
+    let grupoGastosMes = gestionPresupuesto.agruparGastos();
+    let grupoGastosAnyo = gestionPresupuesto.agruparGastos("anyo");
+
+    mostrarGastosAgrupadosWeb("agrupacion-dia", grupoGastosDia, "día");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", grupoGastosMes, "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", grupoGastosAnyo, "año");
 }
 
 function actualizarPresupuestoWeb() {
