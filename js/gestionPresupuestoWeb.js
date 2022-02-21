@@ -185,7 +185,7 @@ function repintar() {
     });
 
     let grupoGastosDia = gestionPresupuesto.agruparGastos("dia");
-    let grupoGastosMes = gestionPresupuesto.agruparGastos();
+    let grupoGastosMes = gestionPresupuesto.agruparGastos("mes");
     let grupoGastosAnyo = gestionPresupuesto.agruparGastos("anyo");
 
     mostrarGastosAgrupadosWeb("agrupacion-dia", grupoGastosDia, "día");
