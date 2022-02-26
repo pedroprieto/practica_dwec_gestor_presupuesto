@@ -99,6 +99,14 @@ function mostrarGastoWeb(idElemento, gasto) {
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrupacion, periodo) {
+
+    // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+    // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
+    // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
+    var divP = document.getElementById(idElemento);
+    // Borrar el contenido de la capa para que no se duplique el contenido al repintar
+    divP.innerHTML = "";
+
     // Elemento raiz de la agrupación
     const agrupacionHTLM = document.createElement('div');
     agrupacionHTLM.className = 'agrupacion';
@@ -133,8 +141,68 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupacion, periodo) {
         // Añadir dato agrupación al elemento raiz.
         agrupacionHTLM.appendChild(agrupacionDatoHTML);
     }
-    
-    document.getElementById(idElemento).append(agrupacionHTLM);
+
+    divP.append(agrupacionHTLM);
+
+    // Estilos
+    divP.style.width = "33%";
+    divP.style.display = "inline-block";
+    // Crear elemento <canvas> necesario para crear la gráfica
+    // https://www.chartjs.org/docs/latest/getting-started/
+    let chart = document.createElement("canvas");
+    // Variable para indicar a la gráfica el período temporal del eje X
+    // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+    let unit = "";
+    switch (periodo) {
+        case "anyo":
+            unit = "year";
+            break;
+        case "mes":
+            unit = "month";
+            break;
+        case "dia":
+        default:
+            unit = "day";
+            break;
+    }
+
+    // Creación de la gráfica
+    // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+    const myChart = new Chart(chart.getContext("2d"), {
+        // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+        type: 'bar',
+        data: {
+            datasets: [
+                {
+                    // Título de la gráfica
+                    label: `Gastos por ${periodo}`,
+                    // Color de fondo
+                    backgroundColor: "#555555",
+                    // Datos de la gráfica
+                    // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                    data: agrup
+                }
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    // El eje X es de tipo temporal
+                    type: 'time',
+                    time: {
+                        // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                        unit: unit
+                    }
+                },
+                y: {
+                    // Para que el eje Y empieza en 0
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // Añadimos la gráfica a la capa
+    divP.append(chart);
 }
 
 function repintar() {
@@ -236,7 +304,7 @@ function filtrarGastosWeb(event) {
     gastosFiltrados.forEach(gasto => {
         mostrarGastoWeb('listado-gastos-completo', gasto);
     });
-    
+
 }
 
 function guardarGastosWeb() {
@@ -253,18 +321,18 @@ function cargarGastosWeb() {
 function cargarGastosApi() {
     const nombreUsuario = document.getElementById('nombre_usuario').value;
     fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario)
-    .then(response => response.json())
-    .then(gastos => {
-        gestionPresupuesto.cargarGastos(gastos);
-        repintar()
-    })
+        .then(response => response.json())
+        .then(gastos => {
+            gestionPresupuesto.cargarGastos(gastos);
+            repintar()
+        })
 }
 
 function EnviarGastoApiHandle() {
-    this.handleEvent = function(event) {
+    this.handleEvent = function (event) {
         const nombreUsuario = document.getElementById('nombre_usuario').value;
-        
-        const gastoJson =  {
+
+        const gastoJson = {
             "valor": this.formulario.valor.value,
             "descripcion": this.formulario.descripcion.value,
             "fecha": this.formulario.fecha.value,
@@ -278,15 +346,15 @@ function EnviarGastoApiHandle() {
                 'Content-Type': 'application/json;charset=utf-8'
             }
         })
-        .then(cargarGastosApi)
+            .then(cargarGastosApi)
     }
 }
 
 function EditarGastoApiHandle() {
-    this.handleEvent = function(event) {
+    this.handleEvent = function (event) {
         const nombreUsuario = document.getElementById('nombre_usuario').value;
-        
-        const gastoJson =  {
+
+        const gastoJson = {
             "valor": this.formulario.valor.value,
             "descripcion": this.formulario.descripcion.value,
             "fecha": this.formulario.fecha.value,
@@ -300,37 +368,37 @@ function EditarGastoApiHandle() {
                 'Content-Type': 'application/json;charset=utf-8'
             }
         })
-        .then(cargarGastosApi)
+            .then(cargarGastosApi)
     }
 }
 
 function EditarHandle() {
-    this.handleEvent = function(event) {
+    this.handleEvent = function (event) {
         this.gasto.actualizarDescripcion(prompt('Descripcion', this.gasto.descripcion));
         this.gasto.actualizarValor(parseFloat(prompt('Valor', this.gasto.valor)));
-        this.gasto.actualizarFecha(prompt('Fecha (yyyy-mm-dd)', new Date(this.gasto.fecha).toISOString().substr(0,10)));
+        this.gasto.actualizarFecha(prompt('Fecha (yyyy-mm-dd)', new Date(this.gasto.fecha).toISOString().substr(0, 10)));
         this.gasto.anyadirEtiquetas(...prompt('Etiquetas (separadas por coma)', this.gasto.etiquetas).split(','));
         repintar();
     }
 }
 
 function BorrarHandle() {
-    this.handleEvent = function(event) {
+    this.handleEvent = function (event) {
         gestionPresupuesto.borrarGasto(this.gasto.id);
         repintar();
     }
 }
 
 function BorrarApiHandle() {
-    this.handleEvent = function(event) {
+    this.handleEvent = function (event) {
         const nombreUsuario = document.getElementById('nombre_usuario').value;
         fetch(`${apiUrl}/${nombreUsuario}/${this.gasto.gastoId}`, { method: 'DELETE' })
-        .then(cargarGastosApi)
+            .then(cargarGastosApi)
     }
 }
 
 function BorrarEtiquetasHandle() {
-    this.handleEvent = function(event) {
+    this.handleEvent = function (event) {
         this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
     }
@@ -356,7 +424,7 @@ function EditarHandleformulario() {
         // Valores actuales del gasto
         formulario.descripcion.value = this.gasto.descripcion;
         formulario.valor.value = this.gasto.valor;
-        formulario.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+        formulario.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0, 10);
         formulario.etiquetas.value = this.gasto.etiquetas;
 
         // Creación del manejador y evento de envío.
