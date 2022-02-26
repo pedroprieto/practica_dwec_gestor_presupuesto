@@ -219,6 +219,11 @@ function repintar() {
     listadoGastos.forEach(gasto => {
         mostrarGastoWeb('listado-gastos-completo', gasto);
     });
+
+    // Repintar gastos agrupados
+    mostrarGastosAgrupadosWeb('agrupacion-dia', gestionPresupuesto.agruparGastos('dia'), 'día');
+    mostrarGastosAgrupadosWeb('agrupacion-mes', gestionPresupuesto.agruparGastos('mes'), 'mes');
+    mostrarGastosAgrupadosWeb('agrupacion-anyo', gestionPresupuesto.agruparGastos('anyo'), 'año');
 }
 
 function actualizarPresupuestoWeb() {
@@ -333,7 +338,7 @@ function EnviarGastoApiHandle() {
         const nombreUsuario = document.getElementById('nombre_usuario').value;
 
         const gastoJson = {
-            "valor": this.formulario.valor.value,
+            "valor": Number(this.formulario.valor.value),
             "descripcion": this.formulario.descripcion.value,
             "fecha": this.formulario.fecha.value,
             "etiquetas": this.formulario.etiquetas.value.split(","),
@@ -355,7 +360,7 @@ function EditarGastoApiHandle() {
         const nombreUsuario = document.getElementById('nombre_usuario').value;
 
         const gastoJson = {
-            "valor": this.formulario.valor.value,
+            "valor": Number(this.formulario.valor.value),
             "descripcion": this.formulario.descripcion.value,
             "fecha": this.formulario.fecha.value,
             "etiquetas": this.formulario.etiquetas.value.split(","),
