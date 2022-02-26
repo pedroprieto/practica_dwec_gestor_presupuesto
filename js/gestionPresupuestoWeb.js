@@ -180,7 +180,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupacion, periodo) {
                     backgroundColor: "#555555",
                     // Datos de la gráfica
                     // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
-                    data: agrup
+                    data: agrupacion
                 }
             ],
         },
