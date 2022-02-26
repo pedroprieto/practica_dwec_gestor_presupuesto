@@ -92,8 +92,13 @@ function listarGastos() {
     return gastos;
 }
 
-function cargarGastos(listaGastos) {
-    gastos = listaGastos;
+function cargarGastos(gastosAlmacenamiento) {
+    gastos = [];
+    for (let g of gastosAlmacenamiento) {
+        let gastoRehidratado = new CrearGasto();
+        Object.assign(gastoRehidratado, g);
+        gastos.push(gastoRehidratado)
+    }
 }
 
 function anyadirGasto(gasto) {
