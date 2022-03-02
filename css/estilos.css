@@ -133,15 +133,15 @@ button:disabled, button:disabled:hover {
     }
 
     .gasto .gasto-fecha {
-        flex: 0 0 15%;
+        flex: 0 0 10%;
     }
 
     .gasto .gasto-valor {
-        flex: 0 0 15%;
+        flex: 0 0 10%;
     }
 
     .gasto .gasto-etiquetas {
-        flex: 0 0 18%;
+        flex: 0 0 20%;
     }
 
     .gasto button {
