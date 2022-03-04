@@ -318,7 +318,12 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 }
 
  
+function transformarListadoEtiquetas(etiquetas) {
 
+    let etiquetasFiltradas = etiquetas.match(/[a-zA-Z0-9]+/gi);
+
+    return etiquetasFiltradas;
+}
 
 
 
@@ -337,6 +342,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
-
+    agruparGastos,
+    transformarListadoEtiquetas
 }
