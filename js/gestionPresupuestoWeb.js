@@ -1,5 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
+let baseUrl = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/';
+
 function mostrarDatoEnId(idElemento, valor) {
     let element = document.getElementById(idElemento);
     element.textContent = valor;
@@ -67,7 +69,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrarApi.className = "gasto-borrar-api"
     botonBorrarApi.innerHTML = "Borrar (API)";
     divGasto.append(botonBorrarApi);
-    let borrarApiEvent = new BorrarHandle();
+    let borrarApiEvent = new BorrarApiHandle();
     borrarApiEvent.gasto = gasto;
     botonBorrarApi.addEventListener("click", borrarApiEvent); 
 
@@ -173,6 +175,19 @@ function BorrarHandle() {
     }
 }
 
+function BorrarApiHandle() {
+    this.handleEvent = async function(e) {
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = baseUrl + usuario + '/' + this.gasto.gastoId;
+        let respuesta = await fetch(url, { method: 'DELETE' });
+        if (respuesta.ok) { 
+            cargarGastosApi();
+        } else {
+            alert("Error-HTTP: " + respuesta.status);
+        }
+    }
+}
+
 function BorrarEtiquetasHandle() {
     this.handleEvent = function(e) {
         this.gasto.borrarEtiquetas(this.etiqueta);
@@ -222,16 +237,75 @@ function nuevoGastoWebFormulario(event) {
     cancelarGastoEvent.botonAnyadir = botonAnyadirGastoFormulario;
     botonCancelar.addEventListener("click", cancelarGastoEvent);
 
+    let botonEnviarGastoApi = formulario.querySelector("button.gasto-enviar-api");
+    let enviarGastoApiEvent = new EnviarGastoApiHandle();
+    enviarGastoApiEvent.formulario = formulario;
+    botonEnviarGastoApi.addEventListener("click", enviarGastoApiEvent);
+
     botonAnyadirGastoFormulario.disabled = true;
 
     let controles = document.getElementById("controlesprincipales")
     controles.append(formulario);
 }
 
+function EnviarGastoApiHandle(){
+    this.handleEvent = async function(e){
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = baseUrl + usuario;
+        
+        let newGasto = crearNuevoObjetoGasto(this.formulario);
+
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(newGasto)
+          });
+
+        if (response.ok) { 
+            cargarGastosApi();
+        } else {
+            alert("Error-HTTP: " + response.status);
+        }
+    }
+}
+
+function ActualizarGastoApiHandle(){
+    this.handleEvent = async function(e){
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = baseUrl + usuario + '/' + this.gasto.gastoId;
+        
+        let newGasto = crearNuevoObjetoGasto(this.formulario);
+
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(newGasto)
+          });
+
+        if (response.ok) { 
+            cargarGastosApi();
+        } else {
+            alert("Error-HTTP: " + response.status);
+        }
+    }
+}
+
 function submitGastoHandle(e){
     e.preventDefault();
 
     let formulario = e.currentTarget;
+    let newGasto = crearNuevoObjetoGasto(formulario);
+    gestionPresupuesto.anyadirGasto(newGasto);
+    repintar();
+
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+}
+
+function crearNuevoObjetoGasto(formulario) {
     let descripcion = formulario.elements.descripcion.value;
     let valorStr = formulario.elements.valor.value;
     let valor = parseFloat(valorStr);
@@ -244,10 +318,7 @@ function submitGastoHandle(e){
     }
 
     let newGasto = etiquetas ? new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr, ...etiquetas) : new gestionPresupuesto.CrearGasto(descripcion, valor, fechaStr);
-    gestionPresupuesto.anyadirGasto(newGasto);
-    repintar();
-
-    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    return newGasto;
 }
 
 function CancelGastoHandle(){
@@ -277,6 +348,12 @@ function EditarHandleformulario() {
         let botonEditarFormulario = e.currentTarget;
         cancelarGastoEvent.botonAnyadir = botonEditarFormulario;
         botonCancelar.addEventListener("click", cancelarGastoEvent);
+
+        let botonEnviarGastoApi = formulario.querySelector("button.gasto-enviar-api");
+        let actualizarGastoApiEvent = new ActualizarGastoApiHandle();
+        actualizarGastoApiEvent.gasto = this.gasto;
+        actualizarGastoApiEvent.formulario = formulario;
+        botonEnviarGastoApi.addEventListener("click", actualizarGastoApiEvent);
 
         botonEditarFormulario.after(formulario);
         botonEditarFormulario.disabled = true;
@@ -364,14 +441,24 @@ function cargarGastoWeb() {
         gestionPresupuesto.cargarGastos([]);
     } else {
         let gastosGuardados = localStorage.getItem('GestorGastosDWEC');
-        let ddd = JSON.parse(gastosGuardados);
-        gestionPresupuesto.cargarGastos(ddd);
+        let gastosGuardadosObject = JSON.parse(gastosGuardados);
+        gestionPresupuesto.cargarGastos(gastosGuardadosObject);
     }
     repintar();
 }
 
-function cargarGastosApi() {
+async function cargarGastosApi() {
+    let usuario = document.getElementById('nombre_usuario').value;
+    let url = baseUrl + usuario;
+    let response = await fetch(url);
 
+    if (response.ok) { 
+        let json = await response.json();
+        gestionPresupuesto.cargarGastos(json);
+        repintar();
+    } else {
+        alert("Error-HTTP: " + response.status);
+    }
 }
 
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
