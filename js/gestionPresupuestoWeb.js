@@ -105,6 +105,19 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
         periodoText = periodo;
     }
 
+    let html = `<div class="agrupacion">
+    <h1>Gastos agrupados por ${periodoText}</h1>`;
+
+    for (let agrupacion of Object.keys(agrup)) {
+        html += `<div class="agrupacion-dato">
+        <span class="agrupacion-dato-clave">${agrupacion}</span>
+        <span class="agrupacion-dato-valor">${agrup[agrupacion]}</span>
+      </div>`;
+    }
+    
+    html += '</div>';
+    divP.innerHTML = html;
+
     divP.style.width = "33%";
     divP.style.display = "inline-block";
 
