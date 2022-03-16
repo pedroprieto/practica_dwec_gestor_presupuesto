@@ -317,6 +317,21 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     }, {});    
 }
 
+
+function cargarGastos(gastosAlmacenamiento) {
+    
+    gastos = [];
+    
+    for (let g of gastosAlmacenamiento) {
+        
+        let gastoRehidratado = new CrearGasto();
+        
+        Object.assign(gastoRehidratado, g);
+        
+        gastos.push(gastoRehidratado)
+    }
+}
+    
  
 function transformarListadoEtiquetas(etiquetas) {
 
@@ -343,5 +358,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    transformarListadoEtiquetas
+    transformarListadoEtiquetas,
+    cargarGastos
 }
