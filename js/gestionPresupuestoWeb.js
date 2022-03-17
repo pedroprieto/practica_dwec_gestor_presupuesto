@@ -9,6 +9,8 @@ bNuevoForm.addEventListener("click", nuevoFormulario);
 let filtradoGastos = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", filtradoGastos);
 
+let gastosGuardados = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener("click" , gastosGuardados);
 
 function mostrarDatoEnId (idElemento, valor) {
 
@@ -390,6 +392,17 @@ function filtrarGastosWeb() {
             mostrarGastoWeb("listado-gastos-completo", f);
         }
     }
+}
+
+
+function guardarGastosWeb() {
+
+    this.handleEvent = function() {
+
+        localStorage.setItem("GestorGastosDWEC", JSON.stringify(gesPres.listarGastos()));
+
+    }
+
 }
 
 export   {
