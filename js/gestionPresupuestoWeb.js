@@ -429,6 +429,14 @@ function cargarGastosWeb() {
     }
 }
 
+function cargarGastosApi {
+
+    this.handleEvent = function() {
+
+        
+    }
+}
+
 export   {
     
     mostrarDatoEnId,
