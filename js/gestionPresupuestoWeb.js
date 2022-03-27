@@ -101,6 +101,18 @@ function mostrarGastoWeb (idElemento, gasto) {
     botonEditForm.addEventListener("click", evEditForm);
     div.append(botonEditForm);
 
+    let btBorrarApi = document.createElement('button');
+    btBorrarApi.type = "button";
+    btBorrarApi.className = "gasto-borrar-api";
+    btBorrarApi.textContent = "Borrar (API)"
+
+    let evBorrarApi = new borrarGastoApi();
+    evBorrarApi.gasto = gasto;
+    btBorrarApi.addEventListener('click', evBorrarApi);
+    div.append(btBorrarApi);
+
+
+
     let id = document.getElementById(idElemento);
     id.append(div);
 
@@ -274,6 +286,10 @@ function nuevoGastoWebFormulario() {
         let evCancelar = new CancelarFormHandle();
         let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener("click", evCancelar);
+
+        let envioApi = new enviarGastoApi();
+        let btEnviarApi = formulario.querySelector("button.gasto-enviar-api");
+        btEnviarApi.addEventListener("click", envioApi);
         
 
     }
@@ -340,6 +356,8 @@ function EditarHandleFormulario() {
         let botonCancelar = new CancelarFormHandle();
         formulario.querySelector("button.cancelar");
         formulario.addEventListener("click", botonCancelar);
+
+
     }
 }
 
@@ -457,6 +475,53 @@ function cargarGastosApi() {
 
     }    
 }  
+
+function borrarGastoApi() {
+    
+    this.handleEvent = async function() {
+
+        let usuario = document.getElementById("nombre_usuario").value;
+
+        let idGasto = this.gasto.gastoId;
+        
+        let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`;
+
+        fetch(api, {method: "DELETE"
+        })
+        .then(response => cargarGastosApi(response));
+
+    }
+}
+
+function enviarGastoApi() {
+
+    this.handleEvent = async function() {
+
+        let usuario = document.getElementById("nombre_usuario").value;
+
+        let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+        var form = document.querySelector("form");
+
+        let descApi = form.elements.descripcion.value;
+        let valorApi = form.elements.valor.value;
+        valorApi = parseFloat(valorApi);
+        let fechaApi = form.elements.fecha.value;
+        let etiApi = form.elements.etiquetas.value;
+        let listadoEti = etiApi.split(",");
+
+        let gastoApi = new gesPres.CrearGasto(descApi, valorApi, fechaApi, ...listadoEti);
+
+        fetch (api, { method: "POST",
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(gastoApi)
+        })
+        .then(response => cargarGastosApi(response)); 
+    }     
+}
+
+
+
 
 
 
