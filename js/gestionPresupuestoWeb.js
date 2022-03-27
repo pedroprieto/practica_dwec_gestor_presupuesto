@@ -336,6 +336,7 @@ function EditarHandleFormulario() {
 
     this.handleEvent = function(event) {
 
+
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
 
@@ -343,22 +344,32 @@ function EditarHandleFormulario() {
         bEditActivo.after(formulario);
         bEditActivo.disabled = true;
 
-        let bEditarGasto = new SubmitEditarHandle();
-        bEditarGasto.gasto = this.gasto;
+	    let evEditarGasto = new SubmitEditarHandle();
+        evEditarGasto.gasto = this.gasto;
 
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
         formulario.elements.fecha.value = this.gasto.fecha;
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
-        formulario.addEventListener("submit", bEditarGasto);
+        let enviarGasto = new EditarHandle();
+        enviarGasto.gasto = this.gasto;
+        formulario.addEventListener("submit", enviarGasto);
 
-        let botonCancelar = new CancelarFormHandle();
-        formulario.querySelector("button.cancelar");
-        formulario.addEventListener("click", botonCancelar);
+        let evEditarApi = new editarGastoApi();
+        let btEditarApi = formulario.querySelector("button.gasto-enviar-api");
+        evEditarApi.gasto = this.gasto;
+        btEditarApi.addEventListener("click", evEditarApi); 
+
+        let evCancelar = new CancelarFormHandle();
+        let botonCancelar = formulario.querySelector("button.cancelar");
+        botonCancelar.addEventListener("click", evCancelar);
 
 
     }
+
+
+    
 }
 
 function SubmitEditarHandle() {
@@ -385,6 +396,8 @@ function SubmitEditarHandle() {
 
     }
 }
+
+
 
 
 function filtrarGastosWeb() {
@@ -495,13 +508,13 @@ function borrarGastoApi() {
 
 function enviarGastoApi() {
 
-    this.handleEvent = async function() {
+    this.handleEvent = async function(event) {
 
         let usuario = document.getElementById("nombre_usuario").value;
 
         let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
-        var form = document.querySelector("form");
+        let form = event.currentTarget.form;
 
         let descApi = form.elements.descripcion.value;
         let valorApi = form.elements.valor.value;
@@ -520,6 +533,37 @@ function enviarGastoApi() {
     }     
 }
 
+
+function editarGastoApi () {
+
+    this.handleEvent = async function(event){
+
+        let usuario = document.getElementById("nombre_usuario").value;
+
+        let idGasto = this.gasto.gastoId;
+
+        let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`;
+
+        let form = event.currentTarget.form;
+
+        let descApi = form.elements.descripcion.value;
+        let valorApi = form.elements.valor.value;
+        valorApi = parseFloat(valorApi);
+        let fechaApi = form.elements.fecha.value;
+        let etiApi = form.elements.etiquetas.value;
+        let listadoEti = etiApi.split(",");
+
+        let gastoApi = new gesPres.CrearGasto(descApi, valorApi, fechaApi, ...listadoEti);
+
+        fetch (api, { method: "PUT",
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(gastoApi)
+        })
+        .then(response => cargarGastosApi(response)); 
+
+    }
+
+}
 
 
 
