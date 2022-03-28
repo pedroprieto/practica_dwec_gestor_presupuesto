@@ -15,8 +15,8 @@ document.getElementById("guardar-gastos").addEventListener("click" , gastosGuard
 let gastosCargados = new cargarGastosWeb();
 document.getElementById("cargar-gastos").addEventListener("click", gastosCargados);
 
-let gastosCargadosApi = new cargarGastosApi();
-document.getElementById("cargar-gastos-api").addEventListener("click", gastosCargadosApi);
+let gastosCargadosApi = document.getElementById("cargar-gastos-api");
+gastosCargadosApi.addEventListener("click", cargarGastosApi);
 
 
 
@@ -465,28 +465,28 @@ function cargarGastosWeb() {
     }
 }
 
-function cargarGastosApi() {
+async function cargarGastosApi() {
 
-    this.handleEvent = async function() {
+    
 
-        let usuario = document.getElementById("nombre_usuario").value;
+    let usuario = document.getElementById("nombre_usuario").value;
 
-        let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
-        let response = await fetch(api);
+    let response = await fetch(api);
 
-        if(response.ok)
-        {
-            gesPres.cargarGastos(await response.json());
-        }
-        else {
-            
-            alert("Error-HTTP: " + response.status);
-        }
+    if(response.ok)
+    {
+        gesPres.cargarGastos(await response.json());
+    }
+    else {
+                    
+        alert("Error-HTTP: " + response.status);
+    }
 
-        repintar();
+    repintar();
 
-    }    
+       
 }  
 
 function borrarGastoApi() {
