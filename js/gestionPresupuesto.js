@@ -2,15 +2,28 @@
 
 // TODO: Variable global
 var presupuesto = 0;
+console.log(presupuesto);
 
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(cantidad) {
+    var cantidad = cantidad;
+    if (cantidad >= 0){
+        presupuesto = cantidad;
+    } else{
+        presupuesto = -1;
+        //alert("Presupuesto inferior a 0");
+        console.log("Presupuesto inferior a 0");
+    }
+
 }
+actualizarPresupuesto(9);
+console.log("Presupuesto " + presupuesto);
 
 function mostrarPresupuesto() {
-    // TODO
+    //document.write("Tu presupuesto actual es de "+ presupuesto + "€")
+    console.log("Tu presupuesto actual es de "+ presupuesto + " €")
 }
+mostrarPresupuesto();
 
 function CrearGasto() {
     // TODO
