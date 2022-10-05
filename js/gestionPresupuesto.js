@@ -10,7 +10,7 @@ function actualizarPresupuesto(actual) {
         return presupuesto;
     }
     else {
-        return "El valor no es correcto -1";
+        return -1;
     }
 }
 
@@ -21,29 +21,26 @@ function mostrarPresupuesto() {
     return mensaje;
 }
 
+
 function CrearGasto(descripcion, valor) {
     // TODO
     // Propiedades del objeto
-    this.descrpcion = descripcion;
-    this.valor = valor;
-    if ( valor >= 0) {
-        valor = valor;
-    }
-    else {
-        valor = 0;
-    }
+    this.descripcion = descripcion;
+    this.valor = (valor >= 0 ) ? valor : 0;
+    
     this.mostrarGasto = function() {
         let mensaje;
-        mensaje = `Gasto correspondiente a ${this.descrpcion} con valor ${this.valor} €`;
+        mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         return mensaje;
-    }
+    },
     this.actualizarDescripcion = function(actualizaDescripcion) {
-        this.descrpcion = actualizaDescripcion;
-    }
+        this.descripcion = actualizaDescripcion;
+        return actualizaDescripcion;
+    },
     this.actualizarValor = function(nuevoValor) {
-        if( nuevoValor >= 0 && nuevoValor == Number) {
+        if(typeof nuevoValor == 'number' &&  nuevoValor >= 0) {
             this.valor = nuevoValor;
-        }
+        } 
     }
 }
 
