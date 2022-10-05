@@ -61,7 +61,18 @@ function actualizarDescripcion(descripcion){
     Gasto.descripcion = descripcion;
     return Gasto;
 }
+// Comprobar si funciona
 actualizarDescripcion("Alquiler");
+mostrarGasto();
+
+function actualizarValor(valor){
+    if (valor >=0){
+        Gasto.valor = valor;
+    }
+    return Gasto;
+}
+// Comprobar si funciona
+actualizarValor(22);
 mostrarGasto();
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
