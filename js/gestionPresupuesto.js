@@ -29,7 +29,7 @@ function mostrarPresupuesto() {
 mostrarPresupuesto();
 
 function CrearGasto() {
-    let Gasto = new gasto("Personal", 50)
+    let Gasto = new gasto("Personal", -50)
 
     if (Gasto.valor < 0 ){
         Gasto.valor = 0;
@@ -54,7 +54,14 @@ function gasto (descripcion, valor){
 function mostrarGasto(){
     console.log("Gasto correspondiente a " + Gasto.descripcion + " con valor " + Gasto.valor + " €");
 }
+// Comprobar si funciona
+mostrarGasto();
 
+function actualizarDescripcion(descripcion){
+    Gasto.descripcion = descripcion;
+    return Gasto;
+}
+actualizarDescripcion("Alquiler");
 mostrarGasto();
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
