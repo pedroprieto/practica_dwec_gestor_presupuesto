@@ -16,6 +16,7 @@ function actualizarPresupuesto(cantidad) {
     }
 
 }
+// Comprobar si funciona
 actualizarPresupuesto(9);
 console.log("Presupuesto: " + presupuesto);
 
@@ -23,26 +24,38 @@ function mostrarPresupuesto() {
     //document.write("Tu presupuesto actual es de "+ presupuesto + "€")
     console.log("Tu presupuesto actual es de "+ presupuesto + " €")
 }
+
+// Comprobar si funciona
 mostrarPresupuesto();
 
 function CrearGasto() {
-    var Gasto = new gasto("Personal", -50)
+    let Gasto = new gasto("Personal", 50)
 
-    if (Gasto.valor <0 ){
+    if (Gasto.valor < 0 ){
         Gasto.valor = 0;
     }
+    // Comprobar si funciona
+    console.log("Tipo de gasto: " + Gasto.descripcion);
+    console.log("Valor: " + Gasto.valor);
 
-    console.log(Gasto.descripcion);
-    console.log(Gasto.valor);
+    return Gasto;
 }
 
-CrearGasto();
+// Comprobar si funciona
+var Gasto = CrearGasto();
 
 // PROPIEDADES DEL OBJETO
 function gasto (descripcion, valor){
     this.descripcion = descripcion;
     this.valor = valor;
 }
+
+// METODOS
+function mostrarGasto(){
+    console.log("Gasto correspondiente a " + Gasto.descripcion + " con valor " + Gasto.valor + " €");
+}
+
+mostrarGasto();
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
