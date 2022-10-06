@@ -5,7 +5,7 @@ let presupuesto = 0;
 
 function actualizarPresupuesto(actual) {
     // TODO
-    if (actual >= 0) {
+    if (!isNaN(actual) && actual >= 0) {
         presupuesto = actual;
         return presupuesto;
     }
@@ -17,7 +17,7 @@ function actualizarPresupuesto(actual) {
 function mostrarPresupuesto() {
     // TODO
     let mensaje;
-    mensaje = `Tú presupuesto actual es de ${presupuesto} €`
+    mensaje = `Tu presupuesto actual es de ${presupuesto} €`
     return mensaje;
 }
 
