@@ -1,9 +1,7 @@
 'use strict'
 let presupuesto = 0;
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 function actualizarPresupuesto(cantidad) {
-    // TODO
     if (cantidad >= 0) {
         presupuesto = cantidad;
         return presupuesto;
@@ -15,22 +13,28 @@ function actualizarPresupuesto(cantidad) {
 }
 
 function mostrarPresupuesto() {
-    // TODO
     let texto = "Tu presupuesto actual es de " + presupuesto + " €";
     return texto;
 }
 
-function CrearGasto(descripcion, gasto) {
-    // TODO
+function CrearGasto(desc, gasto) {
     if (gasto >= 0) {
         this.valor = gasto
     } else {
         this.valor = 0
     }
-    this.descripcion = "Ejemplo de gasto 1",
+    this.descripcion = desc,
+    this.actualizarValor = function (valorActualizado) {
+        if (valorActualizado >= 0) {
+            this.valor = valorActualizado
+        }
+    },
     this.mostrarGasto = function(){
         let texto = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
         return texto;
+        },
+    this.actualizarDescripcion = function (nuevaDescripcion) {
+        this.descripcion = nuevaDescripcion 
     }    
         
 }
