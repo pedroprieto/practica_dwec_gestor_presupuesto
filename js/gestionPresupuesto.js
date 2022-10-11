@@ -38,7 +38,7 @@ function borrarGasto (id) {
     // TODO
     let pos = 0;
     let gasto = id;
-    for (let i in gastos) {
+    for (let i of gastos) {
         if (i == gasto) {
             pos = gastos.indexOf(i);
             gastos.splice(pos, 1 );
@@ -47,9 +47,17 @@ function borrarGasto (id) {
 }
 function calcularTotalGastos () {
     // TODO
+    let suma = 0;
+    for (let i of gastos) {
+        suma = suma + i.valor;
+    }
+    return suma;
 }
 function calcularBalance () {
-    // TODO
+    // TODO balance (presupuesto - gastos totales)
+    let balance = 0;
+    balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
