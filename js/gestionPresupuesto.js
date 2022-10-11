@@ -41,11 +41,29 @@ function calcularBalance () {
     // TODO
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     // Propiedades del objeto
     this.descripcion = descripcion;
+
     this.valor = (valor >= 0 ) ? valor : 0;
+
+    if(!fecha) {
+        fecha = Date.parse(new Date());
+        this.fecha = fecha;
+    }
+    else {
+        fecha = Date.parse(fecha);
+        this.fecha = fecha;
+    }
+    this.etiquetas = [];
+    if ( etiquetas.length != 0) {
+        for (let i in etiquetas){
+            this.etiquetas.push(etiquetas[i]);
+        }
+    } else {
+        this.etiquetas = [];
+    }
     
     this.mostrarGasto = function() {
         let mensaje;
