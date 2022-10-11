@@ -1,7 +1,9 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 "use strict";
-// TODO: Variable global
+// TODO: Variables globales
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(actual) {
     // TODO
@@ -21,6 +23,23 @@ function mostrarPresupuesto() {
     return mensaje;
 }
 
+function listarGastos () {
+    // TODO
+    //Función sin parámetros que devolverá la variable global gastos.
+    return gastos;
+}
+function anyadirGasto () {
+    // TODO
+}
+function borrarGasto () {
+    // TODO
+}
+function calcularTotalGastos () {
+    // TODO
+}
+function calcularBalance () {
+    // TODO
+}
 
 function CrearGasto(descripcion, valor) {
     // TODO
@@ -50,5 +69,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
