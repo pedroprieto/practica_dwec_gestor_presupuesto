@@ -28,8 +28,11 @@ function listarGastos () {
     //Función sin parámetros que devolverá la variable global gastos.
     return gastos;
 }
-function anyadirGasto () {
+function anyadirGasto (gasto) {
     // TODO
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 function borrarGasto () {
     // TODO
