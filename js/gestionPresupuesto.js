@@ -1,79 +1,80 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
-var presupuesto = 0;
-console.log(presupuesto);
+let presupuesto = 0;
+console.log(`Presupuesto inicial: ${presupuesto}`);
 
 // FUNCIONES
 function actualizarPresupuesto(cantidad) {
-    var cantidad = cantidad;
     if (cantidad >= 0){
-        presupuesto = cantidad;
-    } else{
-        presupuesto = -1;
-        //alert("Presupuesto inferior a 0");
-        console.log("Presupuesto inferior a 0");
-    }
-
+        return presupuesto = cantidad;
+        } else{
+            return presupuesto = -1;
+            console.log("Presupuesto inferior a 0");
+        }    
 }
-// Comprobar si funciona
-actualizarPresupuesto(9);
-console.log("Presupuesto: " + presupuesto);
+// Comprobar si funciona ------------------------------
+actualizarPresupuesto(2);
+console.log(`Presupuesto: + ${presupuesto}`);
+console.log("\n")
+//-----------------------------------------------------
+
 
 function mostrarPresupuesto() {
-    //document.write("Tu presupuesto actual es de "+ presupuesto + "€")
-    console.log("Tu presupuesto actual es de "+ presupuesto + " €")
+    if (presupuesto >= 0){
+        return `Tu presupuesto actual es de ${presupuesto} €`;
+    }     
 }
-
-// Comprobar si funciona
+// Comprobar si funciona--
 mostrarPresupuesto();
+console.log("\n");
+//------------------------
 
-function CrearGasto() {
-    let Gasto = new gasto("Personal", -50)
 
-    if (Gasto.valor < 0 ){
-        Gasto.valor = 0;
-    }
-    // Comprobar si funciona
-    console.log("Tipo de gasto: " + Gasto.descripcion);
-    console.log("Valor: " + Gasto.valor);
-
-    return Gasto;
-}
-
-// Comprobar si funciona
-var Gasto = CrearGasto();
-
-// PROPIEDADES DEL OBJETO
-function gasto (descripcion, valor){
+function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
-    this.valor = valor;
-}
-
-// METODOS
-function mostrarGasto(){
-    console.log("Gasto correspondiente a " + Gasto.descripcion + " con valor " + Gasto.valor + " €");
-}
-// Comprobar si funciona
-mostrarGasto();
-
-function actualizarDescripcion(descripcion){
-    Gasto.descripcion = descripcion;
-    return Gasto;
-}
-// Comprobar si funciona
-actualizarDescripcion("Alquiler");
-mostrarGasto();
-
-function actualizarValor(valor){
-    if (valor >=0){
-        Gasto.valor = valor;
+    if (valor < 0){
+        this.valor = 0;
+    } else{
+        this.valor = valor;
     }
-    return Gasto;
+
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${gasto.descripcion} con valor ${gasto.valor} €`;
+    }
+
+    this.actualizarDescripcion = function (descripcion){
+        this.descripcion = descripcion;
+        return this.descripcion;
+    }
+
+    this.actualizarValor = function (valor){
+        if (valor >= 0){
+            this.valor = valor;
+        }
+        return this.valor;
+    }
 }
-// Comprobar si funciona
-actualizarValor(22);
-mostrarGasto();
+// Comprobar si funciona ---------------------------
+let gasto = new CrearGasto("Personal", -5);
+console.log(`Descripcion: ${gasto.descripcion}`);
+console.log(`Valor: ${gasto.valor}`);
+console.log("\n")
+
+console.log("Mostrar Gasto:")
+console.log(gasto.mostrarGasto());
+console.log("\n")
+
+console.log("Actualizar Descripcion:")
+gasto.actualizarDescripcion("Alquiler");
+console.log(gasto.mostrarGasto());
+console.log("\n");
+
+console.log("Actualizar Valor:")
+gasto.actualizarValor(22);
+console.log(gasto.mostrarGasto());
+//--------------------------------------------------
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
