@@ -34,8 +34,16 @@ function anyadirGasto (gasto) {
     idGasto++;
     gastos.push(gasto);
 }
-function borrarGasto () {
+function borrarGasto (id) {
     // TODO
+    let pos = 0;
+    let gasto = id;
+    for (let i in gastos) {
+        if (i == gasto) {
+            pos = gastos.indexOf(i);
+            gastos.splice(pos, 1 );
+        }
+    }
 }
 function calcularTotalGastos () {
     // TODO
