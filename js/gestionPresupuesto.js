@@ -1,4 +1,6 @@
 let presupuesto=0;
+let gastos = [];
+let idGasto=0;
 
 
 
@@ -25,9 +27,6 @@ function actualizarPresupuesto(cantidad){
 
 
 
-
-
-
 /*********************************************/
 /*    FUNCION MOSTRARPRESUPUESTOS            */
 /*===========================================*/
@@ -38,18 +37,79 @@ function mostrarPresupuesto(){
 /*===========================================*/
 
 
+/*********************************************/
+/*    FUNCION LISTARGASTOS                   */
+/*===========================================*/
+function listarGastos(){
+/*===========================================*/
+  return gastos;
+}
+/*===========================================*/
+
+
+/*********************************************/
+/*    FUNCION ANYADIRGASTOS                   */
+/*===========================================*/
+function anyadirGasto(gasto){
+/*===========================================*/
+  gasto.id=idGasto;
+  idGasto +=1;
+  gastos.push(gasto);
+
+}
+/*===========================================*/
+
+/*********************************************/
+/*    FUNCION BORRARGASTOS                   */
+/*===========================================*/
+function borrarGasto(idGasto){
+/*===========================================*/
+  let indice=0;
+  for (let item of gastos ){
+    if ( item.id == idGasto ){
+      gastos.splice(indice,1)
+    }
+    indice ++;
+  }
+}
+/*===========================================*/
+
+
+/*********************************************/
+/*    FUNCION CALCULARTOTALGASTOS            */
+/*===========================================*/
+function calcularTotalGastos(){
+/*===========================================*/
+  let total=0;
+  for (let gasto of gastos){
+    total += gasto.valor;
+  }
+  return total;
+}
+/*===========================================*/
+
+
+/*********************************************/
+/*    FUNCION calcularBalance                   */
+/*===========================================*/
+function calcularBalance(){
+/*===========================================*/
+  return presupuesto - calcularTotalGastos(gastos); 
+}
+/*===========================================*/
 
 
 
 /*********************************************/
 /*    FUNCION CONSTRUCTORA CREARGASTO        */
 /*===========================================*/
-function CrearGasto(descripcion,valor){ 
+function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleString()), ...etiquetas){ 
 /*===========================================*/
   this.descripcion = descripcion;
   this.valor = ( (valor < 0 || isNaN(valor) ) ? 0: valor);
-  console.log("El valor de: " + this.valor);
-
+  this.fecha = ( isNaN(Date.parse(fecha)) ) ? Date.parse(new Date()) : ( isNaN(fecha) ) ? Date.parse(fecha.toLocaleString()): fecha;
+  this.etiquetas=etiquetas;
+  
   //--------------------------------------------
   // METODO ACTUALIZARVALOR 
   //--------------------------------------------
@@ -75,6 +135,55 @@ function CrearGasto(descripcion,valor){
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
   }
   //--------------------------------------------
+  
+  
+  //--------------------------------------------
+  //  METODO MOSTRARGASTOS  
+  //--------------------------------------------
+  this.mostrarGastoCompleto= function(){
+    let fgasto=`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n` +
+    `Fecha: ${new Date(this.fecha).toLocaleString()}\n`+
+    "Etiquetas:\n"
+    for (let i=0; i<this.etiquetas.length; i++){
+      fgasto +="- " + this.etiquetas[i] +  "\n";
+    }
+    return fgasto;
+  }
+  //-------------------------------------------
+  
+  
+  
+  
+  //--------------------------------------------
+  //  METODO ACTUALIZAR FECHA
+  //--------------------------------------------
+  this.actualizarFecha= function(fecha){
+    if ( !isNaN( Date.parse(fecha.toLocaleString()) ) ){
+      this.fecha = Date.parse(fecha.toLocaleString());
+    }
+  }
+  //--------------------------------------------
+
+  //--------------------------------------------
+  //  METODO AÑADIR ETIQUETAS
+  //--------------------------------------------
+  this.anyadirEtiquetas= function (...etiquetas){
+    for (let etiqueta of etiquetas ){
+      if ( this.etiquetas.includes(etiqueta) == false ){
+        this.etiquetas.push(etiqueta);
+      }
+    }
+  }
+  //--------------------------------------------
+
+
+  //--------------------------------------------
+  //  METODO AÑADIR BORRAR ETIQUETAS  
+  //--------------------------------------------
+  this.borrarEtiquetas= function(...etiquetas){
+    this.etiquetas=this.etiquetas.filter( (item) => etiquetas.includes(item) == false )
+  }
+  //--------------------------------------------
 
 
 }
@@ -88,7 +197,12 @@ function CrearGasto(descripcion,valor){
 export {
   mostrarPresupuesto,
   actualizarPresupuesto,
-  CrearGasto
+  CrearGasto,
+  listarGastos,
+  anyadirGasto,
+  borrarGasto,
+  calcularTotalGastos,
+  calcularBalance
 }
 
 
