@@ -101,6 +101,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return mensaje;
     },
     this.actualizarFecha = function (nuevaFecha) {
+        nuevaFecha = Date.parse(nuevaFecha);
+        if (nuevaFecha){
+            this.fecha = nuevaFecha;
+        }
+
+    },
+    this.anyadirEtiquetas = function(...etiquetaNueva) {
+
+    },
+    this.borrarEtiquetas = function (...etiquetaEliminadas) {
 
     },
     this.actualizarDescripcion = function(actualizaDescripcion) {
