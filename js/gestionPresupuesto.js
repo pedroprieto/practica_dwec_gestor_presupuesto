@@ -39,7 +39,7 @@ function borrarGasto (id) {
     let pos = 0;
     let gasto = id;
     for (let i of gastos) {
-        if (i == gasto) {
+        if (i.id == gasto) {
             pos = gastos.indexOf(i);
             gastos.splice(pos, 1 );
         }
@@ -83,11 +83,25 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     } else {
         this.etiquetas = [];
     }
-    
+    //Funciones del objeto gasto
+
     this.mostrarGasto = function() {
         let mensaje;
         mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         return mensaje;
+    },
+    this.mostrarGastoCompleto = function() {
+        let mensaje;
+        mensaje = this.mostrarGasto() + ".";
+        mensaje = mensaje + `\nFecha: ${new Date (this.fecha).toLocaleString()}\n`;
+        mensaje += 'Etiquetas:\n';
+        for ( let i = 0; i < this.etiquetas.length; i++) {
+            mensaje += `- ${this.etiquetas[i]}\n`;
+        }
+        return mensaje;
+    },
+    this.actualizarFecha = function (nuevaFecha) {
+
     },
     this.actualizarDescripcion = function(actualizaDescripcion) {
         this.descripcion = actualizaDescripcion;
