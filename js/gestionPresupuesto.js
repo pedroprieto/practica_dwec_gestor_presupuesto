@@ -108,10 +108,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     },
     this.anyadirEtiquetas = function(...etiquetaNueva) {
-
+        let pos;
+        for (let i of etiquetaNueva){
+            pos = this.etiquetas.indexOf(i);
+            if (pos == -1) {
+                this.etiquetas.push(i);
+            }
+        }
     },
     this.borrarEtiquetas = function (...etiquetaEliminadas) {
-
+        let pos;
+        for (let i of etiquetaEliminadas){
+            pos = this.etiquetas.indexOf(i);
+            if (pos != -1) {
+                this.etiquetas.splice(pos, 1);
+            }
+        }
     },
     this.actualizarDescripcion = function(actualizaDescripcion) {
         this.descripcion = actualizaDescripcion;
