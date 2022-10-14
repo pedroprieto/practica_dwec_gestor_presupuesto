@@ -21,6 +21,11 @@ function CrearGasto( descripcion, valor ) {
     //Función constructora
     this.descripcion = descripcion;
     this.valor = (valor >= 0) ? valor : 0;
+
+    //Método mostrarGasto
+    this.mostrarGasto = function () {
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
