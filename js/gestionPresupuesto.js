@@ -14,7 +14,7 @@ function actualizarPresupuesto(valor) {
 }
 
 function mostrarPresupuesto() {
-    return (`Tu presupuesto actual es de ${presupuesto}€`)
+    return (`Tu presupuesto actual es de ${presupuesto} €`)
 }
 
 function CrearGasto( descripcion, valor ) {
@@ -24,7 +24,7 @@ function CrearGasto( descripcion, valor ) {
 
     //Método mostrarGasto
     this.mostrarGasto = function () {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
 
     //Método actualizarDescripcion
