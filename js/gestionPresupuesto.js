@@ -4,7 +4,7 @@
 // TODO: Variable global
 let presupuesto = 0;
 let gastos = [];
-let idgasto = 0;
+let idGasto = 0;
 
 function actualizarPresupuesto(valor) {
    if (!isNaN(valor) && valor>0){
@@ -83,6 +83,15 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     //Función listarGastos
     function listarGastos(){
         return gastos;
+    }
+
+    //Función anyadirGasto
+    function anyadirGasto (gasto){
+        gasto.id = idGasto;
+
+        idGasto++
+
+        gastos.push(gasto);
     }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
