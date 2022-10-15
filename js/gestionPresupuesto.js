@@ -64,6 +64,20 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
         }
     }
     this.anyadirEtiquetas (...etiquetas);
+
+    //Método borrarEtiquetas
+    this.borrarEtiquetas = function (...etiquetas){
+        let pos = -1;
+
+        for (let e of etiquetas){
+
+            pos = this.etiquetas.indexOf(e);
+
+            if (pos != -1){
+                this.etiquetas.splice (pos, 1);
+            }
+        }
+    }
 }
 
     //Función listarGastos
