@@ -51,6 +51,8 @@ function CrearGasto(descr, val) {
     }else {
         this.valor = 0;
     }
+    this.fecha = new Date();
+    this.etiquetas = [];
 
 
     this.mostrarGasto = function() {
