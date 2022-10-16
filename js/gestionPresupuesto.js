@@ -16,7 +16,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
-    if (valor < 0 || valor == isNaN){
+    if (valor < 0 || isNaN(valor)){
         this.valor = 0;
     } else{
         this.valor = valor;
@@ -32,12 +32,14 @@ function CrearGasto(descripcion, valor) {
     }
 
     this.actualizarValor = function (valor){
-        if (valor >= 0){
+        if (valor >= 0 & isNaN(valor) == false){
             this.valor = valor;
         }
         return this.valor;
     }
 }
+var gasto = new CrearGasto("Alquiler", "hi");
+console.log(gasto.mostrarGasto());
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
