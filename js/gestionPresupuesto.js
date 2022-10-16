@@ -95,6 +95,15 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
 
         return txt;
     }
+
+    //Método actualizarFecha
+    this.actualizarFecha = function (fecha){
+        fecha = Date.parse (fecha);
+
+        if (fecha){
+            this.fecha = fecha;
+        }
+    }
 }
 
     //Función listarGastos
