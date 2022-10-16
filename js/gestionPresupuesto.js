@@ -16,11 +16,35 @@ function actualizarPresupuesto(param) {
 
 function mostrarPresupuesto() {
     // TODO
-    console.log('Tu presupuesto actual es de ' + presupuesto + ' €');
+    let mensaje = "Tu presupuesto actual es de " + presupuesto + " €";
+
+    return (mensaje);
 }
 
-function CrearGasto() {
+function CrearGasto(descr, val) {
     // TODO
+    this.descripcion = descr;
+    if(val >= 0) {
+        this.valor = val;
+    }else {
+        this.valor = 0;
+    }
+
+
+    this.mostrarGasto = function() {
+        return('Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €');
+    }
+
+    this.actualizarDescripcion = function(ndescr) {
+        this.descripcion = ndescr;
+    }
+
+    this.actualizarValor = function(nvalor) {
+        
+        if (nvalor >= 0){
+            this.valor = nvalor;
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
