@@ -5,20 +5,18 @@ function actualizarPresupuesto(cantidad) {
     if (cantidad >= 0){
         return presupuesto = cantidad;
         } else{
-            return presupuesto = -1;
+            return -1;
             console.log("Presupuesto inferior a 0");
         }    
 }
 
 function mostrarPresupuesto() {
-    if (presupuesto >= 0){
-        return `Tu presupuesto actual es de ${presupuesto} €`;
-    }     
+    return `Tu presupuesto actual es de ${presupuesto} €`;    
 }
 
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
-    if (valor < 0){
+    if (valor < 0 || valor == isNaN){
         this.valor = 0;
     } else{
         this.valor = valor;
