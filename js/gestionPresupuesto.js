@@ -23,6 +23,26 @@ function mostrarPresupuesto() {
     return (mensaje);
 }
 
+function listarGastos() {
+
+}
+
+function anyadirGasto() {
+
+}
+
+function borrarGasto() {
+
+}
+
+function calcularTotalGastos() {
+
+}
+
+function calcularBalance() {
+
+}
+
 function CrearGasto(descr, val) {
     // TODO
     this.descripcion = descr;
@@ -55,5 +75,10 @@ function CrearGasto(descr, val) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
     CrearGasto
 }
