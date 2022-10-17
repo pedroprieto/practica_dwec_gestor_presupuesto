@@ -59,7 +59,13 @@ function calcularBalance () {
     balance = presupuesto - calcularTotalGastos();
     return balance;
 }
+function filtrarGastos () {
 
+}
+
+function agruparGastos () {
+
+}
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     // Propiedades del objeto
@@ -133,6 +139,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         if(typeof nuevoValor == 'number' &&  nuevoValor >= 0) {
             this.valor = nuevoValor;
         } 
+    },
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+        let agruparPeriodo = gastos.filter(periodo)
+        // como agrupo?
+
+
+
+
+        return agruparPeriodo;
     }
 }
 
@@ -147,5 +162,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
