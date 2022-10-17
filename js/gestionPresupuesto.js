@@ -51,48 +51,44 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
 
     //Método anyadirEtiquetas
-    this.anyadirEtiquetas = function (...etiquetas){
+    this.anyadirEtiquetas = function( ...etiquetas ) {
         let pos = -1;
 
-        for (let e of etiquetas){
+        for ( let e of etiquetas ) {
+            pos = this.etiquetas.indexOf( e );
 
-            pos = this.etiquetas.indexOf(e);
-
-            if (pos != -1){
-                this.etiquetas.push (pos, 1);
+            if ( pos == -1 ) {
+                this.etiquetas.push( e );
             }
-        }
+        }        
     }
-    this.anyadirEtiquetas (...etiquetas);
+    this.anyadirEtiquetas(...etiquetas);
 
     //Método borrarEtiquetas
-    this.borrarEtiquetas = function (...etiquetas){
+    this.borrarEtiquetas = function( ...etiquetas ) {         
         let pos = -1;
+    
+        for ( let e of etiquetas ) {
+            pos = this.etiquetas.indexOf( e );
 
-        for (let e of etiquetas){
-
-            pos = this.etiquetas.indexOf(e);
-
-            if (pos != -1){
-                this.etiquetas.splice (pos, 1);
+            if ( pos != -1 ) {
+                this.etiquetas.splice( pos, 1 );
             }
-        }
+        }        
     }
 
     //Método mostrarGastoCompleto
-    this.mostrarGastoCompleto = function (){
+    this.mostrarGastoCompleto = function() {  
         let txt = "";
-        let fecha = new Date (this.fecha)
-        let fechaLocal = fecha.toLocaleString (fecha);
+        let fecha = new Date( this.fecha );
+        let fechaLocal = fecha.toLocaleString();
 
-        txt += `Gasto correspondiente a ${this.descripcion} con valor ${valor} €\n
-        Fecha: ${fechaLocal}\n
-        Etiquetas:\n`;
-
-        for (let e of this.etiquetas){
-            txt += (`- ${e}\n`);
+        txt += (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocal}\nEtiquetas:\n`);
+                    
+        for ( let e of this.etiquetas ){            
+            txt += (`- ${e}\n`);         
         }
-
+        
         return txt;
     }
 
