@@ -43,18 +43,19 @@ function calcularBalance() {
 
 }
 
-function CrearGasto(descr, val) {
+function CrearGasto(descr, val, fech, ...etiq) {
     // TODO
     this.descripcion = descr;
-    if(val >= 0) {
-        this.valor = val;
-    }else {
-        this.valor = 0;
+    this.valor = 0;
+
+    this.fecha = Date.now();
+    if(Date.parse(fech) !== null) {
+        this.fecha = fech;
     }
-    this.fecha = new Date();
+
     this.etiquetas = [];
 
-
+    //métodos
     this.mostrarGasto = function() {
         return('Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €');
     }
@@ -68,6 +69,32 @@ function CrearGasto(descr, val) {
         if (nvalor >= 0){
             this.valor = nvalor;
         }
+    }
+
+    this.mostrarGastoCompleto = function() {
+    let gastoDesc = "Gasto correspodiente a " + this.descripcion + " con valor " + this.valor + " €.\n";
+    let fechFormat = "Fecha: " + this.fecha;
+    }
+
+    this.actualizarFecha = function() {
+    
+    }
+
+    this.anyadirEtiquetas = function(...arg) {
+        for(let i=0; i<arg.length; i++){
+            if(!(this.etiquetas.includes(arg[i],0))){
+                this.etiquetas.push(arg[i]);
+            }
+        }
+    }
+
+    this.borrarEtiquetas = function() {
+    
+    }
+
+
+    if(etiq){
+        this.anyadirEtiquetas(...etiq);
     }
 }
 
