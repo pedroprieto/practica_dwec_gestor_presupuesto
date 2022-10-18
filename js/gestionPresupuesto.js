@@ -24,7 +24,6 @@ function CrearGasto(descrip, val) {
         this.descripcion = descrip;
         this.valor = 0;      
     }
-
     this.mostrarGasto = function () {
         return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor +" €";       
     };
@@ -37,7 +36,6 @@ function CrearGasto(descrip, val) {
             this.valor = val;
         }
     }
- 
 }
 
 
