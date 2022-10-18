@@ -2,15 +2,32 @@
 
 // TODO: Variable global
 
+let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+
+function actualizarPresupuesto(nuevoValor) {
+    if( nuevoValor >= 1){
+
+        presupuesto = nuevoValor
+        return presupuesto
+
+    }else{
+
+        console.log("El valor es negativo")
+        return -1
+    }
+
 }
+
+actualizarPresupuesto(4);
 
 function mostrarPresupuesto() {
-    // TODO
+  // TODO
+
+
 }
 
+mostrarPresupuesto();
 function CrearGasto() {
     // TODO
 }
