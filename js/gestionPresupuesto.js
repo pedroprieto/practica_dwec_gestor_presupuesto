@@ -16,20 +16,17 @@ function actualizarPresupuesto(nuevoValor) {
         console.log("El valor es negativo")
         return -1
     }
-
+    
 }
-
-actualizarPresupuesto(4);
 
 function mostrarPresupuesto() {
   // TODO
-
+  let text = `Tu presupuesto actual es de ${presupuesto} €`
+  return text
 
 }
-
-mostrarPresupuesto();
 function CrearGasto() {
-    // TODO
+  
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -38,5 +35,5 @@ function CrearGasto() {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
 }
