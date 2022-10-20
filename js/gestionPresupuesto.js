@@ -9,10 +9,9 @@ let idGasto=0;
 /*===========================================*/
 function actualizarPresupuesto(cantidad){
 /*===========================================*/
-  let suma_cantidad_presupuesto = cantidad;
-  if (! isNaN(suma_cantidad_presupuesto) ){
-    if ( suma_cantidad_presupuesto >= 0 ){
-      presupuesto =   suma_cantidad_presupuesto;
+  if (! isNaN(cantidad) ){
+    if ( cantidad >= 0 ){
+      presupuesto =   cantidad;
       return presupuesto;
     }
     else{
@@ -97,6 +96,52 @@ function calcularBalance(){
   return presupuesto - calcularTotalGastos(gastos); 
 }
 /*===========================================*/
+
+
+/*********************************************/
+/*    FUNCION FILTRARGASTO                   */
+/*===========================================*/
+function filtrarGastos(objGastos){
+/*===========================================*/
+  let param_name = Object.keys(objGastos);
+  let filtergastos=gastos.slice();
+  if ( param_name.length === 0 ) return filtergastos;
+  if ( objGastos.fechaDesde )
+     filtergastos=filtergastos.filter( (item) => item.fecha >= Date.parse(objGastos.fechaDesde));
+  if ( objGastos.fechaHasta)
+     filtergastos=filtergastos.filter( (item) => item.fecha <= Date.parse(objGastos.fechaHasta));
+  if ( objGastos.valorMinimo )
+     filtergastos=filtergastos.filter( (item) => item.valor >= objGastos.valorMinimo);
+  if (objGastos.valorMaximo) 
+     filtergastos=filtergastos.filter( (item) => item.valor <= objGastos.valorMaximo);
+  if (objGastos.descripcionContiene)
+     filtergastos=filtergastos.filter( (item) => item.descripcion.includes(objGastos.descripcionContiene));
+  if ( objGastos.etiquetasTiene )
+     filtergastos=filtergastos.filter( (item) => item.etiquetas.find( (item) => objGastos.etiquetasTiene !== undefined && objGastos.etiquetasTiene.includes(item)));
+  return filtergastos; 
+}
+/*===========================================*/
+
+
+
+/*********************************************/
+/*    FUNCION AGRUPARGASTOS                  */
+/*===========================================*/
+function agruparGastos(periodo,etiquetas, fechaDesde, fechaHasta){
+
+  return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde:fechaDesde, fechaHasta:fechaHasta})
+         .reduce((acumulado_por_fecha,gasto) => {
+            let fecha_clave=gasto.obtenerPeriodoAgrupacion(periodo);
+            if ( !acumulado_por_fecha[fecha_clave] ){
+             acumulado_por_fecha[fecha_clave]=0;
+            }
+            
+            acumulado_por_fecha[fecha_clave]+=gasto.valor;
+            return acumulado_por_fecha;
+         },{});
+}
+/*===========================================*/
+
 
 
 
@@ -184,6 +229,18 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
     this.etiquetas=this.etiquetas.filter( (item) => etiquetas.includes(item) == false )
   }
   //--------------------------------------------
+  
+  //--------------------------------------------
+  //  METODO OBTENER PERIODO AGRUPACIÓN
+  //--------------------------------------------
+  this.obtenerPeriodoAgrupacion = function(periodo="mes"){
+    let fecha_periodo=new Date(this.fecha).toISOString().split("T")[0];
+    let mes=fecha_periodo.substr(0,fecha_periodo.lastIndexOf("-"));
+    let anyo = fecha_periodo.substr(0,4);
+    return (periodo == "mes") ? mes : (periodo == "anyo") ? anyo : fecha_periodo; 
+      
+  }
+  //--------------------------------------------
 
 
 }
@@ -202,7 +259,9 @@ export {
   anyadirGasto,
   borrarGasto,
   calcularTotalGastos,
-  calcularBalance
+  calcularBalance,
+  filtrarGastos,
+  agruparGastos
 }
 
 
