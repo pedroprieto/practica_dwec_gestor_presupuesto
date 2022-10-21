@@ -4,6 +4,8 @@
 
 let presupuesto = 0;
 
+let gasto = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(nuevoValor) {
     if( nuevoValor >= 1){
@@ -25,25 +27,69 @@ function mostrarPresupuesto() {
   return text
 
 }
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, etiquetas) {
+
     this.descripcion = descripcion;
-    if(valor >=0){
+
+    if(valor >= 0){
         this.valor = valor
     }else{
         this.valor = 0
     }
+
+    if(!etiquetas){
+        this.etiquetas = []
+    }else{
+        this.etiquetas = etiquetas
+    }
+
+
     this.mostrarGasto = function() {  
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
+
     this.actualizarDescripcion = function(descripcion) {
         this.descripcion = descripcion;
     }
+
     this.actualizarValor = function(valor) {
        if(valor >= 0){
-        this.valor = valor
+            this.valor = valor
        }
-      
     }
+
+    let dataFecha = Date.parse(fecha)
+    
+    if(!dataFecha){
+
+        this.fecha = Date.parse(new Date())
+        
+    }else{
+    
+        this.fecha = dataFecha
+    }
+ 
+}
+
+
+
+function listarGastos()
+{
+    return gastos
+}
+
+function anyadirGasto(id){
+
+}
+
+function borrarGasto(){
+
+}
+function calcularTotalGastos(){
+
+}
+function calcularBalance(){
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -53,4 +99,9 @@ export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
