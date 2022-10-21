@@ -4,7 +4,7 @@
 
 let presupuesto = 0;
 
-let gasto = [];
+let gastos = [];
 let idGasto = 0;
 
 function actualizarPresupuesto(nuevoValor) {
@@ -32,15 +32,26 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
     this.descripcion = descripcion;
 
     if(valor >= 0){
-        this.valor = valor
+        this.valor = valor;
     }else{
         this.valor = 0
     }
 
-    if(!etiquetas){
-        this.etiquetas = []
+    let dataFecha = Date.parse(fecha)
+    
+    if(!dataFecha){
+
+        this.fecha = Date.parse(new Date())
+        
     }else{
-        this.etiquetas = etiquetas
+    
+        this.fecha = dataFecha;
+    }
+
+    if(!etiquetas){
+        this.etiquetas = [];
+    }else{
+        this.etiquetas = etiquetas;
     }
 
 
@@ -54,20 +65,11 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
 
     this.actualizarValor = function(valor) {
        if(valor >= 0){
-            this.valor = valor
+            this.valor = valor;
        }
     }
 
-    let dataFecha = Date.parse(fecha)
-    
-    if(!dataFecha){
-
-        this.fecha = Date.parse(new Date())
-        
-    }else{
-    
-        this.fecha = dataFecha
-    }
+ 
  
 }
 
@@ -78,13 +80,24 @@ function listarGastos()
     return gastos
 }
 
-function anyadirGasto(id){
-
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
+    idGasto += 1;
+    gastos.push(gasto);
 }
 
-function borrarGasto(){
 
+
+function borrarGasto(id){
+
+    for(let i = 0; i < gastos.length; i++){
+        
+        if(gastos[i].id == id){
+            gastos.splice(i, 1)
+        }
+    }
 }
+
 function calcularTotalGastos(){
 
 }
@@ -105,3 +118,26 @@ export   {
     calcularTotalGastos,
     calcularBalance
 }
+
+
+
+
+// Ejecuciones
+let gasto1 = new CrearGasto("Gasto 1");
+let gasto2 = new CrearGasto("Gasto 2", 23.55);
+let gasto3 = new CrearGasto("Gasto 3", 23.55, "2021-10-06T13:10" );
+let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa" );
+let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado" );
+let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida" );
+
+anyadirGasto(gasto1)
+anyadirGasto(gasto2)
+anyadirGasto(gasto3)
+anyadirGasto(gasto4)
+anyadirGasto(gasto5)
+anyadirGasto(gasto6)
+
+
+borrarGasto(2)
+
+console.log("holka")
