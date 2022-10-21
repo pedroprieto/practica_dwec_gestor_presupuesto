@@ -98,28 +98,37 @@ function calcularBalance(){
 /*===========================================*/
 
 
-/*********************************************/
-/*    FUNCION FILTRARGASTO                   */
-/*===========================================*/
+/***********************************************************************************************************************************/
+/*                                                FUNCION FILTRARGASTO                                                             */
+/*=================================================================================================================================*/
 function filtrarGastos(objGastos){
-/*===========================================*/
-  let param_name = Object.keys(objGastos);
-  let filtergastos=gastos.slice();
-  if ( param_name.length === 0 ) return filtergastos;
-  if ( objGastos.fechaDesde )
-     filtergastos=filtergastos.filter( (item) => item.fecha >= Date.parse(objGastos.fechaDesde));
-  if ( objGastos.fechaHasta)
-     filtergastos=filtergastos.filter( (item) => item.fecha <= Date.parse(objGastos.fechaHasta));
-  if ( objGastos.valorMinimo )
-     filtergastos=filtergastos.filter( (item) => item.valor >= objGastos.valorMinimo);
-  if (objGastos.valorMaximo) 
-     filtergastos=filtergastos.filter( (item) => item.valor <= objGastos.valorMaximo);
-  if (objGastos.descripcionContiene)
-     filtergastos=filtergastos.filter( (item) => item.descripcion.includes(objGastos.descripcionContiene));
-  if ( objGastos.etiquetasTiene )
-     filtergastos=filtergastos.filter( (item) => item.etiquetas.find( (item) => objGastos.etiquetasTiene !== undefined && objGastos.etiquetasTiene.includes(item)));
-  return filtergastos; 
+/*=================================================================================================================================*/
+  let param_name = Object.keys(objGastos).filter( (item) => objGastos[item] !== undefined );
+  if (param_name.length === 0) return gastos;
+  return gastos.filter( (item) => {
+    return param_name.every( (key) => {
+      if ( key.includes("fechaDesde") ){
+        return item.fecha >= Date.parse(objGastos.fechaDesde);
+      }
+      if ( key.includes("fechaHasta") ){
+        return item.fecha <= Date.parse(objGastos.fechaHasta);
+      }
+      if ( key.includes("valorMinimo") ){
+        return item.valor >= objGastos.valorMinimo;
+      }
+      if ( key.includes("valorMaximo") ){
+        return item.valor <= objGastos.valorMaximo;
+      }
+      if ( key.includes("descripcionContiene") ){
+        return item.descripcion.includes(objGastos.descripcionContiene);
+      }
+      if ( key.includes("etiquetasTiene") ){
+        return item.etiquetas.find( (item) => objGastos.etiquetasTiene !== undefined && objGastos.etiquetasTiene.includes(item) );
+      }
+    });
+  }); 
 }
+/*=================================================================================================================================*/
 /*===========================================*/
 
 
@@ -128,8 +137,11 @@ function filtrarGastos(objGastos){
 /*    FUNCION AGRUPARGASTOS                  */
 /*===========================================*/
 function agruparGastos(periodo,etiquetas, fechaDesde, fechaHasta){
-
-  return filtrarGastos({ etiquetasTiene:etiquetas, fechaDesde:fechaDesde, fechaHasta:fechaHasta})
+  let objGastos={}; 
+    objGastos.fechaDesde = fechaDesde;
+    objGastos.fechaHasta= fechaHasta;
+    objGastos.etiquetasTiene = etiquetas;
+  return filtrarGastos(objGastos)
          .reduce((acumulado_por_fecha,gasto) => {
             let fecha_clave=gasto.obtenerPeriodoAgrupacion(periodo);
             if ( !acumulado_por_fecha[fecha_clave] ){
