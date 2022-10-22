@@ -106,7 +106,10 @@ function calcularTotalGastos(){
     return sumaGastos
 }
 function calcularBalance(){
-
+    let gastostotales  = calcularTotalGastos()
+    let balance = presupuesto - gastostotales;
+    console.log(balance)
+    return balance
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -142,6 +145,6 @@ anyadirGasto(gasto5)
 anyadirGasto(gasto6)
 
 
-calcularTotalGastos()
+calcularBalance()
 
 console.log("holka")
