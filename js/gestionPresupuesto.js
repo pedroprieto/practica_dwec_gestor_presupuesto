@@ -97,9 +97,13 @@ function borrarGasto(id){
         }
     }
 }
-
 function calcularTotalGastos(){
+    let sumaGastos = 0;
 
+    for(let i = 0; i < gastos.length; i++){
+           sumaGastos = sumaGastos + gastos[i].valor
+    }
+    return sumaGastos
 }
 function calcularBalance(){
 
@@ -138,6 +142,6 @@ anyadirGasto(gasto5)
 anyadirGasto(gasto6)
 
 
-borrarGasto(2)
+calcularTotalGastos()
 
 console.log("holka")
