@@ -1,5 +1,7 @@
 'use strict'
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(cantidad) {
     if (cantidad >= 0) {
@@ -35,12 +37,12 @@ function CrearGasto(desc, gasto) {
         },
     this.actualizarDescripcion = function (nuevaDescripcion) {
         this.descripcion = nuevaDescripcion 
-    }    
+        }    
         
 }
 
 function listarGastos() {
-    
+    return gastos;
 }
 
 function anyadirGasto() {
