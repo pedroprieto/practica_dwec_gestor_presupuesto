@@ -19,33 +19,60 @@ function mostrarPresupuesto() {
     return texto;
 }
 
-function CrearGasto(desc, gasto) {
+function CrearGasto(desc, gasto, fecha, ...etiquetas) {
     if (gasto >= 0) {
-        this.valor = gasto
+        this.valor = gasto;
     } else {
-        this.valor = 0
+        this.valor = 0;
     }
-    this.descripcion = desc,
+
+    this.descripcion = desc;
+
+    etiquetas = anyadirEtiquetas(...etiquetas);
+
+    if (etiquetas == null) {
+        this.etiquetas = [];
+    } else {
+        this.etiquetas = anyadirEtiquetas(...etiquetas);
+    }
+
+    fecha = Date.parse(fecha);
+
+    if (fecha == null || isNaN(fecha)) {
+        this.fecha = +new Date();
+    } else {
+        this.fecha = fecha;
+    }
+
     this.actualizarValor = function (valorActualizado) {
         if (valorActualizado >= 0) {
-            this.valor = valorActualizado
+            this.valor = valorActualizado;
         }
-    },
-    this.mostrarGasto = function(){
-        let texto = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+    }
+    this.mostrarGastoCompleto = function () {
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. 
+        a fecha de ${this.fecha} con las etiquetas: ${this.etiquetas}`;
         return texto;
-        },
+    }
     this.actualizarDescripcion = function (nuevaDescripcion) {
-        this.descripcion = nuevaDescripcion 
-        }    
-        
+        this.descripcion = nuevaDescripcion;
+    }
+
+
 }
 
 function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {
+function anyadirGasto(gasto) {
+    //TODO: TERMINAR
+    var id = idGasto;
+    idGasto++;
+
+    var lista = [id, gasto];
+
+    gastos.push(lista);
 
 }
 
@@ -60,6 +87,18 @@ function calcularTotalGastos() {
 function calcularBalance() {
     
 }
+
+function anyadirEtiquetas(...Args) {
+    var lista = [];
+
+    for (const arg of Args) {
+        if (lista.includes(arg) == false) {
+            lista.push(arg);
+        }
+    }
+    return lista;
+}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado

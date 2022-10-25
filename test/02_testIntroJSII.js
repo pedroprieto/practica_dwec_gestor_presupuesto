@@ -61,7 +61,6 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
         assert.equal(gasto6.etiquetas[0], "casa");
         assert.equal(gasto6.etiquetas[1], "supermercado");
         assert.equal(gasto6.etiquetas[2], "comida");
-
     });
 
     it("Método 'mostrarGastoCompleto' del objeto gasto", function() {
