@@ -49,9 +49,18 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
             this.valor = valorActualizado;
         }
     }
+
     this.mostrarGastoCompleto = function () {
-        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. 
-        a fecha de ${this.fecha} con las etiquetas: ${this.etiquetas}`;
+        
+        var fechaLocal = new Date(fecha).toLocaleString();
+
+
+        let texto = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €." + "\n" + 
+                    "Fecha: " + fechaLocal + "\n" +
+                    "Etiquetas:\n";
+        for (var i = 0; i < this.etiquetas.length; i++) {
+            texto += "- " + etiquetas[i] + "\n";
+        }
         return texto;
     }
     this.actualizarDescripcion = function (nuevaDescripcion) {
@@ -98,7 +107,6 @@ function anyadirEtiquetas(...Args) {
     }
     return lista;
 }
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
