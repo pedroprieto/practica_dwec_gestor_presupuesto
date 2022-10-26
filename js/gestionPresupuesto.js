@@ -53,4 +53,5 @@ export   {
     borrarGasto
     calcularTotalGastos
     calcularBalance
+    
 }
