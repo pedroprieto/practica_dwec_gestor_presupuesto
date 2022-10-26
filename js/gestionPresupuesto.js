@@ -1,27 +1,21 @@
 let presupuesto = 0;
 
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
-// TODO: Variable global
-
-
-function actualizarPresupuesto(cantidad) {
-    if(cantidad >= 0){ 
+function actualizarPresupuesto(cantidad){
+    if (cantidad >= 0){
         return presupuesto = cantidad;
-    }
-    else{
+    } else{
         return -1;
-        console.log ("Error");
+        console.log("Presupuesto inferior a 0");
     }
 }
 
 function mostrarPresupuesto() {
-   return `Tu presupuesto actual es  de ${presupuesto} €` ;
+   return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
-    if (valor < 0){
+    if (valor < 0 || isNaN(valor)){
         this.valor = 0;
     }
     else{
@@ -35,12 +29,10 @@ function CrearGasto(descripcion, valor) {
         return this.descripcion;
     }
     this.actualizarValor = function(valor){
-        if (valor < 0){
-            this.valor = 0;
+        if (valor >= 0 & isNaN(valor) == false){
+            this.valor = valor;
         }
-        else{
-            return this.valor;
-        } 
+        return this.valor;
     }
 }
 
