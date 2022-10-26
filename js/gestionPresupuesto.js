@@ -39,6 +39,11 @@ function CrearGasto(descrip, val) {
         }
     }
 }
+function listarGastos();
+function anyadirGasto() { };
+function borrarGasto();
+function calcularTotalGastos();
+function calcularBalance();
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -53,5 +58,4 @@ export   {
     borrarGasto
     calcularTotalGastos
     calcularBalance
-    
 }
