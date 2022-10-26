@@ -1,13 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
-    
         {
             "args": [
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceFolder}/test/01_testIntroJSI.js"
+                //"${workspaceFolder}/test/01_testIntroJSI.js",
+                "${workspaceFolder}/test/02_testIntroJSII.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "01 - Fundamentos de JS I - Tests",
