@@ -1,3 +1,5 @@
+"use strict"
+
 let presupuesto = 0; 
 
 function actualizarPresupuesto(par1) {
@@ -16,12 +18,10 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descrip, val) {
-
+    this.descripcion = descrip;
     if (val > 0) {
-        this.descripcion = descrip;
         this.valor = val;
     } else {
-        this.descripcion = descrip;
         this.valor = 0;      
     }
     this.mostrarGasto = function () {
@@ -37,8 +37,6 @@ function CrearGasto(descrip, val) {
         }
     }
 }
-
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
