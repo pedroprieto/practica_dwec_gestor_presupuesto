@@ -71,12 +71,12 @@
           for (let gasto of datos.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}) ){
             datos.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
           }
-          for (let gasto of datos.filtrarGastos({etiquetasTiene: ["comida","camion"], valorMaximo:50}) ){
+          for (let gasto of datos.filtrarGastos({etiquetasTiene: ["comida","transporte"], valorMaximo:50}) ){
             datos.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
           }
           datos.mostrarGastosAgrupadosWeb('agrupacion-dia',datos.agruparGastos("dia"),"día");
           datos.mostrarGastosAgrupadosWeb('agrupacion-mes',datos.agruparGastos("mes"),"mes");
-          datos.mostrarGastosAgrupadosWeb('agrupacion-anyo',datos.agruparGastos("anyo"),"anyo");
+          datos.mostrarGastosAgrupadosWeb('agrupacion-anyo',datos.agruparGastos("anyo"),"año");
         </script>
 
     </body>
