@@ -40,22 +40,14 @@ function anyadirGasto(gasto) {
 }
 
 function borrarGasto(id) {   
-    /*if(gastos.length <= id) {
-        if((gastos.includes(id,0))){
-            gastos.splice(id,1);
+   let indice = 0;
+
+   for (let i of gastos) {
+        if(i.id == id) {
+            indice = gastos.indexOf(i);
+            gastos.splice(indice, 1);
         }
-    }*/
-
-
-    let incluido = gastos.find(element => element.id == id);
-
-    if(incluido != undefined){
-        gastos.splice(id, 1);
-        //idGasto = gastos.length;
-    }
-
-   /* gastos.splice(id, 1);*/
-
+   }
 }
 
 function calcularTotalGastos() {
@@ -106,7 +98,7 @@ function CrearGasto(descr, val, fech, ...etiq) {
 
     this.mostrarGastoCompleto = function() {
         let gastoDesc = this.mostrarGasto() + ".\n";
-        let fechFormat = "Fecha: " + Date(this.fecha) + "\n";
+        let fechFormat = "Fecha: " + this.fecha.toLocaleString() + "\n";
         let resultEtiq ="Etiquetas:\n";
         let i= 0;
 
