@@ -27,9 +27,9 @@ function mostrarPresupuesto() {
 
 function listarGastos() {
     
-    for(let i=0; i<gastos.length;i++) {
+    /*for(let i=0; i<gastos.length;i++) {
         console.log(gastos[i]);
-    }
+    }*/
     return (gastos);
 }
 
@@ -51,14 +51,13 @@ function borrarGasto(id) {
 }
 
 function calcularTotalGastos() {
-    let totalG=0;
-    let i;
-    if(gastos.length != 0){
-        for(i=0;i < gastos.length;i++) {
-            totalG += parseInt(gastos[i].valor);
-        }
+    let total = 0;
+
+    for(let i of gastos) {
+        total += i.valor;
     }
-    return totalG;
+
+    return total;
 }
 
 function calcularBalance() {
