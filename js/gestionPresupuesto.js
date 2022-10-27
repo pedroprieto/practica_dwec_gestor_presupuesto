@@ -105,8 +105,16 @@ function CrearGasto(descr, val, fech, ...etiq) {
     }
 
     this.mostrarGastoCompleto = function() {
-    let gastoDesc = "Gasto correspodiente a " + this.descripcion + " con valor " + this.valor + " €.\n";
-    let fechFormat = "Fecha: " + this.fecha;
+        let gastoDesc = this.mostrarGasto() + ".\n";
+        let fechFormat = "Fecha: " + Date(this.fecha) + "\n";
+        let resultEtiq ="Etiquetas:\n";
+        let i= 0;
+
+        for(i=0; i < gastos.length; i++){
+            resultEtiq += "- " + this[i].etiquetas + "\n";
+        }
+
+        return (gastoDesc + fechFormat + resultEtiq);
     }
 
     this.actualizarFecha = function(paramFecha) {
@@ -125,8 +133,15 @@ function CrearGasto(descr, val, fech, ...etiq) {
         }
     }
 
-    this.borrarEtiquetas = function() {
-    
+    this.borrarEtiquetas = function(...bEtiq) {
+        let i,entrada;
+
+        for(i=0; i < bEtiq.length; i++) {
+            if(this.etiquetas.includes(bEtiq[i],0)) {
+                entrada = this.etiquetas.indexOf(bEtiq[i],0);
+                this.etiquetas.splice(entrada, 1);
+            }
+        }
     }
 
 
