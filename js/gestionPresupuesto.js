@@ -7,12 +7,14 @@ let idGasto = 0;
 
 function actualizarPresupuesto(param) {
     // TODO
+    let nerror= -1;
+
     if (param >= 0) {
         presupuesto = param;
         return presupuesto;
     } else {
         console.log ("Presupuesto no válido.");
-        return (-1);
+        return (nerror);
     }
 }
 
@@ -24,38 +26,76 @@ function mostrarPresupuesto() {
 }
 
 function listarGastos() {
+    
+    for(let i=0; i<gastos.length;i++) {
+        console.log(gastos[i]);
+    }
     return (gastos);
 }
 
 function anyadirGasto(gasto) {
     gasto.id = idGasto;
-    idGasto ++;
     gastos.push(gasto);
+    idGasto ++;
 }
 
-function borrarGasto() {
+function borrarGasto(id) {   
+    /*if(gastos.length <= id) {
+        if((gastos.includes(id,0))){
+            gastos.splice(id,1);
+        }
+    }*/
+
+
+    let incluido = gastos.find(element => element.id == id);
+
+    if(incluido != undefined){
+        gastos.splice(id, 1);
+        //idGasto = gastos.length;
+    }
+
+   /* gastos.splice(id, 1);*/
 
 }
 
 function calcularTotalGastos() {
-
+    let totalG=0;
+    let i;
+    if(gastos.length != 0){
+        for(i=0;i < gastos.length;i++) {
+            totalG += parseInt(gastos[i].valor);
+        }
+    }
+    return totalG;
 }
 
 function calcularBalance() {
+    let totGast = 0;
+    let balance = 0;
 
+    totGast = calcularTotalGastos();
+    balance = presupuesto - totGast;
+
+    return(balance);
 }
 
 function CrearGasto(descr, val, fech, ...etiq) {
     // TODO
+    this.id = idGasto;
     this.descripcion = descr;
     this.valor = 0;
-
+    this.etiquetas = [];
     this.fecha = Date.now();
+
+    /*if(val >= 0){
+        this.valor = val;
+    }*/
+
     if(Date.parse(fech) !== null) {
         this.fecha = fech;
     }
 
-    this.etiquetas = [];
+
 
     //métodos
     this.mostrarGasto = function() {
@@ -98,6 +138,10 @@ function CrearGasto(descr, val, fech, ...etiq) {
     if(etiq){
         this.anyadirEtiquetas(...etiq);
     }
+
+    if(val){
+        this.actualizarValor(val);
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -106,10 +150,10 @@ function CrearGasto(descr, val, fech, ...etiq) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
+    CrearGasto,
     listarGastos,
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance,
-    CrearGasto
+    calcularBalance
 }
