@@ -87,15 +87,6 @@ function CrearGasto(descr, val, fech, ...etiq) {
     this.etiquetas = [];
     this.fecha = Date.now();
 
-    /*if(val >= 0){
-        this.valor = val;
-    }*/
-
-    if(Date.parse(fech) !== null) {
-        this.fecha = fech;
-    }
-
-
 
     //métodos
     this.mostrarGasto = function() {
@@ -118,8 +109,12 @@ function CrearGasto(descr, val, fech, ...etiq) {
     let fechFormat = "Fecha: " + this.fecha;
     }
 
-    this.actualizarFecha = function() {
-    
+    this.actualizarFecha = function(paramFecha) {
+        let data = Date.parse(paramFecha);
+
+        if(data){
+            this.fecha = data;
+        }
     }
 
     this.anyadirEtiquetas = function(...arg) {
@@ -134,6 +129,11 @@ function CrearGasto(descr, val, fech, ...etiq) {
     
     }
 
+
+
+    if(fech){
+        this.actualizarFecha(fech);
+    }
 
     if(etiq){
         this.anyadirEtiquetas(...etiq);
