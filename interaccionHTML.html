@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            <!-- TODO -->
+            Gestor de Presupuesto - Pon aquí tu nombre y apellidos
+        </title>
+    </head>
+
+    <body>
+        <div id="aplicacion">
+            <div id="presupuesto">
+            </div>
+
+            <div id="gastos-totales">
+            </div>
+
+            <div id="balance-total">
+            </div>
+
+            <div id="listado-gastos-completo">
+            </div>
+
+            <div id="listado-gastos-filtrado-1">
+            </div>
+
+            <div id="listado-gastos-filtrado-2">
+            </div>
+
+            <div id="listado-gastos-filtrado-3">
+            </div>
+
+            <div id="listado-gastos-filtrado-4">
+            </div>
+
+            <div id="agrupacion-dia">
+            </div>
+
+            <div id="agrupacion-mes">
+            </div>
+
+            <div id="agrupacion-anyo">
+            </div>
+
+        </div>
+
+        <!--
+             TODO: Cargar el script js/generarDatosEstaticos.js
+
+             Cargar script al final para que se haya cargado todo el HTML previo.
+             El script se debe cargar con el atributo type="module" porque vamos a utilizar "import"
+             https://es.javascript.info/modules-intro#que-es-un-modulo
+        -->
+        <script type="module">
+          import * as datos from './js/generarDatosEstaticos.js';
+
+          datos.mostrarDatoEnId('presupuesto',datos.mostrarPresupuesto());
+          datos.mostrarDatoEnId('gastos-totales',datos.calcularTotalGastos());
+          datos.mostrarDatoEnId('balance-total',datos.calcularBalance());
+          for (let gasto of datos.filtrarGastos({}) ){
+            datos.mostrarGastoWeb('listado-gastos-completo',gasto);
+          }
+          for (let gasto of datos.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-10-02"}) ){
+            datos.mostrarGastoWeb('listado-gastos-filtrado-1',gasto);
+          }
+          for (let gasto of datos.filtrarGastos({valorMinimo:50}) ){
+            datos.mostrarGastoWeb('listado-gastos-filtrado-2',gasto);
+          }
+          for (let gasto of datos.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}) ){
+            datos.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
+          }
+          for (let gasto of datos.filtrarGastos({etiquetasTiene: ["comida","camion"], valorMaximo:50}) ){
+            datos.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
+          }
+          datos.mostrarGastosAgrupadosWeb('agrupacion-dia',datos.agruparGastos("dia"),"día");
+          datos.mostrarGastosAgrupadosWeb('agrupacion-mes',datos.agruparGastos("mes"),"mes");
+          datos.mostrarGastosAgrupadosWeb('agrupacion-anyo',datos.agruparGastos("anyo"),"anyo");
+        </script>
+
+    </body>
+</html>
