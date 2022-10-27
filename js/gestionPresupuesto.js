@@ -111,6 +111,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.obtenerPeriodoAgrupacion = function(periodo){
 
         let dateDia = new Date(fecha)
+        
        
         if(periodo == "dia"){
 
@@ -120,14 +121,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             let month = dateDia.getMonth() + 1
             let year = dateDia.getFullYear()
 
-            if(month < 10){
+                                               
+            if(month < 10 && day < 10){
+                text = `${year}-0${month}-0${day}`
+            }
+            if(month > 10 && day > 10){
+                text = `${year}-${month}-${day}`
+            }
+            if(month < 10 && day > 10){
                 text = `${year}-0${month}-${day}`
-            }else{
-                text=`${year}-${month}-${day}`
+            }
+            if(month > 10 && day < 10){
+                text =`${year}-${month}-0${day}`
             }
             
             return text;
         }
+
         if(periodo == "mes"){
 
            
@@ -222,7 +232,14 @@ export {
 
 
 
+// let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
 
+// gasto1.obtenerPeriodoAgrupacion("mes");
+// // Resultado: "2021-09"
+// gasto1.obtenerPeriodoAgrupacion("anyo");
+// // Resultado: "2021"
+// gasto1.obtenerPeriodoAgrupacion("dia");
+// // Resultado: "2021-09-06"
 
 // // Ejecuciones
 // let gasto1 = new CrearGasto("Gasto 1");
