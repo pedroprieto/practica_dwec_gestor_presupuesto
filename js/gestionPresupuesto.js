@@ -1,3 +1,4 @@
+"use strict"
 let presupuesto = 0;
 let gastos =[];
 let idGasto = 0;
@@ -17,6 +18,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
+
     if (valor < 0 || isNaN(valor)){
         this.valor = 0;
     } else{
@@ -24,7 +26,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.mostrarGasto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        let texto = "";
+        texto = texto + `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        return texto;
     }
 
     this.actualizarDescripcion = function(descripcion){
@@ -33,42 +37,55 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.actualizarValor = function(valor){
-        if (valor >= 0 & isNaN(valor) == false){
+        if (valor >= 0 & !isNaN(valor)){
             this.valor = valor;
         }
         return this.valor;
     }
 
-    if (fecha == null || isNaN(fecha)){
-        fecha = Date.parse(new Date());
-         this.fecha = fecha;
+    if (fecha == null || !isNaN(Date.parse(fecha))){
+        this.fecha = Date.parse(new Date());
     } else{
-        fecha = Date.parse(fecha);
-        this.fecha = fecha; 
+        this.fecha = Date.parse(fecha);
     }
 
     this.etiquetas = [];
-        if(etiquetas.length !=0){
-            for (let etiqueta of etiquetas){
-                this.etiquetas.push(etiquetas[etiqueta]);
+    if (etiquetas != null || etiquetas.length>0){
+        this.anyadirEtiquetas(...etiquetas);
+    } 
+
+    this.actualizarFecha = function(fechaActualizada){
+       fechaActualizada = Date.parse (fechaActualizada);
+       if (fechaActualizada){
+        this.fecha = fechaActualizada;
+       }
+    }
+
+    this.anyadirEtiquetas = function(...etiquetas){ 
+        for (let etiqueta of etiquetas){
+            if (this.etiquetas.includes(etiqueta) == false){
+                this.etiquetas.push(etiqueta);
             }
         }
-        else{
-          
-    }
-
-    this.actualizarFecha = function(){
-
-    }
-    this.anyadirEtiquetas = function(){
-
     }
 
     this.mostrarGastoCompleto = function(){
-
+        let texto = "";
+        texto = texto + this.mostrarGasto() + ".";
+        texto = texto + `\nFecha: ${new Date (this.fecha).toLocaleDateString()}\n`;
+        texto = texto + "Etiquetas:\n";
+        for (let i = 0; i<this.etiquetas.length; i++){
+            texto = texto + `-${this.etiquetas[i]}\n`;
+        }
+        return texto;
     }
-    this.borrarEtiquetas = function(){
 
+    this.borrarEtiquetas = function(...etiquetas){
+        for (let i = 0; i<this.etiquetas.length; i++){
+            if (this.etiquetas[i] == (this.etiquetas)){
+                this.etiquetas.splice(i, 1);
+            }
+        }
     }   
 }
 
@@ -83,7 +100,6 @@ function anyadirGasto(gastoAnyadir){
 }
 
 function borrarGasto(gastoBorrar){
-    let pos = 0;
     for (let i = 0; i<gastos.length; i++){
         if (gastos[i].id == gastoBorrar){
             gastos.splice(pos, 1);
@@ -109,13 +125,14 @@ function calcularBalance(){
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
+    CrearGasto,
     mostrarPresupuesto,
     actualizarPresupuesto,
     listarGastos,
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance,
-    CrearGasto
+    calcularBalance
+    
     
 }
