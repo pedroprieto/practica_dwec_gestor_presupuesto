@@ -91,7 +91,6 @@ function borrarGasto(gastoBorrar){
     }
 }
 
-
 function calcularTotalGastos(){
     let total = 0;
     for (let gasto of gastos){
@@ -100,7 +99,9 @@ function calcularTotalGastos(){
     return total;
 }
 function calcularBalance(){
-
+    let balance = 0;
+    balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 
