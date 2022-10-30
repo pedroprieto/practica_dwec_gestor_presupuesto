@@ -1,4 +1,4 @@
-"use strict"
+
 let presupuesto = 0;
 let gastos =[];
 let idGasto = 0;
@@ -43,23 +43,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return this.valor;
     }
 
+    this.fecha = Date.parse(fecha);
     if (fecha == null || !isNaN(Date.parse(fecha))){
         this.fecha = Date.parse(new Date());
-    } else{
-        this.fecha = Date.parse(fecha);
-    }
-
-    this.etiquetas = [];
-    if (etiquetas != null || etiquetas.length>0){
-        this.anyadirEtiquetas(...etiquetas);
     } 
-
-    this.actualizarFecha = function(fechaActualizada){
-       fechaActualizada = Date.parse (fechaActualizada);
-       if (fechaActualizada){
-        this.fecha = fechaActualizada;
-       }
-    }
 
     this.anyadirEtiquetas = function(...etiquetas){ 
         for (let etiqueta of etiquetas){
@@ -68,6 +55,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
     }
+
+    this.etiquetas = [];
+    if (etiquetas != null || etiquetas.length>0){
+        this.anyadirEtiquetas(...etiquetas);
+    } 
+
+    this.actualizarFecha = function(fechaActualizada){
+       if(!iNaN(Date.parse(fechaActualizada))){
+        this.fecha = Date.parse(fecha);
+    }
+       else{
+        this.fecha = Date.parse(fechaActualizada);
+       }
+      
+    }
+
+   
 
     this.mostrarGastoCompleto = function(){
         let texto = "";
@@ -93,6 +97,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 function listarGastos(){
     return gastos;
 }
+
 function anyadirGasto(gastoAnyadir){
     gastoAnyadir.id = idGasto;
     idGasto++;
@@ -102,7 +107,7 @@ function anyadirGasto(gastoAnyadir){
 function borrarGasto(gastoBorrar){
     for (let i = 0; i<gastos.length; i++){
         if (gastos[i].id == gastoBorrar){
-            gastos.splice(pos, 1);
+            gastos.splice(i, 1);
         }
     }
 }
@@ -114,6 +119,7 @@ function calcularTotalGastos(){
     }
     return total;
 }
+
 function calcularBalance(){
     let balance = 0;
     balance = presupuesto - calcularTotalGastos();
@@ -132,7 +138,6 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
-    
-    
+    calcularBalance,
+
 }
