@@ -44,7 +44,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.fecha = Date.parse(fecha);
-    if (fecha == null || !isNaN(Date.parse(fecha))){
+    if (fecha == null || isNaN(Date.parse(fecha))){
         this.fecha = Date.parse(new Date());
     } 
 
@@ -56,41 +56,40 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.borrarEtiquetas = function(...etiquetas){
+        let pos = 0;
+        for (let etiqueta of etiquetas){
+            pos = this.etiquetas.indexOf(etiqueta);
+            if (pos != -1){
+                this.etiquetas.splice(pos, 1);
+            }
+        }
+    }     
+
     this.etiquetas = [];
     if (etiquetas != null || etiquetas.length>0){
         this.anyadirEtiquetas(...etiquetas);
     } 
 
     this.actualizarFecha = function(fechaActualizada){
-       if(!iNaN(Date.parse(fechaActualizada))){
+       if(isNaN(Date.parse(fechaActualizada))){
         this.fecha = Date.parse(fecha);
     }
        else{
         this.fecha = Date.parse(fechaActualizada);
        }
-      
     }
-
-   
 
     this.mostrarGastoCompleto = function(){
         let texto = "";
         texto = texto + this.mostrarGasto() + ".";
-        texto = texto + `\nFecha: ${new Date (this.fecha).toLocaleDateString()}\n`;
+        texto = texto + `\nFecha: ${new Date (this.fecha).toLocaleString()}\n`;
         texto = texto + "Etiquetas:\n";
         for (let i = 0; i<this.etiquetas.length; i++){
-            texto = texto + `-${this.etiquetas[i]}\n`;
+            texto = texto + `- ${this.etiquetas[i]}\n`;
         }
         return texto;
     }
-
-    this.borrarEtiquetas = function(...etiquetas){
-        for (let i = 0; i<this.etiquetas.length; i++){
-            if (this.etiquetas[i] == (this.etiquetas)){
-                this.etiquetas.splice(i, 1);
-            }
-        }
-    }   
 }
 
 
@@ -115,7 +114,7 @@ function borrarGasto(gastoBorrar){
 function calcularTotalGastos(){
     let total = 0;
     for (let gasto of gastos){
-        total = total + gasto.gastos;
+        total = total + gasto.valor;
     }
     return total;
 }
