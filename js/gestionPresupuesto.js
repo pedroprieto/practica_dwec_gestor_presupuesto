@@ -15,13 +15,13 @@ function actualizarPresupuesto(par1) {
 }
 
 function mostrarPresupuesto() {
+
     let text = "Tu presupuesto actual es de " + presupuesto + " €";
     return text; 
 }
 
-function CrearGasto(descrip, val, fecha, etiqueta) {
-    let fecha;
-    let etiquetas;
+function CrearGasto(descrip, val, fecha, ...etiqueta) {
+    //Propiedades del objeto
     this.descripcion = descrip;
     if (val > 0) {
         this.valor = val;
@@ -40,31 +40,59 @@ function CrearGasto(descrip, val, fecha, etiqueta) {
             this.valor = val;
         }
     };
-
-    if (si esta vacio fecha)
+    if (fecha)
     {
         fecha = new Date(timestamp); // Almacena en fecha, la fecha actual en formato timestamp.
-    }else { 
-       fecha = new Date(Date.parse(fecha)); // Almacena en fecha, la fecha que pasan por parametros.
+        this.fecha = fecha;
     }
+    else { 
+        fecha = new Date(Date.parse(fecha)); // Almacena en fecha, la fecha que pasan por parametros.
+        this.fecha = fecha;
+    }
+    this.etiquetas = [];
+    if (this.etiquetas.length >= 0) {
+        for (let estiqueta in etiquetas)
+        { 
+            this.etiquetas.push(estiquetas[estiqueta]); //Ver si funciona y apuntar el porq.
+        }
+    }
+    else this.etiquetas = []; 
                     //TODO: crear las condiciones de if para fecha y etiquetas=[]; si no entra por parametro.
-    //! Pendiente ejercicio Función CrearGasto y método obj gasto.
-    // this.etiquetas.anyadirEtiquetas(etiquet);//no se si va
+    this.actualizarFecha = function (newDate) { 
+        nuevaFecha = date.parse(newDate);
+        if (nuevaFecha) {
+            this.fecha = nuevaFecha;
+         }
+
+    };
+    this.anyadirEtiquetas = function (...etique) {
+        this.etiquetas.push[etique];
+
+     };//no se si va
+    this.borrarEtiquetas = function (...etique) { };
     this.mostrarGastoCompleto = function () { 
-
-        var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " € \n" + this.fecha + ":";
-       //! Pendiente  método obj gasto:  además..Para mostrar la fecha en formato localizado puedes utilizar el método toLocaleString()
-        //TODO: Falta añadir etiquetas, realizare un bucle para mostrar el array de Etiquetas:
-
+     var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " € \n" ;
+        resultado = resultado + "Fecha: " this.fecha + "\n Etiquetas: \n";
+        for (let i = 0; i < this.etiquetas; i++) {
+            resultado = resultado + this.etiquetas[i] + "\n";
+        }         
+     //! Pendiente  método obj gasto:  además..Para mostrar la fecha en formato localizado puedes utilizar el método toLocaleString()
         return resultado;
     }
 }
-//listarGastos: Elimina un elem del array "gasto" pasando por parametro el id. 
+//Función sin parám. devuelve var global gastos - Elimina un elem del array "gasto" pasando por parametro el id. 
 function listarGastos() { 
     return gastos;
 }
-function anyadirGasto() { }
-function borrarGasto() { }
+
+function anyadirGasto(gasto) { 
+    gastos.id = idGasto;
+    idGasto++;
+    gastos.push(gasto); //Porqué el push?
+}
+function borrarGasto(id) { 
+   let pos = 0;
+}
 function calcularTotalGastos() { }
 function calcularBalance() { }
 
