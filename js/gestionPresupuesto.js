@@ -16,7 +16,7 @@ function actualizarPresupuesto(par1) {
 
 function mostrarPresupuesto() {
 
-    let text = "Tu presupuesto actual es de " + presupuesto + " €";
+    let text = "Tu presupuesto actual es de " + presupuesto + " €"; //funciona
     return text; 
 }
 
@@ -40,26 +40,24 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
             this.valor = val;
         }
     };
-    if (fecha)
+
+    if (!fecha)
     {
-        fecha = new Date(timestamp); // Almacena en fecha, la fecha actual en formato timestamp.
-        this.fecha = fecha;
+        this.fecha = Date.parse(new Date()); // Almacena en fecha, la fecha actual en formato timestamp.//funciona
     }
     else { 
-        fecha = new Date(Date.parse(fecha)); // Almacena en fecha, la fecha que pasan por parametros.
-        this.fecha = fecha;
+        this.fecha = Date.parse(fecha); // Almacena en fecha, la fecha que pasan por parametros.     //funciona  
     }
     this.etiquetas = [];
-    if (this.etiquetas.length >= 0) {
-        for (let estiqueta in etiquetas)
+    if (etiqueta.length > 0) { //Funciona
+        for (let i in etiqueta)
         { 
-            this.etiquetas.push(estiquetas[estiqueta]); //Ver si funciona y apuntar el porq.
+            this.etiquetas.push(etiqueta[i]); //Funciona.
         }
     }
-    else this.etiquetas = []; 
-                    //TODO: crear las condiciones de if para fecha y etiquetas=[]; si no entra por parametro.
+//!          Falta revisar desde aquí
     this.actualizarFecha = function (newDate) { 
-        nuevaFecha = date.parse(newDate);
+        nuevaFecha = Date.parse(newDate);
         if (nuevaFecha) {
             this.fecha = nuevaFecha;
          }
@@ -67,12 +65,19 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
     };
     this.anyadirEtiquetas = function (...etique) {
         this.etiquetas.push[etique];
+    };//no se si va
+    
+    this.borrarEtiquetas = function (...etique) { 
+       
+        for (let i = 0; i < this.etiquetas.length; i++)
+            if (etiqueta[i] == etique)
+                this.etiquetas.silice(deleteCount, etiqueta[i]);
+                
+    };
 
-     };//no se si va
-    this.borrarEtiquetas = function (...etique) { };
     this.mostrarGastoCompleto = function () { 
      var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " € \n" ;
-        resultado = resultado + "Fecha: " this.fecha + "\n Etiquetas: \n";
+        resultado = resultado + "Fecha: " + this.fecha + "\n" + "Etiquetas: \n" ;
         for (let i = 0; i < this.etiquetas; i++) {
             resultado = resultado + this.etiquetas[i] + "\n";
         }         
@@ -84,16 +89,27 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
 function listarGastos() { 
     return gastos;
 }
-
 function anyadirGasto(gasto) { 
     gastos.id = idGasto;
     idGasto++;
-    gastos.push(gasto); //Porqué el push?
+    gastos.push(gasto); 
 }
-function borrarGasto(id) { 
-   let pos = 0;
+function borrarGasto(idBorrar) { 
+    for (let i = 0; i < gastos.length; i++)
+    {
+        if (gastos[i].id == id)Borrar
+            gastos.silice(i, 1);
+    } 
 }
-function calcularTotalGastos() { }
+function calcularTotalGastos() {
+    let total = 0; 
+    for (let i of gastos)
+    {
+        total = total + i.valor;
+    } 
+    return total;
+}
+ 
 function calcularBalance() { }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
