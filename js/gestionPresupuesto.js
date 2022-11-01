@@ -59,11 +59,71 @@ function calcularBalance () {
     balance = presupuesto - calcularTotalGastos();
     return balance;
 }
-function filtrarGastos () {
+function filtrarGastos (opciones) {
+    let gastosFiltrados = {};
+         gastosFiltrados = gastos.filter(function(gasto) {
+            let resultado = true;
+            if (opciones.fechaDesde) {
+                if (gasto.fecha < Date.parse(opciones.fechaDesde)) {
+                    resultado = false;
+                }
+            }
+            if (opciones.fechaHasta) {
+                if (gasto.fecha > Date.parse(opciones.fechaHasta)) {
+                    resultado = false;
+                }
+            }
+            if (opciones.valorMinimo) {
+                if (gasto.valor < opciones.valorMinimo) {
+                    resultado = false;
+                }
+            }
+            if (opciones.valorMaximo) {
+                if (gasto.valor > opciones.valorMaximo) {
+                    resultado = false;
+                }
+            }
+            if (opciones.descripcionContiene) {
+                if (!gasto.descripcion.includes(opciones.descripcionContiene)) {
+                    resultado = false;
+                }
+            }
+            if (opciones.etiquetasTiene) {
+                let count = 0;
+                for (let etq of opciones.etiquetasTiene) {
+                    if (gasto.etiquetas.indexOf(etq)  > -1) {
+                        count++;
+                    }
+                }
+                if (count == 0) {
+                    resultado = false;
+                } 
+            }
+            return resultado;
+        });
+        return gastosFiltrados;
 
 }
 
-function agruparGastos () {
+function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta) {
+    let opciones = {};
+    opciones.periodo = periodo;
+    opciones.etiquetasTiene = etiquetas;
+    opciones.fechaDesde = fechaDesde;
+    opciones.fechaHasta = fechaHasta;
+    let gastosFiltrados = filtrarGastos(opciones);
+    let funcionReduce = function( acc, gasto) {
+        let pAgrup = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (acc[pAgrup]) {
+            acc[pAgrup] += gasto.valor;
+        } else {
+            acc[pAgrup] = gasto.valor;
+        }
+        //console.log( "GAsto : " + gasto.valor +" " + new Date(gasto.fecha));
+        return acc;
+    };
+    let acumulador = {};
+    return gastosFiltrados.reduce(funcionReduce, acumulador);
 
 }
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -151,9 +211,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         } else if (periodo == "anyo") {
             return fechaInter.substring(0,4);
         }
-
-
-
         return agruparPeriodo;
     }
 }
