@@ -36,12 +36,12 @@ function anyadirGasto (gasto) {
 }
 function borrarGasto (id) {
     // TODO
-    let pos = 0;
-    let gasto = id;
-    for (let i of gastos) {
-        if (i.id == gasto) {
-            pos = gastos.indexOf(i);
-            gastos.splice(pos, 1 );
+    //let pos = 0;
+    //let gasto = id;
+    for (let i=0; i<gastos.length; i++ ) {
+        if (gastos[i].id == id) {
+            //pos = gastos.indexOf(i);
+            gastos.splice(i, 1 );
         }
     }
 }
@@ -141,9 +141,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         } 
     },
     this.obtenerPeriodoAgrupacion = function (periodo) {
-        let agruparPeriodo = gastos.filter(periodo)
         // como agrupo?
-
+        let fecha = new Date(this.fecha);
+        let fechaInter =fecha.toISOString();
+        if (periodo == "dia") {
+            return fechaInter.substring(0,10);
+        } else if (periodo == "mes") {
+            return fechaInter.substring(0,7);
+        } else if (periodo == "anyo") {
+            return fechaInter.substring(0,4);
+        }
 
 
 
