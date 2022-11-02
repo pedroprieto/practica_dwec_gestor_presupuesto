@@ -1,16 +1,25 @@
-
+//Importamos para acceder a las funciones
+import * as gestPresupuesto from ("./gestionPresupuesto.js");
 
 //Funciones
-function mostrarDatoEnId (IdElemento, valor) {
+function mostrarDatoEnId (idElemento, valor) {
+
+    let datosId = document.getElementById(idElemento);
+
+    datosId.innerHTML = valor;
 
 }
 
-function mostrarGastoWeb (IdElemento, gasto) {
+function mostrarGastoWeb (idElemento, gasto) {
+
+    let datosId = document.getElementById(idElemento);
+    //Recorrer las etiquetas.
+
 
 }
 
 function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
-    
+
 }
 
 
