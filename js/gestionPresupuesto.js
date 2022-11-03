@@ -44,10 +44,12 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
         return this.etiquetas;
     }
 
-    this.borrarEtiquetas = function (...etiquetasAborrar) {
-        for (const etiqueta of etiquetasAborrar) {
-            if (this.etiquetas.includes(etiqueta) == true) {
-                this.etiquetas.splice(etiqueta);
+    this.borrarEtiquetas = function (...etiquetasABorrar) {
+        for (let i = 0; i < etiquetasABorrar.length; i++) {
+            for (let j = 0; j < this.etiquetas.length; j++){
+                if (etiquetasABorrar[i] == etiquetas[j]) {
+                    this.etiquetas.splice(j, 1);
+                }
             }
         }
     }
