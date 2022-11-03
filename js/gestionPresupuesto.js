@@ -220,7 +220,32 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
 
 
     //Función agruparGastos
-    function agruparGastos (){}
+    function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta){
+
+        return filtrarGastos ({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta })
+
+        .reduce (function (acc, gasto) {
+            let grupo = gasto.obtenerPeriodoAgrupacion (periodo);
+
+            acc [grupo] = (acc[grupo] || 0) + gasto.valor;
+
+            return acc;
+        },
+
+        {})
+    }
+    
+    //https://stackoverflow.com/questions/14446511/most-efficient-method-to-groupby-on-an-array-of-objects
+        //function groupBy(data, key){   
+        //return data
+        //.reduce(     (acc, cur) => {
+        //acc[cur[key]] = acc[cur[key]] || []; 
+        // if the key is new, initiate its value to an array, otherwise keep its own array value         
+        //acc[cur[key]].push(cur);         
+        //return acc;     
+        //}, 
+        //[]) 
+        //} 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
