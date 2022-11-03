@@ -196,6 +196,7 @@ function calcularTotalGastos() {
     let sumaGastos = 0;
 
     for (let i = 0; i < gastos.length; i++) {
+
         sumaGastos = sumaGastos + gastos[i].valor
     }
     return sumaGastos
@@ -206,9 +207,81 @@ function calcularBalance() {
     let balance = presupuesto - gastostotales;
     return balance
 }
-function filtrarGastos(){
-   
+
+
+function filtrarGastos(opciones)
+{
+    
+     return gastos.filter(function(gasto) 
+    {
+        let resultado = true;
+
+        if (opciones.fechaDesde)
+        {
+            if (gasto.fecha < Date.parse(opciones.fechaDesde))
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.fechaHasta)
+        {
+            if(gasto.fecha > Date.parse(opciones.fechaHasta))
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.valorMinimo) 
+        {
+            if (gasto.valor < opciones.valorMinimo) 
+            {
+                resultado = false;
+            }
+        }
+        
+        if (opciones.valorMaximo)
+        {
+            if (gasto.valor > opciones.valorMaximo)
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.descripcionContiene)
+        {
+            if (!gasto.descripcion.includes(opciones.descripcionContiene))
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.etiquetasTiene)
+        {           
+            let diferenteEtiqueta = true;
+            for (let i in opciones.etiquetasTiene)
+            {
+                for (let j in gasto.etiquetas)
+                {
+                    if (opciones.etiquetasTiene[i] == gasto.etiquetas[j])
+                    {                        
+                        diferenteEtiqueta = false;
+                    }
+                }
+            }
+
+            if (diferenteEtiqueta)
+            {
+                resultado = false;
+            }
+        }
+        
+        return resultado;
+    });
 }
+
+
+
 function agruparGastos(){
 
 }
@@ -230,10 +303,6 @@ export {
 }
 
 
-
-
-// let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
-
 // gasto1.obtenerPeriodoAgrupacion("mes");
 // // Resultado: "2021-09"
 // gasto1.obtenerPeriodoAgrupacion("anyo");
@@ -241,22 +310,32 @@ export {
 // gasto1.obtenerPeriodoAgrupacion("dia");
 // // Resultado: "2021-09-06"
 
-// // Ejecuciones
-// let gasto1 = new CrearGasto("Gasto 1");
-// let gasto2 = new CrearGasto("Gasto 2", 23.55);
-// let gasto3 = new CrearGasto("Gasto 3", 23.55, "2021-10-06T13:10" );
-// let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa" );
-// let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado" );
-// let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida" );
+// Ejecuciones
 
-// anyadirGasto(gasto1)
-// anyadirGasto(gasto2)
-// anyadirGasto(gasto3)
-// anyadirGasto(gasto4)
-// anyadirGasto(gasto5)
-// anyadirGasto(gasto6)
+// let gasto1 = new CrearGasto("1 Compra carne", 10, "2021-10-06", "casa", "comida" );
+// let gasto2 = new CrearGasto("2 Compra fruta y verdura", 10, "2021-09-06", "supermercado", "comida" );
+// let gasto3 = new CrearGasto("3 Bonobús", 30, "2020-05-26", "transporte" );
+// let gasto4 = new CrearGasto("4 Gasolina", 40, "2021-10-08", "transporte", "gasolina" );
+// let gasto5 = new CrearGasto("5 Seguro hogar", 50, "2021-09-26", "casa", "seguros" );
+// let gasto6 = new CrearGasto("6 Seguro coche", 60, "2021-10-06", "transporte", "seguros" );
+// anyadirGasto(gasto1);
+// anyadirGasto(gasto2);
+// anyadirGasto(gasto3);
+// anyadirGasto(gasto4);
+// anyadirGasto(gasto5);
+// anyadirGasto(gasto6);
 
 
-// calcularBalance()
 
-// console.log()
+// const awe = filtrarGastos({etiquetasTiene: ["comida"]})
+
+// console.log( awe )
+
+
+
+// fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse.
+// fechaHasta - Fecha máxima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse.
+// valorMinimo - Valor mínimo del gasto.
+// valorMaximo - Valor máximo del gasto.
+// descripcionContiene - Trozo de texto que deberá aparecer en la descripción. Deberá hacerse la comparación de manera que no se distingan mayúsculas de minúsculas.
+// etiquetasTiene
