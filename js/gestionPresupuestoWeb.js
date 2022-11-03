@@ -2,11 +2,14 @@
 import * as gestPresupuesto from ("./gestionPresupuesto.js");
 
 //Funciones
+
+
 function mostrarDatoEnId (idElemento, valor) {
 
     let datosId = document.getElementById(idElemento);
-
-    datosId.innerHTML = valor;
+    datosId.innerHTML = (valor);
+    document.presupuesto.append(datosId);
+    
 
 }
 
