@@ -28,12 +28,28 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
 
     this.descripcion = desc;
 
-    etiquetas = anyadirEtiquetas(...etiquetas);
+    this.etiquetas = etiquetas;
 
     if (etiquetas == null) {
         this.etiquetas = [];
-    } else {
-        this.etiquetas = anyadirEtiquetas(...etiquetas);
+    }
+
+    this.anyadirEtiquetas = function (...etiquetas) {
+
+        for (const etiqueta of etiquetas) {
+            if (this.etiquetas.includes(etiqueta) == false) {
+                this.etiquetas.push(etiqueta);
+            }
+        }
+        return this.etiquetas;
+    }
+
+    this.borrarEtiquetas = function (...etiquetasAborrar) {
+        for (const etiqueta of etiquetasAborrar) {
+            if (this.etiquetas.includes(etiqueta) == true) {
+                this.etiquetas.splice(etiqueta);
+            }
+        }
     }
 
     fecha = Date.parse(fecha);
@@ -42,6 +58,17 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
         this.fecha = +new Date();
     } else {
         this.fecha = fecha;
+    }
+
+    this.actualizarFecha = function (nuevaFecha) {
+        
+        nuevaFecha = Date.parse(nuevaFecha);
+
+        if (isNaN(nuevaFecha)) {
+            this.fecha = fecha;
+        } else {
+            this.fecha = +new Date(nuevaFecha);
+        }
     }
 
     this.actualizarValor = function (valorActualizado) {
@@ -95,17 +122,6 @@ function calcularTotalGastos() {
 
 function calcularBalance() {
     
-}
-
-function anyadirEtiquetas(...Args) {
-    var lista = [];
-
-    for (const arg of Args) {
-        if (lista.includes(arg) == false) {
-            lista.push(arg);
-        }
-    }
-    return lista;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
