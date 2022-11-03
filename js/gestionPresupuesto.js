@@ -31,7 +31,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     else {
         fecha = Date.now();
     }
-    this.fecha=fecha;
+    this.fecha = fecha;
 
     //Método mostrarGasto
     this.mostrarGasto = function () {
@@ -161,10 +161,66 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
     }
 
     //Función filtrarGastos
-    function filtrarGastos (){}
+    function filtrarGastos( {fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene} ){
+
+        return gastos.filter( function( gasto ) {
+    
+            let resultado = true;
+        
+            if ( fechaDesde ){
+                if( gasto.fecha < Date.parse( fechaDesde )){
+                    resultado = false;
+                }
+            } 
+    
+            if ( fechaHasta ){
+                if( gasto.fecha > Date.parse( fechaHasta )){
+                    resultado = false;
+                }
+            }
+    
+            if ( valorMinimo ){
+                if( gasto.valor < valorMinimo ){
+                    resultado = false;
+                }
+            }
+        
+            if ( valorMaximo ){
+                if( gasto.valor > valorMaximo ){
+                    resultado = false;
+                }
+            }
+    
+            if (descripcionContiene){
+                if( gasto.descripcion.indexOf( descripcionContiene ) == -1){
+                    resultado = false;
+                }
+            }
+    
+            if (etiquetasTiene){
+                let encontrado = false;
+    
+                for ( let a of gasto.etiquetas ){
+                    for ( let b of etiquetasTiene ){
+    
+                        if ( a == b ){
+                            encontrado = true;
+                        }
+                    }
+                }
+                if ( !encontrado ){
+                    resultado = false;
+                }
+            }
+        
+            return resultado;
+        }); 
+    }
+    
+
 
     //Función agruparGastos
-    function agruparGastos(){}
+    function agruparGastos (){}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
