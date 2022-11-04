@@ -43,10 +43,10 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
 
     if (!fecha)
     {
-        this.fecha = Date.parse(new Date()); // Almacena en fecha, la fecha actual en formato timestamp.//funciona
+        this.fecha = Date.parse(new Date()); // Almacena en fecha, la fecha actual en formato timestamp. - funciona
     }
     else { 
-        this.fecha = Date.parse(fecha); // Almacena en fecha, la fecha que pasan por parametros.     //funciona  
+        this.fecha = Date.parse(fecha); // Almacena en fecha, la fecha que pasan por parametros. - funciona  
     }
     this.etiquetas = [];
     if (etiqueta.length > 0) { //Funciona
@@ -57,7 +57,10 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
     }
 //!          Falta revisar desde aquí
     this.actualizarFecha = function (newDate) { 
-        nuevaFecha = Date.parse(newDate);
+       
+        if
+        nuevaFecha = new Date(newDate);
+
         if (nuevaFecha) {
             this.fecha = nuevaFecha;
          }
@@ -75,15 +78,15 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
                 
     };
 
-    this.mostrarGastoCompleto = function () { 
-     var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " € \n" ;
-        resultado = resultado + "Fecha: " + this.fecha + "\n" + "Etiquetas: \n" ;
-        for (let i = 0; i < this.etiquetas; i++) {
-            resultado = resultado + this.etiquetas[i] + "\n";
-        }         
-     //! Pendiente  método obj gasto:  además..Para mostrar la fecha en formato localizado puedes utilizar el método toLocaleString()
+    this.mostrarGastoCompleto = function () {
+        var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\n"
+            + "Fecha: " + new Date(this.fecha).toLocaleString() + "\n" + "Etiquetas:\n";
+            for (let i = 0; i < this.etiquetas.length; i++) {
+                resultado = resultado + "- "+ this.etiquetas[i] + "\n";
+            }
         return resultado;
-    }
+    };
+
 }
 //Función sin parám. devuelve var global gastos - Elimina un elem del array "gasto" pasando por parametro el id. 
 function listarGastos() { 
@@ -97,20 +100,23 @@ function anyadirGasto(gasto) {
 function borrarGasto(idBorrar) { 
     for (let i = 0; i < gastos.length; i++)
     {
-        if (gastos[i].id == id)Borrar
-            gastos.silice(i, 1);
+        if (gastos[i].id == id)
+            gastos.silice(i, 1);  // No se si funciona
     } 
 }
 function calcularTotalGastos() {
     let total = 0; 
     for (let i of gastos)
     {
-        total = total + i.valor;
+        total = total + i.valor; //No se si funciona
     } 
     return total;
 }
- 
-function calcularBalance() { }
+function calcularBalance() { 
+    gastoTotal = calcularTotalGastos();
+    calcularBalance = presupuesto - gastoTotal;
+    return calcularBalance;
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
