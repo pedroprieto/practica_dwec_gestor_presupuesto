@@ -55,12 +55,9 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
             this.etiquetas.push(etiqueta[i]); //Funciona.
         }
     }
-//!          Falta revisar desde aquí
     this.actualizarFecha = function (newDate) { 
        
-        if
-        nuevaFecha = new Date(newDate);
-
+        var nuevaFecha = Date.parse(newDate);
         if (nuevaFecha) {
             this.fecha = nuevaFecha;
          }
