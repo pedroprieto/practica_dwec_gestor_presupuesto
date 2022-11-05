@@ -7,8 +7,8 @@ import * as gestPresupuesto from ("./gestionPresupuesto.js");
 function mostrarDatoEnId (idElemento, valor) {
 
     let datosId = document.getElementById(idElemento);
-    datosId.innerHTML = (valor);
-    document.presupuesto.append(datosId);
+    datosId.innerHTML = valor;
+    //document.presupuesto.append(datosId);
     
 
 }
