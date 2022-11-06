@@ -10,7 +10,7 @@ function actualizarPresupuesto(par1) {  //Funciona
         return presupuesto;
     } else {
         console.log('Error');
-        
+
         return -1;
     }       
 }
@@ -98,17 +98,20 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
 function listarGastos() {                         //Funciona.
     return gastos; 
 }
-function anyadirGasto(gasto) {                    //Funciona.
-    gastos.id = idGasto;
+function anyadirGasto(paramGasto) {               //Funciona.
+    paramGasto.id = idGasto;
     idGasto++;
-    gastos.push(gasto); 
+    gastos.push(paramGasto); 
 }
+ /* funciona
+        gastos [] - Almacenará el listado de gastos que vaya introduciendo el usuario. Inicialmente contendrá un array vacío.
+        idGasto - Se utilizará para almacenar el identificador actual de cada gasto que se vaya añadiendo.Su valor inicial será 0. Se irá incrementando con cada gasto que se añada.*/
+ 
 function borrarGasto(idBorrar) { 
     for (let i = 0; i < gastos.length; i++)
     {
         if (gastos[i].id == id)
-            gastos.silice(i, 1);                 // No se si funciona
-    } 
+            gastos.silice(i, 1);                   } 
 }
 function calcularTotalGastos() {
     let total = 0; 
