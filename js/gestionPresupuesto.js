@@ -71,12 +71,16 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
         }
     };                                         
     
-    this.borrarEtiquetas = function (...etique) { 
-       
-        for (let i = 0; i < this.etiquetas.length; i++)
-            if (etiqueta[i] == etique)
-                this.etiquetas.silice(deleteCount, etiqueta[i]);
-                
+    this.borrarEtiquetas = function (...etique) {    //Funciona
+    
+        for (let pos = 0; pos < this.etiquetas.length; pos++) { 
+
+            for (let i = 0; i < etique.length; i++) {
+                var obtienePos = this.etiquetas.indexOf(etique[i]);
+                if(obtienePos >= 0)
+                    this.etiquetas.splice(obtienePos,1);
+                }
+            }      
     };
 
     this.mostrarGastoCompleto = function () {                        //Funciona.
