@@ -115,11 +115,11 @@ function borrarGasto(idBorrar) {                 //Funciona.
             gastos.splice(i, 1);
     } 
 }
-function calcularTotalGastos() {
+function calcularTotalGastos() {                //Funciona.
     let total = 0; 
     for (let i of gastos)
     {
-        total = total + i.valor;             //No se si funciona
+        total = total + i.valor;             
     } 
     return total;
 }
