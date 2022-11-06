@@ -107,11 +107,13 @@ function anyadirGasto(paramGasto) {               //Funciona.
         gastos [] - Almacenará el listado de gastos que vaya introduciendo el usuario. Inicialmente contendrá un array vacío.
         idGasto - Se utilizará para almacenar el identificador actual de cada gasto que se vaya añadiendo.Su valor inicial será 0. Se irá incrementando con cada gasto que se añada.*/
  
-function borrarGasto(idBorrar) { 
+function borrarGasto(idBorrar) {                 //Funciona.
+
     for (let i = 0; i < gastos.length; i++)
     {
-        if (gastos[i].id == id)
-            gastos.silice(i, 1);                   } 
+        if (gastos[i].id === idBorrar)
+            gastos.splice(i, 1);
+    } 
 }
 function calcularTotalGastos() {
     let total = 0; 
