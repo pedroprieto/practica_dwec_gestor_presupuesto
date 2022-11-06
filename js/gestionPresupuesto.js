@@ -57,15 +57,19 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
     }
     this.actualizarFecha = function (newDate) { 
        
-        var nuevaFecha = Date.parse(newDate);
+        var nuevaFecha = Date.parse(newDate);//Funciona.
         if (nuevaFecha) {
             this.fecha = nuevaFecha;
          }
 
     };
-    this.anyadirEtiquetas = function (...etique) {
-        this.etiquetas.push[etique];
-    };//no se si va
+    this.anyadirEtiquetas = function (...etique) {  //!No funciona me quedo aquí
+        for (let item of etique) {
+            var compruebaEtiqueta= this.etiquetas.includes(item)
+            if (!compruebaEtiqueta)
+                this.etiquetas.push(item);    //Funciona
+        }
+    };                                         
     
     this.borrarEtiquetas = function (...etique) { 
        
@@ -75,7 +79,7 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
                 
     };
 
-    this.mostrarGastoCompleto = function () {
+    this.mostrarGastoCompleto = function () {                        //Funciona.
         var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\n"
             + "Fecha: " + new Date(this.fecha).toLocaleString() + "\n" + "Etiquetas:\n";
             for (let i = 0; i < this.etiquetas.length; i++) {
