@@ -4,12 +4,13 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-function actualizarPresupuesto(par1) {
+function actualizarPresupuesto(par1) {  //Funciona
     if (par1 >= 0) {
         presupuesto = par1;
         return presupuesto;
     } else {
         console.log('Error');
+        
         return -1;
     }       
 }
@@ -49,25 +50,25 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
         this.fecha = Date.parse(fecha); // Almacena en fecha, la fecha que pasan por parametros. - funciona  
     }
     this.etiquetas = [];
-    if (etiqueta.length > 0) { //Funciona
+    if (etiqueta.length > 0) {                         //Funciona
         for (let i in etiqueta)
         { 
-            this.etiquetas.push(etiqueta[i]); //Funciona.
+            this.etiquetas.push(etiqueta[i]);          //Funciona.
         }
     }
-    this.actualizarFecha = function (newDate) { 
+    this.actualizarFecha = function (newDate) {        //Funciona.
        
-        var nuevaFecha = Date.parse(newDate);//Funciona.
+        var nuevaFecha = Date.parse(newDate);   
         if (nuevaFecha) {
             this.fecha = nuevaFecha;
          }
 
     };
-    this.anyadirEtiquetas = function (...etique) {  //!No funciona me quedo aquí
+    this.anyadirEtiquetas = function (...etique) {   //Funciona
         for (let item of etique) {
             var compruebaEtiqueta= this.etiquetas.includes(item)
             if (!compruebaEtiqueta)
-                this.etiquetas.push(item);    //Funciona
+                this.etiquetas.push(item);   
         }
     };                                         
     
@@ -83,7 +84,7 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
             }      
     };
 
-    this.mostrarGastoCompleto = function () {                        //Funciona.
+    this.mostrarGastoCompleto = function () {       //Funciona.
         var resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\n"
             + "Fecha: " + new Date(this.fecha).toLocaleString() + "\n" + "Etiquetas:\n";
             for (let i = 0; i < this.etiquetas.length; i++) {
@@ -94,10 +95,10 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {
 
 }
 //Función sin parám. devuelve var global gastos - Elimina un elem del array "gasto" pasando por parametro el id. 
-function listarGastos() { 
-    return gastos;
+function listarGastos() {                         //Funciona.
+    return gastos; 
 }
-function anyadirGasto(gasto) { 
+function anyadirGasto(gasto) {                    //Funciona.
     gastos.id = idGasto;
     idGasto++;
     gastos.push(gasto); 
@@ -106,18 +107,18 @@ function borrarGasto(idBorrar) {
     for (let i = 0; i < gastos.length; i++)
     {
         if (gastos[i].id == id)
-            gastos.silice(i, 1);  // No se si funciona
+            gastos.silice(i, 1);                 // No se si funciona
     } 
 }
 function calcularTotalGastos() {
     let total = 0; 
     for (let i of gastos)
     {
-        total = total + i.valor; //No se si funciona
+        total = total + i.valor;             //No se si funciona
     } 
     return total;
 }
-function calcularBalance() { 
+function calcularBalance() {                  
     gastoTotal = calcularTotalGastos();
     calcularBalance = presupuesto - gastoTotal;
     return calcularBalance;
