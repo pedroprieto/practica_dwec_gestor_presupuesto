@@ -36,4 +36,3 @@ export {
 export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb } from './gestionPresupuestoWeb.js';
 
 
-

@@ -15,11 +15,9 @@ function actualizarPresupuesto(cantidad){
       return presupuesto;
     }
     else{
-      console.log("Error: la cantidad para añadir al presupuesto no puede ser negativa");
       return -1;
     }
   }
-  console.log("Error: la cantidad tiene que ser un valor numerico real");
   return -1;
 }
 /*===========================================*/

@@ -5,12 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             <!-- TODO -->
-            Gestor de Presupuesto - Pon aquí tu nombre y apellidos
+            Gestor de Presupuesto - Luis Gilabert Blanes 
         </title>
+        <link rel="stylesheet" href="css/estilos.css">
     </head>
 
     <body>
         <div id="aplicacion">
+
+            <div id="controlesprincipales">
+              <button type="button" id="actualizarpresupuesto">
+                Actualizar presupuesto
+              </button>
+              <button type="button" id="anyadirgasto">
+                Añadir gasto
+              </button>
+            </div>
+
             <div id="presupuesto">
             </div>
 
@@ -54,9 +65,16 @@
              https://es.javascript.info/modules-intro#que-es-un-modulo
         -->
         <script type="module">
-          import * as datos from './js/generarDatosEstaticos.js';
+          import * as gesPresupuesto from './js/gestionPresupuestoWeb.js';
+          document.getElementById('actualizarpresupuesto').addEventListener('click', gesPresupuesto.actualizarPresupuestoWeb);
+          document.getElementById('anyadirgasto').addEventListener('click', gesPresupuesto.nuevoGastoWeb);
+        </script>
 
-          datos.mostrarDatoEnId('presupuesto',datos.mostrarPresupuesto());
+
+        <script type="module">
+         //: import * as datos from './js/generarDatosEstaticos.js';
+
+/*          datos.mostrarDatoEnId('presupuesto',datos.mostrarPresupuesto());
           datos.mostrarDatoEnId('gastos-totales',datos.calcularTotalGastos());
           datos.mostrarDatoEnId('balance-total',datos.calcularBalance());
           for (let gasto of datos.filtrarGastos({}) ){
@@ -76,7 +94,7 @@
           }
           datos.mostrarGastosAgrupadosWeb('agrupacion-dia',datos.agruparGastos("dia"),"día");
           datos.mostrarGastosAgrupadosWeb('agrupacion-mes',datos.agruparGastos("mes"),"mes");
-          datos.mostrarGastosAgrupadosWeb('agrupacion-anyo',datos.agruparGastos("anyo"),"año");
+          datos.mostrarGastosAgrupadosWeb('agrupacion-anyo',datos.agruparGastos("anyo"),"año");*/
         </script>
 
     </body>

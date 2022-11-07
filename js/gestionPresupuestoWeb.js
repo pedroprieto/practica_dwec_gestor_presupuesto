@@ -1,3 +1,4 @@
+import * as oprcpre from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor){
   document.getElementById(idElemento).append(valor);
@@ -34,11 +35,93 @@ function mostrarGastosAgrupadosWeb(idElemento, arr_agrup, periodo){
   document.getElementById(idElemento).append(div_agrup);
 }
 
+/*********************************************/
+/*    FUNCION CREATE ELEMENT                 */
+/*===========================================*/
 function create_element( element, attribute, attribute_value, text){
   let elemnt=document.createElement(element);
   elemnt.setAttribute(attribute,attribute_value);
   elemnt.innerHTML=text;
   return elemnt;
 }
+/*===========================================*/
 
-export {mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb};
+
+/*********************************************/
+/*    FUNCION ACTUALIZAR PRESUPUESTO WEB     */
+/*===========================================*/
+function actualizarPresupuestoWeb(){
+  let valor_presupuesto = Number(prompt("Introduzca cantidad para ingresar: "));
+  while (isNaN(valor_presupuesto) ){
+    valor_presupuesto = Number(prompt("Ingrese cantidad (Valor, un número decimal): ")); 
+  }
+  BorradoZonasGasto();
+  oprcpre.actualizarPresupuesto(valor_presupuesto);
+  repintar();
+}
+/*===========================================*/
+
+
+
+
+
+/*********************************************/
+/*    FUNCION NUEVO GASTO WEB                */
+/*===========================================*/
+function nuevoGastoWeb(){
+  let descripcion=prompt("Introduzca la descripcion del gasto ");
+  let valor = Number(prompt("Introduzca el valor del gasto (decimal): "));
+  while ( isNaN(valor) ){
+    valor=Number(prompt("Debe introducir un valor en decimal para el gasto: "));    
+  }
+  let fecha_gasto=prompt("Introduzca la fecha del gasto ");
+  let etiquetas=prompt("Insertar etiquetas (Puede insertar varias separadas por ,) :").split(',');
+  oprcpre.anyadirGasto(new oprcpre.CrearGasto(descripcion,valor,fecha_gasto,etiquetas)); 
+  BorradoZonasGasto();
+  repintar();
+}
+/*===========================================*/
+
+
+
+
+/*********************************************/
+/*    FUNCION REPINTAR                       */
+/*===========================================*/
+function repintar(){
+  mostrarDatoEnId('presupuesto', oprcpre.mostrarPresupuesto());
+  mostrarDatoEnId('gastos-totales',oprcpre.calcularTotalGastos());
+  mostrarDatoEnId('balance-total',oprcpre.calcularBalance());
+  for ( let gasto of oprcpre.filtrarGastos({}) ){
+    mostrarGastoWeb('listado-gastos-completo',gasto);
+  }
+}
+/*===========================================*/
+
+
+/*********************************************/
+/*    FUNCION CLEARELEMENT                   */
+/*===========================================*/
+function clearElement(idElemento){
+  document.getElementById(idElemento).innerHTML='';
+}
+/*===========================================*/
+
+
+
+/*********************************************/
+/*    FUNCION BORRADOZONASGASTO              */
+/*===========================================*/
+function BorradoZonasGasto(){
+  clearElement('presupuesto');
+  clearElement('gastos-totales');
+  clearElement('balance-total');
+  clearElement('listado-gastos-completo');
+}
+/*===========================================*/
+export {mostrarDatoEnId,
+        mostrarGastoWeb, 
+  mostrarGastosAgrupadosWeb,
+  actualizarPresupuestoWeb,
+  nuevoGastoWeb,
+  repintar};
