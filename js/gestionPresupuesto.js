@@ -71,6 +71,19 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {  //*Propiedades del obje
             }
         return resultado;
     };
+    this.obtenerPeriodoAgrupacion = function (periodo) { 
+
+        var fecha = new Date(this.fecha);
+        var fechaInternacional = fecha.toISOString(); // fechaInternacional= cadena de texto que devuelve la fecha del objeto en formato internacional.  
+
+        if (periodo == "anyo")
+            return fechaInternacional.substring(0,4)      
+        if (periodo == "mes")
+            return fechaInternacional.substring(0,7)
+        else(periodo == "dia")
+        return fechaInternacional.substring(0,10)
+
+    };
 }
 
  //*FUNCIONES
@@ -121,7 +134,31 @@ function calcularBalance() {
     var res = presupuesto - gastoTotal;
     return res;
 }
+function filtrarGastos(Obj) {  //!Pendiente de hacer. 
+    
+}
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {   // Funciona tutoria 31/10 min:20´
+    var gastosAgrupados = {};
+    var gastosFiltrados;
+    tiempo.periodo = periodo;
+    tiempo.etiqueta = etiquetas;
+    tiempo.fechaDesde = fechaDesde;
+    tiempo.fechaHasta = fechaHasta;
+    gastosAgrupados = filtrarGastos();
 
+    let functionReduce = function (acumulador, elemento) {             //*cada elemento del arr es un gasto.
+        let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
+
+        if (acumulador[pAgrup]) {                                      //*el acumulador tiene una propiedad existente ya con XX fecha? 
+            acumulador[pAgrup] = acumulador[pAgrup]  + elemento.valor; //* suma lo que tenía más el nuevo valor. 
+        }
+        else 
+            acumulador[pAgrup] = elemento.valor;                        //* La 1º vez que lo llamo estará vacio y entra en else. Se crea xx fecha.
+        return acumulador;
+    };
+    let acumulador = { };                                              //* creo un Array vacío. 
+    return gastos.reduce(functionReduce, acumulador)                   //* Devuelve un Obj,cuya propiedad periodo es = a la suma de gastos. 
+ }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -134,4 +171,7 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos,
+
 }
