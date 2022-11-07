@@ -8,7 +8,6 @@ function mostrarDatoEnId (idElemento, valor) {
 
     let datosId = document.getElementById(idElemento);
     datosId.innerHTML = valor;
-    //document.presupuesto.append(datosId);
     
 
 }
