@@ -116,23 +116,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         if(periodo == "dia"){
 
           
-            let text;
+            let text = "";
             let day = dateDia.getDate()
             let month = dateDia.getMonth() + 1
             let year = dateDia.getFullYear()
 
                                                
-            if(month < 10 && day < 10){
+            if(month <= 10 && day <= 10){
                 text = `${year}-0${month}-0${day}`
             }
-            if(month > 10 && day > 10){
+            if(month >= 10 && day >= 10){
                 text = `${year}-${month}-${day}`
             }
-            if(month < 10 && day > 10){
+            if(month <= 10 && day >= 10){
                 text = `${year}-0${month}-${day}`
             }
-            if(month > 10 && day < 10){
+            if(month >= 10 && day <= 10){
                 text =`${year}-${month}-0${day}`
+                console.log("hola--------")
             }
             
             return text;
@@ -209,11 +210,9 @@ function calcularBalance() {
 }
 
 
-function filtrarGastos(opciones)
-{
+function filtrarGastos(opciones) {
     
-     return gastos.filter(function(gasto) 
-    {
+    return gastos.filter(function(gasto) {
         let resultado = true;
 
         if (opciones.fechaDesde)
@@ -282,7 +281,30 @@ function filtrarGastos(opciones)
 
 
 
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+    
+    
+    let gastosFiltrados = filtrarGastos({
+        etiquetasTiene: etiquetas, 
+        fechaDesde: fechaDesde,
+        fechaHasta: fechaHasta
+    })
+        
+    let gastosAgrupacion = gastosFiltrados.reduce(function(acc, gasto){
+
+        let periodoAgrupacio = gasto.obtenerPeriodoAgrupacion(periodo)
+
+        if(!acc[periodoAgrupacio]){
+            acc[periodoAgrupacio] = 0
+        }
+        
+        acc[periodoAgrupacio] += gasto.valor
+
+        return acc
+
+    }, {}) 
+
+    return gastosAgrupacion
 
 }
 
@@ -303,39 +325,34 @@ export {
 }
 
 
-// gasto1.obtenerPeriodoAgrupacion("mes");
-// // Resultado: "2021-09"
-// gasto1.obtenerPeriodoAgrupacion("anyo");
-// // Resultado: "2021"
-// gasto1.obtenerPeriodoAgrupacion("dia");
-// // Resultado: "2021-09-06"
 
-// Ejecuciones
+
 
 // let gasto1 = new CrearGasto("1 Compra carne", 10, "2021-10-06", "casa", "comida" );
 // let gasto2 = new CrearGasto("2 Compra fruta y verdura", 10, "2021-09-06", "supermercado", "comida" );
-// let gasto3 = new CrearGasto("3 Bonobús", 30, "2020-05-26", "transporte" );
-// let gasto4 = new CrearGasto("4 Gasolina", 40, "2021-10-08", "transporte", "gasolina" );
-// let gasto5 = new CrearGasto("5 Seguro hogar", 50, "2021-09-26", "casa", "seguros" );
-// let gasto6 = new CrearGasto("6 Seguro coche", 60, "2021-10-06", "transporte", "seguros" );
+// // // let gasto3 = new CrearGasto("3 Bonobús", 30, "2020-05-26", "transporte" );
+// // // let gasto4 = new CrearGasto("4 Gasolina", 40, "2021-10-08", "transporte", "gasolina" );
+// // // let gasto5 = new CrearGasto("5 Seguro hogar", 50, "2021-09-26", "casa", "seguros" );
+// // // let gasto6 = new CrearGasto("6 Seguro coche", 60, "2021-10-06", "transporte", "seguros" );
 // anyadirGasto(gasto1);
 // anyadirGasto(gasto2);
-// anyadirGasto(gasto3);
-// anyadirGasto(gasto4);
-// anyadirGasto(gasto5);
-// anyadirGasto(gasto6);
+// // // anyadirGasto(gasto3);
+// // // anyadirGasto(gasto4);
+// // // anyadirGasto(gasto5);
+// // // anyadirGasto(gasto6);
 
 
 
-// const awe = filtrarGastos({etiquetasTiene: ["comida"]})
+// const awe = agruparGastos("dia");
 
 // console.log( awe )
 
 
 
-// fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse.
-// fechaHasta - Fecha máxima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse.
-// valorMinimo - Valor mínimo del gasto.
-// valorMaximo - Valor máximo del gasto.
-// descripcionContiene - Trozo de texto que deberá aparecer en la descripción. Deberá hacerse la comparación de manera que no se distingan mayúsculas de minúsculas.
-// etiquetasTiene
+// // // fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse.
+// // // fechaHasta - Fecha máxima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse.
+// // // valorMinimo - Valor mínimo del gasto.
+// // // valorMaximo - Valor máximo del gasto.
+// // // descripcionContiene - Trozo de texto que deberá aparecer en la descripción. Deberá hacerse la comparación de manera que no se distingan mayúsculas de minúsculas.
+// // // etiquetasTiene
+
