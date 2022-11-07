@@ -1,5 +1,5 @@
 //Importamos para acceder a las funciones
-import * as gestPresupuesto from ("./gestionPresupuesto.js");
+//import * as gestPresupuesto from "./gestionPresupuesto.js";
 
 //Funciones
 

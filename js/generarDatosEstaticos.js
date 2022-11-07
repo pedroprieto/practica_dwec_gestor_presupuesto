@@ -7,9 +7,9 @@ import * as gestPresWeb from './gestionPresupuestoWeb.js';
 gestPresupuesto.actualizarPresupuesto(1500);
 
 //Mostrar el presupuesto en el div#presupuesto
-gestPresWeb.mostrarDatoEnId("presupuesto", gestPresupuesto.mostrarPresupuesto());
+gestPresWeb.mostrarDatoEnId('presupuesto', gestPresupuesto.mostrarPresupuesto());
 
-document.presupesto = gestPresupuesto.actualizarPresupuesto();
+//document.presupesto = gestPresupuesto.actualizarPresupuesto();
 
 //Crear gastos
 let gasto1 = new gestPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
