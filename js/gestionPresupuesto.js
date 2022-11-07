@@ -29,19 +29,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let texto = "";
         texto = texto + `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         return texto;
-    }
+    },
 
     this.actualizarDescripcion = function(descripcion){
         this.descripcion = descripcion;
         return this.descripcion;
-    }
+    },
 
     this.actualizarValor = function(valor){
         if (valor >= 0 & !isNaN(valor)){
             this.valor = valor;
         }
         return this.valor;
-    }
+    },
 
     this.fecha = Date.parse(fecha);
     if (fecha == null || isNaN(Date.parse(fecha))){
@@ -54,7 +54,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
                 this.etiquetas.push(etiqueta);
             }
         }
-    }
+    },
 
     this.borrarEtiquetas = function(...etiquetas){
         let pos = 0;
@@ -64,7 +64,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
                 this.etiquetas.splice(pos, 1);
             }
         }
-    }     
+    },   
 
     this.etiquetas = [];
     if (etiquetas != null || etiquetas.length>0){
@@ -78,7 +78,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
        else{
         this.fecha = Date.parse(fechaActualizada);
        }
-    }
+    },
 
     this.mostrarGastoCompleto = function(){
         let texto = "";
@@ -89,6 +89,20 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             texto = texto + `- ${this.etiquetas[i]}\n`;
         }
         return texto;
+    },
+
+    this.obtenerPeriodoAgrupacion= function (periodo){
+        let fechaString = new Date(this.fecha);
+        fechaString = fechaString.toISOString();
+        if ( periodo == "dia"){
+            return fechaString.substring(0, 10);
+        }
+        else if (periodo == "mes"){
+            return fechaString.substring(0, 7)
+        }
+        else if ( periodo == "anyo"){
+            return fechaString.substring(0, 4)
+        }
     }
 }
 
@@ -125,6 +139,14 @@ function calcularBalance(){
     return balance;
 }
 
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+
+}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -138,5 +160,7 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos
 
 }
