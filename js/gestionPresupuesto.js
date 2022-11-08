@@ -34,6 +34,11 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
         this.etiquetas = [];
     }
 
+    this.mostrarGasto = function () {
+        let texto = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+        return texto;
+    }
+
     this.anyadirEtiquetas = function (...etiquetas) {
 
         for (const etiqueta of etiquetas) {
