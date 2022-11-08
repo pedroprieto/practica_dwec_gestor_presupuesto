@@ -100,8 +100,20 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
     this.actualizarDescripcion = function (nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
     }
+    
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+    
+    let mes = new Date(this.fecha).getMonth() + 1;
+    let anyo = new Date(this.fecha).getFullYear();
+    let dia = new Date(this.fecha).getDate();        
+    let texto = "";
+    
+        switch (periodo) {
+            case "mes":
+                return texto += anyo + "-" + mes;
 
-
+        }
+    }
 }
 
 function listarGastos() {
