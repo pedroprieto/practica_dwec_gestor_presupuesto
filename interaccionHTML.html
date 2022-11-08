@@ -65,37 +65,16 @@
              https://es.javascript.info/modules-intro#que-es-un-modulo
         -->
         <script type="module">
-          import * as gesPresupuesto from './js/gestionPresupuestoWeb.js';
-          document.getElementById('actualizarpresupuesto').addEventListener('click', gesPresupuesto.actualizarPresupuestoWeb);
-          document.getElementById('anyadirgasto').addEventListener('click', gesPresupuesto.nuevoGastoWeb);
+         // import * as gesPresupuesto from './js/gestionPresupuestoWeb.js';
         </script>
 
 
         <script type="module">
-         //: import * as datos from './js/generarDatosEstaticos.js';
-
-/*          datos.mostrarDatoEnId('presupuesto',datos.mostrarPresupuesto());
-          datos.mostrarDatoEnId('gastos-totales',datos.calcularTotalGastos());
-          datos.mostrarDatoEnId('balance-total',datos.calcularBalance());
-          for (let gasto of datos.filtrarGastos({}) ){
-            datos.mostrarGastoWeb('listado-gastos-completo',gasto);
-          }
-          for (let gasto of datos.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-10-02"}) ){
-            datos.mostrarGastoWeb('listado-gastos-filtrado-1',gasto);
-          }
-          for (let gasto of datos.filtrarGastos({valorMinimo:50}) ){
-            datos.mostrarGastoWeb('listado-gastos-filtrado-2',gasto);
-          }
-          for (let gasto of datos.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}) ){
-            datos.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
-          }
-          for (let gasto of datos.filtrarGastos({etiquetasTiene: ["comida","transporte"], valorMaximo:50}) ){
-            datos.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
-          }
-          datos.mostrarGastosAgrupadosWeb('agrupacion-dia',datos.agruparGastos("dia"),"día");
-          datos.mostrarGastosAgrupadosWeb('agrupacion-mes',datos.agruparGastos("mes"),"mes");
-          datos.mostrarGastosAgrupadosWeb('agrupacion-anyo',datos.agruparGastos("anyo"),"año");*/
-        </script>
+          import * as gesPresupuesto from './js/generarDatosEstaticos.js';
+          document.getElementById('actualizarpresupuesto').addEventListener('click', gesPresupuesto.actualizarPresupuestoWeb);
+          document.getElementById('anyadirgasto').addEventListener('click', gesPresupuesto.nuevoGastoWeb);
+        </script> 
+        
 
     </body>
 </html>
