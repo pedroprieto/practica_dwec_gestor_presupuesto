@@ -96,13 +96,18 @@ function CrearGasto(descr, val, fech, ...etiq) {
     }
 
     this.mostrarGastoCompleto = function() {
+
+        let f;
+        var sp= '\xa0';
+        f =new Date (this.fecha);
+
         let gastoDesc = this.mostrarGasto() + ".\n";
-        let fechFormat = "Fecha: " + this.fecha.toLocaleString() + "\n";
+        let fechFormat = "Fecha: " + f.toLocaleString('es-ES') + "\n";
         let resultEtiq ="Etiquetas:\n";
         let i= 0;
 
-        for(i=0; i < gastos.length; i++){
-            resultEtiq += "- " + this[i].etiquetas + "\n";
+        for(i=0; i < this.etiquetas.length; i++){
+            resultEtiq += "- " + this.etiquetas[i] + "\n";
         }
 
         return (gastoDesc + fechFormat + resultEtiq);
