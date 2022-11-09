@@ -134,9 +134,37 @@ function calcularBalance() {
     var res = presupuesto - gastoTotal;
     return res;
 }
-function filtrarGastos(Obj) {  //!Pendiente de hacer. 
+function filtrarGastos(obj) {  //!Pendiente de hacer.
     
-}
+    // if(obj)
+    let objFiltrado = [];
+    //fechaDesde = "", fechaHasta = "", valorMinimo, valorMaximo, escripcionContiene.toLowerCase(), etiquetasTiene = [],);
+        
+    //var queGasto = obj.filter(gastos);
+
+    if (Object.keys(obj).length === 0) {
+        return gastos;
+    }
+    else {
+        if (obj.fechaDesde) { 
+            let fecha = Date.parce(obj.fechaDesde);
+            if (fecha) {
+                 
+
+             }  
+        }
+
+
+
+
+
+        return objFiltrado; 
+    }
+   
+    
+  
+ }
+
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {   // Funciona tutoria 31/10 min:20´
     var gastosAgrupados = {};
     var gastosFiltrados;
@@ -144,8 +172,8 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {   // Funci
     tiempo.etiqueta = etiquetas;
     tiempo.fechaDesde = fechaDesde;
     tiempo.fechaHasta = fechaHasta;
-    gastosAgrupados = filtrarGastos();
-
+    gastosFiltrados = filtrarGastos(gastosAgrupados);
+  
     let functionReduce = function (acumulador, elemento) {             //*cada elemento del arr es un gasto.
         let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
 
