@@ -92,8 +92,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     },
 
     this.obtenerPeriodoAgrupacion= function (periodo){
-        let fechaString = new Date(this.fecha);
-        fechaString = fechaString.toISOString();
+        let fecha = new Date(this.fecha);
+        let fechaString = fecha.toISOString();
         if ( periodo == "dia"){
             return fechaString.substring(0, 10);
         }
@@ -139,12 +139,68 @@ function calcularBalance(){
     return balance;
 }
 
-function filtrarGastos(){
-
+function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene){
+    return gastos.filter(function(gasto){
+        let resultado = true;
+        if(fechaDesde){
+            if(gasto.fecha < Date.parse(fechaDesde)){
+                resultado = false;
+            }
+        }
+        if(fechaHasta){
+            if (gasto.fecha > Date.parse(fechaHasta)){
+                resultado = false;
+            }
+        }
+        if(valorMinimo){
+            if (gasto.valor < valorMinimo){
+                resultado = false;
+            }
+        }
+        if(valorMaximo){
+            if(gasto.valor > valorMaximo){
+                resultado = false;
+            }
+        }
+        if(descripcionContiene){
+            if (gasto.descripcion.indexOf(descripcionContiene) == -1){
+                resultado = false;
+            }
+        }
+        if(etiquetasTiene){
+            let encontrado = false;
+            for (let etiqueta of gasto.etiquetas){
+                for (let etiquetaTiene of etiquetasTiene){
+                    if (etiqueta == etiquetaTiene)
+                    encontrado = true;
+                }
+            }
+            if (!encontrado){
+                resultado = false;
+            }
+        }
+    });
 }
 
-function agruparGastos(){
-
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+    periodo = periodo;
+    etiquetas = etiquetas;
+    fechaDesde = fechaDesde;
+    fechaHasta = fechaHasta;
+    filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene);  
+    let funcionReduce = function(acc, gasto){
+        let pAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (acc[pAgrupacion]){
+            acc[pAgrupacion] = acc[pAgrupacion] + gasto.valor;
+        }
+        else{
+            acc[pAgrupacion] = gasto.valor;
+        }
+    
+    return acc;
+    };
+    let acumulador = {};
+    return gastos.reduce(funcionReduce, acumulador);
 }
 
 
