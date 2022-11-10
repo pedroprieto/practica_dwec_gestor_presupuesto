@@ -139,7 +139,13 @@ function calcularBalance(){
     return balance;
 }
 
-function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene){
+function filtrarGastos(opciones){
+    let fechaDesde = opciones.fechaDesde;
+    let fechaHasta = opciones.fechaHasta;
+    let valorMinimo = opciones.valorMinimo;
+    let valorMaximo = opciones.valorMaximo;
+    let descripcionContiene = opciones.descripcionContiene;
+    let etiquetasTiene = opciones.etiquetasTiene;
     return gastos.filter(function(gasto){
         let resultado = true;
         if(fechaDesde){
@@ -183,11 +189,12 @@ function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descrip
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
-    periodo = periodo;
-    etiquetas = etiquetas;
-    fechaDesde = fechaDesde;
-    fechaHasta = fechaHasta;
-    filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene);  
+    let opciones= {};
+    opciones.periodo = periodo;
+    opciones.etiquetas = etiquetas;
+    opciones.fechaDesde = fechaDesde;
+    opciones.fechaHasta = fechaHasta;
+    filtrarGastos(opciones);  
     let funcionReduce = function(acc, gasto){
         let pAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
         if (acc[pAgrupacion]){
@@ -196,7 +203,6 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
         else{
             acc[pAgrupacion] = gasto.valor;
         }
-    
     return acc;
     };
     let acumulador = {};
