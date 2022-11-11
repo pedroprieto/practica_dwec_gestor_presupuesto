@@ -103,15 +103,19 @@ function CrearGasto(desc, gasto, fecha, ...etiquetas) {
     
     this.obtenerPeriodoAgrupacion = function (periodo) {
     
-    let mes = new Date(this.fecha).getMonth() + 1;
-    let anyo = new Date(this.fecha).getFullYear();
-    let dia = new Date(this.fecha).getDate();        
-    let texto = "";
+        let fechaCompleta = new Date(fecha).toISOString();
+        let anyo = fechaCompleta.substring(0, 4);
+        let mes = fechaCompleta.substring(5, 7);
+        let dia = fechaCompleta.substring(8, 10);
+        let texto = "";
     
         switch (periodo) {
             case "mes":
                 return texto += anyo + "-" + mes;
-
+            case "dia":
+                return texto += anyo + "-" + mes + "-" + dia;
+            case "anyo":
+                return texto += anyo;
         }
     }
 }
