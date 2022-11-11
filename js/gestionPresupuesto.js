@@ -195,7 +195,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     opciones.etiquetas = etiquetas;
     opciones.fechaDesde = fechaDesde;
     opciones.fechaHasta = fechaHasta;
-    let gastosFiltardos = filtrarGastos(opciones);  
+    filtrarGastos(opciones);  
     let funcionReduce = function(acc, gasto){
         let pAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
         if (acc[pAgrupacion]){
