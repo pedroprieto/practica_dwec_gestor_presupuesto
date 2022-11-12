@@ -150,13 +150,73 @@ function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
-
-function filtrarGastos() {
     
+function filtrarGastos(Opciones) {
+    let fechaDesde = Opciones.fechaDesde;
+    let fechaHasta = Opciones.fechaHasta;
+    let valorMinimo = Opciones.valorMinimo;
+    let valorMaximo = Opciones.valorMaximo;
+    let descripcionContiene = Opciones.descripcionContiene;
+    let etiquetasTiene = Opciones.etiquetasTiene;
+
+    if (Opciones.length == 0) {
+        return gastos;
+    } else {
+        return gastos.filter(function (gastos) {
+        let resultado = true;
+
+        if (fechaDesde) {
+            if (gastos.fecha < Date.parse(fechaDesde)) {
+                resultado = false;
+            }
+        }
+        if (fechaHasta) {
+            if (gastos.fecha > Date.parse(fechaHasta)) {
+                resultado = false;
+            }
+        }
+        if (valorMinimo) {
+            if (gastos.valor < valorMinimo) {
+                resultado = false;
+            }
+        }
+        if (valorMaximo) {
+            if (gastos.valor > valorMaximo) {
+                resultado = false;
+            }
+        }
+        if (descripcionContiene) {
+            if (gastos.descripcion.indexOf(descripcionContiene) == -1) {
+                resultado = false;
+            }
+        }
+        if (etiquetasTiene) {
+            let encontrado = false;
+            for (let etiqueta of gastos.etiquetas) {
+                for (let etiquetaTiene of etiquetasTiene) {
+                    if (etiqueta == etiquetaTiene) {
+                        encontrado = true;
+                    }
+                }
+            }
+            if (!encontrado) {
+                resultado = false;
+            }
+        }
+
+        return resultado;
+        });    
+    }
 }
 
-function agruparGastos() {
-    
+function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas) {
+    let criterios = {
+        fechaDesde: fechaDesde,
+        fechaHasta: fechaHasta,
+        etiquetas: etiquetas
+    };
+
+    filtrarGastos(criterios);
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
