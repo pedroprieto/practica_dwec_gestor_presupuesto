@@ -8,7 +8,6 @@ let idGasto = 0;
  //*OBJETO:
 function CrearGasto(descrip, val, fecha, ...etiqueta) {  //*Propiedades del objeto
 
-   
     this.descripcion = descrip;
     if (val > 0) {
         this.valor = val;
@@ -75,14 +74,12 @@ function CrearGasto(descrip, val, fecha, ...etiqueta) {  //*Propiedades del obje
 
         var fecha = new Date(this.fecha);
         var fechaInternacional = fecha.toISOString(); // fechaInternacional= cadena de texto que devuelve la fecha del objeto en formato internacional.  
-
         if (periodo == "anyo")
             return fechaInternacional.substring(0,4)      
         if (periodo == "mes")
             return fechaInternacional.substring(0,7)
         else(periodo == "dia")
         return fechaInternacional.substring(0,10)
-
     };
 }
 
@@ -134,35 +131,62 @@ function calcularBalance() {
     var res = presupuesto - gastoTotal;
     return res;
 }
-function filtrarGastos(obj) {  //!Pendiente de hacer.
+function filtrarGastos(obj) {  //!Pendiente de hacer desde: obj.etiquetasTiene
     
     // if(obj)
-    let objFiltrado = [];
+    let objFiltrado = [];                                 
     //fechaDesde = "", fechaHasta = "", valorMinimo, valorMaximo, escripcionContiene.toLowerCase(), etiquetasTiene = [],);
-        
-    //var queGasto = obj.filter(gastos);
-
-    if (Object.keys(obj).length === 0) {
+    if (Object.keys(obj).length === 0) {                  
         return gastos;
     }
     else {
         if (obj.fechaDesde) { 
-            let fecha = Date.parce(obj.fechaDesde);
-            if (fecha) {
-                 
+            let fechaD = Date.parse(obj.fechaDesde);        //Funciona.
 
-             }  
+            if (fechaD) {
+                objFiltrado = gastos.filter(elem => elem.fecha >= fechaD);        
+            }
+            else {
+                objFiltrado = objFiltrado.filter(elem => elem.fecha >= fechaD);     
+            }
         }
-
-
-
-
-
+        if (obj.fechaHasta) {
+            let fechaH = Date.parse(obj.fechaHasta);                 //Funciona.
+            if (fechaH) {
+                objFiltrado = objFiltrado.filter(elem => elem.fecha <= fechaH); 
+            }  
+        }
+        if (obj.valorMinimo) {                             //Funciona.
+            if ((obj.fechaDesde || obj.fechaHasta || obj.descripcionContiene) && objFiltrado.length > 0){
+                objFiltrado = objFiltrado.filter(elem => elem.valor >= obj.valorMinimo);
+            }
+            else {
+                objFiltrado = gastos.filter(elem => elem.valor >= obj.valorMinimo);
+                }
+            }
+        if (obj.valorMaximo) {                           //Funciona.
+            if ((obj.fechaDesde || obj.fechaHasta || obj.valorMinimo || obj.descripcionContiene) && objFiltrado.length>0) {
+                objFiltrado = objFiltrado.filter(elem => elem.valor <= obj.valorMaximo);
+            }
+            else {
+                objFiltrado = gastos.filter(elem => elem.valor <= obj.valorMaximo);
+            }
+        }
+        if (obj.descripcionContiene) {                      //Funciona.
+            if (objFiltrado.length === 0) {            
+                objFiltrado = gastos.filter(elem => elem.descripcion.toLowerCase().indexOf(obj.descripcionContiene.toLowerCase())==0);   
+            }
+            else {
+                objFiltrado = objFiltrado.filter(elem => elem.descripcion.toLowerCase().indexOf(obj.descripcionContiene.toLowerCase()) == 0);
+            }
+        }
+        if (obj.etiquetasTiene) {                               //! No funciona 
+            if (objFiltrado.length === 0)
+                objFiltrado = gastos.filter(elem.find((elemX, id, etiquetasTiene) => gastos.etiquetas.indexOf(etiquetasTiene)));
+        }
+    //    (gastos.etiquetas.find((elemX, id, etiquetasTiene) => gastos.etiquetas.indexOf(etiquetasTiene)));
         return objFiltrado; 
     }
-   
-    
-  
  }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {   // Funciona tutoria 31/10 min:20´
