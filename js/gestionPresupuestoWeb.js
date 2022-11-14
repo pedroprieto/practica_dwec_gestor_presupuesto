@@ -3,7 +3,7 @@ import * as gestionPresupuesto from './gestionPresupuesto';
 // función mostrarDatoEnId
 function mostrarDatoEnId(idElemento, valor){
     let mostrarGasto = document.getElementById(idElemento);
-    mostrarGasto = `${valor}`;
+    mostrarGasto.innerHTML = `${valor}`;
 }
 
 //función mostrarGastoWeb
@@ -11,28 +11,28 @@ function mostrarGastoWeb(idElemento, gasto){
 
     let body = document.getElementById(idElemento);
 
-//<div class="gasto">
-    let divGasto = document.createElement ('div');
+  //<div class="gasto">
+    let divGasto = document.createElement('div');
     divGasto.className = "gasto";
 
-  //<div class="gasto-descripcion">DESCRIPCIÓN DEL GASTO</div>
-    let divDescripcion = document.createElement('div');
-    divDescripcion.className = "gasto-descripcion";
-    divDescripcion.innerHTML = `${gasto.descripcion}`;
+    //<div class="gasto-descripcion">DESCRIPCIÓN DEL GASTO</div>
+      let divDescripcion = document.createElement('div');
+      divDescripcion.className = "gasto-descripcion";
+      divDescripcion.innerHTML = `${gasto.descripcion}`;
 
-  //<div class="gasto-fecha">FECHA DEL GASTO</div> 
-    let divFecha = document.createElement('div');
-    divFecha.className = "gasto-fecha";
-    divFecha.innerHTML = `${gasto.fecha}`;
+    //<div class="gasto-fecha">FECHA DEL GASTO</div> 
+      let divFecha = document.createElement('div');
+      divFecha.className = "gasto-fecha";
+      divFecha.innerHTML = `${gasto.fecha}`;
 
-  //<div class="gasto-valor">VALOR DEL GASTO</div> 
-    let divValor = document.createElement('div');
-    divValor.className = "gasto-valor";
-    divValor.innerHTML = `${gasto.valor}`;
+    //<div class="gasto-valor">VALOR DEL GASTO</div> 
+      let divValor = document.createElement('div');
+      divValor.className = "gasto-valor";
+      divValor.innerHTML = `${gasto.valor}`;
 
-  //<div class="gasto-etiquetas">
-    let divEtiquetas = document.createElement('div');
-    divEtiquetas.className = "gasto-etiquetas";
+    //<div class="gasto-etiquetas">
+      let divEtiquetas = document.createElement('div');
+      divEtiquetas.className = "gasto-etiquetas";
 
      // Añadir hijos al padre <div class="gasto">
      divGasto.append(divDescripcion);
@@ -41,16 +41,18 @@ function mostrarGastoWeb(idElemento, gasto){
      divGasto.append(divEtiquetas);
 
 
-    //<span class="gasto-etiquetas-etiqueta">ETIQUETA 1</span>
-    //<span class="gasto-etiquetas-etiqueta">ETIQUETA 2</span>
+        //<span class="gasto-etiquetas-etiqueta">ETIQUETA 1</span>
+        //<span class="gasto-etiquetas-etiqueta">ETIQUETA 2</span>
     
-    for (let e of gasto.etiquetas) {
-      let spanEtiqueta = document.createElement("span");
-      spanEtiqueta.className = "gasto-etiquetas-etiqueta";
-      spanEtiqueta.innerHTML = `${e}`;
+        for (let e of gasto.etiquetas) {
+          let spanEtiqueta = document.createElement("span");
+          spanEtiqueta.className = "gasto-etiquetas-etiqueta";
+          spanEtiqueta.innerHTML = `${e}`;
 
-      divEtiquetas.append(spanEtiqueta);
-    }
+          divEtiquetas.append(spanEtiqueta);
+        }
+    //Añado todo al documento
+    body.append(divGasto);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
