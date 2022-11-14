@@ -1,5 +1,4 @@
-import { mostrarGastosAgrupadosWeb } from '../../../1º DAW/Mari/CLIENTE/Práctica 1º evaluación/practica_dwec_gestor_presupuesto-master/js/gestionPresupuestoWeb';
-import * as gestionPresupuesto from './gestionPresupuesto'
+import * as gestionPresupuesto from './gestionPresupuesto';
 
 // función mostrarDatoEnId
 function mostrarDatoEnId(idElemento, valor){
@@ -34,19 +33,47 @@ function mostrarGastoWeb(idElemento, gasto){
   //<div class="gasto-etiquetas">
     let divEtiquetas = document.createElement('div');
     divEtiquetas.className = "gasto-etiquetas";
-    //<span class="gasto-etiquetas-etiqueta">
-      //ETIQUETA 1
-    //</span>
-    //<span class="gasto-etiquetas-etiqueta">
-      //ETIQUETA 2
-    //</span>
-    //<!-- Etcétera -->
-  //</div> 
-//</div>
+
+     // Añadir hijos al padre <div class="gasto">
+     divGasto.append(divDescripcion);
+     divGasto.append(divFecha);
+     divGasto.append(divValor);
+     divGasto.append(divEtiquetas);
+
+
+    //<span class="gasto-etiquetas-etiqueta">ETIQUETA 1</span>
+    //<span class="gasto-etiquetas-etiqueta">ETIQUETA 2</span>
+    
+    for (let e of gasto.etiquetas) {
+      let spanEtiqueta = document.createElement("span");
+      spanEtiqueta.className = "gasto-etiquetas-etiqueta";
+      spanEtiqueta.innerHTML = `${e}`;
+
+      divEtiquetas.append(spanEtiqueta);
+    }
 }
 
-function mostrarGastosAgrupadosWeb(){
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+  /*<div class="agrupacion">
+  <!-- PERIODO será "mes", "día" o "año" en función de si el parámetro
+       de la función es "mes", "dia" o "anyo" respectivamente -->
+  <h1>Gastos agrupados por PERIODO</h1>*/
 
+  /*Se deberá crear un div.agrupacion-dato para cada propiedad del objeto agrup:
+       https://es.javascript.info/keys-values-entries#object-keys-values-entries -->
+  <div class="agrupacion-dato">
+    <span class="agrupacion-dato-clave">NOMBRE_PROPIEDAD_OBJETO_AGRUP</span>
+    <span class="agrupacion-dato-valor">VALOR_PROPIEDAD_OBJETO_AGRUP</span>
+  </div>
+
+  <div class="agrupacion-dato">
+    <span class="agrupacion-dato-clave">NOMBRE_PROPIEDAD_OBJETO_AGRUP</span>
+    <span class="agrupacion-dato-valor">VALOR_PROPIEDAD_OBJETO_AGRUP</span>
+  </div>
+
+  <!-- Etcétera -->
+
+</div>*/
 }
 
 export   { 
@@ -54,3 +81,4 @@ export   {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
 } 
+//CCC
