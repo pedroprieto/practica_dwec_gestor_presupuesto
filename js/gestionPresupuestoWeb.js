@@ -24,7 +24,7 @@ function mostrarGastoWeb (idElemento, gasto) {
     //div fecha
     let divFecha = document.createElement("div");
     divFecha.className = "gasto-fecha";
-    divFecha.innerText = gasto.fecha.toLocaleDateString;
+    divFecha.innerText = new Date(gasto.fecha);
     //div valor
     let divValor = document.createElement("div");
     divValor.className = "gasto-valor";
@@ -58,6 +58,21 @@ function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
     let h1Periodo = document.createElement("H1");
     h1Periodo.innerHTML = `Gastos agrupados por ${periodo}`;
     divAgrupar.append(h1Periodo);
+    let agrupDatos = Object.entries(agrup);
+    agrupDatos.map( (gasto) => {
+        let divAgrpGasto = document.createElement("div");
+        divAgrpGasto.className ="agrupacion-dato";
+        for ( let valores of Object.values (gasto)) {
+            let spanClave = document.createElement("span");
+            spanClave.className = "agrupacion-dato-clave";
+            spanClave.append(agrup.fecha);
+            let spanClaveValor = document.createElement("span");
+            spanClave.className = "agrupacion-dato-valor";
+            spanClave.append(agrup.valor);
+        }
+        divAgrupar.append(agrupDatos);
+        
+    })
 
 }
 
