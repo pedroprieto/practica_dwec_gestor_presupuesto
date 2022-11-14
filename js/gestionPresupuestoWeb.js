@@ -54,13 +54,29 @@ function mostrarGastoWeb(idElemento, gasto){
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+  let mostrarAgrupacion = document.getElementById(idElemento);
+
   /*<div class="agrupacion">
   <!-- PERIODO será "mes", "día" o "año" en función de si el parámetro
        de la función es "mes", "dia" o "anyo" respectivamente -->
   <h1>Gastos agrupados por PERIODO</h1>*/
+  let divAgrup = document.createElement('div');
+  divAgrup.className = "agrupación";
+  divAgrup.innerHTML = "";
+
+  let arrayAgrupacion = "";
+
+  divAgrup.innerHTML = `
+            <div class="agrupacion">
+                <h1>Gastos agrupados por ${periodo}</h1>
+                ${arrayAgrupacion}
+            </div>
+        `;
+  
 
   /*Se deberá crear un div.agrupacion-dato para cada propiedad del objeto agrup:
        https://es.javascript.info/keys-values-entries#object-keys-values-entries -->
+       
   <div class="agrupacion-dato">
     <span class="agrupacion-dato-clave">NOMBRE_PROPIEDAD_OBJETO_AGRUP</span>
     <span class="agrupacion-dato-valor">VALOR_PROPIEDAD_OBJETO_AGRUP</span>
@@ -70,10 +86,15 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     <span class="agrupacion-dato-clave">NOMBRE_PROPIEDAD_OBJETO_AGRUP</span>
     <span class="agrupacion-dato-valor">VALOR_PROPIEDAD_OBJETO_AGRUP</span>
   </div>
-
-  <!-- Etcétera -->
-
 </div>*/
+  for( let [nombre, valor] of Object.entries( agrup ) ){
+    arrayAgrupacion += `
+      <div class="agrupacion-dato">
+          <span class="agrupacion-dato-clave">${nombre}</span>
+          <span class="agrupacion-dato-valor">${valor}</span>
+      </div>
+    `;
+  }
 }
 
 export   { 
