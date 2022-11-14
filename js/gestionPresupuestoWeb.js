@@ -61,15 +61,15 @@ function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
     h1Periodo.innerHTML = `Gastos agrupados por ${periodo}`;
     divAgrupar.append(h1Periodo);
     let agrupDatos = Object.entries(agrup);
-    agrupDatos.map( (gasto) => {
+    agrupDatos.map( (movimiento) => {
         let divAgrpGasto = document.createElement("div");
         divAgrpGasto.className ="agrupacion-dato";
             let spanClave = document.createElement("span");
             spanClave.className = "agrupacion-dato-clave";
-            spanClave.append(gasto[0]);
+            spanClave.append(movimiento[0]);
             let spanValor = document.createElement("span");
             spanValor.className = "agrupacion-dato-valor";
-            spanValor.append(gasto[1]);
+            spanValor.append(movimiento[1]);
         divAgrpGasto.append(spanClave, spanValor);
         divAgrupar.append(divAgrpGasto);
         })
