@@ -70,8 +70,8 @@ function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
             let spanValor = document.createElement("span");
             spanValor.className = "agrupacion-dato-valor";
             spanValor.append(gasto[1]);
-        divAgrupar.append(spanClave, spanValor);
-        divAgrpGasto.append(divAgrupar);
+        divAgrpGasto.append(spanClave, spanValor);
+        divAgrupar.append(divAgrpGasto);
         })
         
     let agrupacionPeriodo = document.getElementById(IdElemento);
