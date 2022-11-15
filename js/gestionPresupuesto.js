@@ -3,7 +3,8 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-// FUNCIONES PRACTICA JAVASCRIPT i
+// FUNCIONES PRACTICA JAVASCRIPT I
+//==============================================================================
 function actualizarPresupuesto(cantidad) {
     if (cantidad >= 0){
         return presupuesto = cantidad;
@@ -18,6 +19,8 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+    // Parámetros de JavaScript I
+    ////////////////////////////////////////////////////////////////////
     //descripcion
     this.descripcion = descripcion;
     //valor
@@ -26,7 +29,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     } else{
         this.valor = valor;
     }
-
+    // Parámetros JavaScript II
+    ////////////////////////////////////////////////////////////////////
     // fecha
     fecha = Date.parse(fecha);
 
@@ -35,18 +39,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     } else{
         this.fecha = fecha; // getTime() sirve para pasar la fecha a formato timestamp
     }
-
     //etiqueta
-    etiquetas = anyadirEtiquetas(...etiquetas);
+    this.etiquetas = etiquetas;
     if(etiquetas == null){
         this.etiquetas = [];
-    }else{
-        this.etiquetas = anyadirEtiquetas(...etiquetas);
     }
     
-
+    // METODOS de JavaScript I
+    //////////////////////////////////////////////////////////////////////////////////////
     this.mostrarGasto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} € a fecha de ${this.fecha} con las etiquetas:${this.etiquetas}` ;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
 
     this.actualizarDescripcion = function (descripcion){
@@ -58,24 +60,48 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         if (valor >= 0 & isNaN(valor) == false){
             this.valor = valor;
         }
-        return this.valor;
     }
-}
 
+    // METODOS de JavaScript II
+    ///////////////////////////////////////////////////////////////////////////////////////
+    this.anyadirEtiquetas = function(...etiquetas){
+        for (const i of etiquetas){
+            // comprobar si existe en la lista, si no existe, añadirlo
+            if (this.etiquetas.includes(i) == false){
+                this.etiquetas.push(i);
+            }
+        }
 
-// Crear una lista con etiquetas sin repeticiones 
-function anyadirEtiquetas(...theArgs){
-    var lista = [];
-    for (const arg of theArgs){
-        // comprobar si existe en la lista, si no existe, añadirlo
-        if (lista.includes(arg) == false){
-            lista.push(arg);
+    }
+
+    this.actualizarFecha = function(nuevaFecha){
+        nuevaFecha = Date.parse(nuevaFecha);
+        if(!isNaN(nuevaFecha)){
+            this.fecha = +new Date(nuevaFecha);
         }
     }
-    return lista;
+
+    this.borrarEtiquetas = function(...nuevaEtiqueta){
+
+    }
+
+    this.mostrarGastoCompleto = function(){
+        var fechaLocal = new Date(this.fecha).toLocaleString();
+        var texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        texto += `Fecha: ${fechaLocal}\n`;
+        this.etiquetas.forEach(function(i){
+            texto += `- ${i}\n`;
+        })
+        return texto;
+    }
 }
 
+
 // FUNCIONES JAVASCRIPT II
+//////////////////////////////////////////////////////////////////////////////////////////
+// Crear una lista con etiquetas sin repeticiones 
+
+
 function listarGastos(){
 
     return gastos;
@@ -90,7 +116,9 @@ function anyadirGasto(gasto){
     
 }
 // comprobar si funciona
-//var gasto = new CrearGasto("Alquiler", 300, "2021-10-06T13:10", "casa", "libro", "casa");
+var gasto = new CrearGasto("Alquiler", 300, "2021-10-06T13:10", "casa", "libro", "casa");
+gasto.actualizarFecha("2000-15T13:10");
+console.log(gasto.mostrarGastoCompleto());
 //anyadirGasto(gasto);
 //console.log(gasto.mostrarGasto());
 //console.log(listarGastos());
