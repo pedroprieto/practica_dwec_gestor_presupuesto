@@ -33,7 +33,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     ////////////////////////////////////////////////////////////////////
     // fecha
     fecha = Date.parse(fecha);
-
     if (fecha == null || isNaN(fecha)){
         this.fecha = +new Date(); // se pasa a timestamp con el + delante
     } else{
@@ -100,22 +99,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 }
 
-
 // FUNCIONES JAVASCRIPT II
 //////////////////////////////////////////////////////////////////////////////////////////
-// Crear una lista con etiquetas sin repeticiones 
-
-
 function listarGastos(){
     return gastos;
 }
 
 function anyadirGasto(gasto){
-    var id = idGasto;
+    gasto.id = idGasto;
     idGasto++;
-
-    var lista = [id, gasto];
-    gastos.push(lista);
+    gastos.push(gasto);
     
 }
 // comprobar si funciona
