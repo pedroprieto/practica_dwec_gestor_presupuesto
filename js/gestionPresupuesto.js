@@ -93,6 +93,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         var fechaLocal = new Date(this.fecha).toLocaleString();
         var texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
         texto += `Fecha: ${fechaLocal}\n`;
+        texto += `Etiquetas:\n`;
         this.etiquetas.forEach(function(i){
             texto += `- ${i}\n`; })
         return texto;
