@@ -97,11 +97,50 @@ function repintar (){
         mostrarGastoWeb('listado-gastos-completo', gastos);
     }
 }
-
+//Función actualizarPresupuestoWeb
+function actualizarPresupuestoWeb () {
+    //Pedir al usuario que introduzca un presupuesto mediante un prompt.
+    let nuevoPresupuesto = Number(prompt("¿Cuál es tu nuevo presupuesto ?:"));
+    //Actualicar el presupuesto (función actualizarPresupuesto)
+    gestPresupuesto.actualizarPresupuesto(nuevoPresupuesto);
+    //Llamar a la función repintar para que se muestre la información actualizada
+    repintar();
+    //manejadora del evento click del botón actualizarpresupuesto mediante addEventListener
+    document.getElementById('actualizarpresupuesto').addEventListener('click', gestPresupuesto.actualizarPresupuesto());
+}
+//Función nuevoGastoWeb
+function nuevoGastoWeb () {
+    //Pedir al usuario la información necesaria para crear un nuevo gasto
+    let descripcion = prompt("Descripcion del gasto: ");
+    let valorGasto = Number (prompt("Valor del Gasto :"));
+    let fechaGasto = prompt ("Fecha del gasto en formato yyyy-mm-dd");
+    let etiquetas = prompt ("Introduzca etiquetas separadas por comas :").split(",");
+    let nuevoGasto = new gestPresupuesto.CrearGasto(descripcion, valorGasto, fechaGasto, ...etiquetas);
+    gestPresupuesto.anyadirGasto(nuevoGasto);
+    repintar();
+    document.getElementById('anyadirgasto').addEventListener('click', gestPresupuesto.anyadirGasto);
+}
+//La función EditarHandle
+function EditarHandle () {
+    
+    this.handleEvent = function(event){
+        //Pedir al usuario la información necesaria para editar el gasto
+        let descripcion = prompt("Descripción del gasto :", this.gasto.descripcion);
+        let valorGasto = Number (prompt("Valor del Gasto :", this.gasto.valor));
+        let fechaGasto = prompt ("Fecha del gasto en formato yyyy-mm-dd", this.gasto.fecha);
+        let etiquetas = prompt ("Introduzca etiquetas separadas por comas :", this.gasto.etiquetas).split(",");
+        //Actualizar las propiedades del gasto
+        
+    }
+}
 
 // Exportar las funciones creadas
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    repintar,
+    EditarHandle
 }
