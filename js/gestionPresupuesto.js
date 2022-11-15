@@ -125,9 +125,6 @@ function anyadirGasto(gasto){
 //console.log(gasto.mostrarGasto());
 //console.log(listarGastos());
 
-
-
-
 function borrarGasto(id){
     for(var i = 0; i < gastos.length; i++){
         if(gastos[i].id == id){
@@ -137,7 +134,11 @@ function borrarGasto(id){
 }
 
 function calcularTotalGastos(){
-
+    var totalGasto = 0;
+    for(var i = 0; i < gastos.length; i++){
+        totalGasto += gastos[i].valor;
+    }
+    return totalGasto;
 }
 
 function calcularBalance(){
