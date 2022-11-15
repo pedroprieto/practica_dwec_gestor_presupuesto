@@ -53,7 +53,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.actualizarDescripcion = function (descripcion){
         this.descripcion = descripcion;
-        return this.descripcion;
     }
 
     this.actualizarValor = function (valor){
@@ -71,7 +70,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
                 this.etiquetas.push(i);
             }
         }
-
     }
 
     this.actualizarFecha = function(nuevaFecha){
@@ -82,7 +80,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.borrarEtiquetas = function(...nuevaEtiqueta){
-
+        for(var i = 0; i < nuevaEtiqueta.length; i++){
+            for(var etiqueta = 0; etiqueta < this.etiquetas.length; etiqueta++){
+                if(nuevaEtiqueta[i] == this.etiquetas[etiqueta]){
+                    this.etiquetas.splice(etiqueta,1)
+                }
+            }
+        }
     }
 
     this.mostrarGastoCompleto = function(){
@@ -90,8 +94,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         var texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
         texto += `Fecha: ${fechaLocal}\n`;
         this.etiquetas.forEach(function(i){
-            texto += `- ${i}\n`;
-        })
+            texto += `- ${i}\n`; })
         return texto;
     }
 }
@@ -103,7 +106,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
 
 function listarGastos(){
-
     return gastos;
 }
 
@@ -116,9 +118,9 @@ function anyadirGasto(gasto){
     
 }
 // comprobar si funciona
-var gasto = new CrearGasto("Alquiler", 300, "2021-10-06T13:10", "casa", "libro", "casa");
-gasto.actualizarFecha("2000-15T13:10");
-console.log(gasto.mostrarGastoCompleto());
+//var gasto = new CrearGasto("Alquiler", 300, "2021-10-06T13:10", "casa", "libro", "perro");
+//gasto.borrarEtiquetas("casa", "perro");
+//console.log(gasto.mostrarGastoCompleto());
 //anyadirGasto(gasto);
 //console.log(gasto.mostrarGasto());
 //console.log(listarGastos());
