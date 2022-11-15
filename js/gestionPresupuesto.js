@@ -111,6 +111,7 @@ function anyadirGasto(gasto){
     gastos.push(gasto);
     
 }
+
 // comprobar si funciona
 //var gasto = new CrearGasto("Alquiler", 300, "2021-10-06T13:10", "casa", "libro", "perro");
 //gasto.borrarEtiquetas("casa", "perro");
@@ -127,8 +128,12 @@ function anyadirGasto(gasto){
 
 
 
-function borrarGasto(){
-
+function borrarGasto(id){
+    for(var i = 0; i < gastos.length; i++){
+        if(gastos[i].id == id){
+            gastos.splice(i, 1);
+        }
+    }
 }
 
 function calcularTotalGastos(){
