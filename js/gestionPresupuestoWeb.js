@@ -53,6 +53,11 @@ function mostrarGastoWeb(idElemento, gasto){
         }
     //Añado todo al documento
     contenedor.append(divGasto);
+
+    //Modificación de la función mostrarGastoWeb
+        //Botón editar
+        //Botón borrar
+        //Eventos para los span de etiquetas
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -78,8 +83,45 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
                 ${arrayAgrupacion}
             </div>
         `;
+}
+
+function repintar(){
+  //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+
+  //Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+
+  //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+
+  //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+
+  //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+}
+
+function actualizarPresupuestoWeb(){
 
 }
+
+//botón actualizarpresupuesto
+//element.addEventListener(event, handler, [options]);
+
+function nuevoGastoWeb(){
+
+}
+
+//Botón anyadirgasto
+
+function EditarHandle(){
+//método llamado handleEvent
+}
+
+function BorrarHandle(){
+
+}
+
+function BorrarEtiquetasHandle(){
+
+}
+
 
 export   { 
     mostrarDatoEnId,
