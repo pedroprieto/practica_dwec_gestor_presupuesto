@@ -36,7 +36,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     if (fecha == null || isNaN(fecha)){
         this.fecha = +new Date(); // se pasa a timestamp con el + delante
     } else{
-        this.fecha = fecha; // getTime() sirve para pasar la fecha a formato timestamp
+        this.fecha = fecha; // sirve para pasar la fecha a formato timestamp
     }
     //etiqueta
     this.etiquetas = etiquetas;
@@ -152,7 +152,119 @@ function calcularBalance(){
 
 // FUNCIONES DE JavaScript III
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function filtrarGastos(){
+function filtrarGastos({...filtrar}){
+    // me guardo en la lista resultados todos los gastos, ya que trabajare sobre ella (no quiero modificar la original)
+    let resultado = gastos;
+
+    if (Object.entries(filtrar).length === 0){ // Si el objeto esta vacio 
+        return resultado; 
+    }
+    else{
+        // Recorrer todas la propiedades del objeto
+        for(var prop in filtrar){
+            //console.log("propiedad: "+prop);
+            //console.log("valor: "+filtrar[prop]);
+
+            if(prop == "fechaDesde"){
+                var fechaDesde = Date.parse(filtrar[prop]);
+                if (!isNaN(fechaDesde)){
+                    fechaDesde = +new Date(fechaDesde); // se pasa a timestamp
+                    resultado = resultado.filter(gasto => gasto.fecha >= fechaDesde); // se eliminan los valore menores a la fecha Min
+                }
+            }
+            
+            if(prop == "fechaHasta"){
+                var fechaHasta = Date.parse(filtrar[prop]);
+                if (!isNaN(fechaHasta)){
+                    fechaHasta = +new Date(fechaHasta); // se pasa a timestamp
+                    resultado = resultado.filter(gasto => gasto.fecha <= fechaHasta); // se elimina los valores superiores a la fecha Max - me quedo con los menores
+                }
+            } 
+
+            if(prop == "valorMinimo"){
+                var valorMinimo = filtrar[prop];
+                if(!isNaN(valorMinimo)){
+                    resultado = resultado.filter(gasto => gasto.valor >= valorMinimo);
+                }  
+            }
+
+            if(prop == "valorMaximo"){
+                var valorMaximo = filtrar[prop];
+                if(!isNaN(valorMaximo)){
+                    resultado = resultado.filter(gasto => gasto.valor <= valorMaximo);
+                }  
+            }
+
+            if(prop == "descripcionContiene"){
+                let descripcionContiene = filtrar[prop].toLowerCase();
+                
+                // busco en que objetos se encuentra la palabra buscada
+                let posicion = [];
+                for (var i = 0; i < resultado.length; i++){
+                    let descripcion = resultado[i].descripcion.toLowerCase();
+                    if(!descripcion.includes(descripcionContiene)){
+                        posicion += resultado[i].id;
+                    }
+                }    
+                // eliminamos los objetos de la lista resultado
+                for(var i = 0 ; i < posicion.length; i++){
+                    for(var j = 0; j < resultado.length; j ++){
+                        if(posicion[i] == resultado[j].id){
+                            resultado.splice(j, 1);
+                        }
+                    }
+                }   
+            }
+
+            if(prop == "etiquetasTiene"){
+                let etiquetasTiene = filtrar[prop];
+                // busco en que objetos se encuentra la palabra buscada
+                let posicion = [];
+                for( let etiqueta = 0; etiqueta < etiquetasTiene.length; etiqueta++){
+                    let etiq = etiquetasTiene[etiqueta].toLowerCase();                    
+                    
+                    // recoro los objetos de la lista resultados
+                    for (var i = 0; i < resultado.length; i++){
+                        // recorro las etiquetas de cada objeto
+                        for(var j = 0; j < resultado[i].etiquetas.length; j++){
+                            let palabra = resultado[i].etiquetas[j].toLowerCase();
+                            // si encuentro la etiqueta que busco me devuelve el id del objeto que la contiene
+                            if(palabra.includes(etiq)){
+                                posicion += resultado[i].id
+                            }
+                        }
+                    }
+                }
+                // consigo los id de los objetos que no tienen las etiquetas buscadas
+                let eliminar = [];
+                for( var i = 0; i <=resultado.length -1; i++){
+                    if(!posicion.includes(i)){
+                        eliminar += i;
+                    }
+                }
+                // elimino los objetos que no tienen las etiquetas
+                for(var i = 0 ; i < eliminar.length; i++){
+                    for(var j = 0; j < resultado.length; j ++){
+                        if(eliminar[i] == resultado[j].id){
+                            resultado.splice(j, 1);
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+        }
+    }
+    // PARA COMPROBAR SI EL RESULTADO OBTENIDO ES EL CORRECTO
+    /*
+    console.log("\n--------------Queda esto ---------------\n")
+    console.log(resultado);
+    console.log("\n-----------------------------\n")
+    return resultado;
+    */
 
 }
 
@@ -160,7 +272,41 @@ function agruparGastos(){
 
 }
 
-// COMPROBAR SI FUNCIONA
+// COMPROBAR SI FUNCIONA EL CODIGO
+
+/*
+let valor1 = 23.44,
+    valor2 = 12.88,
+    valor3 = 22.80,
+    valor4 = 62.22,
+    valor5 = 304.75,
+    valor6 = 195.88;
+
+let gasto1 = new CrearGasto("Compra carne", valor1, "2021-10-06", "casa", "comida" );
+let gasto2 = new CrearGasto("Compra fruta y verdura", valor2, "2021-09-06", "supermercado", "comida" );
+let gasto3 = new CrearGasto("Bonobús", valor3, "2020-05-26", "transporte" );
+let gasto4 = new CrearGasto("Gasolina", valor4, "2021-10-08", "transporte", "gasolina" );
+let gasto5 = new CrearGasto("Seguro hogar", valor5, "2021-09-26", "casa", "seguros" );
+let gasto6 = new CrearGasto("Seguro coche", valor6, "2021-10-06", "transporte", "seguros" );
+
+anyadirGasto(gasto1);
+anyadirGasto(gasto2);
+anyadirGasto(gasto3);
+anyadirGasto(gasto4);
+anyadirGasto(gasto5);
+anyadirGasto(gasto6);
+//console.log("Filtrados: "+filtrarGastos({fechaDesde: "2021-10-10"}));
+console.log("\n++++++++++++++++++++++++++++++++\n")
+console.log("Filtrados: "+ filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}));
+
+console.log("Gastos: " + gastos);
+console.log("Resultados: " + filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}).length)
+*/
+
+
+
+
+
 
 
 
