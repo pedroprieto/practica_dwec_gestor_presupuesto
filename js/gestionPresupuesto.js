@@ -101,23 +101,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         // METODOS de JavaScript III
     ///////////////////////////////////////////////////////////////////////////////////////
     this.obtenerPeriodoAgrupacion = function(periodo){
-        var resultado = "";
-        var tiempo = new Date(this.fecha);
-        var anyo = Intl.DateTimeFormat('es', {year: 'numeric'}).format(tiempo);
-        var mes = Intl.DateTimeFormat('es', {month: '2-digit'}).format(tiempo);
-        var dia = Intl.DateTimeFormat('es', {day: '2-digit'}).format(tiempo);
+        var anyo = Intl.DateTimeFormat('es', {year: 'numeric'}).format(this.fecha);
+        var mes = Intl.DateTimeFormat('es', {month: '2-digit'}).format(this.fecha);
+        var dia = Intl.DateTimeFormat('es', {day: '2-digit'}).format(this.fecha);
 
         if(periodo == "anyo"){
-            resultado = anyo;
+            return anyo;
         }
         else if (periodo == "mes"){
-            resultado = anyo + "-" + mes;
+            return anyo + "-" + mes;
         }
         else if (periodo == "dia"){
-            resultado = anyo + "-" + mes + "-" + dia;
+            return anyo + "-" + mes + "-" + dia;
         }
-        return resultado;
-
     }
 }
 
@@ -165,12 +161,7 @@ function agruparGastos(){
 }
 
 // COMPROBAR SI FUNCIONA
-//let gasto2 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
-//console.log(gasto2.mostrarGastoCompleto());
-//console.log("Fecha: " + gasto2.fecha);
-//console.log("Año: " + gasto2.obtenerPeriodoAgrupacion("anyo"));
-//console.log("Mes: " + gasto2.obtenerPeriodoAgrupacion("mes"));
-//console.log("Dia: " + gasto2.obtenerPeriodoAgrupacion("dia"));
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
