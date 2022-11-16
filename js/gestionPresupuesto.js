@@ -1,3 +1,4 @@
+"use strict"
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
 // TODO: Variable global
@@ -14,28 +15,24 @@ function actualizarPresupuesto(dinero) {
 }
 
 function mostrarPresupuesto() {
-    alert(`Tu presupuesto actual es ${presupuesto}€`)
+    alert(`Tu presupuesto actual es ${presupuesto}€`);
 }
 
 function CrearGasto() {
     let gasto = {
-        descripcion : "",
-        valor : 0
-    }
-
-    function mostrarGasto(){
-        alert(`Gasto: ${descripcion}\n
-        Coste: ${valor}`)
-    }
-
-    function actualizarDescripccion(nuevaDesc){
-        nuevaDesc = prompt("Introduzca la nueva descripccion")
-        descripcion = nuevaDesc;
-    }
-
-    function actualizarValor(nuevoVal){
-        nuevoVal = prompt("Introduza el nuevo valor")
-        valor = parseInt(nuevoVal);
+        descricion: "",
+        valor: 0,
+        mostrarGasto(){
+            `Gasto correspondiente a ${this.descricion} con valor ${this.valor}`
+        },
+        actualizarDescripccion(descripcion){
+            this.descricion = descripcion;        
+        },
+        actualizarValor(valor){
+            if(valor >= 0){
+                this.valor = valor;
+            }
+        }
     }
 }
 
@@ -48,3 +45,8 @@ function CrearGasto() {
     CrearGasto
 }
 */
+
+CrearGasto();
+actualizarDescripccion();
+actualizarValor(6);
+mostrarGasto();
