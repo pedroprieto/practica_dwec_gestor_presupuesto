@@ -41,14 +41,14 @@ function mostrarGastoWeb (idElemento, gasto) {
         divEtiquetas.append(spanEti);
     }
     
-
-
     //componer el objeto+
     divGasto.append(divDescripcion, divFecha, divValor, divEtiquetas);
 
     //Añadir gasto al div
     let contenedor = document.getElementById(idElemento);
     contenedor.append(divGasto);
+
+    //Crear un botón con texto Editar de tipo
 }
 
 function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
@@ -130,9 +130,34 @@ function EditarHandle () {
         let fechaGasto = prompt ("Fecha del gasto en formato yyyy-mm-dd", this.gasto.fecha);
         let etiquetas = prompt ("Introduzca etiquetas separadas por comas :", this.gasto.etiquetas).split(",");
         //Actualizar las propiedades del gasto
-        
+        descripcion = this.gasto.actualizarDescripcion();
+        valorGasto = this.gasto.ActualizarValor();
+        fechaGasto = this.gasto.actualizarFecha();
+        etiquetas = this.gasto.anyadirEtiquetas();
+        //Llamar a la función repintar
+        repintar();
     }
 }
+    //Función BorrarHandle
+    function BorrarHandle () {
+        this.handleEvent = function (event) {
+            //Borrar el gasto asociado
+            gestPresupuesto.borrarGasto(this.gasto.idGasto);
+            //Llamar a la función repintar
+            repintar();
+        }
+
+    }
+    //Función BorrarEtiquetasHandle
+    function BorrarEtiquetasHandle () {
+        this.handleEvent = function (event) {
+            //Borrar la etiqueta seleccionada del gasto asociado. 
+            this.gasto.borrarEtiquetas(this.etiqueta);
+            //Llamar a la función repintar
+            repintar();
+
+        }
+    }
 
 // Exportar las funciones creadas
 export {
@@ -142,5 +167,7 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     repintar,
-    EditarHandle
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle
 }
