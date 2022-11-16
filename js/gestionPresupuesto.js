@@ -97,6 +97,28 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             texto += `- ${i}\n`; })
         return texto;
     }
+
+        // METODOS de JavaScript III
+    ///////////////////////////////////////////////////////////////////////////////////////
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        var resultado = "";
+        var tiempo = new Date(this.fecha);
+        var anyo = Intl.DateTimeFormat('es', {year: 'numeric'}).format(tiempo);
+        var mes = Intl.DateTimeFormat('es', {month: '2-digit'}).format(tiempo);
+        var dia = Intl.DateTimeFormat('es', {day: '2-digit'}).format(tiempo);
+
+        if(periodo == "anyo"){
+            resultado = anyo;
+        }
+        else if (periodo == "mes"){
+            resultado = anyo + "-" + mes;
+        }
+        else if (periodo == "dia"){
+            resultado = anyo + "-" + mes + "-" + dia;
+        }
+        return resultado;
+
+    }
 }
 
 // FUNCIONES JAVASCRIPT II
@@ -111,19 +133,6 @@ function anyadirGasto(gasto){
     gastos.push(gasto);
     
 }
-
-// comprobar si funciona
-//var gasto = new CrearGasto("Alquiler", 300, "2021-10-06T13:10", "casa", "libro", "perro");
-//gasto.borrarEtiquetas("casa", "perro");
-//console.log(gasto.mostrarGastoCompleto());
-//anyadirGasto(gasto);
-//console.log(gasto.mostrarGasto());
-//console.log(listarGastos());
-
-//var gasto1 = new CrearGasto("Cine", 15, "2022-10-06T13:10", "SpiderMan");
-//anyadirGasto(gasto1);
-//console.log(gasto.mostrarGasto());
-//console.log(listarGastos());
 
 function borrarGasto(id){
     for(var i = 0; i < gastos.length; i++){
@@ -145,6 +154,24 @@ function calcularBalance(){
     return (presupuesto - calcularTotalGastos())
 }
 
+// FUNCIONES DE JavaScript III
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+
+}
+
+// COMPROBAR SI FUNCIONA
+//let gasto2 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
+//console.log(gasto2.mostrarGastoCompleto());
+//console.log("Fecha: " + gasto2.fecha);
+//console.log("Año: " + gasto2.obtenerPeriodoAgrupacion("anyo"));
+//console.log("Mes: " + gasto2.obtenerPeriodoAgrupacion("mes"));
+//console.log("Dia: " + gasto2.obtenerPeriodoAgrupacion("dia"));
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -157,5 +184,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos, 
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
