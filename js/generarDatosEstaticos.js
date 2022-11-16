@@ -1,6 +1,6 @@
 //Importar librerías
-import * as gestionPresWeb from './gestionPresupuestoWeb';
-import * as gestionPre from './gestionPresupuesto';
+import * as gestionPresWeb from './gestionPresupuestoWeb.js';
+import * as gestionPre from './gestionPresupuesto.js';
 
 // Actualizar el presupuesto a 1500€
 gestionPre.actualizarPresupuesto( 1500 );
@@ -38,6 +38,9 @@ for ( let gasto of gastos ){
 
 // Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1
 let gastosFiltrados = gestionPre.filtrarGastos( {fechaDesde:"2021-09-01", fechaHasta:"2021-09-30"} );
+for ( let gasto of gastosFiltrados ){
+    gestionPresWeb.mostrarGastoWeb( "listado-gastos-filtrado-1", gasto );
+}
 
 // Mostrar el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2
 gastosFiltrados = gestionPre.filtrarGastos( {valorMinimo:50} );
@@ -54,17 +57,17 @@ for ( let gasto of gastosFiltrados ){
 //Mostrar el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en div#listado-gastos-filtrado-4
 gastosFiltrados = gestionPre.filtrarGastos( {etiquetas:"comida, transporte", valorMaximo:50} );
 for ( let gasto of gastosFiltrados ){
-    gestionPre.mostrarGastoWeb( "listado-gastos-filtrado-4", gasto );
+    gestionPresWeb.mostrarGastoWeb( "listado-gastos-filtrado-4", gasto );
 }
 
 //Mostrar el total de gastos agrupados por día en div#agrupacion-dia
-gastosFiltrados.agruparGastos( "dia");
+gastosFiltrados = gestionPre.agruparGastos( "dia");
 gestionPresWeb.mostrarGastosAgrupadosWeb( "agrupacion-dia", gastosFiltrados, "día" );
 
 //Mostrar el total de gastos agrupados por mes en div#agrupacion-mes
-gastosFiltrados.agruparGastos( "mes");
+gastosFiltrados = gestionPre.agruparGastos( "mes");
 gestionPresWeb.mostrarGastosAgrupadosWeb( "agrupacion-mes", gastosFiltrados, "mes" );
 
 //Mostrar el total de gastos agrupados por año en div#agrupacion-anyo 
-gastosFiltrados.agruparGastos( "anyo" );
+gastosFiltrados = gestionPre.agruparGastos( "anyo" );
 gestionPresWeb.mostrarGastosAgrupadosWeb( "agrupacion-anyo", gastosFiltrados, "año");

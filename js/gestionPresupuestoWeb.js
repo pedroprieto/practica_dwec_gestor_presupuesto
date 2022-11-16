@@ -1,8 +1,9 @@
+import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 // función mostrarDatoEnId
 function mostrarDatoEnId(idElemento, valor){
-    let mostrarGasto = document.getElementById(idElemento);
-    mostrarGasto.innerText = valor;
+    let mostrarDato = document.getElementById(idElemento);
+    mostrarDato.innerText = valor;
 }
 
 //función mostrarGastoWeb
