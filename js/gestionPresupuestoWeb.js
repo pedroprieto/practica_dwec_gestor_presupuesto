@@ -174,6 +174,15 @@ function EditarHandle(){
 }
 
 function BorrarHandle(){
+  //método llamado handleEvent
+  this.handleEvent = function(){
+
+    //Borrar el gasto asociado
+    gestionPre.borrarGasto( this.gasto.id );
+
+    //Llamar a la función repintar
+    repintar();
+  }
 
 }
 
