@@ -1,7 +1,7 @@
 "use strict"
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
-// TODO: Variable global
+// TODO: Variable global l
  
 
 function actualizarPresupuesto(dinero) {
