@@ -96,7 +96,7 @@ function repintar(){
   mostrarDatoEnId( "balance-total", gestionPre.calcularBalance() );
 
   //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información.
-  document.getElementById( "listado-gastos-completo" ).innerHTML="";
+  document.getElementById( "listado-gastos-completo" ).innerHTML= '';
 
   //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
   let gastos = gestionPre.listarGastos();
@@ -136,7 +136,7 @@ function nuevoGastoWeb(){
   let arrayEtiquetas = etiquetasUsuario.split(', ');
 
   //Crear un nuevo gasto (función crearGasto)
-  let gasto = new gestionPre.CrearGasto( desc, valorNumero, fecha, arrayEtiquetas );
+  let gasto = new gestionPre.CrearGasto( desc, valorNumero, fecha, ...arrayEtiquetas );
 
   //Añadir el gasto a la lista (función anyadirGasto).
   gestionPre.anyadirGasto( gasto );
@@ -148,10 +148,29 @@ function nuevoGastoWeb(){
 //botón anyadirgasto
 document.getElementById( "anyadirgasto" ).addEventListener( "click", nuevoGastoWeb() );
 
-//Botón anyadirgasto
-
 function EditarHandle(){
-//método llamado handleEvent
+  //método llamado handleEvent
+  this.handleEvent = function(){
+
+     //Pedir al usuario la información necesaria para editar el gasto mediante sucesivas preguntas con prompt. 
+     let desc = prompt( "Introduzca una descripción", this.gasto.descripcion );
+     let valor = prompt( "Introduzca un valor", this.gasto.valor );
+     let fecha = prompt( "Introduzca una fecha con formato aaaa/mm/dd", this.gasto.fecha );
+     let etiquetas = prompt( "Introduzca unas etiquetas separadas por comas", this.gasto.etiquetas );
+   
+     valor = parseFloat( valor );
+   
+     etiquetas = etiquetas.split(', ');
+
+     //Actualizar las propiedades del gasto (disponible mediante this.gasto)
+     this.gasto.actualizarDescripción( desc );
+     this.gasto.actualizaValor( valor );
+     this.gasto.actualizarFecha( fecha );
+     this.gasto.anyadirEtiquetas( ...etiquetas );
+
+     //Llamar a la función repintar
+     repintar();
+  }
 }
 
 function BorrarHandle(){
