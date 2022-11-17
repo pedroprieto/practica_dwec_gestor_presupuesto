@@ -1,4 +1,4 @@
-import * as gestionPresupuesto from './gestionPresupuesto.js';
+import * as gestionPre from './gestionPresupuesto.js';
 
 // función mostrarDatoEnId
 function mostrarDatoEnId(idElemento, valor){
@@ -87,14 +87,22 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 function repintar(){
   //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+  mostrarDatoEnId( "presupuesto", gestionPre.mostrarPresupuesto() );
 
   //Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+  mostrarDatoEnId( "gastos-totales", gestionPre.calcularTotalGastos() );
 
   //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+  mostrarDatoEnId( "balance-total", gestionPre.calcularBalance() );
 
   //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+  document.getElementById( "listado-gastos-completo" ).innerHTML="";
 
   //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+  let gastos = gestionPre.listarGastos();
+  for ( let gasto of gastos){
+    mostrarGastoWeb ("listado-gastos-completo", gasto);
+  }
 }
 
 function actualizarPresupuestoWeb(){
