@@ -95,7 +95,7 @@ function repintar(){
   //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
   mostrarDatoEnId( "balance-total", gestionPre.calcularBalance() );
 
-  //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+  //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información.
   document.getElementById( "listado-gastos-completo" ).innerHTML="";
 
   //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
@@ -106,7 +106,18 @@ function repintar(){
 }
 
 function actualizarPresupuestoWeb(){
+  //Pedir al usuario que introduzca un presupuesto mediante un prompt.
+  //para que las indicaciones se vean bien en IE, recomendamos siempre proporcionar el segundo argumento:
+  let presupuestoUsuario = prompt( 'Introduzca un presupuesto', '');
 
+  //Convertir el valor a número (recuerda que prompt siempre devuelve un string)..
+  let presupuestoNumero = parseInt( presupuestoUsuario);
+
+  //Actualicar el presupuesto (función actualizarPresupuesto)
+  gestionPre.actualizarPresupuesto( presupuestoNumero );
+
+  //Llamar a la función repintar para que se muestre la información actualizada en el archivo HTML. 
+  repintar();
 }
 
 //botón actualizarpresupuesto
