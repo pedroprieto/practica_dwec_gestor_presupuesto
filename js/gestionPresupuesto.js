@@ -1,7 +1,7 @@
+console.log("gestionPresupuesto")
+
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
 // TODO: Variable global
-
 let presupuesto = 0;
 
 let gastos = [];
@@ -133,7 +133,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
             if(month >= 10 && day <= 10){
                 text =`${year}-${month}-0${day}`
-                console.log("hola--------")
             }
             
             return text;
@@ -282,7 +281,6 @@ function filtrarGastos(opciones) {
 
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
-    
     
     let gastosFiltrados = filtrarGastos({
         etiquetasTiene: etiquetas, 
