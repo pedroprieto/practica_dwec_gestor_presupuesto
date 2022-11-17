@@ -23,14 +23,34 @@ manipularDom.mostrarDatoEnId("balance-total", presupuesto.calcularBalance());
 for (let gasto of presupuesto.listarGastos()){
     manipularDom.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
+for (let gasto of presupuesto.filtarGastos(opciones)){
+    if( gasto.fecha == "2021-09")
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado1", gasto);
+}
+for (let gasto of presupuesto.filtrarGastos(opciones)){
+    if( gasto.valor > 50 )
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado2", gasto);
+}
+for (let gasto of presupuesto.filtrarGastos(opciones)){
+    if( gasto.valor > 200 && gasto.etiquetas == "seguros" )
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado3", gasto);
+}
+for (let gasto of presupuesto.filtrarGastos(opciones)){
+    if( gasto.etiquetas == "comida" && gasto.etiquetas == "transporte" )
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado4", gasto);
+}
 
-manipularDom.mostrarGastoWeb("listado-gastos-filtrado1", presupuesto.filtrarGastos(fechaDesde === "2021-09"));
-manipularDom.mostrarGastoWeb("listado-gastos-filtrado2", presupuesto.filtrarGastos(valorMinimo > "50"));
-manipularDom.mostrarGastoWeb("listado-gastos-filtrado3", presupuesto.filtrarGastos(valorMinimo > "200", etiquetasTiene === "seguros"));
-manipularDom.mostrarGastoWeb("listado-gastos-filtrado4", presupuesto.filtrarGastos(valorMaximo < "50", etiquetasTiene === "comida" || etiquetasTiene === "transporte"));
-manipularDom.mostrarGastosAgrupadosWeb("agrupacion-dia", presupuesto.agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta), periodo === "dia");
-manipularDom.mostrarGastosAgrupadosWeb("agrupacion-mes", presupuesto.agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta), periodo === "mes");
-manipularDom.mostrarGastosAgrupadosWeb("agrupacion-anyo", presupuesto.agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta), periodo === "anyo");
+for (let gasto of presupuesto.agruparGastos(periodo)){
+    if(periodo == "dia");
+    manipularDom.mostrarGastosAgrupadosWeb("agrupacion-dia", )
+}
+for (let gasto of presupuesto.agruparGastos(periodo)){
+   
+}for (let gasto of presupuesto.agruparGastos(periodo)){
+  
+
+}
+
 
 
 
