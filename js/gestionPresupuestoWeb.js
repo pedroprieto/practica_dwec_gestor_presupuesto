@@ -1,38 +1,67 @@
-import { agruparGastos, mostrarPresupuesto } from "./gestionPresupuesto";
-
 function mostrarDatoEnId(idElemento, valor) {
-    document.getElementById(idElemento, valor);
-    mostrarPresupuesto();
+    let elemento = document.getElementById(idElemento);
+    elemento.innerText = valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
-    let html = "";
-    html += `<div class="gasto">`;
-    html += `  <div class="gasto-descripcion">${gasto.descripcion}</div>`;
-    html += `   <div class="gasto-fecha">${gasto.fecha}</div> `;
-    html += `   <div class="gasto-valor">${gasto.valor}</div> `;
-    html += `   <div class="gasto-etiquetas">`;
+
+    let divGasto = document.createElement("div");
+    divGasto.className = "gasto";
+
+    let divDesc = document.createElement("div");
+    divDesc.className = "gasto-descripcion";
+    divDesc.innerText = gasto.descripcion;
+
+    let divFecha = document.createElement("div");
+    divFecha.className = "gasto-fecha";
+    divFecha.innerText = gasto.fecha;
+
+    let divValor = document.createElement("div");
+    divValor.className = "gasto-valor"
+    divValor.innerText = gasto.valor;
+
+    let divEti = document.createElement("div");
+    divEti.className = "gasto-etiquetas";
     for(let etiqueta of gasto.etiquetas){
-        html += `<span class="gasto-etiquetas-etiqueta">${etiqueta}</span>`;
+        let spanEti = document.createElement("span");
+        spanEti.className = "gasto-etiquetas-etiqueta";
+        spanEti.innerText = etiqueta;
+        divEti.append(spanEti);
     }
-    html += `   </div>`;
-    html += `</div>`;
-    mostrarDatoEnId(idElemento, html);
+
+    divGasto.append(divDesc);
+    divGasto.append(divFecha);
+    divGasto.append(divValor);
+    divGasto.append(divEti);
+
+   let listadoGastos = documnet.getElementById(idElemento);
+   listadoGastos.append(divGasto);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
-    let html = "";
-     html +=  `<div class="agrupacion">`;     
-     html +=  ` <h1>Gastos agrupados por ${periodo}</h1>`;  
-     agruparGastos(periodo);
-     for (let [key, value] of agrup) {             
-        html +=  `<div class="agrupacion-dato">`;                 
-        html +=  `<span class="agrupacion-dato-clave">${key}</span>`;                 
-        html +=  `<span class="agrupacion-dato-valor">${value}</span>`;                 
-        html +=  `</div>`;        
+    let divAgrup = document.createElement("div");
+    divAgrup.className = "agrupacion";
+
+    let h1Agrup = document.createElement("h1");
+    h1Agrup.innerText = periodo;
+
+   
+     for (let [key, value] of agrup) {   
+        let spanAgrupClave = document.createElement("span")  
+        spanAgrupClave.className = "agrupacion-dato-clave";
+        spanAgrupClave.innerText = key; 
+        let spanAgrupValor = document.createElement("span")  
+        spanAgrupValor.className = "agrupacion-dato-valor";
+        spanAgrupValor.innerText = value;   
+        divAgrup.append(spanAgrupClave);
+        divAgrup.append(spanAgrupValor);           
      }              
-     html +=  `</div>`;  
-     mostrarDatoEnId(idElemento, html);               
+   
+    divAgrup.append(h1Agrup);
+    divAgrup.append(agrupdat);
+
+    let gastosAgrup = document.getElementById(idElemento)   ;
+    gastosAgrup.append(divAgrup)    ;     
 }
 
 export   {
