@@ -121,12 +121,32 @@ function actualizarPresupuestoWeb(){
 }
 
 //botón actualizarpresupuesto
-//element.addEventListener(event, handler, [options]);
+//document.getElementById(id) + element.addEventListener(event, handler, [options]);
 document.getElementById( "actualizarpresupuesto" ).addEventListener( "click", actualizarPresupuestoWeb() );
 
 function nuevoGastoWeb(){
+  //Pedir al usuario la información necesaria para crear un nuevo gasto mediante sucesivas preguntas con prompt (por orden: descripción, valor, fecha y etiquetas). 
+  let desc = prompt( "Introduzca una descripción", "" );
+  let valorUsuario = prompt( "Introduzca un valor", "" );
+  let fecha = prompt( "Introduzca una fecha con formato aaaa/mm/dd", "" );
+  let etiquetasUsuario = prompt( "Introduzca unas etiquetas separadas por comas", "" );
 
+  let valorNumero = parseFloat( valorUsuario );
+
+  let arrayEtiquetas = etiquetasUsuario.split(', ');
+
+  //Crear un nuevo gasto (función crearGasto)
+  let gasto = new gestionPre.CrearGasto( desc, valorNumero, fecha, arrayEtiquetas );
+
+  //Añadir el gasto a la lista (función anyadirGasto).
+  gestionPre.anyadirGasto( gasto );
+
+  //Llamar a la función repintar
+  repintar;
 }
+
+//botón anyadirgasto
+document.getElementById( "anyadirgasto" ).addEventListener( "click", nuevoGastoWeb() );
 
 //Botón anyadirgasto
 
