@@ -166,9 +166,8 @@ function filtrarGastos({...filtrar}){
             //console.log("valor: "+filtrar[prop]);
 
             if(prop == "fechaDesde"){
-                var fechaDesde = Date.parse(filtrar[prop]);
+                var fechaDesde = Date.parse(filtrar[prop]); // ya en formato timestamp
                 if (!isNaN(fechaDesde)){
-                    fechaDesde = +new Date(fechaDesde); // se pasa a timestamp
                     resultado = resultado.filter(gasto => gasto.fecha >= fechaDesde); // se eliminan los valore menores a la fecha Min
                 }
             }
@@ -251,12 +250,8 @@ function filtrarGastos({...filtrar}){
                     }
                 }
             }
-
-
-
-
-
         }
+        return resultado;
     }
     // PARA COMPROBAR SI EL RESULTADO OBTENIDO ES EL CORRECTO
     /*
@@ -265,16 +260,56 @@ function filtrarGastos({...filtrar}){
     console.log("\n-----------------------------\n")
     return resultado;
     */
-
 }
 
-function agruparGastos(){
+function agruparGastos(...[periodo, [...etiquetas], fechaDesde, fechaHasta]){
+   /* let opciones = {};
+    opciones.periodo = periodo;
 
+    if(periodo != "dia" || periodo != "mes" || periodo != "anyo" || periodo == null){
+        opciones.periodo == "mes";
+    }
+
+    if(etiquetas == null){
+        //obtener todas las posibles etiquetas de todos los objetos
+        //opciones.etiquetas = []
+        for(var i = 0; i < gastos.length; i++){
+            for(var j = 0; j < gastos[i].etiquetas.length; j++){
+                if (opciones.etiquetas.includes(gastos[i].etiquetas[j]) == false){
+                    opciones.etiquetas.push(gastos[i].etiquetas[j]);
+                }
+            }
+        }
+    }
+
+    if(fechaDesde != null){
+        fechaDesde = Date.parse(fechaDesde);
+                if (!isNaN(fechaDesde)){
+                    opciones.fechaDesde = +new Date(fechaDesde); // se pasa a timestamp
+                }
+    }
+    else{
+        opciones.fechaDesde = +new Date("0000-00-00");
+    }
+    
+    if(fechaHasta != null){
+        fechaHasta = Date.parse(fechaHasta);
+                if (!isNaN(fechaHasta)){
+                    opciones.fechaHasta = +new Date(fechaHasta); // se pasa a timestamp
+                }
+    }
+    else{
+        opciones.fechaHasta = +new Date();
+    }
+
+    console.log(opciones); */
 }
 
 // COMPROBAR SI FUNCIONA EL CODIGO
 
+
 /*
+
 let valor1 = 23.44,
     valor2 = 12.88,
     valor3 = 22.80,
@@ -296,14 +331,10 @@ anyadirGasto(gasto4);
 anyadirGasto(gasto5);
 anyadirGasto(gasto6);
 //console.log("Filtrados: "+filtrarGastos({fechaDesde: "2021-10-10"}));
-console.log("\n++++++++++++++++++++++++++++++++\n")
-console.log("Filtrados: "+ filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}));
+console.log(filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}));
+console.log("Cuantos objetos devuevle: " + filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}).length);
 
-console.log("Gastos: " + gastos);
-console.log("Resultados: " + filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}).length)
 */
-
-
 
 
 
