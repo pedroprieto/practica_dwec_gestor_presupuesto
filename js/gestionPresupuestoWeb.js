@@ -122,6 +122,7 @@ function actualizarPresupuestoWeb(){
 
 //botón actualizarpresupuesto
 //element.addEventListener(event, handler, [options]);
+document.getElementById( "actualizarpresupuesto" ).addEventListener( "click", actualizarPresupuestoWeb() );
 
 function nuevoGastoWeb(){
 
