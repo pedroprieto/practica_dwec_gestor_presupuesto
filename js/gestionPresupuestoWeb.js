@@ -47,8 +47,24 @@ function mostrarGastoWeb (idElemento, gasto) {
     //Añadir gasto al div
     let contenedor = document.getElementById(idElemento);
     contenedor.append(divGasto);
-
+    //modificar la función mostrarGastoWeb
     //Crear un botón con texto Editar de tipo
+    let botonEditar = document.createElement("button");
+    //clase gasto-editar.
+    botonEditar.className = ("gasto-editar");
+    //de tipo button
+    botonEditar.type = "button";
+    //con texto Editar
+    botonEditar.innerHTML ="Editar";
+    //Crear un nuevo objeto a partir de la función constructora EditarHandle.
+    let objetoEditar = new EditarHandle();
+    //Establecer la propiedad gasto del objeto creado al objeto
+    objetoEditar.gasto = gasto;
+    //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
+    botonEditar.addEventListener("click", objetoEditar);
+    //Añadir el botón al DOM a continuación de las etiquetas
+    divGasto.append(botonEditar);
+    //Botón borrar: 
 }
 
 function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
@@ -105,9 +121,10 @@ function actualizarPresupuestoWeb () {
     gestPresupuesto.actualizarPresupuesto(nuevoPresupuesto);
     //Llamar a la función repintar para que se muestre la información actualizada
     repintar();
-    //manejadora del evento click del botón actualizarpresupuesto mediante addEventListener
-    document.getElementById('actualizarpresupuesto').addEventListener('click', gestPresupuesto.actualizarPresupuesto());
 }
+//manejadora del evento click del botón actualizarpresupuesto mediante addEventListener
+document.getElementById('actualizarpresupuesto').addEventListener('click', actualizarPresupuestoWeb);
+
 //Función nuevoGastoWeb
 function nuevoGastoWeb () {
     //Pedir al usuario la información necesaria para crear un nuevo gasto
@@ -118,22 +135,24 @@ function nuevoGastoWeb () {
     let nuevoGasto = new gestPresupuesto.CrearGasto(descripcion, valorGasto, fechaGasto, ...etiquetas);
     gestPresupuesto.anyadirGasto(nuevoGasto);
     repintar();
-    document.getElementById('anyadirgasto').addEventListener('click', gestPresupuesto.anyadirGasto);
 }
+//Una vez definida la función, se añadirá como manejadora del evento click
+    document.getElementById('anyadirgasto').addEventListener('click', nuevoGastoWeb);
+
 //La función EditarHandle
 function EditarHandle () {
     
     this.handleEvent = function(event){
         //Pedir al usuario la información necesaria para editar el gasto
-        let descripcion = prompt("Descripción del gasto :", this.gasto.descripcion);
-        let valorGasto = Number (prompt("Valor del Gasto :", this.gasto.valor));
-        let fechaGasto = prompt ("Fecha del gasto en formato yyyy-mm-dd", this.gasto.fecha);
-        let etiquetas = prompt ("Introduzca etiquetas separadas por comas :", this.gasto.etiquetas).split(",");
+        let descripcion = prompt("Descripción del gasto :");
+        let valorGasto = Number (prompt("Valor del Gasto :"));
+        let fechaGasto = prompt ("Fecha del gasto en formato yyyy-mm-dd");
+        let etiquetas = prompt ("Introduzca etiquetas separadas por comas :").split(",");
         //Actualizar las propiedades del gasto
-        descripcion = this.gasto.actualizarDescripcion();
-        valorGasto = this.gasto.ActualizarValor();
-        fechaGasto = this.gasto.actualizarFecha();
-        etiquetas = this.gasto.anyadirEtiquetas();
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.ActualizarValor(valorGasto);
+        this.gasto.actualizarFecha(fechaGasto);
+        this.gasto.anyadirEtiquetas(etiquetas);
         //Llamar a la función repintar
         repintar();
     }
@@ -142,7 +161,7 @@ function EditarHandle () {
     function BorrarHandle () {
         this.handleEvent = function (event) {
             //Borrar el gasto asociado
-            gestPresupuesto.borrarGasto(this.gasto.idGasto);
+            gestPresupuesto.borrarGasto(this.gasto.id);
             //Llamar a la función repintar
             repintar();
         }
@@ -163,11 +182,5 @@ function EditarHandle () {
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    actualizarPresupuestoWeb,
-    nuevoGastoWeb,
-    repintar,
-    EditarHandle,
-    BorrarHandle,
-    BorrarEtiquetasHandle
+    mostrarGastosAgrupadosWeb
 }
