@@ -147,56 +147,55 @@ function filtrarGastos(opciones){
     let descripcionContiene = opciones.descripcionContiene;
     let etiquetasTiene = opciones.etiquetasTiene;
     return gastos.filter(function(gasto){
-        let resultado = true;
         if(fechaDesde){
             if(gasto.fecha < Date.parse(fechaDesde)){
-                resultado = false;
+                return false;
             }
         }
         if(fechaHasta){
             if (gasto.fecha > Date.parse(fechaHasta)){
-                resultado = false;
+                return false;
             }
         }
         if(valorMinimo){
             if (gasto.valor < valorMinimo){
-                resultado = false;
+                return false;
             }
         }
         if(valorMaximo){
             if(gasto.valor > valorMaximo){
-                resultado = false;
+                return false;
             }
         }
         if(descripcionContiene){
             if (gasto.descripcion.indexOf(descripcionContiene) == -1){
-                resultado = false;
+                return false;
             }
         }
         if(etiquetasTiene){
             let encontrado = false;
             for (let etiqueta of gasto.etiquetas){
                 for (let etiquetaTiene of etiquetasTiene){
-                    if (etiqueta == etiquetaTiene)
-                    encontrado = true;
+                    if (etiqueta == etiquetaTiene){
+                        encontrado = true;
+                    }
                 }
             }
             if (!encontrado){
-                resultado = false;
+                return false;
             }
         }
-        return resultado;
+        return true;
     });
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     let opciones= {};
     opciones.periodo = periodo;
-    opciones.etiquetas = etiquetas;
+    opciones.etiquetasTiene = etiquetas;
     opciones.fechaDesde = fechaDesde;
-    opciones.fechaHasta = fechaHasta;
-    filtrarGastos(opciones);  
-    let funcionReduce = function(acc, gasto){
+    opciones.fechaHasta = fechaHasta; 
+    let funcionReduce = (acc, gasto) => {
         let pAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
         if (acc[pAgrupacion]){
             acc[pAgrupacion] = acc[pAgrupacion] + gasto.valor;
@@ -206,8 +205,9 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
         }
     return acc;
     };
+    let gastosFiltrados = filtrarGastos(opciones); 
     let acumulador = {};
-    return gastos.reduce(funcionReduce, acumulador);
+    return gastosFiltrados.reduce(funcionReduce, acumulador);
 }
 
 
