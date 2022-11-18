@@ -34,7 +34,7 @@ function mostrarGastoWeb(idElement, gasto){
     divGasValor.className = "gasto-valor"
     divGasValor.innerText = gasto.valor
     
-    divGasEtiquetas.className = "gastos-etiquetas"
+    divGasEtiquetas.className = "gasto-etiquetas"
 
     
     for(let etiqueta of gasto.etiquetas){
@@ -71,7 +71,7 @@ function mostrarGastoAgrupadosWeb(id,periodo){
     let h1Agruparmes = document.createElement('h1')
  
 
-    divAgrupacion.className = "gasto-agrupacion"
+    divAgrupacion.className = "agrupacion"
     h1Agruparmes.innerText = "Gastos agrupados por " + periodo
     
     divAgrupacion.append(h1Agruparmes)
@@ -101,22 +101,26 @@ function mostrarGastoAgrupadosWeb(id,periodo){
    
     
 }
-
+export{
+    mostrarDatoEnId,
+    mostrarGastoWeb,
+    mostrarGastoAgrupadosWeb
+}
 // let gasto0 = new CrearGasto("Seguro coche 1", 10, "2021-08-01", "supermercado", "comida" );
 // let gasto1 = new CrearGasto("Seguro coche 2", 15, "2021-09-02", "supermercado", "comida" );
-// let gasto2 = new CrearGasto("Seguro coche 3", 20, "2021-10-03", "supermercado", "comida" );
-// let gasto3 = new CrearGasto("Seguro coche 4", 25, "2021-11-04", "supermercado", "comida" );
+// // let gasto2 = new CrearGasto("Seguro coche 3", 20, "2021-10-03", "supermercado", "comida" );
+// // let gasto3 = new CrearGasto("Seguro coche 4", 25, "2021-11-04", "supermercado", "comida" );
 // let gasto4 = new CrearGasto("Seguro coche 5", 50, "2021-11-05", "supermercado", "comida" );
 // let gasto5 = new CrearGasto("Seguro coche 6", 55, "2021-11-06", "supermercado", "comida" );
 
 // anyadirGasto(gasto0)
 // anyadirGasto(gasto1)
-// anyadirGasto(gasto2)
+// // anyadirGasto(gasto2)
 // anyadirGasto(gasto3)
 // anyadirGasto(gasto4)
 // anyadirGasto(gasto5)
 
-
+// console.log(gasto0)
 
 // let gastosAgrupados = agruparGastos("mes")
 // console.log(gastosAgrupados)
@@ -129,8 +133,8 @@ function mostrarGastoAgrupadosWeb(id,periodo){
 
 // }
 
-// // // console.log( gasto )
-// // // console.log( gasto6 )
+// // console.log( gasto )
+// // console.log( gasto6 )
 
-// mostrarGastoAgrupadosWeb('presupuesto', "mes")
 
+// 

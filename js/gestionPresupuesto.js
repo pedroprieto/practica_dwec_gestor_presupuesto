@@ -113,7 +113,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let dateDia = new Date(fecha)
         
        
-        if(periodo == "dia"){
+        if(periodo == "día"){
 
           
             let text = "";
@@ -153,7 +153,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
           
             return text;
         }
-        if(periodo == "anyo"){
+        if(periodo == "año"){
            
             let year = dateDia.getFullYear()
             
@@ -169,18 +169,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 
-
-function listarGastos() {
-    return gastos
-}
-
 function anyadirGasto(gasto) {
     gasto.id = idGasto;
     idGasto += 1;
     gastos.push(gasto);
 }
 
-
+function listarGastos() {
+    return gastos
+}
 
 function borrarGasto(id) {
 
@@ -220,8 +217,9 @@ function filtrarGastos(opciones) {
             {
                 resultado = false;
             }
+            
         }
-
+    
         if (opciones.fechaHasta)
         {
             if(gasto.fecha > Date.parse(opciones.fechaHasta))
@@ -328,16 +326,16 @@ export {
 
 // let gasto1 = new CrearGasto("1 Compra carne", 10, "2021-10-06", "casa", "comida" );
 // let gasto2 = new CrearGasto("2 Compra fruta y verdura", 10, "2021-09-06", "supermercado", "comida" );
-// // // let gasto3 = new CrearGasto("3 Bonobús", 30, "2020-05-26", "transporte" );
-// // // let gasto4 = new CrearGasto("4 Gasolina", 40, "2021-10-08", "transporte", "gasolina" );
-// // // let gasto5 = new CrearGasto("5 Seguro hogar", 50, "2021-09-26", "casa", "seguros" );
-// // // let gasto6 = new CrearGasto("6 Seguro coche", 60, "2021-10-06", "transporte", "seguros" );
+// // // // let gasto3 = new CrearGasto("3 Bonobús", 30, "2020-05-26", "transporte" );
+// // // // let gasto4 = new CrearGasto("4 Gasolina", 40, "2021-10-08", "transporte", "gasolina" );
+// // // // let gasto5 = new CrearGasto("5 Seguro hogar", 50, "2021-09-26", "casa", "seguros" );
+// // // // let gasto6 = new CrearGasto("6 Seguro coche", 60, "2021-10-06", "transporte", "seguros" );
 // anyadirGasto(gasto1);
 // anyadirGasto(gasto2);
-// // // anyadirGasto(gasto3);
-// // // anyadirGasto(gasto4);
-// // // anyadirGasto(gasto5);
-// // // anyadirGasto(gasto6);
+// // // // anyadirGasto(gasto3);
+// // // // anyadirGasto(gasto4);
+// // // // anyadirGasto(gasto5);
+
 
 
 
