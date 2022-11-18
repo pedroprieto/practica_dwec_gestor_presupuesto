@@ -24,6 +24,7 @@ gestionPresupuesto.anyadirGasto(gasto6);
 
 let totalGastos = gestionPresupuesto.calcularTotalGastos();
 gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', totalGastos);
-
+let totalBalance = gestionPresupuesto.calcularBalance();
+gestionPresupuestoWeb.mostrarDatoEnId('balance-total', totalBalance);
 
 
