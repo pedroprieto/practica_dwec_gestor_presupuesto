@@ -7,7 +7,7 @@ gestionPresupuesto.actualizarPresupuesto(presupuesto);
 let textoPresupuesto = gestionPresupuesto.mostrarPresupuesto();
 gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', textoPresupuesto);
 
-//Crear gastos, añadirlos y mostrar los gastos totales.
+//Crear gastos, añadirlos, mostrar los gastos totales y el balance total.
 let gasto1 = new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gasto2 = new gestionPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
 let gasto3 = new gestionPresupuesto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
@@ -27,4 +27,5 @@ gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', totalGastos);
 let totalBalance = gestionPresupuesto.calcularBalance();
 gestionPresupuestoWeb.mostrarDatoEnId('balance-total', totalBalance);
 
-
+//Listar gastos y mostrarlos en la web
+gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
