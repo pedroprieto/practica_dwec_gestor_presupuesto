@@ -1,5 +1,5 @@
-import * as gestionPresupuesto from '/gestionPresupuesto.js';
-import * as gestionPresupuestoWeb from '/gestionPresupuestoWeb.js';
+import * as gestionPresupuesto from './gestionPresupuesto.js';
+import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 
 
 let presupuesto = 1500;
