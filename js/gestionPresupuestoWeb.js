@@ -1,3 +1,5 @@
+import { agruparGastos } from "./gestionPresupuesto";
+
 function mostrarDatoEnId(idElemento, valor) {
     let elemento = document.getElementById(idElemento);
     elemento.innerText = valor;
@@ -34,34 +36,37 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasto.append(divValor);
     divGasto.append(divEti);
 
-   let listadoGastos = documnet.getElementById(idElemento);
+   let listadoGastos = document.getElementById(idElemento);
    listadoGastos.append(divGasto);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+    agrup = agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta);
     let divAgrup = document.createElement("div");
     divAgrup.className = "agrupacion";
 
     let h1Agrup = document.createElement("h1");
     h1Agrup.innerText = periodo;
 
-   
-     for (let [key, value] of agrup) {   
+    let divAgrudato = document.createElement("div");
+    divAgrudato.className = "agrupacion-dato";
+
+     for (let [key, value] of Odject.entries(agrup)) {   
         let spanAgrupClave = document.createElement("span")  
         spanAgrupClave.className = "agrupacion-dato-clave";
-        spanAgrupClave.innerText = key; 
+        spanAgrupClave.innerText = `${key}`; 
         let spanAgrupValor = document.createElement("span")  
         spanAgrupValor.className = "agrupacion-dato-valor";
-        spanAgrupValor.innerText = value;   
-        divAgrup.append(spanAgrupClave);
-        divAgrup.append(spanAgrupValor);           
+        spanAgrupValor.innerText = `${value}`;   
+        divAgrudato.append(spanAgrupClave);
+        divAgrudato.append(spanAgrupValor);           
      }              
    
     divAgrup.append(h1Agrup);
-    divAgrup.append(agrupdat);
+    divAgrup.append(divAgrudato);
 
-    let gastosAgrup = document.getElementById(idElemento)   ;
-    gastosAgrup.append(divAgrup)    ;     
+    let gastosAgrup = document.getElementById(idElemento);
+    gastosAgrup.append(divAgrup);     
 }
 
 export   {

@@ -23,34 +23,32 @@ manipularDom.mostrarDatoEnId("balance-total", presupuesto.calcularBalance());
 for (let gasto of presupuesto.listarGastos()){
     manipularDom.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
-for (let gasto of presupuesto.filtarGastos(opciones)){
-    if( gasto.fecha == "2021-09")
-    manipularDom.mostrarGastoWeb("listado-gastos-filtrado1", gasto);
-}
-for (let gasto of presupuesto.filtrarGastos(opciones)){
-    if( gasto.valor > 50 )
-    manipularDom.mostrarGastoWeb("listado-gastos-filtrado2", gasto);
-}
-for (let gasto of presupuesto.filtrarGastos(opciones)){
-    if( gasto.valor > 200 && gasto.etiquetas == "seguros" )
-    manipularDom.mostrarGastoWeb("listado-gastos-filtrado3", gasto);
-}
-for (let gasto of presupuesto.filtrarGastos(opciones)){
-    if( gasto.etiquetas == "comida" && gasto.etiquetas == "transporte" )
-    manipularDom.mostrarGastoWeb("listado-gastos-filtrado4", gasto);
+
+for (let gasto of presupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})){
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);    
 }
 
-for (let gasto of presupuesto.agruparGastos(periodo)){
-    if(periodo == "dia");
-    manipularDom.mostrarGastosAgrupadosWeb("agrupacion-dia", )
-}
-for (let gasto of presupuesto.agruparGastos(periodo)){
-   
-}for (let gasto of presupuesto.agruparGastos(periodo)){
-  
-
+for (let gasto of presupuesto.filtrarGastos({valorMinimo: 50})){
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);  
 }
 
+for (let gasto of presupuesto.filtrarGastos({valorMinimo: 200, etiquetas: "seguros"})){
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);  
+}
+
+for (let gasto of presupuesto.filtrarGastos({valorMaximo: 50, etiquetas: "comida", etiquetas: "transporte"})){
+    manipularDom.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);  
+}
+
+for (let gasto of presupuesto.agruparGastos("dia")){
+    manipularDom.mostrarGastosAgrupadosWeb("agrupacion-dia", gasto);
+}
+for (let gasto of presupuesto.agruparGastos("mes")){
+    manipularDom.mostrarGastosAgrupadosWeb("agrupacion-mes", gasto);
+}
+for (let gasto of presupuesto.agruparGastos("anyo")){
+    manipularDom.mostrarGastosAgrupadosWeb("agrupacion-anyo", gasto);
+}
 
 
 
