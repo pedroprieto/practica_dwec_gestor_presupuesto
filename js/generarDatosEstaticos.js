@@ -29,3 +29,8 @@ gestionPresupuestoWeb.mostrarDatoEnId('balance-total', totalBalance);
 
 //Listar gastos y mostrarlos en la web
 gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
+//Filtrar gastos y mostrarlos
+gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gestionPresupuesto.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" }));
+gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gestionPresupuesto.filtrarGastos({ valorMinimo: 50 }));
+gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gestionPresupuesto.filtrarGastos({ valorMinimo: 200 }));
+gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.filtrarGastos({ etiquetasTiene: ["comida","transporte"], valorMaximo: 50}));
