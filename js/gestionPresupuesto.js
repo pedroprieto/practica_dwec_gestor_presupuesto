@@ -3,7 +3,7 @@
 let presupuesto = 0;
 // TODO: Variable global l
  
-
+// Funcion actualizar presupuesto
 function actualizarPresupuesto(dinero) {
     if (dinero >= 0){
         presupuesto = dinero;
