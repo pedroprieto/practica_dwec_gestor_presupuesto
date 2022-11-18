@@ -33,4 +33,9 @@ gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gestionPresupue
 gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gestionPresupuesto.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" }));
 gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gestionPresupuesto.filtrarGastos({ valorMinimo: 50 }));
 gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gestionPresupuesto.filtrarGastos({ valorMinimo: 200 }));
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.filtrarGastos({ etiquetasTiene: ["comida","transporte"], valorMaximo: 50}));
+gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.filtrarGastos({ etiquetasTiene: ["comida", "transporte"], valorMaximo: 50 }));
+//Mostrar gastos Agrupados
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', 'día', gestionPresupuesto.agruparGastos("dia"));
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', 'mes', gestionPresupuesto.agruparGastos("mes"));
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', 'año', gestionPresupuesto.agruparGastos("anyo"));
+
