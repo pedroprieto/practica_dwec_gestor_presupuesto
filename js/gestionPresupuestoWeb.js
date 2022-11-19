@@ -1,3 +1,4 @@
+import * as gestion from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor) {
     let elemento = document.getElementById(idElemento);
@@ -66,6 +67,39 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar(){
+    mostrarDatoEnId("presupuesto", gestion.mostrarPresupuesto());
+    mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
+    mostrarDatoEnId("balance-total", gestion.calcularBalance());
+
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+    for (let gasto of gestion.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+    document.getElementById("listado-gastos-filtrado-1").innerHTML = "";
+    for (let gasto of gestion.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})){
+        mostrarGastoWeb("listado-gastos-filtrado-1", gasto);    
+    }
+    document.getElementById("listado-gastos-filtrado-2").innerHTML = "";
+    for (let gasto of gestion.filtrarGastos({valorMinimo: 50})){
+        mostrarGastoWeb("listado-gastos-filtrado-2", gasto);  
+    }
+
+    document.getElementById("listado-gastos-filtrado-3").innerHTML = "";
+    for (let gasto of gestion.filtrarGastos({valorMinimo: 200, etiquetas: "seguros"})){
+        mostrarGastoWeb("listado-gastos-filtrado-3", gasto);  
+    }
+
+    document.getElementById("listado-gastos-filtrado-4").innerHTML = "";
+    for (let gasto of gestion.filtrarGastos({valorMaximo: 50, etiquetas: "comida", etiquetas: "transporte"})){
+        mostrarGastoWeb("listado-gastos-filtrado-4", gasto);  
+    }
+
+    document.getElementById("agrupacion-dia").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "día");
+    document.getElementById("agrupacion-mes").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
+    document.getElementById("agrupacion-anyo").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "año");
 
 }
 
