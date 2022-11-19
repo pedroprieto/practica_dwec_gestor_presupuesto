@@ -22,7 +22,22 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
     this.valor = valor > 0 ? valor : 0;
-   
+    
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.actualizarDescripcion = function(descripcion){
+        this.descripcion = descripcion;
+    }
+
+    // Se comprueba que el valor introducido es un número no negativo;
+    // en caso contrario, dejará el valor como estaba.
+    this.actualizarValor = function(valor){
+        if(valor > 0){
+            this.valor = valor;
+        }
+    }
 } // obj
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
