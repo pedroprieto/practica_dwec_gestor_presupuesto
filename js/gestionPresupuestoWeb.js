@@ -38,6 +38,16 @@ function mostrarGastoWeb (idElemento, gasto) {
         spanEti.className = "gasto-etiquetas-etiqueta";
         //spanEti.innerText = gasto.etiquetas;
         spanEti.innerText = eti;
+        //Eventos para los span de etiquetas 
+        //Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+        let objetoEtiqueta = new BorrarEtiquetasHandle();
+        //Establecer la propiedad gasto del objeto creado
+        objetoEtiqueta.gasto = gasto;
+        //Establecer la propiedad etiqueta del objeto creado
+        objetoEtiqueta.etiqueta = eti;
+        //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+        spanEti.addEventListener('click', objetoEtiqueta)
+
         divEtiquetas.append(spanEti);
     }
     
@@ -65,6 +75,22 @@ function mostrarGastoWeb (idElemento, gasto) {
     //Añadir el botón al DOM a continuación de las etiquetas
     divGasto.append(botonEditar);
     //Botón borrar: 
+    let botonBorrar = document.createElement("button");
+    //con clase gasto-borrar.
+    botonBorrar.className="gasto-borrar";
+    //de tipo button (<button type="button">)
+    botonBorrar.type = "button";
+    // botón con texto Borrar 
+    botonBorrar.innerText = "Borrar";
+    //Crear un nuevo objeto a partir de la función constructora BorrarHandle.
+    let objetoBorrar = new BorrarHandle();
+    //Establecer la propiedad gasto del objeto creado al objeto gasto
+    objetoBorrar.gasto = gasto;
+    //Añadir el objeto recién creado como objeto manejador del evento click al botón Borrar recién creado.
+    botonBorrar.addEventListener("click", objetoBorrar);
+    //Añadir el botón al DOM a continuación del botón Editar.
+    divGasto.append(botonBorrar);
+
 }
 
 function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
