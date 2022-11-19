@@ -93,13 +93,14 @@ function nuevoGastoWeb (){
     repintar();
 }
 
+
 for(let gasto of gastos){
     let elementGasto = crearElementoGastoHTML(gasto);
     let botonEditarGasto = crearBotonEditar();
     let botonBorrarGasto = crearBotonBorrar();
     let manejadorEditar = {
         handleEvent(event){
-            gestion.nuevoGastoWeb(gasto);   
+            nuevoGastoWeb(gasto);   
             repintar(); 
         }
     }
@@ -109,6 +110,7 @@ for(let gasto of gastos){
             gestion.borrarGasto(this.gasto.id)  
             repintar(); 
         }
+    }
 }
 manejadorEditar.gasto = gasto;
 manejadorBorrar.gasto = gasto;
