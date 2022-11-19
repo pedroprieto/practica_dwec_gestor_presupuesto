@@ -1,5 +1,26 @@
+import * as gestionPresupuesto from './gestionPresupuesto.js';
+
+let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+    btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
+function actualizarPresupuestoWeb() {
+    let cantidad = prompt('Introduce una cantidad');
+    parseFloat(cantidad);
+    gestionPresupuesto.actualizarPresupuesto(cantidad);
+    repintar();
+}
+
 function mostrarDatoEnId(idElemento, valor) {
     return document.getElementById(idElemento).innerHTML = valor;
+}
+
+function repintar() {
+    mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
+    mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
+    mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
+    let listado = document.getElementById('listado-gastos-completo');
+    listado.innerHTML = "";
+    mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
 }
 
 function mostrarGastoWeb(idElemento, gastos) {
