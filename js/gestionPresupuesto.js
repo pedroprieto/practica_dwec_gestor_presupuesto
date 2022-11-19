@@ -1,6 +1,8 @@
 "use strict"
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 // TODO: Variable global l
  
 // Funcion actualizar presupuesto
@@ -17,7 +19,7 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 } 
  
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha = new Date(), etiquetas = []) {
     
     if (isNaN(valor) || valor < 0)
         this.valor = 0;
@@ -25,7 +27,17 @@ function CrearGasto(descripcion, valor) {
         this.valor = valor;
         
     this.descripcion = descripcion;
+    
+    Date.parse(fecha);
 
+    if(isNaN(fecha)){
+        fecha = new Date();
+        Date.parse(fecha);
+        this.fecha = fecha;
+    }
+    else
+        this.fecha = fecha;
+    
     this.mostrarGasto = function() {
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
@@ -38,11 +50,37 @@ function CrearGasto(descripcion, valor) {
         }
     }
 }
+
+function listarGastos(){
+    return gastos;
+}
+
+function anyadirGasto(){
+
+}
+
+function borrarGasto(){
+
+}
+
+function calcularTotalGastos(){
+
+}
+
+function calcularBalance(){
+
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
