@@ -8,7 +8,7 @@ var presupuesto = 0;
 
 function actualizarPresupuesto(num) {
     if(num >= 0){
-        return presupuesto = presupuesto + num; 
+        return presupuesto = num; 
     }else{
         console.log("Valor no válido");
         return -1; 
