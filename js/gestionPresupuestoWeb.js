@@ -187,7 +187,15 @@ function BorrarHandle(){
 }
 
 function BorrarEtiquetasHandle(){
+  //un método llamado handleEvent
+  this.handleEvent = function(){
 
+      //Borrar la etiqueta seleccionada del gasto asociado
+    this.gasto.borrarEtiquetas(this.etiqueta);
+
+      //Llamar a la función repintar
+      repintar();
+  }
 }
 
 
