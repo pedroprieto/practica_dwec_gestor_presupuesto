@@ -93,12 +93,37 @@ function nuevoGastoWeb (){
     repintar();
 }
 
+for(let gasto of gastos){
+    let elementGasto = crearElementoGastoHTML(gasto);
+    let botonEditarGasto = crearBotonEditar();
+    let botonBorrarGasto = crearBotonBorrar();
+    let manejadorEditar = {
+        handleEvent(event){
+            gestion.nuevoGastoWeb(gasto);   
+            repintar(); 
+        }
+    }
+
+    let manejadorBorrar = {
+        handleEvent(event){
+            gestion.borrarGasto(this.gasto.id)  
+            repintar(); 
+        }
+}
+manejadorEditar.gasto = gasto;
+manejadorBorrar.gasto = gasto;
+botonEditarGasto.addEventListener("click", manejadorEditar);
+elementGasto.append(botonEditarGasto);
+botonBorrarGasto.addEventListener("click", manejadorBorrar);
+elementGasto.append(botonBorrarGasto);
+botonAnyadirPresupuesto.append(elementGasto);
 
 let botonAnyadirPresupuesto = document.getElementById("actualizarpresupuesto");
 botonAnyadirPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 
 let botonanyadirGasto = document.getElementById("anyadirgasto");
 botonanyadirGasto.addEventListener('click', nuevoGastoWeb);
+
 
 export   {
     mostrarDatoEnId,
