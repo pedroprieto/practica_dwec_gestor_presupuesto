@@ -1,7 +1,23 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
-    btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
+let btnAnyadirGasto = document.getElementById('anyadirgasto');
+btnAnyadirGasto.addEventListener('click', nuevoGastoWeb);
+
+function nuevoGastoWeb() {
+    let descripcion = prompt('Introduce una descripcion');
+    let valor = Number(prompt('Introduce el valor del gasto'));
+    console.log(typeof valor);
+    let fecha = prompt('Introduce la fecha del gasto');
+    let etiquetas = prompt('Introduce las etiquetas del gasto');
+    let arrayEtiquetas = etiquetas.split(',');
+
+    let nuevoGasto = gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+    repintar();
+}
 
 function actualizarPresupuestoWeb() {
     let cantidad = prompt('Introduce una cantidad');
