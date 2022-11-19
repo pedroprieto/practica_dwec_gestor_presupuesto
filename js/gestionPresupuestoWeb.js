@@ -75,44 +75,34 @@ function repintar(){
     for (let gasto of gestion.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
-    document.getElementById("listado-gastos-filtrado-1").innerHTML = "";
-    for (let gasto of gestion.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})){
-        mostrarGastoWeb("listado-gastos-filtrado-1", gasto);    
-    }
-    document.getElementById("listado-gastos-filtrado-2").innerHTML = "";
-    for (let gasto of gestion.filtrarGastos({valorMinimo: 50})){
-        mostrarGastoWeb("listado-gastos-filtrado-2", gasto);  
-    }
-
-    document.getElementById("listado-gastos-filtrado-3").innerHTML = "";
-    for (let gasto of gestion.filtrarGastos({valorMinimo: 200, etiquetas: "seguros"})){
-        mostrarGastoWeb("listado-gastos-filtrado-3", gasto);  
-    }
-
-    document.getElementById("listado-gastos-filtrado-4").innerHTML = "";
-    for (let gasto of gestion.filtrarGastos({valorMaximo: 50, etiquetas: "comida", etiquetas: "transporte"})){
-        mostrarGastoWeb("listado-gastos-filtrado-4", gasto);  
-    }
-
-    document.getElementById("agrupacion-dia").innerHTML = "";
-    mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "día");
-    document.getElementById("agrupacion-mes").innerHTML = "";
-    mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
-    document.getElementById("agrupacion-anyo").innerHTML = "";
-    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "año");
-
 }
 
 function actualizarPresupuestoWeb () {
-    let actuaPres = document.getElementById("actualizarpresupuesto");
-    let introValor = prompt("Introduce un presupuesto: ", parseFloat(valor));
-    gestion.actualizarPresupuesto(actuaPres);
-   
-
+    let introValor = prompt("Introduce un presupuesto: ");
+    gestion.actualizarPresupuesto(parseFloat(introValor));
+    repintar();   
 }
+
+function nuevoGastoWeb (){
+    let pregDescripcion = prompt("Introduzca la descripción: ");
+    let pregValor = prompt("Introduzca el valor: ");
+    let pregFecha = prompt("Introduzca la fecha:");
+    let pregEtiquetas = prompt("Introduzca las etiquetas: ");
+    let gasto = new gestion.CrearGasto(pregDescripcion, parseFloat(pregValor), pregFecha, pregEtiquetas.split(","));
+    gestion.anyadirGasto(gasto);
+    repintar();
+}
+
+
+let botonAnyadirPresupuesto = document.getElementById("actualizarpresupuesto");
+botonAnyadirPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
+let botonanyadirGasto = document.getElementById("anyadirgasto");
+botonanyadirGasto.addEventListener('click', nuevoGastoWeb);
 
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    actualizarPresupuestoWeb
 }
