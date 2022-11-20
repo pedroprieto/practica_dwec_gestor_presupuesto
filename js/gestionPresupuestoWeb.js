@@ -51,13 +51,34 @@ function mostrarGastoWeb(idElemento, gasto){
 
           divEtiquetas.append(spanEtiqueta);
         }
+
+        //Modificación de la función mostrarGastoWeb
+        //Botón editar
+          //Crear un botón con texto Editar de tipo button (<button type="button">) con clase gasto-editar.
+          let botonEditar = document.createElement( 'button' );
+          botonEditar.className = "gasto-editar";
+          botonEditar.type = "button";
+          botonEditar.innerHTML = "Editar gasto";
+
+          //Crear un nuevo objeto a partir de la función constructora EditarHandle.
+          let eventEditar = new EditarHandle();
+
+          //Establecer la propiedad gasto del objeto creado al objeto gasto
+          eventEditar.gasto = gasto;
+
+          //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
+          botonEditar.addEventListener( "click", eventEditar );
+
+          //Añadir el botón al DOM a continuación de las etiquetas
+          divGasto.append( botonEditar );
+
+        //Botón borrar
+          //Crear un botón con texto Borrar de tipo button (<button type="button">) con clase gasto-borrar.
+        
+        //Eventos para los span de etiquetas
+
     //Añado todo al documento
     contenedor.append(divGasto);
-
-    //Modificación de la función mostrarGastoWeb
-        //Botón editar
-        //Botón borrar
-        //Eventos para los span de etiquetas
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
