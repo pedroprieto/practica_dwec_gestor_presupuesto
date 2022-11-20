@@ -248,14 +248,27 @@ function BorrarEtiquetasHandle(){
 }
 
 //Función nuevoGastoWebFormulario
-function nuevoGastoWebFormulario(){
+function nuevoGastoWebFormulario( event ){
   //Crear una copia del formulario web definido en la plantilla HTML. 
-  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+  let plantillaFormulario = document.getElementById( "formulario-template" ).content.cloneNode( true );
 
   //Acceder al elemento <form> dentro de ese fragmento de documento.
-  var formulario = plantillaFormulario.querySelector("form");
-      //Crear un manejador de evento para el evento submit del formulario
+  var formulario = plantillaFormulario.querySelector( "form" );
+
+ //Crear un manejador de evento para el evento submit del formulario
       formulario.addEventListener( "submit", anyadirElementoFormulario );
+
+      //Crear un manejador de evento para el evento click del botón Cancelar del formulario. 
+      let cancelar = new cerrarFormulario();
+      var botonCancelarForm = plantillaFormulario.querySelector( "button.cancelar" );
+      botonCancelarForm.addEventListener( "click", cancelar );
+
+      //La variable formulario, para que al pulsar en cancelar se elimine el formulario.
+      event.currentTarget.disabled = true;
+
+      //añadir el fragmento de documento (variable plantillaFormulario) al final del <div id="controlesprincipales">
+      let controles = document.getElementById( "controlesprincipales" );
+      controles.append( plantillaFormulario );
 
 }
 
@@ -269,8 +282,8 @@ function anyadirElementoFormulario( event ){
   event.preventDefault();
 
   //Crear un nuevo gasto con la información de los campos del formulario
-  let arrayEtiquetas = event.currentTarget.etiquetas.value.split( ', ' );
-  let nuevoGastoForm = new gestionPre.anyadirGasto( event.currentTarget.descripcion.value, event.currentTarget.valor.value, event.currentTarget.fecha.value, ...arrayEtiquetas );
+  let arrayEtiquetas = event.currentTarget.etiquetas.value.split( ", " );
+  let nuevoGastoForm = new gestionPre.CrearGasto( event.currentTarget.descripcion.value, event.currentTarget.valor.value, event.currentTarget.fecha.value, ...arrayEtiquetas );
 
   //Añadir el gasto a la lista de gastos.
   gestionPre.anyadirGasto( nuevoGastoForm );
@@ -281,7 +294,23 @@ function anyadirElementoFormulario( event ){
   //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
   let botonAnyadirForm = document.getElementById( "anyadirgasto-formulario" );
   botonAnyadirForm.disabled = false;
+
+  event.currentTarget.remove();
 }
+
+// función constructora que implemente handleEvent para botonCancelarForm
+function cerrarFormulario(){
+  //definir una función constructora que implemente handleEvent
+  this.handleEvent = function(event){
+
+    //La variable formulario, para que al pulsar en cancelar se elimine el formulario.
+    event.currentTarget.parentNode.remove();
+
+    //La referencia al botón anyadirgasto-formulario, para que al pulsar en cancelar se vuelva a activar dicho botón
+    document.getElementById("anyadirgasto-formulario").disabled = false;
+  }
+}
+
 
 export   { 
     mostrarDatoEnId,
