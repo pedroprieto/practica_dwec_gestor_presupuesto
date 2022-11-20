@@ -50,6 +50,20 @@ function mostrarGastoWeb(idElemento, gasto){
           spanEtiqueta.innerHTML = `${e}`;
 
           divEtiquetas.append(spanEtiqueta);
+
+          //Eventos para los span de etiquetas
+          //Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+          let eventBorrarEtiquetas = new BorrarEtiquetasHandle();
+
+          //Establecer la propiedad gasto del objeto creado al objeto gasto
+          eventBorrarEtiquetas.gasto = gasto;
+
+          //Establecer la propiedad etiqueta del objeto creado al texto de la etiqueta que se esté procesando
+          eventBorrarEtiquetas.etiqueta = e;
+
+          //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+          spanEtiqueta.addEventListener( 'click', eventBorrarEtiquetas);
+
         }
 
         //Modificación de la función mostrarGastoWeb
@@ -90,8 +104,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
           //Añadir el botón al DOM a continuación del botón Editar.
           divGasto.append (botonBorrar);
-        //Eventos para los span de etiquetas
-
+        
     //Añado todo al documento
     contenedor.append(divGasto);
 }
@@ -178,11 +191,11 @@ function nuevoGastoWeb(){
   gestionPre.anyadirGasto( gasto );
 
   //Llamar a la función repintar
-  repintar;
+  repintar();
 }
 
 //botón anyadirgasto
-document.getElementById( "anyadirgasto" ).addEventListener( "click", nuevoGastoWeb() );
+document.getElementById( "anyadirgasto" ).addEventListener( "click", nuevoGastoWeb );
 
 function EditarHandle(){
   //método llamado handleEvent
@@ -199,8 +212,8 @@ function EditarHandle(){
      etiquetas = etiquetas.split(', ');
 
      //Actualizar las propiedades del gasto (disponible mediante this.gasto)
-     this.gasto.actualizarDescripción( desc );
-     this.gasto.actualizaValor( valor );
+     this.gasto.actualizarDescripcion( desc );
+     this.gasto.actualizarValor( valor );
      this.gasto.actualizarFecha( fecha );
      this.gasto.anyadirEtiquetas( ...etiquetas );
 
