@@ -176,7 +176,7 @@ function EditarHandle () {
         let etiquetas = prompt ("Introduzca etiquetas separadas por comas :").split(",");
         //Actualizar las propiedades del gasto
         this.gasto.actualizarDescripcion(descripcion);
-        this.gasto.ActualizarValor(valorGasto);
+        this.gasto.actualizarValor(valorGasto);
         this.gasto.actualizarFecha(fechaGasto);
         this.gasto.anyadirEtiquetas(etiquetas);
         //Llamar a la función repintar
