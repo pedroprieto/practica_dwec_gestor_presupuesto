@@ -247,6 +247,41 @@ function BorrarEtiquetasHandle(){
   }
 }
 
+//Función nuevoGastoWebFormulario
+function nuevoGastoWebFormulario(){
+  //Crear una copia del formulario web definido en la plantilla HTML. 
+  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+  //Acceder al elemento <form> dentro de ese fragmento de documento.
+  var formulario = plantillaFormulario.querySelector("form");
+      //Crear un manejador de evento para el evento submit del formulario
+      formulario.addEventListener( "submit", anyadirElementoFormulario );
+
+}
+
+//botón anyadirgasto-formulario
+let botonAnyadirForm = document.getElementById( "anyadirgasto-formulario" );
+botonAnyadirForm.addEventListener( "click", nuevoGastoWebFormulario );
+
+//crear una función manejadora de este evento (con un único parámetro, el evento a procesar)
+function anyadirElementoFormulario( event ){
+  //Prevenir el envío del formulario (comportamiento por defecto) mediante event.preventDefault()
+  event.preventDefault();
+
+  //Crear un nuevo gasto con la información de los campos del formulario
+  let arrayEtiquetas = event.currentTarget.etiquetas.value.split( ', ' );
+  let nuevoGastoForm = new gestionPre.anyadirGasto( event.currentTarget.descripcion.value, event.currentTarget.valor.value, event.currentTarget.fecha.value, ...arrayEtiquetas );
+
+  //Añadir el gasto a la lista de gastos.
+  gestionPre.anyadirGasto( nuevoGastoForm );
+
+  //Llamar a la función repintar
+  repintar();
+
+  //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
+  let botonAnyadirForm = document.getElementById( "anyadirgasto-formulario" );
+  botonAnyadirForm.disabled = false;
+}
 
 export   { 
     mostrarDatoEnId,
