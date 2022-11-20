@@ -9,12 +9,11 @@ btnAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 function nuevoGastoWeb() {
     let descripcion = prompt('Introduce una descripcion');
     let valor = Number(prompt('Introduce el valor del gasto'));
-    console.log(typeof valor);
     let fecha = prompt('Introduce la fecha del gasto');
     let etiquetas = prompt('Introduce las etiquetas del gasto');
     let arrayEtiquetas = etiquetas.split(',');
 
-    let nuevoGasto = gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
     gestionPresupuesto.anyadirGasto(nuevoGasto);
     repintar();
 }
