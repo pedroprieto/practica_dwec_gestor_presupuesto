@@ -142,6 +142,59 @@ function EditarHandleFormulario(){
     let botonEditar = event.currentTarget;
     botonEditar.disabled = true;
 
+    //actualizar los campos del formulario con la información del gasto que se está editando
+    form.elements.descripcion.value = this.gasto.descripcion;
+    form.elements.valor.value = this.gasto.valor;
+    form.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+    form.elements.etiquetas.value = this.gasto.etiquetas;
+
+    //El manejador de eventos del evento submit del formulario no será una función, sino un objeto manejador de Eventos
+    let Submit = new SubmitEditarHandleForm();
+
+    //Establecer la propiedad gasto del objeto creado al objeto gasto
+    Submit.gasto = this.gasto;
+
+     //Añade el objeto al manejador del evento click del botón Submit
+     form.addEventListener('submit', Submit);
+
+     //  Función constructora para cancelar la edición
+     let cancelarEdicion = new cancelarAnyadirGasto(); 
+
+     // Busco en el formulario el botton cuya clase es cancelar 
+     let btnCancelar = form.querySelector("button.cancelar");
+
+     // Añade el objeto al manejador del evento click del botón Cancelar
+     btnCancelar.addEventListener("click", cancelarEdicion);
+  }
+}
+
+function SubmitEditarHandleForm(){
+  this.handleEvent = function( event ){
+    // Prevenir el envío del formulario
+    event.preventDefault();
+
+    // Acceso al formulario
+    let form = event.currentTarget;
+
+    // Recojo las propiedades del gasto
+    let ndescripcion = form.elements.descripcion.value;
+    let nvalor = form.elements.valor.value;
+    let nfecha =  form.elements.fecha.value;
+    let netiquetas = form.elements.etiquetas.value;
+
+    // Convertir el valor a número
+    nvalor = parseFloat(nvalor);
+
+    // Actualizo el gasto
+    let netiquetasArray = netiquetas.split(',');
+
+    this.gasto.actualizarDescripcion(ndescripcion);
+    this.gasto.actualizarValor(nvalor);
+    this.gasto.actualizarFecha(nfecha);
+    this.gasto.anyadirEtiquetas(...netiquetasArray);
+
+    // Llamar a la función repintar
+    repintar();
   }
 }
 
