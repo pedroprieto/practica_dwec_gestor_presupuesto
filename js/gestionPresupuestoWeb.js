@@ -1,11 +1,11 @@
 console.log("gestionPresupuestoWeb")
 
 // Importaciones de modulos
-import { CrearGasto, agruparGastos, anyadirGasto } from '/js/gestionPresupuesto.js';
+import * as gestorPresu from '/js/gestionPresupuesto.js';
 
 
 //Texto
-function mostrarDatoEnId(valor,id){
+function mostrarDatoEnId(id, valor){
     document.getElementById(id).innerText = valor;
 }
 
@@ -36,23 +36,59 @@ function mostrarGastoWeb(idElement, gasto){
     
     divGasEtiquetas.className = "gasto-etiquetas"
 
-    
-    for(let etiqueta of gasto.etiquetas){
-        let divEtiqueta =  document.createElement('span')
-        divEtiqueta.className="gasto-etiquetas-etiqueta"
-        divEtiqueta.append(`${etiqueta},`)
-        divGasEtiquetas.append(divEtiqueta)
-    }
-
     divGasto.append(divGasDescripcion)
     divGasto.append(divGasFecha)
     divGasto.append(divGasValor)
     divGasto.append(divGasEtiquetas)
    
-   
     elementObjetive.append(divGasto)
 
-    
+   
+    for(let etiqueta of gasto.etiquetas){
+        let divEtiqueta =  document.createElement('span')
+        divEtiqueta.className="gasto-etiquetas-etiqueta"
+        divEtiqueta.append(`${etiqueta},`)
+       
+
+        let borrarEtiquetas =  new BorrarEtiquetasHandle();
+
+        borrarEtiquetas.gasto = gasto;
+
+        borrarEtiquetas.etiqueta = etiqueta;
+
+        divEtiqueta.addEventListener("click", borrarEtiquetas);
+
+        divGasEtiquetas.append(divEtiqueta)
+    }
+
+    //Boton editar 
+
+    let botoneditar = document.createElement('button')
+    botoneditar.className = 'gasto-editar'
+    botoneditar.type = 'button'
+    botoneditar.innerText = 'Editar '
+
+    let editar = new EditarHandle()
+    editar.gasto = gasto;
+
+    botoneditar.addEventListener('click', editar)
+
+    divGasto.append(botoneditar)
+
+    //Boton borrar
+
+    let botonBorrar = document.createElement('button')
+    botonBorrar.className = 'gasto-borrar'
+    botonBorrar.type = 'button'
+    botonBorrar.innerText = 'Borrar '
+
+    let borrar = new BorrarHandle()
+
+    borrar.gasto = gasto
+
+    botonBorrar.addEventListener('click', borrar)
+
+    divGasto.append(botonBorrar)
 
 }
 
@@ -78,7 +114,7 @@ function mostrarGastoAgrupadosWeb(id,periodo){
 
     elementObjetive.append(divAgrupacion)
 
-    let gastosAgrupados = agruparGastos(periodo)
+    let gastosAgrupados = gestorPresu.agruparGastos(periodo)
  
     for(let [fechaKey, valor] of Object.entries(gastosAgrupados)){
 
@@ -96,15 +132,116 @@ function mostrarGastoAgrupadosWeb(id,periodo){
         divAgrupacion.append(divagrupacionDatos)
 
     }
+}
 
    
+function repintar(){
+
+    let mostrarPresupuesto = gestorPresu.mostrarPresupuesto()
+    mostrarDatoEnId("presupuesto", mostrarPresupuesto)
+
+    let gastoTotal = gestorPresu.calcularTotalGastos()
+    mostrarDatoEnId("gastos-totales", gastoTotal)
+
+    let blanceTotal = gestorPresu.calcularBalance()
+    mostrarDatoEnId("balance-total", blanceTotal)
+
+    let divlistadogastocompleto = document.getElementById("listado-gastos-completo")
+    divlistadogastocompleto.innerHTML = " "
+
+    let listarGast = gestorPresu.listarGastos()
+
+    for(let gasto of listarGast){
+
+        mostrarGastoWeb("listado-gastos-completo", gasto)
+
+    }
+} 
+
+
+
+function actualizarPresupuestoWeb() {
+
+    let promtpresupuesto = prompt("Introduzca nuevo presupuesto");
+    promtpresupuesto = parseFloat(promtpresupuesto);
+    let nuevopresupuesto = promtpresupuesto;
+    gestorPresu.actualizarPresupuesto(nuevopresupuesto);
+    repintar()
+}
+// Boton actualizarPresupeust
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+
+function nuevoGastoWeb(){
+
+    let promptDescripcion = prompt("Introduzca una Descripcion")
+    let promptvalor = prompt("Introduzca un valor")
+    let prompFecha = prompt("Introduzca una Fecha")
+    let prompEtiquetas = prompt("Introduzca Etiquetas")
+
+    promptvalor = parseFloat(promptvalor);
+
+    let etiqueta =  prompEtiquetas.split(',');
+     
+    let gasto = new gestorPresu.CrearGasto(promptDescripcion,promptvalor,prompFecha,etiqueta)
+    gestorPresu.anyadirGasto(gasto)
+
+    repintar()
+}
+// Boton AyadirGasto
+document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb)
+
+function EditarHandle(){
+    
+    this.handleEvent = function(event){
+
+        let promptDescripcion = prompt("Introduzca una Descripcion")
+        let promptvalor = prompt("Introduzca un valor")
+        let prompFecha = prompt("Introduzca una Fecha")
+        let prompEtiquetas = prompt("Introduzca Etiquetas")
    
+        promptvalor = parseFloat(promptvalor);
+
+        let etiqueta =  prompEtiquetas.split(',');
+
+
+        this.gasto.actualizarDescripcion(promptDescripcion);
+        this.gasto.actualizarValor(promptvalor);
+        this.gasto.actualizarFecha(prompFecha);
+        this.gasto.anyadirEtiquetas(etiqueta);
+
+        repintar();
+
+    }
     
 }
+
+function BorrarHandle(){
+    
+    this.handleEvent = function(event){
+        
+        gestorPresu.borrarGasto(this.gasto.id)
+
+        repintar()
+   
+    }
+    
+}
+
+function BorrarEtiquetasHandle()
+{
+    this.handleEvent = function (event)
+    {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+
+        repintar();
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastoAgrupadosWeb
+    mostrarGastoAgrupadosWeb,
+
 }
 // let gasto0 = new CrearGasto("Seguro coche 1", 10, "2021-08-01", "supermercado", "comida" );
 // let gasto1 = new CrearGasto("Seguro coche 2", 15, "2021-09-02", "supermercado", "comida" );

@@ -5,7 +5,7 @@ import * as gestionPresupuestoWeb from '/js/gestionPresupuestoWeb.js';
 
 gestionPresupuesto.actualizarPresupuesto(1500)
 let mostrarPres = gestionPresupuesto.mostrarPresupuesto()
-gestionPresupuestoWeb.mostrarDatoEnId(mostrarPres,"presupuesto")
+gestionPresupuestoWeb.mostrarDatoEnId("presupuesto", mostrarPres)
 
 
 
@@ -29,10 +29,10 @@ gestionPresupuesto.anyadirGasto(gasto6)
 
 
 let calculoGastosTotasles = gestionPresupuesto.calcularTotalGastos()
-gestionPresupuestoWeb.mostrarDatoEnId(calculoGastosTotasles,"gastos-totales")
+gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales", calculoGastosTotasles)
 
 let calculobalance= gestionPresupuesto.calcularBalance()
-gestionPresupuestoWeb.mostrarDatoEnId(calculobalance,"balance-total")
+gestionPresupuestoWeb.mostrarDatoEnId("balance-total", calculobalance)
 
 let listarGast= gestionPresupuesto.listarGastos()
 
