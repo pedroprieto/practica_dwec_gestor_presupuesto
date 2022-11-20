@@ -104,9 +104,45 @@ function mostrarGastoWeb(idElemento, gasto){
 
           //Añadir el botón al DOM a continuación del botón Editar.
           divGasto.append (botonBorrar);
+
+        //Añade un segundo botón de edición a la estructura HTML de cada gasto.
+        let botonEditarForm = document.createElement( "button" );
+        botonEditarForm.type = "button";
+        botonEditarForm.className = "gasto-editar-formulario";
+        botonEditarForm.innerHTML = "Editar (formulario)";
+
+        // Crear un nuevo objeto a partir de la función constructora EditarHandleForm
+        let eventEditarForm = new EditarHandleFormulario();
+
+        // Establecer la propiedad gasto del objeto creado al objeto gasto
+        eventEditarForm.gasto = gasto;
+
+        // Añade el objeto al manejador del evento click del botón Editar
+        botonEditarForm.addEventListener( "click", eventEditarForm );
+
+        divGasto.append( botonEditarForm );
+
         
     //Añado todo al documento
     contenedor.append(divGasto);
+}
+
+//función constructora EditarHandleformulario
+function EditarHandleFormulario(){
+  this.handleEvent = function(event){
+
+    // Crear una copia del formulario web definido en la plantilla HTML
+    let plantillaForm = document.getElementById('formulario-template').content.cloneNode(true);
+
+    // Acceder al elemento <form> dentro de ese fragmento de documento
+    let form = plantillaForm.querySelector('form');
+
+    // Elemento que provoca el evento
+    event.currentTarget.after(form);
+    let botonEditar = event.currentTarget;
+    botonEditar.disabled = true;
+
+  }
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -259,7 +295,7 @@ function nuevoGastoWebFormulario( event ){
       formulario.addEventListener( "submit", anyadirElementoFormulario );
 
       //Crear un manejador de evento para el evento click del botón Cancelar del formulario. 
-      let cancelar = new cerrarFormulario();
+      let cancelar = new cancelarAnyadirGasto();
       var botonCancelarForm = plantillaFormulario.querySelector( "button.cancelar" );
       botonCancelarForm.addEventListener( "click", cancelar );
 
@@ -299,7 +335,7 @@ function anyadirElementoFormulario( event ){
 }
 
 // función constructora que implemente handleEvent para botonCancelarForm
-function cerrarFormulario(){
+function cancelarAnyadirGasto(){
   //definir una función constructora que implemente handleEvent
   this.handleEvent = function(event){
 
