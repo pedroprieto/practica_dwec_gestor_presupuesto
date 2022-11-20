@@ -158,7 +158,7 @@ function actualizarPresupuestoWeb(){
 
 //botón actualizarpresupuesto
 //document.getElementById(id) + element.addEventListener(event, handler, [options]);
-document.getElementById( "actualizarpresupuesto" ).addEventListener( "click", actualizarPresupuestoWeb() );
+document.getElementById( "actualizarpresupuesto" ).addEventListener( "click", actualizarPresupuestoWeb );
 
 function nuevoGastoWeb(){
   //Pedir al usuario la información necesaria para crear un nuevo gasto mediante sucesivas preguntas con prompt (por orden: descripción, valor, fecha y etiquetas). 
