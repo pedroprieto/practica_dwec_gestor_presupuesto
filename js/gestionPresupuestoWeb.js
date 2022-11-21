@@ -14,14 +14,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     let divDesc = document.createElement('div');
     divDesc.className = "gasto-descripcion";
     divDesc.innerText = gasto.descripcion;
+    divGasto.append(divDesc);
 
     let divFecha = document.createElement('div');
     divFecha.className = "gasto-fecha";
     divFecha.innerText = gasto.fecha;
-
+    divGasto.append(divFecha);
+    
     let divValor = document.createElement('div');
     divValor.className = "gasto-valor"
     divValor.innerText = gasto.valor;
+    divGasto.append(divValor);
 
     let divEti = document.createElement('div');
     divEti.className = "gasto-etiquetas";
@@ -37,12 +40,12 @@ function mostrarGastoWeb(idElemento, gasto) {
         borrarEtiqueta.etiqueta = etiqueta;
         spanEti.addEventListener('click', borrarEtiqueta);
     }
-
+    divGasto.append(divEti);
     listadoGastos.append(divGasto);
-    divGasto.append(divDesc);
-    divGasto.append(divFecha);
-    divGasto.append(divValor);
-    divGasto.append(divEti);   
+    
+    
+    
+       
 
     let botoneditar = document.createElement('button');
     botoneditar.className = "gasto-editar";
