@@ -28,7 +28,7 @@ function mostrarGastoWeb(idElemento, gasto){
     //<div class="gasto-valor">VALOR DEL GASTO</div> 
       let divValor = document.createElement('div');
       divValor.className = "gasto-valor";
-      divValor.innerText = gasto.valor;
+      divValor.innerHTML = `${gasto.valor}`;
 
     //<div class="gasto-etiquetas">
       let divEtiquetas = document.createElement('div');
@@ -158,13 +158,13 @@ function EditarHandleFormulario(){
      form.addEventListener('submit', Submit);
 
      //  Función constructora para cancelar la edición
-     let cancelarEdicion = new cancelarAnyadirGasto(); 
+     let cancelarEdicionForm = new cancelarAnyadirGasto(); 
 
      // Busco en el formulario el botton cuya clase es cancelar 
-     let btnCancelar = form.querySelector("button.cancelar");
+     let btnCancelar = form.querySelector( "button.cancelar" );
 
      // Añade el objeto al manejador del evento click del botón Cancelar
-     btnCancelar.addEventListener("click", cancelarEdicion);
+     btnCancelar.addEventListener( "click", cancelarEdicionForm );
   }
 }
 
@@ -393,10 +393,12 @@ function cancelarAnyadirGasto(){
   this.handleEvent = function(event){
 
     //La variable formulario, para que al pulsar en cancelar se elimine el formulario.
-    event.currentTarget.parentNode.remove();
+    event.currentTarget.remove();
 
     //La referencia al botón anyadirgasto-formulario, para que al pulsar en cancelar se vuelva a activar dicho botón
     document.getElementById("anyadirgasto-formulario").disabled = false;
+
+    repintar();
   }
 }
 
