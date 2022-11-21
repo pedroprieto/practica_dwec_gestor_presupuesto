@@ -50,7 +50,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     let editar = new EditarHandle();
     editar.gasto = gasto;
     botoneditar.addEventListener("click", editar);
-    listadoGastos.append(botoneditar);
+    divGasto.append(botoneditar);
     
     let botonBorrar = document.createElement('button');
     botonBorrar.className = "gasto-borrar";
@@ -59,7 +59,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     let borrar = new BorrarHandle();
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
-    listadoGastos.append(botonBorrar);
+    divGasto.append(botonBorrar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -136,14 +136,12 @@ function EditarHandle() {
     }
 }
 
-
 function BorrarHandle() {
 
     this.handleEvent = function (event) {
         gestion.borrarGasto(this.gasto.id);
         repintar();
     }
-
 }
 
 function BorrarEtiquetasHandle() {
