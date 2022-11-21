@@ -28,25 +28,21 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let divEti = document.createElement('div');
     divEti.className = "gasto-etiquetas";
+    divGasto.append(divEti);
+    listadoGastos.append(divGasto); 
 
     for(let etiqueta of gasto.etiquetas){
         let spanEti = document.createElement('span');
         spanEti.className = "gasto-etiquetas-etiqueta";
         spanEti.innerText = etiqueta;
-        divEti.append(spanEti);
         
         let borrarEtiqueta = new BorrarEtiquetasHandle();
         borrarEtiqueta.gasto = gasto;
         borrarEtiqueta.etiqueta = etiqueta;
         spanEti.addEventListener('click', borrarEtiqueta);
+        divEti.append(spanEti);
     }
-    divGasto.append(divEti);
-    listadoGastos.append(divGasto);
     
-    
-    
-       
-
     let botoneditar = document.createElement('button');
     botoneditar.className = "gasto-editar";
     botoneditar.type = "button";
@@ -103,6 +99,7 @@ function repintar(){
 
 function actualizarPresupuestoWeb () {
     let introValor = prompt("Introduce un presupuesto: ");
+    parseFloat(introValor);
     gestion.actualizarPresupuesto(parseFloat(introValor));
     repintar();  
 }
@@ -129,11 +126,10 @@ function EditarHandle() {
         let valor = Number(prompt("Introduzca el valor: "));
         let fecha = prompt("Introduzca la fecha: ");
         let etiquetas = prompt("Introduzca las etiquetas: " );
-        let arrayEtiquetas = etiquetas.split(',');
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarFecha(fecha);
-        this.gasto.anyadirEtiquetas(...arrayEtiquetas);
+        this.gasto.anyadirEtiquetas(etiquetas.split(","));
         repintar();
     }
 }
