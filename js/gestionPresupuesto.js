@@ -24,14 +24,30 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     this. descripcion = descripcion;
+    this.fecha = new Date();
+    this.etiquetas = [];
     
     if( valor >= 0){
         this.valor = valor;
     }else{
         this.valor = 0;
+    }
+
+    if(!fecha){
+        fecha = Date.parse(new Date());
+        this.fecha = fecha;
+    }else{
+        fecha = new Date(fecha);
+        this.fecha = fecha;
+    }
+
+    if(!etiquetas){
+        this.etiquetas = [];
+    }else{
+        this.etiquetas = etiquetas;
     }
 
     this.mostrarGasto = function () {
@@ -56,6 +72,12 @@ console.log(gasto1);
 
 function listarGastos() {
     return gastos;
+}
+
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto = idGasto + 1;
+    gastos.push(gasto);
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
