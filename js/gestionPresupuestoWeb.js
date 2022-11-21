@@ -372,7 +372,8 @@ function anyadirElementoFormulario( event ){
 
   //Crear un nuevo gasto con la información de los campos del formulario
   let arrayEtiquetas = event.currentTarget.etiquetas.value.split( ", " );
-  let nuevoGastoForm = new gestionPre.CrearGasto( event.currentTarget.descripcion.value, event.currentTarget.valor.value, event.currentTarget.fecha.value, ...arrayEtiquetas );
+  let valorNumero = parseFloat( event.currentTarget.valor.value );
+  let nuevoGastoForm = new gestionPre.CrearGasto( event.currentTarget.descripcion.value, valorNumero, event.currentTarget.fecha.value, ...arrayEtiquetas );
 
   //Añadir el gasto a la lista de gastos.
   gestionPre.anyadirGasto( nuevoGastoForm );
