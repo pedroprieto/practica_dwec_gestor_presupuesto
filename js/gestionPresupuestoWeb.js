@@ -94,7 +94,9 @@ function repintar(){
     mostrarDatoEnId("balance-total", gestion.calcularBalance());
     let gastosCompletos = document.getElementById("listado-gastos-completo");
     gastosCompletos.innerText = "";
-    mostrarGastoWeb("listado-gastos-completo", gestion.listarGastos());
+    for (let gasto of gestion.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
 }
 
 function actualizarPresupuestoWeb () {
@@ -129,7 +131,7 @@ function EditarHandle() {
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarFecha(fecha);
-        this.gasto.anyadirEtiquetas(etiquetas.split(","));
+        this.gasto.anyadirEtiquetas(...etiquetas.split(","));
         repintar();
     }
 }
