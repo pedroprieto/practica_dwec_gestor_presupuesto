@@ -80,6 +80,17 @@ function anyadirGasto(gasto) {
     gastos.push(gasto);
 }
 
+function borrarGasto(id) {
+    let idnum = Number(id);
+    let indice = 0;
+
+    for (const g of gastos) {
+        if (g.id == idnum) {
+            indice = gastos.indexOf(g);
+            gastos.splice(indice, 1);
+        }
+    }
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
