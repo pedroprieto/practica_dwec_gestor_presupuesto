@@ -64,6 +64,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
         return textoTotal;
     }
+
+    this.actualizarFecha = function (fechaNueva) {
+            fechaNueva = Date.parse(fechaNueva);
+            if (fechaNueva) {
+                this.fecha = fechaNueva;
+            }
+    }
+
     this.actualizarDescripcion= function (descripcionNueva) {
             this.descripcion = descripcionNueva;
     }
