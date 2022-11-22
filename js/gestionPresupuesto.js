@@ -40,9 +40,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         fecha = Date.parse(new Date());
         this.fecha = fecha;
     }else{
-        fecha = new Date(fecha);
+        fecha = Date.parse(fecha);
         this.fecha = fecha;
     }
+    console.log(fecha);
 
     if(!etiquetas){
         this.etiquetas = [];
@@ -51,18 +52,37 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.mostrarGasto = function () {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €.`;
         
     }
 
-    this.mostrarGastoCompleto = function () {
+    this.mostrarGastoCompleto = function(){
         let fecha2 = new Date(fecha).toLocaleString();
-        let textoTotal = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-
+        let textoTotal = `Gasto correspondiente a ${descripcion} con valor ${valor} €. \nFecha: ${fecha2}\nEtiquetas:\n`
+        
         for(let eti of etiquetas){
-            textoTotal = textoTotal + "-" + eti+ "\n";
+            textoTotal = textoTotal + "- " + eti+ "\n";
         }
-        return textoTotal;
+        
+        return textoTotal;  
+    }
+
+    this.anyadirEtiquetas = function(...etiquetasNuevas){
+        for(let eti of etiquetasNuevas){
+                if(etiquetas.indexOf(eti) == -1){
+                    this.etiquetas.push(eti);
+            }
+        }
+    }
+
+    this.borrarEtiquetas = function(...etiquetasBorrar){
+        
+        for(let eti of etiquetasBorrar){
+                if(etiquetas.indexOf(eti) > -1){
+                    let indice = etiquetas.indexOf(eti);
+                    this.etiquetas.splice(indice, 1);
+            }
+        }
     }
 
     this.actualizarFecha = function (fechaNueva) {
@@ -85,8 +105,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 }
 
-let gasto1 = new CrearGasto("blabla", 65);
-console.log(gasto1);
+
 
 function listarGastos() {
     return gastos;
@@ -125,6 +144,9 @@ function calcularBalance() {
     balance = presupuesto - gastosTotales;
     return balance;
 }
+
+let gasto2 = new CrearGasto("descripción del gasto", 25.33, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+console.log(gasto2.mostrarGastoCompleto());
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
