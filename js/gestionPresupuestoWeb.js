@@ -6,6 +6,9 @@ btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
+let btnAnyadirGastoForm = document.getElementById('anyadirgasto-formulario');
+btnAnyadirGastoForm.addEventListener('click', nuevoGastoWebFormulario);
+
 function nuevoGastoWeb() {
     let descripcion = prompt('Introduce una descripcion');
     let valor = Number(prompt('Introduce el valor del gasto'));
@@ -125,6 +128,44 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo, agrup) {
     }
 
     
+}
+
+function submitFormulario(event) {
+    event.preventDefault();
+
+    let form = event.currentTarget;
+    let descripcion = form.elements.descripcion.value;
+    let valor = Number(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayEtiquetas = etiquetas.split(',');
+
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+    repintar();
+    document.getElementById('anyadirgasto-formulario').removeAttribute('disabled', 'disabled');
+}
+
+function nuevoGastoWebFormulario(event) {
+
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+    let divControles = document.getElementById('controlesprincipales');
+    divControles.append(formulario);
+    event.currentTarget.setAttribute('disabled', 'disabled');
+
+    formulario.addEventListener('submit', submitFormulario);
+    let borrarFormulario = new BorrarFormularioHandle();
+    borrarFormulario.formulario = formulario;
+    borrarFormulario.boton = event.currentTarget;
+    formulario.querySelector('button.cancelar').addEventListener('click', borrarFormulario);
+}
+
+function BorrarFormularioHandle() {
+    this.handleEvent = function (event) {
+        this.boton.removeAttribute('disabled', 'disabled');
+        this.formulario.remove();
+    }
 }
 
 function EditarHandle() {
