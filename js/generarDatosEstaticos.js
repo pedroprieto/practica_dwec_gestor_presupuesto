@@ -63,4 +63,6 @@ export {
 export { mostrarDatoEnId, mostrarGastoWeb,
   mostrarGastosAgrupadosWeb, 
   actualizarPresupuestoWeb, 
+  nuevoGastoWebFormulario,
+  CrearGastoForm,
   nuevoGastoWeb } from './gestionPresupuestoWeb.js';
