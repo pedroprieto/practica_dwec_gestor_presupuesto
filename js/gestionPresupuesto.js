@@ -5,7 +5,7 @@ let gastos = [];
 let idGasto = 0;
 
 
- //*OBJETO:
+ //!  *OBJETO:
 function CrearGasto(descrip, val, fecha, ...etiqueta) {  //*Propiedades del objeto
 
     this.descripcion = descrip;
@@ -134,96 +134,141 @@ function calcularBalance() {
 function filtrarGastos(obj) {  //!Pendiente de hacer desde: obj.etiquetasTiene
     
     // if(obj)
-    let objFiltrado = [];                                 
+    let objFiltrado = [];
     //fechaDesde = "", fechaHasta = "", valorMinimo, valorMaximo, escripcionContiene.toLowerCase(), etiquetasTiene = [],);
-    if (Object.keys(obj).length === 0) {                  
+    if (Object.keys(obj).length === 0) {
         return gastos;
     }
     else {
-        if (obj.fechaDesde) { 
+        if (obj.fechaDesde) {
             let fechaD = Date.parse(obj.fechaDesde);        //Funciona.
 
             if (fechaD) {
-                objFiltrado = gastos.filter(elem => elem.fecha >= fechaD);        
+                objFiltrado = gastos.filter(elem => elem.fecha >= fechaD);
             }
             else {
-                objFiltrado = objFiltrado.filter(elem => elem.fecha >= fechaD);     
+                objFiltrado = objFiltrado.filter(elem => elem.fecha >= fechaD);
             }
         }
         if (obj.fechaHasta) {
             let fechaH = Date.parse(obj.fechaHasta);                 //Funciona.
             if (fechaH) {
-                objFiltrado = objFiltrado.filter(elem => elem.fecha <= fechaH); 
-            }  
+                objFiltrado = objFiltrado.filter(elem => elem.fecha <= fechaH);
+            }
         }
         if (obj.valorMinimo) {                             //Funciona.
-            if ((obj.fechaDesde || obj.fechaHasta || obj.descripcionContiene) && objFiltrado.length > 0){
+            if ((obj.fechaDesde || obj.fechaHasta || obj.descripcionContiene) && objFiltrado.length > 0) {
                 objFiltrado = objFiltrado.filter(elem => elem.valor >= obj.valorMinimo);
             }
             else {
                 objFiltrado = gastos.filter(elem => elem.valor >= obj.valorMinimo);
-                }
             }
+        }
         if (obj.valorMaximo) {                           //Funciona.
-            if ((obj.fechaDesde || obj.fechaHasta || obj.valorMinimo || obj.descripcionContiene) && objFiltrado.length>0) {
+            if ((obj.fechaDesde || obj.fechaHasta || obj.valorMinimo || obj.descripcionContiene) && objFiltrado.length > 0) {
                 objFiltrado = objFiltrado.filter(elem => elem.valor <= obj.valorMaximo);
             }
             else {
                 objFiltrado = gastos.filter(elem => elem.valor <= obj.valorMaximo);
             }
         }
+
         if (obj.descripcionContiene) {                      //Funciona.
-            if (objFiltrado.length === 0) {            
-                objFiltrado = gastos.filter(elem => elem.descripcion.toLowerCase().indexOf(obj.descripcionContiene.toLowerCase())==0);   
+            if (objFiltrado.length === 0) {
+                objFiltrado = gastos.filter(elem => elem.descripcion.toLowerCase().indexOf(obj.descripcionContiene.toLowerCase()) == 0);
             }
             else {
                 objFiltrado = objFiltrado.filter(elem => elem.descripcion.toLowerCase().indexOf(obj.descripcionContiene.toLowerCase()) == 0);
             }
         }
-        if (obj.etiquetasTiene) {                               //! No funciona 
-            if (objFiltrado.length === 0)
-                objFiltrado = gastos.filter(elem.find((elemX, id, etiquetasTiene) => gastos.etiquetas.indexOf(etiquetasTiene)));
-        }
-    //    (gastos.etiquetas.find((elemX, id, etiquetasTiene) => gastos.etiquetas.indexOf(etiquetasTiene)));
-        return objFiltrado; 
+
+        if (obj.etiquetasTiene) {
+
+            let arr1 = [];
+            let arr2 = [];
+
+            arr1 = etiquetaMinuscula(obj.etiquetasTiene);
+            //arr2 = etiquetaMinuscula(gastos);                     //! No funciona
+                if (objFiltrado.length === 0) {                
+                    objFiltrado = gastos.filter(elem => elem.etiquetas.includes(arr1));//falta una funcion Ej for (let valor of elem.etiquetas)
+                                                                                                            //    for(i , i< arr1.length; i++  )
+                }                                                                                           //    if(valor === arr1[i]) 
+                else {                                                                                      //...... return valor; breack 
+                    objFiltrado = objFiltrado.filter(function (elem) { 
+                        arr2 = etiquetaMinuscula(elem).includes(arr1)
+                    });
+                      
+                }
+                
+                //    (gastos.etiquetas.find((elemX, id, etiquetasTiene) => gastos.etiquetas.indexOf(etiquetasTiene)));
+           
+           
+        }        
+        return objFiltrado;
     }
- }
-
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {   // Funciona tutoria 31/10 min:20´
-    var gastosAgrupados = {};
-    var gastosFiltrados;
-    tiempo.periodo = periodo;
-    tiempo.etiqueta = etiquetas;
-    tiempo.fechaDesde = fechaDesde;
-    tiempo.fechaHasta = fechaHasta;
-    gastosFiltrados = filtrarGastos(gastosAgrupados);
-  
-    let functionReduce = function (acumulador, elemento) {             //*cada elemento del arr es un gasto.
-        let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
-
-        if (acumulador[pAgrup]) {                                      //*el acumulador tiene una propiedad existente ya con XX fecha? 
-            acumulador[pAgrup] = acumulador[pAgrup]  + elemento.valor; //* suma lo que tenía más el nuevo valor. 
-        }
-        else 
-            acumulador[pAgrup] = elemento.valor;                        //* La 1º vez que lo llamo estará vacio y entra en else. Se crea xx fecha.
-        return acumulador;
-    };
-    let acumulador = { };                                              //* creo un Array vacío. 
-    return gastos.reduce(functionReduce, acumulador)                   //* Devuelve un Obj,cuya propiedad periodo es = a la suma de gastos. 
- }
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos,
-
 }
+
+function etiquetaMinuscula(listado) {
+    let elemento = "";
+    let res = [];
+
+
+    if (typeof listado[0] === 'string') {
+        for (let a of listado) {
+            elemento = a.toLowerCase();
+            res.push(elemento);
+        }
+    } else {
+        for (let i in listado) {
+            for (let j in listado[i]) {
+                if (j === 'etiquetas' && listado[i][j].length > 0) {
+                    for (let a of listado[i][j]) {
+                        elemento = a.toLowerCase();
+                        res.push(elemento)
+                    }
+                }
+            }
+        }
+    }
+    return res;
+}       
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {   // Funciona tutoria 31/10 min:20´
+            var gastosAgrupados = {};
+            var gastosFiltrados;
+            tiempo.periodo = periodo;
+            tiempo.etiqueta = etiquetas;
+            tiempo.fechaDesde = fechaDesde;
+            tiempo.fechaHasta = fechaHasta;
+            gastosFiltrados = filtrarGastos(gastosAgrupados);
+  
+            let functionReduce = function (acumulador, elemento) {             //*cada elemento del arr es un gasto.
+                let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
+
+                if (acumulador[pAgrup]) {                                      //*el acumulador tiene una propiedad existente ya con XX fecha? 
+                    acumulador[pAgrup] = acumulador[pAgrup] + elemento.valor; //* suma lo que tenía más el nuevo valor. 
+                }
+                else
+                    acumulador[pAgrup] = elemento.valor;                        //* La 1º vez que lo llamo estará vacio y entra en else. Se crea xx fecha.
+                return acumulador;
+            };
+            let acumulador = {};                                              //* creo un Array vacío. 
+            return gastos.reduce(functionReduce, acumulador)                   //* Devuelve un Obj,cuya propiedad periodo es = a la suma de gastos. 
+       
+}
+        // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
+        // Las funciones y objetos deben tener los nombres que se indican en el enunciado
+        // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
+        export {
+            mostrarPresupuesto,
+            actualizarPresupuesto,
+            CrearGasto,
+            listarGastos,
+            anyadirGasto,
+            borrarGasto,
+            calcularTotalGastos,
+            calcularBalance,
+            filtrarGastos,
+            agruparGastos,
+    }
+    
+
