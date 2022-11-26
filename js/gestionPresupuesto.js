@@ -126,7 +126,7 @@ function calcularBalance() {
     var res = presupuesto - gastoTotal;
     return res;
 }
-function filtrarGastos(obj) {   // Funciona ( Pero puede dar futuros problemas si entra con otro orden ej:   if ((obj.fechaDesde || obj.fechaHasta || obj.descripcionContiene) && objFiltrado.length > 0))
+function filtrarGastos(obj) {   //* Funciona ( Pero puede dar futuros problemas si entra con otro orden ej:   if ((obj.fechaDesde || obj.fechaHasta || obj.descripcionContiene) && objFiltrado.length > 0))
     
     // if(obj)
     let objFiltrado = [];
@@ -244,7 +244,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {   //!Pendie
             var gastosFiltrados;
     
             opciones.periodo = periodo;
-            opciones.etiqueta = etiquetas;
+            opciones.etiquetasTiene = etiquetas;
             opciones.fechaDesde = fechaDesde;
             opciones.fechaHasta = fechaHasta;
 
@@ -252,10 +252,12 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {   //!Pendie
   
     let functionReduce = function (acumulador, elemGasto) {
         let periodoAgrup = elemGasto.obtenerPeriodoAgrupacion(periodo)
-        if (acumulador[periodoAgrup]) {                                        // Existe ejemplo: acumulador [2021-01] ???
+        if (acumulador[periodoAgrup]) {                                        //* Existe ejemplo: acumulador [2021-01] ???
             acumulador[periodoAgrup] = acumulador[periodoAgrup] + elemGasto.valor;   
-        } else { acumulador[periodoAgrup]; }
-        return acumulador;                                                                         //*cada elemento del arr es un gasto.
+        } else {
+            acumulador[periodoAgrup] = elemGasto.valor ;
+        }
+        return acumulador;                                                     //*cada elemento del arr es un gasto.
                 let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
 
                 if (acumulador[pAgrup]) {                                      //*el acumulador tiene una propiedad existente ya con XX fecha? 
@@ -265,9 +267,18 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {   //!Pendie
                     acumulador[pAgrup] = elemento.valor;                        //* La 1º vez que lo llamo estará vacio y entra en else. Se crea xx fecha.
                 return acumulador;
          };
-            let acumulador = {};                                              //* creo un Array vacío. 
-            return gastos.reduce(functionReduce, acumulador)                   //* Devuelve un Obj,cuya propiedad periodo es = a la suma de gastos. 
-       
+    let acumulador = {         //* creo un Objeto vacío.
+       // '2021-07': 5,
+       // '2021-09':10
+    };
+                           //* Devuelve un Obj,cuya propiedad periodo es = a la suma de gastos.
+    if (gastosFiltrados.length > 0)  {                                                       
+          return gastosFiltrados.reduce(functionReduce, acumulador)                         
+    }                                     
+    else { 
+       return gastos.reduce(functionReduce, acumulador)   
+    }
+                                   
 }
         // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
         // Las funciones y objetos deben tener los nombres que se indican en el enunciado

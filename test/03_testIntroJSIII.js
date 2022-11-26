@@ -73,14 +73,14 @@ describe("Función agruparGastos", function() {
             valor5 = 304.75,
             valor6 = 195.88;
 
-        let agrup1 = agruparGastos("mes");
+       let agrup1 = agruparGastos("mes");
         assert.lengthOf(Object.keys(agrup1), 3, "La opción de agrupar por mes no funciona.");
         expect(agrup1["2020-05"], "La opción de agrupar por mes no funciona").to.exist;
-        expect(agrup1["2021-09"], "La opción de agrupar por mes no funciona").to.exist;
+       expect(agrup1["2021-09"], "La opción de agrupar por mes no funciona").to.exist;
         expect(agrup1["2021-10"], "La opción de agrupar por mes no funciona").to.exist;
-        assert.equal(agrup1["2020-05"], valor3, "No se suman los totales por mes correctamente");
+       assert.equal(agrup1["2020-05"], valor3, "No se suman los totales por mes correctamente");
        assert.equal(agrup1["2021-09"], valor2 + valor5, "No se suman los totales por mes correctamente");
-      assert.equal(agrup1["2021-10"], valor1 + valor4 + valor6, "No se suman los totales por mes correctamente");
+       assert.equal(agrup1["2021-10"], valor1 + valor4 + valor6, "No se suman los totales por mes correctamente");
 
      let agrup2 = agruparGastos("dia");
         assert.lengthOf(Object.keys(agrup2), 5, "La opción de agrupar por día no funciona.");
@@ -93,32 +93,32 @@ describe("Función agruparGastos", function() {
         assert.equal(agrup2["2021-09-06"], valor2, "No se suman los totales por día correctamente");
         assert.equal(agrup2["2021-09-26"], valor5, "No se suman los totales por día correctamente");
         assert.equal(agrup2["2021-10-06"], valor1 + valor6, "No se suman los totales por día correctamente");
-        assert.equal(agrup2["2021-10-08"], valor4, "No se suman los totales por día correctamente");
+       assert.equal(agrup2["2021-10-08"], valor4, "No se suman los totales por día correctamente");
 
-        let agrup3 = agruparGastos("mes", ["transporte"]);
+       let agrup3 = agruparGastos("mes", ["transporte"]);
         assert.lengthOf(Object.keys(agrup3), 2, "La opción de agrupar y filtrar por etiquetas no funciona");
-        expect(agrup3["2020-05"], "La opción de agrupar por mes y etiquetas no funciona").to.exist;
-        expect(agrup3["2021-10"], "La opción de agrupar por mes y etiquetas no funciona").to.exist;
-        assert.equal(agrup3["2020-05"], valor3, "No se suman los totales por mes filtrando por etiquetas correctamente");
+       expect(agrup3["2020-05"], "La opción de agrupar por mes y etiquetas no funciona").to.exist;
+      expect(agrup3["2021-10"], "La opción de agrupar por mes y etiquetas no funciona").to.exist;
+      assert.equal(agrup3["2020-05"], valor3, "No se suman los totales por mes filtrando por etiquetas correctamente");
         assert.equal(agrup3["2021-10"], valor4 + valor6, "No se suman los totales por mes filtrando por etiquetas correctamente");
 
-        let agrup4 = agruparGastos("anyo", ["transporte", "casa"]);
+     let agrup4 = agruparGastos("anyo", ["transporte", "casa"]);
         assert.lengthOf(Object.keys(agrup4), 2, "La opción de agrupar y filtrar por etiquetas no funciona");
-        expect(agrup4["2020"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
-        expect(agrup4["2021"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
-        assert.equal(agrup4["2020"], valor3, "No se suman los totales por año filtrando por etiquetas correctamente");
+       expect(agrup4["2020"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
+       expect(agrup4["2021"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
+       assert.equal(agrup4["2020"], valor3, "No se suman los totales por año filtrando por etiquetas correctamente");
         assert.equal(agrup4["2021"], valor1 + valor4 + valor5 + valor6, "No se suman los totales por año filtrando por etiquetas correctamente");
 
-        let agrup5 = agruparGastos("mes", ["transporte"], "2021-01-01");
+         let agrup5 = agruparGastos("mes", ["transporte"], "2021-01-01");
         assert.lengthOf(Object.keys(agrup5), 1, "La opción de agrupar y filtrar por etiquetas y fecha no funciona");
-        expect(agrup5["2021-10"], "La opción de agrupar y filtrar por etiquetas y fecha no funciona").to.exist;
+         expect(agrup5["2021-10"], "La opción de agrupar y filtrar por etiquetas y fecha no funciona").to.exist;
         assert.equal(agrup5["2021-10"], valor4 + valor6, "No se suman los totales por año filtrando por etiquetas y fecha correctamente");
 
         let agrup6 = agruparGastos("mes", ["transporte"], "2021-10-01", "2021-10-07");
         assert.lengthOf(Object.keys(agrup6), 1);
         expect(agrup6["2021-10"], "La opción de agrupar y filtrar por etiquetas y fechas no funciona").to.exist;
         assert.equal(agrup6["2021-10"], valor6, "No se suman los totales por año filtrando por etiquetas y fechas correctamente");
-       
+        
     });
 });
 
