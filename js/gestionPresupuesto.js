@@ -2,12 +2,18 @@
 
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(nuevoPresupuesto) {
+    if (nuevoPresupuesto >= 0) {
+        presupuesto = nuevoPresupuesto;
+        return presupuesto;
+    } else {
+        console.log("Error: el valor introducido no es correcto.");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto() {
