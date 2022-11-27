@@ -3,7 +3,7 @@
 // Generación de datos estáticos
 describe("Generación de datos estáticos", () => {
     it("Función mostrarDatoEnId", () => {
-        cy.visit('/interaccionHTML.html');
+         visit('/interaccionHTML.html');
         cy.get("#presupuesto").should(($p) => {
             expect($p, "Se debe mostrar el texto de la función 'mostrarPresupuesto' con 1500€").to.contain('Tu presupuesto actual es de 1500 €');
         });

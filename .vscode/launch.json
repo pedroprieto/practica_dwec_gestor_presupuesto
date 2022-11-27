@@ -48,6 +48,22 @@
                 "<node_internals>/**"
             ],
             "type": "node"
+        },
+        {
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceFolder}/test/04_testInteraccionHTML.js"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "name": "04 - Interacción de JavaScript con HTML - Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
         }
     ]
 }
