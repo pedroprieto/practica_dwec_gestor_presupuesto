@@ -19,15 +19,23 @@ function mostrarGastoWeb(idElemento, gasto) {
 
       let divFecha = document.createElement("div");
     divFecha .className = "gasto-fecha";
-    divFecha .innerText = gasto. ;
+    divFecha .innerText = gasto.fecha ;
 
       let divValor = document.createElement("div");
     divValor.className = "gasto-valor";
     divValor.innerText = gasto.valor;
 
-      let divEtiquetas = document.createElement("div");
+    let divEtiquetas = document.createElement("div");
     divEtiquetas.className = "gasto-etiquetas";
-    divEtiquetas.innerText = gasto.etiquetas;
+
+        //Es una lista de etiquetas: 
+    for (let eti of gasto.etiquetas) {
+         let spanEtiquetas = document.createElement("span");
+         spanEtiquetas.className = "gasto-etiquetas";
+         spanEtiquetas.innerText = gasto.etiquetas;
+         divEtiquetas.append(spanEtiquetas);
+    }
+      
     
 
         //componer objeto gasto:
