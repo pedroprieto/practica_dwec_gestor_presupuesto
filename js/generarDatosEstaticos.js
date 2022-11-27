@@ -37,8 +37,8 @@ gesPres.anyadirGasto(g1);
 g1 = new gesPres.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 gesPres.anyadirGasto(g1);
 
-manipulaDopm.mostrarDatoEnId("presupuesto", gesPres.calcularTotalGastos());// !FALTA
-manipulaDopm.mostrarDatoEnId("presupuesto", gesPres.calcularBalance());//! Falta
+manipulaDopm.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
+manipulaDopm.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
 for (let g of gesPres.listarGastos()) {
     manipulaDopm.mostrarGastoWeb("listado-gastos-completo", g);

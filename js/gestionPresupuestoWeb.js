@@ -1,15 +1,14 @@
 import * as objGasto from '../js/gestionPresupuesto.js';
 
-
 function mostrarDatoEnId(idElemento, valor) {
     let elem = document.getElementById(idElemento);
-    //Puede usarse innerText no interpretará si ponemos estiquetas ej: <b>Negrita</b> con innerHTML lo pone en negrita con Text solo lo leerá.
-    elem.innerHTML = valor;            
-    
+    //Puede usarse innerHTML. El InnerText no interpretará si ponemos estiquetas ej: <b>Negrita</b> con innerHTML lo pone en negrita con Text solo lo leerá.
+    elem.innerText = valor;            
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
     
+    // div gasto
     let divGasto = document.createElement("div");
     divGasto.className = "gasto";
     //Div hijo descripcion:
@@ -19,7 +18,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
       let divFecha = document.createElement("div");
     divFecha .className = "gasto-fecha";
-    divFecha .innerText = gasto.fecha ;
+    divFecha .innerText =gasto.fecha ;
 
       let divValor = document.createElement("div");
     divValor.className = "gasto-valor";
@@ -32,29 +31,21 @@ function mostrarGastoWeb(idElemento, gasto) {
     for (let eti of gasto.etiquetas) {
          let spanEtiquetas = document.createElement("span");
          spanEtiquetas.className = "gasto-etiquetas";
-         spanEtiquetas.innerText = gasto.etiquetas;
+         spanEtiquetas.innerText = eti;
          divEtiquetas.append(spanEtiquetas);
     }
-      
-    
-
         //componer objeto gasto:
     divGasto.append(divDesc);
-    divFecha.append(divFecha);
-    divValor.append(divValor);
-    divEtiquetas.append(divEtiquetas);
+    divGasto.append(divFecha);
+    divGasto.append(divValor);
+    divGasto.append(divEtiquetas);
 
         // Añadir gasto a la capa contenedora: 
     let contenedor = document.getElementById(idElemento);
-    contenedor.append(divDesc);
+    contenedor.append(divGasto);
 }
 
-
 function mostrarGastosAgrupadosWeb (){}
-
-
-
-
 
 
 export {
