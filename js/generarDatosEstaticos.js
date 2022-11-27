@@ -42,4 +42,28 @@ manipulaDopm.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
 for (let g of gesPres.listarGastos()) {
     manipulaDopm.mostrarGastoWeb("listado-gastos-completo", g);
+    
 }
+
+let gastosFiltrados = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-10-01" });
+
+for (let g of gastosFiltrados) {
+     manipulaDopm.mostrarGastoWeb("listado-gastos-filtrado-1",g);
+ }
+
+let gastosFiltrados2 = gesPres.filtrarGastos({valorMinimo: 50});
+
+for (let g of gastosFiltrados2) {
+     manipulaDopm.mostrarGastoWeb("listado-gastos-filtrado-2",g);
+}
+ let gastosFiltrados3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+
+for (let g of gastosFiltrados3) {
+     manipulaDopm.mostrarGastoWeb("listado-gastos-filtrado-3",g);
+}
+ let gastosFiltrados4 = gesPres.filtrarGastos({etiquetasTiene: ["transporte", "comida"],  valorMaximo: 50});
+
+for (let g of gastosFiltrados4) {
+     manipulaDopm.mostrarGastoWeb("listado-gastos-filtrado-4",g);
+}
+ 
