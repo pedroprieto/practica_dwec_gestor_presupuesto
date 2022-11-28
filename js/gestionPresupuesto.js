@@ -1,6 +1,8 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 let presupuesto = 0;
+let gastos = new Array();
+let idGasto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) {
     if (nuevoPresupuesto >= 0) {
