@@ -89,6 +89,16 @@ function mostrarGastoWeb (idElemento, gasto) {
     botonBorrar.addEventListener("click", objetoBorrar);
     //Añadir el botón al DOM a continuación del botón Editar.
     divGasto.append(botonBorrar);
+     //botón editar formulario
+     let botonEditarFormulario = document.createElement('button');
+     botonEditarFormulario.className = 'gasto-editar-formulario';
+     botonEditarFormulario.type = 'button';
+     botonEditarFormulario.innerHTML = "Editar (Formulario)";
+     let editarFormulario = new editarHandleFormulario();
+     editarFormulario.gasto = gasto;
+     botonEditarFormulario.addEventListener('click', editarFormulario);
+     divGasto.append(botonEditarFormulario);
+   
 
 }
 
@@ -209,6 +219,119 @@ function EditarHandle () {
             repintar();
 
         }
+    }
+    ///Formularios
+    function nuevoGastoWebFormulario (event) {
+        //Crear una copia del formulario web definido en la plantilla 
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        //Acceder al elemento <form> dentro de ese fragmento de documento
+        var formulario = plantillaFormulario.querySelector("form");
+        //Crear un manejador de evento para el evento submit del formulario. Utilizaremos addEventListener
+        formulario.addEventListener("submit", submitFormulario);
+        //añadir el formulario al final de controlesprincipales 
+        let controlFormulario = document.getElementById('controlesprincipales');
+        controlFormulario.append(formulario);
+        //evento submit en botón submit
+        formulario.addEventListener('submit', submitFormulario);
+        //desactivado al activar el formulario el boton añadir
+        event.target.disabled = true;
+        //Crear un manejador de evento para el evento click del botón Cancelar
+        var botonCancelar = plantillaFormulario.querySelector("button.cancelar");
+        //definir una función constructora que implemente handleEvent
+        botonCancelar.addEventListener("click", cerrarFormulario);
+
+        //añadir el fragmento de documento
+        let controles = document.getElementById("controlesprincipales");
+        controles.append(formulario);
+
+        
+    }
+    let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+    botonAnyadirFormulario.addEventListener("click", nuevoGastoWebFormulario);
+
+    //Deberás crear una función manejadora de este evento submitFormulario
+    function submitFormulario (event) {
+         //Prevenir el envío del formulario
+         event.preventDefault();
+         //Separamos el arrqy etiquetas
+         let etiqueta = event.target.etiquetas.value.split(",");
+          //creamos el gasto del los campos recojidos.
+         let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, event.target.valor.value, event.target.fecha.value, ...etiqueta );
+         //Añadir el gasto a la lista de gastos.
+         gestPresupuesto.anyadirGasto(nuevoGastoFormulario);
+         //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
+         let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+         botonAnyadirFormulario.addEventListener('click', nuevoGastoWebFormulario);
+         botonAnyadirFormulario.disabled = false;
+          //Quitar formulario 
+          event.target.remove();
+          
+          //Llamar a la función repintar.
+          repintar();
+        //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+    }
+    //Crear un manejador de evento para el evento click del botón Cancelar
+    function editarHandleFormulario () {
+        this.handleEvent = function(event){ 
+            //Crear una copia del formulario web definido en la plantilla 
+            let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+            //Acceder al elemento <form> dentro de ese fragmento de documento
+            var formulario = plantillaFormulario.querySelector("form");
+            //Mostrar los valores del gasto del formulario
+            formulario.elements.descripcion.value = this.gasto.descripcion;
+            formulario.elements.valor.value = this.gasto.valor;
+            formulario.elements.fecha.value = this.gasto.fecha;
+            formulario.elements.etiquetas.value = this.gasto.etiquetas;
+            //añadir el formulario al final del botón editar
+            event.currentTarget.after(formulario);
+
+             //botón submit
+            let botonSubmitFormulario = new manejadorSubmitEditarFormulario();
+            botonSubmitFormulario.gasto = this.gasto;
+            formulario.addEventListener('submit', botonSubmitFormulario);
+
+             //botón cancelar
+            let botonCancelarFormulario = formulario.querySelector("button.cancelar");
+            let cancelarFormulario = new manejadorBotonCancelarFormulario();
+            cancelarFormulario.className = "button.cancelar"
+            botonCancelarFormulario.addEventListener('click', cancelarFormulario);
+        }
+
+    }
+    //manejador boton borrar formulario
+    function manejadorBotonCancelarFormulario() {
+        this.handleEvent = function(event) {
+            event.currentTarget.parentNode.remove();
+        }
+    }
+    function manejadorSubmitEditarFormulario() {
+        this.handleEvent = function(event) {
+            event.preventDefault();
+    
+            let formulario = event.currentTarget;
+            let descripcion = formulario.elements.descripcion.value;
+            let valor = formulario.elements.valor.value;
+            let fecha =  formulario.elements.fecha.value;
+            let etiquetas = formulario.elements.etiquetas.value.split(",");
+    
+            this.gasto.actualizarValor(valor);
+            this.gasto.actualizarDescripcion(descripcion);
+            this.gasto.actualizarFecha(fecha);
+            this.gasto.anyadirEtiquetas(etiquetas);
+            repintar();
+        }
+    }
+    function cerrarFormulario () {
+        this.handleEvent = function (event) {
+            //cerrar formulario sin cambios no lo cierra
+        var botonCancelar = plantillaFormulario.querySelector("button.cancelar");
+        botonCancelar.disabled = true;
+            //event.target.node.remove();
+            event.currentTarget.parentNode.remove();
+        }
+         
+        console.log("cerrando formulario");//Hacerlo
     }
 
 // Exportar las funciones creadas
