@@ -8,8 +8,7 @@ function mostrarDatoEnId (idElemento, valor) {
 
     let datosId = document.getElementById(idElemento);
     datosId.innerText = valor;
-    
-
+  
 }
 
 function mostrarGastoWeb (idElemento, gasto) {
@@ -61,7 +60,7 @@ function mostrarGastoWeb (idElemento, gasto) {
     //Crear un botón con texto Editar de tipo
     let botonEditar = document.createElement("button");
     //clase gasto-editar.
-    botonEditar.className = ("gasto-editar");
+    botonEditar.className = "gasto-editar";
     //de tipo button
     botonEditar.type = "button";
     //con texto Editar
@@ -138,6 +137,14 @@ function repintar (){
     for (let gastos of gestPresupuesto.listarGastos()){
         mostrarGastoWeb('listado-gastos-completo', gastos);
     }
+    //Prueba de limpieza de filtrado
+
+    document.getElementById('agrupacion-dia').innerHTML = "";
+    document.getElementById('agrupacion-mes').innerHTML = "";
+    document.getElementById('agrupacion-anyo').innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestPresupuesto.agruparGastos("dia"), "Día");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestPresupuesto.agruparGastos("mes"), "Mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestPresupuesto.agruparGastos("anyo"), "Año");
 }
 //Función actualizarPresupuestoWeb
 function actualizarPresupuestoWeb () {

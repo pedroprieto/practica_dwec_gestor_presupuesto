@@ -119,7 +119,7 @@ function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta) {
         } else {
             acc[pAgrup] = gasto.valor;
         }
-        //console.log( "GAsto : " + gasto.valor +" " + new Date(gasto.fecha));
+       
         return acc;
     };
     let acumulador = {};
