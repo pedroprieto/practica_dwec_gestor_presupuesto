@@ -93,11 +93,11 @@ function borrarGasto(id) {
 }
 
 function calcularTotalGastos() {
-
+    return gastos.reduce((suma, gasto) => suma + gasto.valor, 0);
 }
 
 function calcularBalance() {
-
+    return (presupuesto - calcularTotalGastos());
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
