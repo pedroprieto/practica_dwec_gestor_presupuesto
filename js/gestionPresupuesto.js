@@ -38,7 +38,7 @@ function CrearGasto(descripcion, valor) {
 }
 
 function listarGastos() {
-
+    return gastos;
 }
 
 function anyadirGasto() {
@@ -54,7 +54,7 @@ function calcularTotalGastos() {
 }
 
 function calcularBalance() {
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
