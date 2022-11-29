@@ -131,6 +131,14 @@ function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
 
 //Crear una función repintar para actualizar la página
 function repintar (){
+//Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+document.getElementById('listado-gastos-completo').innerHTML = "";
+
+//Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+for (let gastos of gestPresupuesto.listarGastos()){
+    mostrarGastoWeb('listado-gastos-completo', gastos);
+}
+
     //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
     mostrarDatoEnId('presupuesto', gestPresupuesto.mostrarPresupuesto());
     
@@ -140,13 +148,7 @@ function repintar (){
     //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
     mostrarDatoEnId('balance-total', gestPresupuesto.calcularBalance());
 
-    //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
-    document.getElementById('listado-gastos-completo').innerHTML = "";
-
-    //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
-    for (let gastos of gestPresupuesto.listarGastos()){
-        mostrarGastoWeb('listado-gastos-completo', gastos);
-    }
+    
     //Prueba de limpieza de filtrado
 
     document.getElementById('agrupacion-dia').innerHTML = "";
@@ -227,10 +229,10 @@ function EditarHandle () {
         //Acceder al elemento <form> dentro de ese fragmento de documento
         var formulario = plantillaFormulario.querySelector("form");
         //Crear un manejador de evento para el evento submit del formulario. Utilizaremos addEventListener
-        formulario.addEventListener("submit", submitFormulario);
+        //formulario.addEventListener("submit", submitFormulario);
         //añadir el formulario al final de controlesprincipales 
-        let controlFormulario = document.getElementById('controlesprincipales');
-        controlFormulario.append(formulario);
+        //let controlFormulario = document.getElementById('controlesprincipales');
+        //controlFormulario.append(formulario);
         //evento submit en botón submit
         formulario.addEventListener('submit', submitFormulario);
         //desactivado al activar el formulario el boton añadir
@@ -242,7 +244,7 @@ function EditarHandle () {
 
         //añadir el fragmento de documento
         let controles = document.getElementById("controlesprincipales");
-        controles.append(formulario);
+        controles.append(plantillaFormulario);
 
         
     }
@@ -269,11 +271,13 @@ function EditarHandle () {
           //Llamar a la función repintar.
           repintar();
         //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
-        document.getElementById("anyadirgasto-formulario").disabled = false;
+        document.getElementById("anyadirgasto-formulario").disabled = true;//cambio atribute
     }
     //Crear un manejador de evento para el evento click del botón Cancelar
     function editarHandleFormulario () {
         this.handleEvent = function(event){ 
+            
+
             //Crear una copia del formulario web definido en la plantilla 
             let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
             //Acceder al elemento <form> dentro de ese fragmento de documento
@@ -285,6 +289,10 @@ function EditarHandle () {
             formulario.elements.etiquetas.value = this.gasto.etiquetas;
             //añadir el formulario al final del botón editar
             event.currentTarget.after(formulario);
+
+            //anuklar boton 
+            //let botonEditarFormulario = document.getElementById("gasto-editar-formulario");
+            //botonEditarFormulario.disabled = true;
 
              //botón submit
             let botonSubmitFormulario = new manejadorSubmitEditarFormulario();
@@ -323,16 +331,18 @@ function EditarHandle () {
             repintar();
         }
     }
-    function cerrarFormulario () {
-        this.handleEvent = function (event) {
+    function cerrarFormulario (event) {
             //cerrar formulario sin cambios no lo cierra
         var botonCancelar = event.currentTarget;
         botonCancelar.disabled = true;
             //event.target.node.remove();
+            
+         let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+         botonAnyadirFormulario.disabled = false;
             event.currentTarget.parentNode.remove();
-        }
+        
          
-        console.log("cerrando formulario");//Hacerlo
+        //console.log("cerrando formulario");//Hacerlo
     }
 
 // Exportar las funciones creadas
