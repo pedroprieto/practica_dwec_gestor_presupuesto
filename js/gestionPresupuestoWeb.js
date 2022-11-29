@@ -325,7 +325,7 @@ function EditarHandle () {
     function cerrarFormulario () {
         this.handleEvent = function (event) {
             //cerrar formulario sin cambios no lo cierra
-        var botonCancelar = plantillaFormulario.querySelector("button.cancelar");
+        var botonCancelar = event.currentTarget;
         botonCancelar.disabled = true;
             //event.target.node.remove();
             event.currentTarget.parentNode.remove();
