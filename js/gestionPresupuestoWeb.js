@@ -308,6 +308,7 @@ function EditarHandle () {
     function manejadorSubmitEditarFormulario() {
         this.handleEvent = function(event) {
             event.preventDefault();
+            event.currentTarget.disabled = true;
     
             let formulario = event.currentTarget;
             let descripcion = formulario.elements.descripcion.value;
