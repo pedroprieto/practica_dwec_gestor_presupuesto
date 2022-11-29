@@ -131,13 +131,7 @@ function mostrarGastosAgrupadosWeb ( IdElemento, agrup, periodo) {
 
 //Crear una función repintar para actualizar la página
 function repintar (){
-//Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
-document.getElementById('listado-gastos-completo').innerHTML = "";
 
-//Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
-for (let gastos of gestPresupuesto.listarGastos()){
-    mostrarGastoWeb('listado-gastos-completo', gastos);
-}
 
     //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
     mostrarDatoEnId('presupuesto', gestPresupuesto.mostrarPresupuesto());
@@ -147,10 +141,16 @@ for (let gastos of gestPresupuesto.listarGastos()){
 
     //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
     mostrarDatoEnId('balance-total', gestPresupuesto.calcularBalance());
+    //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+    document.getElementById('listado-gastos-completo').innerHTML = "";
 
+    //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    for (let gastos of gestPresupuesto.listarGastos()){
+        mostrarGastoWeb('listado-gastos-completo', gastos);
+    }
     
     //Prueba de limpieza de filtrado
-
+    //document.getElementById('listado-gastos-filtrado-1').innerHTML="";
     document.getElementById('agrupacion-dia').innerHTML = "";
     document.getElementById('agrupacion-mes').innerHTML = "";
     document.getElementById('agrupacion-anyo').innerHTML = "";
@@ -192,12 +192,13 @@ function EditarHandle () {
         let descripcion = prompt("Descripción del gasto :");
         let valorGasto = Number (prompt("Valor del Gasto :"));
         let fechaGasto = prompt ("Fecha del gasto en formato yyyy-mm-dd");
-        let etiquetas = prompt ("Introduzca etiquetas separadas por comas :").split(",");
+        let etiquetas = prompt ("Introduzca etiquetas separadas por comas :");// modifico array
+        let arrayEti = etiquetas.split(',');
         //Actualizar las propiedades del gasto
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valorGasto);
         this.gasto.actualizarFecha(fechaGasto);
-        this.gasto.anyadirEtiquetas(etiquetas);
+        this.gasto.anyadirEtiquetas(arrayEti);
         //Llamar a la función repintar
         repintar();
     }
@@ -256,9 +257,10 @@ function EditarHandle () {
          //Prevenir el envío del formulario
          event.preventDefault();
          //Separamos el arrqy etiquetas
-         let etiqueta = event.target.etiquetas.value.split(",");
+         let etiqueta = event.target.etiquetas.value;//Modifico Array
+         let arrayEti = etiqueta.split(',');
           //creamos el gasto del los campos recojidos.
-         let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, event.target.valor.value, event.target.fecha.value, ...etiqueta );
+         let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, event.target.valor.value, event.target.fecha.value, ...arrayEti );
          //Añadir el gasto a la lista de gastos.
          gestPresupuesto.anyadirGasto(nuevoGastoFormulario);
          //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
@@ -267,11 +269,12 @@ function EditarHandle () {
          botonAnyadirFormulario.disabled = false;
           //Quitar formulario 
           event.target.remove();
-          
+          //botonAnyadirFormulario.disabled = true;
           //Llamar a la función repintar.
           repintar();
         //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
-        document.getElementById("anyadirgasto-formulario").disabled = true;//cambio atribute
+        //document.getElementById("anyadirgasto-formulario").disabled = true;//cambio atribute
+        
     }
     //Crear un manejador de evento para el evento click del botón Cancelar
     function editarHandleFormulario () {
@@ -316,18 +319,29 @@ function EditarHandle () {
     function manejadorSubmitEditarFormulario() {
         this.handleEvent = function(event) {
             event.preventDefault();
-            event.currentTarget.disabled = true;
+            //Desactivar boton editar
+            //event.currentTarget.disabled = true;
+            //let btnEditar = event.currentTarget;
+            //btnEditar.disabled = true;
+            
     
             let formulario = event.currentTarget;
             let descripcion = formulario.elements.descripcion.value;
             let valor = formulario.elements.valor.value;
             let fecha =  formulario.elements.fecha.value;
-            let etiquetas = formulario.elements.etiquetas.value.split(",");
-    
-            this.gasto.actualizarValor(valor);
+            let etiquetas = formulario.elements.etiquetas.value; //separar array
+            let sepEtiquetas = etiquetas.split(',');
+
+            //let btnEditar = formulario.elements.gasto-editar-formulario;
+            //btnEditar.disabled = true;
+            //let btnEditar = document.getElementById("gasto-editar-formulario");
+            //btnEditar.disabled = true;
+            
             this.gasto.actualizarDescripcion(descripcion);
+            this.gasto.actualizarValor(valor);
             this.gasto.actualizarFecha(fecha);
-            this.gasto.anyadirEtiquetas(etiquetas);
+            this.gasto.anyadirEtiquetas(sepEtiquetas);
+            
             repintar();
         }
     }
