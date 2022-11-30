@@ -150,6 +150,7 @@ function repintar (){
     }
     
     //Prueba de limpieza de filtrado
+    //gestPresupuesto.filtrarGastos(gastos);
     //document.getElementById('listado-gastos-filtrado-1').innerHTML="";
     document.getElementById('agrupacion-dia').innerHTML = "";
     document.getElementById('agrupacion-mes').innerHTML = "";
@@ -293,9 +294,9 @@ function EditarHandle () {
             //añadir el formulario al final del botón editar
             event.currentTarget.after(formulario);
 
-            //anuklar boton 
-            //let botonEditarFormulario = document.getElementById("gasto-editar-formulario");
-            //botonEditarFormulario.disabled = true;
+            //anular boton 
+            let botonEditarFormulario = event.currentTarget;
+            botonEditarFormulario.disabled = true;
 
              //botón submit
             let botonSubmitFormulario = new manejadorSubmitEditarFormulario();
@@ -305,6 +306,7 @@ function EditarHandle () {
              //botón cancelar
             let botonCancelarFormulario = formulario.querySelector("button.cancelar");
             let cancelarFormulario = new manejadorBotonCancelarFormulario();
+            cancelarFormulario.botonEditar = event.currentTarget; // Pasas una referencia al botón de editar
             cancelarFormulario.className = "button.cancelar"
             botonCancelarFormulario.addEventListener('click', cancelarFormulario);
         }
@@ -313,7 +315,8 @@ function EditarHandle () {
     //manejador boton borrar formulario
     function manejadorBotonCancelarFormulario() {
         this.handleEvent = function(event) {
-            event.currentTarget.parentNode.remove();
+            event.currentTarget.parentNode.remove(); 
+            this.botonEditar.disabled = false;
         }
     }
     function manejadorSubmitEditarFormulario() {
@@ -324,7 +327,8 @@ function EditarHandle () {
             //let btnEditar = event.currentTarget;
             //btnEditar.disabled = true;
             
-    
+            this.gasto.etiquetas = [];
+            
             let formulario = event.currentTarget;
             let descripcion = formulario.elements.descripcion.value;
             let valor = formulario.elements.valor.value;
@@ -340,7 +344,7 @@ function EditarHandle () {
             this.gasto.actualizarDescripcion(descripcion);
             this.gasto.actualizarValor(valor);
             this.gasto.actualizarFecha(fecha);
-            this.gasto.anyadirEtiquetas(sepEtiquetas);
+            this.gasto.anyadirEtiquetas(...sepEtiquetas);
             
             repintar();
         }
@@ -358,6 +362,31 @@ function EditarHandle () {
          
         //console.log("cerrando formulario");//Hacerlo
     }
+    //Filtrado formulario
+    function filtrarGastosWeb () {
+        //Prevenir el envío del formulario
+        event.preventDefault();
+        //Recoger los datos del formulario formulario-filtrado
+        let formulario = event.currentTarget;
+            let descripcion = formulario.elements.formulario-filtrado-descripcion.value;
+            let valorMinimo = formulario.elements.formulario-filtrado-valor-minimo.value;
+            let valorMaximo =  formulario.elements.formulario-filtrado-valor-maximo.value;
+            let fechaDesde = formulario.elements.formulario-filtrado-fecha-desde.value;
+            let fechaHasta = formulario.elements.formulario-filtrado-fecha-hasta.value;
+            let etiquetas = formulario.elements.formulario-filtrado-etiquetas-tiene.value;
+            
+
+        //Si etiquetas tiene datos, llamar a la función transformarListadoEtiquetas 
+
+        //llamar a la función filtrarGastos del paquete gestionPresupuesto
+        
+        //Llamar a la función filtrarGastos
+
+        //Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb.
+    }
+    //añadirla como manejadora del evento submit del formulario formulario-filtrado.
+    //let btnEnviarFiltrado = form.elements.type.submit("formulario-filtrado");
+    //btnEnviarFiltrado.addEventListener("click", nuevoGastoWebFormulario);
 
 // Exportar las funciones creadas
 export {

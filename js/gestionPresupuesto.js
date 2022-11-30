@@ -126,6 +126,14 @@ function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta) {
     return gastosFiltrados.reduce(funcionReduce, acumulador);
 
 }
+    //Función transformarListadoEtiquetas Vamos a añadir esta función al paquete gestionPresupuesto.js
+    function transformarListadoEtiquetas (etiquetasTiene) {
+        let montarArray = etiquetasTiene;
+        let arrayEtiquetas = montarArray.match(/\w{1,}/g);
+        return arrayEtiquetas;
+
+    }
+
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     // Propiedades del objeto
@@ -228,5 +236,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
