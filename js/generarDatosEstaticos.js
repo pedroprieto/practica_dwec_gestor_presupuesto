@@ -35,25 +35,28 @@ for (let gst of gestPresupuesto.listarGastos()) {
 }
 //Mostrar el listado de gastos realizados en septiembre de 2021
 //gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gestPresupuesto.filtrarGastos());
-for (let gst of gestPresupuesto.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-09-30"}) ){
-    gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gst);
-  }
+
 
 //Mostrar el listado de gastos de más de 50€
 function filtradoEspecial () {
+    for (let gst of gestPresupuesto.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-09-30"}) ){
+        gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gst);
+      }
  
-for (let gst of gestPresupuesto.filtrarGastos({valorMinimo:50}) ) {
-    gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gst);
-}
+    for (let gst of gestPresupuesto.filtrarGastos({valorMinimo:50}) ) {
+        gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gst);
+    }
 //Mostrar el listado de gastos de más de 200€ con etiqueta
-for (let gst of gestPresupuesto.filtrarGastos({valorMinimo:200,etiquetasTiene:["seguros"]}) ) {
-    gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gst);
-}
+    for (let gst of gestPresupuesto.filtrarGastos({valorMinimo:200,etiquetasTiene:["seguros"]}) ) {
+        gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gst);
+    }
 //Mostrar el listado de gastos que tengan las etiquetas
-for (let etiq of gestPresupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene: ["comida","transporte"]}) ){
-    gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-4', etiq);
-}   
+    for (let etiq of gestPresupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene: ["comida","transporte"]}) ){
+        gestPresWeb.mostrarGastoWeb('listado-gastos-filtrado-4', etiq);
+    }
 }
+
+filtradoEspecial();
 //Mostrar el total de gastos agrupados por día en div#agrupacion-dia
 gestPresWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gestPresupuesto.agruparGastos("dia"), "día");
 

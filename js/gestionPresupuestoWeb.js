@@ -145,7 +145,6 @@ function repintar (){
     }
     
     //Prueba de limpieza de filtrado
-    //gestPresupuesto.filtrarGastos(gastos);
     document.getElementById('listado-gastos-filtrado-1').innerHTML="";
     document.getElementById('listado-gastos-filtrado-2').innerHTML="";
     document.getElementById('listado-gastos-filtrado-3').innerHTML="";
