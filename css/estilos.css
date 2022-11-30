@@ -8,6 +8,9 @@
 #aplicacion {
     margin: 1em;
 }
+.agrupacion-dato-clave {
+    padding: 10px;
+}
 
 form, .gasto {
     margin: 1em 0;
