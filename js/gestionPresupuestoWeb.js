@@ -250,8 +250,11 @@ function EditarHandle () {
          //Separamos el arrqy etiquetas
          let etiqueta = event.target.etiquetas.value;//Modifico Array
          let arrayEti = etiqueta.split(',');
+         //Pasar valor
+         let valorNumerico = event.target.valor.value;
+         valorNumerico = parseFloat(valorNumerico);
           //creamos el gasto del los campos recojidos.
-         let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, event.target.valor.value, event.target.fecha.value, ...arrayEti );
+         let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, valorNumerico, event.target.fecha.value, ...arrayEti );
          //Añadir el gasto a la lista de gastos.
          gestPresupuesto.anyadirGasto(nuevoGastoFormulario);
          //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
@@ -315,7 +318,7 @@ function EditarHandle () {
             let sepEtiquetas = etiquetas.split(',');
             //Actualizar los datos
             this.gasto.actualizarDescripcion(descripcion);
-            this.gasto.actualizarValor(valor);
+            this.gasto.actualizarValor(parseFloat(valor));
             this.gasto.actualizarFecha(fecha);
             this.gasto.anyadirEtiquetas(...sepEtiquetas);
             
@@ -338,14 +341,18 @@ function EditarHandle () {
         let formulario = event.currentTarget;
             let descripcion = formulario.elements.formulario-filtrado-descripcion.value;
             let valorMinimo = formulario.elements.formulario-filtrado-valor-minimo.value;
-            let valorMaximo =  formulario.elements.formulario-filtrado-valor-maximo.value;
+            let valorMaximo = formulario.elements.formulario-filtrado-valor-maximo.value;
             let fechaDesde = formulario.elements.formulario-filtrado-fecha-desde.value;
             let fechaHasta = formulario.elements.formulario-filtrado-fecha-hasta.value;
             let etiquetas = formulario.elements.formulario-filtrado-etiquetas-tiene.value;
             
 
         //Si etiquetas tiene datos, llamar a la función transformarListadoEtiquetas 
-
+            if(etiquetas) {
+                etiquetas = gestPresupuesto.transformarListadoEtiquetas();
+            } else {
+                etiquetas = etiquetas;
+            }
         //llamar a la función filtrarGastos del paquete gestionPresupuesto
         
         //Llamar a la función filtrarGastos
