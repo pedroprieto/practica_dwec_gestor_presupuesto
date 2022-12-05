@@ -13,7 +13,9 @@ function actualizarPresupuesto(valor){
 }
 
 function mostrarPresupuesto() {
-   return `Tu presupuesto actual es de ${presupuesto} €`;
+    let texto ="";
+    texto = texto + `Tu presupuesto actual es de ${presupuesto} €`;
+    return texto;
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -195,19 +197,18 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     opciones.etiquetasTiene = etiquetas;
     opciones.fechaDesde = fechaDesde;
     opciones.fechaHasta = fechaHasta; 
-    let funcionReduce = (acc, gasto) => {
-        let pAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
-        if (acc[pAgrupacion]){
-            acc[pAgrupacion] = acc[pAgrupacion] + gasto.valor;
+    let gastosFiltardos = filtrarGastos(opciones);
+    let acumulador ={};
+    return gastosFiltardos.reduce(function(acc, gasto){
+        let pAgrup = gasto.obtenerPeriodoAgrupacion(periodo);
+        if(acc[pAgrup]){
+            acc[pAgrup] = acc[pAgrup] + gasto.valor;
         }
         else{
-            acc[pAgrupacion] = gasto.valor;
+            acc[pAgrup] = gasto.valor;
         }
-    return acc;
-    };
-    let gastosFiltrados = filtrarGastos(opciones); 
-    let acumulador = {};
-    return gastosFiltrados.reduce(funcionReduce, acumulador);
+        return acc;
+    }, acumulador);
 }
 
 
