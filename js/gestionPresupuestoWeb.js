@@ -240,6 +240,29 @@ function BorrarFormularioHandle() {
     }
 }
 
+function filtrarGastosWeb(event){
+    event.preventDefault();
+    let form = event.currentTarget;
+    let descripcion = form.elements.descripcion.value;
+    let valor = Number(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayEtiquetas = etiquetas.gestion.transformarListadoEtiquetas(opciones);
+    let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    gestion.anyadirGasto(nuevoGasto);
+    let opciones;
+    let fechaDesde = form.elements.opciones.fechaDesde.value;
+    let fechaHasta = form.elements. opciones.valorMinimo.value;
+    let valorMaximo = form.elements.opciones.valorMaximo.value;
+    let descripcionContiene = form.elements.opciones.descripcionContiene.value;
+    let etiquetasTiene = form.elements.opciones.etiquetasTiene.value;
+    gestion.filtrarGastos(opciones);
+    gestion.mostrarGastoWeb();
+}
+
+let botonEnvioForm = document.getElementById("formulario-filtrado");
+botonEnvioForm.addEventListener("submit", filtrarGastosWeb);
+
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
