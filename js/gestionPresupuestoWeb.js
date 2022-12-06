@@ -403,6 +403,34 @@ function cancelarAnyadirGasto(){
   }
 }
 
+// Función filtrarGastosWeb
+// manejadora de eventos del formulario formulario-filtrado
+function filtrarGastosWeb(){
+  this.handleEvent = function( ev ){
+
+  //Prevenir el envío del formulario
+    ev.preventDefault();
+
+    //Recoger los datos del formulario formulario-filtrado
+    let formfilt = ev.currentTarget;
+    let descripcion = formfilt.elements['formulario-filtrado-descripcion'].value;
+    let valorMin = formfilt.elements['formulario-filtrado-valor-minimo'].value;
+    let valorMax = formfilt.elements['formulario-filtrado-valor-maximo'].value;
+    let fechaDesde = formfilt.elements['formulario-filtrado-fecha-desde'].value;
+    let fechaHasta = formfilt.elements['formulario-filtrado-fecha-hasta'].value;
+    let etiquetasTiene = formfilt.elements['formulario-filtrado-etiquetas-tiene'].value;
+
+    valorMin = parseFloat( valorMin );
+    valorMax = parseFloat( valorMax );
+
+    //Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a la función transformarListadoEtiquetas
+    if ( etiquetasTiene = !null ){
+      etiquetasTiene = gestionPre.transformarListadoEtiquetas( etiquetasTiene );
+    }
+  }
+  
+}
+
 
 export   { 
     mostrarDatoEnId,
