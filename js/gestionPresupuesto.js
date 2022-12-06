@@ -248,13 +248,12 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
         //} 
 
         //Función transformarListadoEtiquetas
-        function transformarListadoEtiquetas(){
+        function transformarListadoEtiquetas(etiquetas){
             // \w – es lo mismo que [a-zA-Z0-9_]
             // i Con esta bandera, la búsqueda no distingue entre mayúsculas y minúsculas
             // g Con esta bandera, la búsqueda encuentra todas las coincidencias
-            let etiquetasfiltrado = etiquetas.match(/[\w]/gi);
+            let etiquetasfiltrado = etiquetas.match(/[\w]+/gi);
             return etiquetasfiltrado;
-
         }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
