@@ -199,7 +199,6 @@ function EditarGastoHandle() {
         this.gasto.anyadirEtiquetas(...arrayEtiquetas);
         formulario.remove();
         repintar();
-
     }
 }
 
@@ -216,11 +215,9 @@ function AnyadirElemFormulario(event) {
     repintar();
     document.getElementById('anyadirgasto-formulario').removeAttribute('disabled', 'disabled');
     form.remove();
-
 }
 
 function nuevoGastoWebFormulario(event) {
-
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
     let divControles = document.getElementById('controlesprincipales');
@@ -243,21 +240,23 @@ function BorrarFormularioHandle() {
 function filtrarGastosWeb(event){
     event.preventDefault();
     let form = event.currentTarget;
-    let descripcion = form.elements.descripcion.value;
-    let valor = Number(form.elements.valor.value);
-    let fecha = form.elements.fecha.value;
-    let etiquetas = form.elements.etiquetas.value;
-    let arrayEtiquetas = etiquetas.gestion.transformarListadoEtiquetas(opciones);
-    let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
-    gestion.anyadirGasto(nuevoGasto);
-    let opciones;
-    let fechaDesde = form.elements.opciones.fechaDesde.value;
-    let fechaHasta = form.elements. opciones.valorMinimo.value;
-    let valorMaximo = form.elements.opciones.valorMaximo.value;
-    let descripcionContiene = form.elements.opciones.descripcionContiene.value;
-    let etiquetasTiene = form.elements.opciones.etiquetasTiene.value;
+    let divFiltrarGastos = document.getElementById('filtrar-gastos');
+    divFiltrarGastos.append(form);
+    let opciones = {};
+    let descripcionContiene = form.elements.formulario-filtrado-descripcion.value;
+    let valorMinimo = form.elements.formulario-filtrado-valor-minimo.value;
+    let valorMaximo = form.elements.formulario-filtrado-valor-maximo.value;
+    let fechaDesde = form.elements.formulario-filtrado-fecha-desde.value; 
+    let fechaHasta = form.elements.formulario-filtrado-fecha-hasta.value; 
+    let etiquetasTiene = form.elements.formulario-filtrado-etiquetas-tiene.value; 
+    this.gasto.opciones.fechaDesde;
+    this.gasto.opciones.fechaHasta;
+    this.gasto.opciones.valorMinimo;
+    this.gasto.opciones.valorMaximo;
+    this.gasto.opciones.descripcionContiene;
+    this.gasto.opciones.etiquetasTiene;
     gestion.filtrarGastos(opciones);
-    gestion.mostrarGastoWeb();
+    gestion.mostrarGastoWeb(event);
 }
 
 let botonEnvioForm = document.getElementById("formulario-filtrado");

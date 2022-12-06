@@ -211,12 +211,9 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     }, acumulador);
 }
 
-function transformarListadoEtiquetas(opciones){
-    let etiquetas = opciones.etiquetasTiene;
+function transformarListadoEtiquetas(etiquetas){
     let etiquetasTieneTransf = /\d\w/gi;
     etiquetas.match(etiquetasTieneTransf);
-    filtrarGastos(opciones);
-
 }
 
 
