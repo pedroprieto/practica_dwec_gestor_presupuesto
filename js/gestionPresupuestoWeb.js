@@ -425,12 +425,24 @@ function filtrarGastosWeb(){
 
     //Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a la función transformarListadoEtiquetas
     if ( etiquetasTiene = !null ){
-      etiquetasTiene = gestionPre.transformarListadoEtiquetas( etiquetasTiene );
+      etiquetas = gestionPre.transformarListadoEtiquetas( etiquetasTiene );
+    }
+
+    // Crear el objeto necesario para llamar a la función filtrarGastos del paquete gestionPresupuesto.js
+    let gastosFiltro = new gestionPre.filtrarGastos ({fechaDesde, fechaHasta, valorMin, valorMax, descripcion, etiquetas});
+
+    // Llamar a la función filtrarGastos
+
+    // Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb
+    for ( let gastos of gastosFiltro ){
+      mostrarGastoWeb( "listado-gastos-completo", gastos );
     }
   }
-  
 }
 
+//Una vez definida la función deberás añadirla como manejadora del evento submit del formulario formulario-filtrado
+let gastosfiltrados = new filtrarGastosWeb();
+document.getElementById( "formulario-filtrado" ).addEventListener( "submit", gastosfiltrados );
 
 export   { 
     mostrarDatoEnId,

@@ -248,7 +248,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas ) {
         //} 
 
         //Función transformarListadoEtiquetas
-        function transformarListadoEtiquetas(etiquetas){
+        function transformarListadoEtiquetas( etiquetas ){
             // \w – es lo mismo que [a-zA-Z0-9_]
             // i Con esta bandera, la búsqueda no distingue entre mayúsculas y minúsculas
             // g Con esta bandera, la búsqueda encuentra todas las coincidencias
