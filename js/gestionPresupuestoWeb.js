@@ -418,22 +418,25 @@ function filtrarGastosWeb(){
     let valorMax = formfilt.elements['formulario-filtrado-valor-maximo'].value;
     let fechaDesde = formfilt.elements['formulario-filtrado-fecha-desde'].value;
     let fechaHasta = formfilt.elements['formulario-filtrado-fecha-hasta'].value;
-    let etiquetasTiene = formfilt.elements['formulario-filtrado-etiquetas-tiene'].value;
+    let etiquetas = formfilt.elements['formulario-filtrado-etiquetas-tiene'].value;
 
     valorMin = parseFloat( valorMin );
     valorMax = parseFloat( valorMax );
 
     //Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a la función transformarListadoEtiquetas
-    if ( etiquetasTiene = !null ){
-      etiquetas = gestionPre.transformarListadoEtiquetas( etiquetasTiene );
+    if ( etiquetas =!null ){
+      etiquetas = gestionPre.transformarListadoEtiquetas( etiquetas );
     }
 
     // Crear el objeto necesario para llamar a la función filtrarGastos del paquete gestionPresupuesto.js
-    let gastosFiltro = new gestionPre.filtrarGastos ({fechaDesde, fechaHasta, valorMin, valorMax, descripcion, etiquetas});
+    let gastosFiltro = new gestionPre.filtrarGastos ({fechaDesde: fechaDesde, fechaHasta: fechaHasta, valorMinimo: valorMin, valorMaximo: valorMax, descripcionContiene: descripcion, etiquetasTiene: etiquetas});
 
     // Llamar a la función filtrarGastos
-
+    
     // Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb
+    let lista = document.getElementById('listado-gastos-completo');
+        lista.innerHTML = '';
+
     for ( let gastos of gastosFiltro ){
       mostrarGastoWeb( "listado-gastos-completo", gastos );
     }
@@ -443,6 +446,7 @@ function filtrarGastosWeb(){
 //Una vez definida la función deberás añadirla como manejadora del evento submit del formulario formulario-filtrado
 let gastosfiltrados = new filtrarGastosWeb();
 document.getElementById( "formulario-filtrado" ).addEventListener( "submit", gastosfiltrados );
+
 
 export   { 
     mostrarDatoEnId,
