@@ -156,6 +156,12 @@ function agruparGastos(periodo,etiquetas, fechaDesde, fechaHasta){
 /*===========================================*/
 
 
+/*********************************************/
+/*    FUNCION TRANSFORMARLISTADOETIQUETAS    */
+/*===========================================*/
+function transformarListadoEtiquetas(etiquetas){
+  return etiquetas.split(/[:,.; ]/ig).filter( elem => elem != "");
+}
 
 
 /*********************************************/
@@ -275,6 +281,7 @@ export {
   calcularBalance,
   filtrarGastos,
   gastos,
+  transformarListadoEtiquetas,
   agruparGastos
 }
 

@@ -376,7 +376,44 @@ function formatearFecha(fecha){
 /*===========================================*/
 
 
-
+/*********************************************/
+/*    FUNCION FILTARGASTOWEB                 */
+/*===========================================*/
+function filtrarGastosWeb(event){
+  let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+  let valor_minimo = document.getElementById("formulario-filtrado-valor-minimo").value;
+  let valor_maximo = document.getElementById("formulario-filtrado-valor-maximo").value;
+  let fecha_desde = document.getElementById("formulario-filtrado-fecha-desde").value;
+  let fecha_hasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+  let etiquetas_tiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+  let array_etiquetas=[];
+  if ( etiquetas_tiene ){
+    array_etiquetas = oprcpre.transformarListadoEtiquetas(etiquetas_tiene);
+  } 
+  let gasto = {};
+  if ( descripcion !== "")
+    gasto.descripcionContiene= descripcion;
+  if ( valor_minimo !== "")
+    gasto.valorMinimo=valor_minimo;
+  if ( valor_maximo !== "")
+    gasto.valorMaximo=valor_maximo;
+  if ( fecha_desde !== "")
+    gasto.fechaDesde = fecha_desde;
+  if ( fecha_hasta !== "")
+    gasto.fechaHasta = fecha_hasta;
+  if ( etiquetas_tiene !== "")
+    gasto.etiquetasTiene = array_etiquetas;
+  console.log("gasto: " + gasto.valorMinimo);
+  console.log("gasto maximo: " + gasto.valorMaximo);
+  BorradoZonasGasto();
+  let total_gastos=oprcpre.filtrarGastos(gasto);
+  console.log(total_gastos);
+  for (let gasto of total_gastos)
+    mostrarGastoWeb('listado-gastos-completo',gasto);
+  
+  event.preventDefault();
+}
+/*===========================================*/
 
 /*********************************************/
 /*    FUNCION REPINTAR                       */
@@ -429,4 +466,5 @@ export {mostrarDatoEnId,
   nuevoGastoWeb,
   nuevoGastoWebFormulario,
   CrearGastoForm,
+  filtrarGastosWeb,
   repintar};

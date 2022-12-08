@@ -25,32 +25,33 @@ gestionpresupuesto.anyadirGasto(gasto6);
 
 
 
-presupuestoWeb.mostrarDatoEnId('presupuesto',gestionpresupuesto.mostrarPresupuesto());
-presupuestoWeb.mostrarDatoEnId('gastos-totales',gestionpresupuesto.calcularTotalGastos());
-presupuestoWeb.mostrarDatoEnId('balance-total',gestionpresupuesto.calcularBalance());
-for (let gasto of gestionpresupuesto.filtrarGastos({}) ){
-  presupuestoWeb.mostrarGastoWeb('listado-gastos-completo',gasto);
-}
+//presupuestoWeb.mostrarDatoEnId('presupuesto',gestionpresupuesto.mostrarPresupuesto());
+//presupuestoWeb.mostrarDatoEnId('gastos-totales',gestionpresupuesto.calcularTotalGastos());
+//presupuestoWeb.mostrarDatoEnId('balance-total',gestionpresupuesto.calcularBalance());
+//for (let gasto of gestionpresupuesto.filtrarGastos({}) ){
+//  presupuestoWeb.mostrarGastoWeb('listado-gastos-completo',gasto);
+//}
+//
+//
+//
+//for (let gasto of gestionpresupuesto.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-10-02"}) ){
+//  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gasto);
+//}
+//for (let gasto of gestionpresupuesto.filtrarGastos({valorMinimo:50}) ){
+//  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',gasto);
+//}
+//for (let gasto of gestionpresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}) ){
+//  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
+//}
+//for (let gasto of gestionpresupuesto.filtrarGastos({etiquetasTiene: ["comida","transporte"], valorMaximo:50}) ){
+//  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
+//}
+//presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',gestionpresupuesto.agruparGastos("dia"),"día");
+//presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',gestionpresupuesto.agruparGastos("mes"),"mes");
+//presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionpresupuesto.agruparGastos("anyo"),"año");
 
 
-
-for (let gasto of gestionpresupuesto.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-10-02"}) ){
-  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gasto);
-}
-for (let gasto of gestionpresupuesto.filtrarGastos({valorMinimo:50}) ){
-  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',gasto);
-}
-for (let gasto of gestionpresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}) ){
-  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
-}
-for (let gasto of gestionpresupuesto.filtrarGastos({etiquetasTiene: ["comida","transporte"], valorMaximo:50}) ){
-  presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
-}
-presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',gestionpresupuesto.agruparGastos("dia"),"día");
-presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',gestionpresupuesto.agruparGastos("mes"),"mes");
-presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionpresupuesto.agruparGastos("anyo"),"año");
-
-
+document.getElementById('formulario-filtrado').addEventListener('submit', presupuestoWeb.filtrarGastosWeb);
 
 export { 
   mostrarPresupuesto,

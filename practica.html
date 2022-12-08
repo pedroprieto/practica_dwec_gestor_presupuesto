@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practica html</title>
+
+</head>
+<body>
+  <script src="./practicafilter.js">
+  </script>
+  <script>
+    console.log(transformaListadoEtiqueta("eti1,eti2:eti3;eti4"));
+    console.log(transformaListadoEtiqueta("eti1.eti2"));
+    console.log(transformaListadoEtiqueta("eti1;eti2"));
+    console.log(transformaListadoEtiqueta("eti1:eti2"));
+    console.log(transformaListadoEtiqueta("eti1:,eti2"));
+    console.log(transformaListadoEtiqueta("eti1 , eti2"));
+    console.log(transformaListadoEtiqueta("eti1,         eti2"));
+  </script>
+</body>
+</html>

@@ -11,6 +11,9 @@ fechas.push(Date.parse("2021-10-06"))
 let fechashasta=fechas.filter( (x) => x >= Date.parse("2021-09-15") );
 let fechasfin=fechashasta.filter( (x) => x <= Date.parse("2021-10-06")  )
 
+function transformaListadoEtiqueta(etiquetas){
+  return etiquetas.split(/[:,.; ]/ig).filter( elem => elem != "");
+}
 
 
 function Fecha(){
