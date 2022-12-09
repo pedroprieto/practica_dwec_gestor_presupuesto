@@ -424,18 +424,18 @@ function filtrarGastosWeb(){
     valorMax = parseFloat( valorMax );
 
     //Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a la función transformarListadoEtiquetas
-    if ( etiquetas =!null ){
+    if( etiquetas != null ){
       etiquetas = gestionPre.transformarListadoEtiquetas( etiquetas );
     }
 
     // Crear el objeto necesario para llamar a la función filtrarGastos del paquete gestionPresupuesto.js
-    let gastosFiltro = new gestionPre.filtrarGastos ({fechaDesde: fechaDesde, fechaHasta: fechaHasta, valorMinimo: valorMin, valorMaximo: valorMax, descripcionContiene: descripcion, etiquetasTiene: etiquetas});
-
     // Llamar a la función filtrarGastos
-    
+    let gastosFiltro = gestionPre.filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, 
+      valorMinimo: valorMin, valorMaximo: valorMax, descripcionContiene: descripcion, etiquetasTiene: etiquetas,});
+
     // Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb
     let lista = document.getElementById('listado-gastos-completo');
-        lista.innerHTML = '';
+    lista.innerHTML = '';
 
     for ( let gastos of gastosFiltro ){
       mostrarGastoWeb( "listado-gastos-completo", gastos );
