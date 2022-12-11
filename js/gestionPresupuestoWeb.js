@@ -447,6 +447,17 @@ function filtrarGastosWeb(){
 let gastosfiltrados = new filtrarGastosWeb();
 document.getElementById( "formulario-filtrado" ).addEventListener( "submit", gastosfiltrados );
 
+//Función guardarGastosWeb
+function guardarGastosWeb(){
+  this.handleEvent = function(){ 
+    localStorage.GestorGastosDWEC = JSON.stringify(gestionPre.listarGastos());
+  }
+}
+
+//Esta función se utilizará como manejadora de eventos del evento click del botón guardar-gastos.
+let guardargastos = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener("click", guardargastos);
+
 
 export   { 
     mostrarDatoEnId,
