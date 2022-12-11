@@ -458,6 +458,32 @@ function guardarGastosWeb(){
 let guardargastos = new guardarGastosWeb();
 document.getElementById("guardar-gastos").addEventListener("click", guardargastos);
 
+//Función cargarGastosWeb
+function cargarGastosWeb(){
+  this.handleEvent = function (){
+
+    //Se encargará de cargar el listado de gastos desde la clave denominada GestorGastosDWEC
+    //getItem(clave) – obtener el valor por medio de la clave.
+    let cargarGastos = JSON.parse( localStorage.getItem( "GestorGastosDWEC" ) );
+
+    //Si no existe la clave en el almacenamiento, llamará a cargarGastos con un array vacío.
+    if( !cargarGastos ){
+      gestionPre.cargarGastos([]);
+    }
+
+    else{
+      gestionPre.cargarGastos( cargarGastos );
+    }
+
+    // llamar a la función repintar
+    repintar();
+  }
+}
+
+//Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos.
+let cargarGastos = new cargarGastosWeb();
+document.getElementById( "cargar-gastos" ).addEventListener( "click", cargarGastos );
+
 
 export   { 
     mostrarDatoEnId,
