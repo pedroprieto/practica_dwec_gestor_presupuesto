@@ -249,6 +249,8 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   }
   //--------------------------------------------
   
+  
+  
   //--------------------------------------------
   //  METODO OBTENER PERIODO AGRUPACIÓN
   //--------------------------------------------
