@@ -162,6 +162,26 @@ function agruparGastos(periodo,etiquetas, fechaDesde, fechaHasta){
 function transformarListadoEtiquetas(etiquetas){
   return etiquetas.split(/[:,.; ]/ig).filter( elem => elem != "");
 }
+/*===========================================*/
+
+
+
+
+/*********************************************/
+/*    FUNCION CARGARGASTO                    */
+/*===========================================*/
+function cargarGastos(gastosAlmacenamiento){
+  gastos=[];
+  for (let gasto of gastosAlmacenamiento){
+    let gastoRehidratado = new CrearGasto();
+    Object.assign(gastoRehidratado,gasto);
+    gastos.push(gastoRehidratado);
+  }
+}
+/*===========================================*/
+
+
+
 
 
 /*********************************************/
@@ -186,7 +206,7 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   //--------------------------------------------
   //  METODO ACTULIZARDESCRIPCION 
   //--------------------------------------------
-  this.actualizarDescripcion=function (descripcion){
+  this.actualizarDescripcion = function (descripcion){
     this.descripcion = descripcion;
   }
   //--------------------------------------------
@@ -195,7 +215,7 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   //--------------------------------------------
   //  METODO MOSTRARGASTOS  
   //--------------------------------------------
-  this.mostrarGasto=function(){
+  this.mostrarGasto = function(){
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
   }
   //--------------------------------------------
@@ -204,7 +224,7 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   //--------------------------------------------
   //  METODO MOSTRARGASTOS  
   //--------------------------------------------
-  this.mostrarGastoCompleto= function(){
+  this.mostrarGastoCompleto = function(){
     let fgasto=`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n` +
     `Fecha: ${new Date(this.fecha).toLocaleString()}\n`+
     "Etiquetas:\n"
@@ -221,7 +241,7 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   //--------------------------------------------
   //  METODO ACTUALIZAR FECHA
   //--------------------------------------------
-  this.actualizarFecha= function(fecha){
+  this.actualizarFecha = function(fecha){
     if ( !isNaN( Date.parse(fecha.toLocaleString()) ) ){
       this.fecha = Date.parse(fecha.toLocaleString());
     }
@@ -231,7 +251,7 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   //--------------------------------------------
   //  METODO AÑADIR ETIQUETAS
   //--------------------------------------------
-  this.anyadirEtiquetas= function (...etiquetas){
+  this.anyadirEtiquetas = function (...etiquetas){
     for (let etiqueta of etiquetas ){
       if ( this.etiquetas.includes(etiqueta) == false ){
         this.etiquetas.push(etiqueta);
@@ -244,7 +264,7 @@ function CrearGasto(descripcion,valor, fecha=Date.parse(new Date().toLocaleStrin
   //--------------------------------------------
   //  METODO AÑADIR BORRAR ETIQUETAS  
   //--------------------------------------------
-  this.borrarEtiquetas= function(...etiquetas){
+  this.borrarEtiquetas = function(...etiquetas){
     this.etiquetas=this.etiquetas.filter( (item) => etiquetas.includes(item) == false )
   }
   //--------------------------------------------
@@ -284,6 +304,7 @@ export {
   filtrarGastos,
   gastos,
   transformarListadoEtiquetas,
+  cargarGastos,
   agruparGastos
 }
 

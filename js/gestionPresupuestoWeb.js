@@ -181,6 +181,33 @@ function BorrarHandle(){
 /*===========================================*/
 
 
+/*********************************************/
+/*    FUNCION GUARDARGASTOSWEB               */
+/*===========================================*/
+function guardarGastosWeb(){
+  let gastos_save_file=oprcpre.listarGastos();
+  localStorage.GestorGastosDWEC = JSON.stringify(gastos_save_file);
+}
+/*===========================================*/
+
+
+/*********************************************/
+/*    FUNCION GUARDARGASTOSWEB               */
+/*===========================================*/
+function cargarGastosWeb(){
+  try{
+    let gastos_from_storage=JSON.parse(localStorage.GestorGastosDWEC);
+    oprcpre.cargarGastos(gastos_from_storage);
+    repintar();
+  }
+  catch(err){
+    console.log(err.message);
+  }
+}
+/*===========================================*/
+
+
+
 
 /*********************************************/
 /*    FUNCION HANDLER EDITAR FORM            */
@@ -467,4 +494,6 @@ export {mostrarDatoEnId,
   nuevoGastoWebFormulario,
   CrearGastoForm,
   filtrarGastosWeb,
+  guardarGastosWeb,
+  cargarGastosWeb,
   repintar};

@@ -17,5 +17,33 @@
     console.log(transformaListadoEtiqueta("eti1 , eti2"));
     console.log(transformaListadoEtiqueta("eti1,         eti2"));
   </script>
+  <script>
+  
+    var cheese_array = [
+  {
+    name: "Chedder",
+    age: "34",
+    smelly: true
+  },
+  {
+    name: "Brie",
+    age: "4",
+    smelly: false
+  },
+  {
+    name: "Blue Stilton",
+    age: "13",
+    smelly: true
+  }
+ ];
+console.log(JSON.stringify(cheese_array))
+localStorage.gatos_totales=JSON.stringify(cheese_array);
+gastos=JSON.parse(localStorage.gatos_totales);
+
+for ( gasto of gastos ){
+  console.log(gasto);
+}
+  
+  </script>
 </body>
 </html>
