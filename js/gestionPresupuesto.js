@@ -172,6 +172,10 @@ function transformarListadoEtiquetas(etiquetas){
 /*===========================================*/
 function cargarGastos(gastosAlmacenamiento){
   gastos=[];
+  if ( gastosAlmacenamiento.length === 0 ){
+    return gastos=[];
+  }
+  console.log(gastosAlmacenamiento);
   for (let gasto of gastosAlmacenamiento){
     let gastoRehidratado = new CrearGasto();
     Object.assign(gastoRehidratado,gasto);

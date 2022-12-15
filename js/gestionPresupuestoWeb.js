@@ -201,7 +201,10 @@ function cargarGastosWeb(){
     repintar();
   }
   catch(err){
+    oprcpre.cargarGastos([]);
     console.log(err.message);
+    BorradoZonasGasto();
+    repintar();
   }
 }
 /*===========================================*/
@@ -413,9 +416,9 @@ function filtrarGastosWeb(event){
   let fecha_desde = document.getElementById("formulario-filtrado-fecha-desde").value;
   let fecha_hasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
   let etiquetas_tiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-  let array_etiquetas=[];
+  let opciones=[];
   if ( etiquetas_tiene ){
-    array_etiquetas = oprcpre.transformarListadoEtiquetas(etiquetas_tiene);
+    opciones = oprcpre.transformarListadoEtiquetas(etiquetas_tiene);
   } 
   let gasto = {};
   if ( descripcion !== "")
@@ -429,7 +432,7 @@ function filtrarGastosWeb(event){
   if ( fecha_hasta !== "")
     gasto.fechaHasta = fecha_hasta;
   if ( etiquetas_tiene !== "")
-    gasto.etiquetasTiene = array_etiquetas;
+    gasto.etiquetasTiene = opciones;
   console.log("gasto: " + gasto.valorMinimo);
   console.log("gasto maximo: " + gasto.valorMaximo);
   BorradoZonasGasto();
