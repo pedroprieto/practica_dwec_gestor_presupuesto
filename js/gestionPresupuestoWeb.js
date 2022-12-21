@@ -334,32 +334,41 @@ function EditarHandle () {
         event.currentTarget.parentNode.remove();
     }
     //Filtrado formulario
+    //Esta función se utilizará como manejadora de eventos del formulario
     function filtrarGastosWeb () {
-        //Prevenir el envío del formulario
-        event.preventDefault();
-        //Recoger los datos del formulario formulario-filtrado
-        let formulario = event.currentTarget;
-            let descripcion = formulario.elements.formulario-filtrado-descripcion.value;
-            let valorMinimo = formulario.elements.formulario-filtrado-valor-minimo.value;
-            let valorMaximo = formulario.elements.formulario-filtrado-valor-maximo.value;
-            let fechaDesde = formulario.elements.formulario-filtrado-fecha-desde.value;
-            let fechaHasta = formulario.elements.formulario-filtrado-fecha-hasta.value;
-            let etiquetas = formulario.elements.formulario-filtrado-etiquetas-tiene.value;
-            
-
-        //Si etiquetas tiene datos, llamar a la función transformarListadoEtiquetas 
+        this.handleEvent = function(event) {
+            //Prevenir el envío del formulario
+            event.preventDefault();
+            //Recoger los datos del formulario formulario-filtrado
+            let formularioFiltrado = event.currentTarget;
+                let descripcion = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
+                let valorMinimo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
+                let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
+                let fechaDesde = formularioFiltrado.elements['formulario-filtrado-fecha-desde'].value;
+                let fechaHasta = formularioFiltrado.elements['formulario-filtrado-fecha-hasta'].value;
+                let etiquetas = formularioFiltrado.elements['formulario-filtrado-etiquetas-tiene'].value;
+            //Valores para los strings pasarlos a numeros
+            valorMinimo = parseFloat(valorMinimo);
+            valorMaximo = parseFloat(valorMaximo);
+            //Si etiquetas tiene datos, llamar a la función transformarListadoEtiquetas 
             if(etiquetas) {
-                etiquetas = gestPresupuesto.transformarListadoEtiquetas();
-            } else {
-                etiquetas = etiquetas;
+                etiquetas = gestPresupuesto.transformarListadoEtiquetas(etiquetas);
             }
-        //llamar a la función filtrarGastos del paquete gestionPresupuesto
-        
-        //Llamar a la función filtrarGastos
-
-        //Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb.
+            //llamar a la función filtrarGastos del paquete gestionPresupuesto
+            let gastosFiltradosForm = gestPresupuesto.filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, 
+                valorMinimo: valorMinimo, valorMaximo: valorMaximo, descripcionContiene: descripcion, etiquetasTiene: etiquetas,}); 
+            //Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb.
+            document.getElementById('listado-gastos-completo').innerHTML = "";
+            for (let gastos of gastosFiltradosForm) 
+                {
+                    mostrarGastoWeb('listado-gastos-completo', gastos);
+                }   
+        }
+        //repintar();     
     }
     //añadirla como manejadora del evento submit del formulario formulario-filtrado.
+    let gastosFiltradosForm = new filtrarGastosWeb();
+    document.getElementById( "formulario-filtrado" ).addEventListener( "submit", gastosFiltradosForm );
     //let btnEnviarFiltrado = form.elements.type.submit("formulario-filtrado");
     //btnEnviarFiltrado.addEventListener("click", nuevoGastoWebFormulario);
 
