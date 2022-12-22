@@ -369,8 +369,35 @@ function EditarHandle () {
     //añadirla como manejadora del evento submit del formulario formulario-filtrado.
     let gastosFiltradosForm = new filtrarGastosWeb();
     document.getElementById( "formulario-filtrado" ).addEventListener( "submit", gastosFiltradosForm );
-    //let btnEnviarFiltrado = form.elements.type.submit("formulario-filtrado");
-    //btnEnviarFiltrado.addEventListener("click", nuevoGastoWebFormulario);
+    //Función guardarGastosWeb
+    function guardarGastosWeb () {
+        //Se encargará de guardar el listado de gastos
+        this.handleEvent = function() {
+            localStorage.GestorGastosDWEC = JSON.stringify(gestPresupuesto.listarGastos());
+         }
+    }
+    //Dicha funcion se utilizará como manejadora de eventos del evento click del botón guardar-gastos.
+    let guardarGastos = new guardarGastosWeb();
+    document.getElementById("guardar-gastos").addEventListener("click", guardarGastos);
+    //Función cargarGastosWeb
+    function cargarGastoWeb () {
+        //Se encargará de cargar el listado de gastos (función cargarGastos
+        this.handleEvent = function () {
+            let cargaGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+            //Si no existe la clave en el almacenamiento, llamará a cargarGastos con un array vacío.
+            if(!cargaGastos) {
+                gestPresupuesto.cargaGastos([]);
+            }
+            else {
+                gestPresupuesto.cargaGastos(cargaGastos);
+            }
+            //Una vez cargados los gastos deberá llamar a la función repintar para que se muestren correctamente en el HTML.
+            repintar();
+        }
+    }
+    //Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos.
+    let cargarGastos = new cargarGastoWeb();
+    document.getElementById("cargar-gastos").addEventListener("click", cargarGastos);
 
 // Exportar las funciones creadas
 export {
