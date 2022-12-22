@@ -386,10 +386,10 @@ function EditarHandle () {
             let cargaGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
             //Si no existe la clave en el almacenamiento, llamará a cargarGastos con un array vacío.
             if(!cargaGastos) {
-                gestPresupuesto.cargaGastos([]);
+                gestPresupuesto.cargarGastos([]);
             }
             else {
-                gestPresupuesto.cargaGastos(cargaGastos);
+                gestPresupuesto.cargarGastos(cargaGastos);
             }
             //Una vez cargados los gastos deberá llamar a la función repintar para que se muestren correctamente en el HTML.
             repintar();
