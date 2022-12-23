@@ -95,16 +95,6 @@ function mostrarGastoWeb (idElemento, gasto) {
      editarFormulario.gasto = gasto;
      botonEditarFormulario.addEventListener('click', editarFormulario);
      divGasto.append(botonEditarFormulario);
-     //Añade un segundo botón de borrado a la estructura HTML de cada gasto.
-     let botonBorrarApi = document.createElement('button');
-     botonBorrarApi.type = "button";
-     botonBorrarApi.className = "gasto-borrar-api";
-     botonBorrarApi.innerText ="Borrar (API)";
-     //evento del boton
-     let evenBtnBorrarApi = new borrarGastoApi();
-     evenBtnBorrarApi.gasto = gasto;
-     botonBorrarApi.addEventListener('click', evenBtnBorrarApi);
-     divGasto.append(botonBorrarApi);
 
 }
 
@@ -408,27 +398,6 @@ function EditarHandle () {
     //Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos.
     let cargarGastos = new cargarGastoWeb();
     document.getElementById("cargar-gastos").addEventListener("click", cargarGastos);
-    //Nueva función cargarGastosApi
-    async function cargarGastosApi () {
-        //Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor
-        //El cuadro de texto permitirá introducir el nombre de usuario 
-        let usuario = document.getElementById("nombre_usuario").value;
-        //La API que se utilizará está disponible en esta URL: https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest.
-        let api = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        let response = await fetch(api);
-
-            if (response.ok) { // si el HTTP-status es 200-299
-            // obtener cuerpo de la respuesta (método debajo)
-            gestPresupuesto.cargarGastos(await response.json());
-            } else {
-            alert("Error-HTTP: " + response.status);
-            }
-            //Por último, una vez cargados los gastos deberá llamar a la función repintar
-        repintar();
-    }
-    //Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos-api.
-    let btnCargarGastosApi = new cargarGastosApi();
-    document.getElementById("cargar-gastos-api").addEventListener("click" , btnCargarGastosApi);
 
 // Exportar las funciones creadas
 export {
