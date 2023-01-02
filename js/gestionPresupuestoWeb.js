@@ -86,6 +86,16 @@ function mostrarGastoWeb (idElemento, gasto) {
     botonBorrar.addEventListener("click", objetoBorrar);
     //Añadir el botón al DOM a continuación del botón Editar.
     divGasto.append(botonBorrar);
+    //Boton API
+    let botonBorrarApi = document.createElement("button");
+    botonBorrarApi.className = "gasto-borrar-api";
+    botonBorrarApi.type = "button";
+    botonBorrarApi.innerHTML = "Borrar (API)";
+    //Manejador
+    let manejadorBotonBorrarApi = new BorrarApiHandle();
+    manejadorBotonBorrarApi.gasto = gasto;
+    botonBorrarApi.addEventListener("click", manejadorBotonBorrarApi);
+    divGasto.append(botonBorrarApi);
      //botón editar formulario
      let botonEditarFormulario = document.createElement('button');
      botonEditarFormulario.className = 'gasto-editar-formulario';
@@ -222,6 +232,60 @@ function EditarHandle () {
 
         }
     }
+    //Funcion Api manejadora
+    function BorrarApiHandle () {
+        this.handleEvent = function (evento) 
+    {
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        let gastoBorrar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${nombreUsuario}/${this.gasto.gastoId}`";
+
+        if (nombreUsuario != "")
+        {
+            fetch(gastoBorrar, {
+                method: "DELETE",
+                })
+            .then(function (response) {
+                if (response.ok) {
+                    (cargarGastosApi())
+                } else {
+                    alert("Error-HTTP: " + response.status);
+                }
+            })
+            .catch(function(error) {
+                alert("Revisa los camopos introducidos para subsanar el error " + error.message); 
+            });  
+        }
+        else
+        {
+            alert("Es obligatorio el nombre de usuario");
+        }
+        
+    }
+}
+
+function cargarGastosApi() 
+{
+    let nombreUsuario = document.getElementById("nombre_usuario").value;
+    let cargarGastos = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${nombreUsuario}`";
+
+    if(nombreUsuario != "")
+    {
+    fetch(cargarGastos)
+        .then(response => response.json())
+        .then(result => {
+            gestPresupuesto.cargaGastos(result);
+            repintar();
+        })
+        .catch(function(error) {
+            alert("Revisa los campos introducidos para subsanar el error " + error.message); 
+        });   
+    }
+    else
+    {
+        alert("Es obligatorio el nombre de usuario");
+    }
+    
+}
     ///Formularios
     function nuevoGastoWebFormulario (event) {
         //Crear una copia del formulario web definido en la plantilla 
@@ -239,6 +303,9 @@ function EditarHandle () {
         //añadir el fragmento de documento
         let controles = document.getElementById("controlesprincipales");
         controles.append(plantillaFormulario);
+        //Boton Api
+        let botonEnviarApi = plantillaFormulario.querySelector("button.gasto-enviar-api");
+        botonEnviarApi.addEventListener("click", enviarApiFormulario)
     }
     let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
     botonAnyadirFormulario.addEventListener("click", nuevoGastoWebFormulario);
@@ -293,6 +360,11 @@ function EditarHandle () {
             cancelarFormulario.botonEditar = event.currentTarget; // Pasas una referencia al botón de editar
             cancelarFormulario.className = "button.cancelar"
             botonCancelarFormulario.addEventListener('click', cancelarFormulario);
+            //Boton API
+            let botonEditarApi = new EditarApiFormulario();
+            botonEditarApi.gasto = this.gasto;
+            let EditarApi = formulario.querySelector("button.gasto-enviar-api");
+            EditarApi.addEventListener("click", botonEditarApi);
         }
 
     }
@@ -398,6 +470,17 @@ function EditarHandle () {
     //Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos.
     let cargarGastos = new cargarGastoWeb();
     document.getElementById("cargar-gastos").addEventListener("click", cargarGastos);
+
+    //Funcion formulario api
+    function enviarApiFormulario () {
+        //Cargar formulario
+
+    }
+
+    //Funcion editar formulario api
+    function EditarApiFormulario () {
+
+    }
 
 // Exportar las funciones creadas
 export {
