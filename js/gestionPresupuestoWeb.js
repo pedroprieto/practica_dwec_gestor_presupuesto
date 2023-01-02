@@ -237,6 +237,7 @@ function EditarHandle () {
         this.handleEvent = function (evento) 
     {
         let nombreUsuario = document.getElementById("nombre_usuario").value;
+        console.log(nombreUsuario);
         let gastoBorrar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${nombreUsuario}/${this.gasto.gastoId}`";
 
         if (nombreUsuario != "")
@@ -266,6 +267,8 @@ function EditarHandle () {
 function cargarGastosApi() 
 {
     let nombreUsuario = document.getElementById("nombre_usuario").value;
+    
+    console.log(nombreUsuario);
     let cargarGastos = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${nombreUsuario}`";
 
     if(nombreUsuario != "")
@@ -286,6 +289,8 @@ function cargarGastosApi()
     }
     
 }
+let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
+botonCargarGastosApi.addEventListener("click", cargarGastosApi);
     ///Formularios
     function nuevoGastoWebFormulario (event) {
         //Crear una copia del formulario web definido en la plantilla 
@@ -300,12 +305,12 @@ function cargarGastosApi()
         var botonCancelar = plantillaFormulario.querySelector("button.cancelar");
         //definir una función constructora que implemente handleEvent
         botonCancelar.addEventListener("click", cerrarFormulario);
+        //Boton Api
+        let botonEnviarApi = plantillaFormulario.querySelector("button.gasto-enviar-api");
+        botonEnviarApi.addEventListener("click", enviarApiFormulario);
         //añadir el fragmento de documento
         let controles = document.getElementById("controlesprincipales");
         controles.append(plantillaFormulario);
-        //Boton Api
-        let botonEnviarApi = plantillaFormulario.querySelector("button.gasto-enviar-api");
-        botonEnviarApi.addEventListener("click", enviarApiFormulario)
     }
     let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
     botonAnyadirFormulario.addEventListener("click", nuevoGastoWebFormulario);
@@ -474,11 +479,98 @@ function cargarGastosApi()
     //Funcion formulario api
     function enviarApiFormulario () {
         //Cargar formulario
+        var formulario = document.querySelector("form");
+        //Mostrar los valores del gasto del formulario
+        let descripcionApi = formulario.elements.descripcion.value;
+        let valorApi = formulario.elements.valor.value;
+        let fechaApi = formulario.elements.fecha.value;
+        let etiquetasApi = formulario.elements.etiquetas.value;
+        valorApi = parseFloat(valorApi);
+        let etiquetasApiSeparadas = etiquetasApi.split('.');
+        let gastoNuevoApi = {
+            descripcion : descripcionApi,
+            valor : valorApi,
+            fecha : fechaApi,
+            etiquetas : etiquetasApiSeparadas,
+
+        };
+        let usuario =document.getElementById("nombre_usuario").value;
+        console.log(usuario);
+        let gastoEnviar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${usuario}`";
+        if (usuario != "")
+        {
+            fetch(gastoEnviar, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(gastoNuevoApi)
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    (cargarGastosApi())
+                } else {
+                    alert("Error-HTTP: " + response.status);
+                }
+            })
+            .catch(function(error) {
+                alert("Revisa los camopos introducidos para subsanar el error "  + error.message); 
+            }); 
+        }
+        else
+        {
+            alert("Es obligatorio el nombre de usuario");
+        } 
 
     }
 
     //Funcion editar formulario api
     function EditarApiFormulario () {
+        this.handleEvent = function (evento) 
+        {
+            var formulario = document.querySelector("form");
+            //Mostrar los valores del gasto del formulario
+            let descripcionApi = formulario.elements.descripcion.value;
+            let valorApi = formulario.elements.valor.value;
+            let fechaApi = formulario.elements.fecha.value;
+            let etiquetasApi = formulario.elements.etiquetas.value;
+            valorApi = parseFloat(valorApi);
+            let etiquetasApiSeparadas = etiquetasApi.split('.');
+            let gastoNuevoApi = {
+                descripcion : descripcionApi,
+                valor : valorApi,
+                fecha : fechaApi,
+                etiquetas : etiquetasApiSeparadas,
+    
+            };
+            let usuario =document.getElementById("nombre_usuario").value;
+            console.log(usuario);
+            let gastoEnviar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${usuario}/${this.gasto.gastoId}`";
+            if (usuario != "")
+            {
+                fetch(gastoEnviar, {
+                method: 'PUT',
+                headers: {
+                   'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(gastoNuevoApi)
+                })
+                .then(function (response) {
+                if (response.ok) {
+                   (cargarGastosApi())
+                } else {
+                    alert("Error-HTTP: " + response.status);
+                }
+                })
+                .catch(function(error) {
+                    console.log("Revisa los camopos introducidos para subsanar el error "  + error.message); 
+                });   
+            }
+            else
+            {
+                alert("Es obligatorio el nombre de usuario");
+            }
+        }
 
     }
 
