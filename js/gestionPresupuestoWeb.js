@@ -241,8 +241,6 @@ function filtrarGastosWeb() {
     this.handleEvent = function (event) {
         event.preventDefault();
         let formularioFiltrado = event.currentTarget;
-        let divFiltrarGastos = document.getElementById('filtrar-gastos');
-        divFiltrarGastos.append(form);
         let descripcionContiene = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
         let valorMinimo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
         let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
