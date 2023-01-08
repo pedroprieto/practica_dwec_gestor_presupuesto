@@ -291,6 +291,27 @@ function cargarGastosWeb(){
 let botonCargarGastos = new cargarGastosWeb();
 document.getElementById('cargar-gastos').addEventListener("click", botonCargarGastos);
 
+function cargaGastosApi(){
+    this.handleEvent = function(){
+        let listadoApi =  fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/desireemoya");
+        listadoApi.then(function(respuesta){
+            if(respuesta.ok){
+                return respuesta.json();
+               
+            }
+            else{
+                throw new Error("URL no válida");
+            }
+    })
+    gestion.cargarGastos(listadoApi);
+    repintar();
+}
+   
+    
+
+
+let botonCargarGastosApi = new cargaGastosApi();
+document.getElementById('cargar-gastos-api').addEventListener("click", botonCargarGastosApi);
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
