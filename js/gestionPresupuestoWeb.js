@@ -288,7 +288,6 @@ function cargarGastosWeb(){
         repintar();
     }
 }
-
 let botonCargarGastos = new cargarGastosWeb();
 document.getElementById('cargar-gastos').addEventListener("click", botonCargarGastos);
 
