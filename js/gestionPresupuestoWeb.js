@@ -71,6 +71,15 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
 
+    let botonBorrarApi = document.createElement("button");
+    botonBorrar.className = "gasto-borrar-api";
+    botonBorrarApi.type = "button";
+    botonBorrar.innerHTML = "Borrar (API)";
+    let borrarApi = new BorrarGastosApi();
+    borrarApi.gasto = gasto;
+    botonBorrarApi.addEventListener('click', borrarApi);
+    divGasto.append(botonBorrarApi);
+
     let botonEditarForm = document.createElement("button");
     botonEditarForm.className = "gasto-editar-formulario";
     botonEditarForm.type = "button";
@@ -157,6 +166,11 @@ function BorrarHandle() {
     this.handleEvent = function (event) {
         gestion.borrarGasto(this.gasto.id);
         repintar();
+    }
+}
+function BorrarGastosApi(){
+    this.handleEvent = function(){
+        let listadoApi =  fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/desireemoya");
     }
 }
 
@@ -296,8 +310,7 @@ function cargaGastosApi(){
         let listadoApi =  fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/desireemoya");
         listadoApi.then(function(respuesta){
             if(respuesta.ok){
-                return respuesta.json();
-               
+                return respuesta.json(); 
             }
             else{
                 throw new Error("URL no válida");
