@@ -305,7 +305,7 @@ function EditarHandle () {
     {
         let nombreUsuario = document.getElementById("nombre_usuario").value;
         console.log(nombreUsuario);
-        let gastoBorrar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${nombreUsuario}/${this.gasto.gastoId}`";
+        let gastoBorrar = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
 
         if (nombreUsuario != "")
         {
@@ -336,7 +336,7 @@ function cargarGastosApi()
     let nombreUsuario = document.getElementById("nombre_usuario").value;
     
     console.log(nombreUsuario);
-    let cargarGastos = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${nombreUsuario}`";
+    let cargarGastos = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
     if(nombreUsuario != "")
     {
@@ -553,7 +553,7 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
         let fechaApi = formulario.elements.fecha.value;
         let etiquetasApi = formulario.elements.etiquetas.value;
         valorApi = parseFloat(valorApi);
-        let etiquetasApiSeparadas = etiquetasApi.split('.');
+        let etiquetasApiSeparadas = etiquetasApi.split(',');
         let gastoNuevoApi = {
             descripcion : descripcionApi,
             valor : valorApi,
@@ -602,7 +602,7 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
             let fechaApi = formulario.elements.fecha.value;
             let etiquetasApi = formulario.elements.etiquetas.value;
             valorApi = parseFloat(valorApi);
-            let etiquetasApiSeparadas = etiquetasApi.split('.');
+            let etiquetasApiSeparadas = etiquetasApi.split(',');
             let gastoNuevoApi = {
                 descripcion : descripcionApi,
                 valor : valorApi,
