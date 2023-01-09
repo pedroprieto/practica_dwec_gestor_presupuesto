@@ -215,6 +215,7 @@ function transformarListadoEtiquetas(etiquetas){
     let etiquetasTieneTransf = etiquetas.match(/[\w]+/gi);
     return etiquetasTieneTransf;
 }
+
 function cargarGastos(gastosAlmacenamiento) {
     // gastosAlmacenamiento es un array de objetos "planos"
     // No tienen acceso a los métodos creados con "CrearGasto":

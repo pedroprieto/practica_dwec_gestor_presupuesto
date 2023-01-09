@@ -70,7 +70,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
-
+/*
     let botonBorrarApi = document.createElement("button");
     botonBorrar.className = "gasto-borrar-api";
     botonBorrarApi.type = "button";
@@ -79,7 +79,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     borrarApi.gasto = gasto;
     botonBorrarApi.addEventListener('click', borrarApi);
     divGasto.append(botonBorrarApi);
-
+*/
     let botonEditarForm = document.createElement("button");
     botonEditarForm.className = "gasto-editar-formulario";
     botonEditarForm.type = "button";
@@ -318,6 +318,7 @@ function cargaGastosApi(){
     })
     gestion.cargarGastos(listadoApi);
     repintar();
+    }
 }
    
     
@@ -325,6 +326,7 @@ function cargaGastosApi(){
 
 let botonCargarGastosApi = new cargaGastosApi();
 document.getElementById('cargar-gastos-api').addEventListener("click", botonCargarGastosApi);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
