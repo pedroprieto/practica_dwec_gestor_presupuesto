@@ -320,7 +320,7 @@ function EditarHandle () {
                 }
             })
             .catch(function(error) {
-                alert("Revisa los camopos introducidos para subsanar el error " + error.message); 
+                alert("Revisa los camopos introducidos para subsanar el error linea 323" + error.message); 
             });  
         }
         else
@@ -343,11 +343,11 @@ function cargarGastosApi()
     fetch(cargarGastos)
         .then(response => response.json())
         .then(result => {
-            gestPresupuesto.cargaGastos(result);
+            gestPresupuesto.cargarGastos(result);
             repintar();
         })
         .catch(function(error) {
-            alert("Revisa los campos introducidos para subsanar el error " + error.message); 
+            alert("Revisa los campos introducidos para subsanar el error linea 350 " + error.message); 
         });   
     }
     else
@@ -563,7 +563,7 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
         };
         let usuario =document.getElementById("nombre_usuario").value;
         console.log(usuario);
-        let gastoEnviar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${usuario}`";
+        let gastoEnviar = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         if (usuario != "")
         {
             fetch(gastoEnviar, {
@@ -576,12 +576,18 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
             .then(function (response) {
                 if (response.ok) {
                     (cargarGastosApi())
+                    //Quitar formulario 
+                    formulario.remove();
+                    //Activar boton Añadir gasto
+                    let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+                    botonAnyadirFormulario.disabled = false;
+
                 } else {
                     alert("Error-HTTP: " + response.status);
                 }
             })
             .catch(function(error) {
-                alert("Revisa los camopos introducidos para subsanar el error "  + error.message); 
+                alert("Revisa los camopos introducidos para subsanar el error linea 584 "  + error.message); 
             }); 
         }
         else
@@ -595,8 +601,9 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
     function EditarApiFormulario () {
         this.handleEvent = function (evento) 
         {
-            var formulario = document.querySelector("form");
+            var formulario = document.getElementById("plantillaFormulario");
             //Mostrar los valores del gasto del formulario
+            console.log(formulario);
             let descripcionApi = formulario.elements.descripcion.value;
             let valorApi = formulario.elements.valor.value;
             let fechaApi = formulario.elements.fecha.value;
@@ -612,7 +619,7 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
             };
             let usuario =document.getElementById("nombre_usuario").value;
             console.log(usuario);
-            let gastoEnviar = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest`/${usuario}/${this.gasto.gastoId}`";
+            let gastoEnviar = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
             if (usuario != "")
             {
                 fetch(gastoEnviar, {
@@ -626,11 +633,11 @@ botonCargarGastosApi.addEventListener("click", cargarGastosApi);
                 if (response.ok) {
                    (cargarGastosApi())
                 } else {
-                    alert("Error-HTTP: " + response.status);
+                    alert("Error-HTTP: linea 629" + response.status);
                 }
                 })
                 .catch(function(error) {
-                    console.log("Revisa los camopos introducidos para subsanar el error "  + error.message); 
+                    console.log("Revisa los camopos introducidos para subsanar el error linea 633 "  + error.message); 
                 });   
             }
             else
