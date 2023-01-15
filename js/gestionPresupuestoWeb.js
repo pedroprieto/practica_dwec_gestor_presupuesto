@@ -168,12 +168,13 @@ function BorrarHandle() {
         repintar();
     }
 }
+/*
 function BorrarGastosApi(){
     this.handleEvent = function(){
         let listadoApi =  fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/desireemoya");
     }
 }
-
+*/
 function BorrarEtiquetasHandle() {
     this.handleEvent = function (event) {
         this.gasto.borrarEtiquetas(this.etiqueta);
@@ -307,22 +308,22 @@ document.getElementById('cargar-gastos').addEventListener("click", botonCargarGa
 
 function cargaGastosApi(){
     this.handleEvent = function(){
-        let listadoApi =  fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/desireemoya");
-        listadoApi.then(function(respuesta){
-            if(respuesta.ok){
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        console.log(nombreUsuario);
+        let cargoGasto =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`);
+        if(nombreUsuario!=null){
+            cargoGasto.then(function(respuesta){
                 return respuesta.json(); 
-            }
-            else{
-                throw new Error("URL no válida");
-            }
-    })
-    gestion.cargarGastos(listadoApi);
-    repintar();
+            }).then(function(datos){
+                gestion.cargarGastos(datos); 
+                repintar(); 
+            })     
+        }
+        else{
+            gestion.cargarGastos([]);
+        }
     }
 }
-   
-    
-
 
 let botonCargarGastosApi = new cargaGastosApi();
 document.getElementById('cargar-gastos-api').addEventListener("click", botonCargarGastosApi);
