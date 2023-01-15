@@ -70,7 +70,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
-/*
+
     let botonBorrarApi = document.createElement("button");
     botonBorrar.className = "gasto-borrar-api";
     botonBorrarApi.type = "button";
@@ -79,7 +79,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     borrarApi.gasto = gasto;
     botonBorrarApi.addEventListener('click', borrarApi);
     divGasto.append(botonBorrarApi);
-*/
+
     let botonEditarForm = document.createElement("button");
     botonEditarForm.className = "gasto-editar-formulario";
     botonEditarForm.type = "button";
@@ -168,13 +168,23 @@ function BorrarHandle() {
         repintar();
     }
 }
-/*
+
 function BorrarGastosApi(){
-    this.handleEvent = function(){
-        let listadoApi =  fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/desireemoya");
+    this.handleEvent = function(event){
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        let gastoBorrar =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`);    
+        if(nombreUsuario != null){
+            fetch(gastoBorrar, {
+                method: "DELETE",
+            }).then(function(respuesta){
+                if(respuesta.ok){
+                    cargaGastosApi();
+                }
+             });
+        }
     }
 }
-*/
+
 function BorrarEtiquetasHandle() {
     this.handleEvent = function (event) {
         this.gasto.borrarEtiquetas(this.etiqueta);
@@ -199,6 +209,34 @@ function EditarHandleFormulario() {
         borrarFormulario.formulario = formulario;
         borrarFormulario.boton = event.currentTarget;
         formulario.querySelector('button.cancelar').addEventListener('click', borrarFormulario);
+        let botonEditarGastoApi = formulario.querySelector('button.gasto-enviar-api');
+        botonEditarGastoApi.addEventListener('click', editarApiFormulario);
+    }
+}
+
+function editarApiFormulario(event){
+    event.preventDefault();
+    let form = event.currentTarget;
+    let descripcion = form.elements.descripcion.value;
+    let valor = Number(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayEtiquetas = etiquetas.split(',');
+    let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    let nombreUsuario = document.getElementById("nombre_usuario").value;
+    let gastoEditar =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`);    
+    if(nombreUsuario != null){
+        fetch(gastoEditar, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+              body: JSON.stringify(nuevoGasto)
+        }).then(function(respuesta){
+            if(respuesta.ok){
+                cargaGastosApi();
+            }
+        });
     }
 }
 
@@ -243,6 +281,34 @@ function nuevoGastoWebFormulario(event) {
     borrarFormulario.formulario = formulario;
     borrarFormulario.boton = event.currentTarget;
     formulario.querySelector('button.cancelar').addEventListener('click', borrarFormulario);
+    let botonEnviarGastoApi = formulario.querySelector('button.gasto-enviar-api');
+    botonEnviarGastoApi.addEventListener('click', submitApiFormulario);
+}
+
+function submitApiFormulario(event){
+    event.preventDefault();
+    let form = event.currentTarget;
+    let descripcion = form.elements.descripcion.value;
+    let valor = Number(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let arrayEtiquetas = etiquetas.split(',');
+    let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+    let nombreUsuario = document.getElementById("nombre_usuario").value;
+    let gastoEnviar =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`);
+    if(nombreUsuario != null){
+        fetch(gastoEnviar, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+              body: JSON.stringify(nuevoGasto)
+        }).then(function(respuesta){
+            if(respuesta.ok){
+                cargaGastosApi();
+            }
+        });
+    }
 }
 
 function BorrarFormularioHandle() {
@@ -309,7 +375,6 @@ document.getElementById('cargar-gastos').addEventListener("click", botonCargarGa
 function cargaGastosApi(){
     this.handleEvent = function(){
         let nombreUsuario = document.getElementById("nombre_usuario").value;
-        console.log(nombreUsuario);
         let cargoGasto =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`);
         if(nombreUsuario!=null){
             cargoGasto.then(function(respuesta){
