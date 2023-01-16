@@ -56,12 +56,35 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     //JS II
 
+    this.mostrarGastoCompleto = function(){
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        let fechaActual = new Date(this.fecha).toLocaleString();
+        texto += `Fecha: ${fechaActual}\n`;
+        texto += `Etiquetas:\n`
+
+        for (let etis of etiquetas){
+            texto += `- ${etis}\n`
+        }
+
+        return texto;
+    }
+
     this.anyadirEtiquetas = function(...etiquetas){
        for (let eti of etiquetas){
         
        }
     }
 }
+
+/*pruebas
+
+let valor = 23.55;
+        let fechalocale = new Date("2021-10-06T13:10Z").toLocaleString();
+        let gasto1 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+
+gasto1.mostrarGastoCompleto();
+
+pruebas*/
 
 function listarGastos() {
     return gastos;
