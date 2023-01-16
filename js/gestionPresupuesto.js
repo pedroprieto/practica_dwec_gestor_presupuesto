@@ -76,8 +76,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.fecha = fecha;
     }
 
-    this.anyadirEtiquetas = function(...etiquetas){
-       for (let eti of etiquetas){
+    this.anyadirEtiquetas = function(...etiquetasNuevas){
+       for (let eti of etiquetasNuevas){
+        if (this.etiquetas.includes(eti) == false)
+            this.etiquetas.push(eti);
         
        }
     }
