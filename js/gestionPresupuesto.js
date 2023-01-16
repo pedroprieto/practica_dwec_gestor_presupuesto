@@ -83,17 +83,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         
        }
     }
+
+    this.borrarEtiquetas = function (...etiquetasBorrar){
+        for (let i = 0; i < etiquetasBorrar.length; i++){
+            for (let j = this.etiquetas.length; j >= 0; j--)
+                if (etiquetasBorrar[i] == this.etiquetas[j])
+                    this.etiquetas.splice(j, 1);
+        }
+    }
 }
 
-/*pruebas
-
-let valor = 23.55;
-        let fechalocale = new Date("2021-10-06T13:10Z").toLocaleString();
+//pruebas
+let valor = 44.55;
         let gasto1 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+        gasto1.borrarEtiquetas("hola", "supermercado");
+        console.log(gasto1.borrarEtiquetas())
 
-gasto1.mostrarGastoCompleto();
-
-pruebas*/
+//pruebas
 
 function listarGastos() {
     return gastos;
