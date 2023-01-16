@@ -28,15 +28,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     else
         this.valor = valor;
         
-    Date.parse(fecha);
+    fecha = Date.parse(fecha);
     if (fecha == null || isNaN(fecha))
         this.fecha = new Date();
     else
         this.fecha = fecha;
-        
-    this.etiquetas = function(...etis){
+    
+    // JS II
 
-    }
+    if (etiquetas == null)
+        this.etiquetas = [];
+    else
+        this.etiquetas = etiquetas;
+
 
     this.mostrarGasto = function() {
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
@@ -49,6 +53,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.valor = valor;
         }
     }
+
+    //JS II
+
     this.anyadirEtiquetas = function(...etiquetas){
        for (let eti of etiquetas){
         
