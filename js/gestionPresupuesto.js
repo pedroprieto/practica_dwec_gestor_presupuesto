@@ -93,14 +93,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 }
 
-//pruebas
-let valor = 44.55;
-        let gasto1 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
-        gasto1.borrarEtiquetas("hola", "supermercado");
-        console.log(gasto1.borrarEtiquetas())
-
-//pruebas
-
 function listarGastos() {
     return gastos;
 }
