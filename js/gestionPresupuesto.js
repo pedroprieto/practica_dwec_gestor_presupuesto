@@ -19,25 +19,25 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 } 
  
-function CrearGasto(descripcion, valor, fecha = new Date(), etiquetas = []) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+    
+    this.descripcion = descripcion;
     
     if (isNaN(valor) || valor < 0)
         this.valor = 0;
     else
         this.valor = valor;
         
-    this.descripcion = descripcion;
-    
     Date.parse(fecha);
-
-    if(isNaN(fecha)){
-        fecha = new Date();
-        Date.parse(fecha);
-        this.fecha = fecha;
-    }
+    if (fecha == null || isNaN(fecha))
+        this.fecha = new Date();
     else
         this.fecha = fecha;
-    
+        
+    this.etiquetas = function(...etis){
+
+    }
+
     this.mostrarGasto = function() {
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
@@ -49,26 +49,44 @@ function CrearGasto(descripcion, valor, fecha = new Date(), etiquetas = []) {
             this.valor = valor;
         }
     }
+    this.anyadirEtiquetas = function(...etiquetas){
+       for (let eti of etiquetas){
+        
+       }
+    }
 }
 
-function listarGastos(){
+function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto(){
-
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 
-function borrarGasto(){
-
+function borrarGasto(id) {
+    for (let i = 0; i < gastos.length; i++){
+        
+        if(gastos[i].id == id)
+            gastos.splice(i, 1);
+    }
 }
 
-function calcularTotalGastos(){
+function calcularTotalGastos() {
+    let sum = 0;
 
+    for (let gas of gastos)
+        sum += gas.valor;
+    
+    return sum;
 }
 
-function calcularBalance(){
+function calcularBalance() {
+    let balance = presupuesto + calcularTotalGastos();
 
+    return balance;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
