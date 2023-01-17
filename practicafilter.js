@@ -39,3 +39,6 @@ function FechaValida(fechastring){
 function mensaje(mensaje){
     console.log(mensaje);
 }
+
+
+

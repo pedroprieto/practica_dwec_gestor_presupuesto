@@ -43,6 +43,36 @@ gastos=JSON.parse(localStorage.gatos_totales);
 for ( gasto of gastos ){
   console.log(gasto);
 }
+let user = {
+
+  nombre: 'Juan',
+  apellido: 'Perez'
+};
+async function start(){
+
+let url='https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/luisgilabert';
+let response = await fetch(url,{
+
+  method:'POST',
+  headers: { 'Content-Type':'application/json;charset=utf-8' },
+  body: JSON.stringify(user)
+});
+let result = await response.json();
+alert(result.message);
+
+}
+
+/*start();*/
+async function borrarApiEntera(){
+  let url='https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/luisgilabert/f3675a3a-f156-431c-b144-3ec5735e16b8';
+      let response = await fetch(url, {
+        method: 'DELETE',
+        headers: { 'Content-Type':'application/json;charset=utf-8' }
+      });
+}
+
+borrarApiEntera();
+
   
   </script>
 </body>

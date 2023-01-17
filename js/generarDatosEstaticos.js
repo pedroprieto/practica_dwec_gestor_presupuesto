@@ -54,7 +54,7 @@ presupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionpresupuesto.ag
 document.getElementById('formulario-filtrado').addEventListener('submit', presupuestoWeb.filtrarGastosWeb);
 document.getElementById('guardar-gastos').addEventListener('click', presupuestoWeb.guardarGastosWeb);
 document.getElementById('cargar-gastos').addEventListener('click', presupuestoWeb.cargarGastosWeb);
-
+document.getElementById('cargar-gastos-api').addEventListener('click', presupuestoWeb.cargarGastosApi);
 export { 
   mostrarPresupuesto,
   CrearGasto,

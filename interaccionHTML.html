@@ -8,6 +8,7 @@
             Gestor de Presupuesto - Luis Gilabert Blanes 
         </title>
         <link rel="stylesheet" href="css/estilos.css">
+
     </head>
 
     <body>
@@ -26,6 +27,8 @@
 
                 <button id="guardar-gastos">Guardar Gastos</button>
                 <button id="cargar-gastos">Cargar Gastos</button>
+                <button id="cargar-gastos-api">Cargar Gastos API</button>
+                <input type="text" id="nombre_usuario" />
             </div>
 
             <div id="presupuesto">
@@ -81,6 +84,9 @@
           document.getElementById('anyadirgasto').addEventListener('click', gesPresupuesto.nuevoGastoWeb);
           document.getElementById('anyadirgasto-formulario').addEventListener('click', gesPresupuesto.nuevoGastoWebFormulario);
         </script> 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0/dist/chartjs-adapter-moment.min.js"></script>
         
         <template id="formulario-template">
             <form>
@@ -102,6 +108,7 @@
                 </div>
                 <button type="submit">Enviar</button>
                 <button class="cancelar" type="button">Cancelar</button>
+                <button class="gasto-enviar-api" type="button">Enviar (API)</button>
             </form>
         </template>
 

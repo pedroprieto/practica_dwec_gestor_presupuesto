@@ -175,7 +175,6 @@ function cargarGastos(gastosAlmacenamiento){
   if ( gastosAlmacenamiento.length === 0 ){
     return gastos=[];
   }
-  console.log(gastosAlmacenamiento);
   for (let gasto of gastosAlmacenamiento){
     let gastoRehidratado = new CrearGasto();
     Object.assign(gastoRehidratado,gasto);
