@@ -12,6 +12,29 @@ btnAnyadirGastoForm.addEventListener('click', nuevoGastoWebFormulario);
 let btnFiltrado = document.getElementById("formulario-filtrado");
 btnFiltrado.addEventListener("submit", filtrarGastosWeb);
 
+let btnGuardarGastos = document.getElementById("guardar-gastos");
+btnGuardarGastos.addEventListener("click", guardarGastosWeb);
+
+let btnCargarGastos = document.getElementById("cargar-gastos");
+btnCargarGastos.addEventListener("click", cargarGastosWeb);
+
+function guardarGastosWeb() {
+    localStorage.GestorGastosDWEC = JSON.stringify(gestionPresupuesto.listarGastos());
+}
+
+function cargarGastosWeb() {
+
+    let Gastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+    if (!Gastos) {
+        gestionPresupuesto.cargarGastos([]);
+    } else {
+        gestionPresupuesto.cargarGastos(Gastos);
+    }
+
+    repintar();
+}
+
 function nuevoGastoWeb() {
     let descripcion = prompt('Introduce una descripcion');
     let valor = Number(prompt('Introduce el valor del gasto'));
