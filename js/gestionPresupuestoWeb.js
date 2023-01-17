@@ -371,11 +371,11 @@ function cargarGastosWeb(){
         repintar();
     }
 }
+
 let botonCargarGastos = new cargarGastosWeb();
 document.getElementById('cargar-gastos').addEventListener("click", botonCargarGastos);
 
 function cargaGastosApi(){
-
         let nombreUsuario = document.getElementById("nombre-usuario").value;
         let cargoGasto =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`);
         if(nombreUsuario!=null){
