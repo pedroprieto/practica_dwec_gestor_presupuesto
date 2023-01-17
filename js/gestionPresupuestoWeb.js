@@ -92,14 +92,11 @@ function mostrarGastoWeb(idElemento, gasto) {
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     let gastosAgrup = document.getElementById(idElemento);
-
     let divAgrup = document.createElement("div");
     divAgrup.className = "agrupacion";
-
     let h1Agrup = document.createElement("h1");
     h1Agrup.innerText = `Gastos agrupados por ${periodo}`;
     divAgrup.append(h1Agrup);
-
     for (let [key, value] of Object.entries(agrup)) {
         let divAgrudato = document.createElement('div');
         divAgrudato.className = "agrupacion-dato";
@@ -172,7 +169,7 @@ function BorrarHandle() {
 function BorrarGastosApi(){
     this.handleEvent = function(event){
         let nombreUsuario = document.getElementById("nombre-usuario").value;
-        let gastoBorrar =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;    
+        let gastoBorrar = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;    
         if(nombreUsuario != null){
             fetch(gastoBorrar, {
                 method: "DELETE",
@@ -217,7 +214,7 @@ function EditarHandleFormulario() {
 function editarApiFormulario(event){
     event.preventDefault();
     let boton = event.currentTarget;
-    let form = boton.parentElement
+    let form = boton.parentElement;
     let descripcion = form.elements.descripcion.value;
     let valor = Number(form.elements.valor.value);
     let fecha = form.elements.fecha.value;
@@ -225,7 +222,7 @@ function editarApiFormulario(event){
     let arrayEtiquetas = etiquetas.split(',');
     let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
     let nombreUsuario = document.getElementById("nombre-usuario").value;
-    let gastoEditar =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;    
+    let gastoEditar =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.idGasto}`;    
     if(nombreUsuario != null){
         fetch(gastoEditar, {
             method: "PUT",
@@ -236,6 +233,7 @@ function editarApiFormulario(event){
         }).then(function(respuesta){
             if(respuesta.ok){
                 cargaGastosApi();
+                event.currentTarget.setAttribute('disabled', 'disabled');
             }
         });
     }
@@ -307,7 +305,7 @@ function submitApiFormulario(event){
               body: JSON.stringify(nuevoGasto)
         }).then(function(respuesta){
             if(respuesta.ok){
-                cargaGastosApi();
+                cargaGastosApi(); 
             }
         });
     }
@@ -377,9 +375,10 @@ document.getElementById('cargar-gastos').addEventListener("click", botonCargarGa
 
 function cargaGastosApi(){
         let nombreUsuario = document.getElementById("nombre-usuario").value;
-        let cargoGasto =  fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`);
+        let cargoGasto = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
         if(nombreUsuario!=null){
-            cargoGasto.then(function(respuesta){
+            fetch(cargoGasto)
+            .then(function(respuesta){
                 return respuesta.json(); 
             }).then(function(datos){
                 gestion.cargarGastos(datos); 
@@ -392,7 +391,6 @@ function cargaGastosApi(){
     
 }
 
-//let botonCargarGastosApi = new cargaGastosApi();
 document.getElementById('cargar-gastos-api').addEventListener("click", cargaGastosApi);
 
 export {
