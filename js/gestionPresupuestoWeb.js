@@ -206,37 +206,43 @@ function EditarHandleFormulario() {
         borrarFormulario.formulario = formulario;
         borrarFormulario.boton = event.currentTarget;
         formulario.querySelector('button.cancelar').addEventListener('click', borrarFormulario);
-        let botonEditarGastoApi = formulario.querySelector('button.gasto-enviar-api');
-        botonEditarGastoApi.addEventListener('click', editarApiFormulario);
+        let botonEditarGastoApi = new editarApiFormulario;
+        botonEditarGastoApi.formulario = this.gasto;
+        botonEditarGastoApi.boton = event.currentTarget;
+        formulario.querySelector('button.gasto-enviar-api').addEventListener('click', botonEditarGastoApi);
+        event.currentTarget.setAttribute('disabled', 'disabled');
     }
 }
 
-function editarApiFormulario(event){
-    event.preventDefault();
-    let boton = event.currentTarget;
-    let form = boton.parentElement;
-    let descripcion = form.elements.descripcion.value;
-    let valor = Number(form.elements.valor.value);
-    let fecha = form.elements.fecha.value;
-    let etiquetas = form.elements.etiquetas.value;
-    let arrayEtiquetas = etiquetas.split(',');
-    let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
-    let nombreUsuario = document.getElementById("nombre-usuario").value;
-    let gastoEditar =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.idGasto}`;    
-    if(nombreUsuario != null){
-        fetch(gastoEditar, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-              },
-              body: JSON.stringify(nuevoGasto)
-        }).then(function(respuesta){
-            if(respuesta.ok){
-                cargaGastosApi();
-                event.currentTarget.setAttribute('disabled', 'disabled');
-            }
-        });
+function editarApiFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let boton = event.currentTarget;
+        let form = boton.parentElement;
+        let descripcion = form.elements.descripcion.value;
+        let valor = Number(form.elements.valor.value);
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;
+        let arrayEtiquetas = etiquetas.split(',');
+        let nuevoGasto = new gestion.CrearGasto(descripcion, valor, fecha, ...arrayEtiquetas);
+        let nombreUsuario = document.getElementById("nombre-usuario").value;
+        let gastoEditar =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.idGasto }`;    
+        if(nombreUsuario != null){
+            fetch(gastoEditar, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  body: JSON.stringify(nuevoGasto)
+            }).then(function(respuesta){
+                if(respuesta.ok){
+                    cargaGastosApi();
+                    form.remove();
+                }
+            });
+        }
     }
+   
 }
 
 function EditarGastoHandle() {
