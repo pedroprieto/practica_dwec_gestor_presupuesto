@@ -18,6 +18,19 @@ btnGuardarGastos.addEventListener("click", guardarGastosWeb);
 let btnCargarGastos = document.getElementById("cargar-gastos");
 btnCargarGastos.addEventListener("click", cargarGastosWeb);
 
+let btnCargarGastosAPI = document.getElementById("cargar-gastos-api");
+btnCargarGastosAPI.addEventListener("click", cargarGastosApi);
+
+async function cargarGastosApi() {
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario;
+    let peticion = await fetch(url);
+    let respuesta = await peticion.json();
+
+    gestionPresupuesto.cargarGastos(respuesta);
+    repintar();
+}
+
 function guardarGastosWeb() {
     localStorage.GestorGastosDWEC = JSON.stringify(gestionPresupuesto.listarGastos());
 }
@@ -121,6 +134,15 @@ function mostrarGastoWeb(idElemento, gastos) {
         borrar.gasto = gasto;
         botonBorrar.addEventListener('click', borrar);
         div.append(botonBorrar);
+        //Boton borrar API
+        let botonBorrarAPI = document.createElement("button");
+        botonBorrar.className = "gasto-borrar-api";
+        botonBorrarAPI.type = "button";
+        botonBorrarAPI.innerHTML = "Borrar (API)";
+        let borrarAPI = new BorrarApiHandle();
+        //borrarAPI.gasto = gasto;
+        botonBorrarAPI.addEventListener('click', borrarAPI);
+        div.append(botonBorrarAPI);
 
         //Boton editar (formulario)
         let botonEditarForm = document.createElement('button');
@@ -270,6 +292,17 @@ function BorrarHandle() {
         repintar();
     }
 
+}
+
+function BorrarApiHandle() {
+    this.handleEvent = async function (event) {
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario + "/" + this.gasto.gastoId;
+        await fetch(url, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' }
+        }).then(cargarGastosApi());        
+    }
 }
 
 function BorrarEtiquetasHandle() {
