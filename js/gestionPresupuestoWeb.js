@@ -312,9 +312,11 @@ function submitApiFormulario(event){
         }).then(function(respuesta){
             if(respuesta.ok){
                 cargaGastosApi(); 
+                
             }
         });
     }
+    form.remove();
 }
 
 function BorrarFormularioHandle() {
