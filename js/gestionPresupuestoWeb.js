@@ -187,21 +187,9 @@ function repintar() {
     for (let gasto of gestion.listarGastos()) {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
-    let gastosDia = document.getElementById("agrupacion-dia");
-    gastosDia.innerText = "";
-    gestion.agruparGastos("dia", etiquetas, fechaDesde, fechaHasta);
-    mostrarGastosAgrupadosWeb("agrupacion-dia", agrup, "dia");
-    
-    let gastosMes = document.getElementById("agrupacion-mes");
-    gastosMes.innerText = "";
-    gestion.agruparGastos("mes", etiquetas, fechaDesde, fechaHasta);
-    mostrarGastosAgrupadosWeb("agrupacion-mes", agrup, "mes");
-
-    let gastosAnyo = document.getElementById("agrupacion-anyo");
-    gastosAnyo.innerText = "";
-    gestion.agruparGastos("anyo", etiquetas, fechaDesde, fechaHasta);
-    mostrarGastosAgrupadosWeb("agrupacion-anyo", agrup, "anyo");
- 
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "día");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "año");
 }
 
 function actualizarPresupuestoWeb() {
