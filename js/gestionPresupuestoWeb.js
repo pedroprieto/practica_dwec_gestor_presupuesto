@@ -187,6 +187,21 @@ function repintar() {
     for (let gasto of gestion.listarGastos()) {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
+    let gastosDia = document.getElementById("agrupacion-dia");
+    gastosDia.innerText = "";
+    for (let gasto of gestion.agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)) {
+        mostrarGastosAgrupadosWeb("agrupacion-dia", gasto);
+    }
+    let gastosMes = document.getElementById("agrupacion-mes");
+    gastosMes.innerText = "";
+    for (let gasto of gestion.agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)) {
+        mostrarGastosAgrupadosWeb("agrupacion-mes", gasto);
+    }
+    let gastosAnyo = document.getElementById("agrupacion-anyo");
+    gastosAnyo.innerText = "";
+    for (let gasto of gestion.agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)) {
+        mostrarGastosAgrupadosWeb("agrupacion-anyo", gasto);
+    }
 }
 
 function actualizarPresupuestoWeb() {
