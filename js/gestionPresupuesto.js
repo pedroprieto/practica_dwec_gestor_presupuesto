@@ -29,7 +29,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.valor = valor;
         
     fecha = Date.parse(fecha);
-    if (fecha == null || isNaN(fecha))
+    if (fecha == null || isNaN(fecha)) // (!fecha) <== mirar que honda
         this.fecha = new Date();
     else
         this.fecha = fecha;
@@ -97,13 +97,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let fechaString = fecha.toISOString();
 
         if (periodo == "dia"){
-            return fecha.substring(0,10);
+            return fechaString.substring(0,10);
         }   
         else if (periodo == "mes"){
-            return fecha.substring(0,7);
+            return fechaString.substring(0,7);
         }
         else if (periodo == "anyo"){
-            return fecha.substring(0,4);
+            return fechaString.substring(0,4);
         }
     }
 }
@@ -147,9 +147,51 @@ function calcularBalance() {
 }
 
 // JS III
+function filtrarGastos(opciones){
 
-function filtrarGastos(){
+    return gastos.filter(function (gasto){
+        let res = true;
 
+        if (opciones.fechaDesde){
+            if (gasto.fecha < Date.parse(opciones.fechaDesde))
+                res = false;
+        }
+
+        if (opciones.fechaHasta){
+            if (gasto.fecha > Date.parse(opciones.fechaHasta))
+                res = false;
+        }
+        
+        if (opciones.valorMinimo){
+            if (gasto.valor < opciones.valorMinimo)
+                res = false;
+        }
+        
+        if (opciones.valorMaximo){
+            if (gasto.valor > opciones.valorMaximo)
+                res = false;
+        }
+        
+        if (opciones.descripcionContiene){
+            if (!gasto.descripcion.includes(opciones.descripcionContiene))
+                res = false;
+        }
+        
+        if (opciones.etiquetasTiene){
+            let encontrado = false;
+
+            for (let eti of gasto.etiquetas){
+                for (let etiTiene of opciones.etiquetasTiene){
+                    if (eti.toLowerCase() == etiTiene.toLowerCase())
+                        encontrado = true;
+                }
+            }
+            if (!encontrado)
+                res = false; 
+        }
+
+        return res;
+    })
 }
 
 function agruparGastos(){
