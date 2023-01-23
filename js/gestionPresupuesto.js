@@ -79,6 +79,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+
+   }
+   this.borrarEtiquetas = function(...borrarEtiquetas){
+    let x = -1;
+    for (let key of borrarEtiquetas){
+
+        if (etiquetas.indexOf(key) != -1){
+            x = etiquetas.indexOf(key);
+            this.etiquetas.splice(x, 1);
+        }
+    }
    }
    this.mostrarGastoCompleto = function(){
     let fecha2 = new Date(fecha).toLocaleString();
