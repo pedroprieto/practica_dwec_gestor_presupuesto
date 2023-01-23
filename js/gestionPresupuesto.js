@@ -72,6 +72,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.valor = valorAct;
     }
    }
+   this.anyadirEtiquetas = function(...nuevasEtiquetas){
+    for (let key of nuevasEtiquetas){
+        if (etiquetas.indexOf(key) == -1){
+            this.etiquetas.push(key);
+        }
+    }
+
+   }
 
     
     
