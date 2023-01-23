@@ -90,12 +90,24 @@ function listarGastos() {
  return gastos;
 }
 
-function anyadirGasto() {
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto = ++idGasto;
+    gastos.push(gasto);
 
 }
 
-function borrarGasto() {
+function borrarGasto(id) {
+    let idnumero = Number(id);
+    let x = 0;
 
+    for (let key of gastos) {
+        if(key.id == idnumero)
+        {
+            x = gastos.indexOf(key);
+            gastos.splice(x,1);
+        }
+    }
 }
 
 function calcularTotalGastos() {
