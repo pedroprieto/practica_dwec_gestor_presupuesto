@@ -111,10 +111,20 @@ function borrarGasto(id) {
 }
 
 function calcularTotalGastos() {
+    let suma = 0;
 
+    for (let key of gastos) {
+        suma = suma + key.valor;
+    }
+    return suma;
 }
 
 function calcularBalance() {
+    let gastoTotal = calcularTotalGastos();
+    let balance = 0;
+
+    balance = presupuesto - gastoTotal;
+    return balance;
 
 }
 
