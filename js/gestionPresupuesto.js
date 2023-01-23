@@ -80,6 +80,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
    }
+   this.mostrarGastoCompleto = function(){
+    let fecha2 = new Date(fecha).toLocaleString();
+    let texto2 = `Gasto correspondiente a ${descripcion} con valor ${valor} €.\nFecha: ${fecha2}\nEtiquetas:\n`
+
+    for (let key of etiquetas)
+    {
+        texto2 = texto2 + "- " + key + "\n";
+    }
+    return texto2;
+   }
+   this.actualizarFecha = function(nuevaFecha){
+    nuevaFecha = Date.parse(nuevaFecha);
+    if (nuevaFecha)
+    {
+        this.fecha = nuevaFecha;
+    }
+   }
+   
 
     
     
