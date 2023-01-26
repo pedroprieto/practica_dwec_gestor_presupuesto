@@ -140,7 +140,7 @@ function mostrarGastoWeb(idElemento, gastos) {
         botonBorrarAPI.type = "button";
         botonBorrarAPI.innerHTML = "Borrar (API)";
         let borrarAPI = new BorrarApiHandle();
-        //borrarAPI.gasto = gasto;
+        borrarAPI.gasto = gasto;
         botonBorrarAPI.addEventListener('click', borrarAPI);
         div.append(botonBorrarAPI);
 
@@ -298,10 +298,11 @@ function BorrarApiHandle() {
     this.handleEvent = async function (event) {
         let usuario = document.getElementById("nombre_usuario").value;
         let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario + "/" + this.gasto.gastoId;
+        console.log(url);
         await fetch(url, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' }
-        }).then(cargarGastosApi());        
+            method: 'DELETE'
+        })
+            .then(cargarGastosApi);        
     }
 }
 
