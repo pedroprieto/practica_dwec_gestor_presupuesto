@@ -26,8 +26,9 @@ async function cargarGastosApi() {
     let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario;
     let peticion = await fetch(url);
     let respuesta = await peticion.json();
-
+    
     gestionPresupuesto.cargarGastos(respuesta);
+
     repintar();
 }
 
@@ -243,7 +244,7 @@ function EditarHandleFormulario() {
         formulario.descripcion.value = this.gasto.descripcion;
         formulario.valor.value = this.gasto.valor;
 
-        let fecha = new Date(this.gasto.fecha).toISOString();
+        let fecha = new Date(Number(this.gasto.fecha)).toISOString();
         let anyo = fecha.substring(0, 4);
         let mes = fecha.substring(5, 7);
         let dia = fecha.substring(8, 10);
@@ -275,9 +276,8 @@ function EditarHandleFormulario() {
 }
 
 function EditarApiHandle() {
-    this.handleEvent = async function (event) {
-        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-        var formulario = plantillaFormulario.querySelector("form");
+    this.handleEvent = function (event) {
+        let formulario = event.target.parentElement;
 
         let descripcionApi = formulario.elements.descripcion.value;
         let valorApi = formulario.elements.valor.value;
@@ -298,14 +298,16 @@ function EditarApiHandle() {
 
         let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario + "/" + this.gasto.gastoId;
 
-        await fetch(url, {
+        fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(gastoNuevoApi)
-        })
-            .then(cargarGastosApi());
+        }).then(function () {
+            cargarGastosApi();
+        });
+
     }
 }
 
