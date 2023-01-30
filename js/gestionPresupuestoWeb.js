@@ -244,7 +244,7 @@ function EditarHandleFormulario() {
         formulario.descripcion.value = this.gasto.descripcion;
         formulario.valor.value = this.gasto.valor;
 
-        let fecha = new Date(Number(this.gasto.fecha)).toISOString();
+        let fecha = new Date(this.gasto.fecha).toISOString();
         let anyo = fecha.substring(0, 4);
         let mes = fecha.substring(5, 7);
         let dia = fecha.substring(8, 10);
