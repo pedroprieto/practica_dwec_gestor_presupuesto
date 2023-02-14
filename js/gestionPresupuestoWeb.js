@@ -79,6 +79,9 @@ function repintar() {
     let listado = document.getElementById('listado-gastos-completo');
     listado.innerHTML = "";
     mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "dia");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "anyo");
 }
 
 function mostrarGastoWeb(idElemento, gastos) {
