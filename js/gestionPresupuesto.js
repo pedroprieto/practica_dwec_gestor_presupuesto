@@ -231,4 +231,4 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos
-}
+};
