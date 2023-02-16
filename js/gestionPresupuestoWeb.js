@@ -1,6 +1,5 @@
 function mostrarDatoEnId(idElemento, valor){
-// idElemento =idHTML
-// valor 
+
     let elem = document.getElementById(idElemento)
 
     elem.innerText = valor;
