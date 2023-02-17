@@ -1,6 +1,6 @@
 function mostrarDatoEnId(idElemento, valor){
 
-    let elem = document.getElementById(idElemento)
+    let elem = document.getElementById(idElemento);
 
     elem.innerText = valor;
 
@@ -9,29 +9,43 @@ function mostrarDatoEnId(idElemento, valor){
 function mostrarGastoWeb(idElemento, gasto){
 
     //1er DIV (GASTO)
-    let divGasto = document.createElement("div");
+    let divGasto = document.createElement('div');
     divGasto.className = "gasto";
 
-    let divDesc = document.createElement("div");
+    let divDesc = document.createElement('div');
     divDesc.className = "gasto-descripcion";
     divDesc.innerText = gasto.descripcion;
+    divGasto.append(divDesc);
 
-    let divFecha = document.createElement("div");
+    let divFecha = document.createElement('div');
     divFecha.className = "gasto-fecha";
     divFecha.innerText = gasto.fecha;
+    divGasto.append(divFecha);
 
-    let divValor = document.createElement("div");
+    let divValor = document.createElement('div');
     divValor.className = "gasto-valor";
-    divValor.innerText = gasto.valor
+    divValor.innerText = gasto.valor;
+    divGasto.append(divValor);
 
-    // Ver q onda   || poner bucle... || span...
+   //divGasto.append(divDesc, divFecha, divValor);      <-- tmb se puede
+
     let divEti = document.createElement("div");
-    divEti.className = "gasto-descripcion";
+    divEti.className = "gasto-etiquetas";
 
-    divGasto.append(divDesc, divFecha, divValor, divEti);
+    if (gasto.etiquetas){
+        for (let eti of gasto.etiquetas){
+            let spanEti = document.createElement('span');
+            spanEti.className = "gasto-etiquetas-etiqueta";
+            spanEti.innerText = eti;
+            divEti.append(spanEti);
+        }
+    }
+    divGasto.append(divEti);
+    
 
     let divContenedor = document.getElementById(idElemento);
     divContenedor.append(divGasto);
+
 }
 
 function mostrarGastosAgrupadosWeb(){

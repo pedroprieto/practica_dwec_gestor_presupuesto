@@ -1,5 +1,5 @@
-import * as gesPres from "./gestionPresupuesto";
-import * as modDom from "./gestionPresupuestoWeb";
+import * as gesPres from "./gestionPresupuesto.js";
+import * as modDom from "./gestionPresupuestoWeb.js";
 
 gesPres.actualizarPresupuesto(1500);
 
@@ -21,6 +21,23 @@ gesPres.anyadirGasto(g1);
 modDom.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
 modDom.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
-for (g of gesPres.listarGastos()){
+// mostrar listado completo de gastos
+for (let g of gesPres.listarGastos()){
     modDom.mostrarGastoWeb("listado-gastos-completo", g);
+}
+//Gasto filtrado 1
+for (let gFiltrado of gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-31"})){
+    modDom.mostrarGastoWeb("listado-gastos-filtrado-1", gFiltrado);
+}
+//Gasto filtrado 2
+for (let gFiltrado of gesPres.filtrarGastos({valorMinimo: 50})){
+    modDom.mostrarGastoWeb("listado-gastos-filtrado-2", gFiltrado);
+}
+//Gasto filtrado 3
+for (let gFiltrado of gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["Seguros"]})){
+    modDom.mostrarGastoWeb("listado-gastos-filtrado-3", gFiltrado);
+}
+//Gasto filtrado 4
+for (let gFiltrado of gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]})){
+    modDom.mostrarGastoWeb("listado-gastos-filtrado-4", gFiltrado);
 }
