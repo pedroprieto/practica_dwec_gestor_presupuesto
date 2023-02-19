@@ -1,3 +1,5 @@
+import { agruparGastos } from "./gestionPresupuesto.js";
+
 function mostrarDatoEnId(idElemento, valor){
 
     let elem = document.getElementById(idElemento);
@@ -48,7 +50,42 @@ function mostrarGastoWeb(idElemento, gasto){
 
 }
 
-function mostrarGastosAgrupadosWeb(){
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+
+    //Contenedor
+    let divContAgrup = document.createElement('div');
+    divContAgrup.className = "agrupacion";
+    
+    //Titulo
+    let hAgrup = document.createElement('h1');
+    hAgrup.innerText = `Gastos agrupados por ${periodo}`;
+    divContAgrup.append(hAgrup);
+
+    //Porpiedades Obj-agrup
+    
+    let valorAgrup = Object.entries(agrup)
+    for (let a of valorAgrup){
+
+        let divDatoAgrup = document.createElement('div');
+        divDatoAgrup.className = "agrupacion-dato";
+
+        //Spans
+        let nPropiedad = document.createElement('span');
+        nPropiedad.className = "agrupacion-dato-clave";
+        nPropiedad.innerText = a[0];
+        divDatoAgrup.append(nPropiedad);
+
+        let vPropiedad = document.createElement('span');
+        vPropiedad.className = "agrupacion-dato-valor";
+        vPropiedad.innerText = a[1];
+        divDatoAgrup.append(vPropiedad);
+
+        divContAgrup.append(divDatoAgrup);
+    }
+    
+
+    let divContenedor = document.getElementById(idElemento);
+    divContenedor.append(divContAgrup);
 
 }
 

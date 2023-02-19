@@ -41,3 +41,13 @@ for (let gFiltrado of gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: [
 for (let gFiltrado of gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]})){
     modDom.mostrarGastoWeb("listado-gastos-filtrado-4", gFiltrado);
 }
+
+//mostrarGastosAgrupadosWeb
+
+
+//gastosFiltrados = gestionPre.agruparGastos( "dia");
+modDom.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia") ,"día");
+
+modDom.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes") ,"mes");
+
+modDom.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo") ,"año");
