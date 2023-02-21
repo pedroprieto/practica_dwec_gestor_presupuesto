@@ -1,4 +1,4 @@
-import { agruparGastos } from "./gestionPresupuesto.js";
+import * as gesPres from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(idElemento, valor){
 
@@ -89,6 +89,61 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 }
 
+function repintar(){
+    //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+    mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
+
+    //Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+    mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
+
+    //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+    mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+
+    //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique 
+        //la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+    let listadoGastosCompleto = document.getElementById("listado-gastos-completo");
+    listadoGastosCompleto.innerText = "";
+
+    //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    for (let gasto of gesPres.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+    
+}
+
+let btnActPre = document.getElementById("actualizarpresupuesto");
+btnActPre.addEventListener("click", actualizarPresupuestoWeb);
+
+function actualizarPresupuestoWeb(){
+    let presu = prompt("Introduzca un nuevo presupuesto");
+
+    parseInt(presu);
+    
+    gesPres.actualizarPresupuesto(presu);
+    
+    repintar();
+
+}
+
+let btnAnyadirGasto = document.getElementById("anyadirgasto");
+btnAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+
+function nuevoGastoWeb(){
+    let descripcion = prompt("Introduzca descripcion");
+    let valor = prompt("Introduzaca valor");
+    let fecha = prompt("Introduzca fecha");
+    let etiquetas = prompt("Introduzca etiquetas");
+
+    parseInt(valor);
+
+    let arrEtiquetas = etiquetas.split(', ');
+
+    let gasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...arrEtiquetas);
+
+    gesPres.anyadirGasto(gasto);
+
+    repintar();
+}
 
 export{
     mostrarDatoEnId,
