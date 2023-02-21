@@ -115,9 +115,7 @@ let btnActPre = document.getElementById("actualizarpresupuesto");
 btnActPre.addEventListener("click", actualizarPresupuestoWeb);
 
 function actualizarPresupuestoWeb(){
-    let presu = prompt("Introduzca un nuevo presupuesto");
-
-    parseInt(presu);
+    let presu = Number(prompt("Introduzca un nuevo presupuesto"));
     
     gesPres.actualizarPresupuesto(presu);
     
@@ -130,11 +128,9 @@ btnAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
 function nuevoGastoWeb(){
     let descripcion = prompt("Introduzca descripcion");
-    let valor = prompt("Introduzaca valor");
+    let valor = Number(prompt("Introduzaca valor"));
     let fecha = prompt("Introduzca fecha");
     let etiquetas = prompt("Introduzca etiquetas");
-
-    parseInt(valor);
 
     let arrEtiquetas = etiquetas.split(', ');
 
