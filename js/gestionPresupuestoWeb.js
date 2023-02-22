@@ -43,7 +43,24 @@ function mostrarGastoWeb(idElemento, gasto){
         }
     }
     divGasto.append(divEti);
-    
+
+    let btnEditar = document.createElement('button');
+    btnEditar.innerText = "Editar";
+    btnEditar.className = "gasto-editar";
+    btnEditar.type = "button";
+    let editar = new EditarHandle();
+    editar.gasto = gasto;
+    btnEditar.addEventListener("click", editar);
+    divGasto.append(btnEditar);
+
+    let btnBorrar = document.createElement('button');
+    btnBorrar.innerText = "Borrar";
+    btnBorrar.className = "gasto-borrar";
+    btnBorrar.type = "button";
+    let borrar = new BorrarHandle();
+    borrar.gasto = gasto;
+    btnBorrar.addEventListener('click', borrar);
+    divGasto.append(btnBorrar);
 
     let divContenedor = document.getElementById(idElemento);
     divContenedor.append(divGasto);
@@ -107,7 +124,7 @@ function repintar(){
     //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
     for (let gasto of gesPres.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo", gasto);
-    }
+    } 
     
 }
 
@@ -139,6 +156,42 @@ function nuevoGastoWeb(){
     gesPres.anyadirGasto(gasto);
 
     repintar();
+}
+
+function EditarHandle(){                                            // Meter 2º valor del prompt
+    
+    this.handleEvent = function(event) {
+        let nuevaDescripcion = prompt("Introduzca la nueva descripcion");
+        let nuevoValor = Number(prompt("Introduzaca el nuevo valor"));
+        let nuevaFecha = prompt("Introduzca la nueva fecha");
+        let nuevaEtiquetas = prompt("Introduzca nuevas etiquetas");
+    
+        let arrEtiquetas = nuevaEtiquetas.split(', ');
+        
+        this.gasto.actualizarDescripcion(nuevaDescripcion);
+        this.gasto.actualizarValor(nuevoValor);
+        this.gasto.actualizarFecha(nuevaFecha);
+        this.gasto.anyadirEtiquetas(arrEtiquetas);
+
+        repintar();
+    }
+}
+
+function BorrarHandle(){
+
+    this.handleEvent = function(event){
+        gesPres.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+}
+
+function BorrarEtiquetasHandle(){
+    
+    this.handleEvent = function(event){
+        this.gasto.borrarEtiquetas(...this.etiquetas);
+        repintar();
+    }
 }
 
 export{
