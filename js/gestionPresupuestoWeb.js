@@ -39,7 +39,14 @@ function mostrarGastoWeb(idElemento, gasto){
             let spanEti = document.createElement('span');
             spanEti.className = "gasto-etiquetas-etiqueta";
             spanEti.innerText = eti;
-            divEti.append(spanEti);
+            divEti.append(spanEti);            
+
+            let borrarEti = new BorrarEtiquetasHandle();
+            borrarEti.gasto = gasto;
+            borrarEti.eti = eti;
+            spanEti.addEventListener('click', borrarEti);
+            
+
         }
     }
     divGasto.append(divEti);
@@ -61,6 +68,7 @@ function mostrarGastoWeb(idElemento, gasto){
     borrar.gasto = gasto;
     btnBorrar.addEventListener('click', borrar);
     divGasto.append(btnBorrar);
+
 
     let divContenedor = document.getElementById(idElemento);
     divContenedor.append(divGasto);
@@ -189,7 +197,7 @@ function BorrarHandle(){
 function BorrarEtiquetasHandle(){
     
     this.handleEvent = function(event){
-        this.gasto.borrarEtiquetas(...this.etiquetas);
+        this.gasto.borrarEtiquetas(this.eti);
         repintar();
     }
 }
