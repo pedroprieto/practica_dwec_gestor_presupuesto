@@ -55,7 +55,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     //JS II
-
     this.mostrarGastoCompleto = function(){
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
         let fechaActual = new Date(this.fecha).toLocaleString();

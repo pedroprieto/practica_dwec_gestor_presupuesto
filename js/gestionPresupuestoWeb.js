@@ -21,7 +21,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     let divFecha = document.createElement('div');
     divFecha.className = "gasto-fecha";
-    divFecha.innerText = gasto.fecha;
+    divFecha.innerText = new Date(gasto.fecha).toISOString().substring(0,10);
     divGasto.append(divFecha);
 
     let divValor = document.createElement('div');
@@ -68,6 +68,15 @@ function mostrarGastoWeb(idElemento, gasto){
     borrar.gasto = gasto;
     btnBorrar.addEventListener('click', borrar);
     divGasto.append(btnBorrar);
+
+    let btnEditarForm = document.createElement('button');
+    btnEditarForm.innerText = "Editar (formulario)";
+    btnEditarForm.className = "gasto-editar-formulario";
+    btnEditarForm.type = "button";
+    let editarForm = new EditarHandleFormulario();
+    editarForm.gasto = gasto;
+    btnEditarForm.addEventListener('click', editarForm);
+    divGasto.append(btnEditarForm);
 
 
     let divContenedor = document.getElementById(idElemento);
@@ -133,8 +142,10 @@ function repintar(){
     for (let gasto of gesPres.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo", gasto);
     } 
+
     
 }
+
 
 let btnActPre = document.getElementById("actualizarpresupuesto");
 btnActPre.addEventListener("click", actualizarPresupuestoWeb);
@@ -147,6 +158,7 @@ function actualizarPresupuestoWeb(){
     repintar();
 
 }
+
 
 let btnAnyadirGasto = document.getElementById("anyadirgasto");
 btnAnyadirGasto.addEventListener("click", nuevoGastoWeb);
@@ -168,7 +180,7 @@ function nuevoGastoWeb(){
 
 function EditarHandle(){                                            // Meter 2º valor del prompt
     
-    this.handleEvent = function(event) {
+    this.handleEvent = function(event) {         
         let nuevaDescripcion = prompt("Introduzca la nueva descripcion");
         let nuevoValor = Number(prompt("Introduzaca el nuevo valor"));
         let nuevaFecha = prompt("Introduzca la nueva fecha");
@@ -189,7 +201,6 @@ function BorrarHandle(){
 
     this.handleEvent = function(event){
         gesPres.borrarGasto(this.gasto.id);
-
         repintar();
     }
 }
@@ -201,6 +212,111 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+
+function submitFormulario(event){ 
+    event.preventDefault();
+
+    let arrEti = event.target.etiquetas.value.split(", ");
+    let gasto = new gesPres.CrearGasto(event.target.descripcion.value, 
+        Number(event.target.valor.value), event.target.fecha.value, ...arrEti);
+
+    gesPres.anyadirGasto(gasto);
+
+    repintar();
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+
+    btnAnyadirGastoForm.disabled = false;
+    event.target.remove();
+    
+}
+
+function CancelarFormulario(){
+
+    this.handleEvent = function(event){
+        this.formulario.remove();
+        this.boton.disabled = false;
+
+    }
+
+    /* ver xq en uno form y otro plantilla L234
+        ver bn (en esta funcion x ej) 
+        event.target.remove() <-- aca borra el boton cancelar
+        ver q onda */
+}
+
+function EditarHandleFormulario(){
+    
+    this.handleEvent = function(e){
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        let formulario = plantillaFormulario.querySelector("form");
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+        e.currentTarget.after(formulario);
+        e.target.disabled = true;
+
+        // Botones || Submit
+        let submitEditar = new SubmitBtnEditarForm();
+        submitEditar.gasto = this.gasto;
+        formulario.addEventListener("submit", submitEditar);
+        
+        // Botones || Cancelar
+        let btnCancelar = formulario.querySelector("button.cancelar");
+        let cancelarFormEditar = new CancelarFormulario();
+        cancelarFormEditar.formulario = formulario;
+        cancelarFormEditar.boton = e.currentTarget;
+        btnCancelar.addEventListener('click', cancelarFormEditar);
+
+    }
+}
+
+function SubmitBtnEditarForm(){
+
+    this.handleEvent = function(e){
+        e.preventDefault();
+        
+        let form = e.currentTarget;
+        this.gasto.actualizarDescripcion(form.elements.descripcion.value)
+        this.gasto.actualizarValor(Number(form.elements.valor.value));
+        this.gasto.actualizarFecha(form.elements.fecha.value);
+        
+        let etis = form.elements.etiquetas.value;
+        let arrEti = etis.split(',');
+        this.gasto.anyadirEtiquetas(...arrEti);
+        
+        repintar();
+    }
+}
+
+
+let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+btnAnyadirGastoForm.addEventListener('click', nuevoGastoWebFormulario);
+
+function nuevoGastoWebFormulario(event){
+    // Creamos copia form
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    
+    // Accedemos al <form> || Manejadores
+    let formulario = plantillaFormulario.querySelector("form"); // ver xq en uno form y otro
+    formulario.addEventListener('submit', submitFormulario);
+
+    let btnCancelar = plantillaFormulario.querySelector("button.cancelar");
+    let borrarForm = new CancelarFormulario();
+    borrarForm.formulario = formulario;
+    borrarForm.boton = event.currentTarget;
+
+    btnCancelar.addEventListener("click", borrarForm);
+
+    //mostramos/añadimos form + boton
+    event.target.disabled = true;
+    let controles = document.getElementById("controlesprincipales");
+    controles.append(plantillaFormulario);
+}
+
+
 
 export{
     mostrarDatoEnId,
