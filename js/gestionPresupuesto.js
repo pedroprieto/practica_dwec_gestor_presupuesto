@@ -43,7 +43,7 @@ function CrearGasto(descripcionIn, valorIn) {
     },
     
     this.actualizarValor = function(newValor) {
-        if(typeof newValor == 'number' &&  newValor >= 0)
+        if(newValor > 0 && isNaN(newValor))
             this.valor = newValor;
     }
 }
