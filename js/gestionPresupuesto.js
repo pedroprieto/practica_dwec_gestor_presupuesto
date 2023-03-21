@@ -50,46 +50,50 @@ function CrearGasto(descripcionIn, valorIn, fechaIn = Date.now(), ...etiquetasIn
     },
 
     this.mostrarGastoCompleto = function() {
-        let compString = "";
-        let dateString = new Date(this.fecha).toLocaleString();
-        compString += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${dateString}\nEtiquetas:\n`;
-        for (let i = 0; i < this.etiquetas.length; i++) 
-            compString += `- ${this.etiquetas[i]}\n`
-        
-        return compString;
+        let tagList = "";
+        let localDate = new Date(this.fecha).toLocaleString();
+
+        this.etiquetas.forEach((i) => {
+            tagList += `- ${i}\n`
+        })
+
+        let message = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${localDate}\nEtiquetas:\n${tagList}`;
+        return(message);
     },
 
     this.actualizarDescripcion = function(newDescripcion) {
+
         this.descripcion = newDescripcion;
     },
     
     this.actualizarValor = function(newValor) {
+
         if(newValor > 0 && !isNaN(newValor))
             this.valor = newValor;
     },
 
-    this.anyadirEtiquetas = function(...newEtiquetas) {
-        for (let i = 0; i < newEtiquetas.length; i++) {
+    this.anyadirEtiquetas = function(...newEtiqueta) {
 
-            if(this.etiquetas.includes(newEtiquetas[i]))
-                continue;
-            this.etiquetas.push(newEtiquetas[i]);
-        }
+        newEtiqueta.forEach((i) =>{
+            if(!this.etiquetas.includes(i))
+                this.etiquetas.push(i);  
+        })
+    },
+      
+    this.borrarEtiquetas = function(...etiquetas) {
+
+        etiquetas.forEach((i) =>{
+            this.etiquetas.forEach((j, position) =>{
+                if(j.includes(i))
+                    this.etiquetas.splice(position, 1);
+            })
+        })
     },
 
-    this.borrarEtiquetas = function (...etiquetasToDel) {
-        for (let i = 0; i < etiquetasToDel.length; i++) {
-            for (let f = 0; f < this.etiquetas.length; f++) {
-
-                if (etiquetasToDel[i] === this.etiquetas[f])
-                    this.etiquetas.splice(f, 1);
-            }
-        }
-    },
-
-    this.actualizarFecha = function (nuevaFecha) {
-        if (!isNaN(Date.parse(nuevaFecha)))
-            this.fecha = Date.parse(nuevaFecha);
+    this.actualizarFecha = function (newFecha) {
+        
+        if (!isNaN(Date.parse(newFecha)))
+            this.fecha = Date.parse(newFecha);
     }
 }   
 
@@ -103,25 +107,27 @@ function anyadirGasto(newGasto){
     gastos.push(newGasto);
 }
 
-function borrarGasto(idIn){
-    gastos.forEach(gasto, i =>{
-        if(gasto.id.includes(idIn))
-            gastos.splice(i, 1);
+function borrarGasto(id){
+
+    gastos.forEach((i, position) =>{
+        if(i.id === id)
+            gastos.splice(position,1);
     })
 }
 
-function calcularTotalGastos(){
-    let lativeTotal = 0;
 
-    gastos.forEach(gasto, i =>{
-        lativeTotal += parseFloat(gasto[i].valor);
+function calcularTotalGastos(){
+    let result = 0;
+
+    gastos.forEach((i)=>{
+        result += i.valor;
     })
-    
-    return lativeTotal;
+
+    return result;
 }
 
 function calcularBalance(){
-    return(presupuesto - calcularTotalGastos());
+    return presupuesto - calcularTotalGastos();
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
