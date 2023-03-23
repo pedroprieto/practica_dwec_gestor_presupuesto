@@ -94,6 +94,29 @@ function CrearGasto(descripcionIn, valorIn, fechaIn = Date.now(), ...etiquetasIn
         
         if (!isNaN(Date.parse(newFecha)))
             this.fecha = Date.parse(newFecha);
+    },
+
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let result = "";
+        let showDate = new Date(this.fecha);
+
+        let d = String(showDate.getDate()).padStart(2,'0')
+        let mm = String(showDate.getMonth()+1).padStart(2,'0')
+        let yyyy = String(showDate.getFullYear());
+
+        switch(periodo){
+            case "dia" :
+                result = `${yyyy}-${mm}-${d}`;
+                return result;
+            case "mes" :
+                result = `${yyyy}-${mm}`;
+                return result;
+            case "anyo" :
+                result = `${yyyy}`
+                return result;
+            default:
+                return `Error`;
+        }
     }
 }   
 
@@ -130,6 +153,63 @@ function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
 
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+    let gastosFiltrados;
+    gastosFiltrados = gastos.filter(function(gasto){
+
+    let exist = true;
+    if(fechaDesde)
+        if(gasto.fecha < Date.parse(fechaDesde)) exist = false;
+     
+    if(fechaHasta)
+        if(gasto.fecha > Date.parse(fechaHasta)) exist = false;
+    
+    if(valorMinimo)
+        if(gasto.valor < valorMinimo) exist = false;
+    
+    if(valorMaximo)
+        if(gasto.valor > valorMaximo) exist = false;
+     
+    if(descripcionContiene)
+        if(!gasto.descripcion.includes(descripcionContiene)) exist = false;
+    
+    if(etiquetasTiene){
+        let inside = false;
+
+        for (let i = 0; i < gasto.etiquetas.length; i++) {                   
+            for (let j= 0; j < etiquetasTiene.length; j++) {
+
+                if(gasto.etiquetas[i] == etiquetasTiene[j]) 
+                        inside = true;                  
+            }
+        }
+        if(inside == false) 
+            exist = false;
+    }
+
+        return exist;
+    });
+
+    return gastosFiltrados;  
+}
+
+
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
+
+    let filter = {etiquetasTiene : etiquetas, fechaDesde : fechaDesde, fechaHasta : fechaHasta}
+    let returnFiltrarGastos = filtrarGastos(filter);
+    let groupBy;
+
+    groupBy = returnFiltrarGastos.reduce((acc, item) => {
+                let perReduced = item.obtenerPeriodoAgrupacion(periodo);
+                if (acc[perReduced] == null)
+                    acc[perReduced] = item.valor;
+                else 
+                    acc[perReduced] += item.valor;
+                return acc;
+               }, {});
+    return groupBy;
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -141,5 +221,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
