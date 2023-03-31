@@ -157,35 +157,36 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
     let gastosFiltrados;
     gastosFiltrados = gastos.filter(function(gasto){
 
-    let exist = true;
-    if(fechaDesde)
-        if(gasto.fecha < Date.parse(fechaDesde)) exist = false;
+        let exist = true;
+        if(fechaDesde)
+            if(gasto.fecha < Date.parse(fechaDesde)) exist = false;
      
-    if(fechaHasta)
-        if(gasto.fecha > Date.parse(fechaHasta)) exist = false;
+        if(fechaHasta)
+            if(gasto.fecha > Date.parse(fechaHasta)) exist = false;
     
-    if(valorMinimo)
-        if(gasto.valor < valorMinimo) exist = false;
+        if(valorMinimo)
+            if(gasto.valor < valorMinimo) exist = false;
     
-    if(valorMaximo)
-        if(gasto.valor > valorMaximo) exist = false;
+        if(valorMaximo)
+            if(gasto.valor > valorMaximo) exist = false;
      
-    if(descripcionContiene)
-        if(!gasto.descripcion.includes(descripcionContiene)) exist = false;
+        if(descripcionContiene)
+            if(!gasto.descripcion.includes(descripcionContiene)) exist = false;
     
-    if(etiquetasTiene){
-        let inside = false;
+        if(etiquetasTiene){
+            let inside = false;
 
-        for (let i = 0; i < gasto.etiquetas.length; i++) {                   
-            for (let j= 0; j < etiquetasTiene.length; j++) {
+            for (let i = 0; i < gasto.etiquetas.length; i++) {                   
+                for (let j= 0; j < etiquetasTiene.length; j++) {
 
-                if(gasto.etiquetas[i] == etiquetasTiene[j]) 
+                    if(gasto.etiquetas[i] == etiquetasTiene[j]) 
                         inside = true;                  
+                }
             }
+
+            if(inside == false) 
+                exist = false;
         }
-        if(inside == false) 
-            exist = false;
-    }
 
         return exist;
     });
