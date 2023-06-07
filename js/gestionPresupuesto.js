@@ -1,25 +1,36 @@
-// ----------------  VARIABLES GLOBALES   --------------------------------
+// ----------------  VARIABLES GLOBALES   -------------------------------
 
-let presupuesto = 0;
-//-----------------------------------------------------------------------
+var presupuesto = 0;
 
-// ----------------  OBJETO GASTOS Y SUS PROPIEDADES   --------------------------------
+// ----------------  OBJETO GASTOS Y SUS PROPIEDADES   ------------------
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
-    this.valor = !isNaN(valor) ? valor: 0;
+    this.valor = !isNaN(valor) && valor > 0 ? valor: 0;
 
  
 // ----------------  METODOS  --------------------------------   
 
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+        this.descripcion = nuevaDescripcion;
+    }
+
+    this.actualizarValor = function(nuevoValor){
+        this.valor = !isNaN(nuevoValor) && nuevoValor > 0 ? nuevoValor: this.valor; // NO olvidar usar this. !!!!!
+    }
 
 }
-//-----------------------------------------------------------------------
 
-// ----------------  FUNCIONES  --------------------------------
+// ----------------       FUNCIONES     --------------------------------
 
 function actualizarPresupuesto(nuevoPresupuesto) {
-    if(!isNaN(nuevoPresupuesto) && nuevoPresupuesto < 0){
-        return presupuesto = nuevoPresupuesto;   
+    
+    if(!isNaN(nuevoPresupuesto) && nuevoPresupuesto > 0){
+        presupuesto = nuevoPresupuesto;
+        return presupuesto;  
     }
     else{
         return -1;
@@ -28,11 +39,17 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 
 }
 
+/*
+let objeto1 = new CrearGasto("hola", 10);
+objeto1.actualizarValor(15);
+console.log(objeto1.mostrarGasto());
+*/
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 //-----------------------------------------------------------------------
+
 
 
 
