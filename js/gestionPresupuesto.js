@@ -3,8 +3,19 @@
 let presupuesto = 0;
 //-----------------------------------------------------------------------
 
+// ----------------  OBJETO GASTOS Y SUS PROPIEDADES   --------------------------------
+function CrearGasto(descripcion, valor) {
+    this.descripcion = descripcion;
+    this.valor = !isNaN(valor) ? valor: 0;
+
+ 
+// ----------------  METODOS  --------------------------------   
 
 
+}
+//-----------------------------------------------------------------------
+
+// ----------------  FUNCIONES  --------------------------------
 
 function actualizarPresupuesto(nuevoPresupuesto) {
     if(!isNaN(nuevoPresupuesto) && nuevoPresupuesto < 0){
@@ -21,9 +32,10 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto() {
-    // TODO
-}
+//-----------------------------------------------------------------------
+
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
