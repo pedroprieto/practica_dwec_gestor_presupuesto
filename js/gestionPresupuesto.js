@@ -63,7 +63,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.obtenerPeriodoAgrupacion = function(periodo){
         let fechaFormateada = new Date(this.fecha).toISOString(); // --> AAAA-MM-DDTHH:mm:ss.sssZ
-        let anyo = fechaFormateada.slice(0,4);
+        let anyo = fechaFormateada.slice(0,4);                    //
         let mes = fechaFormateada.slice(5,7);
         let dia = fechaFormateada.slice(8,10);
 
@@ -73,6 +73,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             return `${anyo}-${mes}`;
         else if (periodo == "anyo")
             return `${anyo}`;
+        else
+            console.log("Periodo erroneo");
     }
 
 }
@@ -122,10 +124,36 @@ function calcularBalance(){
     return balance;
 }
 
-function filtrarGastos(){
+function filtrarGastos(opciones){ // opciones sera un objeto, por lo cual se le puede añadir propiedades
+    let fechaDesde = opciones.fechaDesde;
+    let fechaHasta = opciones.fechaHasta;
+    let valorMinimo = opciones.valorMinimo;
+    let valorMaximo = opciones.valorMaximo;
+    let descripcionContiene = opciones.descripcionContiene;
+    let etiquetasTiene = opciones.etiquetasTiene;
 
+    return gastos.filter(objeto => { // --> NO OLVIDAR ESTE RETURN TAMPOCO !!!!
+        return ( // --> NO OLVIDAR EL RETURN -.-
+           //se comprueba si la opcion no es nula, undefined o vacia (?) si se cumple se comprueba la condicion (la cual devolvera trueo o false)
+           // : si la opcion esta vacia se devuelve true, es decir no se le aplica el filtro
+          (fechaDesde ? objeto.fecha >= Date.parse(fechaDesde) : true) &&
+          (fechaHasta ? objeto.fecha <= Date.parse(fechaHasta) : true) &&
+          (valorMinimo ? objeto.valor >= valorMinimo : true) &&
+          (valorMaximo ? objeto.valor <= valorMaximo : true) &&
+          (descripcionContiene ? objeto.descripcion.toUpperCase().includes(descripcionContiene.toUpperCase()) : true) &&
+          (etiquetasTiene ? objeto.etiquetas.some(etiqueta => etiquetasTiene.includes(etiqueta)): true)
+        );
+    });   
 }
 
+/*
+let gasto1 = new CrearGasto("Comida", 50, "2022-01-15", "patatas", "carne");
+let gasto2 = new CrearGasto("Transporte", 20, "2022-02-05", "transporte");
+let gasto3 = new CrearGasto("Ropa", 100, "2022-03-10", "moda");
+let gasto4 = new CrearGasto("Entretenimiento", 30, "2022-04-20", "moda", "diversión");
+
+console.log("GASTOS:\n" + filtrarGastos({}));
+*/
 function agruparGastos(){
 
 }
