@@ -29,7 +29,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.mostrarGastoCompleto = function(){
-        
         let fechaLocal = new Date(this.fecha).toLocaleString(); 
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
         texto += `\nFecha: ${fechaLocal}`;
@@ -62,8 +61,21 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         })
     }
 
-}
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let fechaFormateada = new Date(this.fecha).toISOString(); // --> AAAA-MM-DDTHH:mm:ss.sssZ
+        let anyo = fechaFormateada.slice(0,4);
+        let mes = fechaFormateada.slice(5,7);
+        let dia = fechaFormateada.slice(8,10);
 
+        if(periodo === "dia")
+            return `${anyo}-${mes}-${dia}`;
+        else if (periodo === "mes")
+            return `${anyo}-${mes}`;
+        else if (periodo == "anyo")
+            return `${anyo}`;
+    }
+
+}
 
 // ----------------       FUNCIONES     --------------------------------
 
@@ -110,8 +122,13 @@ function calcularBalance(){
     return balance;
 }
 
+function filtrarGastos(){
 
+}
 
+function agruparGastos(){
+
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -124,5 +141,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
