@@ -1,14 +1,24 @@
 // ----------------  VARIABLES GLOBALES   -------------------------------
 
-var presupuesto = 0;
+let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
-// ----------------  OBJETO GASTOS Y SUS PROPIEDADES   ------------------
-function CrearGasto(descripcion, valor) {
+
+// ----------------  OBJETO GASTOS Y SUS METODOS  ------------------
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
-    this.valor = !isNaN(valor) && valor > 0 ? valor: 0;
+    this.valor = !isNaN(valor) && valor > 0 ? valor : 0;
+                //comprueba si fecha existe y no es nulo o indefinido
+    this.fecha = fecha && Date.parse(fecha) ? fecha : Date.now(); 
+    this.etiquetas = etiquetas ? etiquetas: [];
 
  
 // ----------------  METODOS  --------------------------------   
+// CURIOSIDADES: al crear un objeto se ejecutan automaticamente todos los métodos ya que estos 
+// se han agegado al objeto como propiedades. Motivo por el cual las etiquetas se añaden al objeto
+// aunque etiquetas se inicializan con una lsita vacia.
+// es como iniciar la lista y despues con el metodo se rellena la lista
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -22,7 +32,17 @@ function CrearGasto(descripcion, valor) {
         this.valor = !isNaN(nuevoValor) && nuevoValor > 0 ? nuevoValor: this.valor; // NO olvidar usar this. !!!!!
     }
 
+    this.anyadirEtiquetas = function (...nuevasEtiquetas) {
+        nuevasEtiquetas.forEach(etiqueta => {
+          if (!this.etiquetas.includes(etiqueta)) 
+          {
+            this.etiquetas.push(etiqueta);
+          }
+        });
+    }
+
 }
+
 
 // ----------------       FUNCIONES     --------------------------------
 
@@ -39,17 +59,34 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 
 }
 
-/*
-let objeto1 = new CrearGasto("hola", 10);
-objeto1.actualizarValor(15);
-console.log(objeto1.mostrarGasto());
-*/
+
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-//-----------------------------------------------------------------------
+function listarGastos(){
+    return gastos;
+}
 
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+
+}
+
+function borrarGasto(gastoId){
+    let posicion = gastos.findIndex(gasto => gasto.id === gastoId);
+    gastos.splice(posicion, 1);
+}
+
+function calcularTotalGastos(){
+
+}
+
+function calcularBalance(){
+
+}
 
 
 
@@ -60,5 +97,10 @@ function mostrarPresupuesto() {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
