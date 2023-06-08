@@ -10,15 +10,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = !isNaN(valor) && valor > 0 ? valor : 0;
                 //comprueba si fecha existe y no es nulo o indefinido
-    this.fecha = fecha && Date.parse(fecha) ? fecha : Date.now(); 
+    this.fecha = fecha && Date.parse(fecha) ? Date.parse(fecha) : Date.now(); 
     this.etiquetas = etiquetas ? etiquetas: [];
 
  
 // ----------------  METODOS  --------------------------------   
-// CURIOSIDADES: al crear un objeto se ejecutan automaticamente todos los métodos ya que estos 
-// se han agegado al objeto como propiedades. Motivo por el cual las etiquetas se añaden al objeto
-// aunque etiquetas se inicializan con una lsita vacia.
-// es como iniciar la lista y despues con el metodo se rellena la lista
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -32,6 +28,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.valor = !isNaN(nuevoValor) && nuevoValor > 0 ? nuevoValor: this.valor; // NO olvidar usar this. !!!!!
     }
 
+    this.mostrarGastoCompleto = function(){
+        
+        let fechaLocal = new Date(this.fecha).toLocaleString(); 
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
+        texto += `\nFecha: ${fechaLocal}`;
+        texto += `\nEtiquetas:`;
+        for (let etiqueta of this.etiquetas){
+            texto += `\n- ${etiqueta}`;
+        }
+        return texto
+    }
+
+    this.actualizarFecha = function(nuevaFecha){
+        this.fecha = nuevaFecha && Date.parse(nuevaFecha) ? Date.parse(nuevaFecha) : this.fecha;
+    }
+
     this.anyadirEtiquetas = function (...nuevasEtiquetas) {
         nuevasEtiquetas.forEach(etiqueta => {
           if (!this.etiquetas.includes(etiqueta)) 
@@ -39,6 +51,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.etiquetas.push(etiqueta);
           }
         });
+    }
+
+    this.borrarEtiquetas = function(...borrarEtiquetas){
+        borrarEtiquetas.forEach(etiqueta =>{
+            let posicion = this.etiquetas.findIndex(element => element === etiqueta);
+            if (posicion != -1){
+                this.etiquetas.splice(posicion, 1);
+            }
+        })
     }
 
 }
@@ -56,7 +77,6 @@ function actualizarPresupuesto(nuevoPresupuesto) {
         return -1;
         console.log("Presupuesto erroneo, debe ser un número positivo");
     }
-
 }
 
 
@@ -72,7 +92,6 @@ function anyadirGasto(gasto){
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
-
 }
 
 function borrarGasto(gastoId){
@@ -80,12 +99,15 @@ function borrarGasto(gastoId){
     gastos.splice(posicion, 1);
 }
 
+// suma de los valores de todos los gastos
 function calcularTotalGastos(){
-
+    let sumaGastosTotales = gastos.reduce((acumulador, gasto) => acumulador + gasto.valor, 0);
+    return sumaGastosTotales;
 }
 
 function calcularBalance(){
-
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 
