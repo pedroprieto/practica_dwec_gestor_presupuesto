@@ -32,9 +32,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let fechaLocal = new Date(this.fecha).toLocaleString(); 
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
         texto += `\nFecha: ${fechaLocal}`;
-        texto += `\nEtiquetas:`;
+        texto += `\nEtiquetas:\n`;
         for (let etiqueta of this.etiquetas){
-            texto += `\n- ${etiqueta}`;
+            texto += `- ${etiqueta}\n`;
         }
         return texto
     }
@@ -63,7 +63,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.obtenerPeriodoAgrupacion = function(periodo){
         let fechaFormateada = new Date(this.fecha).toISOString(); // --> AAAA-MM-DDTHH:mm:ss.sssZ
-        let anyo = fechaFormateada.slice(0,4);                    //
+        let anyo = fechaFormateada.slice(0,4);                    
         let mes = fechaFormateada.slice(5,7);
         let dia = fechaFormateada.slice(8,10);
 
@@ -154,8 +154,19 @@ let gasto4 = new CrearGasto("Entretenimiento", 30, "2022-04-20", "moda", "divers
 
 console.log("GASTOS:\n" + filtrarGastos({}));
 */
-function agruparGastos(){
-
+function agruparGastos(periodo = "mes", fechaDesde, fechaHasta, ...etiquetas){
+    let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+    let gastosAgrupados =  gastosFiltrados.reduce((acumulador, gasto) => {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+        if(!(periodoAgrupacion in acumulador)){
+            acumulador[periodoAgrupacion] = 0;
+        }
+        else{
+            acumulador[periodoAgrupacion] += gasto.valor;
+        }    
+        return acumulador;
+    }, {});
+    return gastosAgrupados;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -173,3 +184,5 @@ export   {
     filtrarGastos,
     agruparGastos
 }
+
+
