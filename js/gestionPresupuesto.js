@@ -144,30 +144,45 @@ function filtrarGastos(opciones){ // opciones sera un objeto, por lo cual se le 
           (etiquetasTiene ? objeto.etiquetas.some(etiqueta => etiquetasTiene.includes(etiqueta)): true)
         );
     });   
+    
 }
+
+
+// Error cometido antes (...etiquetas), esto es solo para una lista de elementos indefinidos
+// para ele ejercicio simplemente se añade un array con un número determinado de etiquetas asi que no hace falta los 3 puntos
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta,){ // ¿?¿¿?¿?¿¿??¿¿??¿¿? si pongo etiquetas al final no se porque no funciona ¿?¿?¿????¿¿?¿¿¿?¿¿?¿??¿?¿¿?
+    // Obtengo los gastos filtrados 
+    let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+    // Para cada gasto filtrado voy a obtener su periodo de agrupación.
+    // a continuacion compruebo si en el acumulador existe dicho periodo de agrupació,
+    // si no existe lo añade y lo inicializa en 0,
+    // despues se se suma el valor del objeto al acumulador correspondiente
+    let gastosAgrupados = gastosFiltrados.reduce((acumulador, gasto) => {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (!(periodoAgrupacion in acumulador)) {
+            acumulador[periodoAgrupacion] = 0;
+        }
+        acumulador[periodoAgrupacion] += gasto.valor;
+        return acumulador; // No olvidar el RETURN
+    }, {});
+    return gastosAgrupados; // No olvidar el RETURN
+}
+
 
 /*
 let gasto1 = new CrearGasto("Comida", 50, "2022-01-15", "patatas", "carne");
+anyadirGasto(gasto1);
 let gasto2 = new CrearGasto("Transporte", 20, "2022-02-05", "transporte");
+anyadirGasto(gasto2);
 let gasto3 = new CrearGasto("Ropa", 100, "2022-03-10", "moda");
-let gasto4 = new CrearGasto("Entretenimiento", 30, "2022-04-20", "moda", "diversión");
-
-console.log("GASTOS:\n" + filtrarGastos({}));
+anyadirGasto(gasto3);
+let gasto4 = new CrearGasto("Entretenimiento", 30, "2022-01-20", "moda", "diversión");
+anyadirGasto(gasto4);
+//console.log(filtrarGastos({}));
+console.log(agruparGastos("mes"));
 */
-function agruparGastos(periodo = "mes", fechaDesde, fechaHasta, ...etiquetas){
-    let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
-    let gastosAgrupados =  gastosFiltrados.reduce((acumulador, gasto) => {
-        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
-        if(!(periodoAgrupacion in acumulador)){
-            acumulador[periodoAgrupacion] = 0;
-        }
-        else{
-            acumulador[periodoAgrupacion] += gasto.valor;
-        }    
-        return acumulador;
-    }, {});
-    return gastosAgrupados;
-}
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
