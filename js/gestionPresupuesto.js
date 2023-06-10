@@ -147,7 +147,6 @@ function filtrarGastos(opciones){ // opciones sera un objeto, por lo cual se le 
     
 }
 
-
 // Error cometido antes (...etiquetas), esto es solo para una lista de elementos indefinidos
 // para ele ejercicio simplemente se añade un array con un número determinado de etiquetas asi que no hace falta los 3 puntos
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta,){ // ¿?¿¿?¿?¿¿??¿¿??¿¿? si pongo etiquetas al final no se porque no funciona ¿?¿?¿????¿¿?¿¿¿?¿¿?¿??¿?¿¿?
