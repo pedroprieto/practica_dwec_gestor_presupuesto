@@ -64,3 +64,15 @@ let gastosFiltrados4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene: [
 for (let gasto of gastosFiltrados4){
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
 }
+
+//Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+let agrupacionDia = gesPres.agruparGastos("dia");
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", agrupacionDia, "día");
+
+//Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+let agrupacionMes = gesPres.agruparGastos("mes");
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", agrupacionMes, "mes");
+
+//Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+let agrupacionAnyos = gesPres.agruparGastos("anyo");
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupacionAnyos, "año");
