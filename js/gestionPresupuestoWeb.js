@@ -116,8 +116,8 @@ function actualizarPresupuestoWeb(){
     repintar();
 }
 // Asociar la funcion al boton
-let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
-btnActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+let btnActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+btnActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 
 
