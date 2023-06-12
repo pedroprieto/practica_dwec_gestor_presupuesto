@@ -1,4 +1,4 @@
-import * as gestPres from "./gestionPresupuesto";
+//import * as gestPres from "./gestionPresupuesto.js";
 
 //-----------------------------   Interaccion con HTML   ---------------------------------------------
 
@@ -83,6 +83,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     }    
 }
 
+/*
 // -------------------------------------    EVENTOS EN JAVASCRIPT    ---------------------------------------
 function repintar(){
     // mostrar presupuesto
@@ -119,7 +120,7 @@ function actualizarPresupuestoWeb(){
 let btnActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 btnActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
-
+*/
 
 export{
     mostrarDatoEnId,
