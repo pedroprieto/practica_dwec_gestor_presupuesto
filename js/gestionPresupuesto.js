@@ -3,7 +3,7 @@
 // TODO: Variable global
 
 let presupuesto = 0
-const gastos = []
+let gastos = []
 let idGasto = 0
 
 /* Función de 1 parámetro que se encargará de actualizar la variable global presupuesto.
@@ -52,15 +52,6 @@ function CrearGasto (descripcion, valor, fecha, ...etiquetas) {
   }
 }
 
-const gasto1 = new CrearGasto('Gasto 1')
-const gasto2 = new CrearGasto('Gasto 2', 23.55)
-const gasto3 = new CrearGasto('Gasto 3', 23.55, '2021-10-06T13:10')
-const gasto4 = new CrearGasto('Gasto 4', 23.55, '2021-10-06T13:10', 'casa')
-const gasto5 = new CrearGasto('Gasto 5', 23.55, '2021-10-06T13:10', 'casa', 'supermercado')
-const gasto6 = new CrearGasto('Gasto 6', 23.55, '2021-10-06T13:10', 'casa', 'supermercado', 'comida')
-
-console.log(gasto3)
-
 function listarGastos () {
   return gastos
 }
@@ -70,8 +61,8 @@ function anyadirGasto (gastoNuevo) {
   gastos.push(gastoNuevo)
 }
 
-function borrarGasto () {
-  // TODO
+function borrarGasto (id) {
+  gastos = Object.assign(gastos.filter(gasto => gasto.id !== id))
 }
 
 function calcularTotalGastos () {
