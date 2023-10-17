@@ -33,11 +33,11 @@ Función constructora que se encargará de crear un objeto gasto.
 Esta función devolverá un objeto de tipo gasto. Deberá comprobar que el valor introducido
 sea un núḿero no negativo; en caso contrario, asignará a la propiedad valor el valor 0.
 */
-function CrearGasto (valor, descripcion) {
+function CrearGasto (descripcion, valor) {
   this.valor = valor >= 0 ? valor : 0
   this.descripcion = descripcion
   this.mostrarGasto = () => {
-    console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`)
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
   }
   this.actualizarDescripcion = (nuevaDescripcion) => {
     this.descripcion = nuevaDescripcion
