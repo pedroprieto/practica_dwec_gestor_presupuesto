@@ -66,7 +66,9 @@ function borrarGasto (id) {
 }
 
 function calcularTotalGastos () {
-  // TODO
+  let total = 0
+  for (const gasto of gastos) { total += gasto.valor }
+  return total
 }
 
 function calcularBalance () {
