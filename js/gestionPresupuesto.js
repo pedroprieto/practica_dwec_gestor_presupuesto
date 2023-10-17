@@ -4,7 +4,7 @@
 
 let presupuesto = 0
 const gastos = []
-const idGasto = 0
+let idGasto = 0
 
 /* Función de 1 parámetro que se encargará de actualizar la variable global presupuesto.
 Esta función comprobará que el
@@ -65,8 +65,9 @@ function listarGastos () {
   return gastos
 }
 
-function anyadirGasto () {
-  // TODO
+function anyadirGasto (gastoNuevo) {
+  gastoNuevo.id = idGasto++
+  gastos.push(gastoNuevo)
 }
 
 function borrarGasto () {
