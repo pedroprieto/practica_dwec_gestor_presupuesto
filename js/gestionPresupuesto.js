@@ -11,11 +11,9 @@ la variable presupuesto y devolverá el valor del mismo; en caso contrario, most
 por pantalla y devolverá el valor -1.
 */
 function actualizarPresupuesto (nuevoPresupuesto) {
-  const presupuestoProvisional = presupuesto - nuevoPresupuesto
-
-  if (presupuestoProvisional >= 0) {
-    presupuesto = presupuestoProvisional
-    return presupuestoProvisional
+  if (nuevoPresupuesto >= 0) {
+    presupuesto = nuevoPresupuesto
+    return presupuesto
   } else {
     console.error('El presupuesto no puede ser negativo')
     return -1
