@@ -1,7 +1,5 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
-import { prototype } from 'mocha'
-
 // TODO: Variable global
 
 let presupuesto = 0
@@ -37,10 +35,11 @@ Función constructora que se encargará de crear un objeto gasto.
 Esta función devolverá un objeto de tipo gasto. Deberá comprobar que el valor introducido
 sea un núḿero no negativo; en caso contrario, asignará a la propiedad valor el valor 0.
 */
-function CrearGasto (descripcion, valor, fecha = Date.now(), ...etiquetas) {
+function CrearGasto (descripcion, valor, fecha, ...etiquetas) {
   this.valor = valor >= 0 ? valor : 0
   this.descripcion = descripcion
-  this.fecha = Date.parse(fecha) ? fecha : Date.now()
+  // valido la fecha: primero intento date parse y si da un numero es el numero de milisegundos, si da NaN ha fallado al parear a fecha
+  this.fecha = !isNaN(Date.parse(fecha)) ? Date.parse(fecha) : Date.now()
   this.etiquetas = etiquetas ?? []
   this.mostrarGasto = () => {
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
@@ -53,8 +52,6 @@ function CrearGasto (descripcion, valor, fecha = Date.now(), ...etiquetas) {
   }
 }
 
-const { act } = CrearGasto.mostrarGasto
-act('hola')
 const gasto1 = new CrearGasto('Gasto 1')
 const gasto2 = new CrearGasto('Gasto 2', 23.55)
 const gasto3 = new CrearGasto('Gasto 3', 23.55, '2021-10-06T13:10')
@@ -62,7 +59,7 @@ const gasto4 = new CrearGasto('Gasto 4', 23.55, '2021-10-06T13:10', 'casa')
 const gasto5 = new CrearGasto('Gasto 5', 23.55, '2021-10-06T13:10', 'casa', 'supermercado')
 const gasto6 = new CrearGasto('Gasto 6', 23.55, '2021-10-06T13:10', 'casa', 'supermercado', 'comida')
 
-console.log(gasto1)
+console.log(gasto3)
 
 function listarGastos () {
   return gastos
