@@ -27,7 +27,7 @@ Función sin parámetros que se encargará de devolver el texto siguiente: Tu pr
 es de X €, siendo X el valor de la variable global presupuesto.
 */
 function mostrarPresupuesto () {
-  return `Tu presupuesto actual es de ${presupuesto}€`
+  return `Tu presupuesto actual es de ${presupuesto} €`
 }
 
 /*
@@ -35,8 +35,18 @@ Función constructora que se encargará de crear un objeto gasto.
 Esta función devolverá un objeto de tipo gasto. Deberá comprobar que el valor introducido
 sea un núḿero no negativo; en caso contrario, asignará a la propiedad valor el valor 0.
 */
-function CrearGasto () {
-
+function CrearGasto (valor, descripcion) {
+  this.valor = valor >= 0 ? valor : 0
+  this.descripcion = descripcion
+  this.mostrarGasto = () => {
+    console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`)
+  }
+  this.actualizarDescripcion = (nuevaDescripcion) => {
+    this.descripcion = nuevaDescripcion
+  }
+  this.actualizarValor = (nuevoValor) => {
+    if (nuevoValor >= 0) this.valor = nuevoValor
+  }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
