@@ -14,43 +14,28 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(valor,descripcion) {
-    if(valor>=0){
-       let objeto={
-        descripcion:descripcion || "",
-        valor:valor,
-        mostrarGasto:function(){
-            console.log("Gasto correspondiente a " + this.descripcion + " con valor "+ this.valor + "€")
-        },
-        actualizarDescripcion:function(descripcion){
-            this.descripcion=descripcion;
-        },
-        actualizarValor:function(valor){
-            this.valor=valor;
-        }
-
-       }
-       return objeto;
-    }
-    else{
-        let objeto={
-            descripcion:descripcion || "",
-            valor:0,
-            mostrarGasto:function(){
-                console.log("Gasto correspondiente a " + this.descripcion + " con valor "+ this.valor + "€")
-            },
-            actualizarDescripcion:function(descripcion){
-                this.descripcion=descripcion;
-            },
-            actualizarValor:function(valor){
-                this.valor=valor;
-            }
-    
-           }
-           return objeto;
-
+function Gasto(descripcion, valor) {
+    if ( valor >= 0) {
+        this.descripcion = descripcion || "";
+        this.valor = valor;
+    } else {
+        this.descripcion = descripcion || "";
+        this.valor = 0;
     }
 }
+Gasto.prototype.mostrarGasto = function () {
+    return "Gasto correspondiente a "+ this.descripcion+ " con valor "+ this.valor +" €";
+};
+
+Gasto.prototype.actualizarDescripcion = function (descripcion) {
+    this.descripcion = descripcion;
+};
+
+Gasto.prototype.actualizarValor = function (valor) {
+    if (valor>= 0) {
+        this.valor = valor;
+    }
+};
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
