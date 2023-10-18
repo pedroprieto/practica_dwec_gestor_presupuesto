@@ -14,7 +14,7 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function Gasto(descripcion, valor) {
+function CrearGasto(descripcion, valor) {
     if ( valor >= 0) {
         this.descripcion = descripcion || "";
         this.valor = valor;
@@ -23,15 +23,15 @@ function Gasto(descripcion, valor) {
         this.valor = 0;
     }
 }
-Gasto.prototype.mostrarGasto = function () {
+CrearGasto.prototype.mostrarGasto = function () {
     return "Gasto correspondiente a "+ this.descripcion+ " con valor "+ this.valor +" €";
 };
 
-Gasto.prototype.actualizarDescripcion = function (descripcion) {
+CrearGasto.prototype.actualizarDescripcion = function (descripcion) {
     this.descripcion = descripcion;
 };
 
-Gasto.prototype.actualizarValor = function (valor) {
+CrearGasto.prototype.actualizarValor = function (valor) {
     if (valor>= 0) {
         this.valor = valor;
     }
