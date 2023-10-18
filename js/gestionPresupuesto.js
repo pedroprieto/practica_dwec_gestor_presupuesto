@@ -92,6 +92,18 @@ CrearGasto.prototype.actualizarFecha = function (nuevaFecha) {
     }
 };
 
+CrearGasto.prototype.anyadirEtiquetas = function (...nuevasEtiquetas) {
+    for (let etiqueta of nuevasEtiquetas) {
+        if (!this.etiquetas.includes(etiqueta)) {
+            this.etiquetas.push(etiqueta);
+        }
+    }
+};
+
+CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
+    this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasABorrar.includes(etiqueta));
+};
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
