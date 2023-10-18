@@ -85,7 +85,12 @@ function  calcularBalance(){
     return balance;
 }
 
-
+CrearGasto.prototype.actualizarFecha = function (nuevaFecha) {
+    const fechaValida = Date.parse(nuevaFecha);
+    if (!isNaN(fechaValida)) {
+        this.fecha = fechaValida;
+    }
+};
 
 
 
