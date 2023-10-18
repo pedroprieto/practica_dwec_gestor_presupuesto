@@ -18,6 +18,7 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion,valor,fecha,etiquetas) {
+        this.id;
     if(valor >= 0 && typeof valor === 'number'){
         this.descripcion = descripcion;
         this.valor = valor;
@@ -82,12 +83,17 @@ function borrarGasto(id){
 
 
 function calcularTotalGastos(){
-
+    let suma;
+    for(i = 0;i < gastos.length(); i++ ){
+       suma = suma + gastos[i].valor;
+    }
+    return suma;
 }
 
 
 function calcularBalance(){
-
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 
