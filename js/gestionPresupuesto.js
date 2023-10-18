@@ -123,8 +123,41 @@ function agruparGastos () {
 
 }
 
-function filtrarGastos () {
+function filtrarGastos (o) {
+  return gastos.filter(gasto => {
+    if (o.fechaDesde) {
+      const fechaDesde = new Date(o.fechaDesde)
+      if (gasto.fecha <= fechaDesde) {
+        return false
+      }
+    }
 
+    if (o.fechaHasta) {
+      const fechaHasta = new Date(o.fechaHasta)
+      if (gasto.fecha >= fechaHasta) {
+        return false
+      }
+    }
+
+    if (o.valorMinimo !== undefined) {
+      if (gasto.valor > o.valorMinimo) {
+        return false
+      }
+    }
+
+    if (o.valorMaximo !== undefined) {
+      if (gasto.valor < o.valorMaximo) {
+        return false
+      }
+    }
+
+    if (o.descripcionContiene !== undefined) {
+      return gasto.descripcion.includes(o.descripcionContiene)
+    }
+
+    // por defecto devuelve todo
+    return true
+  })
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
