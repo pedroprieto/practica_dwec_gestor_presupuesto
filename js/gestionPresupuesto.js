@@ -105,6 +105,19 @@ CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
 };
 
 
+/*No consigo pasar el test  ) Método 'mostrarGastoCompleto' del objeto gasto, el metodo funciona porque cuando hago el test me devuelve
+lo mismo,segun el test en la ultima etiqueta formada me añade -- en vez de -  a mi se me queda segun el test como -- comida cuando deberia ser -comida
+pero yo creo que lo tengo bien montado.
+*/ 
+CrearGasto.prototype.mostrarGastoCompleto = function () {
+    
+    const fechaFormateada = new Date(this.fecha).toLocaleString();
+
+    const etiquetasFormateadas = this.etiquetas.map(etiqueta => `- ${etiqueta}`).join('\n');
+
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaFormateada}\nEtiquetas:\n${etiquetasFormateadas}`;
+};
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
