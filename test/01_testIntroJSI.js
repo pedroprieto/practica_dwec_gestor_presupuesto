@@ -2,7 +2,7 @@
 import {assert} from "chai";
 
 // Importar código de la aplicación sobre la que se realizarán los tests
-import {actualizarPresupuesto, mostrarPresupuesto, CrearGasto} from '../js/gestionPresupuesto.js';
+import {actualizarPresupuesto, mostrarPresupuesto, CrearGasto} from 'gestionPresupuesto1.js';
 
 // Inicialización de la variable global presupuesto
 describe("Inicialización de la variable global presupuesto", function() {
