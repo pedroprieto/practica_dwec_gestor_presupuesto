@@ -5,10 +5,8 @@ function actualizarPresupuesto(valor) {
         presupuesto=valor;
         return presupuesto;
     }
-    else{
-        window.alert("Error, numero introducido no valido");
-        presupuesto=-1;
-        return presupuesto
+    else{      
+        return -1;
     }
 }
 
