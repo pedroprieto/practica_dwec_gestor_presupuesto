@@ -1,24 +1,45 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
+// Adrián Romero Alonso 2DAWY
 let presupuesto = 0;
 
-
 function actualizarPresupuesto(valor) {
-    if(valor >= 0){
+    if(valor >= 0 && typeof valor === 'number'){
         presupuesto = valor;
         return valor;
     }else{
-        alert("Error, numero negativo");
+        console.error('Error, numero negativo');
         return -1;
     }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    return 'Tu presupuesto actual es de ' + presupuesto + ' €';
 }
 
-function CrearGasto() {
-    // TODO
+function CrearGasto(descripcion,valor) {
+    if(valor >= 0 && typeof valor === 'number'){
+        this.descripcion = descripcion;
+        this.valor = valor;
+    }else{
+        this.descripcion = descripcion;
+        this.valor = 0;
+
+    }
+    
+    this.mostrarGasto = function(){
+        return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €';
+    };
+
+    this.actualizarDescripcion = function(descripcion){
+        this.descripcion = descripcion;
+        return descripcion;
+    };
+
+    this.actualizarValor = function(valor){
+        if(valor >= 0 && typeof valor === 'number'){
+            this.valor = valor;
+            return valor;
+        }
+    };
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
