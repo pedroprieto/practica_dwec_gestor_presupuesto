@@ -17,7 +17,7 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de ' + presupuesto + ' €';
 }
 
-function CrearGasto(descripcion,valor) {
+function CrearGasto(descripcion,valor,fecha,etiquetas) {
     if(valor >= 0 && typeof valor === 'number'){
         this.descripcion = descripcion;
         this.valor = valor;
@@ -25,6 +25,22 @@ function CrearGasto(descripcion,valor) {
         this.descripcion = descripcion;
         this.valor = 0;
 
+    }
+
+    if(etiquetas){
+        this.etiquetas = etiquetas;
+    }else{
+        this.etiquetas = [];
+    }
+
+    if(fecha){
+        if(typeof fecha === 'String'){
+            this.fecha = Date.parse(fecha);
+        }else{
+            this.fecha = Date.now();
+        }
+    }else{
+        this.fecha = Date.now();
     }
     
     this.mostrarGasto = function(){
@@ -45,7 +61,7 @@ function CrearGasto(descripcion,valor) {
 }
 
 function listarGastos(){
-
+    return gastos;
 }
 
 function anyadirGasto(){
