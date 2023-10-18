@@ -21,11 +21,14 @@ function CrearGasto(descripcion, valor,fecha,etiquetas) {
         this.valor = valor;
         this.fecha=saberFecha(fecha) ; 
         this.etiquetas=etiquetas || [];
+        idGasto++;
+       
     } else {
         this.descripcion = descripcion || "";
         this.valor = 0;
         this.fecha=saberFecha(fecha);
         this.etiquetas=etiquetas || [];
+        idGasto++;
     }
 }
 CrearGasto.prototype.mostrarGasto = function () {
@@ -46,7 +49,10 @@ function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(){
+function anyadirGasto(gasto){
+    gasto.id= idGasto;
+    idGasto++;
+    gastos.push(gasto);
 
 }
 
