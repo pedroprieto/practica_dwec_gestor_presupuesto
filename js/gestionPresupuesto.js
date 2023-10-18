@@ -77,7 +77,9 @@ function  calcularTotalGastos(){
 }
 
 function  calcularBalance(){
-
+    let totalGastos=calcularTotalGastos();
+    let balance= presupuesto-totalGastos;
+    return balance;
 }
 
 function saberFecha(fecha){
