@@ -36,19 +36,33 @@ Esta función devolverá un objeto de tipo gasto. Deberá comprobar que el valor
 sea un núḿero no negativo; en caso contrario, asignará a la propiedad valor el valor 0.
 */
 function CrearGasto (descripcion, valor, fecha, ...etiquetas) {
-  this.valor = valor >= 0 ? valor : 0
   this.descripcion = descripcion
+  this.valor = valor >= 0 ? valor : 0
   // valido la fecha: primero intento date parse y si da un numero es el numero de milisegundos, si da NaN ha fallado al parear a fecha
   this.fecha = !isNaN(Date.parse(fecha)) ? Date.parse(fecha) : Date.now()
   this.etiquetas = etiquetas ?? []
+
   this.mostrarGasto = () => {
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
   }
+
   this.actualizarDescripcion = (nuevaDescripcion) => {
     this.descripcion = nuevaDescripcion
   }
+
   this.actualizarValor = (nuevoValor) => {
     if (nuevoValor >= 0) this.valor = nuevoValor
+  }
+
+  this.mostrarGastoCompleto = () => {
+    let res = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+
+    for (const etiqueta of this.etiquetas) {
+      res += `- ${etiqueta}\n`
+    }
+    return res
   }
 }
 
@@ -72,7 +86,7 @@ function calcularTotalGastos () {
 }
 
 function calcularBalance () {
-  // TODO
+  return presupuesto - calcularTotalGastos()
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
