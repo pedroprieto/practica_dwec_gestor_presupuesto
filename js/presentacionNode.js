@@ -1,1 +1,1 @@
-alert("Adrián Romero Alonso 2DAW");
+console.log("Adrián Romero Alonso 2DAW");
