@@ -22,7 +22,7 @@ function CrearGasto(valor,descripcion) {
         descripcion:descripcion || "",
         valor:valor,
         mostrarGasto:function(){
-            mostrarPresupuesto();
+            console.log("Gasto correspondiente a " + this.descripcion + " con valor "+ this.valor + "€")
         },
         actualizarDescripcion:function(descripcion){
             this.descripcion=descripcion;
@@ -39,7 +39,7 @@ function CrearGasto(valor,descripcion) {
             descripcion:descripcion || "",
             valor:0,
             mostrarGasto:function(){
-                mostrarPresupuesto();
+                console.log("Gasto correspondiente a " + this.descripcion + " con valor "+ this.valor + "€")
             },
             actualizarDescripcion:function(descripcion){
                 this.descripcion=descripcion;
