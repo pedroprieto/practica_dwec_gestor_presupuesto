@@ -1,3 +1,4 @@
+
 let presupuesto=0;
 let gastos=[];
 let idGasto=0;
@@ -15,19 +16,19 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion, valor,fecha,etiquetas) {
+function CrearGasto(descripcion, valor,fecha,...etiquetas) {
     if ( valor >= 0) {
         this.descripcion = descripcion || "";
         this.valor = valor;
-        this.fecha=saberFecha(fecha) ; 
-        this.etiquetas=etiquetas || [];
+        this.fecha = fecha ? Date.parse(fecha) : Date.now(); 
+        this.etiquetas = Array.isArray(etiquetas) ? etiquetas : [];
         
        
     } else {
         this.descripcion = descripcion || "";
         this.valor = 0;
-        this.fecha=saberFecha(fecha);
-        this.etiquetas=etiquetas || [];
+        this.fecha = Date.now();
+        this.etiquetas = Array.isArray(etiquetas) ? etiquetas : [];
         
     }
 }
@@ -44,6 +45,8 @@ CrearGasto.prototype.actualizarValor = function (valor) {
         this.valor = valor;
     }
 };
+
+
 
 function listarGastos(){
     return gastos;
@@ -82,19 +85,9 @@ function  calcularBalance(){
     return balance;
 }
 
-function saberFecha(fecha){
-    let date=Date.parse(fecha);
 
-    if(!isNaN(date)){
-        let fechaObj = new Date(date);
-        let fechaString = fechaObj.toLocaleString();
-        return fechaString;
-    }
-    else{
-        let fechaActual= new Date().toLocaleString();
-        return fechaActual;
-    }
-}
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
