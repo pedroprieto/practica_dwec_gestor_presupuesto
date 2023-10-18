@@ -17,19 +17,17 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de ' + presupuesto + ' €';
 }
 
-function CrearGasto(descripcion,valor,fecha,etiquetas) {
-        this.id;
+function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
     if(valor >= 0 && typeof valor === 'number'){
         this.descripcion = descripcion;
         this.valor = valor;
     }else{
         this.descripcion = descripcion;
         this.valor = 0;
-
     }
 
     if(etiquetas){
-        this.etiquetas = etiquetas;
+        etiquetas = [...new Set(etiquetas)];
     }else{
         this.etiquetas = [];
     }
@@ -48,6 +46,14 @@ function CrearGasto(descripcion,valor,fecha,etiquetas) {
         return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €';
     };
 
+    this.mostrarGastoCompleto = function(){
+        let fechaLocal = new Date(this.fecha).toLocaleString();
+        let listaEtiquetas = this.etiquetas.join('\n -');
+        let mostrar = this.mostrarGasto() + '.\nFecha: ' + fechaLocal + '\nEtiquetas:\n - ' + listaEtiquetas;
+        return mostrar;
+      
+    };
+
     this.actualizarDescripcion = function(descripcion){
         this.descripcion = descripcion;
         return descripcion;
@@ -58,6 +64,34 @@ function CrearGasto(descripcion,valor,fecha,etiquetas) {
             this.valor = valor;
             return valor;
         }
+    };
+
+    this.actualizarFecha = function(fecha){
+        if(typeof fecha === 'string'){
+            this.fecha = Date.parse(fecha);
+        }
+    };
+
+    
+    this.anyadirEtiquetas = function(...etiquetas){
+        for(let i; i < etiquetas.length(); i++){
+            let etiqueta = etiquetas[i];
+            if(!this.etiquetas.includes(etiqueta)){
+                this.etiquetas.push(etiqueta);
+            }
+        }
+
+    };
+
+    this.borrarEtiquetas = function(...etiquetas){
+        let filtroEtiquetas = [];
+        for(let i; i < etiquetas.length(); i++){
+            let etiqueta = this.etiquetas[i];
+            if(!etiquetas.includes(etiqueta)){
+                filtroEtiquetas.push(etiqueta);
+            }
+        }
+        this.etiquetas = filtroEtiquetas;
     };
 }
 
@@ -73,7 +107,7 @@ function anyadirGasto(gasto){
 
 
 function borrarGasto(id){
-    for(i = 0;i < gastos.length(); i++ ){
+    for(let i = 0;i < gastos.length(); i++ ){
         if(gastos[i].id == id){
             gastos.splice(i,1);
         }
@@ -84,7 +118,7 @@ function borrarGasto(id){
 
 function calcularTotalGastos(){
     let suma;
-    for(i = 0;i < gastos.length(); i++ ){
+    for(let i = 0;i < gastos.length(); i++ ){
        suma = suma + gastos[i].valor;
     }
     return suma;
