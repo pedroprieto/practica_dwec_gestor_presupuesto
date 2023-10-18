@@ -68,7 +68,12 @@ function borrarGasto(id){
 }
 
 function  calcularTotalGastos(){
-
+    let sumaTotal=0;
+        for(let i=0;i<gastos.length;i++){
+            let numero= gastos[i].valor;
+            sumaTotal=sumaTotal+numero;
+        }
+    return sumaTotal;
 }
 
 function  calcularBalance(){
