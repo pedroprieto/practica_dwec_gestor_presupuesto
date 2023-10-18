@@ -64,6 +64,21 @@ Etiquetas:\n`
     }
     return res
   }
+
+  this.actualizarFecha = (nuevaFecha) => {
+    if (!isNaN(Date.parse(nuevaFecha))) this.fecha = Date.parse(nuevaFecha)
+  }
+
+  this.anyadirEtiquetas = (...etiquetasNuevas) => {
+    const etiquetasCorregidas = etiquetasNuevas.filter(e => !this.etiquetas.includes(e))
+    this.etiquetas.push(...etiquetasCorregidas)
+  }
+
+  this.borrarEtiquetas = (...etiquetasBorrar) => {
+    for (const etiqueta of etiquetasBorrar) {
+      this.etiquetas = Object.assign(this.etiquetas.filter(e => e !== etiqueta))
+    }
+  }
 }
 
 function listarGastos () {
