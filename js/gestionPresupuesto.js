@@ -120,25 +120,7 @@ function calcularBalance () {
 }
 
 function agruparGastos (periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta) {
-  // let resultado = filtrarGastos({ fechaDesde, fechaHasta, etiquetasTiene: etiquetas })
-
-  // no me convence esta forma de hacerlo porque no me deja pasar los filtros si no se pasan todos
-  // refactorizar filtrarGastos?
-  const filtros = {}
-
-  if (fechaDesde) {
-    filtros.fechaDesde = fechaDesde
-  }
-
-  if (fechaHasta) {
-    filtros.fechaHasta = fechaHasta
-  }
-
-  if (etiquetas.length > 0) {
-    filtros.etiquetasTiene = etiquetas
-  }
-
-  let resultado = filtrarGastos(filtros)
+  let resultado = filtrarGastos({ fechaDesde, fechaHasta, etiquetasTiene: etiquetas })
 
   resultado = resultado.reduce((acc, cur) => {
     const periodoAgrupacion = cur.obtenerPeriodoAgrupacion(periodo)
@@ -159,39 +141,39 @@ function filtrarGastos (filtros) {
 
   // filter se queda con lo que coincide, por lo que devuelve true si no se añaden filtros o si coincide
   resultado = resultado.filter(gasto => {
-    if ('fechaDesde' in filtros) {
+    if ('fechaDesde' in filtros && filtros.fechaDesde !== undefined) {
       const fechaDesde = Date.parse(filtros.fechaDesde)
       if (gasto.fecha < fechaDesde) {
         return false
       }
     }
 
-    if ('fechaHasta' in filtros) {
+    if ('fechaHasta' in filtros && filtros.fechaHasta !== undefined) {
       const fechaHasta = Date.parse(filtros.fechaHasta)
       if (gasto.fecha > fechaHasta) {
         return false
       }
     }
 
-    if ('valorMinimo' in filtros) {
+    if ('valorMinimo' in filtros && filtros.valorMinimo !== undefined) {
       if (gasto.valor < filtros.valorMinimo) {
         return false
       }
     }
 
-    if ('valorMaximo' in filtros) {
+    if ('valorMaximo' in filtros && filtros.valorMaximo !== undefined) {
       if (gasto.valor > filtros.valorMaximo) {
         return false
       }
     }
 
-    if ('descripcionContiene' in filtros) {
+    if ('descripcionContiene' in filtros && filtros.descripcionContiene !== undefined) {
       if (!gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) {
         return false
       }
     }
 
-    if ('etiquetasTiene' in filtros) {
+    if ('etiquetasTiene' in filtros && filtros.etiquetasTiene.length !== 0) {
       if (!filtros.etiquetasTiene.some(etiqueta => gasto.etiquetas.includes(etiqueta.toLowerCase()))) {
         return false
       }
