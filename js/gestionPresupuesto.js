@@ -2,8 +2,7 @@
 
 // TODO: Variable global
 
-
-function actualizarPresupuesto() {
+function actualizarPresupuesto(){
     // TODO
 }
 
