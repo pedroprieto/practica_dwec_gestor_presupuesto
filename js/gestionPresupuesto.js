@@ -1,9 +1,9 @@
-// Adrián Romero Alonso 2DAWY
-let presupuesto = 0;
+// Adrián Romero Alonso 2DAWY 53978049Q
+let presupuesto = 0;                                                                    //Declaración de variables globales ARA
 let gastos = [];
 let idGasto = 0;
 
-function actualizarPresupuesto(valor) {
+function actualizarPresupuesto(valor) {                                                 //Función que acutaliza la variable global presupuesto ARA
     if(valor >= 0 && typeof valor === 'number'){
         presupuesto = valor;
         return valor;
@@ -13,33 +13,63 @@ function actualizarPresupuesto(valor) {
     }
 }
 
-function mostrarPresupuesto() {
+function mostrarPresupuesto() {                                                         //Función que devuelve un mensaje y la variable global presupuesto ARA  
     return 'Tu presupuesto actual es de ' + presupuesto + ' €';
 }
 
-function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
+function listarGastos(){                                                                //Función que devuelve la variable global presupuesto ARA  
+    return gastos;
+}
+
+function anyadirGasto(gasto){                                                           //Función que añade un gasto al array de gastos y actualiza el contador de ID ARA
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto)
+}
+
+function borrarGasto(id){                                                               //Función que recibe un id y elimina el gasto asociado ARA  
+    for(let i = 0;i < gastos.length; i++ ){
+        if(gastos[i].id == id){
+            gastos.splice(i,1);
+        }
+    }
+}
+
+function calcularTotalGastos(){                                                        //Función que devuelve el sumatorio de gastos ARA  
+    let suma = 0;
+    for(let i = 0;i < gastos.length; i++ ){
+       suma = suma + gastos[i].valor;
+    }
+    return suma;
+}
+
+function calcularBalance(){                                                          //Función que devuelve el balance de presupuesto/gastos ARA
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
+}
+
+function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                        //Función contructor del objeto Gasto ARA
     this.descripcion = descripcion;
     this.fecha;
+    this.etiquetas = [...new Set(etiquetas)];                                       //Zona de asignación de parametros
     
     if(valor >= 0 && typeof valor === 'number'){
         this.valor = valor;
     }else{
         this.valor = 0;
     }
-
-     this.etiquetas = [...new Set(etiquetas)];
    
-     if (typeof fecha === 'string' && fecha.length === 17) {
-            this.fecha = Date.parse(fecha);
-        }else{
-            this.fecha = Date.now();
-        }
+    if (typeof fecha === 'string' && fecha.length === 17) {
+        this.fecha = Date.parse(fecha);
+    }else{
+        this.fecha = Date.now();
+    }
     
-    this.mostrarGasto = function(){
+    this.mostrarGasto = function(){                                                                                                 // Metodo que devuelve un texto con la descripción y valor del objeto gasto ARA
         return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €';
     };
 
-    this.mostrarGastoCompleto = function(){
+    this.mostrarGastoCompleto = function(){                                                                                          //Metodo que devuelvela información detallada del objeto gasto ARA                     
         let fechaLocal = new Date(this.fecha).toLocaleString();
         let listaEtiquetas = this.etiquetas.join('\n- ');
         let mostrar = this.mostrarGasto() + '.\nFecha: ' + fechaLocal + '\nEtiquetas:\n- ' + listaEtiquetas + '\n';
@@ -47,8 +77,7 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
       
     };
         
-
-    this.actualizarDescripcion = function(descripcion){
+    this.actualizarDescripcion = function(descripcion){                                                                             // Zona de metodos de actualización de atributos ARA
         this.descripcion = descripcion;
         return descripcion;
     };
@@ -67,7 +96,7 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
         }
     };
     
-    this.anyadirEtiquetas = function(...etiquetas){
+    this.anyadirEtiquetas = function(...etiquetas){                                                                                // Zona de metodos de gestion de etiquetas ARA
         for(let i = 0; i < etiquetas.length; i++){
             let etiqueta = etiquetas[i];
             if(!this.etiquetas.includes(etiqueta)){
@@ -88,43 +117,6 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
         this.etiquetas = filtroEtiquetas;
     };
 }
-
-function listarGastos(){
-    return gastos;
-}
-
-function anyadirGasto(gasto){
-    gasto.id = idGasto;
-    idGasto++;
-    gastos.push(gasto)
-}
-
-
-function borrarGasto(id){
-    for(let i = 0;i < gastos.length; i++ ){
-        if(gastos[i].id == id){
-            gastos.splice(i,1);
-        }
-    }
-
-}
-
-
-function calcularTotalGastos(){
-    let suma = 0;
-    for(let i = 0;i < gastos.length; i++ ){
-       suma = suma + gastos[i].valor;
-    }
-    return suma;
-}
-
-
-function calcularBalance(){
-    let balance = presupuesto - calcularTotalGastos();
-    return balance;
-}
-
-
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
