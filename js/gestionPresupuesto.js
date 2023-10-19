@@ -10,14 +10,14 @@ function actualizarPresupuesto(numero) {
     }
            
     else{
-        console.error("Número no valido")
+        console.log("Número no valido")
         return -1
         }
     }
 
 
 function mostrarPresupuesto() {
-    
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto() {
