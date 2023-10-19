@@ -123,41 +123,52 @@ function agruparGastos () {
 
 }
 
-function filtrarGastos (o) {
-  return gastos.filter(gasto => {
-    if (o.fechaDesde) {
-      const fechaDesde = new Date(o.fechaDesde)
-      if (gasto.fecha <= fechaDesde) {
+function filtrarGastos (filtros) {
+  let resultado = [...gastos]
+
+  resultado = resultado.filter(gasto => {
+    if ('fechaDesde' in filtros) {
+      const fechaDesde = Date.parse(filtros.fechaDesde)
+      if (gasto.fecha < fechaDesde) {
         return false
       }
     }
 
-    if (o.fechaHasta) {
-      const fechaHasta = new Date(o.fechaHasta)
-      if (gasto.fecha >= fechaHasta) {
+    if ('fechaHasta' in filtros) {
+      const fechaHasta = Date.parse(filtros.fechaHasta)
+      if (gasto.fecha > fechaHasta) {
         return false
       }
     }
 
-    if (o.valorMinimo !== undefined) {
-      if (gasto.valor > o.valorMinimo) {
+    if ('valorMinimo' in filtros) {
+      if (gasto.valor < filtros.valorMinimo) {
         return false
       }
     }
 
-    if (o.valorMaximo !== undefined) {
-      if (gasto.valor < o.valorMaximo) {
+    if ('valorMaximo' in filtros) {
+      if (gasto.valor > filtros.valorMaximo) {
         return false
       }
     }
 
-    if (o.descripcionContiene !== undefined) {
-      return gasto.descripcion.includes(o.descripcionContiene)
+    if ('descripcionContiene' in filtros) {
+      if (!gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) {
+        return false
+      }
     }
 
-    // por defecto devuelve todo
+    if ('etiquetasTiene' in filtros) {
+      if (!filtros.etiquetasTiene.some(etiqueta => gasto.etiquetas.includes(etiqueta.toLowerCase()))) {
+        return false
+      }
+    }
+
     return true
   })
+
+  return resultado
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
