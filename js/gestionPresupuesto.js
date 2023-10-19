@@ -64,7 +64,11 @@ function anyadirGasto(gasto){
     gasto.id=idGasto++;
     gastos.push(gasto);
 }
-
+function borrarGasto(idGasto){
+    if(this.idGasto==idGasto){
+    let gastos = null;
+    }
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
