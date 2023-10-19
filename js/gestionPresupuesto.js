@@ -18,29 +18,22 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
+    this.descripcion = descripcion;
+    this.fecha;
+    
     if(valor >= 0 && typeof valor === 'number'){
-        this.descripcion = descripcion;
         this.valor = valor;
     }else{
-        this.descripcion = descripcion;
         this.valor = 0;
     }
 
-    if(etiquetas){
-        etiquetas = [...new Set(etiquetas)];
-    }else{
-        this.etiquetas = [];
-    }
-
-    if(fecha){
-        if(typeof fecha === 'String'){
+     this.etiquetas = [...new Set(etiquetas)];
+   
+     if (typeof fecha === 'string' && fecha.length === 17) {
             this.fecha = Date.parse(fecha);
         }else{
             this.fecha = Date.now();
         }
-    }else{
-        this.fecha = Date.now();
-    }
     
     this.mostrarGasto = function(){
         return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €';
@@ -48,11 +41,12 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
 
     this.mostrarGastoCompleto = function(){
         let fechaLocal = new Date(this.fecha).toLocaleString();
-        let listaEtiquetas = this.etiquetas.join('\n -');
-        let mostrar = this.mostrarGasto() + '.\nFecha: ' + fechaLocal + '\nEtiquetas:\n - ' + listaEtiquetas;
+        let listaEtiquetas = this.etiquetas.join('\n- ');
+        let mostrar = this.mostrarGasto() + '.\nFecha: ' + fechaLocal + '\nEtiquetas:\n- ' + listaEtiquetas + '\n';
         return mostrar;
       
     };
+        
 
     this.actualizarDescripcion = function(descripcion){
         this.descripcion = descripcion;
@@ -67,14 +61,14 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
     };
 
     this.actualizarFecha = function(fecha){
-        if(typeof fecha === 'string'){
+
+        if (typeof fecha === 'string' && fecha.length === 17) {
             this.fecha = Date.parse(fecha);
         }
     };
-
     
     this.anyadirEtiquetas = function(...etiquetas){
-        for(let i; i < etiquetas.length(); i++){
+        for(let i = 0; i < etiquetas.length; i++){
             let etiqueta = etiquetas[i];
             if(!this.etiquetas.includes(etiqueta)){
                 this.etiquetas.push(etiqueta);
@@ -85,12 +79,12 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
 
     this.borrarEtiquetas = function(...etiquetas){
         let filtroEtiquetas = [];
-        for(let i; i < etiquetas.length(); i++){
+        for(let i = 0; i < this.etiquetas.length; i++){
             let etiqueta = this.etiquetas[i];
             if(!etiquetas.includes(etiqueta)){
                 filtroEtiquetas.push(etiqueta);
             }
-        }
+        }    
         this.etiquetas = filtroEtiquetas;
     };
 }
@@ -107,7 +101,7 @@ function anyadirGasto(gasto){
 
 
 function borrarGasto(id){
-    for(let i = 0;i < gastos.length(); i++ ){
+    for(let i = 0;i < gastos.length; i++ ){
         if(gastos[i].id == id){
             gastos.splice(i,1);
         }
@@ -117,8 +111,8 @@ function borrarGasto(id){
 
 
 function calcularTotalGastos(){
-    let suma;
-    for(let i = 0;i < gastos.length(); i++ ){
+    let suma = 0;
+    for(let i = 0;i < gastos.length; i++ ){
        suma = suma + gastos[i].valor;
     }
     return suma;
