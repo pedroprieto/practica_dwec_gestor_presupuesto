@@ -52,5 +52,10 @@ function CrearGasto(descripcion, valor) {
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
