@@ -119,13 +119,45 @@ function calcularBalance () {
   return presupuesto - calcularTotalGastos()
 }
 
-function agruparGastos () {
+function agruparGastos (periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta) {
+  // let resultado = filtrarGastos({ fechaDesde, fechaHasta, etiquetasTiene: etiquetas })
 
+  // no me convence esta forma de hacerlo porque no me deja pasar los filtros si no se pasan todos
+  // refactorizar filtrarGastos?
+  const filtros = {}
+
+  if (fechaDesde) {
+    filtros.fechaDesde = fechaDesde
+  }
+
+  if (fechaHasta) {
+    filtros.fechaHasta = fechaHasta
+  }
+
+  if (etiquetas.length > 0) {
+    filtros.etiquetasTiene = etiquetas
+  }
+
+  let resultado = filtrarGastos(filtros)
+
+  resultado = resultado.reduce((acc, cur) => {
+    const periodoAgrupacion = cur.obtenerPeriodoAgrupacion(periodo)
+
+    if (!(periodoAgrupacion in acc)) {
+      acc[periodoAgrupacion] = 0
+    }
+
+    acc[periodoAgrupacion] += cur.valor
+    return acc
+  }, {})
+
+  return resultado
 }
 
 function filtrarGastos (filtros) {
   let resultado = [...gastos]
 
+  // filter se queda con lo que coincide, por lo que devuelve true si no se añaden filtros o si coincide
   resultado = resultado.filter(gasto => {
     if ('fechaDesde' in filtros) {
       const fechaDesde = Date.parse(filtros.fechaDesde)
