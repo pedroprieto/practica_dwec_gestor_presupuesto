@@ -3,12 +3,21 @@
 // TODO: Variable global
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
-}
+function actualizarPresupuesto(numero) {
+    if (numero >=0){
+        presupuesto = numero;
+        return presupuesto;
+    }
+           
+    else{
+        console.error("Número no valido")
+        return -1
+        }
+    }
+
 
 function mostrarPresupuesto() {
-    // TODO
+    
 }
 
 function CrearGasto() {
