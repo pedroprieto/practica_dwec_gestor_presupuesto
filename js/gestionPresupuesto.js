@@ -2,17 +2,25 @@
 
 // TODO: Variable global
 
+let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(valor) {
+    if(!isNaN(valor) && valor > 0){
+        presupuesto = valor;
+        return presupuesto;
+    }
+    else{
+        console.error('Error');
+        return -1;
+    }    
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    
 }
 
-function CrearGasto() {
-    // TODO
+function CrearGasto(descripcion, valor) {
+    
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
