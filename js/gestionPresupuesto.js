@@ -76,7 +76,7 @@ Etiquetas:\n`
 
   this.borrarEtiquetas = (...etiquetasBorrar) => {
     for (const etiqueta of etiquetasBorrar) {
-      this.etiquetas = Object.assign(this.etiquetas.filter(e => e !== etiqueta))
+      this.etiquetas = this.etiquetas.filter(e => e !== etiqueta)
     }
   }
 
