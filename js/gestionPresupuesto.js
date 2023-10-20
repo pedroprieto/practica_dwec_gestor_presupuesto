@@ -1,5 +1,29 @@
 
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
+
+
+function listarGastos(){
+    
+}
+
+function anyadirGasto(){
+
+}
+
+function borrarGasto(){
+
+}
+
+function calcularTotalGastos(){
+
+}
+
+function calcularBalance(){
+
+}
+
 
 //Función que toma un número por parámetro y lo asigna a la variable global presupuesto.
 function actualizarPresupuesto(numero) {
@@ -58,5 +82,11 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos, 
+    calcularBalance
+
 }
