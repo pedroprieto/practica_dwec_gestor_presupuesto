@@ -105,7 +105,7 @@ CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
 };
 
 
-/*No consigo pasar el test  ) Método 'mostrarGastoCompleto' del objeto gasto, el metodo funciona porque cuando hago el test me devuelve
+/*No consigo pasar en el test2 el test ) Método 'mostrarGastoCompleto' del objeto gasto, el metodo funciona porque cuando hago el test me devuelve
 lo mismo,segun el test en la ultima etiqueta formada me añade -- en vez de -  a mi se me queda segun el test como -- comida cuando deberia ser -comida
 pero yo creo que lo tengo bien montado.
 */ 
