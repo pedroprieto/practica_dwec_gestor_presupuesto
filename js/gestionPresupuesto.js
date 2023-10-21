@@ -8,7 +8,15 @@ function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(){
+//Función que recibe un objeto gasto por parámetro y le asigna un id.
+function anyadirGasto(gasto){
+    
+    //Agregar una propiedad 'id' al objeto gasto
+    gasto.id = idGasto;
+    idGasto++;
+
+    //Se añade el objeto gasto al final del array de gastos.
+    gastos.push(gasto);
 
 }
 
@@ -47,7 +55,7 @@ function mostrarPresupuesto() {
 // Función constructora para crear objetos de gasto con descripción, valor, fecha
 //  y un número indeterminado de argumentos que se almacenan en el array etiquetas.
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
-    
+
     // Comprobar si el valor introducido es un número no negativo
     if (valor >= 0) {
         this.valor = valor;
