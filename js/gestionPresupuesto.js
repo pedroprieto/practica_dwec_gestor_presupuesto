@@ -31,8 +31,16 @@ function borrarGasto(id){
     
 
 }
-
+//Función que suma el total de los valores de los objetos gasto
 function calcularTotalGastos(){
+        
+    let totalGastos = 0;
+
+    gastos.forEach(gasto => {
+        totalGastos += gasto.valor
+    });
+    
+    return totalGastos;
 
 }
 
