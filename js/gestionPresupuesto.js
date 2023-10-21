@@ -5,7 +5,7 @@ let idGasto = 0;
 
 
 function listarGastos(){
-    
+    return gastos;
 }
 
 function anyadirGasto(){
@@ -44,7 +44,10 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+// Función constructora para crear objetos de gasto con descripción, valor, fecha
+//  y un número indeterminado de argumentos que se almacenan en el array etiquetas.
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+    
     // Comprobar si el valor introducido es un número no negativo
     if (valor >= 0) {
         this.valor = valor;
@@ -54,6 +57,19 @@ function CrearGasto(descripcion, valor) {
     
     // Asignar la descripción
     this.descripcion = descripcion;
+
+    // Validar la fecha, si es correcta Date.parse devuelve un número valido que se evalua como true
+    if (Date.parse(fecha)) {
+        this.fecha = Date.parse(fecha);
+    } else {
+        this.fecha = Date.now(); // Fecha actual en formato timestamp
+    }
+        
+    //Asignar array etiquetas, si no recibe el parámetro, lo inicia vacío.
+    if(etiquetas === undefined)
+        this.etiquetas = [];
+    else
+        this.etiquetas = etiquetas
     
     // Método para mostrar el gasto
     this.mostrarGasto = function () {
