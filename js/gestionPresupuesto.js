@@ -44,7 +44,12 @@ function calcularTotalGastos(){
 
 }
 
+//Función sin parámetros que devuelva el balance disponible
 function calcularBalance(){
+
+    let balance = presupuesto - calcularTotalGastos();
+
+    return balance;
 
 }
 
