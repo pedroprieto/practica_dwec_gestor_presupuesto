@@ -20,7 +20,15 @@ function anyadirGasto(gasto){
 
 }
 
-function borrarGasto(){
+//Funcíon que recibe un id por parametro y elimina el objeto gasto correspondiente
+function borrarGasto(id){
+    //Recorremos los gastos y añadimos un indice para saber en que punto estamos.
+    gastos.forEach((gasto, index) => {
+        if (gasto.id === id)
+            // Elimnamos el elemento que coincida, en el punto actual de la iteración.
+            gastos.splice(index, 1);
+    });
+    
 
 }
 
