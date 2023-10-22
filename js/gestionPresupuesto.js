@@ -137,7 +137,16 @@ ${listaEtiquetas}`;
             this.fecha = Date.parse(fecha);
         }
     }
+    //Metodo que añade una etiqueta si esta no se repite
+    this.anyadirEtiquetas = function(...etiquetas){
 
+        let nuevasEtiquetas = [...etiquetas]
+        //Recorremos las nuevas etiquetas y las comparamos con las que hay dentro del objeto
+        for (const etiqueta of nuevasEtiquetas) {
+            if(!this.etiquetas.includes(etiqueta))
+                this.etiquetas.push(etiqueta)
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
