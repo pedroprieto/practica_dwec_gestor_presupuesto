@@ -117,7 +117,20 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.valor = nuevoValor;
         }
     }
-
+    //Metodo para mostrar el gasto, fecha y etiquetas de un objeto gasto
+    this.mostrarGastoCompleto = function () {
+        let listaEtiquetas = "";
+        for (const etiqueta of this.etiquetas) {
+            listaEtiquetas += `- ${etiqueta}\n`;
+        }
+        //Creamos una instancia Date válida para formatear con toLocaleString.
+        const fechaFormateada = new Date(this.fecha).toLocaleString();
+        //Devolvemos un texto multilinea
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${fechaFormateada}
+Etiquetas:
+${listaEtiquetas}`;
+    }
 
 }
 
