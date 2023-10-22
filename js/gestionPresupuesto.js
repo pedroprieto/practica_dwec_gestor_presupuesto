@@ -141,7 +141,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //Funcion que actuliza las etiquetas del objeto gasto
     this.anyadirEtiquetas = function (...etiquetaNueva) {
         let pos;
-        for (let i in etiquetaNueva) {
+        for (let i of etiquetaNueva) {
             pos = this.etiquetas.indexOf(i);
             if (pos == -1) {
                 this.etiquetas.push(i);
@@ -152,7 +152,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //Función de un número indeterminado de parámetros que eliminara etiqueta
     this.borrarEtiquetas = function (...eliminarEtiqueta) {
         let pos;
-        for (let i in etiquetas) {
+        for (let i of eliminarEtiqueta) {
             pos = this.etiquetas.indexOf(i);
             if ( pos != -1) {
                 this.etiquetas.splice ( pos ,1);
