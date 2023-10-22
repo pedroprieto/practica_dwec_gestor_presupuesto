@@ -88,6 +88,12 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         fecha = Date.parse(fecha);
         this.fecha = fecha;
     }
+    this.actualizarFecha = function (actualizaFecha) {
+        actualizaFecha = Date.parse(actualizaFecha);
+        if (actualizaFecha) {
+            this.fecha = actualizaFecha;
+        } else this.fecha = this.fecha;
+    }
     this.etiquetas = [];
     if (etiquetas.length != 0) {
         for (let i in etiquetas) {
@@ -95,6 +101,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         } 
     }else {
             this.etiquetas = [];
+    }
+    this.anyadirEtiquetas = function (...etiquetaNueva) {
+        let pos;
+        for (let i in etiquetaNueva) {
+            pos = this.etiquetas.indexOf(i);
+            if (pos == -1) {
+                this.etiquetas.push(i);
+            }
+        }
+    }
+    this.borrarEtiquetas = function (...eliminarEtiqueta) {
+        let pos;
+        for (let i in etiquetas) {
+            pos = this.etiquetas.indexOf(i);
+            if ( pos != -1) {
+                this.etiquetas.splice ( pos ,1);
+            }
+        }
     }
 }
 
