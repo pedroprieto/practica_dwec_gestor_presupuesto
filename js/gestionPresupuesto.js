@@ -26,8 +26,10 @@ function listarGastos () {
     return gastos;
 
 }
-function anyadirGasto () {
-
+function anyadirGasto (gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 
 function borrarGasto () {
@@ -66,6 +68,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     } else {
         fecha = Date.parse(fecha);
         this.fecha = fecha;
+    }
+    this.etiquetas = [];
+    if (etiquetas.length != 0) {
+        for (let i in etiquetas) {
+            this.etiquetas.push(etiquetas[i]);
+        } 
+    }else {
+            this.etiquetas = [];
     }
 }
 
