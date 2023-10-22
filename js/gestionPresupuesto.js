@@ -59,11 +59,11 @@ Etiquetas:\n`
         let arrEti = [];
         for (let e of this.etiquetas) {
             if (etqs.indexOf(e) == -1) {
-                    arrEti.push(e);
+                arrEti.push(e);
             }
-            }
-    
-            this.etiquetas = arrEti;
+        }
+
+        this.etiquetas = arrEti;
 
     }
 
@@ -87,18 +87,26 @@ function anyadirGasto(gasto) {
     gastos.push(gasto);
 }
 function borrarGasto(idGasto) {
-    if (gastos == idGasto) {
-        gastos = null;
+    let gasto = null;
+    for (let borrgasto of gastos) {
+        if (borrgasto.id == idGasto) {
+            gasto = borrgasto;
+        }
+    }
+    if (gasto) {
+        let posGasto = gastos.indexOf(gasto);
+        gastos.splice(posGasto, 1);
     }
 }
 function calcularTotalGastos() {
-    let total = 0;
+    let total = 0
+    for (let gastosTo of gastos) {
+        total += gastosTo.valor;
+    }
     return total;
 }
 function calcularBalance() {
-    let disponible = 0;
-    disponible = presupuesto - calcularTotalGastos;
-    return disponible;
+    return presupuesto - calcularTotalGastos();
 }
 
 
