@@ -23,6 +23,7 @@ function mostrarPresupuesto() {
 }
 
 function listarGastos () {
+    return gastos;
 
 }
 function anyadirGasto () {
@@ -36,10 +37,10 @@ function calcularTotalGastos () {
 
 }
 function calcularBalance () {
-    
+
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
     this.valor = (valor >= 0 ) ? valor : 0;
@@ -58,6 +59,13 @@ function CrearGasto(descripcion, valor) {
             this.valor = actualizarValor;
             return actualizarValor;
         } else valor = valor;
+    }
+    if(!fecha) {
+        fecha = Date.parse(new Date());
+        this.fecha = fecha;
+    } else {
+        fecha = Date.parse(fecha);
+        this.fecha = fecha;
     }
 }
 
