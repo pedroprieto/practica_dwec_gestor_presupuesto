@@ -1,7 +1,7 @@
 // TODO: Variable global
 let presupuesto = 0;
 let gastos = [];
-let idGasto =  0;
+let idGasto = 0;
 
 function actualizarPresupuesto(actualizarPres) {
     // TODO
@@ -9,7 +9,7 @@ function actualizarPresupuesto(actualizarPres) {
         presupuesto = actualizarPres;
         return actualizarPres;
     } else {
-        var mensErr = "Error el valor del Presupuesto es ";
+        let mensErr = "Error el valor del Presupuesto es ";
         return mensErr, -1;
     }
 }
@@ -19,7 +19,7 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor,fecha, ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     this.mostrarGasto = function () {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -28,47 +28,79 @@ function CrearGasto(descripcion, valor,fecha, ...etiquetas) {
         this.descripcion = actualizarDescrip;
     }
     this.actualizarValor = function (actualizarVal) {
-        if (actualizarVal >= 0) {
-            this.valor = actualizarVal;
-        } else {
-            valor = this.valor;
-        }
-
+        this.valor = (actualizarVal >= 0) ? actualizarVal : this.valor;
     }
+    this.mostrarGastoCompleto = function () {
+        let textocompleto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+        for (let x of this.etiquetas) {
+            textocompleto += `- ${x}\n`
+        }
+        return textocompleto;
+    };
+
+    this.actualizarFecha = function (fecha) {
+        let actFe = Date.parse(fecha);
+        if (actFe) {
+            this.fecha = actFe;
+        }
+    }
+
     this.anyadirEtiquetas = function (...etqs) {
-        this.etiquetas.push(...etqs);
+        for (let actEti of etqs) {
+            if (this.etiquetas.indexOf(actEti) == -1) {
+                this.etiquetas.push(actEti);
+            }
+        }
+    }
+
+    this.borrarEtiquetas = function (...etqs) {
+        let arrEti = [];
+        for (let e of this.etiquetas) {
+            if (etqs.indexOf(e) == -1) {
+                    arrEti.push(e);
+            }
+            }
+    
+            this.etiquetas = arrEti;
+
     }
 
     this.descripcion = descripcion;
-    if (valor >= 0) {
-        this.valor = valor;
-        return this.valor;
-    } else {
-        this.valor = 0;
-        return this.valor;
-    }
-    this.etiquetas= [];
+    this.valor = (valor >= 0) ? valor : 0;
+    this.etiquetas = [];
+    this.anyadirEtiquetas(...etiquetas);
     let feactual = Date.parse(fecha);
     if (feactual) {
         this.fecha = feactual;
     } else {
         this.fecha = Date.parse(new Date());
     }
-
 }
 
-function listarGastos(){
+function listarGastos() {
     return gastos;
 }
-function anyadirGasto(gasto){
-    gasto.id=idGasto++;
+function anyadirGasto(gasto) {
+    gasto.id = idGasto++;
     gastos.push(gasto);
 }
-function borrarGasto(idGasto){
-    if(this.idGasto==idGasto){
-    let gastos = null;
+function borrarGasto(idGasto) {
+    if (gastos == idGasto) {
+        gastos = null;
     }
 }
+function calcularTotalGastos() {
+    let total = 0;
+    return total;
+}
+function calcularBalance() {
+    let disponible = 0;
+    disponible = presupuesto - calcularTotalGastos;
+    return disponible;
+}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
