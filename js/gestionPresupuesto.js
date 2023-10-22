@@ -40,10 +40,16 @@ function borrarGasto (identificador) {
     }
 }
 function calcularTotalGastos () {
-
+    let suma = 0;
+    for (let i of gastos) {
+        suma += i.valor;
+    }
+    return suma;
 }
 function calcularBalance () {
-
+    let balance = 0;
+    balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
