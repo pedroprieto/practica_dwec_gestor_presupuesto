@@ -147,6 +147,18 @@ ${listaEtiquetas}`;
                 this.etiquetas.push(etiqueta)
         }
     }
+    //Metodo que elimina etiquetas que se encuentren dentro del objeto
+    this.borrarEtiquetas = function(...etiquetas){
+
+        let nuevasEtiquetas = [...etiquetas]
+        for (const etiqueta of nuevasEtiquetas){
+            //Devuelve el indice de la que coincide o -1 si no coincide con ninguna
+            let indice = this.etiquetas.indexOf(etiqueta)
+            if(indice !== -1){
+                this.etiquetas.splice(indice, 1)
+            }
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
