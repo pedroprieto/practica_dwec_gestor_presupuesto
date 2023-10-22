@@ -44,8 +44,7 @@ function CrearGasto(descripcion, valor) {
 
 // Funcion que muestra el objeto Gasto con descripcion y valor
   this.mostrarGasto = function () {
-    let mensaje=(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €,`);
-    //console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €,`); xq est no  funciona
+    let mensaje=(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);  
     return mensaje;
   },
 
