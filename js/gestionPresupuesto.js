@@ -131,6 +131,12 @@ Fecha: ${fechaFormateada}
 Etiquetas:
 ${listaEtiquetas}`;
     }
+    //Metodo para actualizar una fecha string válida introducida
+    this.actualizarFecha = function(fecha){
+        if (Date.parse(fecha)) {
+            this.fecha = Date.parse(fecha);
+        }
+    }
 
 }
 
