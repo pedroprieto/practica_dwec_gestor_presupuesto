@@ -32,8 +32,12 @@ function anyadirGasto (gasto) {
     gastos.push(gasto);
 }
 
-function borrarGasto () {
-
+function borrarGasto (identificador) {
+    for (let i=0; i < gastos.length; i++) {
+        if ( gastos.id[i] == identificador) {
+            gastos.splice(i , 1)
+        }
+    }
 }
 function calcularTotalGastos () {
 
