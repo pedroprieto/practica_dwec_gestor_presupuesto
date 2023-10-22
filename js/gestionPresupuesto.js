@@ -28,13 +28,17 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.descripcion = actualizarDescrip;
     }
     this.actualizarValor = function (actualizarVal) {
+        //Repasando las lecciones lo he abreviado con el condicional ?.
         this.valor = (actualizarVal >= 0) ? actualizarVal : this.valor;
     }
     this.mostrarGastoCompleto = function () {
+        //Problemas con representar la variable textocompleto, porque me daba error porque no estaba el texto igual 
+        //de organizado que el de la solución. Fecha y Etiquetas lo tenia con unos TABS y eso detectaba el error.
         let textocompleto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
 Fecha: ${new Date(this.fecha).toLocaleString()}
 Etiquetas:\n`
         for (let x of this.etiquetas) {
+            //Lista en Forma de Lista todos los datos del Array Etiquetas.
             textocompleto += `- ${x}\n`
         }
         return textocompleto;
@@ -49,6 +53,8 @@ Etiquetas:\n`
 
     this.anyadirEtiquetas = function (...etqs) {
         for (let actEti of etqs) {
+            //El -1 es para que siempre empieze a contar el array desde el principio, sin 
+            //modificar ningún valor del Array.
             if (this.etiquetas.indexOf(actEti) == -1) {
                 this.etiquetas.push(actEti);
             }
@@ -68,6 +74,7 @@ Etiquetas:\n`
     }
 
     this.descripcion = descripcion;
+    //Repasando las lecciones lo he abreviado con el condicional ?.
     this.valor = (valor >= 0) ? valor : 0;
     this.etiquetas = [];
     this.anyadirEtiquetas(...etiquetas);
@@ -93,14 +100,16 @@ function borrarGasto(idGasto) {
             gasto = borrgasto;
         }
     }
+    //Me ha costado sacarlo porque no sabia la función splice de los arrays.
     if (gasto) {
-        let posGasto = gastos.indexOf(gasto);
-        gastos.splice(posGasto, 1);
+        let gastoborrado = gastos.indexOf(gasto);
+        gastos.splice(gastoborrado, 1);
     }
 }
 function calcularTotalGastos() {
     let total = 0
     for (let gastosTo of gastos) {
+        //Suma todo los valores del array Gastos.
         total += gastosTo.valor;
     }
     return total;
