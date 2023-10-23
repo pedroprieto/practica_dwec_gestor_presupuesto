@@ -1,10 +1,15 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+let presupuesto = 0;
 
-// TODO: Variable global
+// Función que actualiza el presupuesto y devuelve el nuevo valor comprobando que sea un número válido
+function actualizarPresupuesto(nuevoPresupuesto) {
 
-
-function actualizarPresupuesto() {
-    // TODO
+    if (nuevoPresupuesto >= 0 && !isNaN(nuevoPresupuesto)) {
+        return presupuesto = nuevoPresupuesto;
+    }
+    else {
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
