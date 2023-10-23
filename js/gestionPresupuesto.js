@@ -68,6 +68,15 @@ function calcularBalance () {
     return balance;
 }
 
+//Función de un parámetro que devolverá un subconjunto de los gastos existentes
+function filtrarGastos () {
+
+}
+
+function agruparGastos () {
+
+}
+
 //Función constructora que se encargará de crear un objeto gasto
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
@@ -159,6 +168,20 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
     }
+
+    //Función de un parámetro que devolverá el período de agrupación
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+        let fecha = new Date(this.fecha);
+        if ( periodo =="dia") {
+            return fecha.toISOString().substring(0 , 10);
+        } else if (periodo == "mes") {
+            return fecha.toISOString().substring(0 , 7);
+        } else if (periodo == "anyo") {
+            return fecha.toISOString().substring(0, 4);
+        }
+
+    }
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -172,5 +195,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
