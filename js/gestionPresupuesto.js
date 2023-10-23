@@ -14,7 +14,7 @@ function actualizarPresupuesto(resultado)
     else
     {
         presupuesto = -1;
-        return "Error, en el presupuesto" + presupuesto;
+        return presupuesto;
     }
 
 }
@@ -22,8 +22,9 @@ function actualizarPresupuesto(resultado)
 function mostrarPresupuesto()
 {
     // TODO
-    let resultado = "Tu presupuesto actual es de " + presupuesto + "€";
-    return resultado;
+    /*let resultado = "Tu presupuesto actual es de " + presupuesto + "€";
+    return resultado;*/
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto(descripcion, valor)
