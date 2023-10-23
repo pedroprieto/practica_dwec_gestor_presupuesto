@@ -13,8 +13,8 @@ function actualizarPresupuesto(resultado)
     }
     else
     {
-        presupuesto = -1;
-        return presupuesto;
+        
+        return -1;
     }
 
 }
@@ -22,9 +22,8 @@ function actualizarPresupuesto(resultado)
 function mostrarPresupuesto()
 {
     // TODO
-    /*let resultado = "Tu presupuesto actual es de " + presupuesto + "€";
-    return resultado;*/
-    return `Tu presupuesto actual es de ${presupuesto} €`;
+    
+    return `Tu presupuesto actual es de ${presupuesto} €`;;
 }
 
 function CrearGasto(descripcion, valor)
