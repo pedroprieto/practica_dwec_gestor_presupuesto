@@ -46,7 +46,7 @@ function anyadirGasto (gasto) {
 //Función de 1 parámetro que eliminará el gasto de la ID
 function borrarGasto (identificador) {
     for (let i=0; i < gastos.length; i++) {
-        if ( gastos.id[i] == identificador) {
+        if ( gastos[i].id == identificador) {
             gastos.splice(i , 1)
         }
     }
@@ -100,14 +100,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
    //Función sin parámetros que muestre el texto correspondiente al gasto 
      this.mostrarGasto = function (mostrarGasto) {
-        let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
+        let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         return mensaje;
     }
 
     //Función sin parámetros que devuelva el texto multilínea
     this.mostrarGastoCompleto = function () {
         let mensaje = this.mostrarGasto();
-        mensaje += `\nFecha: ${new Date (this.fecha).toLocaleString()}\n`;
+        mensaje += `.\nFecha: ${new Date (this.fecha).toLocaleString()}\n`;
         mensaje += `Etiquetas:\n`;
         for (let i = 0; i < etiquetas.length; i++) {
             mensaje += `- ${this.etiquetas[i]}\n`;
