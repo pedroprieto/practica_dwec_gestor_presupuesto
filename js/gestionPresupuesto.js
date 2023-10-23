@@ -56,6 +56,12 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
         return texto;
     }
+
+    this.actualizarFecha = function(fecha){
+        if (!isNaN(Date.parse(fecha))) {
+            this.fecha = Date.parse(fecha);
+        }
+    } 
 }
 
 function listarGastos() {
