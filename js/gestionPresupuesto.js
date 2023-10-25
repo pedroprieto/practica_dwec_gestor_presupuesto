@@ -78,7 +78,7 @@ function filtrarGastos(){
 }
 
 function agruparGastos(){
-    
+
 }
 
 // Función constructora para crear objetos de gasto con descripción, valor, fecha
@@ -167,6 +167,27 @@ ${listaEtiquetas}`;
             }
         }
     }
+    //Función de un parámetro que devolverá el período de agrupación
+    //correspondiente al parámetro periodo de la función y a la fecha del gasto.
+    //Formato de devolución aaaa-mm-dd
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        
+        let fecha = new Date(this.fecha);
+        let anyo = fecha.getFullYear();
+        //Formateamos el mes para que tenga dos digitos,y cuando sea uno, inserte un 0 delante.
+        let mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+        let dia = fecha.getDate().toString().padStart(2, '0');
+
+        if (periodo === "anyo")
+            return anyo
+        else if  (periodo === "mes")
+            return anyo + "-" + mes
+        else if  (periodo === "dia")
+            return anyo + "-" + mes + "-" + dia
+        else 
+            return "Periodo no válido"
+    }
+        
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
