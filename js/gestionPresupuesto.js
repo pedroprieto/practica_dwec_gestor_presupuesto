@@ -69,6 +69,8 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
    
     if (typeof fecha === 'string' && fecha.length === 17) {
         this.fecha = Date.parse(fecha);
+    }else if(typeof fecha === 'string' && fecha.length === 10){
+        this.fecha = Date.parse(fecha);
     }else{
         this.fecha = Date.now();
     }
@@ -102,6 +104,9 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
         if (typeof fecha === 'string' && fecha.length === 17) {
             this.fecha = Date.parse(fecha);
         }
+        if(typeof fecha === 'string' && fecha.length === 17){
+            this.fecha = Date.parse(fecha);
+        }
     };
     
     this.anyadirEtiquetas = function(...etiquetas){                                                                                // Zona de metodos de gestion de etiquetas ARA
@@ -126,11 +131,20 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
     };
 
     this.obtenerPeriodoAgrupacion = function(periodo){
-        
+        let auxFecha = this.fecha;
+        const anyo = new Date(auxFecha).getFullYear();
+        const mes = String(new Date(auxFecha).getMonth() + 1).padStart(2, '0');
+        const dia = String(new Date(auxFecha).getDate()).padStart(2, '0');
+
+        if (periodo === "dia") {
+            return anyo + '-' + mes + '-' + dia;
+        } else if (periodo === "mes") {
+            return anyo + '-' + mes;
+        } else if (periodo === "anyo") {
+            return anyo;
+        }
     }
 }
-
-
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo.
