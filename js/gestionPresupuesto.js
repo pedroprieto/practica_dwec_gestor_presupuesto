@@ -43,13 +43,44 @@ function calcularTotalGastos(){                                                 
     return suma;
 }
 
-function calcularBalance(){                                                          //Función que devuelve el balance de presupuesto/gastos ARA
+function calcularBalance(){                                                          //Funcion que devuelve el balance de presupuesto/gastos ARA
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
 
-function filtrarGastos(){
+function filtrarGastos(filtros) {                                                                       //Funcion que recibe un objeto con parametros de filtro y devuelve los gastos que cumplan las condiciones ARA
 
+    let gastosFiltrados = [...gastos];                                                                  //Genera un array que recibe la cantidad de gastos que tenemos (indeterminado)
+
+    if (filtros.fechaDesde) {                                                                           //Combrobamos que exista parametro si es == true cumple la condicion
+        let fechaDesde = Date.parse(filtros.fechaDesde);
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha >= fechaDesde);                   //Sustituye el array por un sub array con los elementos que cumplan gasto.fecha >= fechaDesde
+    }
+
+    if (filtros.fechaHasta) {                                                                           //Combrobamos que exista parametro si es == true cumple la condicion
+        let fechaHasta = Date.parse(filtros.fechaHasta);
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha <= fechaHasta);                   //Sustituye el array por un sub array con los elementos que cumplan gasto.fecha <= fechaHasta
+    }
+
+    if (filtros.valorMinimo !== undefined) {                                                            //Combrobamos que exista parametro si es !== undefined cumple la condicion
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= filtros.valorMinimo);          //Sustituye el array por un sub array con los elementos que cumplan gasto.valor >= filtros.valorMinimo
+    }
+
+    if (filtros.valorMaximo !== undefined) {                                                            //Combrobamos que exista parametro si es !== undefined cumple la condicion
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= filtros.valorMaximo);          //Sustituye el array por un sub array con los elementos que cumplan gasto.valor <= filtros.valorMaximo
+    }
+
+    if (filtros.descripcionContiene) {                                                                                             //Combrobamos que exista parametro si es == true cumple la condicion
+        let descripcionContiene = filtros.descripcionContiene.toLowerCase();                                                       //Pasaremos las dos descripciones a comparar a minusculas para que tengan mismo formato
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.toLowerCase().includes(descripcionContiene));          //No comprobamos igualdad al uso en realidad comrpobamos que la descripcion pasada como filtro esta incluida en la descripcion del gasto
+    }
+
+    if (filtros.etiquetasTiene) {                                                                                                                   //Generamos una copia en minusculas para hacer la comparacion en el mismo formato
+        let etiquetasTiene = filtros.etiquetasTiene.map(etiqueta => etiqueta.toLowerCase());                                                        //Como en el filtro anterior comprobamos si esta incluido
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.etiquetas.some(etiqueta => etiquetasTiene.includes(etiqueta.toLowerCase())));       //Usamos some para ver si hay almenos una etiqueta que coincida
+    }
+
+    return gastosFiltrados;
 }
 
 function agruparGastos(){
@@ -130,9 +161,9 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
         this.etiquetas = filtroEtiquetas;
     };
 
-    this.obtenerPeriodoAgrupacion = function(periodo){
-        let auxFecha = this.fecha;
-        const anyo = new Date(auxFecha).getFullYear();
+    this.obtenerPeriodoAgrupacion = function(periodo){                                                                         //Metodo que devuelve un formato de fecha segun un periodo ARA
+        let auxFecha = this.fecha;                                                                                             //OJO! this.fecha no puede hacer uso de las funciones .getFY, getM y .getD
+        const anyo = new Date(auxFecha).getFullYear();                                                                         //La implementacion de un objeto auxiliar Date nos permite tranajar con ellas
         const mes = String(new Date(auxFecha).getMonth() + 1).padStart(2, '0');
         const dia = String(new Date(auxFecha).getDate()).padStart(2, '0');
 
