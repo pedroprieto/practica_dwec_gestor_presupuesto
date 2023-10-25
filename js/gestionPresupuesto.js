@@ -48,6 +48,14 @@ function calcularBalance(){                                                     
     return balance;
 }
 
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+
+}
+
 function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                        //Función contructor del objeto Gasto ARA
     this.descripcion = descripcion;
     this.fecha;
@@ -116,6 +124,10 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
         }    
         this.etiquetas = filtroEtiquetas;
     };
+
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        
+    }
 }
 
 
@@ -130,5 +142,7 @@ export   {
     calcularBalance,
     mostrarPresupuesto,
     actualizarPresupuesto,
+    filtrarGastos,
+    agruparGastos,
     CrearGasto
 }
