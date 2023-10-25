@@ -73,6 +73,14 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+    
+}
+
 // Función constructora para crear objetos de gasto con descripción, valor, fecha
 //  y un número indeterminado de argumentos que se almacenan en el array etiquetas.
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -172,6 +180,8 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos, 
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos,
 
 }
