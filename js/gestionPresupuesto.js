@@ -22,6 +22,12 @@ function borrarGasto(idgasto){
     let posicion = gastos.findIndex(gasto => gasto.id === idgasto);
     gastos.splice(posicion, 1);
 }
+function calcularTotalGastos(){
+    let sumaGastosTotales = gastos.reduce((acumulador, gasto) => acumulador + gasto.valor, 0);
+    return sumaGastosTotales;
+}
+
+
 
 
 // ----------------  OBJETOS GASTO Y SUS METODOS  --------------
