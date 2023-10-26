@@ -78,21 +78,37 @@ function filtrarGastos (opciones) {
             }
         }
         if ( opciones.fechaHasta) {
-            if ( listado.fecha > Date.parse(opciones.fecha)) ´
+            if ( listado.fecha > Date.parse(opciones.fechaHasta))
             resultado = false;
         }
         if ( opciones.valorMinimo) {
-            if ( opciones.valor < valorMinimo) {
+            if ( listado.valor < opciones.valorMinimo) {
                 resultado = false;
             }
         }
         if (opciones.valorMaximo) {
-            if(opciones.valor > valorMaximo) {
+            if(listado.valor > opciones.valorMaximo) {
                 resultado = false;
             }
         }
-    })
+        if ( opciones.descripcionContiene ) {
+            if (!listado.descripcion.includes (opciones.descripcionContiene) )
+            resultado = false;
+        }
+        if (opciones.etiquetasTiene) {
+            let count = 0;
+            for (let etq of opciones.etiquetasTiene) {
+                if (listado.etiquetas.indexOf(etq)  > -1) {
+                    count++;
+                }
+            }
+            if (count == 0) {
+                resultado = false;
+            } 
+        }
 
+        return resultado;
+    }) 
 }
 
 function agruparGastos () {
