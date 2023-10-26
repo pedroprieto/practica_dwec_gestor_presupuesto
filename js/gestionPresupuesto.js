@@ -72,10 +72,56 @@ function actualizarPresupuesto(numero) {
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
+//Función de un parámetro (objeto que contiene los filtros) que devolverá
+//un subconjunto de los gastos existentes (variable global gastos)
+function filtrarGastos(filtros) {
 
-function filtrarGastos(){
-
-}
+    // Inicia la función de filtrado
+    let resultado = gastos.filter((gasto) => {
+      // Comprueba si la fecha mínima está presente y si es mayor que la fecha del gasto
+      if (filtros.fechaDesde && Date.parse(filtros.fechaDesde) > gasto.fecha) {
+        return false; // Si no cumple, excluye el gasto
+      }
+  
+      // Comprueba si la fecha máxima está presente y si es menor que la fecha del gasto
+      if (filtros.fechaHasta && Date.parse(filtros.fechaHasta) < gasto.fecha) {
+        return false; // Si no cumple, excluye el gasto
+      }
+  
+      // Comprueba si el valor mínimo está presente y si es mayor que el valor del gasto
+      if (filtros.valorMinimo && filtros.valorMinimo > gasto.valor) {
+        return false; // Si no cumple, excluye el gasto
+      }
+  
+      // Comprueba si el valor máximo está presente y si es menor que el valor del gasto
+      if (filtros.valorMaximo && filtros.valorMaximo < gasto.valor) {
+        return false; // Si no cumple, excluye el gasto
+      }
+  
+      // Comprueba si la descripción a buscar está presente y si no se encuentra en la descripción del gasto
+      if (filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) {
+        return false; // Si no cumple, excluye el gasto
+      }
+  
+      // Comprueba si hay etiquetas en los filtros y si el gasto contiene al menos una de las etiquetas
+      if (filtros.etiquetasTiene && filtros.etiquetasTiene.length > 0) {
+        // Convierte etiquetas a minúsculas para comparación
+        const etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
+        const etiquetasFiltro = filtros.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
+  
+        // Encuentra las etiquetas que coinciden
+        const etiquetasRepetidas = etiquetasFiltro.filter((etiqueta) => etiquetasGasto.includes(etiqueta));
+        
+        // Si no coincide ninguna etiqueta, excluye el gasto
+        if (etiquetasRepetidas.length === 0) {
+          return false;
+        }
+      }
+      return true; // Si pasa todas las comprobaciones, incluye el gasto en el resultado
+    });
+    return resultado;
+  }
+  
 
 function agruparGastos(){
 
