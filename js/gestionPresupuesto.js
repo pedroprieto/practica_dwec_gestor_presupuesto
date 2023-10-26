@@ -146,6 +146,8 @@ function filtrarGastos(filtros){
         etiquetasTiene
     }=filtros;
 
+    let gastosFiltrados=[];
+    
     gastosFiltrados=gastos.filter(gasto=>{
 
         if(fechaDesde && gasto.fecha< Date.parse(fechaDesde)){
@@ -157,7 +159,7 @@ function filtrarGastos(filtros){
         if(valorMinimo && gasto.valor<valorMinimo){
             return false;
         }
-        if(valorMinimo && gasto.valor>valorMaximo){
+        if(valorMaximo && gasto.valor>valorMaximo){
             return false;
         }
         if(descripcionContiene && !gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
