@@ -18,6 +18,10 @@ function anyadirGasto(gasto){
     idGasto++;
     gastos.push(gasto);
 }
+function borrarGasto(idgasto){
+    let posicion = gastos.findIndex(gasto => gasto.id === idgasto);
+    gastos.splice(posicion, 1);
+}
 
 
 // ----------------  OBJETOS GASTO Y SUS METODOS  --------------
