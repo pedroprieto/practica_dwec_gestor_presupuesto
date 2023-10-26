@@ -32,13 +32,11 @@ function calcularBalance(){
 }
 
 
-
-
 // ----------------  OBJETOS GASTO Y SUS METODOS  --------------
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = !isNaN(valor) && valor > 0 ? valor : 0;
-    // se comprueba si la fecha existe y tambien se comprueba que no sea nulo o indefinida
+    // se comprueba si la fecha existe y tambien se comprueba que no sea nula o indefinida
     this.fecha = fecha && Date.parse(fecha) ? Date.parse(fecha) : Date.now();
     this.etiquetas = etiquetas ? etiquetas : [];
 
@@ -51,6 +49,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
     this.actualizarValor = function(nuevoValor){
         this.valor = !isNaN(nuevoValor) && nuevoValor > 0 ? nuevoValor: this.valor;
+    }
+    this.mostrarGastoCompleto = function(){
+        let fechaLocal = new Date(this.fecha).toLocaleString(); 
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
+        texto += `\nFecha: ${fechaLocal}`;
+        texto += `\nEtiquetas:\n`;
+        for (let etiqueta of this.etiquetas){
+            texto += `- ${etiqueta}\n`;
+        }
+        return texto
     }
 }
 
