@@ -32,6 +32,7 @@ function CrearGasto(descripcion, valor,fecha,...etiquetas) {
         
     }
 }
+
 CrearGasto.prototype.mostrarGasto = function () {
     return "Gasto correspondiente a "+ this.descripcion+ " con valor "+ this.valor +" €";
 };
@@ -105,10 +106,7 @@ CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
 };
 
 
-/*No consigo pasar en el test2 el test ) Método 'mostrarGastoCompleto' del objeto gasto, el metodo funciona porque cuando hago el test me devuelve
-lo mismo,segun el test en la ultima etiqueta formada me añade -- en vez de -  a mi se me queda segun el test como -- comida cuando deberia ser -comida
-pero yo creo que lo tengo bien montado.
-*/ 
+
 CrearGasto.prototype.mostrarGastoCompleto = function () {
     
     const fechaFormateada = new Date(this.fecha).toLocaleString();
@@ -117,6 +115,38 @@ CrearGasto.prototype.mostrarGastoCompleto = function () {
 
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaFormateada}\nEtiquetas:\n${etiquetasFormateadas}`;
 };
+
+CrearGasto.prototype.obtenerPeriodoAgrupacion=function(nombreFecha){
+
+    let fecha=new Date(this.fecha);
+    let fechaAgrupada;
+
+    if(nombreFecha=="dia"){
+        fechaAgrupada=fecha.toISOString().slice(0,10)
+        return fechaAgrupada;
+    }
+    if(nombreFecha=="mes"){
+        fechaAgrupada=fecha.toISOString().slice(0,7)
+        return fechaAgrupada;
+    }
+    if(nombreFecha=="anyo"){
+        fechaAgrupada=fecha.getFullYear().toString();
+        return fechaAgrupada;
+    }
+
+}
+
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+
+}
+
+
+
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -130,6 +160,8 @@ export   {
     calcularBalance,
     mostrarPresupuesto,
     actualizarPresupuesto,
+    filtrarGastos,
+    agruparGastos,
     CrearGasto
 }
 
