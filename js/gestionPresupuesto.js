@@ -136,8 +136,45 @@ CrearGasto.prototype.obtenerPeriodoAgrupacion=function(nombreFecha){
 
 }
 
-function filtrarGastos(){
+function filtrarGastos(filtros){
+    const{
+        fechaDesde,
+        fechaHasta,
+        valorMinimo,
+        valorMaximo,
+        descripcionContiene,
+        etiquetasTiene
+    }=filtros;
 
+    gastosFiltrados=gastos.filter(gasto=>{
+
+        if(fechaDesde && gasto.fecha< Date.parse(fechaDesde)){
+            return false;
+        }
+        if(fechaHasta && gasto.fecha> Date.parse(fechaHasta)){
+            return false;
+        }
+        if(valorMinimo && gasto.valor<valorMinimo){
+            return false;
+        }
+        if(valorMinimo && gasto.valor>valorMaximo){
+            return false;
+        }
+        if(descripcionContiene && !gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+            return false;
+        }
+        if (etiquetasTiene && etiquetasTiene.length > 0) {
+            const etiquetasGasto = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase());
+            const etiquetasFiltrar = etiquetasTiene.map(etiqueta => etiqueta.toLowerCase());
+            if (!etiquetasFiltrar.some(etiqueta => etiquetasGasto.includes(etiqueta))) {
+              return false;
+            }
+          }
+        return true;
+    });
+   
+return gastosFiltrados;
+    
 }
 
 function agruparGastos(){
