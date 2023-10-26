@@ -147,7 +147,7 @@ function filtrarGastos(filtros){
     }=filtros;
 
     let gastosFiltrados=[];
-    
+
     gastosFiltrados=gastos.filter(gasto=>{
 
         if(fechaDesde && gasto.fecha< Date.parse(fechaDesde)){
@@ -179,7 +179,29 @@ return gastosFiltrados;
     
 }
 
-function agruparGastos(){
+function agruparGastos(periodo="mes",etiquetas = [], fechaDesde = "", fechaHasta = ""){
+
+    const gastosFiltrados = filtrarGastos({
+        fechaDesde,
+        fechaHasta,
+        etiquetasTiene: etiquetas
+      });
+
+      const resultado = gastosFiltrados.reduce((acc, gasto) => {
+        
+        const periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+    
+        if (!acc[periodoAgrupacion]) {
+          acc[periodoAgrupacion] = 0;
+        }
+    
+        acc[periodoAgrupacion] += gasto.valor;
+    
+        return acc;
+
+        }, {}); 
+    
+      return resultado; 
 
 }
 
