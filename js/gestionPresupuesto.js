@@ -83,9 +83,26 @@ function filtrarGastos(filtros) {                                               
     return gastosFiltrados;
 }
 
-function agruparGastos(){
+function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = "", fechaHasta = "") {                                                         //Funcion  para agrupar gastos segun filtros, Se declaran valores Default por si no introducen parametros
+       let gastosFiltrados = gastos;                                                                                                                //Inicialmente trabajamos con todos los gastos.
 
+    if (etiquetas.length > 0 || fechaDesde) {                                                                                                      //Si han introducido filtros solo trabajaremos con los gastos que los cumplan
+        gastosFiltrados = filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde, fechaHasta });
+    }
+
+    let resultado = gastosFiltrados.reduce((acc, gasto) => {                                                                                     //Para cada gasto obtendremos el sumatorio de su periodo de agrupacion               
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);                                                                                                                                               
+        if (!acc[periodoAgrupacion]) {                                                                                                             //Si no existe una sumatorio el resultado sera el valor del gasto
+            acc[periodoAgrupacion] = gasto.valor;           
+        } else {                                                                                                                                   //Si Existe sumaremos el valor al conjunto
+            acc[periodoAgrupacion] += gasto.valor;
+        }
+        return acc;
+    }, {});
+
+    return resultado;
 }
+
 
 function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                        //Función contructor del objeto Gasto ARA
     this.descripcion = descripcion;
