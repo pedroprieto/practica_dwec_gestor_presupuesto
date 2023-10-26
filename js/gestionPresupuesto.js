@@ -13,6 +13,11 @@ function mostrarPresupuesto() {
 function listarGastos(){
     return gastos;
 }
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+}
 
 
 // ----------------  OBJETOS GASTO Y SUS METODOS  --------------
