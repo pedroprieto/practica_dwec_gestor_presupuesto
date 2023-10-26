@@ -26,6 +26,10 @@ function calcularTotalGastos(){
     let sumaGastosTotales = gastos.reduce((acumulador, gasto) => acumulador + gasto.valor, 0);
     return sumaGastosTotales;
 }
+function calcularBalance(){
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
+}
 
 
 
