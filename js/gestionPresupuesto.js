@@ -3,14 +3,8 @@ let presupuesto = 0;
 function actualizarPresupuesto(nuevoPresupuesto) {
     return nuevoPresupuesto >= 0 && !isNaN(nuevoPresupuesto) ? presupuesto = nuevoPresupuesto : -1;
 }
-
-
-
-
-
-
 function mostrarPresupuesto() {
-    // TODO
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto() {
