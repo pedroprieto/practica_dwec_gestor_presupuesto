@@ -1,5 +1,7 @@
 // ----------------  VARIABLES GLOBALES   -------------------------------
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 // ----------------  FUNCIONES  -------------------------------
 function actualizarPresupuesto(nuevoPresupuesto) {
@@ -8,12 +10,16 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
+function listarGastos(){
+    return gastos;
+}
 
 
 // ----------------  OBJETOS GASTO Y SUS METODOS  --------------
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = !isNaN(valor) && valor > 0 ? valor : 0;
+    
 
     // ----------------  METODOS  ------------------------------
     this.mostrarGasto = function(){
@@ -31,5 +37,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
