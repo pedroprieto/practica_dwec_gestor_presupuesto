@@ -17,7 +17,7 @@ function actualizarPresupuesto(actualiza) {
     // TODO
     if ( isNaN(actualiza) || actualiza <=0) {
         return -1;
-        alert("No es un Numero, Revisa el valor introducido");
+        // para web alert("No es un Numero, Revisa el valor introducido");
     } else 
     presupuesto = actualiza;
     return presupuesto;
@@ -69,7 +69,29 @@ function calcularBalance () {
 }
 
 //Función de un parámetro que devolverá un subconjunto de los gastos existentes
-function filtrarGastos () {
+function filtrarGastos (opciones) {
+    return gastos.filter(function (listado) {
+        let resultado = true;
+        if ( opciones.fechaDesde) {
+            if(listado.fecha < Date.parse(opciones.fechaDesde)) {
+                resultado = false;
+            }
+        }
+        if ( opciones.fechaHasta) {
+            if ( listado.fecha > Date.parse(opciones.fecha)) ´
+            resultado = false;
+        }
+        if ( opciones.valorMinimo) {
+            if ( opciones.valor < valorMinimo) {
+                resultado = false;
+            }
+        }
+        if (opciones.valorMaximo) {
+            if(opciones.valor > valorMaximo) {
+                resultado = false;
+            }
+        }
+    })
 
 }
 
@@ -144,7 +166,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         actualizaFecha = Date.parse(actualizaFecha);
         if (actualizaFecha) {
             this.fecha = actualizaFecha;
-        } else this.fecha = this.fecha;
+        } //else this.fecha = this.fecha;
     }
 
     //Funcion que actuliza las etiquetas del objeto gasto
