@@ -57,22 +57,59 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return texto;
     }
 
-    this.actualizarFecha = function(fecha){
+    this.actualizarFecha = function (fecha) {
         if (!isNaN(Date.parse(fecha))) {
             this.fecha = Date.parse(fecha);
         }
-    } 
+    }
 
-    this.anyadirEtiquetas = function(...etiquetas) {
+    this.anyadirEtiquetas = function (...etiquetas) {
         for (let etiqueta of etiquetas) {
-            if(!this.etiquetas.includes(etiqueta)){
+            if (!this.etiquetas.includes(etiqueta)) {
                 this.etiquetas.push(etiqueta);
             }
         }
     }
 
-    this.borrarEtiquetas = function(...etiqueta) {
+    this.borrarEtiquetas = function (...etiqueta) {
         this.etiquetas = this.etiquetas.filter(etiquetas => !etiqueta.includes(etiquetas));
+    }
+
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+
+        let dia = new Date(this.fecha).getDate();
+        let mes = new Date(this.fecha).getMonth() + 1;
+        let anyo = new Date(this.fecha).getFullYear();
+
+        switch (periodo) {
+            case 'anyo':
+                return anyo;
+                break;
+            case 'mes':
+                if (mes < 10) {
+                    return `${anyo}-0${mes}`
+                }
+                else {
+                    return `${anyo}-${mes}`
+                }
+                break;
+            case 'dia':
+                if (mes < 10 && dia < 10) {
+                    return `${anyo}-0${mes}-0${dia}`
+                }
+                else if (mes < 10) {
+                    return `${anyo}-0${mes}-${dia}`
+                }
+                else if (dia < 10) {
+                    return `${anyo}-${mes}-0${dia}`
+                }
+                else {
+                    return `${anyo}-${mes}-${dia}`
+                }
+                break;
+            default:
+                return 'Periodo erroneo.'
+        }
     }
 }
 
@@ -106,12 +143,12 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(){
-
+function filtrarGastos() {
+    
 }
 
-function agruparGastos(){
-    
+function agruparGastos() {
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
