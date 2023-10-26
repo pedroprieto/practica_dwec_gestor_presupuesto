@@ -14,12 +14,12 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 
 // Función que devuelve el presupuesto actual
 function mostrarPresupuesto() {
-    return ("El presupuesto es: " + presupuesto + "€");
+    return ("Tu presupuesto actual es de " + presupuesto + " €");
 }
 
-function CrearGasto(valor, descripcion) {
+function CrearGasto(descripcion, valor) {
     
-    if (valor > 0 || !isNaN(valor)) {
+    if (valor > 0 && !isNaN(valor)) {
         this.valor = valor;
     } else {
         this.valor = 0;
@@ -28,7 +28,7 @@ function CrearGasto(valor, descripcion) {
     this.descripcion = descripcion;
 
     this.mostrarGasto = function () {
-        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + "€";
+        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
     }
   
     this.actualizarDescripcion = function (nuevaDescripcion) {
@@ -36,25 +36,11 @@ function CrearGasto(valor, descripcion) {
     }
 
     this.actualizarValor = function (nuevoValor) {
-        if (nuevoValor > 0 || !isNaN(nuevoValor)) {
+        if (nuevoValor > 0 && !isNaN(nuevoValor)) {
             this.valor = nuevoValor;
         }
     }
   }
-  
-// Para probar el código, descomenta la siguiente línea y ejecuta este archivo con Node.js
-console.log("El presupuesto actual es: " + mostrarPresupuesto());
-console.log("El nuevo presupuesto es: " + actualizarPresupuesto(1000));
-console.log("El presupuesto actual es: " + mostrarPresupuesto());
-let gasto = new CrearGasto(10, "Café");
-console.log(gasto.mostrarGasto());
-gasto.actualizarValor(20);
-gasto.actualizarDescripcion("Café con leche");
-console.log(gasto.mostrarGasto());
-gasto.actualizarValor(-10);
-gasto.actualizarDescripcion("");
-console.log(gasto.mostrarGasto());
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
