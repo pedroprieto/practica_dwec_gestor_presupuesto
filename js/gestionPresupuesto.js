@@ -127,7 +127,7 @@ function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta) {
 
         //Buscamos el periodo para sumar los gastos
         let sumaPeriodo = gasto.obtenerPeriodoAgrupacion(periodo);
-        acc[sumaPeriodo] = acc[sumaPeriodo] += gasto.valor || acc[sumaPeriodo] + gasto.valor;
+        acc[sumaPeriodo] = acc[sumaPeriodo+=(gasto.valor)] || acc[sumaPeriodo+(gasto.valor)];
         return acc;
     })
 
