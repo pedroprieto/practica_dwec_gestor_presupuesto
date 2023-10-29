@@ -5,9 +5,9 @@
 var presupuesto = 0;
 
 function actualizarPresupuesto(nuevoValorPresupuesto) {
-    // TODO
+
     if (nuevoValorPresupuesto<0){
-        console.log (`El presupuesto no puede tener valor negativo. Has introducido un presupuesto de ${nuevoValorPresupuesto}`);
+        alert (`El presupuesto no puede tener valor negativo. Has introducido un presupuesto de ${nuevoValorPresupuesto}`);
         return -1;
     }
     else{
@@ -17,7 +17,7 @@ function actualizarPresupuesto(nuevoValorPresupuesto) {
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    // TODOgit statu
 }
 
 function CrearGasto() {
