@@ -17,7 +17,9 @@ function actualizarPresupuesto(nuevoValorPresupuesto) {
 }
 
 function mostrarPresupuesto() {
-    // TODOgit statu
+    
+    return `Tu presupuesto actual es de ${presupuesto} €`;
+    
 }
 
 function CrearGasto() {
