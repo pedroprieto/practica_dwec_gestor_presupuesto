@@ -19,23 +19,37 @@ function mostrarPresupuesto() {
 console.log(mostrarPresupuesto());
 
 function CrearGasto(descripcion, valor) {
-    this.descripcion = descripcion;
-    this.valor = (valor >= 0) ? valor : 0;
 
     this.actualizarDescripcion = function (des) {
         this.descripcion = des;
     }
 
     this.actualizarValor = function (valor) {
-        if (valor >= 0) {
-            return this.valor;
-        } else {
-            return this.valor;
-        }
+        this.valor = (valor >= 0) ? valor : this.valor;
     }
+
     this.mostrarGasto = function () {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`;
     }
+
+    this.descripcion = descripcion;
+    this.valor = (valor >= 0) ? valor : 0;
+}
+
+function listarGastos() {
+
+}
+function anyadirGasto() {
+
+}
+function borrarGasto() {
+
+}
+function calcularTotalGastos() {
+
+}
+function calcularBalance() {
+    
 }
 
 
@@ -45,5 +59,10 @@ function CrearGasto(descripcion, valor) {
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
