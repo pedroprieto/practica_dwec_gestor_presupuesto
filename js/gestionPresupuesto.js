@@ -57,22 +57,26 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.fecha = fecha;
   }
 
+  // Inicializamos el array de etiquetas
+  this.etiquetas = [];
+  // Añadimos las etiquetas recibidas como parámetro al array de etiquetas
+  this.etiquetas = etiquetas;
+
   // Función que recibe un número indeterminado de etiquetas y las añade al array de etiquetas del objeto comprobando que no estén duplicadas
   this.anyadirEtiquetas = function (...etiquetas) {
     for (let i = 0; i < etiquetas.length; i++) {
-        if (!this.etiquetas.includes(etiquetas[i])) {
-            this.etiquetas.push(etiquetas[i]);
-        }     
+      if (!this.etiquetas.includes(etiquetas[i])) {
+        this.etiquetas.push(etiquetas[i]);
+      }
     }
 
     // Función que recibe un número indeterminado de etiquetas y las elimina (si existen) de la propiedad etiquetas del objeto
-    this.borrarEtiquetas = function(...etiquetas){
-            for (let i = 0; i <etiquetas.length; i++) {
-                    if(this.etiquetas.includes(etiquetas[i]))
-                    this.etiquetas.pop(etiquetas[i]);
-            }
-    }
-
+    this.borrarEtiquetas = function (...etiquetas) {
+      for (let i = 0; i < etiquetas.length; i++) {
+        if (this.etiquetas.includes(etiquetas[i]))
+          this.etiquetas.pop(etiquetas[i]);
+      }
+    };
   };
 }
 
