@@ -1,12 +1,12 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-let presupuesto = 1000;
+let presupuesto = 0;
 let gastos = []; //Array vacio
 let idGasto = 0;
 // TODO: Variable global
 
 
 function actualizarPresupuesto(p) {
-    if (p >= 0) {
+    if (p > 0) {
         p = presupuesto;
         return p;
     } else {
@@ -34,40 +34,40 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
 
-    this.mostrarGastoCompleto = function() {
+    this.mostrarGastoCompleto = function () {
         let gastoCompleto = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
 Fecha: ${(new Date(this.fecha)).toLocaleString()}
 Etiquetas:\n`
 
-        for (let i of this.etiquetas) {
-            gastoCompleto += `- ${i}\n`
-        }
-        return gastoCompleto;
+        this.etiquetas.forEach((e) => {
+            gastoCompleto += `- ${e}\n`;
+        });
 
+        return gastoCompleto;
     };
 
-    this.actualizarFecha = function(fecha){
+    this.actualizarFecha = function (fecha) {
         let fec = Date.parse(fecha)
-        if(fec){
+        if (fec) {
             this.fecha = fec;
         }
     }
 
-    this.anyadirEtiquetas = function(...e) {
+    this.anyadirEtiquetas = function (...e) {
         for (let i of e) {
-	    if (this.etiquetas.indexOf(i) == -1) {
-		this.etiquetas.push(i);
-	    }
+            if (this.etiquetas.indexOf(i) == -1) {
+                this.etiquetas.push(i);
+            }
         }
     }
 
-    this.borrarEtiquetas = function(...e) {
+    this.borrarEtiquetas = function (...e) {
         let nuevaEtiquetas = [];
 
         for (let i of this.etiquetas) {
-	    if (e.indexOf(i) == -1) {
+            if (e.indexOf(i) == -1) {
                 nuevaEtiquetas.push(i);
-	    }
+            }
         }
 
         this.etiquetas = nuevaEtiquetas;
@@ -78,44 +78,49 @@ Etiquetas:\n`
     this.descripcion = descripcion;
     this.valor = (valor >= 0) ? valor : 0;
     let fec = Date.parse(fecha);
-        if(fec){
-            this.fecha = fec;
-        } else{
-            this.fecha = Date.parse(new Date())
-        }
+    if (fec) {
+        this.fecha = fec;
+    } else {
+        this.fecha = Date.parse(new Date())
+    }
     this.etiquetas = [];
     this.anyadirEtiquetas(...etiquetas);
-    
+
 }
 
 function listarGastos() {
     return gastos;
 }
+
 function anyadirGasto(gasto) {
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
 }
+
 function borrarGasto(id) {
-    const index=gastos.findIndex((gasto) => {
-         return gasto.id == id
+    const index = gastos.findIndex((gasto) => {
+        return gasto.id == id
     });
-    gastos.splice(index,1);
-    
+    gastos.splice(index, 1);
+
 }
+
 function calcularTotalGastos() {
     let sumarTotal = 0;
 
-    for(let i = 0; i < gastos.length; i++){
-            sumarTotal += gastos[i].valor;
+    for (let i = 0; i < gastos.length; i++) {
+        sumarTotal += gastos[i].valor;
     }
-    return sumarTotal; 
+    return sumarTotal;
 }
-function calcularBalance() {
 
-    let balance = presupuesto - calcularTotalGastos(); 
-    return balance; 
+function calcularBalance() {
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
+
+console.log(presupuesto);
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
