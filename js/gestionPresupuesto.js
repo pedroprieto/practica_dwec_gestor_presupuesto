@@ -1,5 +1,5 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-let presupuesto = 0;
+let presupuesto = 1000;
 let gastos = []; //Array vacio
 let idGasto = 0;
 // TODO: Variable global
@@ -107,14 +107,15 @@ function calcularTotalGastos() {
     let sumarTotal = 0;
 
     for(let i = 0; i < gastos.length; i++){
-            sumarTotal += gastos[i];
+            sumarTotal += gastos[i].valor;
     }
-    return sumarTotal;
+    return sumarTotal; 
 }
 function calcularBalance() {
 
+    let balance = presupuesto - calcularTotalGastos(); 
+    return balance; 
 }
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -127,5 +128,5 @@ export {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
 }
