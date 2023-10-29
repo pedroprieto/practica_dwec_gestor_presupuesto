@@ -1,6 +1,6 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
-let gasto = []; //Array vacio
+let gastos = []; //Array vacio
 let idGasto = 0;
 // TODO: Variable global
 
@@ -20,7 +20,7 @@ function mostrarPresupuesto() {
 
 console.log(mostrarPresupuesto());
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.actualizarDescripcion = function (des) {
         this.descripcion = des;
@@ -31,24 +31,85 @@ function CrearGasto(descripcion, valor) {
     }
 
     this.mostrarGasto = function () {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
+
+    this.mostrarGastoCompleto = function() {
+        let gastoCompleto = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
+Fecha: ${(new Date(this.fecha)).toLocaleString()}
+Etiquetas:\n`
+
+        for (let i of this.etiquetas) {
+            gastoCompleto += `- ${i}\n`
+        }
+        return gastoCompleto;
+
+    };
+
+    this.actualizarFecha = function(fecha){
+        let fec = Date.parse(fecha)
+        if(fec){
+            this.fecha = fec;
+        }
+    }
+
+    this.anyadirEtiquetas = function(...e) {
+        for (let i of e) {
+	    if (this.etiquetas.indexOf(i) == -1) {
+		this.etiquetas.push(i);
+	    }
+        }
+    }
+
+    this.borrarEtiquetas = function(...e) {
+        let nuevaEtiquetas = [];
+
+        for (let i of this.etiquetas) {
+	    if (e.indexOf(i) == -1) {
+                nuevaEtiquetas.push(i);
+	    }
+        }
+
+        this.etiquetas = nuevaEtiquetas;
+    }
+
+    /*********************        PROPIEDADES       *********************** */
 
     this.descripcion = descripcion;
     this.valor = (valor >= 0) ? valor : 0;
+    let fec = Date.parse(fecha);
+        if(fec){
+            this.fecha = fec;
+        } else{
+            this.fecha = Date.parse(new Date())
+        }
+    this.etiquetas = [];
+    this.anyadirEtiquetas(...etiquetas);
+    
 }
 
 function listarGastos() {
-
+    return gastos;
 }
-function anyadirGasto() {
-
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
-function borrarGasto() {
-
+function borrarGasto(id) {
+    const index=gastos.findIndex((gasto) => {
+         return gasto.id == id
+    });
+    gastos.splice(index,1);
+    
 }
 function calcularTotalGastos() {
+    let sumarTotal = 0;
 
+    for(let i = 0; i < gastos.length; i++){
+            sumarTotal += gastos[i];
+    }
+    return sumarTotal;
 }
 function calcularBalance() {
 
