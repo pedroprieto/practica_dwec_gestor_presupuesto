@@ -1,26 +1,25 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-let presupuesto = 2;
+let presupuesto = 0;
 // TODO: Variable global
 
 
 function actualizarPresupuesto(p) {
     if(p >= 0){
          p = presupuesto;
+         return p;
     }else {
         return p = -1;
     }
-
-    return p;
 }
 
 function mostrarPresupuesto() {
-    return (`Tu presupuesto actual es de ${presupuesto} €`);
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 console.log(mostrarPresupuesto());
 
 function CrearGasto() {
-    // TODO
+    
 }
 
 
