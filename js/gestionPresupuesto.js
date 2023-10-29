@@ -86,6 +86,27 @@ Etiquetas:\n`
        })
       }
 
+      this.obtenerPeriodoAgrupacion = function(periodo){
+       /* var fe = new Date(this.fecha); 
+        if(periodo === 'dia'){
+          return fe.getDate(); 
+        }else if(periodo === 'mes'){
+          return fe.getMonth(); 
+        }else if(periodo === 'anyo'){
+          return fe.getFullYear(); 
+        }*/
+
+        var fe = new Date(this.fecha); 
+        if (periodo === 'dia') {
+          return fe.getFullYear() + '-' + (fe.getMonth() + 1).toString().padStart(2, '0') + '-' + fe.getDate().toString().padStart(2, '0');
+        } else if (periodo === 'mes') {
+          return fe.getFullYear() + '-' + (fe.getMonth() + 1).toString().padStart(2, '0');
+        } else if (periodo === 'anyo') {
+          return fe.getFullYear().toString();
+        }
+      
+      }
+
         // Propiedades
       this.descripcion = descripcion;
       this.valor = (valor >=0) ? valor : 0;
@@ -142,6 +163,64 @@ function calcularBalance(){
     return balance; 
 }
 
+function filtrarGastos(filtros){
+
+    return gastos.filter(gasto => {
+      //Filtra por la fecha mínima 
+      if(filtros.fechaDesde && new Date(gasto.fecha) < new Date(filtros.fechaDesde) ){
+        return false; 
+      }
+
+      //Filtra por la fecha máxima
+      if(filtros.fechaHasta && new Date (gasto.fecha) > new Date(filtros.fechaHasta)){
+        return false; 
+      }
+
+      //Filtrar por el valor mínimo 
+      if(filtros.valorMinimo && gasto.valor < filtros.valorMinimo){
+        return false; 
+      }
+
+      //Filtrar por el valor máximo
+      if(filtros.valorMaximo && gasto.valor > filtros.valorMaximo){
+        return false; 
+      }
+
+      //Filtrar por descripción 
+      if(filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())){
+        return false; 
+      }
+
+      //Filtrar por etiquetas
+      if(filtros.etiquetasTiene){
+        const etiquetasFiltrar = filtros.etiquetasTiene.map(etiqueta => etiqueta.toLowerCase()); 
+        const gastoEtiquetas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase()); 
+        if(!etiquetasFiltrar.some(etiqueta => gastoEtiquetas.includes(etiqueta))){
+          return false; 
+        }
+      }
+      return true; 
+
+    }); 
+
+}
+
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+  let gastosFiltrados = filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta });
+
+  return gastosFiltrados.reduce(function (acumulador, gasto) {
+    let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+
+    if (acumulador[periodoAgrupacion]) {
+      acumulador[periodoAgrupacion] += gasto.valor; 
+    } else {
+      acumulador[periodoAgrupacion] = gasto.valor;
+    }
+
+    return acumulador;
+  }, {});
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -153,7 +232,9 @@ export   {
     anyadirGasto,
     borrarGasto, 
     calcularTotalGastos, 
-    calcularBalance
+    calcularBalance, 
+    filtrarGastos, 
+    agruparGastos
     
 }
 
