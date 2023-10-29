@@ -95,7 +95,17 @@ function anyadirGasto(gasto) {
   gastos.push(gasto);
 }
 
-function borrarGasto() {}
+// Función que recibe un id y elimina el gasto asociado del array 'gastos'
+function borrarGasto(id) {
+    let i = 0;
+    while (i < gastos.length) {
+        if (gastos[i].id == id) {
+            gastos.splice(i, 1);
+        } else {
+            i++;
+        }
+    }
+}
 
 function calcularTotalGastos() {}
 
