@@ -1,5 +1,7 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
+let gasto = []; //Array vacio
+let idGasto = 0;
 // TODO: Variable global
 
 
@@ -49,7 +51,7 @@ function calcularTotalGastos() {
 
 }
 function calcularBalance() {
-    
+
 }
 
 
