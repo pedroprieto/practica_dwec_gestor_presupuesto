@@ -33,7 +33,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       this.descripcion +
       " con valor " +
       this.valor +
-      " €."
+      " €"
     );
   };
 
@@ -95,7 +95,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.mostrarGastoCompleto = function () {
     let texto = "";
     const fechaString = new Date(this.fecha).toLocaleString();
-    texto = this.mostrarGasto() + "\nFecha: " + fechaString + "\nEtiquetas:\n";
+    texto = this.mostrarGasto() + ".\nFecha: " + fechaString + "\nEtiquetas:\n";
     for (let i = 0; i < this.etiquetas.length; i++) {
       const etiqueta = this.etiquetas[i];
       texto += "- " + etiqueta + "\n";
