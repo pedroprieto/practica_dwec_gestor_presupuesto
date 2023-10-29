@@ -106,11 +106,11 @@ function filtrarGastos(filtros) {
       // Comprueba si hay etiquetas en los filtros y si el gasto contiene al menos una de las etiquetas
       if (filtros.etiquetasTiene && filtros.etiquetasTiene.length > 0) {
         // Convierte etiquetas a minúsculas para comparación
-        const etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
-        const etiquetasFiltro = filtros.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
+        let etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
+        let etiquetasFiltro = filtros.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
   
         // Encuentra las etiquetas que coinciden
-        const etiquetasRepetidas = etiquetasFiltro.filter((etiqueta) => etiquetasGasto.includes(etiqueta));
+        let etiquetasRepetidas = etiquetasFiltro.filter((etiqueta) => etiquetasGasto.includes(etiqueta));
         
         // Si no coincide ninguna etiqueta, excluye el gasto
         if (etiquetasRepetidas.length === 0) {
@@ -122,10 +122,36 @@ function filtrarGastos(filtros) {
     return resultado;
   }
   
-
-function agruparGastos(){
-
-}
+//Función de cuatro parámetros que devolverá un objeto con los resultados de realizar una agrupación por período temporal.
+  function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) {
+    // Define los filtros para la función de filtrado
+    let filtros = {
+      fechaDesde,
+      fechaHasta,
+      etiquetasTiene: etiquetas,
+    };
+  
+    // Llama a la función de filtrado para obtener el subconjunto de gastos que cumple con los filtros
+    let gastosFiltrados = filtrarGastos(filtros);
+  
+    // Inicializa el objeto acumulador
+    let resultado = gastosFiltrados.reduce((acc, gasto) => {
+      // Obtiene el período de agrupación para el gasto
+      let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+  
+      // Inicializa la propiedad en el acumulador si es la primera vez que se encuentra este período de agrupación
+      if (!acc[periodoAgrupacion]) {
+        acc[periodoAgrupacion] = 0;
+      }
+  
+      // Suma el valor del gasto a la propiedad correspondiente en el acumulador
+      acc[periodoAgrupacion] += gasto.valor;
+  
+      return acc;
+    }, {});
+  
+    return resultado;
+  }
 
 // Función constructora para crear objetos de gasto con descripción, valor, fecha
 //  y un número indeterminado de argumentos que se almacenan en el array etiquetas.
@@ -178,7 +204,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             listaEtiquetas += `- ${etiqueta}\n`;
         }
         //Creamos una instancia Date válida para formatear con toLocaleString.
-        const fechaFormateada = new Date(this.fecha).toLocaleString();
+        let fechaFormateada = new Date(this.fecha).toLocaleString();
         //Devolvemos un texto multilinea
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
 Fecha: ${fechaFormateada}
