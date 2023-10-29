@@ -6,8 +6,8 @@ var presupuesto = 0;
 
 function actualizarPresupuesto(nuevoValorPresupuesto) {
 
-    if (nuevoValorPresupuesto<0){
-        alert (`El presupuesto no puede tener valor negativo. Has introducido un presupuesto de ${nuevoValorPresupuesto}`);
+    if (nuevoValorPresupuesto < 0){
+        console.log (`El presupuesto no puede tener valor negativo.`);
         return -1;
     }
     else{
@@ -22,8 +22,27 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto() {
-    // TODO
+function CrearGasto(descripcion, valor) {
+    this.descripcion = descripcion;
+    this.valor = valor;
+
+    this.mostrarGasto = function() {
+        console.log (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+    }
+
+    this.actualizarDescripcion = function (descripcion) {
+        this.descripcion = descripcion; 
+    }
+
+    this.actualizarValor = function (nuevoValor) {
+        if (nuevoValor >= 0) {
+            this.valor = nuevoValor;
+        }
+        else {
+            this.valor = 0;
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
