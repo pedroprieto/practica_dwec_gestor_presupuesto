@@ -57,6 +57,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.fecha = fecha;
   }
 
+  // Función que actualiza la propiedad fecha recibiendo una fecha en formato string.
+  this.actualizarFecha = function (nuevaFecha) {
+    nuevaFecha = Date.parse(nuevaFecha);
+    if (!isNaN(nuevaFecha)) {
+        this.fecha = nuevaFecha;
+    }
+    };
+
   // Inicializamos el array de etiquetas
   this.etiquetas = [];
   // Añadimos las etiquetas recibidas como parámetro al array de etiquetas
@@ -82,6 +90,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       }
     }
   };
+
+  // Función que devuelve un texto detallando las características de un gasto
+  this.mostrarGastoCompleto = function () {
+    let texto = "";
+    texto =
+      this.mostrarGasto() +
+      "\n" +
+      "Fecha: " +
+      fecha.toLocaleString() +
+      "\n" +
+      "Etiquetas: ";
+    for (let i = 0; i < this.etiquetas.length; i++) {
+      const etiqueta = this.etiquetas[i];
+      texto += etiqueta + "\n";
+    }
+    return texto;
+  };
 }
 
 // Función sin parámetros que devolverá la variable global gastos
@@ -97,26 +122,29 @@ function anyadirGasto(gasto) {
 
 // Función que recibe un id y elimina el gasto asociado del array 'gastos'
 function borrarGasto(id) {
-    let i = 0;
-    while (i < gastos.length) {
-        if (gastos[i].id == id) {
-            gastos.splice(i, 1);
-        } else {
-            i++;
-        }
+  let i = 0;
+  while (i < gastos.length) {
+    if (gastos[i].id == id) {
+      gastos.splice(i, 1);
+    } else {
+      i++;
     }
+  }
 }
 
 // Función que devuelve la suma de los valores de todos los gastos del array 'gastos' usando el método reduce con una función flecha como callback
 function calcularTotalGastos() {
-    const totalGastos = gastos.reduce((acumulador, gasto) => acumulador + gasto.valor, 0);
-    return totalGastos;
+  const totalGastos = gastos.reduce(
+    (acumulador, gasto) => acumulador + gasto.valor,
+    0
+  );
+  return totalGastos;
 }
 
-
+// Función que devuelve la diferencia entre el presupuesto y el gasto total usando 'calcularTotalGastos'
 function calcularBalance() {
-    const totalBalance = presupuesto - calcularTotalGastos();
-    return totalBalance;
+  const totalBalance = presupuesto - calcularTotalGastos();
+  return totalBalance;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
