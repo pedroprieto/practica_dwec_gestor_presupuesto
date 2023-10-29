@@ -107,7 +107,11 @@ function borrarGasto(id) {
     }
 }
 
-function calcularTotalGastos() {}
+// Función que devuelve la suma de los valores de todos los gastos del array 'gastos' usando el método reduce con una función flecha como callback
+function calcularTotalGastos() {
+    return totalGastos = gastos.reduce((acumulador, gasto) => acumulador + gasto.valor, 0);
+}
+
 
 function calcularBalance() {}
 
