@@ -1,5 +1,7 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+// Funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 // Función que actualiza el presupuesto y devuelve el nuevo valor comprobando que sea un número válido
 function actualizarPresupuesto(nuevoPresupuesto) {
