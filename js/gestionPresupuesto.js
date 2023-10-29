@@ -48,7 +48,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   };
 
   // Transformamos la fecha con Date.parse para pasarla de string a timestamp
-  Date.parse(fecha);
+  fecha = Date.parse(fecha);
 
   // Comprobamos que la fecha sea válida, si no lo es, asignamos la fecha actual
   if (isNaN(fecha)) {
@@ -65,7 +65,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   // Función que recibe un número indeterminado de etiquetas y las añade al array de etiquetas del objeto comprobando que no estén duplicadas
   this.anyadirEtiquetas = function (...etiquetas) {
     for (let i = 0; i < etiquetas.length; i++) {
-        const etiqueta = etiquetas[i];
+      const etiqueta = etiquetas[i];
       if (!this.etiquetas.includes(etiqueta)) {
         this.etiquetas.push(etiqueta);
       }
