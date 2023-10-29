@@ -4,28 +4,24 @@
 
 let presupuesto = 0;
 
-function actualizarPresupuesto(resultado)
-{
-    // TODO
-    if(resultado >= 0)
-    {
-        resultado = presupuesto;
 
-        return resultado;
-    }
+function actualizarPresupuesto(result)
+ {
+    if (result >= 0)
+    {
+        presupuesto = result;
+        return result;
+    } 
     else
     {
-        presupuesto = -1;
-
-        return presupuesto;
+        return -1;
     }
-
 }
 
 function mostrarPresupuesto()
 {
     // TODO
-    let resultado = "Tu presupuesto actual es de " + presupuesto + "€";
+    let resultado = "Tu presupuesto actual es de " + presupuesto + " €";
     
     return resultado;
 }
@@ -45,6 +41,7 @@ function CrearGasto(descripcion, valor)
 
     this.actualizarValor = function(valor)
     {
+
         this.valor = (valor >=0) ? valor : this.valor;
     }
 
