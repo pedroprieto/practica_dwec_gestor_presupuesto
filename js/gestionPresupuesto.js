@@ -33,7 +33,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       this.descripcion +
       " con valor " +
       this.valor +
-      " €"
+      " €."
     );
   };
 
@@ -61,9 +61,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.actualizarFecha = function (nuevaFecha) {
     nuevaFecha = Date.parse(nuevaFecha);
     if (!isNaN(nuevaFecha)) {
-        this.fecha = nuevaFecha;
+      this.fecha = nuevaFecha;
     }
-    };
+  };
 
   // Inicializamos el array de etiquetas
   this.etiquetas = [];
@@ -94,16 +94,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   // Función que devuelve un texto detallando las características de un gasto
   this.mostrarGastoCompleto = function () {
     let texto = "";
-    texto =
-      this.mostrarGasto() +
-      "\n" +
-      "Fecha: " +
-      fecha.toLocaleString() +
-      "\n" +
-      "Etiquetas: ";
+    const fechaString = new Date(this.fecha).toLocaleString();
+    texto = this.mostrarGasto() + "\nFecha: " + fechaString + "\nEtiquetas:\n";
     for (let i = 0; i < this.etiquetas.length; i++) {
       const etiqueta = this.etiquetas[i];
-      texto += etiqueta + "\n";
+      texto += "- " + etiqueta + "\n";
     }
     return texto;
   };
