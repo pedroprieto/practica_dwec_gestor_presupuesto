@@ -88,8 +88,12 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 function listarGastos() {
   return gastos;
 }
-
-function anyadirGasto() {}
+// Función que recibe un objeto Gasto y le añade una propiedad id cuyo valor será el valor actual de la variable global idGasto
+function anyadirGasto(gasto) {
+  gasto.id = idGasto;
+  idGasto++;
+  gastos.push(gasto);
+}
 
 function borrarGasto() {}
 
