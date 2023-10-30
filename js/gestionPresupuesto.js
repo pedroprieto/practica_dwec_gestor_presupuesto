@@ -51,8 +51,24 @@ function filtrarGastos(opciones){ // opciones será un objeto, por lo cual se le
         );
     });   
 }
-function agruparGastos(){
-
+// **Error cometido antes** (...etiquetas), esto es solo para una lista de elementos indefinidos
+// para ele ejercicio simplemente se añade un array con un número determinado de etiquetas asi que no hace falta los 3 puntos
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta,){ // ¿?¿¿?¿?¿¿??¿¿??¿¿? si pongo etiquetas al final no se porque no funciona ¿?¿?¿????¿¿?¿¿¿?¿¿?¿??¿?¿¿?
+    // Obtengo los gastos filtrados 
+    let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+    // Para cada gasto filtrado voy a obtener su periodo de agrupación.
+    // a continuacion compruebo si en el acumulador existe dicho periodo de agrupació,
+    // si no existe lo añade y lo inicializa en 0,
+    // despues se se suma el valor del objeto al acumulador correspondiente
+    let gastosAgrupados = gastosFiltrados.reduce((acumulador, gasto) => {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (!(periodoAgrupacion in acumulador)) {
+            acumulador[periodoAgrupacion] = 0;
+        }
+        acumulador[periodoAgrupacion] += gasto.valor;
+        return acumulador; 
+    }, {});
+    return gastosAgrupados; 
 }
 
 
