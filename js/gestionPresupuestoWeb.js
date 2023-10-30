@@ -39,3 +39,32 @@ function mostrarGastoWeb(idElemento, gasto) {
         divEtiquetas.appendChild(etiquetaSpan);
     })
 }
+
+function mostrarDatosAgrupadosWeb(idElemento, agrup, periodo) {
+    let elemento = document.getElementById(idElemento)
+
+    let divAgrupacion = document.createElement("div");
+    divAgrupacion.classList.add("agrupacion");
+    divAgrupacion.appendChild(divAgrupacion);
+
+    let titulo = document.createElement("h1");
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrupacion.appendChild(titulo);
+
+    for (let agrupacion in agrup) {
+        if(agrup.hasOwnProperty(agrupacion)){
+            let divAgrupacionDato = document.createElement("div");
+        divAgrupacionDato.classList.add("agrupacion-dato")
+
+        let spanDatoClave = document.createElement("span");
+        spanDatoClave.classList.add("agrupacion-dato-clave");
+        spanDatoClave.textContent = clave;
+        divAgrupacionDato.appendChild(spanDatoClave);
+
+        let spanDatoValor = document.createElement("span");
+        spanDatoValor.classList.add("agrupacion-dato-valor");
+        spanDatoValor.textContent = objeto[clave];
+        divAgrupacionDato.appendChild(spanDatoValor);
+        }      
+    }
+}
