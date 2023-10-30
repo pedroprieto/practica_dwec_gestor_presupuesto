@@ -117,7 +117,14 @@ function filtrarGastos(objeto) {
 }
 
 
-function agruparGastos() { }
+function agruparGastos() {
+
+
+
+
+
+
+}
 
 
 //Función constructora que se encargará de crear un objeto gasto
