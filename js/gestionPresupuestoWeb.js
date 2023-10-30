@@ -68,3 +68,9 @@ function mostrarDatosAgrupadosWeb(idElemento, agrup, periodo) {
         }      
     }
 }
+
+export{
+    mostrarDatosAgrupadosWeb,
+    mostrarDatoEnId,
+    mostrarGastoWeb
+}
