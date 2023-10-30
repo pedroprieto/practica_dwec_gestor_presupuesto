@@ -53,6 +53,72 @@ function calcularBalance() {
   let balance = presupuesto - calcularTotalGastos();
   return balance;
 };
+function filtrarGastos(objeto) {
+  let fechaDesde = objeto.fechaDesde;
+  let fechaHasta = objeto.fechaHasta;
+  let valorMinimo = objeto.valorMinimo;
+  let valorMaximo = objeto.valorMaximo;
+  let descripcionContiene = objeto.descripcionContiene;
+  let etiquetasTiene = objeto.etiquetasTiene;
+
+
+  if (objeto.length == 0 || objeto == null) {
+    return gastos;
+  } else {
+    return gastos.filter(function (gasto) { 
+      let agrupacion = true;
+      if (fechaDesde) {
+        if (gasto.fecha < Date.parse(fechaDesde)) {
+          return false;
+        }
+      }
+
+      if (fechaHasta) {
+        if (gasto.fecha > Date.parse(fechaHasta)) {
+          return false;
+        }
+      }
+
+      if (valorMinimo) {
+        if (gasto.valor < valorMinimo) {
+          return false;
+        }
+      }
+
+      if (valorMaximo) {
+        if (gasto.valor > valorMaximo) {
+          return false;
+        }
+      }
+
+      if (descripcionContiene) {
+        if (gasto.descripcion.indexOf(descripcionContiene) == -1) {  // Si no se encuentra una coincidencia, indexOf devuelve el valor -1. 
+            return false;                                            //Si se encuentra una coincidencia, devuelve la posición en la cadena 
+          
+        }
+      }
+      if (etiquetasTiene) {
+        let encontrado = false;
+        for (let i = 0; i < gasto.etiquetas.length; i++) {
+          for (let j = 0; j < etiquetasTiene.length; j++) {
+            if (gasto.etiquetas[i] == etiquetasTiene[j]) {
+              return true;
+            }
+          }
+        }
+        if (!encontrado) {
+          return false;
+        }
+      }
+      return agrupacion;
+    });
+  }
+
+}
+
+
+function agruparGastos() { }
+
 
 //Función constructora que se encargará de crear un objeto gasto
 
@@ -135,7 +201,26 @@ this.borrarEtiquetas = function (...etiquetasABorrar) {
     }
   }
 };
+this.obtenerPeriodoAgrupacion = function (periodo) {
 
+  //fecha= new Date(this.fecha).toDateString();//! no estoy seguro de que lo pase a string correcto  (Wed Jun 28 1993)
+  fecha = new Date(this.fecha).toISOString(); //? Devuelve 2011-10-05T14:48:00.000Z
+  let resultadoAgrup = "Resultado :";
+
+  switch (periodo) { //sobre 10 
+
+    case "dia": // aaaa-mm-dd;
+      resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
+      break;
+    case "mes":  //aaaa-mm
+      resultadoAgrup = fecha.substring(0, 7);
+      break;
+    case "anyo":  //aaaa
+      resultadoAgrup = fecha.substring(0, 4);
+      break;
+  }
+  return resultadoAgrup;
+};
 
 }
 
@@ -143,6 +228,7 @@ this.borrarEtiquetas = function (...etiquetasABorrar) {
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export {
+  
   mostrarPresupuesto,
   actualizarPresupuesto,
   CrearGasto,
@@ -150,5 +236,8 @@ export {
   anyadirGasto,
   borrarGasto,
   calcularTotalGastos,
-  calcularBalance,
+  calcularBalance, 
+  filtrarGastos, 
+  agruparGastos,
+  
 };
