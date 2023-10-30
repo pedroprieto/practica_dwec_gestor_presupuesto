@@ -63,6 +63,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.actualizarFecha = function(nuevaFecha){
         this.fecha = nuevaFecha && Date.parse(nuevaFecha) ? Date.parse(nuevaFecha) : this.fecha;
     }
+    this.anyadirEtiquetas = function(...nuevasEtiquetas){
+        nuevasEtiquetas.forEach(etiqueta => {
+            if(!this.etiquetas.includes(etiqueta)){
+                this.etiquetas.push(etiqueta);
+            }
+        });
+    }
 }
 
 
