@@ -40,31 +40,29 @@ export function mostrarGastoWeb(idElemento,gasto){
 
 export function mostrarGastosAgrupadosWeb(idElemento,objeto,periodo){
 
-    let element= document.getElementById(idElemento);
-    
-    let divAgrupar= document.createElement("div");
+    let element = document.getElementById(idElemento);
+
+    let divAgrupar = document.createElement("div");
     divAgrupar.classList.add("agrupacion");
     element.appendChild(divAgrupar);
-    
-    let divTitulo= document.createElement("h1");
-    divTitulo.textContent=`Gastos agrupados por ${periodo}`;
+
+    let divTitulo = document.createElement("h1");
+    divTitulo.textContent = `Gastos agrupados por ${periodo}`;
     divAgrupar.appendChild(divTitulo);
 
-    for(let clave in objeto){
-        if(objeto.hasOwnProperty(clave)){
-           
-            
-            let divAgrupacionDato= document.createElement("div");
-            divAgrupacionDato.setAttribute("class","agrupacion-dato")
+    for (let clave in objeto) {
+        if (objeto.hasOwnProperty(clave)) {
+            let divAgrupacionDato = document.createElement("div");
+            divAgrupacionDato.classList.add("agrupacion-dato");
 
-            let spanClave= document.createElement("span");
-            spanClave.setAttribute("class","agrupacion-dato-clave");
-            spanClave.textContent=clave;
+            let spanClave = document.createElement("span");
+            spanClave.classList.add("agrupacion-dato-clave");
+            spanClave.textContent = clave;
             divAgrupacionDato.appendChild(spanClave);
 
-            let spanAgrupacion= document.createElement("span");
-            spanAgrupacion.setAttribute("class","agrupacion-dato-valor");
-            spanAgrupacion.textContent=objeto[clave];
+            let spanAgrupacion = document.createElement("span");
+            spanAgrupacion.classList.add("agrupacion-dato-valor");
+            spanAgrupacion.textContent = objeto[clave];
             divAgrupacionDato.appendChild(spanAgrupacion);
 
             divAgrupar.appendChild(divAgrupacionDato);
