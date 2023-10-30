@@ -30,6 +30,30 @@ function calcularBalance(){
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
+function filtrarGastos(opciones){ // opciones será un objeto, por lo cual se le puede añadir propiedades
+    let fechaDesde = opciones.fechaDesde;
+    let fechaHasta = opciones.fechaHasta;
+    let valorMinimo = opciones.valorMinimo;
+    let valorMaximo = opciones.valorMaximo;
+    let descripcionContiene = opciones.descripcionContiene;
+    let etiquetasTiene = opciones.etiquetasTiene;
+
+    return gastos.filter(objeto => {
+        return ( 
+           //se comprueba si la opcion no es nula, undefined o vacia (?) si se cumple se comprueba la condicion (la cual devolvera trueo o false)
+           // : si la opcion esta vacia se devuelve true, es decir no se le aplica el filtro
+          (fechaDesde ? objeto.fecha >= Date.parse(fechaDesde) : true) &&
+          (fechaHasta ? objeto.fecha <= Date.parse(fechaHasta) : true) &&
+          (valorMinimo ? objeto.valor >= valorMinimo : true) &&
+          (valorMaximo ? objeto.valor <= valorMaximo : true) &&
+          (descripcionContiene ? objeto.descripcion.toUpperCase().includes(descripcionContiene.toUpperCase()) : true) &&
+          (etiquetasTiene ? objeto.etiquetas.some(etiqueta => etiquetasTiene.includes(etiqueta)): true)
+        );
+    });   
+}
+function agruparGastos(){
+
+}
 
 
 // ----------------  OBJETOS GASTO Y SUS METODOS  --------------
@@ -76,7 +100,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             if (posicion != -1){
                 this.etiquetas.splice(posicion, 1);
             }
-        })
+        });
+    }
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let fechaFormateada = new Date(this.fecha).toISOString(); // --> AAAA-MM-DDTHH:mm:ss.sssZ
+        let anyo = fechaFormateada.slice(0,4);                    
+        let mes = fechaFormateada.slice(5,7);
+        let dia = fechaFormateada.slice(8,10);
+
+        if(periodo === "dia")
+            return `${anyo}-${mes}-${dia}`;
+        else if (periodo === "mes")
+            return `${anyo}-${mes}`;
+        else if (periodo == "anyo")
+            return `${anyo}`;
+        else
+            console.log("Periodo erroneo");
     }
 }
 
@@ -89,5 +128,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
