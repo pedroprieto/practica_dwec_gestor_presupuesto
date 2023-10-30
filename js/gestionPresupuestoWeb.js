@@ -1,6 +1,4 @@
-import * as gestPres from "./gestionPresupuesto.js";
-
-function mostrarDatoEnID(idElemento, valor){
+function mostrarDatoEnId(idElemento, valor){
     // se busca el elemnto con el id indicado y muestra el valor en dicho elemnto
     return document.getElementById(idElemento).innerText = valor;
 }
@@ -76,4 +74,11 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         spanValor.innerHTML = valor;
         divGrupo.append(spanValor);
     }
+}
+
+
+export{
+    mostrarDatoEnId,
+    mostrarGastoWeb,
+    mostrarGastosAgrupadosWeb
 }
