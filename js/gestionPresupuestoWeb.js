@@ -59,17 +59,19 @@ export function mostrarGastosAgrupadosWeb(idElemento,objeto,periodo){
             console.log("Valor: " + objeto[clave]);
             
             let divAgrupacionDato= document.createElement("div");
-            divAgrupacionDato.classList.add("agrupacion-dato")
+            divAgrupacionDato.setAttribute("class","agrupacion-dato")
 
             let spanClave= document.createElement("span");
-            spanClave.classList.add("agrupacion-dato-clave");
+            spanClave.setAttribute("class","agrupacion-dato-clave");
             spanClave.textContent=clave;
             divAgrupacionDato.appendChild(spanClave);
 
             let spanAgrupacion= document.createElement("span");
-            spanAgrupacion.classList.add("agrupacion-dato-valor");
+            spanAgrupacion.setAttribute("class","agrupacion-dato-valor");
             spanAgrupacion.textContent=objeto[clave];
             divAgrupacionDato.appendChild(spanAgrupacion);
+
+            divAgrupar.appendChild(divAgrupacionDato);
         }
     }
     
