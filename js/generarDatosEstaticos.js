@@ -53,3 +53,9 @@ filtroGastos4.forEach((gasto) => {
 
 let gastosXDia = pre.agruparGastos("dia");
 preweb.mostrarDatosAgrupadosWeb("agrupacion-dia", gastosXDia, "dia");
+
+let gastosXMes = pre.agruparGastos("mes");
+preweb.mostrarDatosAgrupadosWeb("agrupacion-mes", gastosXMes, "mes");
+
+let gastosXAnyo = pre.agruparGastos("anyo");
+preweb.mostrarDatosAgrupadosWeb("agrupacion-anyo", gastosXAnyo, "anyo");
