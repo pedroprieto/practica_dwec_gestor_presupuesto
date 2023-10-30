@@ -223,7 +223,8 @@ export   {
     actualizarPresupuesto,
     filtrarGastos,
     agruparGastos,
-    CrearGasto
+    CrearGasto,
+    presupuesto
 }
 
 

@@ -1,9 +1,9 @@
-function mostrarDatoEnID(idElemento,valor){
+export function mostrarDatoEnID(idElemento,valor){
     let element= document.getElementById(idElemento);
     element.textContent=valor;
 }
 
-function mostrarGastoWeb(idElemento,gasto){
+export function mostrarGastoWeb(idElemento,gasto){
     let element =document.getElementById(idElemento);
     
     let divGasto = document.createElement("div");
@@ -38,7 +38,7 @@ function mostrarGastoWeb(idElemento,gasto){
     })
 }
 
-function mostrarGastosAgrupadosWeb(idElemento,objeto,periodo){
+export function mostrarGastosAgrupadosWeb(idElemento,objeto,periodo){
 
     let element= document.getElementById(idElemento);
     
