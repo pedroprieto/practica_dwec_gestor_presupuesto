@@ -60,6 +60,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
         return texto
     }
+    this.actualizarFecha = function(nuevaFecha){
+        this.fecha = nuevaFecha && Date.parse(nuevaFecha) ? Date.parse(nuevaFecha) : this.fecha;
+    }
 }
 
 
