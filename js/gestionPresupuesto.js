@@ -3,12 +3,13 @@
 let presupuesto = 0;
 
 function actualizarPresupuesto(ingreso) {
-    if (ingreso < 0) {
-        console.log("Error");
-        return -1;
+    if (ingreso >= 0) {
+        return presupuesto = ingreso;
     }
     else {
-        return presupuesto += ingreso;
+        
+        console.log("Error");
+        return -1;
     }
 }
 
