@@ -224,7 +224,6 @@ export   {
     filtrarGastos,
     agruparGastos,
     CrearGasto,
-    presupuesto
 }
 
 
