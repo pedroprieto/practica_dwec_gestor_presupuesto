@@ -143,37 +143,66 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(objeto) {
-    return gastos.filter(gasto => {
-        let fechaGasto = new Date(gasto.fecha);
-        let fechaDesde = objeto.fechaDesde ? new Date(objeto.fechaDesde) : null;
-        let fechaHasta = objeto.fechaHasta ? new Date(objeto.fechaHasta) : null;
-
-        if ((fechaDesde && fechaGasto < fechaDesde)||(fechaHasta && fechaGasto > fechaHasta)) {
-            return false;
+function filtrarGastos(filtros) {
+    let resultado = gastos.filter((gasto) => {
+        
+        if (filtros.fechaDesde && Date.parse(filtros.fechaDesde) > gasto.fecha) {
+          return false; 
+        }
+  
+        if (filtros.fechaHasta && Date.parse(filtros.fechaHasta) < gasto.fecha) {
+          return false; 
+        }
+  
+        if (filtros.valorMinimo && filtros.valorMinimo > gasto.valor) {
+          return false; 
         }
 
-        if ((objeto.valorMinimo && gasto.valor < objeto.valorMinimo)||
-            (objeto.valorMaximo && gasto.valor > objeto.valorMaximo)) {
-            return false;
+        if (filtros.valorMaximo && filtros.valorMaximo < gasto.valor) {
+          return false; 
         }
-
-        if (objeto.descripcionContiene &&
-            !gasto.descripcion.toLowerCase().includes(objeto.descripcionContiene.toLowerCase())) {
-            return false;
+  
+        if (filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) {
+          return false; 
         }
-
-        if (objeto.etiquetasTiene &&
-            !objeto.etiquetasTiene.some(etiqueta => gasto.etiquetas.map(et => et.toLowerCase()).includes(etiqueta.toLowerCase()))) {
+  
+        if (filtros.etiquetasTiene && filtros.etiquetasTiene.length > 0) {
+          
+          const etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
+          const etiquetasFiltro = filtros.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
+          const etiquetasRepetidas = etiquetasFiltro.filter((etiqueta) => etiquetasGasto.includes(etiqueta));
+  
+          if (etiquetasRepetidas.length === 0) {
             return false;
+          }
         }
-
-        return true;
-    });
+        return true; 
+      });
+      return resultado;
 }
 
-function agruparGastos() {
+function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = "", fechaHasta = "") {
 
+    let filtros = {
+        fechaDesde,
+        fechaHasta,
+        etiquetasTiene: etiquetas,
+    };
+
+    let gastosFiltrados = filtrarGastos(filtros);
+
+    let resultado = gastosFiltrados.reduce((acc, gasto) => {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        if (!acc[periodoAgrupacion]) {
+            acc[periodoAgrupacion] = 0;
+        }
+        acc[periodoAgrupacion] += gasto.valor;
+
+        return acc;
+    }, {});
+
+    return resultado;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
