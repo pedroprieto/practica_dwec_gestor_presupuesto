@@ -135,32 +135,7 @@ this.borrarEtiquetas = function (...etiquetasABorrar) {
     }
   }
 };
-/*  borrarEtiquetas
 
-/// FUNCIONA 
-this.borrarEtiquetas2 = function (...etiquetasBorrar) {
-  let nuevoArray0=[];
-  for (let iter of this.etiquetas) {
-   if(etiquetasBorrar.indexOf(iter)== -1){
-   nuevoArray0.push(iter);
-   }
-  }
-   this.etiquetas=nuevoArray0;
-   return etiquetas
- };
-
-
- ///!  borrarEtiquetas_NOFUNCIONAFORMACORRECTA
-
-
- this.borrarEtiquetas_NOFUNCIONAFORMACORRECTA = function (...etiquetasBorrar) {
-  for (let i=0 ;i < this.etiquetas.length; i++) {
-    if (this.etiquetas.includes(etiquetasBorrar)) {
-      this.etiquetas.splice(i, 1);
-    }
-  }
-};
-*/
 
 }
 
