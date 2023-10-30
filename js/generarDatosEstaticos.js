@@ -56,6 +56,11 @@ gasto4Filtrado.forEach((gasto)=>{
 })
 
 const gastosAgrupadosPorDia = agruparGastos("dia");
-
 mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgrupadosPorDia,"dia");
+
+const gastosAgrupadosPorMes = agruparGastos();
+mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgrupadosPorMes,"mes");
+
+const gastosAgrupadosPorAnyo = agruparGastos("anyo");
+mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgrupadosPorAnyo,"anyo");
 

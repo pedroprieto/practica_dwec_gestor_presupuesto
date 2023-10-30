@@ -42,9 +42,6 @@ export function mostrarGastosAgrupadosWeb(idElemento,objeto,periodo){
 
     let element= document.getElementById(idElemento);
     
-    console.log("ID del elemento: " + idElemento);
-    console.log("Objeto de agrupación: ", objeto);
-
     let divAgrupar= document.createElement("div");
     divAgrupar.classList.add("agrupacion");
     element.appendChild(divAgrupar);
@@ -55,8 +52,7 @@ export function mostrarGastosAgrupadosWeb(idElemento,objeto,periodo){
 
     for(let clave in objeto){
         if(objeto.hasOwnProperty(clave)){
-            console.log("Clave: " + clave);
-            console.log("Valor: " + objeto[clave]);
+           
             
             let divAgrupacionDato= document.createElement("div");
             divAgrupacionDato.setAttribute("class","agrupacion-dato")
