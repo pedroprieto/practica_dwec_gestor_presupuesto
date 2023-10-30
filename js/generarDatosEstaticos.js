@@ -1,10 +1,25 @@
-import * as pre from "./gestionPresupuesto.js";
-import * as preweb from "./gestionPresupuestoWeb.js";
+import {
+    mostrarPresupuesto,
+    actualizarPresupuesto,
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
+} from "./gestionPresupuesto.js";
+import {
+    mostrarDatosAgrupadosWeb,
+    mostrarDatoEnId,
+    mostrarGastoWeb
+} from "./gestionPresupuestoWeb.js";
 
-pre.actualizarPresupuesto(1500);
+actualizarPresupuesto(1500);
 
-let presupuesto = pre.mostrarPresupuesto();
-preweb.mostrarDatoEnId("presupuesto", presupuesto);
+let presupuesto = mostrarPresupuesto();
+mostrarDatoEnId("presupuesto", presupuesto);
 
 let gasto1 = new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gasto2 = new CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -13,49 +28,49 @@ let gasto4 = new CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gaso
 let gasto5 = new CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
 let gasto6 = new CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
-pre.anyadirGasto(gasto1);
-pre.anyadirGasto(gasto2);
-pre.anyadirGasto(gasto3);
-pre.anyadirGasto(gasto4);
-pre.anyadirGasto(gasto5);
-pre.anyadirGasto(gasto6);
+anyadirGasto(gasto1);
+anyadirGasto(gasto2);
+anyadirGasto(gasto3);
+anyadirGasto(gasto4);
+anyadirGasto(gasto5);
+anyadirGasto(gasto6);
 
-let totalGastos = pre.calcularTotalGastos();
-preweb.mostrarDatoEnId(totalGastos);
+let totalGastos = calcularTotalGastos();
+mostrarDatoEnId(totalGastos);
 
-let balance = pre.calcularBalance();
-preweb.mostrarDatoEnId(balance);
+let balance = calcularBalance();
+mostrarDatoEnId(balance);
 
-let mostrarGastos = pre.listarGastos();
+let mostrarGastos = listarGastos();
 mostrarGastos.forEach((gasto) => {
-    preweb.mostrarGastoWeb("listado-gastos-completo", gasto);
+    mostrarGastoWeb("listado-gastos-completo", gasto);
 });
 
-let filtroGastos1 = pre.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" })
+let filtroGastos1 = filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" })
 filtroGastos1.forEach((gasto) => {
     mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 })
 
-let filtroGastos2 = pre.filtrarGastos({ valorMinimo: 50 })
+let filtroGastos2 = filtrarGastos({ valorMinimo: 50 })
 filtroGastos2.forEach((gasto) => {
     mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
 })
 
-let filtroGastos3 = pre.filtrarGastos({ valorMinimo: 200, etiquetasTiene: "seguros" })
+let filtroGastos3 = filtrarGastos({ valorMinimo: 200, etiquetasTiene: ["seguros"] })
 filtroGastos3.forEach((gasto) => {
     mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 })
 
-let filtroGastos4 = pre.filtrarGastos({ etiquetasTiene: ["comida", "transporte"] })
+let filtroGastos4 = filtrarGastos({ etiquetasTiene: ["comida", "transporte"] })
 filtroGastos4.forEach((gasto) => {
     mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 })
 
-let gastosXDia = pre.agruparGastos("dia");
-preweb.mostrarDatosAgrupadosWeb("agrupacion-dia", gastosXDia, "dia");
+let gastosXDia = agruparGastos("dia");
+mostrarDatosAgrupadosWeb("agrupacion-dia", gastosXDia, "dia");
 
-let gastosXMes = pre.agruparGastos("mes");
-preweb.mostrarDatosAgrupadosWeb("agrupacion-mes", gastosXMes, "mes");
+let gastosXMes = agruparGastos("mes");
+mostrarDatosAgrupadosWeb("agrupacion-mes", gastosXMes, "mes");
 
-let gastosXAnyo = pre.agruparGastos("anyo");
-preweb.mostrarDatosAgrupadosWeb("agrupacion-anyo", gastosXAnyo, "anyo");
+let gastosXAnyo = agruparGastos("anyo");
+mostrarDatosAgrupadosWeb("agrupacion-anyo", gastosXAnyo, "anyo");

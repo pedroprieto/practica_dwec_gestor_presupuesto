@@ -57,13 +57,15 @@ function mostrarDatosAgrupadosWeb(idElemento, agrup, periodo) {
 
         let spanDatoClave = document.createElement("span");
         spanDatoClave.classList.add("agrupacion-dato-clave");
-        spanDatoClave.textContent = clave;
+        spanDatoClave.textContent = agrupacion;
         divAgrupacionDato.appendChild(spanDatoClave);
 
         let spanDatoValor = document.createElement("span");
         spanDatoValor.classList.add("agrupacion-dato-valor");
-        spanDatoValor.textContent = objeto[clave];
+        spanDatoValor.textContent = agrup[agrupacion];
         divAgrupacionDato.appendChild(spanDatoValor);
+        
+        divAgrupacion.appendChild(divAgrupacionDato);
         }      
     }
 }
