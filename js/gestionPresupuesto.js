@@ -2,7 +2,7 @@
 
 let presupuesto = 0;
 
-function actualizarPresupuesto(ingreso) {
+function actualizarPresupuesto(ingreso) {//Funciona
     if (ingreso >= 0) {
         return presupuesto = ingreso;
     }
@@ -13,22 +13,37 @@ function actualizarPresupuesto(ingreso) {
     }
 }
 
-function mostrarPresupuesto() {
+function mostrarPresupuesto() {//Funciona
      return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto(descrip, valorIntroducido) {
     
     this.descripcion = descrip;
+
     if (valorIntroducido > 0) {     
         this.valor = valorIntroducido;
     }
     else {
         this.valor = 0;
-     }
-    this.mostrarGasto = function () { 
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
+
+    //* Métodos de objeto:
+    this.mostrarGasto = function () {
+       return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    };
+    this.actualizarDescripcion = function (nuevoTexto) {
+        return this.descripcion = nuevoTexto;
+    };
+    this.actualizarValor = function (nuevoValor) {
+        if (nuevoValor >= 0) {
+            this.valor = nuevoValor;
+        }
+
+    };
+   
+
+       
  
 }
 
