@@ -70,6 +70,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         });
     }
+    this.borrarEtiquetas = function(...borrarEtiquetas){
+        borrarEtiquetas.forEach(etiqueta =>{
+            let posicion = this.etiquetas.findIndex(element => element === etiqueta);
+            if (posicion != -1){
+                this.etiquetas.splice(posicion, 1);
+            }
+        })
+    }
 }
 
 
