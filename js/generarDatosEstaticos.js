@@ -26,3 +26,28 @@ preweb.mostrarDatoEnId(totalGastos);
 let balance = pre.calcularBalance();
 preweb.mostrarDatoEnId(balance);
 
+let mostrarGastos = pre.listarGastos();
+mostrarGastos.forEach((gasto) => {
+    preweb.mostrarGastoWeb("listado-gastos-completo", gasto);
+});
+
+let filtroGastos1 = pre.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" })
+filtroGastos1.forEach((gasto) => {
+    mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+})
+
+let filtroGastos2 = pre.filtrarGastos({ valorMinimo: 50 })
+filtroGastos2.forEach((gasto) => {
+    mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+})
+
+let filtroGastos3 = pre.filtrarGastos({ valorMinimo: 200, etiquetasTiene: "seguros" })
+filtroGastos3.forEach((gasto) => {
+    mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+})
+
+let filtroGastos4 = pre.filtrarGastos({ etiquetasTiene: ["comida", "transporte"] })
+filtroGastos4.forEach((gasto) => {
+    mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+})
+
