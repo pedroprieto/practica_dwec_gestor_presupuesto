@@ -145,40 +145,40 @@ function calcularBalance() {
 
 function filtrarGastos(filtros) {
     let resultado = gastos.filter((gasto) => {
-        
+
         if (filtros.fechaDesde && Date.parse(filtros.fechaDesde) > gasto.fecha) {
-          return false; 
+            return false;
         }
-  
+
         if (filtros.fechaHasta && Date.parse(filtros.fechaHasta) < gasto.fecha) {
-          return false; 
+            return false;
         }
-  
+
         if (filtros.valorMinimo && filtros.valorMinimo > gasto.valor) {
-          return false; 
+            return false;
         }
 
         if (filtros.valorMaximo && filtros.valorMaximo < gasto.valor) {
-          return false; 
-        }
-  
-        if (filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) {
-          return false; 
-        }
-  
-        if (filtros.etiquetasTiene && filtros.etiquetasTiene.length > 0) {
-          
-          const etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
-          const etiquetasFiltro = filtros.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
-          const etiquetasRepetidas = etiquetasFiltro.filter((etiqueta) => etiquetasGasto.includes(etiqueta));
-  
-          if (etiquetasRepetidas.length === 0) {
             return false;
-          }
         }
-        return true; 
-      });
-      return resultado;
+
+        if (filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())) {
+            return false;
+        }
+
+        if (filtros.etiquetasTiene && filtros.etiquetasTiene.length > 0) {
+
+            const etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
+            const etiquetasFiltro = filtros.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
+            const etiquetasRepetidas = etiquetasFiltro.filter((etiqueta) => etiquetasGasto.includes(etiqueta));
+
+            if (etiquetasRepetidas.length === 0) {
+                return false;
+            }
+        }
+        return true;
+    });
+    return resultado;
 }
 
 function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = "", fechaHasta = "") {
