@@ -28,3 +28,34 @@ mostrarDatoEnID("gastos-totales", totalGastos);
 
 const balance = calcularBalance();
 mostrarDatoEnID("balance-total", balance);
+
+const listaGastosBien = listarGastos();
+listaGastosBien.forEach((gasto)=>{
+mostrarGastoWeb("listado-gastos-completo",gasto);
+});
+
+const gastos1Filtrado=filtrarGastos({fechaDesde:"2021-09-01",fechaHasta:"2021-09-30"})
+gastos1Filtrado.forEach((gasto)=>{
+    mostrarGastoWeb("listado-gastos-filtrado-1",gasto);
+
+})
+
+const gasto2Filtrado=filtrarGastos({valorMinimo:50});
+gasto2Filtrado.forEach((gasto)=>{
+    mostrarGastoWeb("listado-gastos-filtrado-2",gasto);
+})
+
+const gasto3Filtrado=filtrarGastos({valorMinimo:200,etiquetasTiene:["seguros"]});
+gasto3Filtrado.forEach((gasto)=>{
+    mostrarGastoWeb("listado-gastos-filtrado-3",gasto);
+})
+
+const gasto4Filtrado=filtrarGastos({valorMaximo:50,etiquetasTiene:["comida","transporte"]});
+gasto4Filtrado.forEach((gasto)=>{
+    mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+})
+
+const gastosAgrupadosPorDia = agruparGastos("dia");
+
+mostrarGastosAgrupadosWeb("agrupacion-dia", gastosAgrupadosPorDia,"dia");
+
