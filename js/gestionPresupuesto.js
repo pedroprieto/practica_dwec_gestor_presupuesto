@@ -5,12 +5,11 @@
 var presupuesto = 0;
 
 function actualizarPresupuesto(nuevoValorPresupuesto) {
-
-    if (nuevoValorPresupuesto < 0){
+if ((nuevoValorPresupuesto < 0) || (isNaN(nuevoValorPresupuesto))) {
         console.log (`El presupuesto no puede tener valor negativo.`);
         return -1;
     }
-    else{
+    else {
         presupuesto = nuevoValorPresupuesto;
         return presupuesto;
     }
@@ -24,7 +23,12 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
-    this.valor = valor;
+    if (isNaN(valor) || (valor < 0)) {
+        this.valor = 0;
+    }
+    else {
+        this.valor = valor;
+    }
 
     this.mostrarGasto = function() {
         console.log (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
@@ -36,15 +40,14 @@ function CrearGasto(descripcion, valor) {
     }
 
     this.actualizarValor = function (nuevoValor) {
-        if (nuevoValor >= 0) {
-            this.valor = nuevoValor;
-        }
-        else {
+        if (isNaN(nuevoValor) || (nuevoValor < 0)) {
             this.valor = 0;
+        }
+        else if (nuevoValor >= 0) {
+            this.valor = nuevoValor;
         }
     }
 }
-
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
