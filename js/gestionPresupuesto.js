@@ -41,7 +41,7 @@ function calcularBalance() {
 
 //* OBJETO
 
-function CrearGasto(descrip, valorIntroducido) {
+function CrearGasto(descrip, valorIntroducido, date, etiqueta = []) {
 
     this.descripcion = descrip;
 
@@ -52,6 +52,17 @@ function CrearGasto(descrip, valorIntroducido) {
     else {
         this.valor = 0;
     }
+    
+    if (!date) {
+
+        this.fecha = new Date(timestamp)
+    }
+    else { 
+        this.fecha = date;
+    }
+    
+    this.etiquetas = etiqueta;
+
 
     //* Métodos del objeto:
 
