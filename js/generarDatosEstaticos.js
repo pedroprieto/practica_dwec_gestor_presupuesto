@@ -19,3 +19,10 @@ pre.anyadirGasto(gasto3);
 pre.anyadirGasto(gasto4);
 pre.anyadirGasto(gasto5);
 pre.anyadirGasto(gasto6);
+
+let totalGastos = pre.calcularTotalGastos();
+preweb.mostrarDatoEnId(totalGastos);
+
+let balance = pre.calcularBalance();
+preweb.mostrarDatoEnId(balance);
+
