@@ -117,14 +117,20 @@ function filtrarGastos(objeto) {
 }
 
 
-function agruparGastos() {
+function agruparGastos(periodo ,fechaDesde,fechaHasta, etiquetas) { 
 
-
-
-
-
-
-}
+  let filtro =filtrarGastos({fechaDesde:fechaDesde ,fechaHasta:fechaHasta, etiquetasTiene:etiquetas});// filtro fecha de objeto con propiedades
+  
+  let agrupacionGastos = filtro.reduce(function (acumulador, gasto) {
+      let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);//obtengo gasto por periodo 
+      acumulador[periodoAgrupacion] += gasto.valor;
+  
+      return acumulador;
+  
+  }, {} );  //inicializacion con objeto vacio
+  
+    return agrupacionGastos;
+  }
 
 
 //Función constructora que se encargará de crear un objeto gasto
