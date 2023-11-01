@@ -52,7 +52,7 @@ Etiquetas:\n`
     }
 
     this.anyadirEtiquetas = function (...etqs) {
-        for (let actEti of etqs) { 
+        for (let actEti of etqs) {
             //El -1 es para que siempre empieze a contar el array desde el principio, sin 
             //modificar ningún valor del Array.
             if (this.etiquetas.indexOf(actEti) == -1) {
@@ -72,23 +72,23 @@ Etiquetas:\n`
         this.etiquetas = arrEti;
 
     }
-    this.obtenerPeriodoAgrupacion = function(periodo){
+    this.obtenerPeriodoAgrupacion = function (periodo) {
         //Nueva variable para almacenar la this.fecha que el la del return GastosCompletos
         let pA = new Date(this.fecha);
         //Condicionales para cada tipo de petición (¿Se puede mejorar con un bucle?)
-        if(periodo== "mes"){
+        if (periodo == "mes") {
             //La fecha se muestra en formato ISO "aaaa-mm-ddThh:mm:ss.sssZ"
             let fechaISO = pA.toISOString();
             //Solo se han de coger los caracteres necesarios y por eso los corto con Slice.
-            return fechaISO.slice(0,7);
+            return fechaISO.slice(0, 7);
         }
-        if(periodo== "anyo"){
+        if (periodo == "anyo") {
             let fechaISO = pA.toISOString();
-            return fechaISO.slice(0,4);
+            return fechaISO.slice(0, 4);
         }
-        if(periodo== "dia"){
+        if (periodo == "dia") {
             let fechaISO = pA.toISOString();
-            return fechaISO.slice(0,10);
+            return fechaISO.slice(0, 10);
         }
     }
 
@@ -136,10 +136,52 @@ function calcularTotalGastos() {
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(){
+function filtrarGastos(filtro) {
+    return gastos.filter((gast) => {
+        // Inicializamos como válido por defecto
+        let ok = true;
+        // Filtrar por fechaDesde si se proporciona
+        if (filtro.fechaDesde) {
+            let fechaDesde = Date.parse(filtro.fechaDesde);
+            ok = ok && (gast.fecha >= fechaDesde);
+        }
+        // Filtrar por fechaHasta si se proporciona
+        if (filtro.fechaHasta) {
+            let fechaHasta = Date.parse(filtro.fechaHasta);
+            ok = ok && (gast.fecha <= fechaHasta);
+        }
+        // Filtrar por valorMinimo si se proporciona
+        if (filtro.valorMinimo) {
+            ok = ok && (gast.valor >= filtro.valorMinimo);
+        }
+        // Filtrar por valorMaximo si se proporciona
+        if (filtro.valorMaximo) {
+            ok = ok && (gast.valor <= filtro.valorMaximo);
+        }
+        // Filtrar por descripcionContiene si se proporciona
+        if (filtro.descripcionContiene) {
+            ok = ok && gast.descripcion.toLowerCase().includes(filtro.descripcionContiene.toLowerCase());
+        }
+        // Filtrar por etiquetasTiene si se proporciona
+        if (filtro.etiquetasTiene) {
+            let etiQue = false; // Inicializa una variable para rastrear si se ha encontrado alguna etiqueta
+            for (let eti of filtro.etiquetasTiene) {
+                // Convierte la etiqueta del filtro y la etiqueta actual a minúsculas
+                const etiquetaFiltro = eti.toLowerCase();
+                // Utiliza el método some para verificar si al menos una etiqueta en las etiquetas del gasto coincide
+                if (gast.etiquetas.some(etiqueta => etiqueta.toLowerCase() === etiquetaFiltro)) {
+                    etiQue = true; // Si se encuentra al menos una coincidencia, establece etiQue en true
+                    break; // Terminar el bucle una vez que se encuentra una coincidencia
+                }
+            }
+            ok = ok && etiQue; // Actualiza el resultado general con la condición de las etiquetas
+        }
+
+        return ok;
+    })
 
 }
-function agruparGastos(){
+function agruparGastos() {
 
 }
 
