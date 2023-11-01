@@ -53,6 +53,8 @@ function calcularBalance() {
   let balance = presupuesto - calcularTotalGastos();
   return balance;
 };
+
+//Funcion Filtro de gastos por objeto entrante
 function filtrarGastos(objeto) {
   let fechaDesde = objeto.fechaDesde;
   let fechaHasta = objeto.fechaHasta;
@@ -116,7 +118,7 @@ function filtrarGastos(objeto) {
 
 }
 
-
+//Funcion quer agrupa gastos por periodo , fecha y etiquetas
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
   let filtro = filtrarGastos({ // filtro fecha de objeto con propiedades
@@ -161,7 +163,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       this.fecha = fecha;
   }
  
-   //actualizar fechas
+   // Funcionactualizar fechas
   this.actualizarFecha = function (nuevaFecha) {        
   nuevaFecha = Date.parse(nuevaFecha);
   if (isNaN(nuevaFecha)) {
@@ -221,6 +223,7 @@ this.borrarEtiquetas = function (...etiquetasABorrar) {
     }
   }
 };
+//Funcion deAgrupacion por tipo de fecha
 this.obtenerPeriodoAgrupacion = function (periodo) {
 
   //fecha= new Date(this.fecha).toDateString();//! no estoy seguro de que lo pase a string correcto  (Wed Jun 28 1993)
