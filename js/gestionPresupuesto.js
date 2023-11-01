@@ -48,21 +48,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
 
     this.mostrarGastoCompleto = function()
     {
-        let comenta = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €." +
-        "Fecha: " + new Date(this.fecha).toLocaleString() +
-        "Etiquetas:\n";
-        
-        for(let etiq of this.etiquetas)
+        let coment = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+
+        for (let eti of this.etiquetas)
         {
-            comenta = comenta + " - " + etiq + "\n";
+            coment = coment + `- ${eti}\n`
         }
-        return comenta;
+
+        return coment;
+
     }
 
     this.actualizarFecha = function(fecha)
     {
         let fech = Date.parse(fecha);
-        if(fech)
+
+        if (fech)
         {
             this.fecha = fech;
         }
@@ -70,11 +73,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
 
     this.anyadirEtiquetas = function(...etiquet)
     {
-        for(let etiq of etiquet)
+        for (let eti of etiquet)
         {
-            if(this.etiquetas.indexof(etiq) == -1)
+            if (this.etiquetas.indexOf(eti) == -1)
             {
-                this.etiquetas.push(etiq);
+                this.etiquetas.push(eti);
             }
         }
     }
@@ -82,13 +85,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
     this.borrarEtiquetas = function(...etiquet)
     {
         let nuevo = [];
-        for(let etiq of this.etiquetas)
+
+        for (let eti of this.etiquetas)
         {
-            if(etiquet.indexof(etiq) == -1)
+            if (etiquet.indexOf(eti) == -1)
             {
-                nuevo.push(etiq);
-            }
+                nuevo.push(eti);
+	        }
         }
+
         this.etiquetas = nuevo;
     }
 
@@ -96,9 +101,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
     this.valor = (valor >=0) ? valor : 0;
 
     let fech = Date.parse(fecha);
+
     if (fech)
     {
-        this.fecha = fecha;
+        this.fecha = fech;
     }
     else
     {
@@ -115,13 +121,13 @@ function listarGastos()
     return Gastos;
 }
 
-function anyadirGastos(gastos)
+function anyadirGasto(gastos)
 {
     gastos.id = idGasto++;
     Gastos.push(gastos);
 }
 
-function borrarGastos(idGasto)
+function borrarGasto(idGasto)
 {
     let gastos = null;
 
@@ -132,7 +138,7 @@ function borrarGastos(idGasto)
             gastos = gast;
         }
     }
-    
+
     if(gastos)
     {
         let despuesgastos = Gastos.indexof(gastos);
@@ -166,8 +172,8 @@ export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
     listarGastos,
-    anyadirGastos,
-    borrarGastos,
+    anyadirGasto,
+    borrarGasto,
     calcularTotalGastos,
     calcularBalance,
     CrearGasto
