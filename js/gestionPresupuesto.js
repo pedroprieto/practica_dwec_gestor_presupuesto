@@ -181,9 +181,27 @@ function filtrarGastos(filtro) {
     })
 
 }
-function agruparGastos() {
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
+    // Llamar a filtrarGastos para obtener el subconjunto de gastos
+    let filtrados = filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta });
+    // Inicializar el acumulador como un objeto vacío
+    let acumulador = {};
+
+    // Utilizar reduce para agrupar los gastos por período
+    filtrados.reduce((acc, gasto) => {
+        // Obtener el período de agrupación utilizando el método obtenerPeriodoAgrupacion del gasto
+        let per = gasto.obtenerPeriodoAgrupacion(periodo);
+        // Sumar el valor del gasto al período correspondiente en el acumulador
+        // Si el período no existe en el acumulador, se inicializa con el valor del gasto, de lo contrario se suma al valor existente
+        acc[per] = (acc[per] || 0) + gasto.valor;
+
+        return acc;// Devolver el objeto acumulador actualizado para la siguiente iteración
+    }, acumulador);
+
+    return acumulador;
 
 }
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
