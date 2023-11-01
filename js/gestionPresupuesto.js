@@ -72,6 +72,25 @@ Etiquetas:\n`
         this.etiquetas = arrEti;
 
     }
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        //Nueva variable para almacenar la this.fecha que el la del return GastosCompletos
+        let pA = new Date(this.fecha);
+        //Condicionales para cada tipo de petición (¿Se puede mejorar con un bucle?)
+        if(periodo== "mes"){
+            //La fecha se muestra en formato ISO "aaaa-mm-ddThh:mm:ss.sssZ"
+            let fechaISO = pA.toISOString();
+            //Solo se han de coger los caracteres necesarios y por eso los corto con Slice.
+            return fechaISO.slice(0,7);
+        }
+        if(periodo== "anyo"){
+            let fechaISO = pA.toISOString();
+            return fechaISO.slice(0,4);
+        }
+        if(periodo== "dia"){
+            let fechaISO = pA.toISOString();
+            return fechaISO.slice(0,10);
+        }
+    }
 
     this.descripcion = descripcion;
     //Repasando las lecciones lo he abreviado con el condicional ?.
@@ -121,7 +140,7 @@ function filtrarGastos(){
 
 }
 function agruparGastos(){
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
