@@ -52,7 +52,7 @@ Etiquetas:\n`
     }
 
     this.anyadirEtiquetas = function (...etqs) {
-        for (let actEti of etqs) {
+        for (let actEti of etqs) { 
             //El -1 es para que siempre empieze a contar el array desde el principio, sin 
             //modificar ningún valor del Array.
             if (this.etiquetas.indexOf(actEti) == -1) {
