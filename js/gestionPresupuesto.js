@@ -3,7 +3,7 @@
 // TODO: Variable global
 
 let presupuesto = 0;
-let Gastos = [];
+let gastos = [];
 let idGasto = 0;
 
 function actualizarPresupuesto(result)
@@ -43,7 +43,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
     this.actualizarValor = function(valor)
     {
 
-        this.valor = (valor >=0) ? valor : this.valor;
+        this.valor = (valor >= 0) ? valor : this.valor;
     }
 
     this.mostrarGastoCompleto = function()
@@ -98,7 +98,7 @@ Etiquetas:\n`
     }
 
     this.descripcion = descripcion;
-    this.valor = (valor >=0) ? valor : 0;
+    this.valor = (valor >= 0) ? valor : 0;
 
     let fech = Date.parse(fecha);
 
@@ -118,9 +118,53 @@ Etiquetas:\n`
 
 function listarGastos()
 {
-    return Gastos;
+    return gastos;
 }
 
+function anyadirGasto(gast)
+{
+    gast.id = idGasto++;
+
+    gastos.push(gast);
+}
+
+function borrarGasto(idGasto)
+{
+    let gast = null;
+
+    for (let gas of gastos)
+    {
+        if (gas.id == idGasto)
+        {
+            gast = gas;
+        }
+    }
+
+    if (gast)
+    {
+        let despuesGasto = gastos.indexOf(gast);
+
+        gastos.splice(despuesGasto, 1);
+    }
+}
+
+function calcularTotalGastos()
+{
+    let Gastototal = 0;
+
+    for (let gas of gastos)
+    {
+        Gastototal = Gastototal + gas.valor;
+    }
+
+    return Gastototal;
+}
+
+function calcularBalance()
+{
+    return presupuesto - calcularTotalGastos();
+}
+/*
 function anyadirGasto(gastos)
 {
     gastos.id = idGasto++;
@@ -161,7 +205,7 @@ function calcularTotalGastos()
 function calcularBalance()
 {
     return presupuesto - calcularTotalGastos();
-}
+}*/
 
 
 
