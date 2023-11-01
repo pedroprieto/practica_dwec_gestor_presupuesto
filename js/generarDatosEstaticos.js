@@ -36,10 +36,10 @@ anyadirGasto(gasto5);
 anyadirGasto(gasto6);
 
 let totalGastos = calcularTotalGastos();
-mostrarDatoEnId(totalGastos);
+mostrarDatoEnId("gastos-totales", totalGastos);
 
 let balance = calcularBalance();
-mostrarDatoEnId(balance);
+mostrarDatoEnId("balance-total", balance);
 
 let mostrarGastos = listarGastos();
 mostrarGastos.forEach((gasto) => {
@@ -61,16 +61,16 @@ filtroGastos3.forEach((gasto) => {
     mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 })
 
-let filtroGastos4 = filtrarGastos({ etiquetasTiene: ["comida", "transporte"] })
+let filtroGastos4 = filtrarGastos({ valorMaximo:50, etiquetasTiene: ["comida", "transporte"] })
 filtroGastos4.forEach((gasto) => {
     mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 })
 
 let gastosXDia = agruparGastos("dia");
-mostrarDatosAgrupadosWeb("agrupacion-dia", gastosXDia, "dia");
+mostrarDatosAgrupadosWeb("agrupacion-dia", gastosXDia, "día");
 
 let gastosXMes = agruparGastos("mes");
 mostrarDatosAgrupadosWeb("agrupacion-mes", gastosXMes, "mes");
 
 let gastosXAnyo = agruparGastos("anyo");
-mostrarDatosAgrupadosWeb("agrupacion-anyo", gastosXAnyo, "anyo");
+mostrarDatosAgrupadosWeb("agrupacion-anyo", gastosXAnyo, "año");

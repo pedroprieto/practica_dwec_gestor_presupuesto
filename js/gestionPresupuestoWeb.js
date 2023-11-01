@@ -1,5 +1,5 @@
 function mostrarDatoEnId(idElemento, valor) {
-    let elemento = document.getElementById(idElemento)
+    let elemento = document.getElementById(idElemento);
     if (elemento) {
         elemento.textContent = valor;
     }
@@ -15,7 +15,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     let divDescripcion = document.createElement("div");
     divDescripcion.classList.add("gasto-descripcion");
     divDescripcion.textContent = gasto.descripcion;
-    elemento.appendChild(divDescripcion);
+    divGasto.appendChild(divDescripcion);
 
     let divGastoFecha = document.createElement("div");
     divGastoFecha.classList.add("gasto-fecha");
@@ -51,26 +51,26 @@ function mostrarDatosAgrupadosWeb(idElemento, agrup, periodo) {
     divAgrupacion.appendChild(titulo);
 
     for (let agrupacion in agrup) {
-        if(agrup.hasOwnProperty(agrupacion)){
+        if (agrup.hasOwnProperty(agrupacion)) {
             let divAgrupacionDato = document.createElement("div");
-        divAgrupacionDato.classList.add("agrupacion-dato")
+            divAgrupacionDato.classList.add("agrupacion-dato")
 
-        let spanDatoClave = document.createElement("span");
-        spanDatoClave.classList.add("agrupacion-dato-clave");
-        spanDatoClave.textContent = agrupacion;
-        divAgrupacionDato.appendChild(spanDatoClave);
+            let spanDatoClave = document.createElement("span");
+            spanDatoClave.classList.add("agrupacion-dato-clave");
+            spanDatoClave.textContent = agrupacion;
+            divAgrupacionDato.appendChild(spanDatoClave);
 
-        let spanDatoValor = document.createElement("span");
-        spanDatoValor.classList.add("agrupacion-dato-valor");
-        spanDatoValor.textContent = agrup[agrupacion];
-        divAgrupacionDato.appendChild(spanDatoValor);
-        
-        divAgrupacion.appendChild(divAgrupacionDato);
-        }      
+            let spanDatoValor = document.createElement("span");
+            spanDatoValor.classList.add("agrupacion-dato-valor");
+            spanDatoValor.textContent = agrup[agrupacion];
+            divAgrupacionDato.appendChild(spanDatoValor);
+
+            divAgrupacion.appendChild(divAgrupacionDato);
+        }
     }
 }
 
-export{
+export {
     mostrarDatosAgrupadosWeb,
     mostrarDatoEnId,
     mostrarGastoWeb

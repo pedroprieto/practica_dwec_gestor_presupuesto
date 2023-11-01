@@ -4,5 +4,6 @@
     "fixturesFolder": false,
     "video": false,
     "supportFile": false,
-    "screenshotOnRunFailure": false
+    "screenshotOnRunFailure": false,
+    "browser": "chrome"
 }
