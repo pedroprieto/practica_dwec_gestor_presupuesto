@@ -164,50 +164,6 @@ function calcularBalance()
 {
     return presupuesto - calcularTotalGastos();
 }
-/*
-function anyadirGasto(gastos)
-{
-    gastos.id = idGasto++;
-    Gastos.push(gastos);
-}
-
-function borrarGasto(idGasto)
-{
-    let gastos = null;
-
-    for(let gast of Gastos)
-    {
-        if(gast.id == idGasto)
-        {
-            gastos = gast;
-        }
-    }
-
-    if(gastos)
-    {
-        let despuesgastos = Gastos.indexof(gastos);
-        Gastos.splice(despuesgastos, 1);
-    }
-}
-
-function calcularTotalGastos()
-{
-    let totalGastos = 0;
-
-    for (let gast of Gastos)
-    {
-        totalGastos = totalGastos + gast.valor;
-    }
-
-    return totalGastos;
-}
-
-function calcularBalance()
-{
-    return presupuesto - calcularTotalGastos();
-}*/
-
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
