@@ -87,14 +87,6 @@ Etiquetas:\n`
       }
 
       this.obtenerPeriodoAgrupacion = function(periodo){
-       /* var fe = new Date(this.fecha); 
-        if(periodo === 'dia'){
-          return fe.getDate(); 
-        }else if(periodo === 'mes'){
-          return fe.getMonth(); 
-        }else if(periodo === 'anyo'){
-          return fe.getFullYear(); 
-        }*/
 
         var fe = new Date(this.fecha); 
         if (periodo === 'dia') {
@@ -225,6 +217,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
+    gastos,
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto, 
