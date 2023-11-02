@@ -44,6 +44,36 @@ function mostrarGastoWeb (idElemento , agrup , periodo) {
 
 }
 
+//Función de tres parámetros que se encargará de crear una estructura HTML para el objeto 
+function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
+    //idElemento  Hará referencia al id del elemento HTML donde se insertará
+    //<div class="agrupacion">
+    let divAgrupacion = document.createElement("div");
+    divAgrupacion.className ="agrupacion";
+    //<h1>Gastos agrupados por mes</h1>
+    let h1Periodo = document.createElement("h1");
+    h1Periodo.innerHTML = `Gastos agrupados por ${periodo}`;
+
+    //<div class="agrupacion-dato">
+
+    //agrup contendrá el resultado de agrupar el total de gastos por período temporal 
+
+    //periodo - Período temporal por el que se habrá realizado la agrupación.
+
+
+  
+  
+    /* <span class="agrupacion-dato-clave">2021-09</span>
+    <span class="agrupacion-dato-valor">5</span>
+  </div>
+
+  <div class="agrupacion-dato">
+    <span class="agrupacion-dato-clave">2021-10</span>
+    <span class="agrupacion-dato-valor">39</span>
+  </div>
+</div> */
+}
+
 
 export {
     mostrarDatoEnId,
