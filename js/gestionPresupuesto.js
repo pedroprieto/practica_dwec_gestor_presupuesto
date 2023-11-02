@@ -114,24 +114,11 @@ function filtrarGastos (opciones) {
 /*Función de cuatro parámetros que devolverá un objeto 
 con los resultados de realizar una agrupación por período temporal */
 function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta) {
+    
     //En primer lugar se llamará a filtrarGastos para obtener el subconjunto de gastos
-    let gastosFiltrados = {};
-    gastosFiltrados.periodo = periodo;
-    gastosFiltrados.etiquetas = etiquetas;
-    gastosFiltrados.fechaDesde = fechaDesde;
-    gastosFiltrados.fechaHasta = fechaHasta;
-    let filtrado = filtrarGastos(gastosFiltrados);
-
-    //Ejecutar reduce sobre el conjunto de gastos filtrados
-    return filtrado.reduce(function(acc , gasto) {
-
-        //Buscamos el periodo para sumar los gastos
-        let sumaPeriodo = gasto.obtenerPeriodoAgrupacion(periodo);
-        acc[sumaPeriodo] = acc[sumaPeriodo+=(gasto.valor)] || acc[sumaPeriodo+(gasto.valor)];
-        return acc;
-    })
 
 }
+
 
 //Función constructora que se encargará de crear un objeto gasto
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
