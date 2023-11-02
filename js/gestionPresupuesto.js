@@ -116,7 +116,25 @@ con los resultados de realizar una agrupación por período temporal */
 function agruparGastos (periodo, etiquetas, fechaDesde, fechaHasta) {
     
     //En primer lugar se llamará a filtrarGastos para obtener el subconjunto de gastos
+    let gastosFiltrados = filtrarGastos({
+        etiquetasTiene : etiquetas,
+        fechaDesde : fechaDesde,
+        fechaHasta : fechaHasta,
+    });
 
+    //Ejecutar reduce sobre el conjunto de gastos filtrados
+    return gastosFiltrados.reduce(function(acc , gasto) {
+
+        //Buscamos el periodo para sumar los gastos
+        let sumaPeriodo = gasto.obtenerPeriodoAgrupacion(periodo);
+        if(acc[sumaPeriodo]) {
+            acc[sumaPeriodo] += gasto.valor;
+        } else {
+            acc[sumaPeriodo] = gasto.valor;
+        }
+       
+        return acc;
+    }, {});
 }
 
 
