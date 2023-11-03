@@ -144,11 +144,44 @@ function calcularBalance() {
     let sum = calcularTotalGastos();
     return pres - sum;
 }
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
 }
-function filtrarGastos() {
+function filtrarGastos(buscarPorFecha) {
+        return gastos.filter (gasto => {
 
+            if(buscarPorFecha.fechaDesde && gasto.fecha > buscarPorFecha.fechaDesde){
+                return false;
+            }
+            if(buscarPorFecha.fechaHasta && gasto.fecha > buscarPorFecha.fechaHasta){
+                return false; 
+              }
+            if(buscarPorFecha.valorMinimo && gasto.valor < buscarPorFecha.valorMinimo){
+                return false; 
+             }
+            if(buscarPorFecha.valorMaximo && gasto.valor > buscarPorFecha.valorMaximo){
+                return false; 
+            }
+
+
+            if(buscarPorFecha.descripcionContiene && !gasto.descripcion.toLowerCase().includes(buscarPorFecha.descripcionContiene.toLowerCase())){
+                return false; 
+              }
+
+              if(buscarPorFecha.etiquetasTiene){
+                const etiquetasFiltrar = buscarPorFecha.etiquetasTiene.map(etiqueta => etiqueta.toLowerCase()); 
+                const gastoEtiquetas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase()); 
+
+                if(!etiquetasFiltrar.some(etiqueta => gastoEtiquetas.includes(etiqueta))){
+                  return false; 
+                }
+              }
+
+
+              return true;
+
+
+        })
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
