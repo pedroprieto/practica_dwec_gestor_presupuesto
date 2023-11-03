@@ -146,6 +146,7 @@ function calcularBalance() {
 }
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     let buscadorDeGastos = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    console.log(buscadorDeGastos);
 
     return buscadorDeGastos.reduce(function (suma, gasto) {
         let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
@@ -163,7 +164,7 @@ function filtrarGastos(buscarPorFecha) {
 
         return gastos.filter (gasto => {
 
-            if(buscarPorFecha.fechaDesde && new Date( gasto.fecha ) > new Date(buscarPorFecha.fechaDesde)){
+            if(buscarPorFecha.fechaDesde && new Date( gasto.fecha ) < new Date(buscarPorFecha.fechaDesde)){
                 return false;
             }
             if(buscarPorFecha.fechaHasta && new Date(gasto.fecha) > new Date(buscarPorFecha.fechaHasta)){
@@ -210,5 +211,5 @@ export {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
 }
