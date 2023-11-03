@@ -37,7 +37,7 @@ function mostrarDatoEnID (idElemento, valor) {
   dato.append(valor)
 }
 
-function mostrarGastosAgrupadosWeb () {
+function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
   // TODO
 }
 
