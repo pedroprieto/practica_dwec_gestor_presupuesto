@@ -112,12 +112,13 @@ function calcularTotalGastos() {
     for (let i = 0; i < gastos.length; i++) {
         sumarTotal += gastos[i].valor;
     }
+
     return sumarTotal;
 }
 
 function calcularBalance() {
     let sum = calcularTotalGastos();
-    return presupuesto - sum;
+    return pres - sum;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
