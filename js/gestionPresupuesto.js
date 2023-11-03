@@ -160,12 +160,13 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
       }, {});
 }
 function filtrarGastos(buscarPorFecha) {
+
         return gastos.filter (gasto => {
 
-            if(buscarPorFecha.fechaDesde && gasto.fecha > buscarPorFecha.fechaDesde){
+            if(buscarPorFecha.fechaDesde && new Date( gasto.fecha ) > new Date(buscarPorFecha.fechaDesde)){
                 return false;
             }
-            if(buscarPorFecha.fechaHasta && gasto.fecha > buscarPorFecha.fechaHasta){
+            if(buscarPorFecha.fechaHasta && new Date(gasto.fecha) > new Date(buscarPorFecha.fechaHasta)){
                 return false; 
               }
             if(buscarPorFecha.valorMinimo && gasto.valor < buscarPorFecha.valorMinimo){
