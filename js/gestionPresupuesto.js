@@ -73,6 +73,27 @@ Etiquetas:\n`
         this.etiquetas = nuevaEtiquetas;
     }
 
+    this.obtenerPeriodoAgrupacion = function(periodo){
+
+        var fec = new Date(this.fecha);
+        var dia = fec.getDate();
+        var mes = fec.getMonth();
+        var anyo = fec.getFullYear();
+
+        //periodo.forEach((peri) => {
+
+            if(periodo === "dia") {
+                return anyo.toString() + "-" + (mes + 1).toString().padStart(2 , '0') + "-" + dia.toString().padStart(2 , '0');
+            }
+            else if(periodo === "mes") {
+                return anyo.toString() + "-" + (mes + 1).toString().padStart(2 , '0');
+            }
+            else if(periodo === "anyo" || periodo === "año") {
+                return anyo.toString();
+            }
+       // })    
+    }
+
     /*********************        PROPIEDADES       *********************** */
 
     this.descripcion = descripcion;
@@ -87,6 +108,9 @@ Etiquetas:\n`
     this.anyadirEtiquetas(...etiquetas);
 
 }
+
+let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
+console.log(gasto1.obtenerPeriodoAgrupacion("dia"));
 
 function listarGastos() {
     return gastos;
@@ -120,6 +144,12 @@ function calcularBalance() {
     let sum = calcularTotalGastos();
     return pres - sum;
 }
+function agruparGastos(){
+
+}
+function filtrarGastos() {
+
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -133,4 +163,6 @@ export {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
