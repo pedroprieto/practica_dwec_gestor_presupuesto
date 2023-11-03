@@ -38,7 +38,32 @@ function mostrarDatoEnID (idElemento, valor) {
 }
 
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
-  // TODO
+  const dAgrupacion = document.createElement('div')
+  dAgrupacion.classList.add('agrupacion')
+
+  const header1 = document.createElement('h1')
+  header1.innerHTML = `Gastos agrupados por ${periodo}`
+  dAgrupacion.append(header1)
+
+  for (const [key, value] of Object.entries(agrup)) {
+    const dAgrupacionDato = document.createElement('div')
+    dAgrupacionDato.classList.add('agrupacion-dato')
+
+    const dAgrupacionClave = document.createElement('span')
+    dAgrupacionClave.classList.add('agrupacion-dato-clave')
+    dAgrupacionClave.innerHTML = key
+    dAgrupacionDato.append(dAgrupacionClave)
+
+    const dAgrupacionValor = document.createElement('span')
+    dAgrupacionValor.classList.add('agrupacion-dato-valor')
+    dAgrupacionValor.innerHTML = value
+    dAgrupacionDato.append(dAgrupacionValor)
+
+    dAgrupacion.append(dAgrupacionDato)
+  }
+
+  const elemento = document.getElementById(idElemento)
+  elemento.append(dAgrupacion)
 }
 
 export {

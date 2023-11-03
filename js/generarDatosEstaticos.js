@@ -42,3 +42,5 @@ for (const gasto of gp.filtrarGastos({ valorMinimo: 20, etiquetasTiene: ['seguro
 for (const gasto of gp.filtrarGastos({ valorMaximo: 50, etiquetasTiene: ['comida', 'transporte'] })) {
   gpWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gasto)
 }
+
+gpWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gp.agruparGastos('mes'), 'mes')
