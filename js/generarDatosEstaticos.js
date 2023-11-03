@@ -35,7 +35,7 @@ for (const gasto of gp.filtrarGastos({ valorMinimo: 50 })) {
   gpWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gasto)
 }
 
-for (const gasto of gp.filtrarGastos({ valorMinimo: 20, etiquetasTiene: ['seguros'] })) {
+for (const gasto of gp.filtrarGastos({ valorMinimo: 200, etiquetasTiene: ['seguros'] })) {
   gpWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gasto)
 }
 
@@ -43,4 +43,8 @@ for (const gasto of gp.filtrarGastos({ valorMaximo: 50, etiquetasTiene: ['comida
   gpWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gasto)
 }
 
-gpWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gp.agruparGastos('mes'), 'mes')
+gpWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gp.agruparGastos('dia'), 'día')
+
+gpWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gp.agruparGastos('mes'), 'mes')
+
+gpWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', gp.agruparGastos('anyo'), 'año')
