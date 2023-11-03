@@ -145,7 +145,19 @@ function calcularBalance() {
     return pres - sum;
 }
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+    let buscadorDeGastos = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
 
+    return buscadorDeGastos.reduce(function (suma, gasto) {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+    
+        if (suma[periodoAgrupacion]) {
+          suma[periodoAgrupacion] += gasto.valor; 
+        } else {
+          suma[periodoAgrupacion] = gasto.valor;
+        }
+    
+        return suma;
+      }, {});
 }
 function filtrarGastos(buscarPorFecha) {
         return gastos.filter (gasto => {
@@ -169,10 +181,10 @@ function filtrarGastos(buscarPorFecha) {
               }
 
               if(buscarPorFecha.etiquetasTiene){
-                const etiquetasFiltrar = buscarPorFecha.etiquetasTiene.map(etiqueta => etiqueta.toLowerCase()); 
-                const gastoEtiquetas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase()); 
+                const etiquetasFiltrar = buscarPorFecha.etiquetasTiene.map(etiq => etiq.toLowerCase()); 
+                const gastoEtiquetas = gasto.etiquetas.map(etiq => etiq.toLowerCase()); 
 
-                if(!etiquetasFiltrar.some(etiqueta => gastoEtiquetas.includes(etiqueta))){
+                if(!etiquetasFiltrar.some(etiq => gastoEtiquetas.includes(etiq))){
                   return false; 
                 }
               }
