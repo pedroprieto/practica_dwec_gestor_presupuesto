@@ -63,7 +63,8 @@ function calcularTotalGastos() {
 }
 
 function calcularBalance() {
-    
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 
