@@ -98,15 +98,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 	}
 
 	this.obtenerPeriodoAgrupacion = function (periodo) {
-		if (periodo == "dia") {
-			return new Date(this.fecha).toISOString().slice(0, 10)
-		} else if (periodo == "mes") {
-			return new Date(this.fecha).toISOString().slice(0, 7)
-		} else if (periodo == "anyo") {
-			return new Date(this.fecha).toISOString().slice(0, 4)
+		let fechaFormateada
+		const fechaISO = new Date(this.fecha).toISOString()
+
+		if (periodo === "dia") {
+			fechaFormateada = fechaISO.slice(0, 10)
+		} else if (periodo === "mes") {
+			fechaFormateada = fechaISO.slice(0, 7)
+		} else if (periodo === "anyo") {
+			fechaFormateada = fechaISO.slice(0, 4)
 		} else {
-			return "Período introducido no válido"
+			return "Período no válido"
 		}
+		return fechaFormateada
 	}
 }
 
