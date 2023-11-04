@@ -55,6 +55,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
     } 
+    this.borrarEtiquetas = function(...borrarEtiquetas) {        
+        for (const borrarEtiqueta of borrarEtiquetas) {
+            let indexBorrar = this.etiquetas.findIndex(function(etiqueta) {
+                return etiqueta === borrarEtiqueta;
+            })
+            if (indexBorrar != -1) {
+                this.etiquetas.splice(indexBorrar, 1);
+            }           
+        }
+    }
 }
 
 function listarGastos() {
@@ -68,11 +78,11 @@ function anyadirGasto(gasto) {
 }
 
 function borrarGasto(id) {
-    let borrar = gastos.findIndex(function(gasto) {
+    let indexBorrar = gastos.findIndex(function(gasto) {
         return gasto.id === id;
     })
-    if (borrar != -1) {
-        gastos.splice(borrar, 1);
+    if (indexBorrar != -1) {
+        gastos.splice(indexBorrar, 1);
     }    
 }
 
