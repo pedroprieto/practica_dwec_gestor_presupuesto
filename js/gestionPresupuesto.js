@@ -96,6 +96,31 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 		}
 		return texto
 	}
+
+	// Función de un parámetro que devuelve el periodo de agrupación correspondiente al parámetro periodo de la función y a la fecha del gasto
+	this.obtenerPeriodoAgrupacion = function (periodo) {
+		let periodoAgrupacion = ""
+		const fecha = new Date(this.fecha)
+		const dia = fecha.getDay()
+		const mes = fecha.getMonth()
+		const anyo = fecha.getFullYear()
+
+		switch (periodo) {
+			case "dia":
+				periodoAgrupacion = dia + "-" + mes + "-" + anyo
+				break
+			case "mes":
+				periodoAgrupacion = mes + "-" + anyo
+				break
+			case "año":
+				periodoAgrupacion = anyo
+				break
+			default:
+				periodoAgrupacion = "No se ha indicado un periodo válido"
+				break
+		}
+		return periodoAgrupacion
+	}
 }
 
 // Función sin parámetros que devolverá la variable global gastos
