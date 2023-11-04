@@ -19,64 +19,87 @@ function actualizarPresupuesto(ingreso) {                       //OK
 function mostrarPresupuesto() {                                 //OK
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
-function listarGastos() {
+function listarGastos() {                                       //OK
     return gastos;
 }
 
-function anyadirGasto() {
-
+function anyadirGasto(o) {
 }
 
 function borrarGasto() {
-
 }
 
 function calcularTotalGastos() {
-
 }
 
 function calcularBalance() {
-
 }
 
 //* OBJETO
 
-function CrearGasto(descrip, valorIntroducido, date, etiqueta = []) {
+function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
 
-    this.descripcion = descrip;
-
-    // prodiedad valor= opción condicional ? del libro: "this.valor = (valor >=0) ? valor : 0;"
-    if (valorIntroducido > 0) { 
-        this.valor = valorIntroducido;
-    }                                  
-    else {
-        this.valor = 0;
-    }
-    
-    if (!date) {
-
-        this.fecha = new Date(timestamp)
-    }
-    else { 
-        this.fecha = date;
-    }
-    
-    this.etiquetas = etiqueta;
-
-
+   
     //* Métodos del objeto:
 
     this.mostrarGasto = function () {                           //OK
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    };
-    this.actualizarDescripcion = function (nuevoTexto) {        //OK 
+    }
+
+    this.actualizarDescripcion = function (nuevoTexto) {        //OK dwec_U02_a03_Cpe_s.js
         this.descripcion = nuevoTexto;
-    };
-    this.actualizarValor = function (nuevoValor) {              //OK Opción libro, con condicional ?sería: "this.valor = (valor >=0) ? valor : this.valor;"
-        if (nuevoValor >= 0) {
+    }
+
+    this.actualizarValor = function (valor) {              //OK Opción libro.
+
+        this.valor = (valor >= 0) ? valor : this.valor;
+        /*if (valor >= 0) {
             this.valor = nuevoValor;
-        }
+        }*/
+    }
+
+    this.mostrarGastoCompleto = function() {
     };
+
+    this.actualizarFecha = function () {  
+    }
+
+    this.anyadirEtiquetas = function () {     
+    }
+    this.borrarEtiquetas = function () {   
+    }
+    // Propiedades:
+    this.descripcion = descrip;
+
+    if (valorIntroducido > 0) {                        //prodiedad valor= opción condicional ? del libro: "this.valor = (valor >=0) ? valor : 0;"
+        this.valor = valorIntroducido;
+    }
+    else {
+        this.valor = 0;
+    }
+    let fech = Date.parse(date);                     //Opción libro.
+    if (fech) {
+        this.fecha = fech;
+    } else {
+        this.fecha = Date.parse(new Date());
+    }
+    // en objeto Gasto:
+    /*if (!date) {
+    
+            this.fecha = new Date(timestamp)
+        }
+        else { 
+            this.fecha = date;
+        }
+    
+        if (etiqueta.length === 0) {
+            this.etiquetas = [];
+        }
+        else{
+        this.etiquetas = etiqueta;
+        }*/
+    this.etiquetas = [];   
+    this.anyadirEtiquetas(...etiquetas);
 }
 
 
@@ -93,3 +116,4 @@ export {
     calcularTotalGastos,
     calcularBalance
 }
+

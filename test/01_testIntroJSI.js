@@ -1,24 +1,24 @@
 // Importar librería Chai para realizar aserciones
-import {assert} from "chai";
+import { assert } from "chai";
 
 // Importar código de la aplicación sobre la que se realizarán los tests
-import {actualizarPresupuesto, mostrarPresupuesto, CrearGasto} from '../js/gestionPresupuesto.js';
+import { actualizarPresupuesto, mostrarPresupuesto, CrearGasto } from '../js/gestionPresupuesto.js';
 
 // Inicialización de la variable global presupuesto
-describe("Inicialización de la variable global presupuesto", function() {
-    it("Devuelve 0 si no se ha modificado el presupuesto (valor por defecto)", function() {
+describe("Inicialización de la variable global presupuesto", function () {
+    it("Devuelve 0 si no se ha modificado el presupuesto (valor por defecto)", function () {
         assert.equal(mostrarPresupuesto(), "Tu presupuesto actual es de 0 €");
     });
 });
 
 // Función actualizarPresupuesto
-describe("Función actualizarPresupuesto", function() {
-    it("Actualiza presupuesto con valor válido", function() {
+describe("Función actualizarPresupuesto", function () {
+    it("Actualiza presupuesto con valor válido", function () {
         assert.equal(actualizarPresupuesto(1000), 1000);
         assert.equal(actualizarPresupuesto(2050.25), 2050.25);
     });
 
-    it("Devuelve -1 si el valor no es un número positivo", function() {
+    it("Devuelve -1 si el valor no es un número positivo", function () {
         assert.equal(actualizarPresupuesto(-1000), -1);
         assert.equal(actualizarPresupuesto(-150.42), -1);
         assert.equal(actualizarPresupuesto("blabla"), -1);
@@ -28,8 +28,8 @@ describe("Función actualizarPresupuesto", function() {
 });
 
 // Función mostrarPresupuesto
-describe("Función mostrarPresupuesto", function() {
-    it("Devuelve el valor correcto tras realizar actualizaciones del presupuesto", function() {
+describe("Función mostrarPresupuesto", function () {
+    it("Devuelve el valor correcto tras realizar actualizaciones del presupuesto", function () {
         actualizarPresupuesto(2000);
         assert.equal(mostrarPresupuesto(), "Tu presupuesto actual es de 2000 €");
         actualizarPresupuesto(14000.25);
@@ -43,8 +43,8 @@ describe("Función mostrarPresupuesto", function() {
 });
 
 // Función CrearGasto y funcionamiento de objeto gasto
-describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
-    it("CrearGasto devuelve objeto gasto si los parámetros son correctos", function() {
+describe("Función CrearGasto y funcionamiento de objeto gasto", function () {
+    it("CrearGasto devuelve objeto gasto si los parámetros son correctos", function () {
         var valor = 50;
         var descripcion = "Ejemplo de gasto 1";
         var gasto1 = new CrearGasto(descripcion, valor);
@@ -56,9 +56,9 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
         var gasto2 = new CrearGasto(descripcion, valor);
         assert.equal(gasto2.valor, valor);
         assert.equal(gasto2.descripcion, descripcion);
-    }); 
+    });
 
-    it("CrearGasto devuelve un objeto gasto con valor 0 si el parámetro valor no es un número positivo", function() {
+    it("CrearGasto devuelve un objeto gasto con valor 0 si el parámetro valor no es un número positivo", function () {
         var valor = "novalido";
         var descripcion = "Ejemplo de gasto 1";
         var gasto1 = new CrearGasto(descripcion, valor);
@@ -70,14 +70,14 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
         assert.equal(gasto2.descripcion, descripcion);
     });
 
-    it("Método 'mostrarGasto' del objeto gasto", function() {
+    it("Método 'mostrarGasto' del objeto gasto", function () {
         var valor = 20.33;
         var descripcion = "Ejemplo de gasto 1";
         var gasto1 = new CrearGasto(descripcion, valor);
         assert.equal(gasto1.mostrarGasto(), `Gasto correspondiente a ${descripcion} con valor ${valor} €`);
     });
 
-    it("Método 'actualizarDescripcion' del objeto gasto", function() {
+    it("Método 'actualizarDescripcion' del objeto gasto", function () {
         var valor = 20.33;
         var descripcion = "Ejemplo de gasto 1";
         var gasto1 = new CrearGasto(descripcion, valor);
@@ -87,7 +87,7 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
         assert.equal(gasto1.descripcion, nuevadesc);
     });
 
-    it("Método 'actualizarValor' del objeto gasto", function() {
+    it("Método 'actualizarValor' del objeto gasto", function () {
         var valor = 20.33;
         var descripcion = "Ejemplo de gasto 1";
         var gasto1 = new CrearGasto(descripcion, valor);

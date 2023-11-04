@@ -25,7 +25,7 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
         assert.equal(new Date(gasto1.fecha).getDate(), now.getDate());
         assert.isEmpty(gasto1.etiquetas, "Si el gasto se crea sin etiquetas, la propiedad 'etiquetas' debe inicializarse a un array vacío");
 
-        /*let gasto2 = new CrearGasto(descr, 23.55);
+        let gasto2 = new CrearGasto(descr, 23.55);
         assert.equal(gasto2.descripcion, descr);
         assert.equal(gasto2.valor, 23.55);
         assert.equal(new Date(gasto2.fecha).getMonth(), now.getMonth());
@@ -60,11 +60,11 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
         assert.lengthOf(gasto6.etiquetas,3);
         assert.equal(gasto6.etiquetas[0], "casa");
         assert.equal(gasto6.etiquetas[1], "supermercado");
-        assert.equal(gasto6.etiquetas[2], "comida");*/
+        assert.equal(gasto6.etiquetas[2], "comida");
 
     });
 
-    /*it("Método 'mostrarGastoCompleto' del objeto gasto", function() {
+    it("Método 'mostrarGastoCompleto' del objeto gasto", function() {
         let valor = 23.55;
         let fechalocale = new Date("2021-10-06T13:10Z").toLocaleString();
         let gasto1 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
@@ -76,9 +76,9 @@ Etiquetas:
 - supermercado
 - comida
 `);
-    });*/
+    });
 
-   /* it("Método 'actualizarFecha' del objeto gasto", function() {
+  it("Método 'actualizarFecha' del objeto gasto", function() {
         let orig = Date.parse("2021-10-06T13:10Z");
         let nueva = Date.parse("2021-11-11T13:10Z");
         let gasto1 = new CrearGasto("descripción del gasto", 23.55, "2021-10-06T13:10Z");
@@ -86,9 +86,9 @@ Etiquetas:
         assert.equal(gasto1.fecha, orig, "Si la fecha no es válida, se debe dejar sin modificar.");
         gasto1.actualizarFecha("2021-11-11T13:10Z");
         assert.equal(gasto1.fecha, nueva, "Actualizar fecha si es válida.");
-    });*/
+    });
 
-    /*it("Método 'anyadirEtiquetas' del objeto gasto", function() {
+    it("Método 'anyadirEtiquetas' del objeto gasto", function () {
         let valor = 44.55;
         let gasto1 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
         gasto1.anyadirEtiquetas("nueva1");
@@ -120,9 +120,9 @@ Etiquetas:
         gasto2.anyadirEtiquetas("nueva2", "nueva9", "nueva3");
         assert.lengthOf(gasto2.etiquetas,9, "Si las etiquetas ya existen no se deben añadir: solo deben añadirse las que no existan previamente en el objeto gasto.");
         assert.equal(gasto2.etiquetas[8], "nueva9");
-    });*/
+    });
 
-    /*it("Método 'borrarEtiquetas' del objeto gasto", function() {
+    it("Método 'borrarEtiquetas' del objeto gasto", function() {
         let valor = 44.55;
         let gasto1 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
         gasto1.borrarEtiquetas("supermercado");
@@ -146,7 +146,7 @@ Etiquetas:
         let gasto4 = new CrearGasto("descripción del gasto", valor, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
         gasto4.borrarEtiquetas("noexiste", "casa", "supermercado", "noexiste2", "comida");
         assert.lengthOf(gasto4.etiquetas,0, "Si se borran todas las etiquetas la propiedad etiquetas debe ser un array vacío");
-    });*/
+    });
 });
 
 
