@@ -30,15 +30,17 @@ function mostrarGastoWeb(idElemento, gasto) {
       divValor.textContent = gasto.valor + ' €';
       divGasto.appendChild(divValor);
 
-      const divEtiquetas = document.createElement('div');
-      divEtiquetas.classList.add('gasto-etiquetas');
-      gasto.etiquetas.forEach(etiqueta => {
+      if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
+        const divEtiquetas = document.createElement('div');
+        divEtiquetas.classList.add('gasto-etiquetas');
+        gasto.etiquetas.forEach(etiqueta => {
           const spanEtiqueta = document.createElement('span');
           spanEtiqueta.classList.add('gasto-etiquetas-etiqueta');
           spanEtiqueta.textContent = etiqueta;
           divEtiquetas.appendChild(spanEtiqueta);
-      });
-      divGasto.appendChild(divEtiquetas);
+        });
+        divGasto.appendChild(divEtiquetas);
+      }
 
       elemento.appendChild(divGasto);
   }
