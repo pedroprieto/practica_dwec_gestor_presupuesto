@@ -23,17 +23,36 @@ function listarGastos() {                                       //OK
     return gastos;
 }
 
-function anyadirGasto(o) {
+function anyadirGasto(gasto) {
+    gasto.id = idGasto++;
+    gastos.push(gasto);
 }
 
-function borrarGasto() {
+
+function borrarGasto(idGasto) {                                 //OK del libro.
+    let borrar;
+    for (let g of gastos) {
+        if (g.id == idGasto) {
+            let pos = gastos.indexOf(g);                        // Obj.indexOf(param) busca dentro del obj el índice(pos) donde esta el param
+            gastos.splice(pos, 1)                                //splice: borra 1 elem a partir de la pos que le indicamos objeto.splice(pos,cantid.a.Borrar)
+            break;
+        }
+    }
 }
 
 function calcularTotalGastos() {
+    let totalG = 0;
+    for (let g of gastos) {
+        totalG += g.valor;
+    }
+    return totalG;
 }
 
 function calcularBalance() {
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
+
 
 //* OBJETO
 
