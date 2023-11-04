@@ -61,11 +61,21 @@ function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
     this.mostrarGastoCompleto = function() {
     };
 
-    this.actualizarFecha = function () {  
+    this.actualizarFecha = function (date) {                // Opción Libro
+        let fech = Date.parse(date)
+        if (fech) {
+            this.fecha = fech;
+        }
     }
 
-    this.anyadirEtiquetas = function () {     
+    this.anyadirEtiquetas = function (...etiq) {             // Opción libro
+        for (let e of etiq) {
+            if (this.etiquetas.indexOf(e) == -1) {
+                this.etiquetas.push(e);
+            }
+        }
     }
+
     this.borrarEtiquetas = function () {   
     }
     // Propiedades:
@@ -83,21 +93,7 @@ function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
     } else {
         this.fecha = Date.parse(new Date());
     }
-    // en objeto Gasto:
-    /*if (!date) {
     
-            this.fecha = new Date(timestamp)
-        }
-        else { 
-            this.fecha = date;
-        }
-    
-        if (etiqueta.length === 0) {
-            this.etiquetas = [];
-        }
-        else{
-        this.etiquetas = etiqueta;
-        }*/
     this.etiquetas = [];   
     this.anyadirEtiquetas(...etiquetas);
 }
@@ -116,4 +112,18 @@ export {
     calcularTotalGastos,
     calcularBalance
 }
-
+// en objeto Gasto:
+/*if (!date) {
+ 
+        this.fecha = new Date(timestamp)
+    }
+    else { 
+        this.fecha = date;
+    }
+ 
+    if (etiqueta.length === 0) {
+        this.etiquetas = [];
+    }
+    else{
+    this.etiquetas = etiqueta;
+    }*/
