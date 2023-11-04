@@ -6,8 +6,8 @@ let idGasto = 0;
 
 
 function actualizarPresupuesto(p) {
-    if (p > 0) {
-        p = presupuesto;
+    if (p >= 0) {
+        presupuesto = p;
         return p;
     } else {
         return p = -1;
@@ -131,18 +131,21 @@ function borrarGasto(id) {
 }
 
 function calcularTotalGastos() {
-    let sumarTotal = 0;
+    let sumTotal = 0; 
 
-    for (let i = 0; i < gastos.length; i++) {
-        sumarTotal += gastos[i].valor;
-    }
+  gastos.forEach((g) => {
+      sumTotal += g.valor; 
+  }
+  ); 
 
-    return sumarTotal;
+  return sumTotal; 
 }
 
 function calcularBalance() {
-    let sum = calcularTotalGastos();
-    return pres - sum;
+    let suma = calcularTotalGastos(); 
+    return presupuesto - suma; 
+
+    
 }
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     let buscadorDeGastos = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
