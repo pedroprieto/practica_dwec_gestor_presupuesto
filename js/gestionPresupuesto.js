@@ -50,7 +50,7 @@ function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
         this.descripcion = nuevoTexto;
     }
 
-    this.actualizarValor = function (valor) {              //OK Opción libro.
+    this.actualizarValor = function (valor) {                    //OK Opción libro.
 
         this.valor = (valor >= 0) ? valor : this.valor;
         /*if (valor >= 0) {
@@ -58,10 +58,19 @@ function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
         }*/
     }
 
-    this.mostrarGastoCompleto = function() {
+    this.mostrarGastoCompleto = function () {                     //OK
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+
+        for (let e of this.etiquetas) {
+            texto += `- ${e}\n`
+        }
+        return texto;
     };
 
-    this.actualizarFecha = function (date) {                // Opción Libro
+
+    this.actualizarFecha = function (date) {                      // Opción Libro
         let fech = Date.parse(date)
         if (fech) {
             this.fecha = fech;
@@ -75,9 +84,17 @@ function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
             }
         }
     }
+    this.borrarEtiquetas = function (...etqs) {
+        let newetiquetas = [];
 
-    this.borrarEtiquetas = function () {   
+        for (let e of this.etiquetas) {
+            if (etqs.indexOf(e) == -1) {
+                newetiquetas.push(e);
+            }
+        }
+        this.etiquetas = newetiquetas;
     }
+
     // Propiedades:
     this.descripcion = descrip;
 
