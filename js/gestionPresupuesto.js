@@ -149,7 +149,56 @@ function calcularBalance() {
 	return totalBalance
 }
 
-function filtrarGastos() {}
+// Función que recibe un objeto con filtros y devuelve un array con los gastos filtrados
+function filtrarGastos(filtros) {
+	// Creamos una copia del array de gastos para no modificar el original
+	let gastosFiltrados = gastos
+
+	// Si el parámetro tiene una propiedad fechaDesde, filtramos los gastos que tengan una fecha mayor o igual a la fecha indicada
+	if (filtros.fechaDesde) {
+		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.fecha >= Date.parse(filtros.fechaDesde))
+	}
+
+	// Si el parámetro tiene una propiedad fechaHasta, filtramos los gastos que tengan una fecha menor o igual a la fecha indicada
+	if (filtros.fechaHasta) {
+		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.fecha <= Date.parse(filtros.fechaHasta))
+	}
+
+	// Si el parámetro tiene una propiedad valorMinimo, filtramos los gastos que tengan un valor mayor o igual al valor indicado
+	if (filtros.valorMinimo) {
+		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.valor >= filtros.valorMinimo)
+	}
+
+	// Si el parámetro tiene una propiedad valorMaximo, filtramos los gastos que tengan un valor menor o igual al valor indicado
+	if (filtros.valorMaximo) {
+		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.valor <= filtros.valorMaximo)
+	}
+
+	//
+	if (filtros.descripcionContiene) {
+		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase()))
+	}
+
+	// Si el parámetro tiene una propiedad etiquetasTiene, filtramos los gastos que tengan al menos una de las etiquetas indicadas
+	if (filtros.etiquetasTiene) {
+		gastosFiltrados = gastosFiltrados.filter((gasto) => {
+			let etiquetasCoincidentes = 0
+			for (let i = 0; i < filtros.etiquetasTiene.length; i++) {
+				const etiqueta = filtros.etiquetasTiene[i]
+				if (gasto.etiquetas.includes(etiqueta)) {
+					etiquetasCoincidentes++
+				}
+			}
+			if (etiquetasCoincidentes > 0) {
+				return true
+			} else {
+				return false
+			}
+		})
+	}
+
+	return gastosFiltrados
+}
 
 function agruparGastos() {}
 
