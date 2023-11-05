@@ -52,6 +52,13 @@ function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
+function filtrarGastos() { 
+
+}
+
+function agruparGastos() { 
+
+}
 
 
 //* OBJETO
@@ -114,6 +121,24 @@ Etiquetas:\n`
         this.etiquetas = newetiquetas;
     }
 
+    this.obtenerPeriodoAgrupacion(periodo){ 
+        let res = "";
+        let totalGasto = gastos.reduce()
+
+        if (periodo == "anyo") {
+            
+        }
+        
+        if (periodo == "mes") {
+            
+        }
+                
+        if (periodo == "dia") {
+            
+        }
+
+    }
+
     // Propiedades:
     this.descripcion = descrip;
 
@@ -132,6 +157,8 @@ Etiquetas:\n`
     
     this.etiquetas = [];   
     this.anyadirEtiquetas(...etiquetas);
+
+    this.periodo;
 }
 
 
@@ -146,7 +173,10 @@ export {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos,
+
 }
 // en objeto Gasto:
 /*if (!date) {
