@@ -49,6 +49,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.fecha = Date.parse(fecha);
         }
     }
+    this.anyadirEtiquetas = function(...etiquetas) {
+        for (const etiqueta of etiquetas) {
+            if (!this.etiquetas.includes(etiqueta)) {
+                this.etiquetas.push(etiqueta);
+            }
+        }
+    }
 }
 
 function listarGastos() {
