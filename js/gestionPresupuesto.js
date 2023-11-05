@@ -50,7 +50,10 @@ function borrarGasto(id) {
     gastos.splice(idxBorrar, 1);
 }
 
-function calcularTotalGastos() {}
+function calcularTotalGastos() {
+    return gastos.reduce((suma, gasto) => suma + gasto.valor, 0);
+}
+
 function calcularBalance() {}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
