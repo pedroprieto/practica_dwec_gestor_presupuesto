@@ -3,8 +3,14 @@
 let presupuesto = 0;
 
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(nuevoPresupuesto) {
+    if (nuevoPresupuesto >= 0) {
+        presupuesto = nuevoPresupuesto;
+        return presupuesto;
+    } else {
+        console.log("Presupuesto no válido");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
