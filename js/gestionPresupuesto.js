@@ -35,8 +35,16 @@ function CrearGasto(descripcion, valor) {
     }
 }
 
-function listarGastos() {}
-function anyadirGasto() {}
+function listarGastos() {
+    return gastos;
+}
+
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    gastos.push(gasto);
+    idGasto++;
+}
+
 function borrarGasto() {}
 function calcularTotalGastos() {}
 function calcularBalance() {}
