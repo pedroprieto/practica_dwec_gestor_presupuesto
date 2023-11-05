@@ -40,8 +40,8 @@ function calcularTotalGastos(){
         totalGastos += gasto.valor
     });
     
-    return totalGastos;
-
+    // Formatear el resultado con dos decimales
+    return totalGastos.toFixed(2);
 }
 
 //Función sin parámetros que devuelva el balance disponible

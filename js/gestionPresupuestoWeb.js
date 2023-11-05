@@ -37,7 +37,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     const divValor = document.createElement("div");
     divValor.classList.add("gasto-valor");
-    divValor.textContent = `${gasto.valor} €`;
+    divValor.textContent = `${gasto.valor}`;
 
     // Crear un elemento div con la clase "gasto-etiquetas" para las etiquetas del gasto
     const divEtiquetas = document.createElement("div");
@@ -98,7 +98,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
         const spanValor = document.createElement("span");
         spanValor.classList.add("agrupacion-dato-valor");
-        spanValor.textContent = agrup[clave];
+        spanValor.textContent = agrup[clave].toFixed(2); //Formateo para que aparezcan dos decimales
 
         // Agregar spans al divDato
         divDato.appendChild(spanClave);
