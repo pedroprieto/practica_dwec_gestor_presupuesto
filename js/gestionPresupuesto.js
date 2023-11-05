@@ -45,7 +45,11 @@ function anyadirGasto(gasto) {
     idGasto++;
 }
 
-function borrarGasto() {}
+function borrarGasto(id) {
+    const idxBorrar = gastos.findIndex(gasto => gasto.id === id);
+    gastos.splice(idxBorrar, 1);
+}
+
 function calcularTotalGastos() {}
 function calcularBalance() {}
 
