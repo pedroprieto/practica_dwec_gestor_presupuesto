@@ -2,8 +2,8 @@
  mostrar la información relacionada con estos en la página */
 
  //Importar los programas /js/gestionPresupuesto y js/gestionPresupuestoWeb.
- import * as gestPresupuesto from ' ./js/gestionPresupuesto.js';
- import * as gestPresupuestoWeb from './js/gestionPresupuestoWeb.js';
+ import * as gestPresupuesto from ' ./gestionPresupuesto.js';
+ import * as gestPresupuestoWeb from './gestionPresupuestoWeb.js';
 
  //Actualizar el presupuesto a 1500€ (función actualizarPresupuesto)
  gestPresupuesto.actualizarPresupuesto(1500);
@@ -20,15 +20,25 @@
  let gasto6 = new gestPresupuesto.crearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
  //Añadir los gastos creados (función anyadirGasto)
- gestPresupuesto.anyadirGato(gasto1);
- gestPresupuesto.anyadirGato(gasto2);
- gestPresupuesto.anyadirGato(gasto3);
- gestPresupuesto.anyadirGato(gasto4);
- gestPresupuesto.anyadirGato(gasto5);
- gestPresupuesto.anyadirGato(gasto6);
+ gestPresupuesto.anyadirGasto(gasto1);
+ gestPresupuesto.anyadirGasto(gasto2);
+ gestPresupuesto.anyadirGasto(gasto3);
+ gestPresupuesto.anyadirGasto(gasto4);
+ gestPresupuesto.anyadirGasto(gasto5);
+ gestPresupuesto.anyadirGasto(gasto6);
 
  //Mostrar los gastos totales en div#gastos-totales
- 
+ gestPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestPresupuesto.calcularTotalGastos());
+
+ //Mostrar el balance total en div#balance-total
+ gestPresupuestoWeb.mostrarDatoEnId('balance-total', gestPresupuesto.calcularBalance());
+
+ //Mostrar el listado completo de gastos en div#listado-gastos-completo
+ for ( let gst of gestPresupuesto.listarGastos()) {
+    gestPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo' , gst);
+ }
+
+ //Mostrar el listado de gastos realizados en septiembre de 2021
 
 
 
