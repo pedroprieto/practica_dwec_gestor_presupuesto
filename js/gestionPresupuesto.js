@@ -174,7 +174,7 @@ function filtrarGastos(filtros) {
 		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.valor <= filtros.valorMaximo)
 	}
 
-	//
+	// Si el parámetro tiene una propiedad descripcionContiene, filtramos los gastos que tengan la descripción indicada
 	if (filtros.descripcionContiene) {
 		gastosFiltrados = gastosFiltrados.filter((gasto) => gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase()))
 	}
