@@ -120,8 +120,66 @@ function calcularBalance() {
     return balance;
 }
 
-function filtrarGastos() {
-   
+function filtrarGastos(objeto) {
+    let {fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene} = objeto;
+
+    //Fechas
+    fechaDesde = Date.parse(fechaDesde);
+    fechaHasta = Date.parse(fechaHasta);
+    let cumpleFechas = (gasto) => {
+        if (fechaDesde && gasto.fecha < fechaDesde) {
+          return false;  
+        }
+        if (fechaHasta && gasto.fecha > fechaHasta) {
+            return false;
+        }
+        return true;
+    }    
+
+    //Valores
+    let cumpleValores = (gasto) => {
+        if (valorMinimo && gasto.valor < valorMinimo) {
+          return false;  
+        }
+        if (valorMaximo && gasto.valor > valorMaximo) {
+            return false;
+        }
+        return true;
+    }  
+
+    //Descripción    
+    if (descripcionContiene) {
+        descripcionContiene = descripcionContiene.toLowerCase();
+    }
+    let cumpleDescripcion = (gasto) => {
+        if (descripcionContiene && !gasto.descripcion.toLowerCase().includes(descripcionContiene)) {
+            return false;  
+        }
+        return true;
+    }
+    //Etiquetas
+    if (etiquetasTiene) {
+        etiquetasTiene = etiquetasTiene.map(etiqueta => etiqueta.toLowerCase());
+    }       
+    let cumpleEtiquetas = (gasto) => {
+        if (!etiquetasTiene) {
+            return true;
+        }
+        if (etiquetasTiene && gasto.etiquetas.find((etiqueta) => etiquetasTiene.includes(etiqueta.toLowerCase()))) {
+            return true;
+        }
+        return false;
+    }
+
+    let gastosFiltrados = gastos.filter(gasto => (
+            cumpleFechas(gasto) &&
+            cumpleValores(gasto) &&
+            cumpleDescripcion(gasto) &&
+            cumpleEtiquetas(gasto) 
+        )
+    ) 
+
+    return gastosFiltrados;
 }
 
 function agruparGastos() {
