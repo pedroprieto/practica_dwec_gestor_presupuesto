@@ -42,6 +42,13 @@ function mostrarGastoWeb (idElemento , agrup , periodo) {
         spanEti.innerText = eti;
     }
 
+    //Componer los divs
+    divGasto.append(divDescripcion, divFecha,divValor, divEtiquetas);
+
+    //Añadir el div contenedor
+    let divContenedor = document.getElementById(idElemento);
+    divContenedor.append(divGasto);
+
 }
 
 //Función de tres parámetros que se encargará de crear una estructura HTML para el objeto 
