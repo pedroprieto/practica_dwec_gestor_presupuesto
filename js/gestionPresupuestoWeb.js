@@ -14,6 +14,8 @@ function mostrarDatoEnId(idElemento, valor){
   }
 }
 
+//Función de dos parámetros que se encargará de añadir dentro del elemento HTML con id idElemento 
+//indicado una estructura HTML para el gasto que se pase como parámetro
 function mostrarGastoWeb(idElemento, gasto){
   // Buscar el elemento HTML por su ID
   const contenedor = document.getElementById(idElemento);   
@@ -62,4 +64,56 @@ function mostrarGastoWeb(idElemento, gasto){
       console.error("Elemento no encontrado.");
     }
   
+}
+
+//Función de tres parámetros que se encargará de crear dentro del elemento HTML con id idElemento
+//indicado una estructura HTML para el objeto agrup que se pase como parámetro:
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+
+  // Buscar el elemento HTML por su ID
+  const contenedor = document.getElementById(idElemento);   
+  
+  if (contenedor){
+    // Crear un div con la clase "agrupacion"
+    const divAgrupacion = document.createElement("div");
+    divAgrupacion.classList.add("agrupacion");
+
+    // Crear un título h1 basado en el período
+    const h1Titulo = document.createElement("h1");
+    h1Titulo.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrupacion.appendChild(h1Titulo);
+
+    // Recorrer las propiedades del objeto agrup
+    for (const clave in agrup) {
+      //Verificamos que el objeto tiene la propiedad
+      if (agrup.hasOwnProperty(clave)) {
+        // Crear un div con la clase "agrupacion-dato"
+        const divDato = document.createElement("div");
+        divDato.classList.add("agrupacion-dato");
+
+        // Crear spans para clave y valor
+        const spanClave = document.createElement("span");
+        spanClave.classList.add("agrupacion-dato-clave");
+        spanClave.textContent = clave;
+
+        const spanValor = document.createElement("span");
+        spanValor.classList.add("agrupacion-dato-valor");
+        spanValor.textContent = agrup[clave];
+
+        // Agregar spans al divDato
+        divDato.appendChild(spanClave);
+        divDato.appendChild(spanValor);
+
+        // Agregar divDato al divAgrupacion
+        divAgrupacion.appendChild(divDato);
+      }
+    }
+
+    // Agregar divAgrupacion al contenedor
+    contenedor.appendChild(divAgrupacion);
+}
+  else {
+    console.error("Elemento no encontrado.");
+  }
+
 }
