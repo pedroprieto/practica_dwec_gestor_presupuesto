@@ -178,12 +178,18 @@ function filtrarGastos(objeto) {
             cumpleEtiquetas(gasto) 
         )
     ) 
-
     return gastosFiltrados;
 }
 
-function agruparGastos() {
-    
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+    let gastosFiltrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde, fechaHasta});
+   
+    let gastosAgrupados = gastosFiltrados.reduce((acc, gasto) => {
+        let clavePeriodo = gasto.obtenerPeriodoAgrupacion(periodo);
+        acc[clavePeriodo] = clavePeriodo in acc ? acc[clavePeriodo] + gasto.valor : gasto.valor;
+        return acc;
+    }, {})
+    return gastosAgrupados;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
