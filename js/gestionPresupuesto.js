@@ -44,6 +44,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
         return ret;
     }
+    this.actualizarFecha = function(fecha) {
+        if (Date.parse(fecha)) {
+            this.fecha = Date.parse(fecha);
+        }
+    }
 }
 
 function listarGastos() {
