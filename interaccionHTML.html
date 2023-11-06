@@ -1,54 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>
-            Gestor de Presupuesto - Miguel Trascasas Baños
-        </title>
-        <link rel="stylesheet" type="text/css" href="css/estilos.css" /> 
- 
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestor de Presupuesto - Miguel Trascasas Baños</title>
+    <link rel="stylesheet" type="text/css" href="css/estilos.css" />
+  </head>
 
-    <body>
-        <div id="aplicacion">
-            <div id="presupuesto">
-            </div>
+  <body>
+    <div id="aplicacion">
+      <div id="controlesprincipales">
+        <button type="button" id="actualizarpresupuesto">
+          Actualizar presupuesto
+        </button>
+        <button type="button" id="anyadirgasto">Añadir gasto</button>
+      </div>
+      <div id="presupuesto"></div>
 
-            <div id="gastos-totales">
-            </div>
+      <div id="gastos-totales"></div>
 
-            <div id="balance-total">
-            </div>
+      <div id="balance-total"></div>
 
-            <div id="listado-gastos-completo">
-            </div>
+      <div id="listado-gastos-completo"></div>
 
-            <div id="listado-gastos-filtrado-1">
-            </div>
+      <div id="listado-gastos-filtrado-1"></div>
 
-            <div id="listado-gastos-filtrado-2">
-            </div>
+      <div id="listado-gastos-filtrado-2"></div>
 
-            <div id="listado-gastos-filtrado-3">
-            </div>
+      <div id="listado-gastos-filtrado-3"></div>
 
-            <div id="listado-gastos-filtrado-4">
-            </div>
+      <div id="listado-gastos-filtrado-4"></div>
 
-            <div id="agrupacion-dia">
-            </div>
+      <div id="agrupacion-dia"></div>
 
-            <div id="agrupacion-mes">
-            </div>
+      <div id="agrupacion-mes"></div>
 
-            <div id="agrupacion-anyo">
-            </div>
+      <div id="agrupacion-anyo"></div>
+    </div>
 
-        </div>
-
-        <script type="module" src="/js/generarDatosEstaticos.js">
-            
-        </script>
-    </body>
+    <script type="module" src="/js/generarDatosEstaticos.js"></script>
+    <script>
+      // importar presupuestoweb
+      actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+    </script>
+  </body>
 </html>

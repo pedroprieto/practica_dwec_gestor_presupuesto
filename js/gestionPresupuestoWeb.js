@@ -1,3 +1,33 @@
+import * as gp from './gestionPresupuesto.js'
+
+function actualizarPresupuestoWeb () {
+  const pregunta = Number(globalThis.prompt('Introduce un presupuesto.'))
+}
+
+function repintar () {
+  // Mostrar el presupuesto en #presupuesto
+  mostrarDatoEnID('presupuesto', gp.mostrarPresupuesto())
+
+  // Mostrar los gastos totales en #gastos-totales
+  mostrarDatoEnID('gastos-totales', gp.calcularTotalGastos())
+
+  // Mostrar el balance total en #balance-total
+  mostrarDatoEnID('balance-total', gp.calcularBalance())
+
+  // Borrar el contenido de #listado-gastos-completo
+  borrarContenido('listado-gastos-completo')
+
+  // Mostrar el listado completo de gastos en div#listado-gastos-completo
+  for (const gasto of gp.obtenerGastos()) {
+    mostrarGastoWeb('listado-gastos-completo', gasto)
+  }
+}
+
+function borrarContenido (idElemento) {
+  const elemento = document.getElementById(idElemento)
+  elemento.innerHTML = ''
+}
+
 function mostrarGastoWeb (idElemento, gasto) {
   const cGasto = document.createElement('div')
   cGasto.classList.add('gasto')
@@ -67,6 +97,7 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
 }
 
 export {
+  repintar,
   mostrarDatoEnID,
   mostrarGastoWeb,
   mostrarGastosAgrupadosWeb
