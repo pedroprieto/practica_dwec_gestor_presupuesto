@@ -142,9 +142,9 @@ function calcularTotalGastos() {
 }
 
 function calcularBalance() {
+
     let suma = calcularTotalGastos(); 
     return presupuesto - suma; 
-
     
 }
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
