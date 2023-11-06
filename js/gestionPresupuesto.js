@@ -52,59 +52,98 @@ function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
-//Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en objetoParam.
-function filtrarGastos(objetoParam) {
-    let res;
-    if (!objetoParam || (objetoParam).length === 0) {
-        // Si 'gastos' es nulo o indefinido, simplemente retornamos gastos.
-        return gasto;
-    }
-    else{
-    let res = gastos.filter(function (gasto) {
-        let existe = true;
-
-        if (objetoParam.fdesde) {
-            let fdesde = Date.parse(objetoParam.fdesde); // Convierte la fecha (objetoParam.fdesde) a representación numérica con Date.parse
-            if (gasto.fecha < fdesde) {
-                existe = false;
+function filtrarGastos(dat) {                         // OK Libro.
+    return gastos.filter(function (d) {
+        var resul = true;
+        if (dat.fechaDesde) {
+            var f = Date.parse(dat.fechaDesde);
+            resul = resul && (d.fecha >= f);
+        }
+        if (dat.fechaHasta) {
+            var f = Date.parse(dat.fechaHasta);
+            resul = resul && (d.fecha <= f);
+        }
+        if (dat.valorMinimo) {
+            resul = resul && (d.valor >= dat.valorMinimo);
+        }
+        if (dat.valorMaximo) {
+            resul = resul && (d.valor <= dat.valorMaximo);
+        }
+        if (dat.descripcionContiene) {
+            resul = resul && (d.descripcion.indexOf(dat.descripcionContiene) > -1);
+        }
+        if (dat.etiquetasTiene) {
+            let etiSi = false;
+            for (let e of dat.etiquetasTiene) {
+                if (d.etiquetas.indexOf(e) > -1) {
+                    etiSi = true;
+                }
             }
+            resul = resul && etiSi;
         }
 
-        if (objetoParam.fHasta) {
-            let fHasta = Date.parse(objetoParam.fHasta);
-            if (gasto.fecha > fHasta) {
-                existe = false;
-            }
-        }
-
-        if (objetoParam.vMinimo) {
-            if (gasto.v < objetoParam.vMinimo) {
-                existe = false;
-            }
-        }
-
-        if (objetoParam.vMaximo) {
-            if (gasto.v > objetoParam.vMaximo) {
-                existe = false;
-            }
-        }
-
-        if (objetoParam.descripcionContiene) {
-            if (!gasto.descripcion.includes(objetoParam.descripcionContiene)) {
-                existe = false;
-            }
-        }
-
-        if (objetoParam.etiquetasTiene) {
-            if (!cumpleEtiquetasTiene(gasto, objetoParam.etiquetasTiene)) {
-                existe = false;
-            }
-        }
-    
-        return existe; // Devuelve true si el gasto cumple con todos los criterios, de lo contrario, devuelve false
+        return resul;
     })
-    };
+
 }
+//Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en objetoParam.
+/*function filtrarGastos(objetoParam) {
+    let vacio = true;
+
+    for (let oP in objetoParam) {
+        vacio = false;
+        break;
+    }
+    // Si 'gastos' es nulo o indefinido, simplemente retornamos gastos.
+    if (!objetoParam || vacio) {
+        return gastos;
+    } else {
+        let res = gastos.filter(function (g) {
+            let existe = true;
+
+            if (objetoParam.fechaDesde) {
+                let fdesde = Date.parse(objetoParam.fechaDesde);
+                if (g.fecha <= fdesde) {
+                    existe = false;
+                }
+            }
+
+            if (objetoParam.fechaHasta) {
+                let fHasta = Date.parse(objetoParam.fechaHasta);
+                if (g.fecha > fHasta) {
+                    existe = false;
+                }
+            }
+
+            if (objetoParam.valorMinimo) {
+                if (g.v < objetoParam.valorMinimo) {
+                    existe = false;
+                }
+            }
+
+            if (objetoParam.valorMaximo) {
+                if (g.v > objetoParam.valorMaximo) {
+                    existe = false;
+                }
+            }
+
+            if (objetoParam.descripcionContiene) {
+                if (!g.descripcion.includes(objetoParam.descripcionContiene)) {
+                    existe = false;
+                }
+            }
+
+            if (objetoParam.etiquetasTiene) {
+                if (!cumpleEtiquetasTiene(g, objetoParam.etiquetasTiene)) {
+                    existe = false;
+                }
+            }
+
+            return existe;
+        });
+    }
+}*/
+
 
     function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
         for (let etiqueta of etiquetasTiene) {
@@ -116,6 +155,7 @@ function filtrarGastos(objetoParam) {
     }
 
 function agruparGastos() { 
+
 
 }
 
