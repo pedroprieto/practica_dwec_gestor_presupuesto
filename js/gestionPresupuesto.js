@@ -121,22 +121,22 @@ Etiquetas:\n`
         this.etiquetas = newetiquetas;
     }
 
-    this.obtenerPeriodoAgrupacion(periodo){ 
-        let res = "";
-        let totalGasto = gastos.reduce()
+    this.obtenerPeriodoAgrupacion= function (periodo){
+        let fech = new Date(this.fecha);
 
         if (periodo == "anyo") {
-            
+            return fech.toDateString();
         }
         
         if (periodo == "mes") {
-            
+            return fech.toDateString();
         }
                 
         if (periodo == "dia") {
-            
+            return fech.toDateString();
         }
-
+        else
+            return "ERROR";
     }
 
     // Propiedades:
