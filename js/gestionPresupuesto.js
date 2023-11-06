@@ -52,9 +52,68 @@ function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
-function filtrarGastos() { 
+//Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en objetoParam.
+function filtrarGastos(objetoParam) {
+    let res;
+    if (!objetoParam || (objetoParam).length === 0) {
+        // Si 'gastos' es nulo o indefinido, simplemente retornamos gastos.
+        return gasto;
+    }
+    else{
+    let res = gastos.filter(function (gasto) {
+        let existe = true;
 
+        if (objetoParam.fdesde) {
+            let fdesde = Date.parse(objetoParam.fdesde); // Convierte la fecha (objetoParam.fdesde) a representación numérica con Date.parse
+            if (gasto.fecha < fdesde) {
+                existe = false;
+            }
+        }
+
+        if (objetoParam.fHasta) {
+            let fHasta = Date.parse(objetoParam.fHasta);
+            if (gasto.fecha > fHasta) {
+                existe = false;
+            }
+        }
+
+        if (objetoParam.vMinimo) {
+            if (gasto.v < objetoParam.vMinimo) {
+                existe = false;
+            }
+        }
+
+        if (objetoParam.vMaximo) {
+            if (gasto.v > objetoParam.vMaximo) {
+                existe = false;
+            }
+        }
+
+        if (objetoParam.descripcionContiene) {
+            if (!gasto.descripcion.includes(objetoParam.descripcionContiene)) {
+                existe = false;
+            }
+        }
+
+        if (objetoParam.etiquetasTiene) {
+            if (!cumpleEtiquetasTiene(gasto, objetoParam.etiquetasTiene)) {
+                existe = false;
+            }
+        }
+    
+        return existe; // Devuelve true si el gasto cumple con todos los criterios, de lo contrario, devuelve false
+    })
+    };
 }
+
+    function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
+        for (let etiqueta of etiquetasTiene) {
+            if (!gasto.etiquetas.includes(etiqueta)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 function agruparGastos() { 
 
@@ -103,9 +162,9 @@ Etiquetas:\n`
         }
     }
 
-    this.anyadirEtiquetas = function (...etiq) {             // Opción libro
-        for (let e of etiq) {
-            if (this.etiquetas.indexOf(e) == -1) {
+    this.anyadirEtiquetas = function (...etiq) {             // Opción libro, con REST
+        for (let e of etiq) {       // procesará cada elemento que se haya pasado como argumento al método.
+            if (this.etiquetas.indexOf(e) == -1) { //En cada iteración, indexOf busca el elem. en el array. Devuelve su índice, o -1 si no se encuentra.
                 this.etiquetas.push(e);
             }
         }
@@ -154,7 +213,7 @@ Etiquetas:\n`
     }
     
     this.etiquetas = [];   
-    this.anyadirEtiquetas(...etiquetas);
+    this.anyadirEtiquetas(...etiquetas); //Esto asegura que no haya etiquetas duplicadas en el array
 
     this.periodo;
 }
