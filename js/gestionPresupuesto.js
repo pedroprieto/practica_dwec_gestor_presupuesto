@@ -200,7 +200,28 @@ function filtrarGastos(filtros) {
 	return gastosFiltrados
 }
 
-function agruparGastos() {}
+// Función de cuatro parámetros que devolverá un objeto con los resultados de realizar una agrupación por periodo temporal
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+	// Primero filtramos los gastos según los parámetros recibidos
+	let gastosFiltrados = filtrarGastos({ fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas })
+
+	// Creamos una función reductora que recibe un acumulador y un elemento y devuelve un objeto con el periodo y el valor del gasto
+	const funcionReductora = (acc, elemento) => {
+		let periodoElemento = elemento.obtenerPeriodoAgrupacion(periodo)
+		// Si el periodo ya existe en el acumulador, sumamos el valor del gasto al valor que ya había
+		if (acc[periodoElemento]) {
+			acc[periodoElemento] += elemento.valor
+			// Si el periodo no existe aún en el acumulador, creamos una nueva propiedad con el periodo y el valor del gasto
+		} else {
+			acc[periodoElemento] = elemento.valor
+		}
+		return acc
+	}
+	// Reducimos el array de gastos filtrados con la función reductora y un objeto vacío como valor inicial
+	let gastosReducidos = gastosFiltrados.reduce(funcionReductora, {})
+	// Devolvemos el objeto con los resultados agrupados por periodo
+	return gastosReducidos
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
