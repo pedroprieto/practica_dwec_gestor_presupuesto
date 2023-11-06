@@ -120,23 +120,21 @@ Etiquetas:\n`
         }
         this.etiquetas = newetiquetas;
     }
+    
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+        var fech = new Date(this.fecha); //crea objeto Date fech con lo que tiene: this.fecha
 
-    this.obtenerPeriodoAgrupacion= function (periodo){
-        let fech = new Date(this.fecha);
-
-        if (periodo == "anyo") {
-            return fech.toDateString();
-        }
-        
-        if (periodo == "mes") {
-            return fech.toDateString();
-        }
-                
-        if (periodo == "dia") {
-            return fech.toDateString();
-        }
-        else
-            return "ERROR";
+        switch (periodo) {
+            case "mes":    //devuelve la fecha en formato "AAAA-MM"
+                return fech.toISOString().substr(0, 7);
+            case "anyo": //devuelve la fecha en formato "AAAA"
+                return fech.toISOString().substr(0, 4);
+            case "dia"://devuelve la fecha en formato "AAAA-MM-DD" 
+                return fech.toISOString().substr(0, 10);
+            default:
+                return console.error("La fecha no es válida");
+        } //toISOString():convierte la fecha en una cadena de texto: "AAAA-MM-DDTHH:mm:ss.sssZ"
+        //.substr(0, 4):extraer una subcadena de la anterior. Los argumentos especifican el índice de inicio y la longitud de la subcadena que se extraerá
     }
 
     // Propiedades:
