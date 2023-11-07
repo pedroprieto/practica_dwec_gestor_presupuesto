@@ -55,7 +55,9 @@ function calcularBalance() {
 
 //Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en listaDatos.
 function filtrarGastos(listaDatos) {
-    
+    //  gastos = [{},{fecha:x,valor:x, desripcion:"y", etiquetas:[]}]
+    //  gastos.filter(true);
+    //  gastos = [{fecha:x,valor:x, desripcion:"y", etiquetas:[]}]
         return gastos.filter(function (g) {
             let existe = true;
 
@@ -105,12 +107,23 @@ function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
         return tiene;
     }
 
-function agruparGastos(periodo, etiquetas, fDesde, fhasta) { }
-   // let GastoFiltrado = filtrarGastos({etiquetasArray: etiquetas, fechaDesde: fDesde, fechaHasta:fhasta});
+function agruparGastos(periodo, etiquetas, fDesde, fhasta) {       //Ok libro
+ let GastosFiltrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fDesde, fechaHasta:fhasta});
 
+    return GastosFiltrados.reduce(function (acc, gasto) {
+     
+        let period = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (acc[period]) {
+            acc[period] = acc[period] + gasto.valor;
+        }
+        else {
+            acc[period] = gasto.valor;
+        }
+    
+        return acc;
+    }, {})
 
-
-
+}
     //Reduce: Reduce: 
  	/*Se encarga de recorrer todos los elem.del array para generar un valor único.Se suele usar para realizar cálculos. (puede ser un total, medias, etc o agrupaciones de datos.)
 Admite 2 parámetros:
@@ -118,16 +131,11 @@ Admite 2 parámetros:
 Es obligatorio los 2 primeros. 
 2º Un valor inicial, q se usará en la 1ª ejecución del callback.*/
    /* let numeros = [2, 5, 4];
-    let total = numeros.reduce(
-        // 1º param: función callback
+    let total = numeros.reduce( // 1º param: función callback
         Function(acc, num){
             Return acc + num;
-},
-0); // 2º param: valor inicial.
-
-
-}*/
-
+}, 0); // 2º param: valor inicial.
+ }*/
 
 //* OBJETO
 
