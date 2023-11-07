@@ -1,7 +1,9 @@
 import * as gp from './gestionPresupuesto.js'
 
 function actualizarPresupuestoWeb () {
-  const pregunta = Number(globalThis.prompt('Introduce un presupuesto.'))
+  const nuevoPresupuesto = Number(globalThis.prompt('Introduce un presupuesto.'))
+  gp.actualizarPresupuesto(nuevoPresupuesto)
+  repintar()
 }
 
 function repintar () {
@@ -18,7 +20,7 @@ function repintar () {
   borrarContenido('listado-gastos-completo')
 
   // Mostrar el listado completo de gastos en div#listado-gastos-completo
-  for (const gasto of gp.obtenerGastos()) {
+  for (const gasto of gp.listarGastos()) {
     mostrarGastoWeb('listado-gastos-completo', gasto)
   }
 }
@@ -64,7 +66,7 @@ function mostrarGastoWeb (idElemento, gasto) {
 
 function mostrarDatoEnID (idElemento, valor) {
   const dato = document.getElementById(idElemento)
-  dato.append(valor)
+  dato.innerHTML = valor
 }
 
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
@@ -97,6 +99,7 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
 }
 
 export {
+  actualizarPresupuestoWeb,
   repintar,
   mostrarDatoEnID,
   mostrarGastoWeb,

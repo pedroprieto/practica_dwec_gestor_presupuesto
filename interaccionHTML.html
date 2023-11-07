@@ -39,9 +39,11 @@
     </div>
 
     <script type="module" src="/js/generarDatosEstaticos.js"></script>
-    <script>
-      // importar presupuestoweb
-      actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+    <script type="module">
+      import * as gp from "/js/gestionPresupuestoWeb.js";
+
+      const actualizar = document.getElementById("actualizarpresupuesto");
+      actualizar.addEventListener("click", gp.actualizarPresupuestoWeb);
     </script>
   </body>
 </html>
