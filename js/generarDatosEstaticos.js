@@ -55,20 +55,21 @@ listarValor.forEach((valor) => {
     /* Mostrar el listado de gastos que tengan las etiquetas comida o transporte de 
        menos de 50€ en div#listado-gastos-filtrado-4 (funciones filtrarGastos y mostrarGastoWeb) */
 
-       const listadoEtiquetas = gestionPresupuesto.filtrarGastos({etiquetaTiene: ['comida', 'transporte'], valorMax: 50});
+       const listadoEtiquetas = gestionPresupuesto.filtrarGastos({etiquetasTiene: ['comida', 'transporte'], valorMaximo: 50});
                 listadoEtiquetas.forEach((elemnt) => {
-                    gestionPresupuesto.mostrarGastoWeb('listado-gastos-filtrado-4', elemnt);
+                    const valorId = 'listado-gastos-filtrado-4';
+                    gestionPresupuestoWeb.mostrarGastoWeb(valorId, elemnt);
                 });
 
     //Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 
     const listadoPorDia = gestionPresupuesto.agruparGastos('dia');
-                gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', listadoPorDia, 'dia');
+                gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', listadoPorDia, 'día');
 
     const listadoPorMes = gestionPresupuesto.agruparGastos('mes');
                 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', listadoPorMes, 'mes');
 
-    const listadoPorAño = gestionPresupuesto.agruparGastos('año');
+    const listadoPorAño = gestionPresupuesto.agruparGastos('anyo');
                 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', listadoPorAño , 'año');
 
                 export * from './generarDatosEstaticos.js';

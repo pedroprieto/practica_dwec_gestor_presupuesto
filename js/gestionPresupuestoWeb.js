@@ -40,65 +40,57 @@ function mostrarGastoWeb(idElemento, gasto) {
         contenidoGasto.appendChild(divValorGasto);
 
 
-        /*Creo como venimos haciedno el div, con su clase gasto-etiquetas*/ 
-        const divGastoEtiquetas = document.createElement('div');
-            divGastoEtiquetas.classList.add('gasto-etiquetas');
-        /*Con un for recorro lo que hay gasto.etiquetas, y por cada elemento encontrado
-        crea un span, con su clase gasto-etiquetas-etiqueta,
-        una vez echo eso, el contenido que se cre es el elemnto etique
-        que es sacado de gasto.etiquetas
-        y con el appendChild lo guarda al final, y lo recorre hast no encontrar ninguno mas*/ 
-        for(const etique of gasto.etiquetas) {
-            const spanEtiquetas = document.createElement('span');
-            spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
-            spanEtiquetas.textContent = etique;
-            divGastoEtiquetas.appendChild(spanEtiquetas);
-        }
-        contenidoGasto.appendChild(divGastoEtiquetas);
 
-        //Al final guardamos todo lo que hay en contenidoGasto
-        //en el elemtno creado al pricipio, y lo guardamos al final
+        if(gasto.etiquetas && Array.isArray(gasto.etiquetas)){
+            const divGastoEtiquetas = document.createElement('div');
+            divGastoEtiquetas.classList.add('gasto-etiquetas');
+
+            for(const etique of gasto.etiquetas) {
+                const spanEtiquetas = document.createElement('span');
+                spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
+                spanEtiquetas.textContent = etique;
+                divGastoEtiquetas.appendChild(spanEtiquetas);
+            }
+            contenidoGasto.appendChild(divGastoEtiquetas);
+        }
+
         elemnt.appendChild(contenidoGasto);
-    }else{
-        console.error("No hay ningun elemento");
     }
 
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
-
-    const elemnto = document.getElementById(idElemento);
-
-    if(elemnto) {
-
-        for(const agr in agrup){
-
-            const divAgrupacion = documente.getElementById('div');
-            divAgrupacion.classList.add('agrupacion');
-            const titutloH1 = document.getElementById('h1');
-            titutloH1.textContent = `Gastos agrupados por ${periodo}`;
-            divAgrupacion.appendChild(titutloH1);
-
-            if(agr.hasOwnProperty(agr)) {
-                const divAgrupacionDato = document.getElementById('div');
-                divAgrupacionDato.classList.add('agrupacion-dato');
-
+    const elemento = document.getElementById(idElemento);
+    if (elemento) {
+        const divAgrupacion = document.createElement('div');
+        divAgrupacion.classList.add('agrupacion');
+  
+        const h1Periodo = document.createElement('h1');
+        h1Periodo.textContent = 'Gastos agrupados por'+ " " + periodo;
+        divAgrupacion.appendChild(h1Periodo);
+  
+        for (const clave in agrup) {
+            if (agrup.hasOwnProperty(clave)) {
+                const divDato = document.createElement('div');
+                divDato.classList.add('agrupacion-dato');
+  
                 const spanClave = document.createElement('span');
                 spanClave.classList.add('agrupacion-dato-clave');
-                spanClave.textContent = agr;
-                divAgrupacionDato.appendChild(spanClave);
-
-                const spanValue = document.getElementById('span');
-                spanValue.classList.add('agrupacion-dato-valor');
-                spanValue.textContent = agrup[agr];
-                divAgrupacionDato.appendChild(spanValue);
+                spanClave.textContent = clave;
+                divDato.appendChild(spanClave);
+  
+                const spanValor = document.createElement('span');
+                spanValor.classList.add('agrupacion-dato-valor');
+                spanValor.textContent = agrup[clave];
+                divDato.appendChild(spanValor);
+  
+                divAgrupacion.appendChild(divDato);
             }
         }
-
-        elemnto.appendChild(divAgrupacion);
-
+  
+        elemento.appendChild(divAgrupacion);
     }
-}
+  }
 
 export {
     mostrarDatoEnId,

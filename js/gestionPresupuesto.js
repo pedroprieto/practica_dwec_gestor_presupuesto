@@ -149,7 +149,6 @@ function calcularBalance() {
 }
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     let buscadorDeGastos = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
-    console.log(buscadorDeGastos);
 
     return buscadorDeGastos.reduce(function (suma, gasto) {
         let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
