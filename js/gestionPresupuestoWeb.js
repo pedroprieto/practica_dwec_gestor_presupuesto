@@ -1,9 +1,12 @@
 import * as gp from './gestionPresupuesto.js'
 
 function actualizarPresupuestoWeb () {
-  const nuevoPresupuesto = Number(globalThis.prompt('Introduce un presupuesto.'))
-  gp.actualizarPresupuesto(nuevoPresupuesto)
-  repintar()
+  const nuevoPresupuesto = Number(globalThis.prompt('Introduce un presupuesto'))
+
+  if (nuevoPresupuesto !== 0) {
+    gp.actualizarPresupuesto(nuevoPresupuesto)
+    repintar()
+  }
 }
 
 function repintar () {
@@ -61,12 +64,15 @@ function mostrarGastoWeb (idElemento, gasto) {
 
   cGasto.append(cGastoEtiquetas)
 
-  mostrarDatoEnID(idElemento, cGasto)
+  const elemento = document.getElementById(idElemento)
+  elemento.append(cGasto)
 }
 
+// Borra el contenido y muestra sólo el valor
 function mostrarDatoEnID (idElemento, valor) {
-  const dato = document.getElementById(idElemento)
-  dato.innerHTML = valor
+  const elemento = document.getElementById(idElemento)
+  elemento.innerHTML = ''
+  elemento.append(valor)
 }
 
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
