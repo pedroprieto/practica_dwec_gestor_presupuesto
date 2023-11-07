@@ -67,7 +67,7 @@ function filtrarGastos(listaDatos) {
 
             if (listaDatos.fechaHasta) {
                 let fHasta = Date.parse(listaDatos.fechaHasta);
-                    existe = existe && (g.fecha >= fHasta);
+                    existe = existe && (g.fecha <= fHasta);
             }
 
             if (listaDatos.valorMinimo) {
@@ -95,15 +95,14 @@ function filtrarGastos(listaDatos) {
 
     }
 
-
-
-   function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
+function cumpleEtiquetasTiene(gasto, etiquetasTiene) { 
+    let tiene = false;
         for (let etiqueta of etiquetasTiene) {
-            if (!gasto.etiquetas.includes(etiqueta)) {
-                return false;
+            if (gasto.etiquetas.includes(etiqueta)) {
+                tiene = true;
             }
         }
-        return true;
+        return tiene;
     }
 
 function agruparGastos(periodo, etiquetas, fDesde, fhasta) { }

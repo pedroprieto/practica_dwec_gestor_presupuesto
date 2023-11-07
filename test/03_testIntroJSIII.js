@@ -52,17 +52,17 @@ describe("Función filtrarGastos", function() {
         assert.lengthOf(filtrarGastos({valorMinimo: 60}), 3, "La opción 'valorMinimo' no funciona correctamente.");
         assert.lengthOf(filtrarGastos({valorMinimo: 20, valorMaximo: 100}), 3, "Las opciones 'valorMinimo' o 'valorMaximo' no funcionan correctamente.");
         assert.lengthOf(filtrarGastos({fechaDesde: "2021-09-15", fechaHasta: "2021-10-06", valorMaximo: 150}), 1, "Las opciones 'fechaDesde', 'fechaHasta' o 'valorMaximo' no funcionan correctamente.");
-      //  assert.lengthOf(filtrarGastos({descripcionContiene: "Seguro", valorMinimo: 10, valorMaximo: 200}), 1, "Las opciones 'descripcionContiene', 'valorMinimo' o 'valorMaximo' no funcionan correctamente.");
-    // assert.lengthOf(filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}), 3, "La opción 'etiquetasTiene' no funciona correctamente.");
-      //  assert.lengthOf(filtrarGastos({valorMaximo: 50, etiquetasTiene: ["transporte"]}), 1, "Las opciones 'valorMaximo' o 'etiquetasTiene' no funcionan correctamente.");
-      //  assert.lengthOf(filtrarGastos({etiquetasTiene: ["comida", "gasolina"], fechaDesde: "2021-10-06"}), 2, "Las opciones 'fechaDesde' o 'etiquetasTiene' no funcionan correctamente.");
-      //  assert.lengthOf(filtrarGastos({etiquetasTiene: ["transporte", "comida"], fechaHasta: "2020-12-31", valorMaximo: 200}), 1, "Las opciones 'fechaHasta', 'valorMaximo' o 'etiquetasTiene' no funcionan correctamente.");
+       assert.lengthOf(filtrarGastos({descripcionContiene: "Seguro", valorMinimo: 10, valorMaximo: 200}), 1, "Las opciones 'descripcionContiene', 'valorMinimo' o 'valorMaximo' no funcionan correctamente.");
+       assert.lengthOf(filtrarGastos({etiquetasTiene: ["comida", "gasolina"]}), 3, "La opción 'etiquetasTiene' no funciona correctamente.");
+       assert.lengthOf(filtrarGastos({valorMaximo: 50, etiquetasTiene: ["transporte"]}), 1, "Las opciones 'valorMaximo' o 'etiquetasTiene' no funcionan correctamente.");
+       assert.lengthOf(filtrarGastos({etiquetasTiene: ["comida", "gasolina"], fechaDesde: "2021-10-06"}), 2, "Las opciones 'fechaDesde' o 'etiquetasTiene' no funcionan correctamente.");
+        assert.lengthOf(filtrarGastos({etiquetasTiene: ["transporte", "comida"], fechaHasta: "2020-12-31", valorMaximo: 200}), 1, "Las opciones 'fechaHasta', 'valorMaximo' o 'etiquetasTiene' no funcionan correctamente.");
 
     });
 });
 
 // Función agruparGastos
-/*describe("Función agruparGastos", function() {
+describe("Función agruparGastos", function() {
     it("Realiza una agrupación de gastos por períodos temporales", function() {
 
         // Los gastos están añadidos en el test anterior
@@ -119,5 +119,5 @@ describe("Función filtrarGastos", function() {
         expect(agrup6["2021-10"], "La opción de agrupar y filtrar por etiquetas y fechas no funciona").to.exist;
         assert.equal(agrup6["2021-10"], valor6, "No se suman los totales por año filtrando por etiquetas y fechas correctamente");
     });
-});*/
+});
 
