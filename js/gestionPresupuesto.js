@@ -52,100 +52,52 @@ function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
-function filtrarGastos(dat) {                         // OK Libro.
-    return gastos.filter(function (d) {
-        var resul = true;
-        if (dat.fechaDesde) {
-            var f = Date.parse(dat.fechaDesde);
-            resul = resul && (d.fecha >= f);
-        }
-        if (dat.fechaHasta) {
-            var f = Date.parse(dat.fechaHasta);
-            resul = resul && (d.fecha <= f);
-        }
-        if (dat.valorMinimo) {
-            resul = resul && (d.valor >= dat.valorMinimo);
-        }
-        if (dat.valorMaximo) {
-            resul = resul && (d.valor <= dat.valorMaximo);
-        }
-        if (dat.descripcionContiene) {
-            resul = resul && (d.descripcion.indexOf(dat.descripcionContiene) > -1);
-        }
-        if (dat.etiquetasTiene) {
-            let etiSi = false;
-            for (let e of dat.etiquetasTiene) {
-                if (d.etiquetas.indexOf(e) > -1) {
-                    etiSi = true;
-                }
-            }
-            resul = resul && etiSi;
-        }
 
-        return resul;
-    })
-
-}
-//Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en objetoParam.
-/*function filtrarGastos(objetoParam) {
-    let vacio = true;
-
-    for (let oP in objetoParam) {
-        vacio = false;
-        break;
-    }
-    // Si 'gastos' es nulo o indefinido, simplemente retornamos gastos.
-    if (!objetoParam || vacio) {
-        return gastos;
-    } else {
-        let res = gastos.filter(function (g) {
+//Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en listaDatos.
+function filtrarGastos(listaDatos) {
+    
+        return gastos.filter(function (g) {
             let existe = true;
 
-            if (objetoParam.fechaDesde) {
-                let fdesde = Date.parse(objetoParam.fechaDesde);
-                if (g.fecha <= fdesde) {
-                    existe = false;
-                }
+            if (listaDatos.fechaDesde) {
+                let fDesde = Date.parse(listaDatos.fechaDesde);
+                existe = existe && (g.fecha >= fDesde);
+                
             }
 
-            if (objetoParam.fechaHasta) {
-                let fHasta = Date.parse(objetoParam.fechaHasta);
-                if (g.fecha > fHasta) {
-                    existe = false;
-                }
+            if (listaDatos.fechaHasta) {
+                let fHasta = Date.parse(listaDatos.fechaHasta);
+                    existe = existe && (g.fecha >= fHasta);
             }
 
-            if (objetoParam.valorMinimo) {
-                if (g.v < objetoParam.valorMinimo) {
-                    existe = false;
-                }
+            if (listaDatos.valorMinimo) {
+                existe = existe && (g.valor >= listaDatos.valorMinimo);
+                
             }
 
-            if (objetoParam.valorMaximo) {
-                if (g.v > objetoParam.valorMaximo) {
-                    existe = false;
-                }
+            if (listaDatos.valorMaximo) {
+                existe = existe && (g.valor <= listaDatos.valorMaximo);
+                
             }
 
-            if (objetoParam.descripcionContiene) {
-                if (!g.descripcion.includes(objetoParam.descripcionContiene)) {
-                    existe = false;
-                }
+            if (listaDatos.descripcionContiene) {
+                existe = existe && (g.descripcion.indexOf(listaDatos.descripcionContiene) > -1);
             }
 
-            if (objetoParam.etiquetasTiene) {
-                if (!cumpleEtiquetasTiene(g, objetoParam.etiquetasTiene)) {
-                    existe = false;
+            if (listaDatos.etiquetasTiene) {
+                if (!cumpleEtiquetasTiene(g, listaDatos.etiquetasTiene)) {
+                    existe = existe && false;
                 }
             }
 
             return existe;
         });
+
     }
-}*/
 
 
-    function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
+
+   function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
         for (let etiqueta of etiquetasTiene) {
             if (!gasto.etiquetas.includes(etiqueta)) {
                 return false;
@@ -154,10 +106,28 @@ function filtrarGastos(dat) {                         // OK Libro.
         return true;
     }
 
-function agruparGastos() { 
+function agruparGastos(periodo, etiquetas, fDesde, fhasta) { }
+   // let GastoFiltrado = filtrarGastos({etiquetasArray: etiquetas, fechaDesde: fDesde, fechaHasta:fhasta});
 
 
-}
+
+
+    //Reduce: Reduce: 
+ 	/*Se encarga de recorrer todos los elem.del array para generar un valor único.Se suele usar para realizar cálculos. (puede ser un total, medias, etc o agrupaciones de datos.)
+Admite 2 parámetros:
+    1º función de callback, que admite 4 param.El resultado de la ejecución de callback(Llamado normalmente acumulador) y los 3(elem, índice y array) 
+Es obligatorio los 2 primeros. 
+2º Un valor inicial, q se usará en la 1ª ejecución del callback.*/
+   /* let numeros = [2, 5, 4];
+    let total = numeros.reduce(
+        // 1º param: función callback
+        Function(acc, num){
+            Return acc + num;
+},
+0); // 2º param: valor inicial.
+
+
+}*/
 
 
 //* OBJETO
