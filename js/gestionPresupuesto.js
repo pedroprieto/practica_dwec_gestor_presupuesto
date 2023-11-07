@@ -18,9 +18,9 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(concepto, cantidad) {
-    var gasto={
-        "descripcion":'',
-        "valor":0,
+    let gasto = {
+        descripcion:'',
+        valor:0,
         mostrarGasto(){
             return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         },
@@ -36,12 +36,10 @@ function CrearGasto(concepto, cantidad) {
     gasto.actualizarDescripcion(concepto);
     gasto.actualizarValor(cantidad)
 
-    if(cantidad < 0){
-        gasto.actualizarValor(0);
+    if((typeof gasto.descripcion == 'string' &&  gasto.descripcion != '') &&
+     typeof gasto.valor == 'number'){
         return gasto;
-    }else{
-        return gasto;      
-    } 
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
