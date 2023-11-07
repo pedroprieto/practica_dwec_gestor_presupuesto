@@ -1,4 +1,4 @@
-//import * as gestionPresupuesto from "./gestionPresupuesto.js";
+import * as gestionPresupuesto from "./gestionPresupuesto.js";
 
 // Función para mostrar un valor en un elemento HTML por su ID
 function mostrarDatoEnId(idElemento, valor) {
@@ -9,7 +9,7 @@ function mostrarDatoEnId(idElemento, valor) {
 function mostrarGastoWeb(idElemento, gasto) {
   let elemento = document.getElementById(idElemento);
 
-  if (elemento) {
+ 
     // crear Div .gasto
     let divGasto = document.createElement('div');
     divGasto.classList.add('gasto');
@@ -24,7 +24,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     //<div class="gasto-fecha">FECHA DEL GASTO</div> 
     let divFecha= document.createElement('div');
     divFecha.classList.add('gasto-fecha');
-    divFecha.textContent='FECHA DEL GASTO :' + gasto.descripcion;
+    divFecha.textContent='FECHA DEL GASTO :' + gasto.fecha;
     divGasto.appendChild(divFecha);
 
     //<div class="gasto-valor">VALOR DEL GASTO</div> 
@@ -39,36 +39,18 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasto.appendChild(divEtiquetas);
 
     //<span class="gasto-etiquetas-etiqueta"> en bucle 
-  for (const item of gasto) {
+    for (const item of gasto) {     //!for (const item of gasto.etiquetas)
     let spanEtiquetas = document.createElement('span');
     spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
     spanEtiquetas.innerText= 'Etiqueta :'+ gasto.etiqueta + ' ;\n';
     divEtiquetas.appendChild(spanEtiquetas);
     }   
-  }
+  
 }
 
-/*
-
-<div class="gasto">
-  <div class="gasto-descripcion">DESCRIPCIÓN DEL GASTO</div>
-  <div class="gasto-fecha">FECHA DEL GASTO</div> 
-  <div class="gasto-valor">VALOR DEL GASTO</div> 
-  <div class="gasto-etiquetas">
-    <span class="gasto-etiquetas-etiqueta">
-      ETIQUETA 1
-    </span>
-    <span class="gasto-etiquetas-etiqueta">
-      ETIQUETA 2
-    </span>
-    <!-- Etcétera -->
-  </div> 
-</div>
-
-*/
 
 // Función para mostrar gastos agrupados en un elemento HTML por su ID
-function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+function mostrarGastosAgrupadosWeb(idElemento, periodo) {
 
   let divContenedor = document.getElementById(idElemento);
 
@@ -81,8 +63,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     h1.textContent = `Gastos agrupados por ${periodo}`;
     divAgrupacion.append(h1);
 
-
-    for (let item of Object.entries(agrup)) { //! agrup es un objeto 
+    let gstosAgrupados = agruparGastos(periodo);
+    for (let item of Object.entries(gstosAgrupados)) { //! gstosAgrupados es un objeto 
      /* 
       1- (let item in agrup)
       2- for (let item of Object.entries(agrup)) { // Utilizar Object.entries para obtener pares clave-valor

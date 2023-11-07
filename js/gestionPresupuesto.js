@@ -67,7 +67,7 @@ function filtrarGastos(objeto) {
   if (objeto.length == 0 || objeto == null) {
     return gastos;
   } else {
-    return gastos.filter(function (gasto) { 
+    return gastos.filter(function (gasto) {
       let agrupacion = true;
       if (fechaDesde) {
         if (gasto.fecha < Date.parse(fechaDesde)) {
@@ -95,8 +95,8 @@ function filtrarGastos(objeto) {
 
       if (descripcionContiene) {
         if (gasto.descripcion.indexOf(descripcionContiene) == -1) {  // Si no se encuentra una coincidencia, indexOf devuelve el valor -1. 
-            return false;                                            //Si se encuentra una coincidencia, devuelve la posición en la cadena 
-          
+          return false;                                            //Si se encuentra una coincidencia, devuelve la posición en la cadena 
+
         }
       }
       if (etiquetasTiene) {
@@ -125,15 +125,16 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     etiquetasTiene: etiquetas,
     fechaDesde: fechaDesde,
     fechaHasta: fechaHasta,
-  }); 
+  });
 
   let agrupacionGastos = filtro.reduce(function (acumulador, gasto) {
 
     let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo); //obtengo gasto por periodo
-   
+
     if (!acumulador[periodoAgrupacion]) {        //compruebo si en el acumulador existe dicho periodo de agrupació,
-           acumulador[periodoAgrupacion] = 0; }    // si no existe lo añade y lo inicializa en 0,
-     
+      acumulador[periodoAgrupacion] = 0;
+    }    // si no existe lo añade y lo inicializa en 0,
+
     acumulador[periodoAgrupacion] += gasto.valor;
     return acumulador;
   }, {}); //inicializacion con objeto vacio
@@ -150,100 +151,100 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.valor = valor > 0 ? (this.valor = valor) : (this.valor = 0);
 
   // etiquetas
-  this.etiquetas=etiquetas;   //! en serio
+  this.etiquetas = etiquetas;  
   if (this.etiquetas == null) {
-    this.etiquetas = [];
+    this.etiquetas = []; 
   }
 
- // fechas
+  // fechas
   fecha = Date.parse(fecha);
   if (fecha == null || isNaN(fecha)) {
-      this.fecha = +new Date();
+    this.fecha = +new Date();
   } else {
-      this.fecha = fecha;
+    this.fecha = fecha;
   }
- 
-   // Funcionactualizar fechas
-  this.actualizarFecha = function (nuevaFecha) {        
-  nuevaFecha = Date.parse(nuevaFecha);
-  if (isNaN(nuevaFecha)) {
+
+  // Funcionactualizar fechas
+  this.actualizarFecha = function (nuevaFecha) {
+    nuevaFecha = Date.parse(nuevaFecha);
+    if (isNaN(nuevaFecha)) {
       this.fecha = fecha;
-  } else {
+    } else {
       this.fecha = +new Date(nuevaFecha);
     }
   };
 
- // Funcion que muestra el objeto Gasto con descripcion y valor
+  // Funcion que muestra el objeto Gasto con descripcion y valor
   this.mostrarGasto = function () {
     let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     return texto;
   };
 
- //Funcion que actualiza la propiedad  descripcion del objeto
+  //Funcion que actualiza la propiedad  descripcion del objeto
   this.actualizarDescripcion = function (descripcion) {
     this.descripcion = descripcion;
   };
 
-   //Funcion que actualiza la propiedad  descripcion del objeto
+  //Funcion que actualiza la propiedad  descripcion del objeto
   this.actualizarValor = function (valor) {
     if (valor > 0) {
       this.valor = valor;
     }
   };
- //Funcion que muestra el gastocompleto del objeto
+  //Funcion que muestra el gastocompleto del objeto
   this.mostrarGastoCompleto = function () {
-   let fecha1 = new Date(fecha).toLocaleString(); 
+    let fecha1 = new Date(fecha).toLocaleString();
     let etiq = "";
     for (let iterator of etiquetas) {
       etiq += `- ${iterator}\n`;
     }
     let mensaje = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €." + "\n" +
-      "Fecha: " + fecha1 + "\n" + 
+      "Fecha: " + fecha1 + "\n" +
       "Etiquetas:\n" + etiq;
     return mensaje;
   };
 
- //Funcion que añade etiquetas al objeto
+  //Funcion que añade etiquetas al objeto
   this.anyadirEtiquetas = function (...etiquetasN) {
     for (let etiq of etiquetasN) {
-        if (!this.etiquetas.includes(etiq)) {
-            this.etiquetas.push(etiq);
-        }
-    }
-    return this.etiquetas;
-};
-
- //Funcion que borra etiquetas al objeto
-this.borrarEtiquetas = function (...etiquetasABorrar) {
-  for (let i = 0; i < etiquetasABorrar.length; i++) {
-    for (let j = 0; j < this.etiquetas.length; j++) {
-      if (etiquetasABorrar[i] == etiquetas[j]) {
-        this.etiquetas.splice(j, 1);
+      if (!this.etiquetas.includes(etiq)) {
+        this.etiquetas.push(etiq);
       }
     }
-  }
-};
-//Funcion deAgrupacion por tipo de fecha
-this.obtenerPeriodoAgrupacion = function (periodo) {
+    return this.etiquetas;
+  };
 
-  //fecha= new Date(this.fecha).toDateString();//! no estoy seguro de que lo pase a string correcto  (Wed Jun 28 1993)
-  fecha = new Date(this.fecha).toISOString(); //? Devuelve 2011-10-05T14:48:00.000Z
-  let resultadoAgrup = "Resultado :";
+  //Funcion que borra etiquetas al objeto
+  this.borrarEtiquetas = function (...etiquetasABorrar) {
+    for (let i = 0; i < etiquetasABorrar.length; i++) {
+      for (let j = 0; j < this.etiquetas.length; j++) {
+        if (etiquetasABorrar[i] == etiquetas[j]) {
+          this.etiquetas.splice(j, 1);
+        }
+      }
+    }
+  };
+  //Funcion deAgrupacion por tipo de fecha
+  this.obtenerPeriodoAgrupacion = function (periodo) {
 
-  switch (periodo) { //sobre 10 
+    //fecha= new Date(this.fecha).toDateString();//! no estoy seguro de que lo pase a string correcto  (Wed Jun 28 1993)
+    fecha = new Date(this.fecha).toISOString(); //? Devuelve 2011-10-05T14:48:00.000Z
+    let resultadoAgrup = "Resultado :";
 
-    case "dia": // aaaa-mm-dd;
-      resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
-      break;
-    case "mes":  //aaaa-mm
-      resultadoAgrup = fecha.substring(0, 7);
-      break;
-    case "anyo":  //aaaa
-      resultadoAgrup = fecha.substring(0, 4);
-      break;
-  }
-  return resultadoAgrup;
-};
+    switch (periodo) { //sobre 10 
+
+      case "dia": // aaaa-mm-dd;
+        resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
+        break;
+      case "mes":  //aaaa-mm
+        resultadoAgrup = fecha.substring(0, 7);
+        break;
+      case "anyo":  //aaaa
+        resultadoAgrup = fecha.substring(0, 4);
+        break;
+    }
+    return resultadoAgrup;
+  };
 
 }
 
@@ -251,7 +252,7 @@ this.obtenerPeriodoAgrupacion = function (periodo) {
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export {
-  
+
   mostrarPresupuesto,
   actualizarPresupuesto,
   CrearGasto,
@@ -259,8 +260,8 @@ export {
   anyadirGasto,
   borrarGasto,
   calcularTotalGastos,
-  calcularBalance, 
-  filtrarGastos, 
+  calcularBalance,
+  filtrarGastos,
   agruparGastos,
-  
+
 };

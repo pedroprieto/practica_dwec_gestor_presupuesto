@@ -64,15 +64,12 @@ for (const gasto of filtro4) {
 }
 
 //Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-let agrupacionDia = gstionPresupuesto.agruparGastos("dia");
-gstionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", agrupacionDia, "día");
+
+gstionPresupuestoWeb.mostrarGastoAgrupadosWeb("agrupacion-anyo", "dia")
 
 //Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 
-let agrupacionMes = gstionPresupuesto.agruparGastos("mes");
-gstionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", agrupacionMes, "mes");
-
+gstionPresupuestoWeb.mostrarGastoAgrupadosWeb("agrupacion-anyo", "mes")
 
 //Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-let agrupacionAnyos = gstionPresupuesto.agruparGastos("anyo");
-gstionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupacionAnyos, "año");
+gstionPresupuestoWeb.mostrarGastoAgrupadosWeb("agrupacion-anyo", "año")
