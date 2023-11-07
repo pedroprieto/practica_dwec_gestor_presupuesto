@@ -18,6 +18,30 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(concepto, cantidad) {
+    var gasto={
+        "descripcion":'',
+        "valor":0,
+        mostrarGasto(){
+            return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        },
+        actualizarDescripcion(nuevaDescripcion){
+            this.descripcion=nuevaDescripcion;
+        },
+        actualizarValor(nuevoValor){
+            if(nuevoValor>0){
+                this.valor=nuevoValor;
+            }
+        }
+    };
+    gasto.actualizarDescripcion(concepto);
+    gasto.actualizarValor(cantidad)
+
+    if(cantidad < 0){
+        gasto.actualizarValor(0);
+        return gasto;
+    }else{
+        return gasto;      
+    } 
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
