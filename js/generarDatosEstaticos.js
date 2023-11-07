@@ -1,5 +1,6 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
+export * from './generarDatosEstaticos.js';
 
 gestionPresupuesto.actualizarPresupuesto(1500);
 
@@ -71,4 +72,4 @@ listarValor.forEach((valor) => {
     const listadoPorAño = gestionPresupuesto.agruparGastos('año');
                 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', listadoPorAño , 'año');
 
-                export * from './generarDatosEstaticos.js';
+                
