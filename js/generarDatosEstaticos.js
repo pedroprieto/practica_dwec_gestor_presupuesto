@@ -18,3 +18,9 @@ let gastos = [
 for (const gasto of gastos) {
     gp.anyadirGasto(gasto);
 }
+
+let gTotales = gp.calcularTotalGastos();
+gpw.mostrarDatoEnId("gastos-totales", gTotales.toFixed(2));
+
+let balance = gp.calcularBalance();
+gpw.mostrarDatoEnId("balance-total", balance.toFixed(2));
