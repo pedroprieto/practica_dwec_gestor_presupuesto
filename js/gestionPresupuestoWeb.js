@@ -1,5 +1,20 @@
 import * as gp from './gestionPresupuesto.js'
 
+function nuevoGastoWeb () {
+  // descripción, valor, fecha y etiquetas
+  const pDescripcion = globalThis.prompt('Introduce una descripción')
+  const pValor = Number(globalThis.prompt('Introduce un valor'))
+  const pFecha = globalThis.prompt('Introduce una fecha (aaaa/mm/dd)')
+  const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma').split(',')
+
+  console.log(pFecha)
+
+  const gasto = new gp.CrearGasto(pDescripcion, pValor, pFecha, ...pEtiquetas)
+  gp.anyadirGasto(gasto)
+
+  repintar()
+}
+
 function actualizarPresupuestoWeb () {
   const nuevoPresupuesto = Number(globalThis.prompt('Introduce un presupuesto'))
 
@@ -106,6 +121,7 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
 
 export {
   actualizarPresupuestoWeb,
+  nuevoGastoWeb,
   repintar,
   mostrarDatoEnID,
   mostrarGastoWeb,
