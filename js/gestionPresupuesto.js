@@ -19,7 +19,7 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor,fecha, ...etiquetas) {
     
     this.mostrarGasto=function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -32,19 +32,30 @@ function CrearGasto(descripcion, valor) {
             this.valor=valor;
         }
     }
+    this.mostrarGastoCompleto=function(){
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+        for (let etiqueta of this.etiquetas){
+            texto +=`- ${etiqueta}\n`
+        }
+        return texto
+    }
     this.descripcion=descripcion;
     if(valor>=0){
         this.valor=valor;
     }else{
         this.valor=0;
-    } 
+    }
+    this.etiquetas=etiquetas;
+    this.fecha=fecha;
 }
 function listarGastos(){
     return gastos;
 }
-function anyadirGasto(idGasto){
+function anyadirGasto(){
 }
-function borrarGasto(idGastoBorrar){
+function borrarGasto(){
 }
 function calcularTotalGastos(){}
 function calcularBalance(){}
