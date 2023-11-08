@@ -14,3 +14,7 @@ let gastos = [
     new gp.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros"),
     new gp.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros")
 ];
+
+for (const gasto of gastos) {
+    gp.anyadirGasto(gasto);
+}
