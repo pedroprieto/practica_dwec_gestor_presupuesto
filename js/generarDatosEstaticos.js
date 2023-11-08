@@ -24,3 +24,8 @@ gpw.mostrarDatoEnId("gastos-totales", gTotales.toFixed(2));
 
 let balance = gp.calcularBalance();
 gpw.mostrarDatoEnId("balance-total", balance.toFixed(2));
+
+let listaDeGastos = gp.listarGastos();  
+for (const gasto of listaDeGastos) {
+    gpw.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
