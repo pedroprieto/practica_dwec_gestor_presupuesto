@@ -1,13 +1,27 @@
 import * as gp from './gestionPresupuesto.js'
 
+class EditarHandle {
+  handleEvent (event) {
+    const pDescripcion = globalThis.prompt('Introduce una descripción', this.gasto.descripcion)
+    const pValor = Number(globalThis.prompt('Introduce un valor', this.gasto.valor))
+    const pFecha = globalThis.prompt('Introduce una fecha (aaaa/mm/dd)', this.gasto.fecha)
+    const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma', this.gasto.mostrarEtiquetas).split(',')
+
+    this.gasto.actualizarDescripcion(pDescripcion)
+    this.gasto.actualizarValor(pValor)
+    this.gasto.actualizarFecha(pFecha)
+    this.gasto.borrarEtiquetas()
+    this.gasto.anyadirEtiquetas(...pEtiquetas)
+
+    repintar()
+  }
+}
+
 function nuevoGastoWeb () {
-  // descripción, valor, fecha y etiquetas
   const pDescripcion = globalThis.prompt('Introduce una descripción')
   const pValor = Number(globalThis.prompt('Introduce un valor'))
   const pFecha = globalThis.prompt('Introduce una fecha (aaaa/mm/dd)')
   const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma').split(',')
-
-  console.log(pFecha)
 
   const gasto = new gp.CrearGasto(pDescripcion, pValor, pFecha, ...pEtiquetas)
   gp.anyadirGasto(gasto)
@@ -51,6 +65,7 @@ function borrarContenido (idElemento) {
 function mostrarGastoWeb (idElemento, gasto) {
   const cGasto = document.createElement('div')
   cGasto.classList.add('gasto')
+  cGasto.gasto = gasto
 
   const cGastoDesc = document.createElement('div')
   cGastoDesc.classList.add('gasto-descripcion')
@@ -78,6 +93,18 @@ function mostrarGastoWeb (idElemento, gasto) {
   }
 
   cGasto.append(cGastoEtiquetas)
+
+  const bEditar = document.createElement('button')
+  bEditar.classList.add('gasto-editar')
+  bEditar.innerHTML = 'Editar'
+  bEditar.type = 'button'
+  cGasto.append(bEditar)
+
+  const bBorrar = document.createElement('button')
+  bBorrar.classList.add('gasto-borrar')
+  bBorrar.innerHTML = 'Borrar'
+  bBorrar.type = 'button'
+  cGasto.append(bBorrar)
 
   const elemento = document.getElementById(idElemento)
   elemento.append(cGasto)
@@ -121,6 +148,7 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
 
 export {
   actualizarPresupuestoWeb,
+  EditarHandle,
   nuevoGastoWeb,
   repintar,
   mostrarDatoEnID,

@@ -47,6 +47,18 @@
 
       const anyadir = document.getElementById("anyadirgasto");
       anyadir.addEventListener("click", gp.nuevoGastoWeb);
+
+      const bEditarGastos = document.getElementsByClassName("gasto-editar");
+
+      for (const bEditar of bEditarGastos) {
+        // Cada boton tiene que tener su instancia
+        const objetoEditar = new gp.EditarHandle();
+
+        // Traemos el gasto del padre del boton, que es quien tiene la info
+        objetoEditar.gasto = bEditar.parentNode.gasto;
+
+        bEditar.addEventListener("click", objetoEditar);
+      }
     </script>
   </body>
 </html>

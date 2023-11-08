@@ -46,6 +46,14 @@ function CrearGasto (descripcion, valor, fecha, ...etiquetas) {
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
   }
 
+  this.mostrarEtiquetas = () => {
+    let salida = ''
+
+    for (const etiqueta of this.etiquetas) { salida += `${etiqueta},` }
+
+    return salida.slice(0, salida.length - 1)
+  }
+
   this.actualizarDescripcion = (nuevaDescripcion) => {
     this.descripcion = nuevaDescripcion
   }
