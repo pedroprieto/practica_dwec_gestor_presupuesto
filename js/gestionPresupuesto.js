@@ -25,7 +25,7 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     if (isNaN(valor) || (valor < 0)) {
         this.valor = 0;
@@ -50,7 +50,7 @@ function CrearGasto(descripcion, valor) {
         else if (nuevoValor >= 0) {
             this.valor = nuevoValor;
         }
-    }
+    }    
 }
 
 function listarGastos() {
