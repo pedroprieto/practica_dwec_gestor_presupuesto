@@ -1,5 +1,6 @@
-function mostrarDatoEnId() {
-
+function mostrarDatoEnId(idElemento, valor) {
+    let elemento = document.querySelector(`#${idElemento}`);
+    elemento.textContent = valor;
 }
 
 function mostrarGastoWeb() {
