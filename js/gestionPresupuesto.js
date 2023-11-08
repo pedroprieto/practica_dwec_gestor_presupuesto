@@ -6,7 +6,7 @@ let idGasto = 0;
 
 //* FUNCIONES: 
 
-function actualizarPresupuesto(ingreso) {                       //OK 
+function actualizarPresupuesto(ingreso) {                       
     if (ingreso >= 0) {
         return presupuesto = ingreso;
     }
@@ -16,10 +16,10 @@ function actualizarPresupuesto(ingreso) {                       //OK
     }
 }
 
-function mostrarPresupuesto() {                                 //OK
+function mostrarPresupuesto() {                                
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
-function listarGastos() {                                       //OK
+function listarGastos() {                                       
     return gastos;
 }
 
@@ -29,7 +29,7 @@ function anyadirGasto(gasto) {
 }
 
 
-function borrarGasto(idGasto) {                                 //OK del libro.
+function borrarGasto(idGasto) {                                 
     let borrar;
     for (let g of gastos) {
         if (g.id == idGasto) {
@@ -54,47 +54,35 @@ function calcularBalance() {
 }
 
 //Método que devuelve un nuevo array con los elementos del array original(gastos) que cumplan con los criterios especificados en listaDatos.
-function filtrarGastos(listaDatos) {
-    //  gastos = [{},{fecha:x,valor:x, desripcion:"y", etiquetas:[]}]
-    //  gastos.filter(true);
-    //  gastos = [{fecha:x,valor:x, desripcion:"y", etiquetas:[]}]
+function filtrarGastos(listaDatos) {                    //  gastos = [{},{fecha:x,valor:x, desripcion:"y", etiquetas:[]}]  //  gastos.filter(true);
+                                                       //  gastos = [{fecha:x,valor:x, desripcion:"y", etiquetas:[]}]
         return gastos.filter(function (g) {
             let existe = true;
 
             if (listaDatos.fechaDesde) {
                 let fDesde = Date.parse(listaDatos.fechaDesde);
-                existe = existe && (g.fecha >= fDesde);
-                
+                existe = existe && (g.fecha >= fDesde);     
             }
-
             if (listaDatos.fechaHasta) {
                 let fHasta = Date.parse(listaDatos.fechaHasta);
                     existe = existe && (g.fecha <= fHasta);
             }
-
             if (listaDatos.valorMinimo) {
-                existe = existe && (g.valor >= listaDatos.valorMinimo);
-                
+                existe = existe && (g.valor >= listaDatos.valorMinimo);    
             }
-
             if (listaDatos.valorMaximo) {
-                existe = existe && (g.valor <= listaDatos.valorMaximo);
-                
+                existe = existe && (g.valor <= listaDatos.valorMaximo);    
             }
-
             if (listaDatos.descripcionContiene) {
                 existe = existe && (g.descripcion.indexOf(listaDatos.descripcionContiene) > -1);
             }
-
             if (listaDatos.etiquetasTiene) {
                 if (!cumpleEtiquetasTiene(g, listaDatos.etiquetasTiene)) {
                     existe = existe && false;
                 }
             }
-
             return existe;
         });
-
     }
 
 function cumpleEtiquetasTiene(gasto, etiquetasTiene) { 
@@ -107,60 +95,57 @@ function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
         return tiene;
     }
 
-function agruparGastos(periodo, etiquetas, fDesde, fhasta) {       //Ok libro
- let GastosFiltrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fDesde, fechaHasta:fhasta});
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {   
+    var opciones = {};
+    var gastosFiltrados;
 
-    return GastosFiltrados.reduce(function (acc, gasto) {
-     
-        let period = gasto.obtenerPeriodoAgrupacion(periodo);
-        if (acc[period]) {
-            acc[period] = acc[period] + gasto.valor;
-        }
-        else {
-            acc[period] = gasto.valor;
-        }
-    
-        return acc;
-    }, {})
+    opciones.periodo = periodo;
+    opciones.etiquetasTiene = etiquetas;
+    opciones.fechaDesde = fechaDesde;
+    opciones.fechaHasta = fechaHasta;
 
+    gastosFiltrados = filtrarGastos(opciones);
+
+    let functionReduce = function (acumulador, elemGasto) {
+        let periodoAgrup = elemGasto.obtenerPeriodoAgrupacion(periodo)
+        if (acumulador[periodoAgrup]) {                                        
+            acumulador[periodoAgrup] = acumulador[periodoAgrup] + elemGasto.valor;
+        } else {
+            acumulador[periodoAgrup] = elemGasto.valor;
+        }
+        return acumulador;          
+    };                                                                            //*cada elemento del arr es un gasto
+    let acumulador = {};                                                          //* creo un Objeto vacío
+                                                                                  //* Devuelve un Obj,cuya propiedad periodo es = a la suma de gastos.
+    if (gastosFiltrados.length > 0) {
+        return gastosFiltrados.reduce(functionReduce, acumulador)
+    }
+    else {
+        return gastos.reduce(functionReduce, acumulador)
+    }
 }
-    //Reduce: Reduce: 
- 	/*Se encarga de recorrer todos los elem.del array para generar un valor único.Se suele usar para realizar cálculos. (puede ser un total, medias, etc o agrupaciones de datos.)
-Admite 2 parámetros:
-    1º función de callback, que admite 4 param.El resultado de la ejecución de callback(Llamado normalmente acumulador) y los 3(elem, índice y array) 
-Es obligatorio los 2 primeros. 
-2º Un valor inicial, q se usará en la 1ª ejecución del callback.*/
-   /* let numeros = [2, 5, 4];
-    let total = numeros.reduce( // 1º param: función callback
-        Function(acc, num){
-            Return acc + num;
-}, 0); // 2º param: valor inicial.
- }*/
 
 //* OBJETO
 
 function CrearGasto(descrip, valorIntroducido, date, ...etiquetas) {
 
-   
     //* Métodos del objeto:
-
-    this.mostrarGasto = function () {                           //OK
+    this.mostrarGasto = function () {                           
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
 
-    this.actualizarDescripcion = function (nuevoTexto) {        //OK dwec_U02_a03_Cpe_s.js
+    this.actualizarDescripcion = function (nuevoTexto) {        
         this.descripcion = nuevoTexto;
     }
 
-    this.actualizarValor = function (valor) {                    //OK Opción libro.
-
+    this.actualizarValor = function (valor) {                  
         this.valor = (valor >= 0) ? valor : this.valor;
         /*if (valor >= 0) {
             this.valor = nuevoValor;
         }*/
     }
 
-    this.mostrarGastoCompleto = function () {                     //OK
+    this.mostrarGastoCompleto = function () {                     
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
 Fecha: ${new Date(this.fecha).toLocaleString()}
 Etiquetas:\n`
@@ -172,20 +157,21 @@ Etiquetas:\n`
     };
 
 
-    this.actualizarFecha = function (date) {                      // Opción Libro
+    this.actualizarFecha = function (date) {                     
         let fech = Date.parse(date)
         if (fech) {
             this.fecha = fech;
         }
     }
 
-    this.anyadirEtiquetas = function (...etiq) {             // Opción libro, con REST
-        for (let e of etiq) {       // procesará cada elemento que se haya pasado como argumento al método.
-            if (this.etiquetas.indexOf(e) == -1) { //En cada iteración, indexOf busca el elem. en el array. Devuelve su índice, o -1 si no se encuentra.
+    this.anyadirEtiquetas = function (...etiq) {            
+        for (let e of etiq) {                               // procesará cada elemento que se haya pasado como argumento al método.
+            if (this.etiquetas.indexOf(e) == -1) {          //En cada iteración, indexOf busca el elem. en el array. Devuelve su índice, o -1 si no se encuentra.
                 this.etiquetas.push(e);
             }
         }
     }
+
     this.borrarEtiquetas = function (...etqs) {
         let newetiquetas = [];
 
@@ -198,40 +184,36 @@ Etiquetas:\n`
     }
     
     this.obtenerPeriodoAgrupacion = function (periodo) {
-        var fech = new Date(this.fecha); //crea objeto Date fech con lo que tiene: this.fecha
+        var fech = new Date(this.fecha);                          //crea objeto Date fech con lo que tiene: this.fecha
 
         switch (periodo) {
-            case "mes":    //devuelve la fecha en formato "AAAA-MM"
+            case "mes":                                            //devuelve la fecha en formato "AAAA-MM"
                 return fech.toISOString().substr(0, 7);
-            case "anyo": //devuelve la fecha en formato "AAAA"
+            case "anyo":                                           //devuelve la fecha en formato "AAAA"
                 return fech.toISOString().substr(0, 4);
-            case "dia"://devuelve la fecha en formato "AAAA-MM-DD" 
+            case "dia":                                            //devuelve la fecha en formato "AAAA-MM-DD" 
                 return fech.toISOString().substr(0, 10);
-            default:
-                return console.error("La fecha no es válida");
-        } //toISOString():convierte la fecha en una cadena de texto: "AAAA-MM-DDTHH:mm:ss.sssZ"
-        //.substr(0, 4):extraer una subcadena de la anterior. Los argumentos especifican el índice de inicio y la longitud de la subcadena que se extraerá
+            default:                                                   //toISOString():convierte la fecha en una cadena de texto: "AAAA-MM-DDTHH:mm:ss.sssZ"
+                return console.error("La fecha no es válida");         //.substr(0, 4): extraer una subcadena de la anterior. Los argumentos especifican el índice de inicio
+        }                                                              // y la longitud de la subcadena que se extraerá.                                                                                                                                 
     }
 
     // Propiedades:
     this.descripcion = descrip;
-
-    if (valorIntroducido > 0) {                        //prodiedad valor= opción condicional ? del libro: "this.valor = (valor >=0) ? valor : 0;"
+    if (valorIntroducido > 0) {                                        //prodiedad valor= opción condicional ? del libro: "this.valor = (valor >=0) ? valor : 0;"
         this.valor = valorIntroducido;
     }
     else {
         this.valor = 0;
     }
-    let fech = Date.parse(date);                     //Opción libro.
+    let fech = Date.parse(date);                     
     if (fech) {
         this.fecha = fech;
     } else {
         this.fecha = Date.parse(new Date());
     }
-    
     this.etiquetas = [];   
-    this.anyadirEtiquetas(...etiquetas); //Esto asegura que no haya etiquetas duplicadas en el array
-
+    this.anyadirEtiquetas(...etiquetas);                                 //Esto asegura que no haya etiquetas duplicadas en el array
     this.periodo;
 }
 
@@ -250,20 +232,13 @@ export {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-
 }
-// en objeto Gasto:
-/*if (!date) {
- 
-        this.fecha = new Date(timestamp)
-    }
-    else { 
-        this.fecha = date;
-    }
- 
-    if (etiqueta.length === 0) {
-        this.etiquetas = [];
-    }
-    else{
-    this.etiquetas = etiqueta;
-    }*/
+
+/*let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
+
+if (acumulador[pAgrup]) {                                      //*el acumulador tiene una propiedad existente ya con XX fecha? 
+    acumulador[pAgrup] = acumulador[pAgrup] + elemento.valor;  //* suma lo que tenía más el nuevo valor. 
+}
+else
+    acumulador[pAgrup] = elemento.valor;                        //* La 1º vez que lo llamo estará vacio y entra en else. Se crea xx fecha.
+return acumulador;*/

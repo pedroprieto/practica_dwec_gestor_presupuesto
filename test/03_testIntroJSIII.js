@@ -23,7 +23,7 @@ describe("Función CrearGasto y funcionamiento de objeto gasto", function() {
 
 
 // Función filtrarGastos
-describe("Función filtrarGastos", function() {
+ describe("Función filtrarGastos", function() {
     it("Filtra los gastos (variable global 'gastos') de acuerdo con los parámetros pasados a la función", function() {
         let valor1 = 23.44,
             valor2 = 12.88,
@@ -105,9 +105,9 @@ describe("Función agruparGastos", function() {
         let agrup4 = agruparGastos("anyo", ["transporte", "casa"]);
         assert.lengthOf(Object.keys(agrup4), 2, "La opción de agrupar y filtrar por etiquetas no funciona");
         expect(agrup4["2020"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
-        expect(agrup4["2021"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
+         expect(agrup4["2021"], "La opción de agrupar por año y etiquetas no funciona").to.exist;
         assert.equal(agrup4["2020"], valor3, "No se suman los totales por año filtrando por etiquetas correctamente");
-        assert.equal(agrup4["2021"], valor1 + valor4 + valor5 + valor6, "No se suman los totales por año filtrando por etiquetas correctamente");
+         assert.equal(agrup4["2021"], valor1 + valor4 + valor5 + valor6, "No se suman los totales por año filtrando por etiquetas correctamente");
 
         let agrup5 = agruparGastos("mes", ["transporte"], "2021-01-01");
         assert.lengthOf(Object.keys(agrup5), 1, "La opción de agrupar y filtrar por etiquetas y fecha no funciona");
@@ -115,9 +115,9 @@ describe("Función agruparGastos", function() {
         assert.equal(agrup5["2021-10"], valor4 + valor6, "No se suman los totales por año filtrando por etiquetas y fecha correctamente");
 
         let agrup6 = agruparGastos("mes", ["transporte"], "2021-10-01", "2021-10-07");
-        assert.lengthOf(Object.keys(agrup6), 1);
-        expect(agrup6["2021-10"], "La opción de agrupar y filtrar por etiquetas y fechas no funciona").to.exist;
-        assert.equal(agrup6["2021-10"], valor6, "No se suman los totales por año filtrando por etiquetas y fechas correctamente");
+         assert.lengthOf(Object.keys(agrup6), 1);
+         expect(agrup6["2021-10"], "La opción de agrupar y filtrar por etiquetas y fechas no funciona").to.exist;
+         assert.equal(agrup6["2021-10"], valor6, "No se suman los totales por año filtrando por etiquetas y fechas correctamente");
     });
 });
 
