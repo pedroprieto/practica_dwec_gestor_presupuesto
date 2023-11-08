@@ -1,5 +1,6 @@
+import * as gestionPresupuesto from './gestionPresupuesto.js';
 
-
+let listadoGastos = []; 
 // Función para mostrar un valor en un elemento HTML por su ID
 function mostrarDatoEnId(idElemento, valor) {
   const elemento = document.getElementById(idElemento);
@@ -42,6 +43,11 @@ function mostrarGastoWeb(idElemento, gasto) {
         divGasto.appendChild(divEtiquetas);
       }
 
+      const botonEditar = document.createElement('button');
+      botonEditar.classList.add('gasto-editar');
+      botonEditar.textContent = 'Editar';
+      botonEditar.addEventListener('click', () => new EditarHandle(gasto));
+      divGasto.appendChild(botonEditar);
       elemento.appendChild(divGasto);
   }
 }
@@ -80,9 +86,90 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
   }
 }
 
+function repintar(){
+
+  // Muestra el presupuesto en el elemento con ID "presupuesto"
+  const presupuesto = gestionPresupuesto.mostrarPresupuesto();
+  mostrarDatoEnId('presupuesto', presupuesto);
+
+  // Calcula los totales de gastos y el balance total
+  const totalGastos = gestionPresupuesto.calcularTotalGastos();
+  const balanceTotal = gestionPresupuesto.calcularBalance();
+  // Muestra los totales en elementos HTML
+  mostrarDatoEnId('gastos-totales', totalGastos);
+  mostrarDatoEnId('balance-total', balanceTotal);
+
+  let listado = document.getElementById('listado-gastos-completo'); 
+
+  //Se limpia el contenido de listado
+
+  listado.innerHTML = ""; 
+  // Muestra el listado completo de gastos
+   // Muestra el listado completo de gastos
+  const listadoGastos = gestionPresupuesto.listarGastos(); // Declaración e inicialización de listadoGastos
+   console.log(listadoGastos); 
+   console.log(listado); 
+ 
+   listadoGastos.forEach((gasto) => {
+      mostrarGastoWeb('listado-gastos-completo', gasto);
+   });
+}
+
+function actualizarPresupuestoWeb(){
+    let presupuestoWeb = prompt('Actualiza el presupuesto: ', ''); 
+    parseFloat(presupuestoWeb); 
+    gestionPresupuesto.actualizarPresupuesto(presupuestoWeb); 
+    repintar(); 
+    
+
+}
+
+function nuevoGastoWeb(){
+    let descripcion = prompt('Añade la descripción del gasto: ', ''); 
+    let cantidad = prompt('Añade la cantidad: ', 100); 
+    cantidad = parseFloat(cantidad); 
+    let fecha = prompt ('Añade una fecha en el formato yyyy-mm-dd: ', '2023-11-08'); 
+    let etiquetas = prompt('Añade las etiquetas separadas por , : ', 'casa, seguro'); 
+    let arrEtiquetas = etiquetas.split(', '); 
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, cantidad, fecha, arrEtiquetas); 
+    gestionPresupuesto.anyadirGasto(nuevoGasto); 
+    //listadoGastos = gestionPresupuesto.listarGastos(); 
+    repintar(); 
+    console.log(nuevoGasto); 
+    console.log(gestionPresupuesto.listarGastos()); 
+}
+
+function EditarHandle(gasto) {
+// Asignamos el gasto al objeto manejador
+this.gasto = gasto;
+
+// Método para manejar el evento de edición
+this.handleEvent = function () {
+  // Pedir al usuario la información necesaria para editar el gasto
+  const nuevaDescripcion = prompt('Editar descripción:', this.gasto.descripcion);
+  const nuevoValor = parseFloat(prompt('Editar valor:', this.gasto.valor));
+  const nuevaFecha = prompt('Editar fecha (yyyy-mm-dd):', this.gasto.fecha);
+  const etiquetasTexto = prompt('Editar etiquetas (separadas por comas):', this.gasto.etiquetas.join(', '));
+
+  // Actualizar las propiedades del gasto
+  this.gasto.actualizarDescripcion(nuevaDescripcion);
+  this.gasto.actualizarValor(nuevoValor);
+  this.gasto.actualizarFecha(nuevaFecha);
+  this.gasto.etiquetas = etiquetasTexto.split(',').map(etiqueta => etiqueta.trim());
+
+  // Llamar a la función repintar para mostrar los datos actualizados
+  repintar();
+  };
+  //repintar();
+}
+
 // Exporta las funciones
 export {
   mostrarDatoEnId,
   mostrarGastoWeb,
-  mostrarGastosAgrupadosWeb
+  mostrarGastosAgrupadosWeb, 
+  repintar, 
+  actualizarPresupuestoWeb, 
+  nuevoGastoWeb, 
+  EditarHandle
 };

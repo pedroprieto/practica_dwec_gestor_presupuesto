@@ -85,4 +85,15 @@ gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gastosAgrupado
 const gastosAgrupadosPorAnio = gestionPresupuesto.agruparGastos('anyo');
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', gastosAgrupadosPorAnio, 'año');
 
+//Botón actualizar
+const btnActualizar = document.getElementById('actualizarpresupuesto'); 
+
+btnActualizar.onclick = () => gestionPresupuestoWeb.actualizarPresupuestoWeb(); 
+
+const btnAnyadirGasto = document.getElementById('anyadirgasto'); 
+
+btnAnyadirGasto.onclick = () => gestionPresupuestoWeb.nuevoGastoWeb(); 
+
+
+
 export * from './generarDatosEstaticos.js';
