@@ -127,8 +127,11 @@ function anyadirGasto(gastoAnyadir) {
     gastos.push(gastoAnyadir);
 }
 
-function borrarGasto() {
-
+function borrarGasto(idGastoBorrar) {
+    
+    //Busco la posición del elemento buscado por su 'id' con findIndex, y lo borro usando 'splice'
+    let indice = gastos.findIndex((item) => item.id == idGastoBorrar);
+    gastos.splice (indice,1);    
 }
 
 function calcularTotalGastos() {
