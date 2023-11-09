@@ -46,8 +46,15 @@ function mostrarGastoWeb(idElemento, gasto) {
       const botonEditar = document.createElement('button');
       botonEditar.classList.add('gasto-editar');
       botonEditar.textContent = 'Editar';
-      botonEditar.addEventListener('click', () => new EditarHandle(gasto));
+      botonEditar.addEventListener('click', new EditarHandle(gasto));
       divGasto.appendChild(botonEditar);
+      elemento.appendChild(divGasto);
+
+      const botonBorrar = document.createElement('button');
+      botonBorrar.classList.add('gasto-borrar');
+      botonBorrar.textContent = 'Borrar';
+      botonBorrar.addEventListener('click', new BorrarHandle(gasto)); // Asigna BorrarHandle con el gasto correspondiente
+      divGasto.appendChild(botonBorrar);
       elemento.appendChild(divGasto);
   }
 }
@@ -163,6 +170,20 @@ this.handleEvent = function () {
   //repintar();
 }
 
+function BorrarHandle(gasto) {
+  // Asignamos el gasto al objeto manejador
+  this.gasto = gasto;
+
+  // Método para manejar el evento de borrado
+  this.handleEvent = function () {
+    // Borrar el gasto asociado
+    gestionPresupuesto.borrarGasto(this.gasto.id);
+
+    // Llamar a la función repintar para mostrar la lista actualizada de gastos
+    repintar();
+  };
+}
+
 // Exporta las funciones
 export {
   mostrarDatoEnId,
@@ -171,5 +192,6 @@ export {
   repintar, 
   actualizarPresupuestoWeb, 
   nuevoGastoWeb, 
-  EditarHandle
+  EditarHandle, 
+  BorrarHandle
 };
