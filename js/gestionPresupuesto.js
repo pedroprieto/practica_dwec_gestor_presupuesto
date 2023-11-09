@@ -26,12 +26,28 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+    
     this.descripcion = descripcion;
     if (isNaN(valor) || (valor < 0)) {
         this.valor = 0;
     }
     else {
         this.valor = valor;
+    }
+    
+    //1º inicializo this.etiquetas con un array vacío.
+    //2º si la longitud del array etiquetas es mayor que 0 es que se ha introducido algún valor,
+    //así que puedo asignar dichos valores a this.etiquetas, en caso contrario le asigno un array vacío.
+    this.etiquetas = []; 
+    this.etiquetas = (etiquetas.length > 0) ? this.etiquetas.concat(etiquetas) : [];
+    
+    //Si fecha no tiene valor o el string introducido no es válido, me quedo con la fecha actual
+    //en caso contrario con la fecha dada
+    if (isNaN(Date.parse(fecha)) || fecha == undefined) {
+        this.fecha = Date.parse(Date().toString());
+    }
+    else {
+        this.fecha = Date.parse(fecha);
     }
 
     this.mostrarGasto = function() {
@@ -50,7 +66,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         else if (nuevoValor >= 0) {
             this.valor = nuevoValor;
         }
-    }    
+    } 
+    
+    this.mostrarGastoCompleto = function() {
+        let fechaMostrar = new Date(this.fecha).toLocaleString('es-ES','UTC');
+        let etiquetasMostrar ="";
+
+        for (let item of this.etiquetas) {
+            etiquetasMostrar += `- ${item}\n`
+        }
+
+        return `
+        Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
+        Fecha: ${fechaMostrar}\n
+        Etiquetas:\n${etiquetasMostrar}`;
+    }  
+
 }
 
 function listarGastos() {
@@ -72,6 +103,7 @@ function calcularTotalGastos() {
 function calcularBalance() {
 
 }
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
