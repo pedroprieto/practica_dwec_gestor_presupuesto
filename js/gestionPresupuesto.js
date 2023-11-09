@@ -2,9 +2,9 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
-var presupuesto = 0;
-var gastos = [];
-var idGasto = 0;
+let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 
 function actualizarPresupuesto(nuevoValorPresupuesto) {
@@ -118,8 +118,13 @@ function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {
-
+function anyadirGasto(gastoAnyadir) {
+    //Añado a id el idGasto actual
+    gastoAnyadir.id = idGasto;
+    //Incremento idGasto en  una unidad
+    idGasto++;
+    //Añado gastoAnyadir al array gastos
+    gastos.push(gastoAnyadir);
 }
 
 function borrarGasto() {
