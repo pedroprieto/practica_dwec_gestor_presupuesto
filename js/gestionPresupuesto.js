@@ -69,17 +69,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     } 
     
     this.mostrarGastoCompleto = function () {
-        let fechaMostrar = new Date(this.fecha).toLocaleString('es-ES','UTC');
+
+        let fechaMostrar = new Date(this.fecha);
         let etiquetasMostrar ="";
 
-        for (let item of this.etiquetas) {
-            etiquetasMostrar += `- ${item}\n`
+        for (let itemEtiqueta of this.etiquetas) {
+            etiquetasMostrar += `\n- ${itemEtiqueta}`
         }
 
-        return `
-        Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
-        Fecha: ${fechaMostrar}\n
-        Etiquetas:\n${etiquetasMostrar}`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaMostrar.toLocaleString()}\nEtiquetas:${etiquetasMostrar}\n`;
     }
     
     this.actualizarFecha = function (fechaActualizar) {
