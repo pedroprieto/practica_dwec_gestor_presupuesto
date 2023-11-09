@@ -38,6 +38,9 @@ function mostrarGastoWeb(idElemento, gasto) {
           const spanEtiqueta = document.createElement('span');
           spanEtiqueta.classList.add('gasto-etiquetas-etiqueta');
           spanEtiqueta.textContent = etiqueta;
+          spanEtiqueta.addEventListener('click', function() {
+            BorrarEtiquetasHandle(gasto, etiqueta);
+          });
           divEtiquetas.appendChild(spanEtiqueta);
         });
         divGasto.appendChild(divEtiquetas);
@@ -184,6 +187,16 @@ function BorrarHandle(gasto) {
   };
 }
 
+// Función para eliminar una etiqueta de un gasto
+function BorrarEtiquetasHandle(gasto, etiqueta) {
+  if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
+    const etiquetaIndex = gasto.etiquetas.indexOf(etiqueta);
+    if (etiquetaIndex !== -1) {
+      gasto.etiquetas.splice(etiquetaIndex, 1);
+      repintar(); 
+    }
+  }
+}
 // Exporta las funciones
 export {
   mostrarDatoEnId,
@@ -193,5 +206,6 @@ export {
   actualizarPresupuestoWeb, 
   nuevoGastoWeb, 
   EditarHandle, 
-  BorrarHandle
+  BorrarHandle, 
+  BorrarEtiquetasHandle
 };
