@@ -1,11 +1,13 @@
 import * as gp from './gestionPresupuesto.js'
 
+// TODO: al añadir gastos y repintar, el handle se pierde -> añadir eventos al repintar?
+
 class EditarHandle {
   handleEvent (event) {
     const pDescripcion = globalThis.prompt('Introduce una descripción', this.gasto.descripcion)
     const pValor = Number(globalThis.prompt('Introduce un valor', this.gasto.valor))
     const pFecha = globalThis.prompt('Introduce una fecha (aaaa/mm/dd)', this.gasto.fecha)
-    const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma', this.gasto.mostrarEtiquetas).split(',')
+    const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma', this.gasto.mostrarEtiquetas()).split(',')
 
     this.gasto.actualizarDescripcion(pDescripcion)
     this.gasto.actualizarValor(pValor)
@@ -13,6 +15,19 @@ class EditarHandle {
     this.gasto.borrarEtiquetas()
     this.gasto.anyadirEtiquetas(...pEtiquetas)
 
+    repintar()
+  }
+}
+class BorrarEtiquetasHandle {
+  handleEvent (event) {
+    this.gasto.borrarEtiquetas(this.etiqueta)
+    repintar()
+  }
+}
+
+class BorrarHandle {
+  handleEvent (event) {
+    gp.borrarGasto(this.gasto.id)
     repintar()
   }
 }
@@ -149,6 +164,8 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
 export {
   actualizarPresupuestoWeb,
   EditarHandle,
+  BorrarHandle,
+  BorrarEtiquetasHandle,
   nuevoGastoWeb,
   repintar,
   mostrarDatoEnID,

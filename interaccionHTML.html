@@ -42,23 +42,67 @@
     <script type="module">
       import * as gp from "/js/gestionPresupuestoWeb.js";
 
-      const actualizar = document.getElementById("actualizarpresupuesto");
-      actualizar.addEventListener("click", gp.actualizarPresupuestoWeb);
+      // funcion para que se ejecute cuando llegue aqui y la pueda llamar cuando quiera
+      function anyadirEventos() {
+        const actualizar = document.getElementById("actualizarpresupuesto");
+        actualizar.addEventListener("click", gp.actualizarPresupuestoWeb);
 
-      const anyadir = document.getElementById("anyadirgasto");
-      anyadir.addEventListener("click", gp.nuevoGastoWeb);
+        const anyadir = document.getElementById("anyadirgasto");
+        anyadir.addEventListener("click", gp.nuevoGastoWeb);
 
-      const bEditarGastos = document.getElementsByClassName("gasto-editar");
+        // añadimos evento al botón Editar Gastos
 
-      for (const bEditar of bEditarGastos) {
-        // Cada boton tiene que tener su instancia
-        const objetoEditar = new gp.EditarHandle();
+        const bEditarGastos = document.getElementsByClassName("gasto-editar");
 
-        // Traemos el gasto del padre del boton, que es quien tiene la info
-        objetoEditar.gasto = bEditar.parentNode.gasto;
+        for (const bEditar of bEditarGastos) {
+          // Cada boton tiene que tener su instancia
+          const objetoEditar = new gp.EditarHandle();
 
-        bEditar.addEventListener("click", objetoEditar);
+          // Traemos el gasto del padre del boton, que es quien tiene la info
+          objetoEditar.gasto = bEditar.parentNode.gasto;
+
+          bEditar.addEventListener("click", objetoEditar);
+        }
+
+        // Añadimos evento al botón Borrar Gastos
+
+        const bBorrarGastos = document.getElementsByClassName("gasto-borrar");
+
+        for (const bBorrar of bBorrarGastos) {
+          // Cada boton tiene que tener su instancia
+          const objetoBorrar = new gp.BorrarHandle();
+
+          // Traemos el gasto del padre del boton, que es quien tiene la info
+          objetoBorrar.gasto = bBorrar.parentNode.gasto;
+
+          bBorrar.addEventListener("click", objetoBorrar);
+        }
+
+        // Añadimos evento al span de etiquetas
+
+        const sEtiquetas = document.getElementsByClassName(
+          "gasto-etiquetas-etiqueta"
+        );
+
+        for (const sEtiqueta of sEtiquetas) {
+          const objBorrarEtiqueta = new gp.BorrarEtiquetasHandle();
+
+          objBorrarEtiqueta.gasto = sEtiqueta.parentNode.parentNode.gasto;
+          objBorrarEtiqueta.etiqueta = sEtiqueta.innerHTML;
+
+          sEtiqueta.addEventListener("click", objBorrarEtiqueta);
+        }
       }
+
+      anyadirEventos();
+
+      // añadir evento a la aplicacion para que cuando se modifique el contenido, le podamos volver a poner eventos
+      const app = document.getElementById("aplicacion");
+
+      // si pongo console.log dentro se ejecuta 9 veces -> ¿Por qué? ¿Hay forma más eficiente?
+      app.addEventListener("DOMNodeInserted", (event) => {
+        anyadirEventos();
+      });
     </script>
   </body>
 </html>
