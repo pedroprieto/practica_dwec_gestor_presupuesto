@@ -49,3 +49,12 @@ let filtrado4 = gp.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valo
 for (const gasto of filtrado4) {
     gpw.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
+
+let agrupadosDia = gp.agruparGastos("dia");
+gpw.mostrarGastosAgrupadosWeb("agrupacion-dia", agrupadosDia, "día");
+
+let agrupadosMes = gp.agruparGastos("mes");
+gpw.mostrarGastosAgrupadosWeb("agrupacion-mes", agrupadosMes, "mes");
+
+let agrupadosAnyo = gp.agruparGastos("anyo");
+gpw.mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupadosAnyo, "año");
