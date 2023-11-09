@@ -233,13 +233,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     switch (periodo) { //sobre 10 
 
-      case "dia": // aaaa-mm-dd;
+      case "día": // aaaa-mm-dd;
         resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
         break;
       case "mes":  //aaaa-mm
         resultadoAgrup = fecha.substring(0, 7);
         break;
-      case "anyo":  //aaaa
+      case "año":  //aaaa
         resultadoAgrup = fecha.substring(0, 4);
         break;
     }
