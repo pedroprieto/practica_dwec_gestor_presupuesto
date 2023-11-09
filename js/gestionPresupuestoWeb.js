@@ -95,7 +95,6 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo) {
     spanDatoValor.textContent = valor ;
     agrupacionDato.appendChild(spanDatoValor);
 
-
     divContenedor.appendChild(divAgrupacion);
   }
   divContenedor.appendChild(divAgrupacion);
