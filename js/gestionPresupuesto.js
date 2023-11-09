@@ -91,23 +91,26 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.anyadirEtiquetas = function (...etiquetasAnyadir) {
-
-        if (etiquetasAnyadir.length > 0){
+        //Si no hay etiquetas no añado nada. En caso de haber alguna compruebo si ya existe y en caso de existir dicha etiqueta, no hago nada. Para ver si existen o no uso 'includes'.
+        //Hasta terminar de revisar todas y añadirlas o no según se vea si existen o no. Las añado al fiunal del array con 'push'.
+        if (etiquetasAnyadir.length > 0) {
             for (let itemEtiquetaAnyadir of etiquetasAnyadir) {
-                let anyadoEtiqueta = true;
-                for (let itemEtiquetasExistentes of this.etiquetas) {
-                    if (itemEtiquetaAnyadir == itemEtiquetasExistentes) {
-                        anyadoEtiqueta = false;
-                        break;                         
-                    }
-                }
-                if (anyadoEtiqueta == true) {
+                if (!(this.etiquetas.includes(itemEtiquetaAnyadir))) {
+                    //Si la etiqueta no está previamente creada, la añado.
                     this.etiquetas.push (itemEtiquetaAnyadir);
                 }
             }
         }
-        else {
-            anyadoEtiqueta = false;
+    }
+
+    this.borrarEtiquetas = function (...etiquetasBorrar) {
+        //Si no hay etiquetas no hago nada. En caso contrario busco el índice de la etiqueta con 'indexOf' y las voy eliminado.
+        if (etiquetasBorrar.length > 0) {
+            for (let itemEtiquetaBorrar of etiquetasBorrar) {
+                if (this.etiquetas.indexOf(itemEtiquetaBorrar) > -1) {
+                    this.etiquetas.splice(this.etiquetas.indexOf(itemEtiquetaBorrar),1);
+                }
+            }
         }
     }
 
