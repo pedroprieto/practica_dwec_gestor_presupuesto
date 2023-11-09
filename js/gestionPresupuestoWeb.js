@@ -53,6 +53,57 @@ function actualizarPresupuestoWeb () {
   }
 }
 
+function anyadirEventos () {
+  const actualizar = document.getElementById('actualizarpresupuesto')
+  actualizar.addEventListener('click', actualizarPresupuestoWeb)
+
+  const anyadir = document.getElementById('anyadirgasto')
+  anyadir.addEventListener('click', nuevoGastoWeb)
+
+  // añadimos evento al botón Editar Gastos
+
+  const bEditarGastos = document.getElementsByClassName('gasto-editar')
+
+  for (const bEditar of bEditarGastos) {
+    // Cada boton tiene que tener su instancia
+    const objetoEditar = new EditarHandle()
+
+    // Traemos el gasto del padre del boton, que es quien tiene la info
+    objetoEditar.gasto = bEditar.parentNode.gasto
+
+    bEditar.addEventListener('click', objetoEditar)
+  }
+
+  // Añadimos evento al botón Borrar Gastos
+
+  const bBorrarGastos = document.getElementsByClassName('gasto-borrar')
+
+  for (const bBorrar of bBorrarGastos) {
+    // Cada boton tiene que tener su instancia
+    const objetoBorrar = new BorrarHandle()
+
+    // Traemos el gasto del padre del boton, que es quien tiene la info
+    objetoBorrar.gasto = bBorrar.parentNode.gasto
+
+    bBorrar.addEventListener('click', objetoBorrar)
+  }
+
+  // Añadimos evento al span de etiquetas
+
+  const sEtiquetas = document.getElementsByClassName(
+    'gasto-etiquetas-etiqueta'
+  )
+
+  for (const sEtiqueta of sEtiquetas) {
+    const objBorrarEtiqueta = new BorrarEtiquetasHandle()
+
+    objBorrarEtiqueta.gasto = sEtiqueta.parentNode.parentNode.gasto
+    objBorrarEtiqueta.etiqueta = sEtiqueta.innerHTML
+
+    sEtiqueta.addEventListener('click', objBorrarEtiqueta)
+  }
+}
+
 function repintar () {
   // Mostrar el presupuesto en #presupuesto
   mostrarDatoEnID('presupuesto', gp.mostrarPresupuesto())
@@ -70,6 +121,8 @@ function repintar () {
   for (const gasto of gp.listarGastos()) {
     mostrarGastoWeb('listado-gastos-completo', gasto)
   }
+
+  anyadirEventos()
 }
 
 function borrarContenido (idElemento) {
@@ -166,6 +219,7 @@ export {
   EditarHandle,
   BorrarHandle,
   BorrarEtiquetasHandle,
+  anyadirEventos,
   nuevoGastoWeb,
   repintar,
   mostrarDatoEnID,
