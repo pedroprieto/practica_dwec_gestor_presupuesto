@@ -32,7 +32,7 @@ function mostrarPresupuesto() {
 
 //Función sin parámetros que devolverá la variable global gastos
 function listarGastos () {
-    return gastos;
+    return  gastos;
 
 }
 
@@ -58,14 +58,16 @@ function calcularTotalGastos () {
     for (let i of gastos) {
         suma += i.valor;
     }
-    return suma;
+    
+    return suma; // quitar tantos decimales falla test aquí.toFixed(2);
 }
 
 //Función sin paràmetros que devuelva el balance disponible
 function calcularBalance () {
     let balance = 0;
     balance = presupuesto - calcularTotalGastos();
-    return balance;
+    //En el balance no da error el test
+    return balance.toFixed(2);
 }
 
 //Función de un parámetro que devolverá un subconjunto de los gastos existentes
