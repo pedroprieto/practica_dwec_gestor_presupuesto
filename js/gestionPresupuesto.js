@@ -136,6 +136,19 @@ function borrarGasto(idGastoBorrar) {
 
 function calcularTotalGastos() {
 
+    //Puedo hacerlo de este modo, con un bucle
+    /*
+        let acumulado = 0;
+        for (let item of gastos) {
+            acumulado += item.valor;
+        }
+        return acumulado;
+    */
+
+    //También puede hacerse usando map  y reduce.
+    let valores = gastos.map (gastoUsar => gastoUsar.valor);
+
+    return valores.reduce ((valorInicial, valorElemento) => valorInicial + valorElemento, 0);
 }
 
 function calcularBalance() {
