@@ -90,6 +90,27 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.anyadirEtiquetas = function (...etiquetasAnyadir) {
+
+        if (etiquetasAnyadir.length > 0){
+            for (let itemEtiquetaAnyadir of etiquetasAnyadir) {
+                let anyadoEtiqueta = true;
+                for (let itemEtiquetasExistentes of this.etiquetas) {
+                    if (itemEtiquetaAnyadir == itemEtiquetasExistentes) {
+                        anyadoEtiqueta = false;
+                        break;                         
+                    }
+                }
+                if (anyadoEtiqueta == true) {
+                    this.etiquetas.push (itemEtiquetaAnyadir);
+                }
+            }
+        }
+        else {
+            anyadoEtiqueta = false;
+        }
+    }
+
 }
 
 function listarGastos() {
