@@ -1,20 +1,17 @@
 //Este fichero contendrá las utilidades necesarias para mostrar los datos de la aplicación
 
-//Importar librerias
-import * as gestPresupuesto from "./gestionPresupuesto.js";
-import * as gestEstatico from "./generarDatosEstaticos.js";
 //Funciones
 //Función de dos parámetros que se encargará de añadir dentro del elemento HTML 
 function mostrarDatoEnId (idElemento , gasto ) {
     // Buscar el elemento
     let elemento = document.getElementById(idElemento);
     //Insertar el valor delemento buscado
-    elemento.innerText = valor;
+    elemento.innerText = gasto;
 
 }
 
-//Función de tres parámetros que se encargará de crear una estructura HTML
-function mostrarGastoWeb (idElemento , agrup , periodo) {
+//Función de dos parámetros que se encargará de añadir dentro del elemento HTML
+function mostrarGastoWeb (idElemento , gasto) {
     //Formato <div class="gasto">
     let divGasto = document.createElement("div");
     divGasto.className = "gasto";
@@ -70,6 +67,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     //agrup contendrá el resultado de agrupar el total de gastos por período temporal 
 
     //periodo - Período temporal por el que se habrá realizado la agrupación.
+    
 
 
   
