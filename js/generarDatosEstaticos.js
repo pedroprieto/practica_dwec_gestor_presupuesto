@@ -29,3 +29,23 @@ let listaDeGastos = gp.listarGastos();
 for (const gasto of listaDeGastos) {
     gpw.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
+
+let filtrados1 = gp.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
+for (const gasto of filtrados1) {
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+let filtrado2 = gp.filtrarGastos({valorMinimo: 50});
+for (const gasto of filtrado2) {    
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
+
+let filtrado3 = gp.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+for (const gasto of filtrado3) {
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
+
+let filtrado4 = gp.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo: 50});
+for (const gasto of filtrado4) {
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}

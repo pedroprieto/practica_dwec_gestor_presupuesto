@@ -120,8 +120,7 @@ function calcularBalance() {
     return balance;
 }
 
-function filtrarGastos(objeto) {
-    let {fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene} = objeto;
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}) {
 
     //Fechas
     fechaDesde = Date.parse(fechaDesde);
