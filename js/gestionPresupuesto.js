@@ -68,7 +68,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     } 
     
-    this.mostrarGastoCompleto = function() {
+    this.mostrarGastoCompleto = function () {
         let fechaMostrar = new Date(this.fecha).toLocaleString('es-ES','UTC');
         let etiquetasMostrar ="";
 
@@ -80,7 +80,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
         Fecha: ${fechaMostrar}\n
         Etiquetas:\n${etiquetasMostrar}`;
-    }  
+    }
+    
+    this.actualizarFecha = function (fechaActualizar) {
+        //Si fecha no tiene valor o el string introducido no es válido, me quedo con la fecha actual
+        //por lo que no hago nada, en caso contrario con la fecha dada.
+        if (!(isNaN(Date.parse(fechaActualizar)) || fechaActualizar == undefined)) {
+            this.fecha = Date.parse(fechaActualizar);
+        }
+    }
 
 }
 
