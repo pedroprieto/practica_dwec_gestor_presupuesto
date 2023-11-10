@@ -1,3 +1,5 @@
+import * as GesPrest from './gestionPresupuesto.js'
+
 //Función de dos parámetros que se encargará de escribir el valor (texto)
 //en el elemento HTML con id idElemento indicado
 function mostrarDatoEnId(idElemento, valor){
@@ -116,6 +118,24 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     console.error("Elemento no encontrado.");
   }
 
+}
+//Función que vuelve a crear toda la estructura HTML y refleja los cambios realizados
+function repintar(){
+  //Mostrar el presupuesto en div#presupuesto
+  mostrarDatoEnId('presupuesto', GesPrest.mostrarPresupuesto())
+
+  //Mostrar los gastos totales en div#gastos-totales 
+  mostrarDatoEnId('gastos-totales', GesPrest.calcularTotalGastos())
+
+  //Mostrar el balance total en div#balance-total
+  mostrarDatoEnId('balance-total', GesPrest.calcularBalance())
+
+  //Borrar el contenido de div#listado-gastos-completo
+  const listadoGastosCompleto = document.getElementById('listado-gastos-completo');
+  listadoGastosCompleto.innerHTML = '';
+
+  //Mostrar el listado completo de gastos en div#listado-gastos-completo
+  mostrarGastoWeb('listadoGastosCompleto', GesPrest.listarGastos())
 }
 
 export{
