@@ -64,19 +64,10 @@ Etiquetas:\n`
         this.etiquetas=nuevaLista;
     }
     this.descripcion=descripcion;
-    if(valor>=0){
-        this.valor=valor;
-    }else{
-        this.valor=0;
-    }
+    valor>=0? this.valor=valor: this.valor=0;
     this.etiquetas=[];
     this.anyadirEtiquetas(...etiquetas);
-    
-    if(Date.parse(fecha)){
-        this.fecha=Date.parse(fecha)
-    }else{
-        this.fecha=Date.parse(new Date())
-    }
+    Date.parse(fecha)?this.fecha=Date.parse(fecha):this.fecha=Date.parse(new Date());
 }
 function listarGastos(){
     return gastos;
