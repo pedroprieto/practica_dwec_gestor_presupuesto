@@ -1,4 +1,4 @@
-import * as GesPrest from './gestionPresupuesto.js'
+import * as GesPrest from './gestionPresupuesto.js';
 
 //Función de dos parámetros que se encargará de escribir el valor (texto)
 //en el elemento HTML con id idElemento indicado
@@ -135,8 +135,20 @@ function repintar(){
   listadoGastosCompleto.innerHTML = '';
 
   //Mostrar el listado completo de gastos en div#listado-gastos-completo
-  mostrarGastoWeb('listadoGastosCompleto', GesPrest.listarGastos())
+  const gastos = GesPrest.listarGastos();
+
+  for (const gasto of gastos) {
+    mostrarGastoWeb('listado-gastos-completo', gasto);
+  }
 }
+//Evento click boton actualizarpresupuesto
+const boton = document.getElementById('actualizarpresupuesto')
+boton.addEventListener('click', ()=>{
+    const presu = parseFloat(prompt('Introduce el presupuesto'));
+    GesPrest.actualizarPresupuesto(presu);
+    repintar();
+
+})
 
 export{
   mostrarDatoEnId,
