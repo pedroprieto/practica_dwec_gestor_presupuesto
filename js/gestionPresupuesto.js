@@ -41,14 +41,42 @@ Etiquetas:\n`
         }
         return texto
     }
+    this.actualizarFecha=function(fecha){
+        if(Date.parse(fecha)){
+            this.fecha=Date.parse(fecha);
+        }
+    }
+    this.anyadirEtiquetas=function(...etiquetasNuevas){
+        for(let etiqueta of etiquetasNuevas){
+            if(this.etiquetas.indexOf(etiqueta) == -1){
+                this.etiquetas.push(etiqueta)
+            }
+        }
+
+    }
+    this.borrarEtiquetas=function(...etiquetasBorrar){
+        let nuevaLista=[]
+        for(let etiqueta of this.etiquetas){  
+            if( etiquetasBorrar.indexOf(etiqueta) == -1){
+                nuevaLista.push(etiqueta)
+            }
+        }
+        this.etiquetas=nuevaLista;
+    }
     this.descripcion=descripcion;
     if(valor>=0){
         this.valor=valor;
     }else{
         this.valor=0;
     }
-    this.etiquetas=etiquetas;
-    this.fecha=fecha;
+    this.etiquetas=[];
+    this.anyadirEtiquetas(...etiquetas);
+    
+    if(Date.parse(fecha)){
+        this.fecha=Date.parse(fecha)
+    }else{
+        this.fecha=Date.parse(new Date())
+    }
 }
 function listarGastos(){
     return gastos;
