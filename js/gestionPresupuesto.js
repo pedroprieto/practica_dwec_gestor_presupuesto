@@ -98,7 +98,9 @@ function calcularTotalGastos(){
     gastos.forEach(x=> gastosTotales+= x.valor)
     return gastosTotales;
 }
-function calcularBalance(){}
+function calcularBalance(){
+    return presupuesto - calcularTotalGastos();
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
