@@ -142,13 +142,36 @@ function repintar(){
   }
 }
 //Evento click boton actualizarpresupuesto
-const boton = document.getElementById('actualizarpresupuesto')
-boton.addEventListener('click', ()=>{
+const botonPresu = document.getElementById('actualizarpresupuesto')
+botonPresu.addEventListener('click', ()=>{
     const presu = parseFloat(prompt('Introduce el presupuesto'));
     GesPrest.actualizarPresupuesto(presu);
     repintar();
 
 })
+
+//Evento botón añadir gasto
+const botonGasto = document.getElementById('anyadirgasto');
+botonGasto.addEventListener('click', nuevoGastoWeb);
+
+function nuevoGastoWeb(){
+  // Pedir al usuario la información del nuevo gasto
+  const descripcion = prompt('Introduce la descripción del gasto:');
+  const valor = Number(prompt('Introduce el valor del gasto:'));
+  const fecha = prompt('Introduce la fecha del gasto (yyyy-mm-dd):');
+  const etiquetasInput = prompt('Introduce las etiquetas del gasto separadas por comas:');
+  // Divide la cadena etiquetasInput en un array utilizando la coma como delimitador,
+  // utiliza map para aplicar trim() a cada elemento (elimina espacios en blanco al principio y al final)
+  const etiquetas = etiquetasInput.split(',').map(etiqueta => etiqueta.trim());
+  //Creación objeto gasto con la función constructora
+  const gasto = new GesPrest.CrearGasto(descripcion, valor, fecha, ...etiquetas)
+  GesPrest.anyadirGasto(gasto);
+
+  repintar();
+}
+
+
+
 
 export{
   mostrarDatoEnId,
