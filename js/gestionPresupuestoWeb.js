@@ -53,11 +53,19 @@ function mostrarGastoWeb(idElemento, gasto){
         divEtiquetas.appendChild(spanEtiqueta);
     }
 
+    // Crear botón para editar gastos
+    const bEditar = document.createElement('button');
+    bEditar.classList = 'gasto-editar'; 
+    bEditar.innerHTML = 'Editar';
+    bEditar.type = 'button';
+
     // Agregar todos los elementos al divGasto
     divGasto.appendChild(divDescripcion);
     divGasto.appendChild(divFecha);
     divGasto.appendChild(divValor);
     divGasto.appendChild(divEtiquetas);
+    divGasto.appendChild(bEditar); 
+
 
     // Agregar el divGasto al contenedor
     contenedor.appendChild(divGasto);
