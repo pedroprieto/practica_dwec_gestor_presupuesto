@@ -22,14 +22,35 @@ function mostrarPresupuesto() {
     console.log("Tu presupuesto actual es de " + presupuesto.toString() +"€.");
 }
 //función CrearGasto porqeu es un constructor y va en en mayúsculas.
-function CrearGasto(valor) {
+// Para objeto gasto creamos dentro de Crear Gasto los métodos qeu nos piden
+function CrearGasto(descripcion, valor) {
     // TODO
-    this.valor = (typeof valor === 'number' && valor >=0) ? valor: 0; 
+    let gasto = {};
+    //propiedades
+    gasto.descripcion = descripcion;
+    gasto.valor = (typeof valor === 'number' && valor >=0) ? valor: 0; 
+
+    // Métodos 
+    gasto.mostrarGasto = function () {
+        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}  €"`);
+    }
+    gasto.actualizarDescripcion = function(nuevaDescripcion){
+        this.descripcion = nuevaDescripcion;
+    }
+    gasto.actualizarValor = function (nuevoValor){
+        if(typeof nuevoValor === 'number' && nuevoValor >= 0) {
+            this.valor = nuevoValor;
+        }
+
+    }
 
 }
 
+
+
+
 // Lo que haríamos es un nuevo objeto llamado gasto, podríamos haberlo creaado en la función también.
-let gasto = new CrearGasto();
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -38,5 +59,5 @@ let gasto = new CrearGasto();
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    crearGasto
+    CrearGasto
 }
