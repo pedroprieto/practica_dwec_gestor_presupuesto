@@ -28,7 +28,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
       const divValor = document.createElement('div');
       divValor.classList.add('gasto-valor');
-      divValor.textContent = gasto.valor + ' €';
+      divValor.textContent = gasto.valor;
       divGasto.appendChild(divValor);
 
       if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
