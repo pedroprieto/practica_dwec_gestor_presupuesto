@@ -1,5 +1,8 @@
 function mostrarDatoEnId(idElemento, valor) {
-    document.querySelector(`#${idElemento}`).innerHTML = valor;
+    const elem = document.querySelector(`#${idElemento}`)
+    if (elem) {
+        elem.innerHTML = valor;
+    }
 }
 
 export {

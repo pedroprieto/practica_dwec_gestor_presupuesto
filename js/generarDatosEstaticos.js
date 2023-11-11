@@ -15,3 +15,5 @@ let gastosEntrada = [
 gastosEntrada.forEach(gasto => gestion.anyadirGasto(new gestion.CrearGasto(...gasto)));
 
 gestionWeb.mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
+
+gestionWeb.mostrarDatoEnId("balance-total", gestion.calcularBalance());
