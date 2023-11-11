@@ -38,6 +38,34 @@
  }
 
  //Mostrar el listado de gastos realizados en septiembre de 2021
+ function filtroSeptiembre() {
+   for ( let gst of gestPresupuesto.filtrarGastos({fechaDesde:"2021-09-01" ,fechaHasta:"2021-09-30"}) )
+   {
+      gestPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gst)
+   }
+ }
+ filtroSeptiembre();
+ //Mostrar el listado de gastos de más de 50€ en
+ function filtroMas50 () {
+   for ( let gst of gestPresupuesto.filtrarGastos({valorMinimo:50})) {
+      gestPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gst)
+   }
+ }
+ filtroMas50();
+ //Mostrar el listado de gastos de más de 200€ con etiqueta seguros
+ function filtroMas200Eti () {
+   for (let gst of gestPresupuesto.filtrarGastos({valorMinimo:200, etiquetaTiene:["seguros"]})) {
+      gestPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gst)
+   }
+ }
+ filtroMas200Eti();
+ //Mostrar el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€
+ function filtrado50Eti () {
+   for (let gst of gestPresupuesto.filtrarGastos({valorMaximo:50, etiquetaTiene:["comida" , "transporte"]})) {
+      gestPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4" , gst);
+   }
+ }
+ filtrado50Eti();
 
 
 
