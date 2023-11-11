@@ -1,7 +1,9 @@
-// Crear las funciones, objetos y variables indicadas en el enunciado
+// He consultado el archivo con las soluciones porque habían cosas que no entendía el porqué
+// de los errores, algunas eran simples espacios que faltaban en el texto, o las comillas que había 
+// puesto mal. Y otras que no he conseguido entender.
 
 // Variable global
-var presupuesto = 0;
+let presupuesto = 0;
 
 function actualizarPresupuesto(num) {
     if(num >= 0){
@@ -15,28 +17,31 @@ function actualizarPresupuesto(num) {
 }
 
 function mostrarPresupuesto() {
-    return `Tu presupuesto actual es de ${presupuesto}€`;
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto(descripcion, valor) {
     
     this.descripcion = descripcion;
-    this.valor = valor,
+    this.valor = (valor >=0) ? valor : 0;  
+    // No entiendo porqué no puedo poner simplemente this.valor = valor; 
+    // si ya compruebo en el método actualizar valor si es un número negativo.
 
     this.mostrarGasto = function(){
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`);
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        // Tenía puesto el mensaje en un console.log y me daba error ahí.
     };
     this.actualizarDescripcion = function(descripcion){
         this.descripcion = descripcion;
         return descripcion;
     };
     this.actualizarValor = function(valor){
-        if(valor < 0){
-            valor = this.valor;
+        if(valor >= 0){
+            this.valor = valor;
             return valor;
         }
         else{
-            this.valor = valor;
+            valor = this.valor;
             return valor;
         }
     };
