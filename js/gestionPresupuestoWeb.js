@@ -66,25 +66,29 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     h1Periodo.innerHTML = `Gastos agrupados por ${periodo}`;
     divAgrupacion.append(h1Periodo);
 
-    //<div class="agrupacion-dato">
-
     //agrup contendrá el resultado de agrupar el total de gastos por período temporal 
+    //<div class="agrupacion-dato">
+    for ( let dato of Object.keys(agrup)) {
+        let divAgrupDato = document.createElement("div");
+        divAgrupDato.className ="agrupacion-dato";
+        //<span class="agrupacion-dato-clave">2021-10</span>
+        let spanClave = document.createElement("span");
+        spanClave.className = "agrupacion-dato-clave";
+        spanClave.innerText = dato;
+        divAgrupDato.append(spanClave);
+        //<span class="agrupacion-dato-valor">5</span>
+        let spanValor = document.createElement("span");
+        spanValor.className = "agrupacion-dato-valor";
+        spanValor.innerText = agrup[dato];
+        divAgrupDato.append(spanValor);
+        divAgrupacion.append(divAgrupDato);
 
-    //periodo - Período temporal por el que se habrá realizado la agrupación.
-    
+    }
 
+    //Periodo de agrupación segun periodo pasado
+    let agrupacionPeriodo = document.getElementById(idElemento);
+    agrupacionPeriodo.append(divAgrupacion);
 
-  
-  
-    /* <span class="agrupacion-dato-clave">2021-09</span>
-    <span class="agrupacion-dato-valor">5</span>
-  </div>
-
-  <div class="agrupacion-dato">
-    <span class="agrupacion-dato-clave">2021-10</span>
-    <span class="agrupacion-dato-valor">39</span>
-  </div>
-</div> */
 }
 
 
