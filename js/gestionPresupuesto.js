@@ -59,6 +59,28 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.borrarEtiquetas = function(...etiquetas) {
         this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetas.includes(etiqueta))
     }
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        let texto = "";
+        let fecha = new Date(this.fecha);
+        if (periodo === "anyo" || periodo === "mes" || periodo === "dia") {
+            texto += fecha.getFullYear();
+        }
+        if (periodo === "mes" || periodo === "dia") {
+            let mes = fecha.getMonth() + 1;
+            if (mes < 10) {
+                mes = "0" + mes;
+            }
+            texto += "-" + mes;
+        }
+        if (periodo === "dia") {
+            let dia = fecha.getDate();
+            if (dia < 10) {
+                dia = "0" + dia;
+            }
+            texto += "-" + dia;
+        }
+        return texto;
+    }
 }
 
 function listarGastos() {
