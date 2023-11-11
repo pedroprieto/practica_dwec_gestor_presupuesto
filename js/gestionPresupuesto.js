@@ -1,6 +1,9 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 // la creamos con let
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
+
 
 // TODO: Variable global
 
@@ -27,6 +30,7 @@ function CrearGasto(descripcion, valor) {
     // TODO
     let gasto = {};
     //propiedades
+    gasto.id = idGasto++;
     gasto.descripcion = descripcion;
     gasto.valor = (typeof valor === 'number' && valor >=0) ? valor: 0; 
 
@@ -42,9 +46,17 @@ function CrearGasto(descripcion, valor) {
             this.valor = nuevoValor;
         }
 
+        return gasto;
+
+    }
+
+    function agregarGasto(gasto){
+        gastos.push(gasto);
     }
 
 }
+
+
 
 
 
