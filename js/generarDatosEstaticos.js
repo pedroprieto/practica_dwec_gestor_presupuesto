@@ -37,3 +37,9 @@ gestion.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}).forEach(
 gestion.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]}).forEach(
     gasto => gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
 );
+
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "día");
+
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
+
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "año");

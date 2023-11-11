@@ -27,7 +27,23 @@ function mostrarGastoWeb(idElemento, gasto) {
     `;
 }
 
+function mostrarGastosAgrupadosWeb(idElemento, gastosAgrupados, tipoAgrupacion) {
+    let texto = `
+        <div class="agrupacion">
+            <h1>Gastos agrupados por ${tipoAgrupacion}</h1>
+            ${Object.keys(gastosAgrupados).map(clave => `
+                <div class="agrupacion-dato">
+                    <span class="agrupacion-dato-clave">${clave}</span>
+                    <span class="agrupacion-dato-valor">${gastosAgrupados[clave]}</span>
+                </div>
+            `).join("\n")}
+        </div>
+    `;
+    mostrarDatoEnId(idElemento, texto);
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
+    mostrarGastosAgrupadosWeb,
 }
