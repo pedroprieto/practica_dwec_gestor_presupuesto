@@ -66,6 +66,12 @@
    }
  }
  filtrado50Eti();
+//Mostrar el total de gastos agrupados por día
+gestPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', "dia", gestPresupuesto.agruparGastos("dia"));
+//Mostrar el total de gastos agrupados por mes
+gestPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes","mes",gestPresupuesto.agruparGastos('mes') );
+//Mostrar el total de gastos agrupados por año
+gestPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo' , 'año', gestPresupuesto.agruparGastos("anyo"));
 
 
 

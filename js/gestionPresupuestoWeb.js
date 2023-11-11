@@ -63,7 +63,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     divAgrupacion.className ="agrupacion";
     //<h1>Gastos agrupados por mes</h1>
     let h1Periodo = document.createElement("h1");
-    h1Periodo.innerHTML = `Gastos agrupados por ${periodo}`;
+    h1Periodo.innerHTML = `Gastos agrupados por ${periodo} `;
     divAgrupacion.append(h1Periodo);
 
     //agrup contendrá el resultado de agrupar el total de gastos por período temporal 
