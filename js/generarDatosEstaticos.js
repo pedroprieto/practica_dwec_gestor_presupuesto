@@ -67,7 +67,7 @@ for (const gasto of filtro4) {
 
 //Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", "día")
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", "día") 
 
 //Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 
@@ -75,3 +75,15 @@ gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", "mes")
 
 //Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", "año")
+
+// botones Html
+let btnActualizarpresupuesto = document.getElementById("actualizarpresupuesto");
+actualizarpresupuesto.onclick = () => {
+  gestionPresupuestoWeb.actualizarPresupuestoWeb();
+};
+
+let btnAnyadirgasto = document.getElementById("anyadirgasto");
+anyadirgasto.onclick = () => {
+  gestionPresupuestoWeb.nuevoGastoWeb();
+};
+

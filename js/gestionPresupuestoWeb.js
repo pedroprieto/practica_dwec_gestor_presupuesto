@@ -100,8 +100,75 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo) {
   divContenedor.appendChild(divAgrupacion);
 }
 
+
+//crear toda la estructura HTML que refleje los cambios realizados en el modelo de datos.
+function repintar() {
+
+  let presupuesto = gestionPresupuesto.mostrarPresupuesto();
+  mostrarDatoEnId("presupuesto", presupuesto);
+
+  let gastoTotales = gestionPresupuesto.calcularTotalGastos();
+  mostrarDatoEnId('gastos-totales', gastoTotales);  
+
+  let calcularBalance = gestionPresupuesto.calcularBalance();  
+  mostrarDatoEnId('balance-total', calcularBalance);
+
+
+  let listadoGastosCompletos = document.getElementById("listado-gastos-completo");
+  listadoGastosCompletos.innerHTML = "";//borro el listado 
+  
+
+  let listGastos = gestionPresupuesto.listarGastos();
+  listGastos.forEach((gasto) => {
+    mostrarGastoWeb('listado-gastos-completo', gasto);
+  });
+}
+
+// manejadora de eventos del botón actualizarpresupuesto del código HTML.
+function actualizarPresupuestoWeb (){
+  let presupuesto = prompt(" Introduzca el nuevo  presupuesto");
+    presupuesto= Number(presupuesto);
+
+  gestionPresupuesto.actualizarPresupuesto(presupuesto);
+
+  repintar();
+  }  
+function nuevoGastoWeb() {
+
+  let descripcion = prompt('Añade la descripción del gasto:' );
+
+  let valor = prompt('Introduzca nuevo valor');
+  valor = Number(valor);
+
+  let fecha = prompt(' Introduzca nueva Fecha dd/mm/aa', `00/00/00`);
+  fecha = Date.parse(fecha);
+
+  let Etiquetas = prompt('Introduzca nueva Etiqueta.Si son varias separadas por , Coma')
+  let arrrayEtiquetas = Etiquetas.split(' , ') //dividir la cadena de texto por una coma
+
+  let nuevoGasto = gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arrrayEtiquetas); // creo nuevogasto con array etiq
+
+  gestionPresupuesto.anyadirGasto(nuevoGasto);  
+  repintar();
+
+}
+function EditarHandle(){
+
+}
+function BorrarHandle(){
+
+}
+function BorrarEtiquetasHandle(){
+
+}
 export {
   mostrarDatoEnId,
   mostrarGastoWeb,
-  mostrarGastosAgrupadosWeb
+  mostrarGastosAgrupadosWeb,
+  repintar,
+  actualizarPresupuestoWeb,
+  nuevoGastoWeb,
+
 }
+
+

@@ -164,7 +164,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.fecha = fecha;
   }
 
-  // Funcionactualizar fechas
+  // Funcion actualizar fechas
   this.actualizarFecha = function (nuevaFecha) {
     nuevaFecha = Date.parse(nuevaFecha);
     if (isNaN(nuevaFecha)) {
@@ -227,19 +227,26 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   //Funcion deAgrupacion por tipo de fecha
   this.obtenerPeriodoAgrupacion = function (periodo) {
 
-    //fecha= new Date(this.fecha).toDateString();//! no estoy seguro de que lo pase a string correcto  (Wed Jun 28 1993)
+    //fecha= new Date(this.fecha).toDateString(); // no estoy seguro de que lo pase a string correcto  (Wed Jun 28 1993)
     fecha = new Date(this.fecha).toISOString(); //? Devuelve 2011-10-05T14:48:00.000Z
     let resultadoAgrup = "Resultado :";
 
-    switch (periodo) { //sobre 10 
-
-      case "día": // aaaa-mm-dd;
+    switch (
+      periodo //sobre 10
+    ) {
+      case "día": // aaaa-mm-dd; //! da fallo en test3 si lo cambio a dìa pasa test4
         resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
         break;
-      case "mes":  //aaaa-mm
+      case "dia": // aaaa-mm-dd; 
+        resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
+        break;
+      case "mes": //aaaa-mm
         resultadoAgrup = fecha.substring(0, 7);
         break;
-      case "año":  //aaaa
+      case "año": //aaaa //! da fallo  en test3 si lo cambio a año pasa test4
+        resultadoAgrup = fecha.substring(0, 4);
+        break;
+      case "anyo": //aaaa 
         resultadoAgrup = fecha.substring(0, 4);
         break;
     }
