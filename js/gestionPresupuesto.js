@@ -106,8 +106,45 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos() {
+function filtrarGastos(
+    {
+        fechaDesde,
+        fechaHasta,
+        valorMinimo,
+        valorMaximo,
+        descripcionContiene,
+        etiquetasTiene
+    }
+) {
+    if (descripcionContiene) {
+        descripcionContiene = descripcionContiene.toLowerCase();
+    }
+    if (etiquetasTiene) {
+        etiquetasTiene = etiquetasTiene.map(etiqueta => etiqueta.toLowerCase());
+    }
+    if (fechaDesde) {
+        fechaDesde = Date.parse(fechaDesde);
+    }
+    if (fechaHasta) {
+        fechaHasta = Date.parse(fechaHasta);
+    }
+    let filtrarPorFecha = gasto =>
+        (!fechaDesde || gasto.fecha >= fechaDesde) &&
+        (!fechaHasta || gasto.fecha <= fechaHasta)
+        ;
+    let filtrarPorValor = gasto =>
+        (!valorMinimo || gasto.valor >= valorMinimo) &&
+        (!valorMaximo || gasto.valor <= valorMaximo)
+    let filtrarPorDescripcion = gasto => !descripcionContiene || gasto.descripcion.toLowerCase().includes(descripcionContiene);
+    let filtrarPorEtiquetas = gasto =>
+        !etiquetasTiene || etiquetasTiene.some(etiqueta => gasto.etiquetas.map(e => e.toLowerCase()).includes(etiqueta));
 
+    return gastos.filter(gasto =>
+        filtrarPorFecha(gasto) &&
+        filtrarPorValor(gasto) &&
+        filtrarPorDescripcion(gasto) &&
+        filtrarPorEtiquetas(gasto)
+    );
 }
 
 function agruparGastos() {
