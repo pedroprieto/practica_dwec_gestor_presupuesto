@@ -17,3 +17,7 @@ gastosEntrada.forEach(gasto => gestion.anyadirGasto(new gestion.CrearGasto(...ga
 gestionWeb.mostrarDatoEnId("gastos-totales", gestion.calcularTotalGastos());
 
 gestionWeb.mostrarDatoEnId("balance-total", gestion.calcularBalance());
+
+gestion.listarGastos().forEach(gasto =>
+    gestionWeb.mostrarGastoWeb("listado-gastos-completo", gasto)
+);
