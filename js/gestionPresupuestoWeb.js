@@ -42,6 +42,8 @@ function mostrarGastoWeb (idElemento , gasto) {
         let spanEti = document.createElement("span");
         spanEti.className = "gasto-etiquetas-etiqueta";
         spanEti.innerText = eti;
+        //Añadir etiquetas al div
+        divEtiquetas.append(spanEti);
     }
 
     //Componer los divs
