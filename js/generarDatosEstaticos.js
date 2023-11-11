@@ -21,3 +21,7 @@ gestionWeb.mostrarDatoEnId("balance-total", gestion.calcularBalance());
 gestion.listarGastos().forEach(gasto =>
     gestionWeb.mostrarGastoWeb("listado-gastos-completo", gasto)
 );
+
+gestion.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}).forEach(
+    gasto => gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto)
+);
