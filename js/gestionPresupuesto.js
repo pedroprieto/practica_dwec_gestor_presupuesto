@@ -147,8 +147,17 @@ function filtrarGastos(
     );
 }
 
-function agruparGastos() {
-
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+    const gastosFiltrados = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene: etiquetas});
+    return gastosFiltrados.reduce((agrup, gasto) => {
+        let periodoAgrup = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (periodoAgrup in agrup) {
+            agrup[periodoAgrup] += gasto.valor;
+        } else {
+            agrup[periodoAgrup] = gasto.valor;
+        }
+        return agrup;
+    }, {})
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
