@@ -29,3 +29,11 @@ gestion.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}).forE
 gestion.filtrarGastos({valorMinimo: 50}).forEach(
     gasto => gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto)
 );
+
+gestion.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}).forEach(
+    gasto => gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto)
+);
+
+gestion.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]}).forEach(
+    gasto => gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
+);
