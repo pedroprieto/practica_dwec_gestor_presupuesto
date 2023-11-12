@@ -88,8 +88,7 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo) {
   h1.textContent = `Gastos agrupados por ${periodo}`;
   divAgrupacion.appendChild(h1);
 
-  for (let item of Object.entries(agrup)) {
-    //! gstosAgrupados es un objeto
+  for (let item of Object.entries(agrup)) { //! gstosAgrupados es un objeto
     /* 
      1- (let item in agrup)
      2- for (let item of Object.entries(agrup)) { // Utilizar Object.entries para obtener pares clave-valor
