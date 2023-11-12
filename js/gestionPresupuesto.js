@@ -112,6 +112,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.obtenerPeriodoAgrupacion = function (periodoAgrupar) {
+        if (["dia", "mes", "anyo"].includes (periodoAgrupar)) {
+            let partesFecha = fecha.toString().split("-");
+            if (periodoAgrupar == "anyo") {
+              return partesFecha[0];
+            } else if (periodoAgrupar == "mes") {
+              return partesFecha[0] + "-" + partesFecha[1];
+            } else {
+              return partesFecha[0] + "-" + partesFecha[1] + "-" + partesFecha[2];
+            }
+        }
+    }
+
 }
 
 function listarGastos() {
@@ -160,7 +173,7 @@ function filtrarGastos() {
 }
 
 function agruparGastos() {
-    
+
 }
 
 
