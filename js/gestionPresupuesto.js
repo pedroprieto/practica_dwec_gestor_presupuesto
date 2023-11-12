@@ -63,6 +63,37 @@ Etiquetas:\n`
         }
         this.etiquetas=nuevaLista;
     }
+    this.obtenerPeriodoAgrupacion= function(filtro){
+        let fecha= new Date(this.fecha).toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric"})
+        let fechaSimple= fecha.split("/")
+        let anyo = fechaSimple[2]
+        let mes,dia
+        if(fechaSimple[0]<10){
+            mes ="0" + fechaSimple[0]
+        }else{
+            mes = fechaSimple[0]
+        }
+        if(fechaSimple[1]<10){
+            dia ="0" + fechaSimple[1]
+        }else{
+            dia = fechaSimple[1]
+        }
+        
+        switch(filtro){
+            case 'anyo':
+               return  `${anyo}`
+            break;
+            case 'mes':
+                return  `${anyo}-${mes}`
+            break;
+            case 'dia':
+                return  `${anyo}-${mes}-${dia}`
+            default:
+                return 'Valor introducido erroneo'
+            break;
+        }
+
+    }
     this.descripcion=descripcion;
     valor>=0? this.valor=valor: this.valor=0;
     this.etiquetas=[];
