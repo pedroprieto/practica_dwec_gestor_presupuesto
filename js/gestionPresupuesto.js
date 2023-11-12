@@ -11,7 +11,7 @@ let idGasto = 0;
 function actualizarPresupuesto(valor) {
     // TODO
     if (typeof valor === 'number' && valor >=0) {
-        presupuesto =valor;
+        presupuesto = valor;
         return presupuesto;
     }
     else {
@@ -22,41 +22,42 @@ function actualizarPresupuesto(valor) {
 
 function mostrarPresupuesto() {
     // TODO
-    console.log("Tu presupuesto actual es de " + presupuesto.toString() +"€.");
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
+
+
+
 //función CrearGasto porqeu es un constructor y va en en mayúsculas.
 // Para objeto gasto creamos dentro de Crear Gasto los métodos qeu nos piden
+
 function CrearGasto(descripcion, valor) {
     // TODO
-    let gasto = {};
+
     //propiedades
-    gasto.id = idGasto++;
-    gasto.descripcion = descripcion;
-    gasto.valor = (typeof valor === 'number' && valor >=0) ? valor: 0; 
+   // gasto.id = idGasto++;
+    this.descripcion = descripcion;
+    this.valor = typeof valor === 'number' && valor >=0 ? valor: 0; 
 
     // Métodos 
-    gasto.mostrarGasto = function () {
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}  €"`);
+    this.mostrarGasto = function () {
+       return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
-    gasto.actualizarDescripcion = function(nuevaDescripcion){
+    this.actualizarDescripcion = function(nuevaDescripcion){
         this.descripcion = nuevaDescripcion;
     }
-    gasto.actualizarValor = function (nuevoValor){
+    this.actualizarValor = function (nuevoValor){
         if(typeof nuevoValor === 'number' && nuevoValor >= 0) {
             this.valor = nuevoValor;
         }
-
-        return gasto;
+    
+   
 
     }
+}
 
     function agregarGasto(gasto){
         gastos.push(gasto);
     }
-
-}
-
-
 
 
 
@@ -71,5 +72,5 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto 
 }
