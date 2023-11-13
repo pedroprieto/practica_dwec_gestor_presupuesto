@@ -207,7 +207,23 @@ function filtrarGastos(datos)
         {
             result = result && (dat.valor <= datos.valorMaximo);
         }
-
+        if(datos.descripcionContiene)
+        {
+            result = result && (dat.descripcion.indexOf(datos.descripcionContiene) >= 0)
+        }
+        if(datos.etiquetasTiene)
+        {
+            let tieneeti = false;
+            for(let eti of datos.etiquetasTiene)
+            {
+                if(dat.etiquetas.indexOf(eti) >= 0)
+                {
+                    tieneeti = true;
+                }
+            }
+            result = result && tieneeti;
+        }
+        return result
     }
     )
 }
