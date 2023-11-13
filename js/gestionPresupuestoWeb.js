@@ -134,6 +134,30 @@ function nuevoGastoWeb (){
 let btnAnyadirGasto = document.getElementById("anyadirgasto");
 btnAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
+function EditarHandle(){
+    this.handleEvent = function(event){
+        let descripcion = prompt("Cúal es la descripción?");
+        let valor = prompt("Indica el valor");
+        let fecha = prompt("Indica la fecha en formato yyyy-mm-dd");
+        let etiquetas = prompt("Indica las etiquetas separadas por comas");
+
+        let valorNumerico = parseFloat(valor);
+        let etiquetasArray = etiquetas.split(",");
+
+        let gasto = new gestPres.CrearGasto(descripcion, valorNumerico, fecha, ...etiquetasArray);
+        gestPres.anyadirGasto(gasto);
+
+        repintar();
+    }
+}
+
+function BorrarHandle(){
+    this.handleEvent = function(event){
+        gestPres.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
