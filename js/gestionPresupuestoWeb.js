@@ -1,3 +1,7 @@
+import * as gestPres from "./gestionPresupuesto.js"
+
+//-----------------------------   Interaccion con HTML   ---------------------------------------------
+
 function mostrarDatoEnId(idElemento, valor){
     // se busca el elemnto con el id indicado y muestra el valor en dicho elemnto
     return document.getElementById(idElemento).innerText = valor;
@@ -75,6 +79,32 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divGrupo.append(spanValor);
     }
 }
+
+// -------------------------------------    EVENTOS EN JAVASCRIPT    ---------------------------------------
+function repintar(){
+    // mostrar presupuesto
+    let presupuesto = gestPres.mostrarPresupuesto();
+    mostrarDatoEnId("presupuesto", presupuesto);
+
+    // mostrar gastos totales
+    let gastosTotales = gestPres.calcularTotalGastos();
+    mostrarDatoEnId("gastos-totales", gastosTotales);
+
+    // mostrar el balance total
+    let balanceTotal = gestPres.calcularBalance();
+    mostrarDatoEnId("balance-total", balanceTotal);
+
+    // borar el contenido de div#listado-gastos-completo
+    let contenidoBorrar = document.getElementById("listado-gastos-completo");
+    contenidoBorrar.innerHTML = "";
+
+    // Mostrar listado completo de gastos
+    let gastos = gestPres.listarGastos();
+    for (let gasto of gastos){
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+}
+
 
 
 export{
