@@ -105,6 +105,16 @@ function repintar(){
     }
 }
 
+function actualizarPresupuestoWeb(){
+    let nuevoPresupuesto = prompt("Indica el nuevo Presupuesto: ");
+    // pasar de sting a numero
+    parseFloat(nuevoPresupuesto);
+    gestPres.actualizarPresupuesto(nuevoPresupuesto);
+    repintar();
+}
+// Asociar la funcion al boton
+let btnActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+btnActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 
 export{
