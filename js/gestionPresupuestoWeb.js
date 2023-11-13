@@ -20,7 +20,7 @@ function mostrarGastoWeb(idElemento, gasto) {
                 `).join("\n")}
             </div> 
         </div>`;
-  elemento.innerHTML += texto;
+    elemento.innerHTML += texto;
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -37,9 +37,22 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
         </div>`;
     elemento.innerHTML += texto;
 }
-    
 
-export {    
+function repintar() {    
+    mostrarDatoEnId("presupuesto", gp.mostrarPresupuesto());
+
+    mostrarDatoEnId("gastos-totales", gp.calcularTotalGastos().toFixed(2));
+
+    mostrarDatoEnId("balance-total", gp.calcularBalance().toFixed(2));
+
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+    for (const gasto of gp.listarGastos()) {
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+}
+
+
+export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
