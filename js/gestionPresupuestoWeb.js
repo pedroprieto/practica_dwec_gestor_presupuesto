@@ -60,12 +60,21 @@ function mostrarGastoWeb(idElemento, gasto){
     bEditar.type = 'button';
     bEditar.addEventListener('click', new EditarHandle(gasto));
 
+    // Crear botón para borrar gastos
+    const bBorrar = document.createElement('button');
+    bBorrar.classList = 'gasto-borrar'; 
+    bBorrar.innerHTML = 'Borrar';
+    bBorrar.type = 'button';
+    bBorrar.addEventListener('click', new BorrarHandle(gasto));
+
     // Agregar todos los elementos al divGasto
     divGasto.appendChild(divDescripcion);
     divGasto.appendChild(divFecha);
     divGasto.appendChild(divValor);
     divGasto.appendChild(divEtiquetas);
     divGasto.appendChild(bEditar); 
+    divGasto.appendChild(bBorrar);
+    
 
 
     // Agregar el divGasto al contenedor
@@ -202,8 +211,18 @@ function EditarHandle(gasto) {
   };
 }
 
+// Función constructora BorrarHandle
+function BorrarHandle(gasto) {
+  this.gasto = gasto; // Asignar el gasto al objeto
 
+  // Método handleEvent de BorrarHandle
+  this.handleEvent = function () {
+    // Borrar el gasto asociado
+    GesPrest.borrarGasto(this.gasto.id)
 
+    repintar();
+  };
+}
 
 
 export{
