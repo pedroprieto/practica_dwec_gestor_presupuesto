@@ -1,3 +1,5 @@
+import * as gp from "./gestionPresupuesto.js";
+
 function mostrarDatoEnId(idElemento, valor) {
     let elemento = document.querySelector(`#${idElemento}`);
     elemento.textContent = valor;
