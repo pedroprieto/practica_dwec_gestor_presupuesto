@@ -45,13 +45,19 @@ function mostrarGastoWeb(idElemento, gasto){
     const divEtiquetas = document.createElement("div");
     divEtiquetas.classList.add("gasto-etiquetas");
 
-    // Recorrer las etiquetas y crear elementos span para cada una
-    for (const etiqueta of gasto.etiquetas) {
-        const spanEtiqueta = document.createElement("span");
-        spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
-        spanEtiqueta.textContent = etiqueta;
-        divEtiquetas.appendChild(spanEtiqueta);
-    }
+// Recorrer las etiquetas y crear elementos span para cada una
+for (const etiqueta of gasto.etiquetas) {
+  const spanEtiqueta = document.createElement("span");
+  spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
+  spanEtiqueta.textContent = etiqueta;
+  divEtiquetas.appendChild(spanEtiqueta);
+
+  // Crear una instancia de BorrarEtiquetasHandle y asignar el manejador de eventos al span
+  const borrarEtiquetaHandler = new BorrarEtiquetasHandle(gasto, etiqueta);
+
+  // Utilizar una función de flecha para mantener el contexto de 'this'
+  spanEtiqueta.addEventListener('click', () => borrarEtiquetaHandler.handleEvent());
+}
 
     // Crear botón para editar gastos
     const bEditar = document.createElement('button');
@@ -66,6 +72,7 @@ function mostrarGastoWeb(idElemento, gasto){
     bBorrar.innerHTML = 'Borrar';
     bBorrar.type = 'button';
     bBorrar.addEventListener('click', new BorrarHandle(gasto));
+
 
     // Agregar todos los elementos al divGasto
     divGasto.appendChild(divDescripcion);
@@ -213,10 +220,10 @@ function EditarHandle(gasto) {
 
 // Función constructora BorrarHandle
 function BorrarHandle(gasto) {
-  this.gasto = gasto; // Asignar el gasto al objeto
+  this.gasto = gasto;
 
   // Método handleEvent de BorrarHandle
-  this.handleEvent = function () {
+  this.handleEvent = function(){
     // Borrar el gasto asociado
     GesPrest.borrarGasto(this.gasto.id)
 
@@ -224,6 +231,18 @@ function BorrarHandle(gasto) {
   };
 }
 
+// Función constructora BorrarEtiquetasHandle
+function BorrarEtiquetasHandle(gasto, etiqueta){
+  this.gasto = gasto;
+  this.etiqueta = etiqueta;
+
+  this.handleEvent = function(){
+    this.gasto.borrarEtiquetas(this.etiqueta)
+
+    repintar();
+  }
+
+}
 
 export{
   mostrarDatoEnId,
