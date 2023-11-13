@@ -199,6 +199,14 @@ function filtrarGastos(datos)
             let fech = Date.Parse(datos.fechaHasta);
             result = result && (dat.fecha <= fech);
         }
+        if(datos.valorMinimo)
+        {
+            result = result && (dat.valor >= datos.valorMinimo);
+        }
+        if(datos.valorMaximo)
+        {
+            result = result && (dat.valor <= datos.valorMaximo);
+        }
 
     }
     )
