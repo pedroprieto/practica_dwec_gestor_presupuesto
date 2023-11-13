@@ -96,6 +96,11 @@ Etiquetas:\n`
 
         this.etiquetas = nuevo;
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo)
+    {
+        
+    }
     
 
     this.descripcion = descripcion;
@@ -173,7 +178,7 @@ function filtrarGastos(datos)
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
 {
-    
+
 }
 
 
