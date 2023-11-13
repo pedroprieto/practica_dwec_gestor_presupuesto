@@ -230,7 +230,22 @@ function filtrarGastos(datos)
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
 {
-
+    let gastosfiltrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    return gastosfiltrados.reduce(function(acumulador, gasto)
+    {
+        let rango = gasto.obtenerPeriodoAgrupacion(periodo);
+        if(acumulador[rango])
+        {
+            acumulador[rango] = acumulador[rango] + gasto.valor;
+        }
+        else
+        {
+            acumulador[rango] = gasto.valor;
+        }
+        return acumulador;
+    },
+    {}
+    )
 }
 
 
