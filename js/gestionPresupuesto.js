@@ -6,12 +6,12 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-function actualizarPresupuesto(result)
+function actualizarPresupuesto(resultt)
  {
-    if (result >= 0)
+    if (resultt >= 0)
     {
-        presupuesto = result;
-        return result;
+        presupuesto = resultt;
+        return resultt;
     } 
     else
     {
@@ -22,9 +22,9 @@ function actualizarPresupuesto(result)
 function mostrarPresupuesto()
 {
     // TODO
-    let resultado = "Tu presupuesto actual es de " + presupuesto + " €";
+    let resulttado = "Tu presupuesto actual es de " + presupuesto + " €";
     
-    return resultado;
+    return resulttado;
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas)
@@ -32,8 +32,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
     // TODO
     this.mostrarGasto = function()
     {
-        let resultado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
-        return resultado;
+        let resulttado = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+        return resulttado;
     }
     this.actualizarDescripcion = function(actualidescrip)
     {
@@ -189,41 +189,41 @@ function filtrarGastos(datos)
     return gastos.filter(function(dat)
     {
         let result = true;
-        if(datos.fechaDesde)
+        if (datos.fechaDesde)
         {
-            let fech = Date.Parse(datos.fechaDesde);
+            var fech = Date.parse(datos.fechaDesde);
             result = result && (dat.fecha >= fech);
         }
-        if(datos.fechaHasta)
+        if (datos.fechaHasta)
         {
-            let fech = Date.Parse(datos.fechaHasta);
+            var fech = Date.parse(datos.fechaHasta);
             result = result && (dat.fecha <= fech);
         }
-        if(datos.valorMinimo)
+        if (datos.valorMinimo)
         {
             result = result && (dat.valor >= datos.valorMinimo);
         }
-        if(datos.valorMaximo)
+        if (datos.valorMaximo)
         {
             result = result && (dat.valor <= datos.valorMaximo);
         }
-        if(datos.descripcionContiene)
+        if (datos.descripcionContiene)
         {
-            result = result && (dat.descripcion.indexOf(datos.descripcionContiene) >= 0)
+            result = result && (dat.descripcion.indexOf(datos.descripcionContiene) >= 0);
         }
-        if(datos.etiquetasTiene)
+        if (datos.etiquetasTiene)
         {
             let tieneeti = false;
-            for(let eti of datos.etiquetasTiene)
+            for (let eti of datos.etiquetasTiene)
             {
-                if(dat.etiquetas.indexOf(eti) >= 0)
+                if (dat.etiquetas.indexOf(eti) >= 0)
                 {
-                    tieneeti = true;
+                 tieneeti = true;
                 }
             }
             result = result && tieneeti;
         }
-        return result
+        return result;
     }
     )
 }
