@@ -57,8 +57,22 @@ function actualizarPresupuestoWeb() {
     repintar();
 }
 
-let boton = document.getElementById("actualizarpresupuesto");
-boton.addEventListener("click", actualizarPresupuestoWeb);
+let boton1 = document.getElementById("actualizarpresupuesto");
+boton1.addEventListener("click", actualizarPresupuestoWeb);
+
+function nuevoGastoWeb() {
+    let descripcion = prompt("Introduzca una descripción: ");
+    let valor = Number(prompt("Introduzca valor: "));
+    let fecha = prompt("Introduzca fecha en formato yyyy-mm-dd: ");
+    let etiquetas = prompt("Introduzca etiquetas separadas por comas: ");
+    etiquetas = etiquetas.split(",");
+    let gasto = new gp.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    gp.anyadirGasto(gasto);
+    repintar();
+}
+
+let boton2 = document.getElementById("anyadirgasto");
+boton2.addEventListener("click", nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
