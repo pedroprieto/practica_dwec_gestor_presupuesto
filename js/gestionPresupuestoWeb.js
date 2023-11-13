@@ -58,6 +58,7 @@ function mostrarGastoWeb(idElemento, gasto){
     bEditar.classList = 'gasto-editar'; 
     bEditar.innerHTML = 'Editar';
     bEditar.type = 'button';
+    bEditar.addEventListener('click', new EditarHandle(gasto));
 
     // Agregar todos los elementos al divGasto
     divGasto.appendChild(divDescripcion);
@@ -177,6 +178,30 @@ function nuevoGastoWeb(){
 
   repintar();
 }
+
+// Función constructora EditarHandle
+function EditarHandle(gasto) {
+  this.gasto = gasto; 
+
+  // Método handleEvent de EditarHandle
+  this.handleEvent = function () {
+    // Pedir al usuario la información necesaria para editar el gasto
+    const nuevaDescripcion = prompt('Introduce la nueva descripción:', this.gasto.descripcion);
+    const nuevoValor = parseFloat(prompt('Introduce el nuevo valor:', this.gasto.valor));
+    const nuevaFecha = prompt('Introduce la nueva fecha (formato yyyy-mm-dd):', this.gasto.fecha);
+    const nuevasEtiquetasString = prompt('Introduce las nuevas etiquetas separadas por comas:', this.gasto.etiquetas.join(','));
+    const nuevasEtiquetas = nuevasEtiquetasString.split(',');
+
+    // Actualizar las propiedades del gasto
+    this.gasto.actualizarDescripcion(nuevaDescripcion);
+    this.gasto.actualizarValor(nuevoValor);
+    this.gasto.actualizarFecha(nuevaFecha);
+    this.gasto.anyadirEtiquetas(nuevasEtiquetas);
+
+    repintar();
+  };
+}
+
 
 
 
