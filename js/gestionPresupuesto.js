@@ -186,7 +186,22 @@ function calcularBalance()
 
 function filtrarGastos(datos)
 {
+    return gastos.filter(function(dat)
+    {
+        let result = true;
+        if(datos.fechaDesde)
+        {
+            let fech = Date.Parse(datos.fechaDesde);
+            result = result && (dat.fecha >= fech);
+        }
+        if(datos.fechaHasta)
+        {
+            let fech = Date.Parse(datos.fechaHasta);
+            result = result && (dat.fecha <= fech);
+        }
 
+    }
+    )
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
