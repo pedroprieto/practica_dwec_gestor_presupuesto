@@ -99,7 +99,20 @@ Etiquetas:\n`
 
     this.obtenerPeriodoAgrupacion = function(periodo)
     {
-        
+        let fech = new Date(this.fecha);
+        if((periodo == "mes") || !periodo)
+        {
+            return fech.toISOString().substr(0,7);
+        }
+        if((periodo == "anyo") || !periodo)
+        {
+            return fech.toISOString().substr(0,4);
+        }
+        if((periodo == "dia") || !periodo)
+        {
+            return fech.toISOString().substr(0,10);
+        }
+        return fech.toISOString().substr(0,7);
     }
     
 
