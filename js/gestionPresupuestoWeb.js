@@ -116,6 +116,23 @@ function actualizarPresupuestoWeb(){
 let btnActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 btnActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
+function nuevoGastoWeb (){
+    let descripcion = prompt("Cúal es la descripción?");
+    let valor = prompt("Indica el valor");
+    let fecha = prompt("Indica la fecha en formato yyyy-mm-dd");
+    let etiquetas = prompt("Indica las etiquetas separadas por comas");
+
+    let valorNumerico = parseFloat(valor);
+    let etiquetasArray = etiquetas.split(",");
+
+    let gasto = new gestPres.CrearGasto(descripcion, valorNumerico, fecha, ...etiquetasArray);
+    gestPres.anyadirGasto(gasto);
+
+    repintar();
+}
+// Asocial la funcion al boton
+let btnAnyadirGasto = document.getElementById("anyadirgasto");
+btnAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
 export{
     mostrarDatoEnId,
