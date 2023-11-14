@@ -1,4 +1,7 @@
 "use strict";
+
+import { assert } from "chai";
+
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
@@ -113,7 +116,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.obtenerPeriodoAgrupacion = function (periodoAgrupar) {
-        if (["dia", "mes", "anyo"].includes (periodoAgrupar)) {
+        if (["anyo", "mes", "dia"].includes (periodoAgrupar)) {
             let partesFecha = fecha.toString().split("-");
             if (periodoAgrupar == "anyo") {
               return partesFecha[0];
@@ -159,17 +162,71 @@ function calcularTotalGastos() {
     */
 
     //También puede hacerse usando map  y reduce.
-    let valores = gastos.map (gastoUsar => gastoUsar.valor);
+    /*let valores = gastos.map (gastoUsar => gastoUsar.valor);
 
-    return valores.reduce ((valorInicial, valorElemento) => valorInicial + valorElemento, 0);
+    return valores.reduce ((valorInicial, valorElemento) => valorInicial + valorElemento, 0);*/
+
+    return gastos.map (gastoUsar => gastoUsar.valor).reduce ((valorInicial, valorElemento) => valorInicial + valorElemento, 0);
+
 }
 
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos() {
+function filtrarGastos(objetoUsar) {
+    
+    let gastosFiltrados = gastos.filter(gasto => gasto);
 
+    if (Object.keys(objetoUsar).length === 0){
+        return gastosFiltrados;
+    }
+    else {
+        if (objetoUsar.fechaDesde) {
+            gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha >= (Date.parse(objetoUsar.fechaDesde)));
+        }
+
+        if (objetoUsar.fechaHasta) {
+            gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha <= (Date.parse(objetoUsar.fechaHasta))); 
+        }
+
+        if (objetoUsar.valorMinimo) {
+            gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= objetoUsar.valorMinimo);
+        }
+
+        if (objetoUsar.valorMaximo) {
+            gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= objetoUsar.valorMaximo);
+        }
+
+        if (objetoUsar.descripcionContiene) {
+            gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.indexOf(objetoUsar.descripcionContiene) > -1);
+        }
+
+        if (objetoUsar.etiquetasTiene) {
+            gastosFiltrados = gastosFiltrados.filter(gasto => {
+                if (gasto.etiquetas && Array.isArray(gasto.etiquetas)){ //Me aseguro de que etiquetas sea un array y exista
+                    for (let item of objetoUsar.etiquetasTiene) {       //Recorro las etiquetas del objetoUsar
+                        if (gasto.etiquetas.includes(item)) {           //y con item voy comprobando si están incluidas en las etiquetas de gasto 
+                            return true;                                //En cuanto detecta una devuelve true
+                        }
+                    }
+                }
+                return false;   //Si no detecta ninguna devuelve false
+            });
+
+        }
+
+        //Buscando por internet he visto esta otra forma de hacerlo pero no la entiendo bien
+        //por eso la tengo comentada.
+
+        /*if (objetoUsar.etiquetasTiene) {
+            gastosFiltrados = gastosFiltrados.filter(gasto =>
+                objetoUsar.etiquetasTiene.some(item => Array.isArray(gasto.etiquetas) && gasto.etiquetas.includes(item))
+            );
+        }*/
+
+        return gastosFiltrados;
+    }
 }
 
 function agruparGastos() {
