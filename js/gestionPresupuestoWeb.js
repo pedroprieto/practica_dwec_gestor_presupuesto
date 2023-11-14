@@ -53,12 +53,48 @@ function actualizarPresupuestoWeb () {
   }
 }
 
+function nuevoGastoWebFormulario () {
+  const plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true)
+
+  const botonAnyadirFormulario = document.getElementById('anyadirgasto-formulario')
+  botonAnyadirFormulario.disabled = true
+
+  document.getElementById('controlesprincipales').appendChild(plantillaFormulario)
+
+  const formulario = document.body.querySelector('form')
+
+  formulario.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    const form = event.currentTarget
+
+    const fDescripcion = form.elements.descripcion.value
+    const fValor = Number(form.elements.valor.value)
+    const fFecha = form.elements.fecha.value
+    const fEtiquetas = form.elements.etiquetas.value.split(',')
+
+    const gasto = new gp.CrearGasto(fDescripcion, fValor, fFecha, ...fEtiquetas)
+
+    gp.anyadirGasto(gasto)
+    console.log(gp.listarGastos())
+
+    repintar()
+
+    botonAnyadirFormulario.disabled = false
+
+    document.getElementById('controlesprincipales').removeChild(formulario)
+  })
+}
+
 function anyadirEventos () {
   const actualizar = document.getElementById('actualizarpresupuesto')
   actualizar.addEventListener('click', actualizarPresupuestoWeb)
 
   const anyadir = document.getElementById('anyadirgasto')
   anyadir.addEventListener('click', nuevoGastoWeb)
+
+  const anyadirFormulario = document.getElementById('anyadirgasto-formulario')
+  anyadirFormulario.addEventListener('click', nuevoGastoWebFormulario)
 
   // añadimos evento al botón Editar Gastos
 
