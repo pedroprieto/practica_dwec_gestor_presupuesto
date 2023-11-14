@@ -1,6 +1,7 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 // la creamos con let
 let presupuesto = 0;
+//Creación de array gastos e idGasto
 let gastos = [];
 let idGasto = 0;
 
