@@ -3,8 +3,16 @@
 // TODO: Variable global
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
+function actualizarPresupuesto(nuevoPresupuesto) {
     // TODO
+
+    if (nuevoPresupuesto >= 0) {
+        presupuesto = nuevoPresupuesto;
+        return nuevoPresupuesto;
+    } else {
+        console.log("error");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
