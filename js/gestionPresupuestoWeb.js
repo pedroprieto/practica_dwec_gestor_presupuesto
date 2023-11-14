@@ -18,6 +18,60 @@ class EditarHandle {
     repintar()
   }
 }
+
+// este lo hago como funcion y no como clase
+function EditarHandleFormulario () {
+  this.handleEvent = function (event) {
+    // DECLARACIONES E INICIALIZACIONES
+    const plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true)
+    const bEditarFormulario = this.gastoDiv.querySelector('.gasto-editar-formulario')
+
+    bEditarFormulario.disabled = true
+    this.gastoDiv.appendChild(plantillaFormulario)
+
+    // INICIALIZACION DE LOS VALORES DEL FORMULARIO
+    const gasto = this.gastoDiv.gasto
+    const formulario = this.gastoDiv.querySelector('form')
+
+    formulario.descripcion.value = gasto.descripcion
+    formulario.valor.value = gasto.valor
+    formulario.fecha.value = new Date(gasto.fecha).toISOString().substring(0, 10)
+    formulario.etiquetas.value = gasto.etiquetas
+
+    // EVENTO SUBMIT - ahora pruebo sin crear otra funcion
+    const eventoEditar = {
+      handleEvent (event) {
+        event.preventDefault()
+
+        const form = event.currentTarget
+
+        const fDescripcion = form.elements.descripcion.value
+        const fValor = Number(form.elements.valor.value)
+        const fFecha = form.elements.fecha.value
+        const fEtiquetas = form.elements.etiquetas.value.split(',')
+
+        this.gasto.actualizarDescripcion(fDescripcion)
+        this.gasto.actualizarValor(fValor)
+        this.gasto.actualizarFecha(fFecha)
+        this.gasto.borrarEtiquetas()
+        this.gasto.anyadirEtiquetas(...fEtiquetas)
+
+        repintar()
+      }
+    }
+
+    eventoEditar.gasto = gasto
+    formulario.addEventListener('submit', eventoEditar)
+
+    // EVENTO CANCELAR
+    const botonCancelar = formulario.querySelector('button.cancelar')
+    const eventoCancelar = new EventoCancelar()
+
+    eventoCancelar.boton = bEditarFormulario
+    botonCancelar.addEventListener('click', eventoCancelar)
+  }
+}
+
 class BorrarEtiquetasHandle {
   handleEvent (event) {
     this.gasto.borrarEtiquetas(this.etiqueta)
@@ -53,6 +107,18 @@ function actualizarPresupuestoWeb () {
   }
 }
 
+// Lo he escrito de forma que se puede reusar para cancelar cualquier formulario
+class EventoCancelar {
+  handleEvent (event) {
+    const formulario = event.currentTarget.closest('form')
+
+    this.boton.disabled = false
+
+    // Forma 2 de eliminar formulario
+    formulario.remove()
+  }
+}
+
 function nuevoGastoWebFormulario () {
   const plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true)
 
@@ -82,8 +148,15 @@ function nuevoGastoWebFormulario () {
 
     botonAnyadirFormulario.disabled = false
 
+    // Forma 1 de eliminar el formulario
     document.getElementById('controlesprincipales').removeChild(formulario)
   })
+
+  const botonCancelar = formulario.querySelector('button.cancelar')
+
+  const eventoCancelar = new EventoCancelar()
+  eventoCancelar.boton = botonAnyadirFormulario
+  botonCancelar.addEventListener('click', eventoCancelar)
 }
 
 function anyadirEventos () {
@@ -96,8 +169,18 @@ function anyadirEventos () {
   const anyadirFormulario = document.getElementById('anyadirgasto-formulario')
   anyadirFormulario.addEventListener('click', nuevoGastoWebFormulario)
 
-  // añadimos evento al botón Editar Gastos
+  // añado eventos al boton editar gasto en formulario
+  const bEditarGastoFormulario = document.getElementsByClassName('gasto-editar-formulario')
 
+  for (const bEditarForm of bEditarGastoFormulario) {
+    const objetoEditarForm = new EditarHandleFormulario()
+
+    objetoEditarForm.gastoDiv = bEditarForm.parentNode
+
+    bEditarForm.addEventListener('click', objetoEditarForm)
+  }
+
+  // añadimos evento al botón Editar Gastos
   const bEditarGastos = document.getElementsByClassName('gasto-editar')
 
   for (const bEditar of bEditarGastos) {
@@ -111,7 +194,6 @@ function anyadirEventos () {
   }
 
   // Añadimos evento al botón Borrar Gastos
-
   const bBorrarGastos = document.getElementsByClassName('gasto-borrar')
 
   for (const bBorrar of bBorrarGastos) {
@@ -125,7 +207,6 @@ function anyadirEventos () {
   }
 
   // Añadimos evento al span de etiquetas
-
   const sEtiquetas = document.getElementsByClassName(
     'gasto-etiquetas-etiqueta'
   )
@@ -178,7 +259,7 @@ function mostrarGastoWeb (idElemento, gasto) {
 
   const cGastoFecha = document.createElement('div')
   cGastoFecha.classList.add('gasto-fecha')
-  cGastoFecha.innerHTML = gasto.fecha
+  cGastoFecha.innerHTML = (gasto.fecha)
   cGasto.append(cGastoFecha)
 
   const cGastoValor = document.createElement('div')
@@ -209,6 +290,12 @@ function mostrarGastoWeb (idElemento, gasto) {
   bBorrar.innerHTML = 'Borrar'
   bBorrar.type = 'button'
   cGasto.append(bBorrar)
+
+  const bEditarFormulario = document.createElement('button')
+  bEditarFormulario.classList.add('gasto-editar-formulario')
+  bEditarFormulario.innerHTML = 'Editar (formulario)'
+  bEditarFormulario.type = 'button'
+  cGasto.append(bEditarFormulario)
 
   const elemento = document.getElementById(idElemento)
   elemento.append(cGasto)

@@ -124,7 +124,8 @@ function calcularTotalGastos () {
 }
 
 function calcularBalance () {
-  return presupuesto - calcularTotalGastos()
+  const balance = presupuesto - calcularTotalGastos()
+  return balance
 }
 
 function agruparGastos (periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta) {
