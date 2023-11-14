@@ -22,6 +22,29 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
+function listarGastos() {
+    return gastos;
+}
+
+function anyadirGasto() {
+    
+}
+
+function borrarGasto() {
+
+}
+
+function calcularTotalGastos() {
+    
+}
+
+function calcularBalance() {
+    
+}
+
+
+
+
 function CrearGasto(descripcion, valor) {
     // TODO
 
@@ -62,5 +85,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
