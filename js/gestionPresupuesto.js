@@ -52,4 +52,9 @@ export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
