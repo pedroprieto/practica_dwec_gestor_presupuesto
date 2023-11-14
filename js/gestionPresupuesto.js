@@ -12,13 +12,14 @@ function actualizarPresupuesto(num) {
     }
     else
     {
-        alert("Error el número es negativo");
         return -1;
     }
 }
 
 function mostrarPresupuesto() {
     // TODO
+    let mensaje = `Tu presupuesto actual es de ${presupuesto} €`;
+    return mensaje;
 }
 
 function CrearGasto() {
