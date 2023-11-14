@@ -6,21 +6,39 @@ function mostrarDatoEnId(idElemento, valor) {
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
-    let elemento = document.querySelector(`#${idElemento}`);
+        let elemento = document.querySelector(`#${idElemento}`);
     let texto = `
         <div class="gasto">
             <div class="gasto-descripcion">${gasto.descripcion}</div>
-            <div class="gasto-fecha">${(new Date(gasto.fecha)).toLocaleString()}</div> 
-            <div class="gasto-valor">${gasto.valor} €</div> 
+            <div class="gasto-fecha">${(new Date(gasto.fecha)).toLocaleDateString()}</div> 
+            <div class="gasto-valor">${gasto.valor}</div> 
             <div class="gasto-etiquetas">
                 ${gasto.etiquetas.map(etiqueta => `
-                    <span class="gasto-etiquetas-etiqueta">
+                    <span class="gasto-etiquetas-etiqueta" id="${idElemento}-borraretiqueta-${gasto.id}-${etiqueta}">
                         ${etiqueta}
                     </span>
                 `).join("\n")}
             </div> 
+            <button type="button" class="gasto-editar" id="${idElemento}-editargasto-${gasto.id}">
+                Editar
+            </button>
+            <button type="button" class="gasto-borrar" id="${idElemento}-borrargasto-${gasto.id}">
+                Borrar
+            </button>
         </div>`;
-    elemento.innerHTML += texto;
+
+    elemento.insertAdjacentHTML('beforeend', texto);
+    
+    let botonEditar = document.getElementById(`${idElemento}-editargasto-${gasto.id}`);
+    botonEditar.addEventListener("click", new EditarHandle(gasto));
+
+    let botonBorrar = document.getElementById(`${idElemento}-borrargasto-${gasto.id}`);
+    botonBorrar.addEventListener("click", new BorrarHandle(gasto));
+
+    for (const etiqueta of gasto.etiquetas) {
+        let etiquetaABorrar = document.getElementById(`${idElemento}-borraretiqueta-${gasto.id}-${etiqueta}`);
+        etiquetaABorrar.addEventListener("click", new BorrarEtiquetasHandle(gasto, etiqueta));
+    }
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
