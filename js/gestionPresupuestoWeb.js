@@ -91,6 +91,25 @@ function EditarHandle(gasto) {
     }
 }
 
+function BorrarHandle(gasto) {
+    this.gasto = gasto;
+
+    this.handleEvent = function() {
+        gp.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
+
+function BorrarEtiquetasHandle(gasto, etiqueta) {
+    this.gasto = gasto;
+    this.etiqueta = etiqueta;
+    
+    this.handleEvent = function() {
+        this.gasto.borrarEtiquetas(etiqueta);
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
