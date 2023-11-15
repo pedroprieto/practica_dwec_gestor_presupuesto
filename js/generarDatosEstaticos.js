@@ -62,7 +62,7 @@ gastosMasDe50.forEach((gasto) => {
     gestionPresupuestoWeb.mostrarGastoWeb(elementoId, gasto);
   });
 
-console.log(gastosMasDe50); 
+//console.log(gastosMasDe50); 
 
 const gastosSegurosMasDe200 = gestionPresupuesto.filtrarGastos({ etiquetasTiene: ['seguros'], valorMinimo: 200 });
 //gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gastosSegurosMasDe200);
@@ -95,6 +95,10 @@ const btnAnyadirGasto = document.getElementById('anyadirgasto');
 
 btnAnyadirGasto.onclick = () => gestionPresupuestoWeb.nuevoGastoWeb(); 
 
+const btnAnyadirGastoFormulario = document.getElementById('anyadirgasto-formulario'); 
 
+btnAnyadirGastoFormulario.onclick = () => gestionPresupuestoWeb.nuevoGastoWebFormulario(); 
+
+//document.getElementById("anyadirgasto-formulario").addEventListener("click", gestionPresupuestoWeb.nuevoGastoWebFormulario);
 
 export * from './generarDatosEstaticos.js';
