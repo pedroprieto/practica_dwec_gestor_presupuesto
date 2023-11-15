@@ -45,7 +45,7 @@ function calcularBalance() {
 
 
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
     // TODO
 
     //propiedades
@@ -56,6 +56,9 @@ function CrearGasto(descripcion, valor) {
     } else{
         this.valor = 0;
     }
+
+    this.fecha = fecha;
+    this.etiquetas = etiquetas;
 
     //metodos
     this.mostrarGasto = function () {
@@ -75,8 +78,37 @@ function CrearGasto(descripcion, valor) {
         }
     }
 
-    
+    this.mostrarGastoCompleto = function () {
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. 
+Fecha: ${this.fecha.toLocalString()}
+Etiquetas:
+- ETIQUETA 1
+- ETIQUETA 2
+- ETIQUETA 3`
+    }
 
+    this.actualizarFecha = function (nuevaFechaString) {
+        let ts = Date.parse(nuevaFechaString); //creo un timestamp
+        //compruebo si es NaN para ver si es fecha valida
+        if (isNaN(ts) == false) {
+            this.fecha = ts;
+        }
+    }
+
+    this.anyadirEtiquetas = function (...nuevasEtiquetas) {
+        
+        for(let etiqueta of nuevasEtiquetas){
+            if (!this.etiquetas.includes(etiqueta)) {
+                this.etiquetas.push(etiqueta);
+            }
+        }
+    }
+
+    this.borrarEtiquetas = function (...etiquetasBorrar) {
+       this.etiquetas = this.etiquetas.filter ( function (e) {
+           return !etiquetasBorrar.includes(e) 
+        })   
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
