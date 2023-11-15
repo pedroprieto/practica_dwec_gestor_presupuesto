@@ -229,10 +229,30 @@ function filtrarGastos(objetoUsar) {
     }
 }
 
-function agruparGastos() {
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
+    //Llamo a filtrarGastos
+    let gastosFiltrados = filtrarGastos ({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
 
+    //Monto la función 'reduce'
+    return gastosFiltrados.reduce (function (acumulado, gasto) {
+        let periodoGasto = gasto.obtenerPeriodoAgrupacion (periodo); //Obtengo el periodo de agrupación dentro de la variable 'periodoGasto'
+
+        //Si existe 'acumulado[periodoGasto]' le acumulo el valor del gasto (valor 1 del operador ternario ?)
+        //Si no existe 'acumulado[periodoGasto]' le asigno el valor del gasto correspondiente (valor 2 del operador ternario ?)
+        acumulado[periodoGasto] = (acumulado[periodoGasto]) ?  acumulado[periodoGasto] += gasto.valor: acumulado[periodoGasto] = gasto.valor;
+        return acumulado; //Finalmente devuelvo el acumulado
+
+        //Primero hice las condiciones con if, pero he podido ver la forma de hacerlo con el operador ternario ? y queda todo claro en una línea.
+        /*if (acumulado[periodoGasto]) {
+            acumulado[periodoGasto] += gasto.valor; //Si existe 'acumulado[periodoGasto]' le acumulo el valor del gasto
+        }
+        else {
+            acumulado[periodoGasto] = gasto.valor; //Si no existe 'acumulado[periodoGasto]' le asigno el valor del gasto correspondiente
+        }*/
+        
+
+    }, {}); //Como valor inicial pongo un objeto vacío '{}'
 }
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
