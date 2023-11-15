@@ -1,0 +1,462 @@
+[33mcommit b6c4f4672720276bd231b8fd56eb49a8192c5b3d[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Alberto Meseguer Rodríguez <albmesrod@alu.edu.gva.es>
+Date:   Wed Nov 15 12:11:49 2023 +0100
+
+    Realizadas tareas de "Introducción a JavaScript"
+
+[33mcommit e29fec39126e082585b8c198cbd43af4c8cb2631[m
+Author: Alberto Meseguer Rodríguez <albmesrod@alu.edu.gva.es>
+Date:   Thu Oct 26 17:16:40 2023 +0200
+
+    test Code
+
+[33mcommit 1b8216e10534ebdd6fb8709ebb7e00f961831958[m[33m ([m[1;31mprofesor/master[m[33m)[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Thu Jan 20 10:42:49 2022 +0100
+
+    Corrijo enunciado
+
+[33mcommit f6927480a8eb6c67ab85d217e856ab19d320aeb1[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Dec 22 19:07:13 2021 +0100
+
+    Aclaración sobre WebPack
+
+[33mcommit 37cb535a8424a8aa5cf1095f67ab9123415fcddd[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Dec 22 19:04:10 2021 +0100
+
+    Añado videotutorial de WebPack
+
+[33mcommit 8ca1b279941b0bbe4ef5159aefe89a0cbd74b612[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Dec 22 14:20:56 2021 +0100
+
+    Errata
+
+[33mcommit e18db55a8a0f25ce66ac1b89d898fcf41a6c597b[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Dec 22 14:12:49 2021 +0100
+
+    Corrección práctica almacenamiento
+
+[33mcommit 6a5005762b4feeb51780909f0bd9a26598af0c9a[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Dec 21 13:24:52 2021 +0100
+
+    Estilo
+
+[33mcommit 86d6c7987d9b6abc3f3b79e71d06caf9e9176e12[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Dec 21 13:22:05 2021 +0100
+
+    Aclaración
+
+[33mcommit b27a1a9398912932fcc64aea5faca2921b846a58[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Dec 21 13:20:22 2021 +0100
+
+    Práctica librerías externas
+
+[33mcommit 36e3fd4447a8c00b51e1f72ca68cfcd599370700[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 20 15:08:03 2021 +0100
+
+    Enlaces a vídeos en enunciado async
+
+[33mcommit 955d96209e6f14e600c8bd1fef27554be81194ef[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 20 09:32:20 2021 +0100
+
+    Aclaración enunciado async
+
+[33mcommit 229860def62bea246a53c26e46b1bdf708891978[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 13 19:21:29 2021 +0100
+
+    Actualizo README
+
+[33mcommit b789e7989433aa1098cbad5fae1bbada99f906ba[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 13 19:20:01 2021 +0100
+
+    Actualizo enunciado
+
+[33mcommit e691f531a971a71fc9ac86b9a570b0361546e1fe[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 13 19:11:32 2021 +0100
+
+    Quito comentarios test 6 (olvido)
+
+[33mcommit 042439a6f73972576c6bfcd095302d5f1b34b93f[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 13 19:07:54 2021 +0100
+
+    Link API
+
+[33mcommit 7013e399d8bf2fabfee21946bdb6adcd07cc09e4[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Dec 13 19:02:52 2021 +0100
+
+    Enunciado async
+
+[33mcommit e814685f92e0db52807d205289adef5ddc952d99[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Nov 24 09:40:53 2021 +0100
+
+    Nuevo requisito en práctica fundamentos III
+
+[33mcommit 18e9372e252a9c57a71bbb79b6a5eee2d2c6c4bb[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 22 02:07:16 2021 +0100
+
+    Aclaración
+
+[33mcommit b72368ebf923032848245038dab1b251b557799a[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 22 02:06:55 2021 +0100
+
+    Práctica almacenamiento localstorage
+
+[33mcommit 5e5b905b3912c92e5eaf40afe1c166dec1af6b09[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 16 09:53:27 2021 +0100
+
+    Errata
+
+[33mcommit 848834dbee5d0e25efb930dc6c3ebdc4c908884a[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 15 19:07:44 2021 +0100
+
+    Añado información extra enunciado Regexp
+
+[33mcommit 6c1f805f88837374df6c2fa98912d0f8d4fd88f7[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 15 19:04:33 2021 +0100
+
+    Errata
+
+[33mcommit 0e72622c90369e7b107ebcee9875320eb6bfe638[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 15 19:04:13 2021 +0100
+
+    Estilos formulario filtrado
+
+[33mcommit 9f2b0b6680843f85855c9d4827d42785105225c8[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 15 19:03:45 2021 +0100
+
+    Práctica expresiones regulares
+
+[33mcommit 52389863736f0bbff951cbc13b7d1c8b8a4c8712[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 15 11:46:06 2021 +0100
+
+    Añado hoja de estilos
+
+[33mcommit 8561efa4b014cc708c7470f654d1f426cb8b609d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Nov 10 16:40:16 2021 +0100
+
+    Test 1 - Comprobación función constructora
+
+[33mcommit b50396920c84d3dcc05ee5a05372a1d2b0a7f505[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 9 12:11:39 2021 +0100
+
+    Aclaración 3 y formato
+
+[33mcommit fbc3cf30df0b26234985a889690db35605ac05c7[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 9 12:06:21 2021 +0100
+
+    Aclaración 2
+
+[33mcommit 92467ec051f68e06184a3cf85d34e05cbb8860be[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 9 12:03:43 2021 +0100
+
+    Aclaración
+
+[33mcommit 36d2e071d112cc3553165bf596b8e2b4c5420439[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 9 11:54:15 2021 +0100
+
+    Práctica Formularios y JavaScript
+
+[33mcommit 02bde58972ed0a352d791bc831596225b8a8372f[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 8 22:47:55 2021 +0100
+
+    Aclaración issues en enunciados
+
+[33mcommit ea2f0fcc1535b68ae223baf0a6b9bbe293007a14[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Nov 8 22:36:15 2021 +0100
+
+    Errata
+
+[33mcommit cdc3720d5e815d2ce20114f97a0ea6656d7f1cdc[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 2 15:46:31 2021 +0100
+
+    Actualizo README
+
+[33mcommit efadc7e93202813d5c7c666c2b6402bc01a5b29d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Nov 2 15:45:29 2021 +0100
+
+    Práctica Eventos JavaScript
+
+[33mcommit b3a559375c4d102e57cc102af86510fb3760570d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Fri Oct 29 11:00:57 2021 +0200
+
+    Corrijo errores en test 4
+
+[33mcommit f67a177c2a0d1158ddb1f595dc53edc4191394ce[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Oct 26 13:33:08 2021 +0200
+
+    Quito importación que no se utiliza
+
+[33mcommit e769110b7b366cf373cc081944df4c9c934bf02f[m
+Merge: e4fc408 94b8ed9
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Oct 26 13:20:38 2021 +0200
+
+    Merge branch 'master' of https://github.com/pedroprieto/practica_dwec_gestor_presupuesto
+
+[33mcommit e4fc408a955e93e671293423e41e12357ec399c2[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Oct 26 13:20:18 2021 +0200
+
+    Práctica Interacción HTML
+
+[33mcommit 94b8ed97f0fc02654148ffb09ec8166041a17b5b[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Fri Oct 22 23:42:35 2021 +0200
+
+    Corrijo error en enunciado
+
+[33mcommit d7f75d89a800ed3589fbe8db4f7a8c6491b60fd5[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 20 13:24:42 2021 +0200
+
+    Añado información de depuración en VS Code
+
+[33mcommit 84e2716a79d546f169bb5606568c18570bfa3ef4[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 20 13:22:50 2021 +0200
+
+    Corrijo enlace
+
+[33mcommit 9c678fc30de29df9397eec99bca412545dc5fec3[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 20 13:21:14 2021 +0200
+
+    Añado información sobre depuración en VS Code
+
+[33mcommit a56b76b5c61d4fee28b5edc45e5882cf8cd61019[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 20 13:09:22 2021 +0200
+
+    Añado configuración de depuración para VS Code
+
+[33mcommit 00875bba49ca8fafcd95db2c38943e6087fa8c50[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 18 12:04:51 2021 +0200
+
+    Corrijo provisionalmente test II para que se pasen todos a la vez
+
+[33mcommit 74de830c33e1f34e247a7ed132213771861d64af[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 18 11:34:30 2021 +0200
+
+    Práctica Fundamentos JS III
+
+[33mcommit 1b8d1e0011e2950e25f7ce5f0f9a4fefcf49a43c[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Sat Oct 9 00:00:07 2021 +0200
+
+    Actualizo README
+
+[33mcommit 60d996c479f2e1bf2a7afcd73bf3f6389a96725c[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Fri Oct 8 23:59:12 2021 +0200
+
+    Práctica Fundamentos de JS II
+
+[33mcommit 0a4ad66de34c1b1e40ccc89bebfd783bae0b3c02[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 6 11:33:35 2021 +0200
+
+    Errata
+
+[33mcommit befe9762808b8e34de460c427347ab9b849d8b74[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 6 11:31:07 2021 +0200
+
+    Corrijo instrucciones explicativas sobre GitHub Actions
+
+[33mcommit 3073595bed2e79db1ff818d13ee3aa91a54fcd37[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Oct 6 11:09:24 2021 +0200
+
+    Cambio estructura de tests para que sean independientes los de cada práctica
+
+[33mcommit 4308c2fe8418e6e7fdb82f8a6d2c100da3f4d987[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Oct 5 11:07:44 2021 +0200
+
+    Corrijo ruta
+
+[33mcommit 59cd392048e72c898e78147ff035ea175642695d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Oct 5 11:06:03 2021 +0200
+
+    Añado nota sobre activar GitHub Actions
+
+[33mcommit d419581f4400575738f142bab184bdd67872379d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 02:20:09 2021 +0200
+
+    Detallo enunciado sobre GitHub Actions
+
+[33mcommit ef9e67990c1ed18005f8aca3cbd1928c8049d1d1[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 02:07:32 2021 +0200
+
+    Retoco fichero actions
+
+[33mcommit 149467264630499dea4f344e6f019869bbd4279d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 02:01:44 2021 +0200
+
+    Corrijo de nuevo archivo Actions
+
+[33mcommit 9ee2357d1d396c9cb332797874fdd505e06b8a97[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 01:56:29 2021 +0200
+
+    Corrijo error en archivo Actions
+
+[33mcommit 9cf9ebea6ed9c5dc9a8ed76d93e7cd84be1c2490[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 01:54:59 2021 +0200
+
+    Añado archivo para ejecutar tests en GitHub Actions
+
+[33mcommit 5e7c5b6d694fee542a929c6f21a103629b5fd87b[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 01:08:50 2021 +0200
+
+    Añado práctica Intro JS I
+
+[33mcommit 7d659fb0b5d6211e096e809a36b6b8f94de56a9c[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 01:08:04 2021 +0200
+
+    Esqueleto práctica Intro JS I
+
+[33mcommit bf3a4766d5632b0f62815488302edb0d58a05944[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 01:06:15 2021 +0200
+
+    Corrijo enunciado y errores en test IntroJS I
+
+[33mcommit 82ed197afcb0316ea1751fe6a5e0b8ed41d0adc9[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 00:46:48 2021 +0200
+
+    Quito caso especial del test introJSI
+
+[33mcommit 2eea762c9490bf068575531c7369b73a9f30d049[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 00:24:33 2021 +0200
+
+    Tests intro JS I
+
+[33mcommit 38d93b0c7d0793bf029b5ceb3ade5767872d74ae[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 00:24:15 2021 +0200
+
+    Fichero código práctica fundamentos JS I
+
+[33mcommit 9b70f691be8a54f5e44530d97edf1ba038f5ec9d[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Oct 4 00:23:39 2021 +0200
+
+    Cambios en nombres en enunciado
+
+[33mcommit ff98c26a46f8354ef441ce159e3d55b7cf047ed1[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Sun Oct 3 23:48:12 2021 +0200
+
+    package.json
+
+[33mcommit 0f792d9252ed656ca787fca7073a9c907bb22858[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Sun Oct 3 23:45:56 2021 +0200
+
+    gitignore
+
+[33mcommit 40cb82c11b2860e06384363c08d17e67f47c00ce[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Sun Oct 3 23:44:05 2021 +0200
+
+    Tareas práctica fundamentos JS I
+
+[33mcommit bd698fb81115484262117a382ce88ada86321cb5[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Sep 29 12:34:03 2021 +0200
+
+    Actualizo instrucciones para traer cambios
+
+[33mcommit 43936deac28332cbe046deaa25ff7debd8fe6d06[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Wed Sep 29 12:24:38 2021 +0200
+
+    Inicio enunciado práctica intro js I
+
+[33mcommit 176db96fc4e3732ef247393106460e7b6a6aff30[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Sep 27 11:16:50 2021 +0200
+
+    Elimino archivo no válido
+
+[33mcommit a6c3d50e85fee84329e67f35d27fa154593c9924[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Mon Sep 27 11:14:25 2021 +0200
+
+    Errata
+
+[33mcommit 6a92080a7d4fe0bc1d415138bae002ed466584e5[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Fri Sep 24 12:28:53 2021 +0200
+
+    Creo práctica introducción a javascript
+
+[33mcommit 1a58fc9c84e0d6ca40dd372d153ebde9d284d80a[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Sep 21 12:44:36 2021 +0200
+
+    Actualizo enunciado
+
+[33mcommit 47cc6c626bd9a8c09a9ca8228a572c5c9af8e961[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Sep 21 12:20:05 2021 +0200
+
+    Corrijo enlace
+
+[33mcommit 50504fb28e7649b54fbe31a0febbcc84e22c2a85[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Sep 21 12:19:19 2021 +0200
+
+    Índice general y primera práctica
+
+[33mcommit 324ce35e6e32ba79102e0cddac6bb3f3468907e3[m
+Author: Pedro Prieto <pedpral@gmail.com>
+Date:   Tue Sep 21 12:02:24 2021 +0200
+
+    Initial commit
