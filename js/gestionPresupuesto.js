@@ -2,13 +2,32 @@
 
 // TODO: Variable global
 
+let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    // TODO
+let gasto={
+    descripcion:"",
+    valor:0   
+}
+gasto.setDatos= function(valor){
+ this.valor=valor;
+}
+
+
+function actualizarPresupuesto( valor ) {
+    if(valor>0){
+        presupuesto =valor;
+        return (` ${presupuesto} `)
+       
+    }     
+    else{
+        presupuesto=-1;
+        return (`${presupuesto}`)
+    }
+        
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    return (`Tu presupuesto actual es de ${presupuesto} €`)
 }
 
 function CrearGasto() {
