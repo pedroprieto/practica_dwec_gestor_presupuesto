@@ -57,7 +57,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
         this.valor = 0;
     }
 
-    this.fecha = fecha;
+    this.fecha = Date.parse(fecha);
+
+    //compruebo la fecha si no tiene formato adecuado le asigno la actual
+    if (isNaN(this.fecha)) {
+        this.fecha = Date.now();
+    }
+
     this.etiquetas = etiquetas;
 
     //metodos
@@ -79,18 +85,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
     }
 
     this.mostrarGastoCompleto = function () {
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. 
-Fecha: ${this.fecha.toLocalString()}
-Etiquetas:
-- ETIQUETA 1
-- ETIQUETA 2
-- ETIQUETA 3`
+        let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n` 
+        mensaje = mensaje + `Fecha: ${new Date(this.fecha).toLocaleString("es")}\n`
+        mensaje = mensaje + `Etiquetas:\n`
+        for (let e of this.etiquetas) {
+            mensaje = mensaje + `- ${e}\n`
+        }
+         return mensaje;
     }
 
     this.actualizarFecha = function (nuevaFechaString) {
         let ts = Date.parse(nuevaFechaString); //creo un timestamp
         //compruebo si es NaN para ver si es fecha valida
-        if (isNaN(ts) == false) {
+        if (!isNaN(ts) ) {
             this.fecha = ts;
         }
     }
