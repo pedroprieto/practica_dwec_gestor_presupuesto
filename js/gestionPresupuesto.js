@@ -30,20 +30,17 @@ function CrearGasto(descripcion, valor) {
         this.valor = 0;
     }
 
-    function mostrarGasto(){
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor de ${valor} €`);
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
     }
 
-    function actualizarDescripcion(nuevaDescripcion){
-       descripcion = nuevaDescripcion;
+    this.actualizarDescripcion = function(descripcion){
+        this.descripcion = descripcion;
     }
 
-    function actualizarValor(nuevoValor){
-        if (nuevoValor >= 0){
-            valor = nuevoValor;
-        }
-    }    
 }
+
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
