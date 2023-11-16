@@ -88,12 +88,14 @@ Etiquetas:\n`
             break;
             case 'dia':
                 return  `${anyo}-${mes}-${dia}`
+            break;
             default:
                 return 'Valor introducido erroneo'
             break;
         }
 
     }
+    //PROPIEDADES
     this.descripcion=descripcion;
     valor>=0? this.valor=valor: this.valor=0;
     this.etiquetas=[];
@@ -123,7 +125,39 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(){
+function filtrarGastos(filtroDatos){
+    let results = gastos.filter(function(g){
+        var valido = true;
+        if(filtroDatos.fechaDesde){
+            var fechaFiltro = Date.parse(filtroDatos.fechaDesde);
+            valido= valido && (g.fecha >= fechaFiltro);
+        }
+        if(filtroDatos.fechaHasta){
+            var fechaFiltro = Date.parse(filtroDatos.fechaHasta);
+            valido= valido && (g.fecha <= fechaFiltro);
+        }
+        if(filtroDatos.valorMinimo){
+            valido = valido && (g.valor >= filtroDatos.valorMinimo);
+        }
+        if(filtroDatos.valorMaximo){
+            valido = valido && (g.valor <= filtroDatos.valorMaximo);
+        }
+        if(filtroDatos.descripcionContiene){
+            valido = valido && (g.descripcion.indexOf(filtroDatos.descripcionContiene)> -1);
+        }
+        if(filtroDatos.etiquetasTiene){
+            var etiSi = false;
+            filtroDatos.etiquetasTiene.forEach((valor)=>{
+                if(g.etiquetas.indexOf(valor) > -1){
+                    etiSi = true;
+                }
+            })
+
+            valido = valido && etiSi;
+        }
+        return valido;
+    })
+    return results;
 }
 function agruparGastos(){
 }
