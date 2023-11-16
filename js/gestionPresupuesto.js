@@ -56,25 +56,21 @@ function CrearGasto( descripcion, valor) {
         }
         
     }   
-    if(valor<0 || isNaN(valor)){
-        
-        this.valor=0
-        
-        return (`gasto= new gasto  ${this.descripcion}  ${this.valor} €`)
-        
+    if(valor<0 || isNaN(valor)){      
+        this.valor=0       
+        return (`gasto= new gasto  ${this.descripcion}  ${this.valor} €`)       
     }
-    else{
-        
+    else{   
         return (`gasto= new gasto  ${this.descripcion}  ${this.valor}`)
-        
+  
     }
-    
- 
 }
-function listarGastos(){}
+function listarGastos(){
+return (`${gastos}`)
+}
 function anyadirGasto(){}
 function borrarGasto(){}
-function borrarGasto(){}
+function calcularTotalGastos(){}
 function calcularBalance(){}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -86,6 +82,6 @@ export   {
     listarGastos,
     anyadirGasto,
     borrarGasto,
-    borrarGasto,
+    calcularTotalGastos,
     calcularBalance
 }
