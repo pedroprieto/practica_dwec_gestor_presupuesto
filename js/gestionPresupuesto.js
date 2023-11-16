@@ -1,4 +1,6 @@
 var presupuesto = 0;
+var gastos = [];
+var idGasto = 0;
 
 function actualizarPresupuesto(cantidad) {
     if (cantidad >= 0){
@@ -15,7 +17,7 @@ function mostrarPresupuesto() {
     return(`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
 
     if (Number(valor) >= 0){
@@ -23,7 +25,27 @@ function CrearGasto(descripcion, valor) {
     }
     else{
         this.valor = 0;
-    }  
+    }
+
+    //fecha viene en formato string
+    //this.fecha tiene que guardar un timestamp
+    if (etiquetas = []){
+        this.etiquetas = []
+    }
+    else {
+        this.etiquetas = etiquetas;
+    }
+
+    if(isNaN(fecha)){
+        this.fecha = Date.now;
+    }
+    else{
+        this.fecha = Date.parse(fecha);
+    }
+
+    //etiquetas
+    
+
 }
 
 CrearGasto.prototype.mostrarGasto = function (){
@@ -37,7 +59,63 @@ CrearGasto.prototype.actualizarValor = function (nuevovalor){
     if (Number(nuevovalor) >= 0){
         this.valor = nuevovalor;
     }     
-};
+}
+
+CrearGasto.prototype.fecha = function(){
+    this.fecha = new Date.timestamp;
+}
+
+CrearGasto.prototype.etiquetas = function(){
+    this.etiquetas = [];
+}
+
+function mostrarGastoCompleto() {
+    let objFecha = new Date(this.fecha);
+    return (`
+    Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+    Fecha: ${objFecha.toLocaleString}
+    Etiquetas:\n`
+
+    for (let e of this etiquetas) {
+        texto += `- $(e)\n`
+    }
+    )
+}
+
+function actualizarFecha (actFecha){
+    if(isNaN(actFecha)){
+        this.fecha = this.fecha;
+    }
+    else{
+        this.fecha = Date.parse(actFecha);
+    }
+}
+
+function anyadiretiquetas (...etiquetas) {
+    for (let etiqueta of etiquetas) {
+        if (this.etiquetas.indexOf(etiqueta) == -1) {
+            this.etiquetas.push(etiqueta);
+        }
+    }
+}
+
+function borrarEtiquetas = function(...etiquetas) {
+    let nuevoListadoEtiquetas = [];
+    for (let etiqueta of this.etiquetas){
+        if(etiquetas.indexOf(etiqueta) == -1) {
+            nuevoListadoEtiquetas.push(etiqueta);
+        }
+    this.etiquetas = nuevoListadoEtiquetas;
+    }
+}
+
+
+]
+function listarGastos () {
+    return gastos;
+}
+
+
 
 
 
@@ -48,5 +126,10 @@ CrearGasto.prototype.actualizarValor = function (nuevovalor){
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
