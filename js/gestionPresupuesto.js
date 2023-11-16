@@ -2,22 +2,27 @@
 
 // TODO: Variable global
 let presupuesto = 0;
-presupuesto = actualizarPresupuesto("a");
-console.log(presupuesto);
 
-function actualizarPresupuesto(numero) {
-    if ((numero > 0) && (!isNaN(numero))){
-        return numero;
-    } else {
-        console.log("Error");
-        return -1;
-    }
+// llamadas a las funciones
+presupuesto = actualizarPresupuesto(-1);
 
-
+if (presupuesto >= 0){
+    console.log(mostrarPresupuesto());
 }
 
+// funciones
+function actualizarPresupuesto(numero) {
+    if ((numero >= 0) && (!isNaN(numero))){
+        return numero;
+    } else {
+        console.log("Error: número menor que cero o carácter no numérico");
+        return -1;
+    }
+}
+
+
 function mostrarPresupuesto() {
-    // TODO
+    return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
 function CrearGasto() {
