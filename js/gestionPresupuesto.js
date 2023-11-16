@@ -159,7 +159,26 @@ function filtrarGastos(filtroDatos){
     })
     return results;
 }
-function agruparGastos(){
+function agruparGastos(periodo = mes,etiquetas,fechaDesde,fechaHasta){
+    let listaFiltrada;
+    if((etiquetas == undefined)&& fechaDesde && fechaHasta){
+        listaFiltrada=gastos;
+    }else{
+        listaFiltrada= filtrarGastos({etiquetasTiene:etiquetas,fechaDesde:fechaDesde,fechaHasta:fechaHasta})
+    }
+    
+    return listaFiltrada.reduce(function(acc,gasto){
+
+        let per = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        if (acc[per]) {
+            acc[per] = acc[per] + gasto.valor;
+        } else {
+            acc[per] = gasto.valor;
+        }
+
+        return acc;
+    },{})
 }
 
 
