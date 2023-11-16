@@ -1,10 +1,19 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
+let presupuesto = 0;
+presupuesto = actualizarPresupuesto("a");
+console.log(presupuesto);
+
+function actualizarPresupuesto(numero) {
+    if ((numero > 0) && (!isNaN(numero))){
+        return numero;
+    } else {
+        console.log("Error");
+        return -1;
+    }
 
 
-function actualizarPresupuesto() {
-    // TODO
 }
 
 function mostrarPresupuesto() {
