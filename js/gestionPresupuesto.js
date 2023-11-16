@@ -31,10 +31,17 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto( descripcion, valor) {
+function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
     this.descripcion=descripcion;
     this.valor=valor;
-    
+    this.etiquetas=etiquetas;
+    let f = Date.parse(fecha)
+    if (isNaN(f)){
+        this.fecha=Date.now()
+    } 
+    else{
+        this.fecha=f
+    }
     this.mostrarGasto=function() {
     
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`)
@@ -64,6 +71,7 @@ function CrearGasto( descripcion, valor) {
         return (`gasto= new gasto  ${this.descripcion}  ${this.valor}`)
   
     }
+
 }
 function listarGastos(){
 return (`${gastos}`)
