@@ -60,6 +60,14 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         this.descripcion=descripcion;
         return (`${descripcion}`)
     } 
+    this.actualizarFecha=function(fechaNueva){
+        let fechaValida=Date.parse(fechaNueva)
+        if(!isNaN(fechaValida))
+        {
+            this.fecha=fechaValida
+        }
+        
+    }
     this.actualizarValor= function(valor){
         
         if (valor>0) {
@@ -80,6 +88,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         return (`gasto= new gasto  ${this.descripcion}  ${this.valor}`)
   
     }
+
 
 }
 function listarGastos(){
