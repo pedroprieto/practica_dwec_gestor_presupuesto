@@ -92,4 +92,27 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo, agrup) {
 	elemento.appendChild(contenedor)
 }
 
+// Función repintar que vuelve a crear toda la estructura HTML, reflejando los cambios en el modelo de datos
+function repintar() {
+	// Mostramos el presupuesto en div#presupuesto
+	let presupuesto = gestionPresupuesto.mostrarPresupuesto()
+	mostrarDatoEnId("presupuesto", presupuesto)
+
+	// Mostramos los gastos totales en div#gastos-totales
+	let gastosTotales = gestionPresupuesto.calcularTotalGastos()
+	mostrarDatoEnId("gastos-totales", gastosTotales)
+
+	// Mostramos el balance total en div#balance-total
+	let balanceTotal = gestionPresupuesto.calcularBalance()
+	mostrarDatoEnId("balance-total", balanceTotal)
+
+	// Borramos el contenido de div#listado-gastos-completo usando innetHTML
+	let listadoGastosCompleto = document.getElementById("listado-gastos-completo")
+	listadoGastosCompleto.innerHTML = ""
+
+	// Mostramos el listado completo de gastos en div#listado-gastos-completo
+	let listaGastos = gestionPresupuesto.listarGastos()
+	mostrarGastoWeb("listado-gastos-completo", listaGastos)
+}
+
 export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb }
