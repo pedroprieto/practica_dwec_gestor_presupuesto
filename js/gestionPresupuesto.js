@@ -77,10 +77,12 @@ function borrarGasto(id){
 }
 
 function calcularTotalGastos(){
-
+    return gastos.reduce((sum, current) => sum + current.valor, 0);
 }
 
 function calcularBalance(){
+    let total = calcularTotalGastos();
+    return presupuesto - total;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
