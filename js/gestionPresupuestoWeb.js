@@ -59,11 +59,29 @@ function mostrarGastoWeb(idElemento, gasto) {
 	// Asignamos la propiedad gasto del objeto creado al objeto gasto del parámetro
 	editarManejador.gasto = gasto
 
-	// Añaadimos el evento 'click' al botón 'Editar' con el manejador de evento editarManejador
+	// Añadimos el evento 'click' al botón 'Editar' con el manejador de evento editarManejador
 	botonEditar.addEventListener("click", editarManejador)
 
 	// Añadimos el botón al DOM a continuación de las etiquetas
 	divGasto.appendChild(botonEditar)
+
+	// Creamos un botón con texto 'Borrar' de tipo 'button' (<button type="button">Borrar</button>) con clase 'gasto-borrar'
+	let botonBorrar = document.createElement("button")
+	botonBorrar.classList.add("gasto-borrar")
+	botonBorrar.type = "button"
+	botonBorrar.textContent = "Borrar"
+
+	// Manejador de evento de borrar
+	let borrarManejador = new BorrarHandle()
+
+	// Asignamos la propiedad gasto del objeto creado al objeto gasto del parámetro
+	borrarManejador.gasto = gasto
+
+	// Añadimos el evento 'click' al botón 'Borrar' con el manejador de evento borrarManejador
+	botonBorrar.addEventListener("click", borrarManejador)
+
+	// Añadimos el botón al DOM a continuación de las etiquetas
+	divGasto.appendChild(botonBorrar)
 
 	// Agregamos al contenedor el div gasto creado con todos sus elementos
 	contenedor.appendChild(divGasto)
@@ -208,9 +226,9 @@ function EditarHandle() {
 // Función constructora Borrarhandle con un único método handleEvent que se encargará de manejar el evento 'click'
 function BorrarHandle() {
 	this.handleEvent = function (event) {
-		// Borramos la etiqueta del gasto llamando al método correspondiente
-		this.gasto.gestionPresupuesto.borrarEtiquetas(this.etiqueta)
-
+		let idBorrar = this.gasto.id
+		gestionPresupuesto.borrarGasto(idBorrar)
+		console.log(this.gasto.id)
 		// Llamos a la función repintar para mostrar la información actualizada en el HTML
 		repintar()
 	}
