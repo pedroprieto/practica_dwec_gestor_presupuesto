@@ -1,6 +1,8 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 
 function actualizarPresupuesto(nuevoPresu) {
@@ -19,16 +21,29 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+
+    //Parámetros por orden de aparición
 
     this.descripcion = descripcion;
 
-    if (valor >= 0){
+    if (valor >= 0){ //Comprobamos si el valor es negativo
         this.valor = valor;
     }
     else{
         this.valor = 0;
     }
+
+    let date = Date.parse(fecha); //Con el date parse nos aseguramos el tipo timestamp
+
+    if(isNaN(date)){       //Esta comprobación es por que en caso de no ser válida la fecha, se devolveria un NaN
+        this.fecha = Date.parse(new Date());
+    }
+    else{
+        this.fecha = date;
+    }
+
+    this.etiquetas = etiquetas;
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
@@ -46,8 +61,28 @@ function CrearGasto(descripcion, valor) {
 
 }
 
+let date = Date();
 
+console.log(date);
 
+function listarGastos(){
+    return gastos;
+}
+
+function anyadirGasto(){
+
+}
+
+function borrarGasto(){
+
+}
+
+function calcularTotalGastos(){
+
+}
+
+function calcularBalance(){
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -55,5 +90,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
