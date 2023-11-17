@@ -6,3 +6,4 @@ gestionPresupuesto.actualizarPresupuesto(1500);
 
 gestionPresupuestoWeb.mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
+//gestionPresupuestoWeb.mostrarGastoWeb();
