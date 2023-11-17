@@ -69,9 +69,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         
     }
    this.anyadirEtiquetas=function(...etiquetaNueva){
-   
-  
-      
+
        for (let i = 0;i<=etiquetas.length;i++)
        {
         if(this.etiquetas.length==0)
@@ -86,10 +84,35 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         
        }
        return (`${etiquetas}`)
+    }
+    this.borrarEtiquetas=function(...etiqueta){
+       
+        for (let i = 0;i<etiqueta.length;i++)
+       {
+        this.funcionEtiquetas(etiqueta[i])
+            
+            
+            
+       }
+       
+       return (`${etiquetas}`)
+
+    }
+    this.funcionEtiquetas=function(etiqueta){
         
-        
-        
-}
+        for (let i = 0;i<etiquetas.length;i++)
+        {
+         
+             if( etiquetas[i]==etiqueta  )
+             {
+                 
+              etiquetas.splice(i,1)
+             
+             }
+             
+             
+        }
+    }
     this.actualizarValor= function(valor){
         
         if (valor>0) {
