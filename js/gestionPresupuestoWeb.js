@@ -185,7 +185,11 @@ function EditarHandle() {
 // Función constructora Borrarhandle con un único método handleEvent que se encargará de manejar el evento 'click'
 function BorrarHandle() {
 	this.handleEvent = function (event) {
+		// Borramos la etiqueta del gasto llamando al método correspondiente
 		this.gasto.gestionPresupuesto.borrarEtiquetas(this.etiqueta)
+
+		// Llamos a la función repintar para mostrar la información actualizada en el HTML
+		repintar()
 	}
 }
 
