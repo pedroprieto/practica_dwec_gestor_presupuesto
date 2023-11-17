@@ -44,6 +44,11 @@ function mostrarGastoWeb(idElemento, gasto) {
 		let spanEtiquetas = document.createElement("span")
 		spanEtiquetas.classList.add("gasto-etiquetas-etiqueta")
 		spanEtiquetas.textContent = etiqueta + ", "
+		// Evento para los span de etiquetas (el borrado se produce al hacer click en la etiqueta, no hay botón)
+		let borrarEtiquetaManejador = new BorrarEtiquetasHandle()
+		borrarEtiquetaManejador.gasto = gasto
+		borrarEtiquetaManejador.etiqueta = etiqueta
+		spanEtiquetas.addEventListener("click", borrarEtiquetaManejador)
 		divEtiquetas.appendChild(spanEtiquetas)
 	}
 
@@ -226,9 +231,20 @@ function EditarHandle() {
 // Función constructora Borrarhandle con un único método handleEvent que se encargará de manejar el evento 'click'
 function BorrarHandle() {
 	this.handleEvent = function (event) {
+		// Recogemos el id del gasto a borrar
 		let idBorrar = this.gasto.id
+		// Borramos el gasto
 		gestionPresupuesto.borrarGasto(idBorrar)
-		console.log(this.gasto.id)
+		// Llamos a la función repintar para mostrar la información actualizada en el HTML
+		repintar()
+	}
+}
+
+// Función constructora BorrarEtiquetasHandle con un único método handleEvent que se encargará de manejar el evento 'click'
+function BorrarEtiquetasHandle() {
+	this.handleEvent = function (event) {
+		this.gasto.borrarEtiquetas(this.etiqueta)
+
 		// Llamos a la función repintar para mostrar la información actualizada en el HTML
 		repintar()
 	}
