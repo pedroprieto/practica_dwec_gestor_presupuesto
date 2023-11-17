@@ -68,6 +68,28 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         }
         
     }
+   this.anyadirEtiquetas=function(...etiquetaNueva){
+   
+  
+      
+       for (let i = 0;i<=etiquetas.length;i++)
+       {
+        if(this.etiquetas.length==0)
+             {
+                etiquetas.push(etiquetaNueva[i])
+             }
+       else if(!etiquetas.includes(etiquetaNueva[i]) && !etiquetaNueva[i]=="")
+        {
+
+        etiquetas.push(etiquetaNueva[i])
+        }
+        
+       }
+       return (`${etiquetas}`)
+        
+        
+        
+}
     this.actualizarValor= function(valor){
         
         if (valor>0) {
@@ -91,10 +113,13 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
 
 
 }
+
 function listarGastos(){
 return (`${gastos}`)
 }
-function anyadirGasto(){}
+function anyadirGasto(objetoGasto){
+
+}
 function borrarGasto(){}
 function calcularTotalGastos(){}
 function calcularBalance(){}
