@@ -26,8 +26,12 @@ function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {
-    
+function anyadirGasto(nuevoGasto) {
+    //añado al objeto gasto la propiedad id
+    nuevoGasto.id = idGasto;
+    idGasto++;
+    //añado el objeto gasto a la variable global gasto
+    gastos.push(nuevoGasto);
 }
 
 function borrarGasto() {
