@@ -112,10 +112,12 @@ function repintar() {
 
 	// Mostramos el listado completo de gastos en div#listado-gastos-completo
 	let listaGastos = gestionPresupuesto.listarGastos()
-	mostrarGastoWeb("listado-gastos-completo", listaGastos)
+	for (let gasto of listaGastos) {
+		mostrarGastoWeb("listado-gastos-completo", gasto)
+	}
 }
 
-// Función nuevoGastoWeb manejadora de eventos del botón 'actualizarpresupuesto'
+// Función actualizarPresupuestoWeb manejadora de eventos del botón 'actualizarpresupuesto'
 function actualizarPresupuestoWeb() {
 	// Recogemos el valor del nuevo presupuesto con un prompt
 	let presupuesto = prompt("Introduce el nuevo presupuesto", 0)
