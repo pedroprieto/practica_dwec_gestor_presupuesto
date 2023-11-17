@@ -34,8 +34,17 @@ function anyadirGasto(nuevoGasto) {
     gastos.push(nuevoGasto);
 }
 
-function borrarGasto() {
+function borrarGasto(id) {
 
+    for (const gasto of gastos) {
+        if (gasto.id == id) {
+
+            const i = gastos.indexOf(gasto);
+
+            gastos.splice(i, 1);
+      
+        }
+    }
 }
 
 function calcularTotalGastos() {
