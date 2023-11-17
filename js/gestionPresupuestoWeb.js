@@ -244,6 +244,78 @@ function BorrarEtiquetasHandle(gasto, etiqueta){
 
 }
 
+
+
+const btnAnyadir = document.getElementById('anyadirgasto-formulario')
+btnAnyadir.addEventListener('click', nuevoGastoWebFormulario)
+const controlesPrincipales = document.getElementById('controlesprincipales');
+
+function nuevoGastoWebFormulario(){
+
+  // Clonar la plantilla del formulario
+  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+  // Obtener el formulario del fragmento clonado
+  var formulario = plantillaFormulario.querySelector("form");
+
+  // Añadir el fragmento de documento al final del <div>
+  controlesPrincipales.appendChild(plantillaFormulario);
+
+  // Deshabilitar boton de anyadir gasto al formulario
+  btnAnyadir.disabled = true;
+
+    
+   // Crear un manejador de evento para el evento submit del formulario
+  formulario.addEventListener('submit', function (event) {
+    
+      // Evitar que el formulario se envíe de forma predeterminada
+      event.preventDefault();
+      // Acceder al formulario actual (el que disparó el evento submit)
+      const form = event.currentTarget;
+
+      
+
+      // Acceder a los valores del formulario
+      const descripcion = form.elements.descripcion.value;
+      const valor = Number(form.elements.valor.value);
+      const fecha = form.elements.fecha.value;
+      const etiquetas = form.elements.etiquetas.value;
+
+      const gasto = new GesPrest.CrearGasto(descripcion, valor, fecha, etiquetas);
+      GesPrest.anyadirGasto(gasto);
+
+
+
+      const btnCancelar = formulario.querySelector("button.cancelar")
+      btnCancelar.addEventListener('click', new CancelarHandle(form));
+
+      repintar();
+      
+ 
+      btnAnyadir.removeAttribute('disabled');//Otra opción: btnAnyadir.disabled = false;
+
+
+    })
+    
+}
+
+// Función constructora CancelarHandle
+function CancelarHandle(form) {
+
+  this.form = form;
+  let btnCancelar = this.currentTarget
+  this.btnAnyadir = btnAnyadir
+  // Método handleEvent de function CancelarHandl
+  this.handleEvent = function(){
+      // Borrar contenido del form
+      this.form.reset();
+
+      // Habilitar botón cancelar
+      btnCancelar.removeAttribute('disabled')
+
+      btnAnyadir.removeAttribute('disabled')
+  };
+}
+
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
