@@ -61,9 +61,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
 }
 
-let date = Date();
-
-console.log(date);
 
 function listarGastos(){
     return gastos;
@@ -76,8 +73,9 @@ function anyadirGasto(gasto){
 }
 
 function borrarGasto(id){
-    gastos.splice(id, 1);
+    gastos.splice(gastos.findIndex(item => item.id == id), 1)
 }
+
 function calcularTotalGastos(){
 
 }
