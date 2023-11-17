@@ -156,4 +156,31 @@ function nuevoGastoWeb() {
 	repintar()
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb }
+// Función constructora EditarHandle con un único método handleEvent que se encargará de manejar el evento 'click'
+function EditarHandle() {
+	this.handleEvent = function (event) {
+		// Recogemos los valores del nuevo gasto con prompt
+		let descripcion = prompt("Introduce la descripción del gasto", this.gasto.gestionPresupuesto.descripcion)
+		let valor = prompt("Introduce el valor del gasto", this.gasto.gestionPresupuesto.valor)
+		let fecha = prompt("Introduce la fecha del gasto", this.gasto.gestionPresupuesto.fecha)
+		//
+		let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.gestionPresupuesto.etiquetasTiene.join(", "))
+
+		// Transformamos el valor a número
+		valor = parseFloat(valor)
+
+		// Convertimos la cadena de texto de etiquetas en un array
+		let arrayEtiquetas = etiquetas.split(", ")
+
+		// Actualizamos el gasto con los nuevos datos llamando a los métodos correspondientes
+		this.gasto.gestionPresupuesto.actualizarDescripcion(descripcion)
+		this.gasto.gestionPresupuesto.actualizarValor(valor)
+		this.gasto.gestionPresupuesto.actualizarFecha(fecha)
+		this.gasto.gestionPresupuesto.anyadirEtiquetas(arrayEtiquetas)
+
+		// Llamos a la función repintar para mostrar la información actualizada en el HTML
+		repintar()
+	}
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle }
