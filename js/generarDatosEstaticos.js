@@ -75,3 +75,7 @@ let gastos4 = gestionPresupuesto.filtrarGastos(filtro4)
 for (let gasto of gastos4) {
 	gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
 }
+
+// Manejamos el evento 'click' en el botón 'actualizarpresupuesto'
+let $eventoPrespuesto = document.getElementById("actualizarpresupuesto")
+$eventoPrespuesto.addEventListener("click", gestionPresupuestoWeb.actualizarPresupuestoWeb)

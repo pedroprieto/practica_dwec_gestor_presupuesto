@@ -115,4 +115,19 @@ function repintar() {
 	mostrarGastoWeb("listado-gastos-completo", listaGastos)
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb }
+// Función nuevoGastoWeb manejadora de eventos del botón 'actualizarpresupuesto'
+function actualizarPresupuestoWeb() {
+	// Recogemos el valor del nuevo presupuesto con un prompt
+	let presupuesto = prompt("Introduce el nuevo presupuesto", 0)
+
+	// Transformamos la variable presupuesto de string a número
+	presupuesto = parseInt(presupuesto)
+
+	// Actualizamos el presupuesto con el nuevo valor
+	gestionPresupuesto.actualizarPresupuesto(presupuesto)
+
+	// Llamos a la función repintar para mostrar la información actualizada en el HTML
+	repintar()
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb }
