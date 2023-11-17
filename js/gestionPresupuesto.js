@@ -1,88 +1,80 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
+// Asignación e inicialización de la variable presupuesto
 let presupuesto = 0;
-console.log("Presupuesto igual a " + presupuesto);
+console.log("Presupuesto inicial igual a " + presupuesto);
 
 
-// EJECUCIÓN DEL PROGRAMA: LLAMADA A LAS FUNCIONES
-let numero = actualizarPresupuesto(2000);
+// EJECUCIÓN DEL PROGRAMA
 
-console.log(mostrarPresupuesto(numero));
+// Llamada a las funciones
+actualizarPresupuesto(0);
+mostrarPresupuesto()
 
+// Se crea el objeto
+let gasto = new CrearGasto("Ejemplo de gasto 1", 20.33);
 
-// Primera llamada a la función crearGasto: crea el objeto.
-let gasto1 = new CrearGasto("Gastos ordinarios", 350);
-gasto1.mostrarGasto();
-gasto1.actualizarDescripcion("Gastos imprevistos");
+// Ejecución de las funciones del objeto
+console.log(gasto.mostrarGasto());
+gasto.actualizarDescripcion("Gastos imprevistos");
+gasto.actualizarValor(100.58);
+console.log(gasto.mostrarGasto());
+gasto.actualizarDescripcion("Gasto erróneo");
+gasto.actualizarValor(-200);
+console.log(gasto.mostrarGasto());
+
 
 // FUNCIONES
 
-// 1 función actualizarPresupuesto
+// Función actualizarPresupuesto
 function actualizarPresupuesto(numero) {
     if ((numero >= 0) && (!isNaN(numero))){
         presupuesto = numero
         return numero;
-    } else if (numero == presupuesto){
-        return 0;
-    }
-    else {
+    } else {
         console.log("Error: número menor que cero o carácter no numérico");
         return -1;
     }
 }
 
-
+// Función mostrarPresupuesto
 function mostrarPresupuesto() {
-    if ((numero >= 0) && (!isNaN(numero))){
         return "Tu presupuesto actual es de " + presupuesto + " €";
-    }
 }
 
+// Función CrearGasto
 function CrearGasto(descripcion, valor) {
-        let gasto = {
-            descripcion: descripcion,
-            valor: valor,
 
-            mostrarGasto: function(){
-                console.log("Gasto correspondiente a " + this.descripcion + " con valor " + this.valor);
-            },
+            this.descripcion = descripcion;
+            this.valor = (valor >=0) ? valor : 0;
 
-            actualizarDescripcion: function (nuevaDescripcion){
+        // Este bloque if no pasa el test
+        /* if (valor < 0){
+                this.valor = 0;
+            } else {
+                this.valor = valor;
+            } */
+
+            this.mostrarGasto = function(){
+                //console.log("Gasto correspondiente a " + this.descripcion + " con valor " + this.valor);
+                return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+            }
+
+            this.actualizarDescripcion = function (nuevaDescripcion){
                 this.descripcion = nuevaDescripcion;
-                this.mostrarGasto();
-            },
+            }
 
-            actualizarValor: function (nuevoValor){
+            this.actualizarValor = function (nuevoValor){
                 if ((nuevoValor >= 0) && (!isNaN(nuevoValor))){
                     this.valor = nuevoValor;
-                }  
-                this.mostrarGasto();
-            }      
+                } else {
+                    return 0;
+                }
+              }      
 
 
         };
-
-        if (gasto.valor < 0){
-            gasto.valor = 0;
-            return gasto;
-        }
-
-        return gasto;
-    }
-
-/*
-
-        
-
-
-        gasto.
-
- 
-        }*/
-
-
-
 
 
 
