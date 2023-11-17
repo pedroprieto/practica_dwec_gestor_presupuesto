@@ -123,7 +123,7 @@ function actualizarPresupuestoWeb() {
 	let presupuesto = prompt("Introduce el nuevo presupuesto", 0)
 
 	// Transformamos la variable presupuesto de string a número
-	presupuesto = parseInt(presupuesto)
+	presupuesto = parseFloat(presupuesto)
 
 	// Actualizamos el presupuesto con el nuevo valor
 	gestionPresupuesto.actualizarPresupuesto(presupuesto)
@@ -132,4 +132,28 @@ function actualizarPresupuestoWeb() {
 	repintar()
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb }
+// Función nuevoGastoWeb manejadora de eventos del botón 'anyadirgasto'
+function nuevoGastoWeb() {
+	// Recogemos los valores del nuevo gasto con prompt
+	let descripcion = prompt("Introduce la descripción del gasto")
+	let valor = prompt("Introduce el valor del gasto")
+	let fecha = prompt("Introduce la fecha del gasto")
+	let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)")
+
+	// Transformamos el valor a número
+	valor = parseFloat(valor)
+
+	// Convertimos la cadena de texto de etiquetas en un array
+	let arrayEtiquetas = etiquetas.split(", ")
+
+	// Creamos el nuevo gasto con los datos proporcionados
+	let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arrayEtiquetas)
+
+	// Añadimos el gasto
+	gestionPresupuesto.anyadirGasto(nuevoGasto)
+
+	// Llamos a la función repintar para mostrar la información actualizada en el HTML
+	repintar()
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb }

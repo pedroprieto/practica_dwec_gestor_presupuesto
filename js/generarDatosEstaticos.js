@@ -79,3 +79,7 @@ for (let gasto of gastos4) {
 // Manejamos el evento 'click' en el botón 'actualizarpresupuesto'
 let $eventoPrespuesto = document.getElementById("actualizarpresupuesto")
 $eventoPrespuesto.addEventListener("click", gestionPresupuestoWeb.actualizarPresupuestoWeb)
+
+// Manejamos el evento 'click' en el botón 'anyadirgasto'
+let $eventoAnyadirGasto = document.getElementById("anyadirgasto")
+$eventoAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb)
