@@ -18,20 +18,20 @@ function mostrarGastoWeb(idElemento, gasto) {
 	// Creamos un div con la clase gasto-descripcion y lo añadimos al div gasto
 	let divDescripcion = document.createElement("div")
 	divDescripcion.classList.add("gasto-descripcion")
-	divDescripcion.textContent = "DESCRIPCIÓN DEL GASTO :" + gasto.descripcion
+	divDescripcion.textContent = gasto.descripcion
 	divGasto.appendChild(divDescripcion)
 
 	// Creamos un div con la clase gasto-fecha y lo añadimos al div gasto
 	let divFecha = document.createElement("div")
 	divFecha.classList.add("gasto-fecha")
 	let fecha = new Date(gasto.fecha).toLocaleDateString() // parse de timestamp a fecha corta
-	divFecha.textContent = "FECHA DEL GASTO: " + fecha
+	divFecha.textContent = fecha
 	divGasto.appendChild(divFecha)
 
 	// Creamos un div con la clase gasto-valor y lo añadimos al div gasto
 	let divValor = document.createElement("div")
 	divValor.classList.add("gasto-valor")
-	divValor.textContent = "VALOR DEL GASTO :" + gasto.valor
+	divValor.textContent = gasto.valor
 	divGasto.appendChild(divValor)
 
 	// Creamos un div con la clase gasto-etiquetas y lo añadimos al div gasto
@@ -43,9 +43,28 @@ function mostrarGastoWeb(idElemento, gasto) {
 	for (let etiqueta of gasto.etiquetas) {
 		let spanEtiquetas = document.createElement("span")
 		spanEtiquetas.classList.add("gasto-etiquetas-etiqueta")
-		spanEtiquetas.textContent = "Etiqueta :" + etiqueta
+		spanEtiquetas.textContent = etiqueta + ", "
 		divEtiquetas.appendChild(spanEtiquetas)
 	}
+
+	// Creamos un botón con texto 'Editar' de tipo 'button' (<button type="button">Editar</button>) con clase 'gasto-editar'
+	let botonEditar = document.createElement("button")
+	botonEditar.classList.add("gasto-editar")
+	botonEditar.type = "button"
+	botonEditar.textContent = "Editar"
+
+	// Manejador de evento de editar
+	let editarManejador = new EditarHandle()
+
+	// Asignamos la propiedad gasto del objeto creado al objeto gasto del parámetro
+	editarManejador.gasto = gasto
+
+	// Añaadimos el evento 'click' al botón 'Editar' con el manejador de evento editarManejador
+	botonEditar.addEventListener("click", editarManejador)
+
+	// Añadimos el botón al DOM a continuación de las etiquetas
+	divGasto.appendChild(botonEditar)
+
 	// Agregamos al contenedor el div gasto creado con todos sus elementos
 	contenedor.appendChild(divGasto)
 }
@@ -160,11 +179,10 @@ function nuevoGastoWeb() {
 function EditarHandle() {
 	this.handleEvent = function (event) {
 		// Recogemos los valores del nuevo gasto con prompt
-		let descripcion = prompt("Introduce la descripción del gasto", this.gasto.gestionPresupuesto.descripcion)
-		let valor = prompt("Introduce el valor del gasto", this.gasto.gestionPresupuesto.valor)
-		let fecha = prompt("Introduce la fecha del gasto", this.gasto.gestionPresupuesto.fecha)
-		let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.gestionPresupuesto.etiquetasTiene.join(", "))
-
+		let descripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion)
+		let valor = prompt("Introduce el valor del gasto", this.gasto.valor)
+		let fecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd", new Date(this.gasto.fecha).toISOString().slice(0, 10))
+		let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.etiquetas.join(", "))
 		// Transformamos el valor a número
 		valor = parseFloat(valor)
 
@@ -172,10 +190,15 @@ function EditarHandle() {
 		let arrayEtiquetas = etiquetas.split(", ")
 
 		// Actualizamos el gasto con los nuevos datos llamando a los métodos correspondientes
-		this.gasto.gestionPresupuesto.actualizarDescripcion(descripcion)
-		this.gasto.gestionPresupuesto.actualizarValor(valor)
-		this.gasto.gestionPresupuesto.actualizarFecha(fecha)
-		this.gasto.gestionPresupuesto.anyadirEtiquetas(arrayEtiquetas)
+		this.gasto.actualizarDescripcion(descripcion)
+		this.gasto.actualizarValor(valor)
+		this.gasto.actualizarFecha(fecha)
+
+		// Borramos las antiguas etiquetas
+		this.gasto.borrarEtiquetas(...this.gasto.etiquetas)
+
+		// Añadimos las nuevas etiquetas
+		this.gasto.anyadirEtiquetas(...arrayEtiquetas)
 
 		// Llamos a la función repintar para mostrar la información actualizada en el HTML
 		repintar()
