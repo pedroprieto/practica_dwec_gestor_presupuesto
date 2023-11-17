@@ -163,7 +163,6 @@ function EditarHandle() {
 		let descripcion = prompt("Introduce la descripción del gasto", this.gasto.gestionPresupuesto.descripcion)
 		let valor = prompt("Introduce el valor del gasto", this.gasto.gestionPresupuesto.valor)
 		let fecha = prompt("Introduce la fecha del gasto", this.gasto.gestionPresupuesto.fecha)
-		//
 		let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.gestionPresupuesto.etiquetasTiene.join(", "))
 
 		// Transformamos el valor a número
@@ -183,4 +182,11 @@ function EditarHandle() {
 	}
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle }
+// Función constructora Borrarhandle con un único método handleEvent que se encargará de manejar el evento 'click'
+function BorrarHandle() {
+	this.handleEvent = function (event) {
+		this.gasto.gestionPresupuesto.borrarEtiquetas(this.etiqueta)
+	}
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle }
