@@ -44,6 +44,7 @@ function mostrarGastoWeb(idElemento, gasto) {
           const spanEtiqueta = document.createElement('span');
           spanEtiqueta.classList.add('gasto-etiquetas-etiqueta');
           spanEtiqueta.textContent = etiqueta;
+          console.log(etiqueta); 
       
           // Agregar un evento de clic para manejar la eliminación de etiquetas
           spanEtiqueta.addEventListener('click', function () {
@@ -209,13 +210,13 @@ function EditarHandleFormulario(gasto, divGasto) {
       let fecha = formulario.querySelector("#fecha").value;
       let etiquetasTexto = formulario.querySelector("#etiquetas").value;
       let etiquetasArr = etiquetasTexto.split(',').map(etiqueta => etiqueta.trim());
-      console.log(etiquetasArr); 
+      //console.log(etiquetasArr); 
       let valorNum = parseFloat(valor); 
       // Actualizar el gasto con los nuevos valores
       this.gasto.actualizarDescripcion(descripcion);
       this.gasto.actualizarValor(valorNum);
       this.gasto.actualizarFecha(fecha);
-      this.gasto.anyadirEtiquetas(etiquetasArr);
+      this.gasto.anyadirEtiquetas(...etiquetasArr);
 
       console.log("fff"); 
 
@@ -257,7 +258,7 @@ function submitHandler(event) {
     const etiquetasArr = etiquetasTexto.split(',').map(etiqueta => etiqueta.trim());
    // Actualizar las propiedades del gasto
    const nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valorFloat, fecha); 
-   nuevoGasto.anyadirEtiquetas(etiquetasArr); 
+   nuevoGasto.anyadirEtiquetas(...etiquetasArr); 
    
    gestionPresupuesto.anyadirGasto(nuevoGasto);
 
