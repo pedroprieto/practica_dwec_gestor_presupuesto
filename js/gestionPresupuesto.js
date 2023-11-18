@@ -66,6 +66,12 @@ Etiquetas:
 - ${etiquetas.join("\n- ")}
 `
     }
+
+    this.actualizarFecha = function(fecha){
+        if(Date.parse(fecha)){
+            this.fecha = Date.parse(fecha);
+        }
+    }
 }
 
 
