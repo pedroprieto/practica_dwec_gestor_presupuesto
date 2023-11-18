@@ -59,6 +59,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.mostrarGastoCompleto = function(){
+        return `${this.mostrarGasto()}.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:
+- ${etiquetas.join("\n- ")}
+`
+    }
 }
 
 
