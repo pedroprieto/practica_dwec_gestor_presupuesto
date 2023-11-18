@@ -1,12 +1,13 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
+//Código de gestor de presupuesto por DVS curso 2023/2024...
 
 let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
 
+
 function actualizarPresupuesto(nuevoPresu) {
-    if (nuevoPresu >= 0){
+    if (nuevoPresu >= 0){  //Comprobamos que el presupuesto sea no negativo...
         presupuesto = nuevoPresu;
         return nuevoPresu;
     }
@@ -18,10 +19,10 @@ function actualizarPresupuesto(nuevoPresu) {
 }
 
 function mostrarPresupuesto() {
-    return `Tu presupuesto actual es de ${presupuesto} €`;
+    return `Tu presupuesto actual es de ${presupuesto} €`; //Mostramos el presupuesto...
 }
 
-function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {  //Constructor con los parámetros demandados, incluido el array variable de etiquetas
 
     //Parámetros por orden de aparición
 
@@ -34,32 +35,32 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.valor = 0;
     }
 
-    let date = Date.parse(fecha); //Con el date parse nos aseguramos el tipo timestamp
 
-    if(isNaN(date)){       //Esta comprobación es por que en caso de no ser válida la fecha, se devolveria un NaN
-        this.fecha = Date.parse(new Date());
+
+    if(Date.parse(fecha)){ //Aprovechamos que los parse suelen devolver un bool, aplicando el que nos han pedido
+        this.fecha = Date.parse(fecha);       //Si se cumple, lo usamos como fecha
     }
     else{
-        this.fecha = date;
+        this.fecha = Date.parse(new Date()); //Si no se cumple, cogemos la fecha del momento
     }
 
     this.etiquetas = etiquetas;
 
     this.mostrarGasto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €` //Método que nos cuenta un poco del gasto
     }
 
-    this.actualizarDescripcion = function(descripcion){
+    this.actualizarDescripcion = function(descripcion){ //Podemos actualizar la descripción
         this.descripcion = descripcion;
     }
 
-    this.actualizarValor = function(valor){
+    this.actualizarValor = function(valor){ //Con este método podríamos actualizar el valor del gasto
         if (valor >= 0){
             this.valor = valor;
         }
     }
 
-    this.mostrarGastoCompleto = function(){
+    this.mostrarGastoCompleto = function(){ //Una muestra algo más completa sobre el gasto
         return `${this.mostrarGasto()}.
 Fecha: ${new Date(this.fecha).toLocaleString()}
 Etiquetas:
@@ -67,35 +68,52 @@ Etiquetas:
 `
     }
 
-    this.actualizarFecha = function(fecha){
-        if(Date.parse(fecha)){
+    this.actualizarFecha = function(fecha){ //También podemos actualizar la fecha
+        if(Date.parse(fecha)){  //La parseamos, para que no se cambie en caso de no ser timestamp correcta...
             this.fecha = Date.parse(fecha);
         }
     }
-}
+
+    this.anyadirEtiquetas = function(...etiquetas){ //Anyadimos etiquetas
+        etiquetas.forEach((item) => {
+            if (!this.etiquetas.includes(item)){ //Nos aseguramos de que, en caso de que nuestro array de etiquetas incluya alguna de las que queremos añadir, no lo haga
+                this.etiquetas.push(item);
+            }
+        })
+    }
+
+    this.borrarEtiquetas = function(...etiquetas){ //Borramos etiquetas
+        etiquetas.forEach((item, index) => {    
+            if(this.etiquetas.includes(item)){ //En este caso, lo que tratamos es de se ordene borrar solo en caso de que exista el objetivo de eliminación
+                this.etiquetas.splice(this.etiquetas.indexOf(item), 1);
+            }
+        })
+
+    }
+
+}   
 
 
 function listarGastos(){
-    return gastos;
+    return gastos; //Muy sencillo, listamos los gastos "a pelo"
 }
 
-function anyadirGasto(gasto){
+function anyadirGasto(gasto){  //Anyadimos un gasto nuevo al array gastos, con su correspondiente id, que será único e irrepetible
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
 }
 
-function borrarGasto(id){
-    gastos.splice(gastos.findIndex(item => item.id == id), 1)
+function borrarGasto(id){ //Podemos borrar un gasto, localizando por su id, ya que es único como hemos comentado
+    gastos.splice(gastos.findIndex(item => item.id == id), 1) //Aplicamos un splice con deleteCount de 1, en el indice donde coincida la propiedad id
 }
 
-function calcularTotalGastos(){
-    return gastos.reduce((sum, current) => sum + current.valor, 0);
+function calcularTotalGastos(){ //Podemos llevarnos el susto, al calcular el total de todos los gastos...
+    return gastos.reduce((sum, current) => sum + current.valor, 0); //Inicializamos el contador sum a 0, a la que vamos añadiendo cada propiedad valor de cada parametro
 }
 
-function calcularBalance(){
-    let total = calcularTotalGastos();
-    return presupuesto - total;
+function calcularBalance(){ //Un simple balance, en el que restamos los gastos totales aprovechando la función que lo calcula, al presupuesto que tenemos
+    return presupuesto - calcularTotalGastos();
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
