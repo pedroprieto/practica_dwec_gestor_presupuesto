@@ -4,11 +4,12 @@
 // Asignación e inicialización de la variable presupuesto
 let presupuesto = 0;
 console.log("Presupuesto inicial igual a " + presupuesto);
-
+let gastos = [];
+let idGasto = 0;
 
 // EJECUCIÓN DEL PROGRAMA
 
-// Llamada a las funciones
+// Llamada a las funciones de la práctica: Fundamentos de JavaScript I
 actualizarPresupuesto(0);
 mostrarPresupuesto()
 
@@ -24,8 +25,12 @@ gasto.actualizarDescripcion("Gasto erróneo");
 gasto.actualizarValor(-200);
 console.log(gasto.mostrarGasto());
 
+// Llamada a las funciones de la práctica: Fundamentos de JavaScript II
+
 
 // FUNCIONES
+
+// FUNCIONES de la práctica: Fundamentos de JavaScript I
 
 // Función actualizarPresupuesto
 function actualizarPresupuesto(numero) {
@@ -76,6 +81,24 @@ function CrearGasto(descripcion, valor) {
 
         };
 
+// FUNCIONES de la práctica: Fundamentos de JavaScript II
+
+        function listarGastos(){
+
+        }
+        function anyadirGasto(){
+
+        }
+        function borrarGasto(){
+
+        } 
+        function calcularTotalGastos(){
+
+        }
+        function calcularBalance(){
+
+        }
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -84,5 +107,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto, 
+    calcularTotalGastos,
+    calcularBalance
 }
