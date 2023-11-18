@@ -14,7 +14,7 @@ actualizarPresupuesto(0);
 mostrarPresupuesto()
 
 // Se crea el objeto
-let gasto = new CrearGasto("Ejemplo de gasto 1", 20.33);
+let gasto = new CrearGasto("Ejemplo de gasto 1", 20.33, "Oct 06 2021", "ordinario","extraordinario");
 
 // Ejecución de las funciones del objeto
 console.log(gasto.mostrarGasto());
@@ -24,7 +24,12 @@ console.log(gasto.mostrarGasto());
 gasto.actualizarDescripcion("Gasto erróneo");
 gasto.actualizarValor(-200);
 console.log(gasto.mostrarGasto());
-
+console.log(`La fecha es ${gasto.fecha}`);
+console.log(`Etiquetas que hay ${gasto.etiquetas.length}`)
+gasto.anyadirGasto("ordinario","extraordinario");
+for (let gastoTipo of gasto.etiquetas){
+    console.log(gastoTipo);
+}
 // Llamada a las funciones de la práctica: Fundamentos de JavaScript II
 
 
@@ -49,18 +54,22 @@ function mostrarPresupuesto() {
 }
 
 // Función CrearGasto
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+
+            // Propiedades del objeto crearGasto
 
             this.descripcion = descripcion;
             this.valor = (valor >=0) ? valor : 0;
 
-        // Este bloque if no pasa el test
-        /* if (valor < 0){
-                this.valor = 0;
-            } else {
-                this.valor = valor;
-            } */
+            this.fecha = fecha;
+            //this.fecha = new Date();
+            this.fecha = (Date.parse(fecha)) ? new Date(fecha) : new Date;
+            this.etiquetas = [];
+            this.etiquetas = (etiquetas.length > 0) ? etiquetas : [];
 
+
+            // Métodos del objeto crearGasto
+            //1º ejercicio
             this.mostrarGasto = function(){
                 //console.log("Gasto correspondiente a " + this.descripcion + " con valor " + this.valor);
                 return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
@@ -76,7 +85,18 @@ function CrearGasto(descripcion, valor) {
                 } else {
                     return 0;
                 }
-              }      
+              }     
+              
+            // 2º ejercicio
+
+            this.anyadirGasto = function(...lleganTags){
+                    this.etiquetas.push(lleganTags);
+            }
+
+            this.borrarGasto = function(id){
+
+            }
+
 
 
         };
@@ -84,7 +104,7 @@ function CrearGasto(descripcion, valor) {
 // FUNCIONES de la práctica: Fundamentos de JavaScript II
 
         function listarGastos(){
-
+            return gastos;
         }
         function anyadirGasto(){
 
