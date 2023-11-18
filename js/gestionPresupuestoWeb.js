@@ -6,7 +6,7 @@ function mostrarDatoEnId(idElemento, valor) {
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
-        let elemento = document.querySelector(`#${idElemento}`);
+    let elemento = document.querySelector(`#${idElemento}`);
     let texto = `
         <div class="gasto">
             <div class="gasto-descripcion">${gasto.descripcion}</div>
@@ -25,6 +25,7 @@ function mostrarGastoWeb(idElemento, gasto) {
             <button type="button" class="gasto-borrar" id="${idElemento}-borrargasto-${gasto.id}">
                 Borrar
             </button>
+            <button class="gasto-editar-formulario" type="button">Editar (formulario)</button>
         </div>`;
 
     elemento.insertAdjacentHTML('beforeend', texto);
@@ -127,6 +128,49 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
         repintar();
     }
 }
+
+function nuevoGastoWebFormulario (e) {
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    let formulario = plantillaFormulario.querySelector("form");
+
+    function enviarForm(e) {
+        e.preventDefault();
+        let formulario = e.currentTarget;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = Number(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+        etiquetas = etiquetas.split(",");
+
+        let gasto = new gp.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+        gp.anyadirGasto(gasto);
+        repintar();
+        let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+        botonAnyadirGastoForm.removeAttribute("disabled");
+    }
+
+    formulario.addEventListener("submit", enviarForm);
+
+    function CancelarHandle (formulario, botonAnyadirGastoForm) {
+        this.formulario = formulario;
+        this.botonAnyadirGastoForm = botonAnyadirGastoForm;
+        this.handleEvent = function() {
+            this.formulario.remove();            
+            this.botonAnyadirGastoForm.removeAttribute("disabled");
+        }
+    }
+
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    let botonAnyadirGastoForm = e.currentTarget;
+    botonCancelar.addEventListener("click", new CancelarHandle(formulario, botonAnyadirGastoForm));
+
+    botonAnyadirGastoForm.setAttribute("disabled", "");
+    let controlesPrincipales = document.getElementById("controlesprincipales");
+    controlesPrincipales.appendChild(plantillaFormulario);
+}
+
+let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 
 export {
     mostrarDatoEnId,
