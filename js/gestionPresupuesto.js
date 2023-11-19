@@ -25,6 +25,8 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
     this.valor = valor >= 0 ? valor : 0;
+    this.fecha = new Date();
+    this.etiquetas = [];
     
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -39,10 +41,44 @@ function CrearGasto(descripcion, valor) {
             this.valor = valor;
         }
     }
+
+    this.mostrarGastoCompleto = function() {
+        let mensaje = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €."
+                    + "\nFecha: " + this.fecha.toLocaleString
+                    + "\nEtiquetas:";
+        
+        for (let etiqueta of this.etiquetas) {
+            mensaje += "\n - " + etiqueta;
+        }
+
+        return mensaje;
+    }
+
+    this.actualizarFecha = function(fecha) {
+        if (Date.parse(fecha)) {
+            this.fecha = Date.parse(fecha);
+        }
+    }
+
+    this.anyadirEtiquetas = function(...etiquetas) {
+        for (let etiqueta of etiquetas) {
+            if (!this.etiquetas.includes(etiqueta)) {
+                this.etiquetas.push(etiqueta);
+            }
+        }
+    }
+
+    this.borrarEtiquetas = function(...etiquetas) {
+        for (let etiqueta of etiquetas) {
+            if (this.etiquetas.includes(etiqueta)) {
+                this.etiquetas.splice(this.etiquetas.indexOf(etiqueta), 1);
+            }
+        }
+    }
 }
 
 function listarGastos() {
-
+    return gastos;
 }
 
 function anyadirGasto() {
@@ -58,7 +94,7 @@ function calcularTotalGastos() {
 }
 
 function calcularBalance() {
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
