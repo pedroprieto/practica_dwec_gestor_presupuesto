@@ -1,4 +1,6 @@
 //Este fichero contendrá las utilidades necesarias para mostrar los datos de la aplicación
+//Importar libreria de gestionPresupuesto
+import * as gestPresupuesto from './gestionPresupuesto.js';
 
 //Funciones
 //Función de dos parámetros que se encargará de añadir dentro del elemento HTML 
@@ -63,7 +65,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     divAgrupacion.className ="agrupacion";
     //<h1>Gastos agrupados por mes</h1>
     let h1Periodo = document.createElement("h1");
-    h1Periodo.innerHTML = `Gastos agrupados por ${periodo} `;
+    h1Periodo.innerHTML = `Gastos agrupados por ${periodo}`;
     divAgrupacion.append(h1Periodo);
 
     //agrup contendrá el resultado de agrupar el total de gastos por período temporal 
@@ -88,6 +90,39 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     //Periodo de agrupación segun periodo pasado
     let agrupacionPeriodo = document.getElementById(idElemento);
     agrupacionPeriodo.append(divAgrupacion);
+
+    //Crear una función repintar para actualizar la página
+    function repintar () {
+        //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+        mostrarDatoEnId("presupuesto" , gestPresupuesto.mostrarPresupuesto());
+        
+        //Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+        mostrarDatoEnId("gastos-totales" , gestPresupuesto.calcularTotalGastos());
+
+        //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+        mostrarDatoEnId("balance-total", gestPresupuesto.calcularBalance());
+
+        /*Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información.
+        Puedes utilizar innerHTML para borrar el contenido de dicha capa.*/
+        document.getElementById('listado-gastos-completo').innerHTML = "";
+
+        //Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+        for (let gastos of gestPresupuesto.listarGastos()){
+            mostrarGastoWeb('listado-gastos-completo', gastos);
+        }
+    }
+    //Función actualizarPresupuestoWeb
+    function actualizarPresupuestoWeb () {
+        //Pedir al usuario que introduzca un presupuesto mediante un prompt.
+        let nuevoPresupuesto = Number(prompt("¿Cual es tú nuevo presupuesto?"));
+        //Actualicar el presupuesto (función actualizarPresupuesto)
+        gestPresupuesto.actualizarPresupuesto(nuevoPresupuesto);
+        //Llamar a la función repintar 
+        repintar();
+
+    }
+    // manejadora del evento click del botón actualizarpresupuesto mediante addEventListener
+    document.getElementById("actualizarpresupuesto").addEventListener("click" , actualizarPresupuestoWeb);
 
 }
 
