@@ -73,6 +73,26 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        let periodoAgrupacion = '';
+
+        switch (periodo) {
+            case 'anyo':
+                periodoAgrupacion = new Date(this.fecha).toISOString().slice(0,4);
+                break;
+
+            case 'mes':
+                periodoAgrupacion = new Date(this.fecha).toISOString().slice(0, 7);
+                break;
+
+            case 'dia':
+                periodoAgrupacion = new Date(this.fecha).toISOString().slice(0, 10);
+                break;
+        }
+
+        return periodoAgrupacion;
+    }
+
     // Propiedades
     this.descripcion = descripcion;
     this.valor = valor >= 0 ? valor : 0;
@@ -119,7 +139,7 @@ function filtrarGastos() {
 }
 
 function agruparGastos() {
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
