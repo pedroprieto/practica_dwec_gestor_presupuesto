@@ -22,11 +22,11 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = valor >= 0 ? valor : 0;
-    this.fecha = new Date();
-    this.etiquetas = [];
+    this.fecha = Date.parse(fecha) ? Date.parse(fecha) : new Date().getTime();
+    this.etiquetas = etiquetas ?? [];
     
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -43,12 +43,12 @@ function CrearGasto(descripcion, valor) {
     }
 
     this.mostrarGastoCompleto = function() {
-        let mensaje = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €."
-                    + "\nFecha: " + this.fecha.toLocaleString
-                    + "\nEtiquetas:";
+        let mensaje = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\n"
+                    + "Fecha: " + new Date(this.fecha).toLocaleString() + "\n"
+                    + "Etiquetas:\n";
         
         for (let etiqueta of this.etiquetas) {
-            mensaje += "\n - " + etiqueta;
+            mensaje += "- " + etiqueta + "\n";
         }
 
         return mensaje;
