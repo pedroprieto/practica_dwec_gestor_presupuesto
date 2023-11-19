@@ -55,6 +55,8 @@ function mostrarGastoWeb(idElemento, gasto){
         spanEtiqueta.addEventListener("click", borrarEtiqueta); // se añade sobre cada etiqueta el evento
     }
 
+    // Crear div de los botones
+
     //Boton Editar
     let btnEditar = document.createElement("button");
     btnEditar.type = "button";
@@ -63,7 +65,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let editar = new EditarHandle();
     editar.gasto = gasto; // Establecer la propiedad gasto del objeto creado al objeto gasto
     btnEditar.addEventListener('click', editar);
-    contenedor.append(btnEditar);
+    divGasto.append(btnEditar);
 
     //Boton Borrar
     let btnBorrar = document.createElement("button");
@@ -73,7 +75,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let borrar = new BorrarHandle();
     borrar.gasto = gasto;
     btnBorrar.addEventListener("click", borrar)
-    contenedor.append(btnBorrar);
+    divGasto.append(btnBorrar);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let contenedor = document.getElementById(idElemento);
@@ -171,8 +173,11 @@ function EditarHandle(){
         let valorNumerico = parseFloat(valor);
         let etiquetasArray = etiquetas.split(",");
 
-        let gasto = new gestPres.CrearGasto(descripcion, valorNumerico, fecha, ...etiquetasArray);
-        gestPres.anyadirGasto(gasto);
+        // los metodos de actualizar vienen de gestionPresupuesto
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valorNumerico);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetasArray);
 
         repintar();
     }
