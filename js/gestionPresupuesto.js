@@ -236,11 +236,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.obtenerPeriodoAgrupacion = function (periodo) {
         let fecha = new Date(this.fecha);
         if ( periodo =="dia") {
-            return fecha.toISOString().substring(0 , 10);
+            return fecha.toISOString().substring(0 , 11);
         } else if (periodo == "mes") {
-            return fecha.toISOString().substring(0 , 7);
+            return fecha.toISOString().substring(0 , 8);
         } else if (periodo == "anyo") {
-            return fecha.toISOString().substring(0, 4);
+            return fecha.toISOString().substring(0, 5);
         }
 
     }
