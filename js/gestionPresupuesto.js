@@ -31,7 +31,7 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
+function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
     this.descripcion=descripcion;
     this.valor=valor;
     this.etiquetas=etiquetas;
@@ -90,9 +90,7 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         for (let i = 0;i<etiqueta.length;i++)
        {
         this.funcionEtiquetas(etiqueta[i])
-            
-            
-            
+                       
        }
        
        return (`${etiquetas}`)
@@ -104,11 +102,11 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
         {
          
              if( etiquetas[i]==etiqueta  )
-             {
+            {
                  
               etiquetas.splice(i,1)
              
-             }
+            }
              
              
         }
@@ -136,13 +134,21 @@ function CrearGasto( descripcion, valor, fecha, ...etiquetas) {
 
 
 }
-
-function listarGastos(){
-return (`${gastos}`)
-}
 function anyadirGasto(objetoGasto){
+objetoGasto.id=idGasto;
+idGasto++;
+gastos.push(objetoGasto);
+}
+
+function llamarGasto(objetoGasto){
 
 }
+function listarGastos(){
+    
+    return (gastos)
+
+}
+
 function borrarGasto(){}
 function calcularTotalGastos(){}
 function calcularBalance(){}

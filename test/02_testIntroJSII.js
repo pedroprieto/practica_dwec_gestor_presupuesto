@@ -162,6 +162,7 @@ describe("Función anyadirGasto", function() {
         let gasto3 = new CrearGasto("descripción del gasto", valor3, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
         assert.lengthOf(listarGastos(), 0);
         anyadirGasto(gasto1);
+
         assert.lengthOf(listarGastos(), 1);
         assert.equal(listarGastos()[0].id, 0, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
         anyadirGasto(gasto2);
