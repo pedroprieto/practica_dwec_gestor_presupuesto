@@ -23,11 +23,8 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
-    this.descripcion = descripcion;
-    this.valor = valor >= 0 ? valor : 0;
-    this.fecha = Date.parse(fecha) ? Date.parse(fecha) : new Date().getTime();
-    this.etiquetas = etiquetas ?? [];
-    
+
+    // Métodos
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
@@ -75,6 +72,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
     }
+
+    // Propiedades
+    this.descripcion = descripcion;
+    this.valor = valor >= 0 ? valor : 0;
+    this.fecha = Date.parse(fecha) ? Date.parse(fecha) : new Date().getTime();
+    this.etiquetas = [];
+    this.anyadirEtiquetas(...etiquetas);    // Como se llama a un método del propio constructor dicho método debe encontrarse ANTES de la llamada
+
 }
 
 function listarGastos() {
