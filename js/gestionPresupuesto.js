@@ -187,7 +187,7 @@ function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta) {
 
         let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
 
-        gastoTotal[periodoAgrupacion] = gastoTotal[periodoAgrupacion] ? gastoTotal[periodoAgrupacion] + gasto.valor : gasto.valor;
+        gastoTotal[periodoAgrupacion] = gastoTotal[periodoAgrupacion] + gasto.valor || gasto.valor;
 
         return gastoTotal;
         
