@@ -58,7 +58,13 @@ function calcularBalance() {
     return presupuesto - gastosTotal;
 }
 
+function filtrarGastos() {
+    
+}
 
+function agruparGastos() {
+    
+}
 
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
@@ -132,6 +138,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
            return !etiquetasBorrar.includes(e) 
         })   
     }
+
+    this.obtenerPeriodoAgrupacion = function (params) {
+        
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -145,5 +155,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
