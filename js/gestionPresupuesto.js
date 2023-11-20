@@ -63,7 +63,7 @@ function filtrarGastos(opciones) {
     return gastos.filter(function(gasto) {
         let resultado = true;
 
-        if (opciones.fechaDesde)
+        if (opciones.fechaDesde) //compruebo fecha minima
         {
             if (gasto.fecha < Date.parse(opciones.fechaDesde))
             {
@@ -73,7 +73,7 @@ function filtrarGastos(opciones) {
         }
     
         if (opciones.fechaHasta)
-        
+
         {
             if(gasto.fecha > Date.parse(opciones.fechaHasta))
             {
@@ -133,14 +133,16 @@ function filtrarGastos(opciones) {
 
 function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta) {
     
+    //utilizo la funcion filtrarGastos
     let gastosFiltrados = filtrarGastos({
         etiquetasTiene: etiquetas, 
         fechaDesde: fechaDesde,
         fechaHasta: fechaHasta
     })
-        
+        //reduce: itera sobre los gastos y realiza la agrupacion
     let gastosAgrupacion = gastosFiltrados.reduce(function(acc, gasto){
-
+        
+        //obtengo el periodoDeAgrupacion para cada gasto utilizando la f(x) obtenerPeriodoAgrup.
         let periodoAgrupacio = gasto.obtenerPeriodoAgrupacion(periodo)
 
         if(!acc[periodoAgrupacio]){
@@ -149,10 +151,11 @@ function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta) {
         
         acc[periodoAgrupacio] += gasto.valor
 
-        return acc
+        return acc //devuelve el acc para la ss iteracion de reduce
 
-    }, {}) 
+    }, {}) //inicio objeto vacio, acc para almacenar los resultados agrupados
 
+    //devuelvo obj. con los resultados agrupados
     return gastosAgrupacion
 }
 
@@ -233,8 +236,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
         let fechaPer;
 
         if (periodo == "dia"){
-            fechaPer = new Date(fecha).toISOString();
-            fechaPer = fechaPer.substring(0,10);
+            fechaPer = new Date(fecha).toISOString(); //obtengo fecha en formato ISO utilizando clase Date
+            fechaPer = fechaPer.substring(0,10); //se extraen los 10 primeros caracteres
             return fechaPer;
         }
         if (periodo == "mes"){
