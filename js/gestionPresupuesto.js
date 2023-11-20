@@ -150,7 +150,15 @@ function borrarGasto(objetoGasto){
         }
     }
 }
+function calcularTotalGastos(){
+let gastosTotales=0;
+    for(let i=0;i<gastos.length;i++)
+    {
+        gastosTotales+=gastos[i].valor
+    }
 
+    return (gastosTotales)
+}
 function llamarGasto(objetoGasto){
 
 }
@@ -161,7 +169,7 @@ function listarGastos(){
 }
 
 
-function calcularTotalGastos(){}
+
 function calcularBalance(){}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
