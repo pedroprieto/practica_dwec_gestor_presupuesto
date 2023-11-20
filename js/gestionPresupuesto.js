@@ -10,7 +10,6 @@ function actualizarPresupuesto(nuevoPresupuesto) {
         presupuesto=nuevoPresupuesto;
         return nuevoPresupuesto;
     }else{
-        
         return -1;       
     }
 }
