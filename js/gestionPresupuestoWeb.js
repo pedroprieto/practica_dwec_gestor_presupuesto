@@ -66,7 +66,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
         divAgrupacion.classList.add('agrupacion');
   
         const h1Periodo = document.createElement('h1');
-        h1Periodo.textContent = 'Gastos agrupados por'+ " " + periodo;
+        h1Periodo.textContent = 'Gastos agrupados por ' + periodo;
         divAgrupacion.appendChild(h1Periodo);
   
         for (const clave in agrup) {

@@ -31,26 +31,35 @@ listGasto.forEach((gasto) => {
     gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
 });
 
-const listarFecha = gestionPresupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechasHasta: '2021-09-30'})
+const listarFecha = gestionPresupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechasHasta: '2021-09-30'});
 listarFecha.forEach((fecha) => {
     const fechaId = 'listado-gastos-filtrado-1';
     gestionPresupuestoWeb.mostrarGastoWeb(fechaId, fecha);
 });
 
-const listarValor = gestionPresupuesto.filtrarGastos({valorMin: 50});
-listarValor.forEach((valor) => {
+/*const gastosMasDe50 = gestionPresupuesto.filtrarGastos({ valorMinimo: 50 });
+gastosMasDe50.forEach((gasto) => {
+    const elementoId = 'listado-gastos-filtrado-2';
+    gestionPresupuestoWeb.mostrarGastoWeb(elementoId, gasto);
+  }); */
+
+
+
+  const listarValor = gestionPresupuesto.filtrarGastos({ valorMinimo: 50 });
+
+  listarValor.forEach((valor) => {
     const valorId = 'listado-gastos-filtrado-2';
     gestionPresupuestoWeb.mostrarGastoWeb(valorId, valor);
-});
+  });
 
 /* Mostrar el listado de gastos de más de 200€ con etiqueta seguros 
    en div#listado-gastos-filtrado-3 (funciones filtrarGastos y mostrarGastoWeb)*/ 
 
-   const listaMas200 = gestionPresupuesto.filtrarGastos({valorMayor: 200});
-    listaMas200.forEach((valor) => {
-        const valorId = 'listado-gastos-filtrado-3';
-        gestionPresupuestoWeb.mostrarGastoWeb(valorId, valor);
-    });
+   const gastosSegurosMasDe200 = gestionPresupuesto.filtrarGastos({ etiquetasTiene: ['seguros'], valorMinimo: 200 });
+gastosSegurosMasDe200.forEach((gasto) => {
+    const elementoId = 'listado-gastos-filtrado-3';
+    gestionPresupuestoWeb.mostrarGastoWeb(elementoId, gasto ); 
+});
 
     /* Mostrar el listado de gastos que tengan las etiquetas comida o transporte de 
        menos de 50€ en div#listado-gastos-filtrado-4 (funciones filtrarGastos y mostrarGastoWeb) */
