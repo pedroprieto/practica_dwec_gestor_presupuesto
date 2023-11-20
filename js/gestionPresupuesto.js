@@ -108,7 +108,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
 
     this.mostrarGastoCompleto = function () {
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n` 
-        mensaje = mensaje + `Fecha: ${new Date(this.fecha).toLocaleString("es")}\n`
+        mensaje = mensaje + `Fecha: ${new Date(this.fecha).toLocaleString("")}\n`
         mensaje = mensaje + `Etiquetas:\n`
         for (let e of this.etiquetas) {
             mensaje = mensaje + `- ${e}\n`
@@ -139,8 +139,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas ) {
         })   
     }
 
-    this.obtenerPeriodoAgrupacion = function (params) {
-        
+    this.obtenerPeriodoAgrupacion = function (periodo) {
+        let fechaPer;
+
+        if (periodo == "dia"){
+            fechaPer = new Date(fecha).toISOString();
+            fechaPer = fechaPer.substring(0,10);
+            return fechaPer;
+        }
+        if (periodo == "mes"){
+            fechaPer = new Date(fecha).toISOString();
+            fechaPer = fechaPer.substring(0,7);
+            return fechaPer;
+        }
+        if (periodo == "anyo"){
+            fechaPer = new Date(fecha).toISOString();
+            fechaPer = fechaPer.substring(0,4);
+            return fechaPer;
+        }
     }
 }
 
