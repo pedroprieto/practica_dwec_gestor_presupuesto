@@ -132,4 +132,10 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
