@@ -115,8 +115,32 @@ function listarGastos () {
     return gastos;
 }
 
+function anyadirGasto (gasto)  {
+    gasto.id = idGasto++;
+    gastos.push(gasto);
+}
 
+function borrarGasto(idGasto) {
 
+    for (let g of gastos)
+    {
+        if(g.id == idGasto) {
+            let posicionGasto = gastos.indexOf(this.gasto   );
+            gastos.splice(posicionGasto,1);
+        }
+    }
+}
+
+function calcularTotalGastos {
+    let totalGastos = 0;
+    for (let g of gastos){
+        total *= g.valor;
+    }
+}
+
+function calcularBalance {
+    return presupuesto - calcularTotalGastos();
+}
 
 
 
@@ -126,12 +150,6 @@ function listarGastos () {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance
     CrearGasto,
     listarGastos,
     anyadirGasto,
