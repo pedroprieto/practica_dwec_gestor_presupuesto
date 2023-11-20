@@ -58,12 +58,102 @@ function calcularBalance() {
     return presupuesto - gastosTotal;
 }
 
-function filtrarGastos() {
+function filtrarGastos(opciones) {
     
-}
+    return gastos.filter(function(gasto) {
+        let resultado = true;
 
-function agruparGastos() {
+        if (opciones.fechaDesde)
+        {
+            if (gasto.fecha < Date.parse(opciones.fechaDesde))
+            {
+                resultado = false;
+            }
+            
+        }
     
+        if (opciones.fechaHasta)
+        
+        {
+            if(gasto.fecha > Date.parse(opciones.fechaHasta))
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.valorMinimo) 
+        {
+            if (gasto.valor < opciones.valorMinimo) 
+            {
+                resultado = false;
+            }
+        }
+        
+        if (opciones.valorMaximo)
+        {
+            if (gasto.valor > opciones.valorMaximo)
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.descripcionContiene)
+        {
+            if (!gasto.descripcion.includes(opciones.descripcionContiene))
+            {
+                resultado = false;
+            }
+        }
+
+        if (opciones.etiquetasTiene)
+        {           
+            let diferenteEtiqueta = true;
+            for (let i in opciones.etiquetasTiene)
+            {
+                for (let j in gasto.etiquetas)
+                {
+                    if (opciones.etiquetasTiene[i] == gasto.etiquetas[j])
+                    {                        
+                        diferenteEtiqueta = false;
+                    }
+                }
+            }
+
+            if (diferenteEtiqueta)
+            {
+                resultado = false;
+            }
+        }
+        
+        return resultado;
+        });
+    }
+     
+
+
+function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta) {
+    
+    let gastosFiltrados = filtrarGastos({
+        etiquetasTiene: etiquetas, 
+        fechaDesde: fechaDesde,
+        fechaHasta: fechaHasta
+    })
+        
+    let gastosAgrupacion = gastosFiltrados.reduce(function(acc, gasto){
+
+        let periodoAgrupacio = gasto.obtenerPeriodoAgrupacion(periodo)
+
+        if(!acc[periodoAgrupacio]){
+            acc[periodoAgrupacio] = 0
+        }
+        
+        acc[periodoAgrupacio] += gasto.valor
+
+        return acc
+
+    }, {}) 
+
+    return gastosAgrupacion
 }
 
 
