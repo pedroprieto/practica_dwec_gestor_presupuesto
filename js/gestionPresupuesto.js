@@ -18,35 +18,29 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+    
+    //PROPIEDADES
     this.descripcion = descripcion;
-
-    if (Number(valor) >= 0){
-        this.valor = Number(valor);
-    }
-    else{
-        this.valor = 0;
-    }
-
-    //fecha viene en formato string
+    this.valor = (valor >= 0) ? valor : 0;
+        
+    //fecha viene en formato string "2021-10-06T13:10"
     //this.fecha tiene que guardar un timestamp
+    let f = Date.parse(fecha);
+    if (isNaN(f)) {
+        this.fecha = Date.now();
+    }
+    else {
+        this.fecha = f;
+    }
+
     if (etiquetas = []){
         this.etiquetas = []
     }
     else {
-        this.etiquetas = etiquetas;
+        this.anyadiretiquetas (...etiquetas);
     }
-
-    if(isNaN(fecha)){
-        this.fecha = Date.now;
-    }
-    else{
-        this.fecha = Date.parse(fecha);
-    }
-
-    //etiquetas
-    
-
 }
+
 
 CrearGasto.prototype.mostrarGasto = function (){
     return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
@@ -70,16 +64,10 @@ CrearGasto.prototype.etiquetas = function(){
 }
 
 function mostrarGastoCompleto() {
-    let objFecha = new Date(this.fecha);
-    return (`
-    Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
-    Fecha: ${objFecha.toLocaleString}
-    Etiquetas:\n`
+    let objFecha = new Date(this.fecha).toLocaleString();
 
-    for (let e of this etiquetas) {
-        texto += `- $(e)\n`
-    }
-    )
+    let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. 
+    Fecha: ${objFecha}`;
 }
 
 function actualizarFecha (actFecha){
@@ -99,7 +87,7 @@ function anyadiretiquetas (...etiquetas) {
     }
 }
 
-function borrarEtiquetas = function(...etiquetas) {
+function borrarEtiquetas (...etiquetas) {
     let nuevoListadoEtiquetas = [];
     for (let etiqueta of this.etiquetas){
         if(etiquetas.indexOf(etiqueta) == -1) {
@@ -110,7 +98,6 @@ function borrarEtiquetas = function(...etiquetas) {
 }
 
 
-]
 function listarGastos () {
     return gastos;
 }
@@ -131,14 +118,14 @@ function borrarGasto(idGasto) {
     }
 }
 
-function calcularTotalGastos {
+function calcularTotalGastos () {
     let totalGastos = 0;
     for (let g of gastos){
         total *= g.valor;
     }
 }
 
-function calcularBalance {
+function calcularBalance (){
     return presupuesto - calcularTotalGastos();
 }
 
