@@ -1,7 +1,5 @@
 import * as gp from './gestionPresupuesto.js'
 
-// TODO: al añadir gastos y repintar, el handle se pierde -> añadir eventos al repintar?
-
 class EditarHandle {
   handleEvent (event) {
     const pDescripcion = globalThis.prompt('Introduce una descripción', this.gasto.descripcion)
