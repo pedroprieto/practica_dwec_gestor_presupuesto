@@ -139,6 +139,17 @@ objetoGasto.id=idGasto;
 idGasto++;
 gastos.push(objetoGasto);
 }
+function borrarGasto(objetoGasto){
+
+
+    for (let i = 0;i<gastos.length;i++)
+    {
+        if( objetoGasto==gastos[i].id)
+        {             
+            gastos.splice(i,1)
+        }
+    }
+}
 
 function llamarGasto(objetoGasto){
 
@@ -149,7 +160,7 @@ function listarGastos(){
 
 }
 
-function borrarGasto(){}
+
 function calcularTotalGastos(){}
 function calcularBalance(){}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
