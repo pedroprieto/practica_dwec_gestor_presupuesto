@@ -37,7 +37,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {  //Constructor co
 
 
 
-    if(Date.parse(fecha)){ //Aprovechamos que los parse suelen devolver un bool, aplicando el que nos han pedido
+    if(Date.parse(fecha)){ //Aprovechamos que nos devolveria un NaN si la fecha no fuera correcta
         this.fecha = Date.parse(fecha);       //Si se cumple, lo usamos como fecha
     }
     else{
@@ -91,6 +91,35 @@ Etiquetas:
 
     }
 
+    this.obtenerPeriodoAgrupacion = function (periodo){
+        
+        let fecha = new Date(this.fecha);
+
+        let anyo = fecha.getFullYear();
+
+        let mes = fecha.getMonth() + 1;
+
+        if (mes < 10){
+            mes = '0' + mes;
+        }
+
+        let dia = fecha.getDate();
+
+        if (dia < 10){
+            dia = '0' + dia;
+        }
+
+        if (periodo === "dia"){
+            return `${anyo}-${mes}-${dia}`;
+        }
+        if (periodo === "mes"){
+            return `${anyo}-${mes}`
+        }
+        if (periodo === "anyo"){
+            return `${anyo}`;
+        }
+    }
+
 }   
 
 
@@ -116,6 +145,31 @@ function calcularBalance(){ //Un simple balance, en el que restamos los gastos t
     return presupuesto - calcularTotalGastos();
 }
 
+function filtrarGastos(objetoFiltro){
+    return gastos.filter(function(gasto){
+        let pasaFiltro = true;
+        if (gasto.fechaDesde){
+            let fechaFiltro = Date.parse(objetoFiltro.fechaDesde);
+            
+            if (fechaFiltro <= gasto.fecha){
+                pasaFiltro = true;
+            }
+            else{
+                pasaFiltro = false;
+            }
+        }
+        if (!isNaN(Date.parse(objetoFiltro.fechaHasta)) && Date.parse(objetoFiltro.fechaHasta) >= gasto.fecha){
+            pasaFiltro = true;
+        }
+        return pasaFiltro;
+    })
+
+}
+
+
+function agruparGastos(){
+
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -127,5 +181,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
