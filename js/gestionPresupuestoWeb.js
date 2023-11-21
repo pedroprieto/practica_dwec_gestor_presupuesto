@@ -71,9 +71,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
 
 
-<body>
-  <div>Patricia</div>
-</body>
+
 
 
 
