@@ -148,19 +148,58 @@ function calcularBalance(){ //Un simple balance, en el que restamos los gastos t
 function filtrarGastos(objetoFiltro){
     return gastos.filter(function(gasto){
         let pasaFiltro = true;
-        if (gasto.fechaDesde){
-            let fechaFiltro = Date.parse(objetoFiltro.fechaDesde);
-            
-            if (fechaFiltro <= gasto.fecha){
-                pasaFiltro = true;
-            }
-            else{
+        
+        if (objetoFiltro.fechaDesde){
+            let fecha = Date.parse(objetoFiltro.fechaDesde);
+
+            if (fecha > gasto.fecha) pasaFiltro = false;
+        }
+        
+        if (objetoFiltro.fechaHasta){
+            let fecha = Date.parse(objetoFiltro.fechaHasta);
+
+            if (fecha < gasto.fecha) pasaFiltro = false;
+        }
+
+        if (objetoFiltro.valorMinimo){
+            if (objetoFiltro.valorMinimo > gasto.valor ) pasaFiltro = false;
+        }
+
+        if (objetoFiltro.valorMaximo){
+            if (objetoFiltro.valorMaximo < gasto.valor ) pasaFiltro = false;
+        }
+
+        if (objetoFiltro.descripcionContiene){
+            let descr = objetoFiltro.descripcionContiene.toLowerCase();
+            if (!(gasto.descripcion.toLowerCase().includes(descr))){
                 pasaFiltro = false;
             }
         }
-        if (!isNaN(Date.parse(objetoFiltro.fechaHasta)) && Date.parse(objetoFiltro.fechaHasta) >= gasto.fecha){
-            pasaFiltro = true;
+
+        if (objetoFiltro.etiquetasTiene){
+            pasaFiltro = false;
+            
+            let etiquetasFiltro = objetoFiltro.etiquetasTiene.map(function (item){
+                return item.toLowerCase();
+            })
+
+            let etiquetasGasto = gasto.etiquetas.map(function(item){
+                return item.toLowerCase();
+            })
+            
+
+            function contienen(uno, dos){
+                return uno.some(function (eti){
+                    dos.includes(eti);
+                })
+            }
+
+            if (contienen(etiquetasFiltro, etiquetasGasto)){
+                pasaFiltro = true;
+            }
+            
         }
+
         return pasaFiltro;
     })
 
