@@ -195,7 +195,6 @@ function filtrarGastos(objetoFiltro){
 
            if (!contienen(etiquetasFiltro, etiquetasGasto)) pasaFiltro = false;
 
-
         }
 
         return pasaFiltro;
@@ -204,9 +203,35 @@ function filtrarGastos(objetoFiltro){
 }
 
 
-function agruparGastos(){
+function agruparGastos(periodo, fechaDesde, fechaHasta,...etiquetas){
+
+    let filtro = {
+        etiquetasTiene: etiquetas
+    }
+
+    if (fechaDesde && Date.parse(fechaDesde)){
+        let fechaD = Date.parse(fechaDesde);
+        filtro.fechaDesde = fechaD;        
+    }
+
+    if (fechaHasta && Date.parse(fechaHasta)){
+        let fechaH = Date.parse(fechaHasta);
+        filtro.fechaHasta = fechaH;
+    }
+    else{
+        filtro.fechaHasta = Date.now();
+    }
+
+
+    let filtrado = filtrarGastos(filtro);
+
+    return filtrado.reduce(function(acc, actual){
+
+
+    }, {})
 
 }
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
