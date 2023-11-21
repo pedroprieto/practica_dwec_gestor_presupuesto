@@ -1,15 +1,13 @@
-// gestionPresupuestoWeb.js
 
-// Función mostrarDatoEnId
-export function mostrarDatoEnId(idElemento, valor) {
+export function mostrarDatoEnId(idElemento, valor) {                                        // Función que escribe el valor recibiendo el id  ARA                          
     const elemento = document.getElementById(idElemento);
     if (elemento) {
       elemento.textContent = valor;
     }
   }
   
-  // Función mostrarGastoWeb
-  export function mostrarGastoWeb(idElemento, gasto) {
+ 
+  export function mostrarGastoWeb(idElemento, gasto) {                                      // Función muestra el gasto segun el id ARA
     const elemento = document.getElementById(idElemento);
     if (elemento) {
       const gastoElemento = document.createElement("div");
@@ -45,7 +43,7 @@ export function mostrarDatoEnId(idElemento, valor) {
   }
   
   // Función mostrarGastosAgrupadosWeb
-  export function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+  export function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {                // Función que muestra la agrupacion de gastos ARA
     const elemento = document.getElementById(idElemento);
     if (elemento) {
       const agrupacionElemento = document.createElement("div");
