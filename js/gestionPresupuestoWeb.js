@@ -197,6 +197,9 @@ function BorrarEtiquetasHandle(){
     }
 }
 
+
+  
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
