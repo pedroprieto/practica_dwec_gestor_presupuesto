@@ -1,89 +1,102 @@
 import * as gp from './gestionPresupuesto.js'
 
-class EditarHandle {
-  handleEvent (event) {
-    const pDescripcion = globalThis.prompt('Introduce una descripción', this.gasto.descripcion)
-    const pValor = Number(globalThis.prompt('Introduce un valor', this.gasto.valor))
-    const pFecha = globalThis.prompt('Introduce una fecha (aaaa/mm/dd)', this.gasto.fecha)
-    const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma', this.gasto.mostrarEtiquetas()).split(',')
+/**
+ * Controlador de eventos que solicita al usuario que edite las
+ * propiedades de un objeto `gasto` y luego actualiza el objeto y vuelve a pintar la interfaz de
+ * usuario.
+ * @param gasto - Objeto que contiene información sobre un gasto.
+ */
+function EditarHandle (gasto) {
+  this.handleEvent = (event) => {
+    const pDescripcion = globalThis.prompt('Introduce una descripción', gasto.descripcion)
+    const pValor = Number(globalThis.prompt('Introduce un valor', gasto.valor))
+    const pFecha = globalThis.prompt('Introduce una fecha (aaaa/mm/dd)', gasto.fecha)
+    const pEtiquetas = globalThis.prompt('Introduce etiquetas separadas por coma', gasto.mostrarEtiquetas()).split(',')
 
-    this.gasto.actualizarDescripcion(pDescripcion)
-    this.gasto.actualizarValor(pValor)
-    this.gasto.actualizarFecha(pFecha)
-    this.gasto.borrarEtiquetas()
-    this.gasto.anyadirEtiquetas(...pEtiquetas)
+    gasto.actualizarDescripcion(pDescripcion)
+    gasto.actualizarValor(pValor)
+    gasto.actualizarFecha(pFecha)
+    gasto.borrarEtiquetas()
+    gasto.anyadirEtiquetas(...pEtiquetas)
 
     repintar()
   }
 }
 
-// este lo hago como funcion y no como clase
-function EditarHandleFormulario () {
+/**
+ * Maneja la edición de un formulario para un gasto.
+ * @param gasto - Objeto que contiene información sobre un gasto.
+ */
+function EditarHandleFormulario (gasto) {
   this.handleEvent = function (event) {
     // DECLARACIONES E INICIALIZACIONES
     const plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true)
-    const bEditarFormulario = this.gastoDiv.querySelector('.gasto-editar-formulario')
+    const bEditarFormulario = event.currentTarget.closest('.gasto-editar-formulario')
 
     bEditarFormulario.disabled = true
-    this.gastoDiv.appendChild(plantillaFormulario)
+    bEditarFormulario.after(plantillaFormulario)
 
     // INICIALIZACION DE LOS VALORES DEL FORMULARIO
-    const gasto = this.gastoDiv.gasto
-    const formulario = this.gastoDiv.querySelector('form')
+    const formulario = event.currentTarget.parentNode.querySelector('form')
 
     formulario.descripcion.value = gasto.descripcion
     formulario.valor.value = gasto.valor
     formulario.fecha.value = new Date(gasto.fecha).toISOString().substring(0, 10)
     formulario.etiquetas.value = gasto.etiquetas
 
-    // EVENTO SUBMIT - ahora pruebo sin crear otra funcion
-    const eventoEditar = {
-      handleEvent (event) {
-        event.preventDefault()
+    formulario.addEventListener('submit', event => {
+      event.preventDefault()
 
-        const form = event.currentTarget
+      const form = event.currentTarget
 
-        const fDescripcion = form.elements.descripcion.value
-        const fValor = Number(form.elements.valor.value)
-        const fFecha = form.elements.fecha.value
-        const fEtiquetas = form.elements.etiquetas.value.split(',')
+      const fDescripcion = form.elements.descripcion.value
+      const fValor = Number(form.elements.valor.value)
+      const fFecha = form.elements.fecha.value
+      const fEtiquetas = form.elements.etiquetas.value.split(',')
 
-        this.gasto.actualizarDescripcion(fDescripcion)
-        this.gasto.actualizarValor(fValor)
-        this.gasto.actualizarFecha(fFecha)
-        this.gasto.borrarEtiquetas()
-        this.gasto.anyadirEtiquetas(...fEtiquetas)
+      gasto.actualizarDescripcion(fDescripcion)
+      gasto.actualizarValor(fValor)
+      gasto.actualizarFecha(fFecha)
+      gasto.borrarEtiquetas()
+      gasto.anyadirEtiquetas(...fEtiquetas)
 
-        repintar()
-      }
-    }
+      repintar()
+    })
 
-    eventoEditar.gasto = gasto
-    formulario.addEventListener('submit', eventoEditar)
-
-    // EVENTO CANCELAR
-    const botonCancelar = formulario.querySelector('button.cancelar')
-    const eventoCancelar = new EventoCancelar()
-
-    eventoCancelar.boton = bEditarFormulario
-    botonCancelar.addEventListener('click', eventoCancelar)
+    // EVENTO CANCELAR -> borra el formulario y reactiva el botón Editar
+    formulario.querySelector('button.cancelar').addEventListener('click', new EventoCancelar(bEditarFormulario))
   }
 }
 
-class BorrarEtiquetasHandle {
-  handleEvent (event) {
-    this.gasto.borrarEtiquetas(this.etiqueta)
+/**
+ * Controlador de eventos que elimina una
+ * etiqueta específica de un gasto y luego vuelve a pintar la interfaz de usuario.
+ * @param gasto - Gasto del cual borrar la etiqueta.
+ * @param etiqueta - Etiqueta que se desea eliminar del objeto
+ */
+function BorrarEtiquetasHandle (gasto, etiqueta) {
+  this.handleEvent = (event) => {
+    gasto.borrarEtiquetas(etiqueta)
     repintar()
   }
 }
 
-class BorrarHandle {
-  handleEvent (event) {
-    gp.borrarGasto(this.gasto.id)
+/**
+ * Evento de eliminar un gasto específico.
+ * @param gasto - Gasto a eliminar
+ */
+function BorrarHandle (gasto) {
+  this.handleEvent = (event) => {
+    gp.borrarGasto(gasto.id)
     repintar()
   }
 }
 
+/**
+ * Solicita al usuario que ingrese una descripción, valor, fecha y etiquetas
+ * para un nuevo gasto, crea un nuevo objeto de gasto usando los valores ingresados, agrega el gasto a
+ * una lista de gastos y luego vuelve a pintar la interfaz.
+ */
 function nuevoGastoWeb () {
   const pDescripcion = globalThis.prompt('Introduce una descripción')
   const pValor = Number(globalThis.prompt('Introduce un valor'))
@@ -96,6 +109,10 @@ function nuevoGastoWeb () {
   repintar()
 }
 
+/**
+ * Solicita al usuario que ingrese un nuevo presupuesto,
+ * lo actualiza y luego vuelve a pintar la interfaz
+ */
 function actualizarPresupuestoWeb () {
   const nuevoPresupuesto = Number(globalThis.prompt('Introduce un presupuesto'))
 
@@ -105,18 +122,24 @@ function actualizarPresupuestoWeb () {
   }
 }
 
-// Lo he escrito de forma que se puede reusar para cancelar cualquier formulario
-class EventoCancelar {
-  handleEvent (event) {
+/**
+ * Borra el formulario más cercano que le llama y reactiva el botón pasado por parámetro
+ * @param boton - Botón a reactivar al borrar el formulario
+ */
+function EventoCancelar (boton) {
+  this.handleEvent = (event) => {
     const formulario = event.currentTarget.closest('form')
 
-    this.boton.disabled = false
+    boton.disabled = false
 
     // Forma 2 de eliminar formulario
     formulario.remove()
   }
 }
 
+/**
+ * Crea un nuevo formulario para crear un gasto y lo añade a la lista de gastos
+ */
 function nuevoGastoWebFormulario () {
   const plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true)
 
@@ -127,6 +150,7 @@ function nuevoGastoWebFormulario () {
 
   const formulario = document.body.querySelector('form')
 
+  // EVENTO SUBMIT -> añade el gasto a la lista de gastos y vuelve a pintar la interfaz
   formulario.addEventListener('submit', (event) => {
     event.preventDefault()
 
@@ -140,7 +164,6 @@ function nuevoGastoWebFormulario () {
     const gasto = new gp.CrearGasto(fDescripcion, fValor, fFecha, ...fEtiquetas)
 
     gp.anyadirGasto(gasto)
-    console.log(gp.listarGastos())
 
     repintar()
 
@@ -150,75 +173,14 @@ function nuevoGastoWebFormulario () {
     document.getElementById('controlesprincipales').removeChild(formulario)
   })
 
-  const botonCancelar = formulario.querySelector('button.cancelar')
-
-  const eventoCancelar = new EventoCancelar()
-  eventoCancelar.boton = botonAnyadirFormulario
-  botonCancelar.addEventListener('click', eventoCancelar)
+  // EVENTO CANCELAR -> borra el formulario y reactiva el botón Añadir
+  formulario.querySelector('button.cancelar').addEventListener('click', new EventoCancelar(botonAnyadirFormulario))
 }
 
-function anyadirEventos () {
-  const actualizar = document.getElementById('actualizarpresupuesto')
-  actualizar.addEventListener('click', actualizarPresupuestoWeb)
-
-  const anyadir = document.getElementById('anyadirgasto')
-  anyadir.addEventListener('click', nuevoGastoWeb)
-
-  const anyadirFormulario = document.getElementById('anyadirgasto-formulario')
-  anyadirFormulario.addEventListener('click', nuevoGastoWebFormulario)
-
-  // añado eventos al boton editar gasto en formulario
-  const bEditarGastoFormulario = document.getElementsByClassName('gasto-editar-formulario')
-
-  for (const bEditarForm of bEditarGastoFormulario) {
-    const objetoEditarForm = new EditarHandleFormulario()
-
-    objetoEditarForm.gastoDiv = bEditarForm.parentNode
-
-    bEditarForm.addEventListener('click', objetoEditarForm)
-  }
-
-  // añadimos evento al botón Editar Gastos
-  const bEditarGastos = document.getElementsByClassName('gasto-editar')
-
-  for (const bEditar of bEditarGastos) {
-    // Cada boton tiene que tener su instancia
-    const objetoEditar = new EditarHandle()
-
-    // Traemos el gasto del padre del boton, que es quien tiene la info
-    objetoEditar.gasto = bEditar.parentNode.gasto
-
-    bEditar.addEventListener('click', objetoEditar)
-  }
-
-  // Añadimos evento al botón Borrar Gastos
-  const bBorrarGastos = document.getElementsByClassName('gasto-borrar')
-
-  for (const bBorrar of bBorrarGastos) {
-    // Cada boton tiene que tener su instancia
-    const objetoBorrar = new BorrarHandle()
-
-    // Traemos el gasto del padre del boton, que es quien tiene la info
-    objetoBorrar.gasto = bBorrar.parentNode.gasto
-
-    bBorrar.addEventListener('click', objetoBorrar)
-  }
-
-  // Añadimos evento al span de etiquetas
-  const sEtiquetas = document.getElementsByClassName(
-    'gasto-etiquetas-etiqueta'
-  )
-
-  for (const sEtiqueta of sEtiquetas) {
-    const objBorrarEtiqueta = new BorrarEtiquetasHandle()
-
-    objBorrarEtiqueta.gasto = sEtiqueta.parentNode.parentNode.gasto
-    objBorrarEtiqueta.etiqueta = sEtiqueta.innerHTML
-
-    sEtiqueta.addEventListener('click', objBorrarEtiqueta)
-  }
-}
-
+/**
+ * Actualiza la visualización del presupuesto, gastos totales, balance total  y la lista
+ * completa de gastos
+ */
 function repintar () {
   // Mostrar el presupuesto en #presupuesto
   mostrarDatoEnID('presupuesto', gp.mostrarPresupuesto())
@@ -236,15 +198,22 @@ function repintar () {
   for (const gasto of gp.listarGastos()) {
     mostrarGastoWeb('listado-gastos-completo', gasto)
   }
-
-  anyadirEventos()
 }
 
+/**
+ * Borrar el contenido de un elemento HTML
+ * @param idElemento - ID del elemento HTML cuyo contenido se desea borrar.
+ */
 function borrarContenido (idElemento) {
   const elemento = document.getElementById(idElemento)
   elemento.innerHTML = ''
 }
 
+/**
+ * Crea y agrega elementos HTML y eventos para mostrar el gasto
+ * @param idElemento - ID del elemento donde se hará append del gasto
+ * @param gasto - Gasto a representar
+ */
 function mostrarGastoWeb (idElemento, gasto) {
   const cGasto = document.createElement('div')
   cGasto.classList.add('gasto')
@@ -269,7 +238,9 @@ function mostrarGastoWeb (idElemento, gasto) {
   cGastoEtiquetas.classList.add('gasto-etiquetas')
 
   for (const etiqueta of gasto.etiquetas) {
+    const objetoBorrarEtiqueta = new BorrarEtiquetasHandle(gasto, etiqueta)
     const cEtiqueta = document.createElement('span')
+    cEtiqueta.addEventListener('click', objetoBorrarEtiqueta)
     cEtiqueta.classList.add('gasto-etiquetas-etiqueta')
     cEtiqueta.innerHTML = etiqueta
     cGastoEtiquetas.append(cEtiqueta)
@@ -277,19 +248,28 @@ function mostrarGastoWeb (idElemento, gasto) {
 
   cGasto.append(cGastoEtiquetas)
 
+  // Botón editar gasto
+  const objetoEditar = new EditarHandle(gasto)
   const bEditar = document.createElement('button')
+  bEditar.addEventListener('click', objetoEditar)
   bEditar.classList.add('gasto-editar')
   bEditar.innerHTML = 'Editar'
   bEditar.type = 'button'
   cGasto.append(bEditar)
 
+  // Botón borrar gasto
+  const objetoBorrar = new BorrarHandle(gasto)
   const bBorrar = document.createElement('button')
+  bBorrar.addEventListener('click', objetoBorrar)
   bBorrar.classList.add('gasto-borrar')
   bBorrar.innerHTML = 'Borrar'
   bBorrar.type = 'button'
   cGasto.append(bBorrar)
 
+  // Botón editar gasto en formulario
+  const objetoEditarFormulario = new EditarHandleFormulario(gasto)
   const bEditarFormulario = document.createElement('button')
+  bEditarFormulario.addEventListener('click', objetoEditarFormulario)
   bEditarFormulario.classList.add('gasto-editar-formulario')
   bEditarFormulario.innerHTML = 'Editar (formulario)'
   bEditarFormulario.type = 'button'
@@ -299,13 +279,23 @@ function mostrarGastoWeb (idElemento, gasto) {
   elemento.append(cGasto)
 }
 
-// Borra el contenido y muestra sólo el valor
+/**
+ * Actualiza el innerHTML del elemento con el ID dado para mostrar el valor.
+ * @param idElemento - ID HTML donde desea mostrar el valor.
+ * @param valor - Valor que desea mostrar
+ */
 function mostrarDatoEnID (idElemento, valor) {
   const elemento = document.getElementById(idElemento)
   elemento.innerHTML = ''
   elemento.append(valor)
 }
 
+/**
+ * Crea y agrega elementos HTML para mostrar gastos agrupados por dia, mes o año
+ * @param idElemento - Donde se mostrarán los gastos agrupados.
+ * @param agrup - Objeto que contiene los gastos agrupados
+ * @param periodo - Periodo de agrupación: dia, mes o año
+ */
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
   const dAgrupacion = document.createElement('div')
   dAgrupacion.classList.add('agrupacion')
@@ -337,10 +327,10 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
 
 export {
   actualizarPresupuestoWeb,
+  nuevoGastoWebFormulario,
   EditarHandle,
   BorrarHandle,
   BorrarEtiquetasHandle,
-  anyadirEventos,
   nuevoGastoWeb,
   repintar,
   mostrarDatoEnID,

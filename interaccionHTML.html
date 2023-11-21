@@ -45,7 +45,17 @@
     <script type="module">
       import * as gp from "/js/gestionPresupuestoWeb.js";
 
-      gp.anyadirEventos();
+      document
+        .getElementById("actualizarpresupuesto")
+        .addEventListener("click", gp.actualizarPresupuestoWeb);
+
+      document
+        .getElementById("anyadirgasto")
+        .addEventListener("click", gp.nuevoGastoWeb);
+
+      document
+        .getElementById("anyadirgasto-formulario")
+        .addEventListener("click", gp.nuevoGastoWebFormulario);
     </script>
     <template id="formulario-template">
       <form>

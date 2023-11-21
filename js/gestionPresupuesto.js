@@ -225,28 +225,20 @@ function filtrarGastos (filtros) {
   resultado = resultado.filter(gasto => {
     if ('fechaDesde' in filtros && filtros.fechaDesde !== undefined) {
       const fechaDesde = Date.parse(filtros.fechaDesde)
-      if (gasto.fecha < fechaDesde) {
-        return false
-      }
+      if (gasto.fecha < fechaDesde) return false
     }
 
     if ('fechaHasta' in filtros && filtros.fechaHasta !== undefined) {
       const fechaHasta = Date.parse(filtros.fechaHasta)
-      if (gasto.fecha > fechaHasta) {
-        return false
-      }
+      if (gasto.fecha > fechaHasta) return false
     }
 
     if ('valorMinimo' in filtros && filtros.valorMinimo !== undefined) {
-      if (gasto.valor < filtros.valorMinimo) {
-        return false
-      }
+      if (gasto.valor < filtros.valorMinimo) return false
     }
 
     if ('valorMaximo' in filtros && filtros.valorMaximo !== undefined) {
-      if (gasto.valor > filtros.valorMaximo) {
-        return false
-      }
+      if (gasto.valor > filtros.valorMaximo) return false
     }
 
     if ('descripcionContiene' in filtros && filtros.descripcionContiene !== undefined) {
