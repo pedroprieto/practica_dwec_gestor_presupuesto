@@ -83,3 +83,7 @@ $eventoPrespuesto.addEventListener("click", gestionPresupuestoWeb.actualizarPres
 // Manejamos el evento 'click' en el botón 'anyadirgasto'
 let $eventoAnyadirGasto = document.getElementById("anyadirgasto")
 $eventoAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb)
+
+// Manejamos el evento 'click' en el botón 'anyadirgasto-formulario'
+let $eventoAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
+$eventoAnyadirGastoFormulario.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWebFormulario)

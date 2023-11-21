@@ -1,4 +1,5 @@
 import * as gestionPresupuesto from "./gestionPresupuesto.js"
+var formulario = plantillaFormulario.querySelector("form")
 
 // Función para mostrar un valor en un elemento HTML por su ID
 function mostrarDatoEnId(idElemento, valor) {
@@ -250,4 +251,77 @@ function BorrarEtiquetasHandle() {
 	}
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle }
+// Función nuevoGastoWebFormulario manejadora de eventos del botón 'anyadirgasto-formulario'
+function nuevoGastoWebFormulario() {
+	// Creamos una copia del formulario web definido en la plantilla HTML
+	let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true)
+
+	// Creamos la variable que accede al formulario dentro de la plantilla
+	var formulario = plantillaFormulario.querySelector("form")
+
+	// Creamos las variables que hacen referencia al botón de añadir gasto y al botón de cancelar
+	let botonAnyadir = document.getElementById("anyadirgasto-formulario")
+	let botonCancelar = formulario.querySelector("button.cancelar")
+
+	// Manejamos el evento 'submit' en el formulario
+	formulario.addEventListener("submit", manejadorSubmitFormulario)
+
+	// Manejamos el evento 'click' en el botón 'Cancelar'
+	let manejadorBotonCancelar = new CancelarFormularioHandle(formulario, botonAnyadir)
+	botonCancelar.addEventListener("click", manejadorBotonCancelar)
+
+	// Desactivamos el botón de añadir gasto
+	botonAnyadirGastoFormulario.addAttribute("disabled")
+
+	// Añadimos el formulario al DOM
+	document.getElementById("controlesprincipales").appendChild(plantillaFormulario)
+}
+
+// Manejador de evento submit del formulario
+function manejadorSubmitFormulario(evento) {
+	// Evitamos que el formulario se envíe por defecto
+	evento.preventDefault()
+
+	// Creamos la variable formulario que hace referencia al formulario mediante el evento
+	let form = evento.currentTarget
+
+	// Recogemos los valores del formulario mediante el atributo name
+	let descripcion = form.descripcion.value
+	let valor = form.valor.value
+	let fecha = form.fecha.value
+	let etiquetas = form.etiquetas.value
+
+	// Transformamos el valor a número
+	valor = parseFloat(valor)
+
+	// Convertimos la cadena de texto de etiquetas en un array
+	let arrayEtiquetas = etiquetas.split(", ")
+
+	// Creamos el nuevo gasto con los datos proporcionados
+	let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arrayEtiquetas)
+
+	// Añadimos el gasto
+	gestionPresupuesto.anyadirGasto(nuevoGasto)
+
+	// Llamos a la función repintar para mostrar la información actualizada en el HTML
+	repintar()
+
+	// Creamos la variable que hace referencia al botón de añadir gasto para poder activarlo
+	let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
+
+	// Activamos el botón de añadir gasto eliminando el atributo disabled
+	botonAnyadirGastoFormulario.removeAttribute("disabled")
+}
+
+// Función constructora CancelarFormularioHandle con un único método handleEvent que se encargará de manejar el evento 'click'
+function CancelarFormularioHandle(formulario, botonAnyadir) {
+	// Creamos el handleEvent que se ejecutará al hacer click en el botón cancelar
+	this.handleEvent = function () {
+		// Eliminamos el formulario
+		formulario.remove()
+		// Activamos el botón de añadir gasto eliminando el atributo disabled
+		botonAnyadir.removeAttribute("disabled")
+	}
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, nuevoGastoWebFormulario }
