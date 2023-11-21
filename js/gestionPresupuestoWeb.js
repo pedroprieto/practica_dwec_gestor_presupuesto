@@ -24,7 +24,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     let divfecha = document.createElement("div");
     divfecha.className = "gasto-fecha";
     //con el innetText asigno el valor de fecha al contenido del div
-    divfecha.innerText = gasto.fecha;
+    divfecha.innerText = new Date(gasto.fecha).toLocaleDateString(); //convierte la fecha del objeto date en una cadena de texto, se representa en formato de fecha local 
 
     //creo div con la clase gasto-valor
     let divValor = document.createElement("div");
@@ -36,8 +36,6 @@ function mostrarGastoWeb(idElemento, gasto) {
     let divEtiquetas = document.createElement("div");
     divEtiquetas.className = "gasto-etiquetas";
 
-    //añado descripcion al gasto
-    divGasto.appendChild(divDes);
 
     // Itero sobre las etiquetas y crear elementos span para ellas
     for (let etiqueta of gasto.etiquetas) {
@@ -49,16 +47,11 @@ function mostrarGastoWeb(idElemento, gasto) {
       divEtiquetas.appendChild(spanEtiqueta);
     }
 
-    //Añado los elementos creados "createElement" al div ppal gasto
+    //Añado los elementos creados "createElement" al div principal gasto
     divGasto.appendChild(divDesc);
     divGasto.appendChild(divfecha);
     divGasto.appendChild(divValor);
     divGasto.appendChild(divEtiquetas);
-
-
-    // Añadir el div de etiquetas al gasto
-    divGasto.appendChild(divEtiquetas);
-  
 
   // Obtengo el contenedor por su ID
   let contenedor = document.getElementById(idElemento);
@@ -67,8 +60,54 @@ function mostrarGastoWeb(idElemento, gasto) {
 
 }
 
+function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo) {
 
 
+  //creo el elemento div para agrup
+  let divAgrupacion = document.createElement("div");
+  divAgrupacion.className = "agrupacion";
+
+  let h1Periodo = document.createElement("h1");
+  h1Periodo.innerText = `Gastos agrupados por ${periodo}`;
+
+  //añado elmentos creados al div agrup
+  divAgrupacion.appendChild(h1Periodo);
+  
+  //recorro las (clave)propiedades del objeto agrup
+  for (let clave in agrup) {
+    //creo un div para cada propiedad
+    let divDato = document.createElement("div");
+    divDato.className = "agrupacion-dato";
+    divAgrupacion.appendChild(divDato); //agrupacion-dato es el hijo de divAgrupacion(padre)
+
+    //creo un span agrupacion-dato clave
+    let spanClave = document.createElement("span");
+    spanClave.className = "agrupacion-dato-clave";
+    spanClave.innerText = clave; //lo relleno con la clave
+    divDato.appendChild(spanClave); //añado los spans al div datos
+
+    //creo un span para agrupacion-dato-valor
+    let spanValor = document.createElement("span");
+    spanValor.className = "agrupacion-dato-valor";
+    spanValor.innerText = agrup[clave]; //ya que un objeto almacena relaciones (clave-valor)
+    divDato.appendChild(spanValor);
+
+  }
+
+  //busco el elemento idElemento y me lo devuelve 
+  let element = document.getElementById(idElemento);
+  element.appendChild(divAgrupacion); 
+}
+
+
+
+
+export{
+  mostrarDatoEnId,
+  mostrarGastoWeb,
+  mostrarGastoAgrupadosWeb,
+
+}
 
 
 
