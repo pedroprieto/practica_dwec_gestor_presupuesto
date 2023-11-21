@@ -145,50 +145,50 @@ function calcularBalance(){ //Un simple balance, en el que restamos los gastos t
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(objetoFiltro){
-    return gastos.filter(function(gasto){
-        let pasaFiltro = true;
-        
-        if (objetoFiltro.fechaDesde){
-            let fecha = Date.parse(objetoFiltro.fechaDesde);
+function filtrarGastos(objetoFiltro){ //A ver si me consigo explicar... aqui pasamos de parámetro un objeto, de momento sin parámetros, al que se los iremos añadiendo si procede
+    return gastos.filter(function(gasto){  //Vamos a aplicar el gasto... menudo cacao para entender como funciona el filter
+        let pasaFiltro = true; //Esta variable sera la encargada de decir si el current gasto pasa el filtro o no, vamos a aplicar la logica 
+                               //De dejarlo default en si, y pasarlo a false en caso de que el valor no deba ser filtrado
+        if (objetoFiltro.fechaDesde){  //Vemos si existe la propiedad fechaDesde
+            let fecha = Date.parse(objetoFiltro.fechaDesde);  //La parseamos, pues trabajamos con timestamp
 
-            if (fecha > gasto.fecha) pasaFiltro = false;
+            if (fecha > gasto.fecha) pasaFiltro = false; //Y filtramos, con la lógica de "ver si no pasa el filtro"
         }
         
-        if (objetoFiltro.fechaHasta){
+        if (objetoFiltro.fechaHasta){ //Idem para fechaHasta
             let fecha = Date.parse(objetoFiltro.fechaHasta);
 
             if (fecha < gasto.fecha) pasaFiltro = false;
         }
 
-        if (objetoFiltro.valorMinimo){
+        if (objetoFiltro.valorMinimo){  //Y lo mismo para valorMinimo
             if (objetoFiltro.valorMinimo > gasto.valor ) pasaFiltro = false;
         }
 
-        if (objetoFiltro.valorMaximo){
+        if (objetoFiltro.valorMaximo){ //Y valor maximo
             if (objetoFiltro.valorMaximo < gasto.valor ) pasaFiltro = false;
         }
 
-        if (objetoFiltro.descripcionContiene){
-            let descr = objetoFiltro.descripcionContiene.toLowerCase();
-            if (!(gasto.descripcion.toLowerCase().includes(descr))){
+        if (objetoFiltro.descripcionContiene){ //Aqui comprobamos si existe propiedad de descripcionContiene
+            let descr = objetoFiltro.descripcionContiene.toLowerCase(); //Y la pasamos a minusculas
+            if (!(gasto.descripcion.toLowerCase().includes(descr))){ //Para comparar con la tambien pasada a minusculas propiedad correspondientes del current gasto
                 pasaFiltro = false;
             }
         }
 
-        if (objetoFiltro.etiquetasTiene){
+        if (objetoFiltro.etiquetasTiene){ //Comprobamos que exista la propiedad...
 
-            let etiquetasFiltro = objetoFiltro.etiquetasTiene.map(function (item){
+            let etiquetasFiltro = objetoFiltro.etiquetasTiene.map(function (item){ //Mapeamos, para pasar todas las etiquetas a minusculas, favoreciendo la no distincion may/min
                 return item.toLowerCase();
             })
 
-            let etiquetasGasto = gasto.etiquetas.map(function(item){
+            let etiquetasGasto = gasto.etiquetas.map(function(item){ //Tambien mapeamos las etiquetas del current gasto
                 return item.toLowerCase();
             })
             
 
-            function contienen(uno, dos){
-                return uno.some(function (eti){
+            function contienen(uno, dos){ //Aqui implementamos una funcion, para ver si coincide alguna etiqueta, no se si es buena idea o seria mejor implementarla fuera y luego llamarla
+                return uno.some(function (eti){ //Pero como tampoco quiero escribir mas funciones de las que toca, lo dejamos aqui
                     return dos.includes(eti);
                 })
             }
@@ -197,7 +197,7 @@ function filtrarGastos(objetoFiltro){
 
         }
 
-        return pasaFiltro;
+        return pasaFiltro; //Si ningun filtro ha dicho "por aqui no pasas", el pasaFiltro permanecería true, y el current gasto pasaria el filtro
     })
 
 }
@@ -205,10 +205,13 @@ function filtrarGastos(objetoFiltro){
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
-    let objetoFiltro = {etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta};
+    let objetoFiltro = {etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta}; //Aqui es donde me he comido mucho la cabeza
+    //No paraba de poner if, como en filtrar gastos, para comprobar si existian las propiedades, y venga a darme fallo....
+    //Tras 40342 ifs y 345243242352 pruebas, me doy cuenta que si etiquetas esta undefined, en filtrar gastos actuaria como si no existen etiquetas
+    //Por lo que podemos declarar el objeto directamente como lo estoy haciendo, no declarando un objeto {} al que luego se le van añadiendo propiedades 
+    //si no existe, que es lo que trataba de hacer en un principio----
 
-
-    return filtrarGastos(objetoFiltro).reduce(function(acc, actual){
+    return filtrarGastos(objetoFiltro).reduce(function(acc, actual){ //Y esto otro quebradero, pero una vez que comprendes la lógica, es entendible y práctico
         let perio = actual.obtenerPeriodoAgrupacion(periodo);
         if (acc[perio]){
             acc[perio] = acc[perio] + actual.valor;
@@ -223,18 +226,6 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
 }
 
-/**let gasto1 = new CrearGasto("Hola", 200, "2022-11-10", "Casa");
-
-let gasto2 = new CrearGasto("Adios", 150, "2022-10-10", "Cosas");
-
-gastos.push(gasto2);
-gastos.push(gasto1);
-
-console.log(gasto1.mostrarGastoCompleto());
-
-console.log(gasto1.obtenerPeriodoAgrupacion("mes", ["casa"]));
-
-console.log(agruparGastos("mes"));**/
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
