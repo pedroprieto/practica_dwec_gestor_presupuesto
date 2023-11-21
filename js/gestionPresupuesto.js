@@ -203,34 +203,38 @@ function filtrarGastos(objetoFiltro){
 }
 
 
-function agruparGastos(periodo, fechaDesde, fechaHasta,...etiquetas){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
-    let filtro = {
-        etiquetasTiene: etiquetas
-    }
-
-    if (fechaDesde && Date.parse(fechaDesde)){
-        let fechaD = Date.parse(fechaDesde);
-        filtro.fechaDesde = fechaD;        
-    }
-
-    if (fechaHasta && Date.parse(fechaHasta)){
-        let fechaH = Date.parse(fechaHasta);
-        filtro.fechaHasta = fechaH;
-    }
-    else{
-        filtro.fechaHasta = Date.now();
-    }
+    let objetoFiltro = {etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta};
 
 
-    let filtrado = filtrarGastos(filtro);
-
-    return filtrado.reduce(function(acc, actual){
-
+    return filtrarGastos(objetoFiltro).reduce(function(acc, actual){
+        let perio = actual.obtenerPeriodoAgrupacion(periodo);
+        if (acc[perio]){
+            acc[perio] = acc[perio] + actual.valor;
+        }
+        else{
+            acc[perio] = actual.valor;
+        }
+        
+        return acc;
 
     }, {})
 
 }
+
+/**let gasto1 = new CrearGasto("Hola", 200, "2022-11-10", "Casa");
+
+let gasto2 = new CrearGasto("Adios", 150, "2022-10-10", "Cosas");
+
+gastos.push(gasto2);
+gastos.push(gasto1);
+
+console.log(gasto1.mostrarGastoCompleto());
+
+console.log(gasto1.obtenerPeriodoAgrupacion("mes", ["casa"]));
+
+console.log(agruparGastos("mes"));**/
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
