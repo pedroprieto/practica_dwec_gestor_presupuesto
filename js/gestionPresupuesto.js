@@ -177,8 +177,7 @@ function filtrarGastos(objetoFiltro){
         }
 
         if (objetoFiltro.etiquetasTiene){
-            pasaFiltro = false;
-            
+
             let etiquetasFiltro = objetoFiltro.etiquetasTiene.map(function (item){
                 return item.toLowerCase();
             })
@@ -190,14 +189,13 @@ function filtrarGastos(objetoFiltro){
 
             function contienen(uno, dos){
                 return uno.some(function (eti){
-                    dos.includes(eti);
+                    return dos.includes(eti);
                 })
             }
 
-            if (contienen(etiquetasFiltro, etiquetasGasto)){
-                pasaFiltro = true;
-            }
-            
+           if (!contienen(etiquetasFiltro, etiquetasGasto)) pasaFiltro = false;
+
+
         }
 
         return pasaFiltro;
