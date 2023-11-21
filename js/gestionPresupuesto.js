@@ -41,7 +41,7 @@ function calcularTotalGastos(){
     });
     
     // Formatear el resultado con dos decimales
-    return totalGastos.toFixed(2);
+    return totalGastos
 }
 
 //Función sin parámetros que devuelva el balance disponible
@@ -173,6 +173,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     } else {
         this.fecha = Date.now(); // Fecha actual en formato timestamp
     }
+    
         
     //Asignar array etiquetas, si no recibe el parámetro, lo inicia vacío.
     if(etiquetas === undefined)
@@ -227,18 +228,24 @@ ${listaEtiquetas}`;
                 this.etiquetas.push(etiqueta)
         }
     }
-    //Metodo que elimina etiquetas que se encuentren dentro del objeto
-    this.borrarEtiquetas = function(...etiquetas){
-
-        let nuevasEtiquetas = [...etiquetas]
-        for (const etiqueta of nuevasEtiquetas){
-            //Devuelve el indice de la que coincide o -1 si no coincide con ninguna
-            let indice = this.etiquetas.indexOf(etiqueta)
-            if(indice !== -1){
-                this.etiquetas.splice(indice, 1)
+    this.borrarEtiquetas = function (...etiquetas) {
+        // Verificar si no se proporcionaron etiquetas
+        if (etiquetas.length === 0) {
+            // Si no se proporcionan etiquetas, borrar todas las etiquetas
+            this.etiquetas = [];
+            return;
+        }
+    
+        // Si se proporcionan etiquetas, borrar solo las etiquetas especificadas
+        let nuevasEtiquetas = [...etiquetas];
+        for (const etiqueta of nuevasEtiquetas) {
+            let indice = this.etiquetas.indexOf(etiqueta);
+            if (indice !== -1) {
+                this.etiquetas.splice(indice, 1);
             }
         }
     }
+    
     //Función de un parámetro que devolverá el período de agrupación
     //correspondiente al parámetro periodo de la función y a la fecha del gasto.
     //Formato de devolución aaaa-mm-dd
