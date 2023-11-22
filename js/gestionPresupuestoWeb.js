@@ -5,7 +5,7 @@ function mostrarDatoEnId(idElemento, valor) {
 function mostrarGastoWeb(idElemento, gasto) {
 
     let divGasto = document.createElement('div');
-    divGasto.className('gasto');
+    divGasto.className = 'gasto';
     
     let divGastoDescripcion = document.createElement('div');
     divGastoDescripcion.className = 'gasto-descripcion';
@@ -14,7 +14,8 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let divGastoFecha = document.createElement('div');
     divGastoFecha.className = 'gasto-fecha';
-    divGastoFecha.textContent = new Date(gasto.fecha).toISOString().slice(0, 10);
+//    divGastoFecha.textContent = new Date(gasto.fecha).toISOString().slice(0, 10);
+    divGastoFecha.textContent = gasto.fecha;
     divGasto.append(divGastoFecha);
 
     let divGastoValor = document.createElement('div');
