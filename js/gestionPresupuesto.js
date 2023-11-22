@@ -1,19 +1,14 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
-var presupuesto = 0;
-var gastos = [];
-var idGasto = 0;
+let presupuesto = 0;
 
 function actualizarPresupuesto(num) {
     // TODO
-    if (num >= 0)
-    {
+    if (num >= 0) {
         presupuesto = num;
         return presupuesto;
-    }
-    else
-    {
+    } else {
         return -1;
     }
 }
@@ -29,40 +24,20 @@ function CrearGasto(descripcion, valor) {
     
     // Propiedades
     this.descripcion = descripcion;
-    this.valor = (valor >=0) ? valor : 0;
+    this.valor = (valor >= 0) ? valor : 0;
     
     // Métodos
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
 
-    this.actualizarDescripcion = function(desc) {
-        this.descripcion = desc;
+    this.actualizarDescripcion = function(nuevaDescripcion) {
+        this.descripcion = nuevaDescripcion;
     }
-
-    this.actualizarValor = function(valor) {
-        this.valor = (valor >=0) ? valor : this.valor;
+    
+    this.actualizarValor = function(nuevoValor) {
+        this.valor = (nuevoValor >= 0) ? nuevoValor : this.valor;
     }
-}
-
-function listarGastos() {
-    return gastos;
-}
-
-function anyadirGasto() {
-
-}
-
-function borrarGasto() {
-
-}
-
-function calcularTotalGastos() {
-
-}
-
-function calcularBalance() {
-
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -72,9 +47,4 @@ export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance
 }
