@@ -131,7 +131,21 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
         return (`gasto= new gasto  ${this.descripcion}  ${this.valor}`)
   
     }
+    this.obtenerPeriodoAgrupacion= function(tipoFecha){
 
+        if (tipoFecha=="dia")
+        {
+
+        }
+        else if(ipoFecha=="mes")
+        {
+
+        }
+        else if(ipoFecha=="anyo")
+        {
+
+        }
+    }
 
 }
 function anyadirGasto(objetoGasto){
@@ -167,16 +181,178 @@ function calcularBalance(){
     }
     return (balance)
 }
-function llamarGasto(objetoGasto){
 
-}
 function listarGastos(){
     
     return (gastos)
 
 }
 
+function filtrarGastos(parametro){
+   
+    
+    let objetoFechaDesde =[]
+    objetoFechaDesde = gastos.filter(function fechaDesde(gastos){
+        
+            let gasto=gastos.fecha;
+            Date.parse(gasto)
+            let fechaObj= new Date(gasto)
+             fechaObj.toLocaleString();  
+             let parametroPrueba =parametro.fechaDesde;
+             Date.parse(parametroPrueba)
+             let parametroPrueba1 = new Date(parametroPrueba)
+             parametroPrueba1.toLocaleString();
+             if(parametroPrueba1<=fechaObj)
+             {
+                objetoFechaDesde.push(gastos)
+                return (objetoFechaDesde)
+             } 
+            
+             
+        
+        
+    }
 
+    );
+    
+        let objetoFechaHasta=[]
+        objetoFechaHasta = gastos.filter( function fechaHasta(gastos){
+            
+            let gasto=gastos.fecha;
+            Date.parse(gasto)
+            let fechaObj= new Date(gasto)
+             fechaObj.toLocaleString();  
+             let parametroPrueba =parametro.fechaHasta;
+             Date.parse(parametroPrueba)
+             let parametroPrueba1 = new Date(parametroPrueba)
+             parametroPrueba1.toLocaleString();
+            
+            if(parametroPrueba1>=fechaObj)
+                 {
+                    objetoFechaHasta.push(gastos)
+                    return ( objetoFechaHasta)
+                 } 
+    
+        })
+    
+    if(parametro.fechaDesde && parametro.fechaHasta)
+    {
+        let objetoFiltrado=[];
+        //////////////
+        objetoFiltrado = gastos.filter( function fechaFiltrada(gastos){
+        let gasto=gastos.fecha;
+         Date.parse(gasto)
+        let fechaObj= new Date(gasto)
+         fechaObj.toLocaleString();  
+        let parametroPrueba =parametro.fechaHasta;
+        Date.parse(parametroPrueba)
+        let parametroPrueba1 = new Date(parametroPrueba)
+        parametroPrueba1.toLocaleString();
+        
+        let parametroPrueba2=parametro.fechaDesde;
+        Date.parse(parametroPrueba2);
+        let parametroPrueba3= new Date(parametroPrueba2)
+        parametroPrueba3.toLocaleString();
+         if(parametroPrueba1>=fechaObj && parametroPrueba3<=fechaObj)
+        {
+        objetoFiltrado.push(gastos)
+        return ( objetoFiltrado)
+        } 
+        
+        })
+        return ( objetoFiltrado)
+    }
+    if(parametro.valorMinimo)
+{
+    let objetoValorMinimo=[]
+    objetoValorMinimo = gastos.filter (function fechaValorMinimo(gastos){
+        let gasto=gastos.valor;
+       
+        if (gasto>=parametro.valorMinimo)
+        {
+            objetoValorMinimo.push(gastos)
+            return(objetoValorMinimo)
+        }
+        
+    })
+    return(objetoValorMinimo)
+}
+    if(typeof parametro === 'object' && Object.keys(parametro).length === 0)
+        {
+            return (gastos)
+        }
+       
+        else if (parametro.fechaDesde)
+        {
+            return (objetoFechaDesde)
+        }     
+        else if(parametro.fechaHasta)
+        {
+            return(objetoFechaHasta)
+        }   
+       
+}
+
+        
+/*let param = gastos.filter(function(gastoParam){
+let existe=true;
+    if (parametro.fechaDesde)
+    {
+        
+        let fechaD = new Date (parametro)
+       fechaD.toLocaleString();
+        let fechaObj= new Date(gastoParam.fecha)
+        fechaObj.toLocaleString();
+        if (fechaObj > parametro)
+        {
+            
+            return fechaObj < parametro
+            
+        }
+        
+    }
+    /*let f = Date.parse(fecha)
+    if (isNaN(f)){
+        this.fecha=Date.now()
+    } 
+    else{
+        this.fecha=f
+    }
+    if (parametro.fechaHasta)
+    {
+        let fechaH = Date.parse(parametro.fechaHasta)
+        if (gastoParam.fecha <= fechaH)
+        {
+            existe=false;
+        }
+        
+    }
+    if (parametro.valorMinimo)
+    {
+       if( gastoParam.valor > parametro.valorMinimo )
+       existe= false;
+    }
+    if (parametro.descripcionContiene)
+    {
+       if( gastoParam.descripcion > parametro.descripcionContiene.toLowerCase() )
+       existe= false;
+    }
+    if (parametro.etiquetasTiene)
+    {
+       if( gastoParam.etiquetas > parametro.etiquetasTiene.toLowerCase() )
+       existe= false;
+    }
+
+    
+   
+})
+return (gastos)
+*/
+
+
+function agruparGastos(){
+
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -190,5 +366,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
