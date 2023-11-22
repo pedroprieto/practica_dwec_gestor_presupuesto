@@ -58,8 +58,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.valor = (nuevoValor >= 0) ? nuevoValor : this.valor;
     }
 
-    this.mostrarGastoCompleto = function() {
-        let texto = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
+    this.mostrarGastoCompleto = function () {
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
 Fecha: ${new Date(this.fecha).toLocaleString()}
 Etiquetas:\n`
 
@@ -78,8 +78,6 @@ Etiquetas:\n`
         }
     }
 
-    
-
     this.borrarEtiquetas = function (...listaEtiquetas) {
         let nuevaListaEtiquetas = [];
 
@@ -91,16 +89,15 @@ Etiquetas:\n`
 
         this.etiquetas = nuevaListaEtiquetas;
     }
-
-
 }
 
 function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {
-
+function anyadirGasto(gasto) {
+    gasto.id = idGasto++;
+    gastos.push(gasto)
 }
 
 function borrarGasto() {
@@ -114,8 +111,6 @@ function calcularTotalGastos() {
 function calcularBalance() {
 
 }
-
-
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
