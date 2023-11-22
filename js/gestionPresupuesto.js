@@ -74,16 +74,14 @@ Etiquetas:
         }
     }
 
-    this.anyadirEtiquetas = function(...etiquetas){ //Anyadimos etiquetas
-        etiquetas.forEach((item) => {
-            if (!this.etiquetas.includes(item)){ //Nos aseguramos de que, en caso de que nuestro array de etiquetas incluya alguna de las que queremos añadir, no lo haga
-                this.etiquetas.push(item);
-            }
+    this.anyadirEtiquetas = function(...etiquetaNueva){ //Anyadimos etiquetas
+        etiquetaNueva.forEach(function(item){
+            if (!etiquetas.includes(item)) etiquetas.push(item);
         })
     }
 
     this.borrarEtiquetas = function(...etiquetas){ //Borramos etiquetas
-        etiquetas.forEach((item, index) => {    
+        etiquetas.forEach((item) => {    
             if(this.etiquetas.includes(item)){ //En este caso, lo que tratamos es de se ordene borrar solo en caso de que exista el objetivo de eliminación
                 this.etiquetas.splice(this.etiquetas.indexOf(item), 1);
             }
@@ -134,7 +132,9 @@ function anyadirGasto(gasto){  //Anyadimos un gasto nuevo al array gastos, con s
 }
 
 function borrarGasto(id){ //Podemos borrar un gasto, localizando por su id, ya que es único como hemos comentado
-    gastos.splice(gastos.findIndex(item => item.id == id), 1) //Aplicamos un splice con deleteCount de 1, en el indice donde coincida la propiedad id
+    gastos.splice(gastos.findIndex(function(item){
+        if (item.id == id) return true;
+    }), 1) //Aplicamos un splice con deleteCount de 1, en el indice donde coincida la propiedad id
 }
 
 function calcularTotalGastos(){ //Podemos llevarnos el susto, al calcular el total de todos los gastos...
