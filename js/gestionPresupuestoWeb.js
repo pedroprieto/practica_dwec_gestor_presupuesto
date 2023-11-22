@@ -48,12 +48,18 @@ function mostrarGastoWeb(idElemento, gasto) {
                 spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
                 spanEtiquetas.textContent = etique;
 
-                spanEtiquetas.addEventListener('click', function () {
-                    BorrarEtiquetasHandle(gasto, etiqueta);
-                  });
-
+                let borrarEtiquetaMan = new BorrarEtiquetasHandle();
+                borrarEtiquetaMan.gasto = gasto;
+                borrarEtiquetaMan.etique = etique;
+                spanEtiquetas.addEventListener('click', borrarEtiquetaMan);
                 divGastoEtiquetas.appendChild(spanEtiquetas);
             }
+
+            let botonEditar = document.createElement("button")
+	              botonEditar.classList.add("gasto-editar")
+	              botonEditar.type = "button"
+	              botonEditar.textContent = "Editar"
+
             contenidoGasto.appendChild(divGastoEtiquetas);
         }
         elemento.appendChild(contenidoGasto);
@@ -182,6 +188,14 @@ function BorrarHandle() {
 	}
 }
 
+function BorrarEtiquetasHandle() {
+	this.handleEvent = function (event) {
+		this.gasto.borrarEtiquetas(this.etiqueta)
+
+		repintar()
+	}
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -191,4 +205,5 @@ export {
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
+    BorrarEtiquetasHandle,
   };
