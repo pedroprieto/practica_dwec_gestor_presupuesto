@@ -55,13 +55,6 @@ Etiquetas:\n`;
         }
     }
 
-    this.obtenerPeriodoAgrupacion = function (periodo) {
-        fechaADevolver = new Date(this.fecha);
-        if (periodo = "mes"){
-            return (fechaADevolver.getFullYear() + `-` + fechaADevolver.getMonth());
-        }
-    }
-
     
     //PROPIEDADES
     this.descripcion = descripcion;
@@ -154,7 +147,5 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos
+    calcularBalance
 }
