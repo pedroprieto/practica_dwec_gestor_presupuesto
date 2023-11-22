@@ -237,6 +237,75 @@ this.handleEvent= function(event){
   
   }
 }
+
+let botonAnyadir = document.getElementById('anyadirgasto-formulario'); //localiza botn  
+botonAnyadir.addEventListener('click', nuevoGastoWebFormulario)
+
+
+function nuevoGastoWebFormulario(event) {
+
+  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+  let formulario = plantillaFormulario.querySelector("form"); //almacena el nodo formulario que vamos a crear.
+
+
+  formulario.addEventListener('submit', botonAnadir);
+
+
+
+  let btncancelar = plantillaFormulario.querySelector(".cancelar")
+  btncancelar.addEventListener(`click`, botonCancelar);
+
+
+
+
+  document.getElementById("controlesprincipales").appendChild(plantillaFormulario);
+}
+
+function botonAnadir(event) {
+
+  event.preventDefault(); //Prevenir el envío del formulario 
+
+  let formulario = event.currentTarget; //acceso al elemento que  ha provocado el evento
+
+  //anadir gastos
+  let descripcion = document.getElementById(`descripcion`).value //formulario.element.descripcion.value;
+  let valor = Number(document.getElementById('valor').value);
+  let fecha = document.getElementById('fecha').value;
+  let etiquetas = document.getElementById(`etiquetas`).value;
+  let arrEtiquetas = etiquetas.split(`,`);
+
+  // creo new gasto
+  let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arrEtiquetas);
+  gestionPresupuesto.anyadirGasto(nuevoGasto);
+
+  repintar();
+
+  let botonAnyadir = document.getElementById('anyadirgasto-formulario');
+  botonAnyadir.dissable = true;
+
+}
+
+function botonCancelar(event) {
+  //let btncancelar = document.querySelector(".cancelar");
+
+  let formulario = document.querySelector("#formulario-template");
+  formulario.remove(); //! no de borra el fomulario
+
+  //let formulario1= document.getElementById(`formulario-template`)
+ // formulario1.remove();  //! no de borra el fomulario
+
+  let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+  botonAnyadir.dissable = true; //activo botn
+}
+
+function EditarHandleFormulario(event) {
+  //TODO
+ 
+}
+
+
+
 export {
   mostrarDatoEnId,
   mostrarGastoWeb,
@@ -244,4 +313,8 @@ export {
   repintar,
   actualizarPresupuestoWeb,
   nuevoGastoWeb,
+  nuevoGastoWebFormulario,
+  EditarHandle,
+  BorrarEtiquetasHandle,
+  EditarHandleFormulario,
 };

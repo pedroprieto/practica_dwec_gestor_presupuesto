@@ -121,7 +121,7 @@ function filtrarGastos(objeto) {
 //Funcion quer agrupa gastos por periodo , fecha y etiquetas
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 
-  let filtro = filtrarGastos({ // filtro fecha de objeto con propiedades
+  let filtro = filtrarGastos({   // filtro fecha de objeto con propiedades
     etiquetasTiene: etiquetas,
     fechaDesde: fechaDesde,
     fechaHasta: fechaHasta,
@@ -132,8 +132,8 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo); //obtengo gasto por periodo
 
     if (!acumulador[periodoAgrupacion]) {        //compruebo si en el acumulador existe dicho periodo de agrupació,
-      acumulador[periodoAgrupacion] = 0;
-    }    // si no existe lo añade y lo inicializa en 0,
+      acumulador[periodoAgrupacion] = 0; }        // si no existe lo añade y lo inicializa en 0,
+            
 
     acumulador[periodoAgrupacion] += gasto.valor;
     return acumulador;
@@ -151,9 +151,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.valor = valor > 0 ? (this.valor = valor) : (this.valor = 0);
 
   // etiquetas
-  this.etiquetas = etiquetas;  
+  this.etiquetas = etiquetas;
   if (this.etiquetas == null) {
-    this.etiquetas = []; 
+    this.etiquetas = [];
   }
 
   // fechas
@@ -232,7 +232,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     let resultadoAgrup = "Resultado :";
 
     switch (
-      periodo //sobre 10
+    periodo //sobre 10
     ) {
       case "día": // aaaa-mm-dd; //! da fallo en test3 si lo cambio a dìa pasa test4
         resultadoAgrup = fecha.substring(0, 10); //?  .substring extrae caracteres desde indiceA hasta indiceB sin incluirlo
