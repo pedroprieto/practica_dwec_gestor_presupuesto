@@ -88,7 +88,8 @@ $eventoPrespuesto.addEventListener("click", gestionPresupuestoWeb.actualizarPres
 let $eventoAnyadirGasto = document.getElementById("anyadirgasto")
 $eventoAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb)
 
-
+let $eventoAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
+$eventoAnyadirGastoFormulario.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWebFormulario)
                 export * from './generarDatosEstaticos.js';
 
                 

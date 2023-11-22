@@ -267,45 +267,56 @@ function manejadorEvento(event) {
 }
 
 function CancelarFormularioHandle(formulario, botonAnyadir) {
-	// Creamos el handleEvent que se ejecutará al hacer click en el botón cancelar
 	this.handleEvent = function () {
-		// Eliminamos el formulario
+
 		formulario.remove()
-		// Activamos el botón de añadir gasto eliminando el atributo disabled
+
 		botonAnyadir.removeAttribute("disabled")
 	}
 }
 
 function EditarHandleFormulario(gasto) {
 
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-		var formulario = plantillaFormulario.querySelector("form");
+  const plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+  const formulario = plantillaFormulario.querySelector("form");
+  this.gasto = gasto;
+ 
+  this.handleEvent =  () => {
+    const botonEditar = contenidoGasto.querySelector("button.gasto-editar-formulario");
+    const botonCancelar = formulario.querySelector("button.cancelar");
+    const cancelarHandler = new CancelarHandler(formulario, botonEditar);
+    botonCancelar.addEventListener("click", cancelarHandler);
+    botonEditar.setAttribute("disabled", "true"); 
+ 
+    formulario.querySelector("#descripcion").value = this.gasto.descripcion;
+    formulario.querySelector("#valor").value = this.gasto.valor;
+    formulario.querySelector("#fecha").value = this.gasto.fecha;
+    formulario.querySelector("#etiquetas").value = this.gasto.etiquetas.join(', ');
 
-	this.gasto = gasto
-	this.handleEvent = function (event) {
+    const submitHandler =  (event) => {
+      event.preventDefault();
 
-		let botonEditarFormulario = event.target;
-		botonEditarFormulario.setAttribute("disabled", "");
+      let descripcion = formulario.querySelector("#descripcion").value;
+      let valor = formulario.querySelector("#valor").value;
+      let fecha = formulario.querySelector("#fecha").value;
+      let etiquetasTexto = formulario.querySelector("#etiquetas").value;
+      let etiquetasArr = etiquetasTexto.split(',').map(etiqueta => etiqueta.trim());
 
-	
-		let descripcion = this.gasto.descripcion;
-		let valor = this.gasto.valor;
-		let fecha = new Date(this.gasto.fecha).toISOString().slice(0, 10);
-		let etiquetas = this.gasto.etiquetas.join(", ") ;
+      let valorNum = parseFloat(valor); 
 
-		
-		let divGasto = event.target.parentNode ;
-		divGasto.appendChild(plantillaFormulario);
+      this.gasto.actualizarDescripcion(descripcion);
+      this.gasto.actualizarValor(valorNum);
+      this.gasto.actualizarFecha(fecha);
+      this.gasto.anyadirEtiquetas(...etiquetasArr);
 
-		formulario.querySelector("#descripcion").value = descripcion;
-		formulario.querySelector("#valor").value = valor;
-		formulario.querySelector("#fecha").value = fecha;
-		formulario.querySelector("#etiquetas").value = etiquetas;
+      repintar();
+    };
 
-		let botonCancelar = formulario.querySelector("button.cancelar");
-		let manejadorCancelar = new CancelarFormularioHandle(formulario, botonEditarFormulario);
-		botonCancelar.addEventListener("click", manejadorCancelar);
-	}
+    // Agregar el manejador de eventos al evento submit del formulario
+    formulario.addEventListener('submit', submitHandler);
+
+    divGasto.appendChild(plantillaFormulario);
+  };
 }
 
 export {
