@@ -72,6 +72,16 @@ btnBorrar.addEventListener(`click`,new BorrarHandle(gasto)) ;// Asigna BorrarHan
 divGasto.appendChild(btnBorrar); // agrego bton
 elemento.appendChild(divGasto);//agrego div
 
+ //Boton gasto-editar-formulario
+ let btnEditarFormulario = document.createElement('button');
+ btnEditarFormulario.classList.add('gasto-editar-formulario');
+ btnEditarFormulario.innerText = 'Editar Gasto';
+
+ btnEditarFormulario.addEventListener('click', new EditarHandleFormulario());  //! asignar nuevo gasto al evento editar
+
+ divGasto.appendChild(btnEditarFormulario); // agrego bton
+ elemento.appendChild(divGasto);//agrego div
+
 
 }
 
