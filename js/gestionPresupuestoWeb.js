@@ -172,6 +172,16 @@ function EditarHandle() {
 	}
 }
 
+function BorrarHandle() {
+	this.handleEvent = function (e) {
+
+		let idBorrar = this.gasto.id
+
+		gestionPresupuesto.borrarGasto(idBorrar)
+		repintar()
+	}
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -180,4 +190,5 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     EditarHandle,
+    BorrarHandle,
   };
