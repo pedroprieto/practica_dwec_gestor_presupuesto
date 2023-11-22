@@ -5,7 +5,10 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-
+function listarGastos() {
+    return gastos;
+    }
+    isEmpty.listarGastos();
 // TODO: Variable global
 
 
@@ -26,18 +29,24 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
+function anyadirGasto(gasto){
+      //  gasto.id = idGasto++;
+          // Añadir el objeto gasto al final del array gastos
+        gastos.push(gasto);
+}
 
 
 //función CrearGasto porqeu es un constructor y va en en mayúsculas.
 // Para objeto gasto creamos dentro de Crear Gasto los métodos qeu nos piden
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor =0 , fecha, ... etiquetas) {
     // TODO
 
     //propiedades
-   // gasto.id = idGasto++;
+    this.id = idGasto++;
     this.descripcion = descripcion;
     this.valor = typeof valor === 'number' && valor >=0 ? valor: 0; 
+    
 
     // Métodos 
     this.mostrarGasto = function () {
@@ -50,32 +59,103 @@ function CrearGasto(descripcion, valor) {
         if(typeof nuevoValor === 'number' && nuevoValor >= 0) {
             this.valor = nuevoValor;
         }
-    
-   
-
     }
-}
-function listarGastos () {
+    this.etiquetas = [];
+
+    this.anyadirEtiquetas(...etiquetas);
+
+    let f = Date.parse(fecha);
+    if (isNaN(f)) {
+        this.fecha = Date.now();
+    }
+    else {
+        this.fecha = f;
+    }
 
 }
 
-function anyadirGasto(){
 
+CrearGasto.prototype.mostrarGastoCompleto = function () {
+    const fechaLocalizada = new Date(this.fecha).toLocaleString();
+    const etiquetasList = this.etiquetas.map(etiqueta => ` - ${etiqueta}`).join('\n');
+  
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${etiquetasList}`;
+  };
+
+CrearGasto.prototype.actualizarFecha = function (nuevaFecha) {
+    let parsedDate = Date.parse(nuevaFecha);
+    if (!isNaN(parsedDate)) {
+      this.fecha = parsedDate;
+    }
+  };
+
+
+
+
+
+CrearGasto.prototype.anyadirEtiquetas = function (...etiquetas) {
+    etiquetas.forEach(etiqueta => {
+        let etiquetaExistente = false;
+        for (let i = 0; i < this.etiquetas.length; i++) {
+            if (this.etiquetas[i] === etiqueta) {
+                etiquetaExistente = true;
+                break;
+            }
+        }
+
+        if (!etiquetaExistente) {
+            this.etiquetas.push(etiqueta);
+        }
+    })
 }
-function borrarGasto(){
 
+CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
+    this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasABorrar.includes(etiqueta));
+  };
+
+  let valor1 = 23.44,
+  valor2 = 42.88,
+  valor3 = 22.87;
+
+let gasto1 = new CrearGasto("descripción del gasto", valor1, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+let gasto2 = new CrearGasto("descripción del gasto", valor2, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+let gasto3 = new CrearGasto("descripción del gasto", valor3, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+//assert., 0);
+//lengthOf(listarGastos());
+gastos.length;
+anyadirGasto(gasto1);
+gastos.length;
+//assert.lengthOf(listarGastos(), 1);
+listarGastos();
+//assert.equal(listarGastos()[0].id, 0, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
+listarGastos()[0].id;
+anyadirGasto(gasto2);
+//assert.lengthOf(listarGastos(), 2);
+//lengthOf(listarGastos());
+//assert.equal(listarGastos()[1].id, 1, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
+console.log(listarGastos()[1].id);
+anyadirGasto(gasto3);
+
+//assert.lengthOf(listarGastos(), 3);
+//lengthOf(listarGastos());
+//assert.equal(listarGastos()[2].id, 2, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
+listarGastos()[2].id;
+function borrarGasto(idGastoABorrar){
+    let index = gastos.findIndex(gasto => gasto.id === idGastoABorrar);
+    if (index !== -1) {
+      gastos.splice(index, 1);
+    }
 }
 
 function calcularTotalGastos(){
-    
+ return gastos.reduce((total, gasto) => total + gasto.valor, 0);   
 }
 function calcularBalance(){
-    
+return presupuesto - calcularTotalGastos();
 }
 
-function agregarGasto(gasto){
-        gastos.push(gasto);
-}
+
+
 
 
 
