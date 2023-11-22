@@ -296,6 +296,11 @@ function EditarHandleFormulario(gasto) {
 		let botonCancelar = formulario.querySelector("button.cancelar")
 		let manejadorCancelar = new CancelarFormularioHandle(formulario, botonEditarFormulario)
 		botonCancelar.addEventListener("click", manejadorCancelar)
+
+		let manejadorEditar = new EditarFormularioHandle(gasto)
+
+		// Manejamos el evento 'submit' en el formulario cuando se edita un gasto
+		formulario.addEventListener("submit", manejadorEditar)
 	}
 }
 
@@ -355,10 +360,47 @@ function manejadorSubmitFormulario(evento) {
 	// Llamos a la función repintar para mostrar la información actualizada en el HTML
 	repintar()
 
-	let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
-
 	// Activamos el botón de añadir gasto eliminando el atributo disabled
+	let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
 	botonAnyadirGastoFormulario.removeAttribute("disabled")
+}
+
+// Manejo del evento 'submit' cuando se edita un gasto desde el formulario
+function EditarFormularioHandle(gasto) {
+	this.gasto = gasto
+	this.handleEvent = function (evento) {
+		// Evitamos que el formulario se envíe por defecto
+		evento.preventDefault()
+
+		// Creamos la variable formulario que hace referencia al formulario mediante el evento
+		let form = evento.currentTarget
+
+		// Recogemos los valores del formulario mediante el atributo name
+		let descripcion = form.descripcion.value
+		let valor = form.valor.value
+		let fecha = form.fecha.value
+		let etiquetas = form.etiquetas.value
+
+		// Transformamos el valor a número
+		valor = parseFloat(valor)
+
+		// Convertimos la cadena de texto de etiquetas en un array
+		let arrayEtiquetas = etiquetas.split(", ")
+
+		// Actualizamos el gasto con los nuevos datos llamando a los métodos correspondientes
+		this.gasto.actualizarDescripcion(descripcion)
+		this.gasto.actualizarValor(valor)
+		this.gasto.actualizarFecha(fecha)
+
+		// Borramos las antiguas etiquetas
+		this.gasto.borrarEtiquetas(...this.gasto.etiquetas)
+
+		// Añadimos las nuevas etiquetas
+		this.gasto.anyadirEtiquetas(...arrayEtiquetas)
+
+		// Llamos a la función repintar para
+		repintar()
+	}
 }
 
 // Función constructora CancelarFormularioHandle con un único método handleEvent que se encargará de manejar el evento 'click'
