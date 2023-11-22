@@ -79,6 +79,18 @@ function mostrarGastoWeb(idElemento, gasto) {
 
                 botonBorrar.addEventListener('click', borrarMan);
                 contenidoGasto.appendChild(botonBorrar);
+
+
+                let botonFormulario = document.createElement('button');
+                    botonFormulario.classList.add('gasto-editar-formulario');
+                    botonFormulario.type = "button";
+                    botonFormulario.textContent = "Editar Formulario";
+
+                let botonForm = new EditarHandleFormulario();
+                    botonForm.gasto = gasto;
+
+                    botonFormulario.addEventListener('click', botonForm);
+                    contenidoGasto.appendChild(botonFormulario);
         }
         elemento.appendChild(contenidoGasto);
 
@@ -264,6 +276,38 @@ function CancelarFormularioHandle(formulario, botonAnyadir) {
 	}
 }
 
+function EditarHandleFormulario(gasto) {
+
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+		var formulario = plantillaFormulario.querySelector("form");
+
+	this.gasto = gasto
+	this.handleEvent = function (event) {
+
+		let botonEditarFormulario = event.target;
+		botonEditarFormulario.setAttribute("disabled", "");
+
+	
+		let descripcion = this.gasto.descripcion;
+		let valor = this.gasto.valor;
+		let fecha = new Date(this.gasto.fecha).toISOString().slice(0, 10);
+		let etiquetas = this.gasto.etiquetas.join(", ") ;
+
+		
+		let divGasto = event.target.parentNode ;
+		divGasto.appendChild(plantillaFormulario);
+
+		formulario.querySelector("#descripcion").value = descripcion;
+		formulario.querySelector("#valor").value = valor;
+		formulario.querySelector("#fecha").value = fecha;
+		formulario.querySelector("#etiquetas").value = etiquetas;
+
+		let botonCancelar = formulario.querySelector("button.cancelar");
+		let manejadorCancelar = new CancelarFormularioHandle(formulario, botonEditarFormulario);
+		botonCancelar.addEventListener("click", manejadorCancelar);
+	}
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -275,5 +319,6 @@ export {
     BorrarHandle,
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario,
-    CancelarFormularioHandle
+    CancelarFormularioHandle,
+    EditarHandleFormulario
   };
