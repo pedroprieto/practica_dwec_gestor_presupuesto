@@ -100,8 +100,19 @@ function anyadirGasto(gasto) {
     gastos.push(gasto)
 }
 
-function borrarGasto() {
+function borrarGasto(idGasto) {
+    let gasto = null;
 
+    for (let g of gastos) {
+        if (g.id == idGasto) {
+            gasto = g;
+            break;
+        }
+    }
+    if (gasto) {
+        let posGasto = gastos.indexOf(gasto);
+        gastos.splice(posGasto, 1);
+    }
 }
 
 function calcularTotalGastos() {
