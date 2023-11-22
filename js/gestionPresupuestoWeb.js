@@ -296,7 +296,7 @@ function botonAnadir(event) {
 
 }
 
-function BotonCancelar(event) {
+function BotonCancelar() {
   
   this.handleEvent = function (event) {
 
@@ -307,7 +307,7 @@ function BotonCancelar(event) {
  // formulario1.remove();  //! no de borra el fomulario
 
   let botonAnyadir = document.getElementById("anyadirgasto-formulario");
-  botonAnyadir.dissable = true; //activo botn
+  botonAnyadir.disable = true; //activo botn
   }
 }
 
@@ -320,27 +320,21 @@ function EditarHandleFormulario(event, gasto) {
 
     let formulario = plantillaFormulario.querySelector("form");
 
-    formulario.descripcion.value = this.gasto.descripcion;
-    formulario.valor.value = this.gasto.valor;
-    formulario.fecha.value = this.gasto.fecha;
-    formulario.etiquetas.value = this.gasto.etiquetas;
+    formulario.elements.descripcion.value = this.gasto.descripcion;
+    formulario.elements.valor.value = this.gasto.valor;
+    formulario.elements.fecha.value = this.gasto.fecha;
+    formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
     //evento submit
-    function HandleSubmit() {
-      let descripcion = formulario.descripcion.value; //formulario.element.descripcion.value;
-      let valor = Number(formulario.valor.value);
-      H;
-      let fecha = formulario.fecha.value;
-      let etiquetas = formulario.etiquetas.value;
+    function handleSubmit() {
+      let descripcion = formulario.elements.descripcion.value; //formulario.element.descripcion.value;
+      let valor = Number(formulario.elements.valor.value);    
+      let fecha =formulario.elements.fecha.value;
+      let etiquetas =formulario.elements.etiquetas.value;
       let arrEtiquetas = etiquetas.split(`,`);
 
       // creo new gasto
-      let nuevoGasto = new gestionPresupuesto.CrearGasto(
-        descripcion,
-        valor,
-        fecha,
-        arrEtiquetas
-      );
+      let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arrEtiquetas);
       gestionPresupuesto.anyadirGasto(nuevoGasto);
 
       repintar();
@@ -349,7 +343,7 @@ function EditarHandleFormulario(event, gasto) {
     }
 
     let editarGastoFrom = document.getElementById(`gasto-editar-formulario`);
-    editarGastoFrom.HandleSubmit();
+    editarGastoFrom.handleSubmit();
 
     //evento cancelar
 
