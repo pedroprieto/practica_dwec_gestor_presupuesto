@@ -1,5 +1,4 @@
 import * as gestionPresupuesto from "./gestionPresupuesto.js"
-var formulario = plantillaFormulario.querySelector("form")
 
 // Función para mostrar un valor en un elemento HTML por su ID
 function mostrarDatoEnId(idElemento, valor) {
@@ -260,21 +259,22 @@ function nuevoGastoWebFormulario() {
 	var formulario = plantillaFormulario.querySelector("form")
 
 	// Creamos las variables que hacen referencia al botón de añadir gasto y al botón de cancelar
-	let botonAnyadir = document.getElementById("anyadirgasto-formulario")
+	let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
 	let botonCancelar = formulario.querySelector("button.cancelar")
 
 	// Manejamos el evento 'submit' en el formulario
 	formulario.addEventListener("submit", manejadorSubmitFormulario)
 
 	// Manejamos el evento 'click' en el botón 'Cancelar'
-	let manejadorBotonCancelar = new CancelarFormularioHandle(formulario, botonAnyadir)
+	let manejadorBotonCancelar = new CancelarFormularioHandle(formulario, botonAnyadirGastoFormulario)
 	botonCancelar.addEventListener("click", manejadorBotonCancelar)
 
 	// Desactivamos el botón de añadir gasto
-	botonAnyadirGastoFormulario.addAttribute("disabled")
+	botonAnyadirGastoFormulario.setAttribute("disabled", "")
 
-	// Añadimos el formulario al DOM
-	document.getElementById("controlesprincipales").appendChild(plantillaFormulario)
+	// Añadimos el formulario al div controlesprincipales
+	let divControlesPrincipales = document.getElementById("controlesprincipales")
+	divControlesPrincipales.appendChild(plantillaFormulario)
 }
 
 // Manejador de evento submit del formulario
@@ -306,7 +306,6 @@ function manejadorSubmitFormulario(evento) {
 	// Llamos a la función repintar para mostrar la información actualizada en el HTML
 	repintar()
 
-	// Creamos la variable que hace referencia al botón de añadir gasto para poder activarlo
 	let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario")
 
 	// Activamos el botón de añadir gasto eliminando el atributo disabled
