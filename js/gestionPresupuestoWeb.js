@@ -39,9 +39,11 @@ function mostrarGastoWeb(idElemento, gasto) {
         divValorGasto.textContent = gasto.valor + '€';
         contenidoGasto.appendChild(divValorGasto);
 
+        const divGastoEtiquetas = document.createElement('div');
+              divGastoEtiquetas.classList.add('gasto-etiquetas');
+              contenidoGasto.appendChild(divGastoEtiquetas);
+
         if(gasto.etiquetas && Array.isArray(gasto.etiquetas)){
-            const divGastoEtiquetas = document.createElement('div');
-            divGastoEtiquetas.classList.add('gasto-etiquetas');
 
             for(const etique of gasto.etiquetas) {
                 const spanEtiquetas = document.createElement('span');
@@ -55,12 +57,28 @@ function mostrarGastoWeb(idElemento, gasto) {
                 divGastoEtiquetas.appendChild(spanEtiquetas);
             }
 
-            let botonEditar = document.createElement("button")
-	              botonEditar.classList.add("gasto-editar")
-	              botonEditar.type = "button"
-	              botonEditar.textContent = "Editar"
+            let botonEditar = document.createElement("button");
+	              botonEditar.classList.add("gasto-editar");
+	              botonEditar.type = "button";
+	              botonEditar.textContent = "Editar";
 
-            contenidoGasto.appendChild(divGastoEtiquetas);
+            let editarMan = new EditarHandle();
+                editarMan.gasto = gasto;
+
+                botonEditar.addEventListener('click' , editarMan);
+                contenidoGasto.appendChild(botonEditar);
+
+
+            let botonBorrar = document.createElement("button");
+                botonBorrar.classList.add("gasto-borrar");
+                botonBorrar.type = "button";
+                botonBorrar.textContent = "Borrar";
+
+            let borrarMan = new BorrarHandle();
+                borrarMan.gasto = gasto;
+
+                botonBorrar.addEventListener('click', borrarMan);
+                contenidoGasto.appendChild(botonBorrar);
         }
         elemento.appendChild(contenidoGasto);
 
