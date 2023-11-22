@@ -67,8 +67,16 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo) {
   let divAgrupacion = document.createElement("div");
   divAgrupacion.className = "agrupacion";
 
+  let periodo_texto = "mes";
+  if (periodo == "dia") {
+    periodo_texto = "día";
+  } else if (periodo == "anyo") {
+    periodo_texto = "año";
+  }
+
   let h1Periodo = document.createElement("h1");
-  h1Periodo.innerText = `Gastos agrupados por ${periodo}`;
+  h1Periodo.innerText = `Gastos agrupados por ${periodo_texto}`;
+  
 
   //añado elmentos creados al div agrup
   divAgrupacion.appendChild(h1Periodo);
@@ -101,7 +109,6 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo) {
 
 
 
-
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
@@ -110,22 +117,3 @@ export{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export{
-    mostrarDatoEnId,
-    mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
-}
