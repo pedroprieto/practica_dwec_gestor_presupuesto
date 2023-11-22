@@ -1,7 +1,6 @@
-import * as gesPres from './gestionPresupuesto';
+import * as gesPres from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor) {
-
     const elemento = document.getElementById(idElemento);
 
     if(elemento) {
@@ -11,9 +10,9 @@ function mostrarDatoEnId(idElemento, valor) {
 
 function mostrarGastoWeb(idElemento, gasto) {
 
-    const elemnt = document.getElementById(idElemento);
+    const elemento = document.getElementById(idElemento);
 
-    if(elemnt){
+    if(elemento){
 
         /*Primero creo el elmento div con createElemt....
         y luego con classList creo la clase gasto, y lo agrego!*/ 
@@ -40,8 +39,6 @@ function mostrarGastoWeb(idElemento, gasto) {
         divValorGasto.textContent = gasto.valor + '€';
         contenidoGasto.appendChild(divValorGasto);
 
-
-
         if(gasto.etiquetas && Array.isArray(gasto.etiquetas)){
             const divGastoEtiquetas = document.createElement('div');
             divGastoEtiquetas.classList.add('gasto-etiquetas');
@@ -50,12 +47,17 @@ function mostrarGastoWeb(idElemento, gasto) {
                 const spanEtiquetas = document.createElement('span');
                 spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
                 spanEtiquetas.textContent = etique;
+
+                spanEtiquetas.addEventListener('click', function () {
+                    BorrarEtiquetasHandle(gasto, etiqueta);
+                  });
+
                 divGastoEtiquetas.appendChild(spanEtiquetas);
             }
             contenidoGasto.appendChild(divGastoEtiquetas);
         }
+        elemento.appendChild(contenidoGasto);
 
-        elemnt.appendChild(contenidoGasto);
     }
 
 }
@@ -93,41 +95,89 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     }
   }
 
-  function repintar() {
+  function repintar(){
 
-    const mostrarPres = gesPres.mostrarPresupuesto()
-    mostrarDatoEnId('presupuesto', mostrarPres)
+    const presupuesto = gestionPresupuesto.mostrarPresupuesto();
+    mostrarDatoEnId('presupuesto', presupuesto);
+  
 
-    const totalGasto = gesPres.calcularTotalGastos();
-    mostrarDatoEnId('gastos-totales', totalGasto);
+    const totalGastos = gestionPresupuesto.calcularTotalGastos();
+    const balanceTotal = gestionPresupuesto.calcularBalance();
 
-    const totalBalance = gesPres.calcularBalance();
-    mostrarDatoEnId('balance-total', totalBalance);
+    mostrarDatoEnId('gastos-totales', totalGastos);
+    mostrarDatoEnId('balance-total', balanceTotal);
+  
+    let listado = document.getElementById('listado-gastos-completo'); 
+  
+  
+    listado.innerHTML = ""; 
 
-     var listaGast = Document.getElementById('listado-gastos-completo');
-     listaGast.innerHTML;
-
-     const listaGastoCompletos = gesPres.listarGastos();
-
-     listaGastoCompletos.forEach((gasto) => {
-        mostrarGastoWeb('listado-gastos-completo', listaGastoCompletos);
-     })
-
+    const listadoGastos = gestionPresupuesto.listarGastos(); // Declaración e inicialización de listadoGastos
+     listadoGastos.forEach((gasto) => {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+     });
   }
 
   function actualizarPresupuestoWeb(){
+    let presupuestoWeb = prompt('Actualiza el presupuesto: ', 0); 
+    presupuestoWeb = parseFloat(presupuestoWeb); 
+    gestionPresupuesto.actualizarPresupuesto(presupuestoWeb); 
+    repintar(); 
+}
 
-    var pedirPres = prompt('Introducir presupuesto: ', ' ');
-    parseInt(pedirPres);
-    gesPres.actualizarPresupuesto(pedirPres);
-    repintar();
+function nuevoGastoWeb() {
 
-  }
+	let descripcion = prompt("Introduce la descripción del gasto")
+	let valor = prompt("Introduce el valor del gasto")
+	let fecha = prompt("Introduce la fecha del gasto")
+	let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)")
+
+
+	valor = parseFloat(valor)
+
+	let arrayEtiquetas = etiquetas.split(", ")
+
+	let nuevoGasto = new gesPres.CrearGasto(descripcion, valor, fecha, arrayEtiquetas)
+
+	gestionPresupuesto.anyadirGasto(nuevoGasto)
+
+	repintar()
+}
+
+function EditarHandle() {
+	this.handleEvent = function (event) {
+
+		let descripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion)
+		let valor = prompt("Introduce el valor del gasto", this.gasto.valor)
+		let fecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd", new Date(this.gasto.fecha).toISOString().slice(0, 10))
+		let etiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.etiquetas.join(", "))
+
+		valor = parseFloat(valor)
+
+
+		let arrayEtiquetas = etiquetas.split(", ")
+
+
+		this.gasto.actualizarDescripcion(descripcion)
+		this.gasto.actualizarValor(valor)
+		this.gasto.actualizarFecha(fecha)
+
+
+		this.gasto.borrarEtiquetas(...this.gasto.etiquetas)
+
+
+		this.gasto.anyadirEtiquetas(...arrayEtiquetas)
+
+		repintar()
+	}
+}
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    EditarHandle,
   };

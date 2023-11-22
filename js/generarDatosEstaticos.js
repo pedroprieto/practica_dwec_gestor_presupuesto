@@ -31,11 +31,11 @@ listGasto.forEach((gasto) => {
     gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
 });
 
-const listarFecha = gestionPresupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechasHasta: '2021-09-30'});
-listarFecha.forEach((fecha) => {
-    const fechaId = 'listado-gastos-filtrado-1';
-    gestionPresupuestoWeb.mostrarGastoWeb(fechaId, fecha);
-});
+const gastosSeptiembre2021 = gestionPresupuesto.filtrarGastos({ fechaDesde: '2021-09-01', fechaHasta: '2021-09-30' });
+gastosSeptiembre2021.forEach((gasto) => {
+    const elementoId = 'listado-gastos-filtrado-1';
+    gestionPresupuestoWeb.mostrarGastoWeb(elementoId, gasto);
+  });
 
 /*const gastosMasDe50 = gestionPresupuesto.filtrarGastos({ valorMinimo: 50 });
 gastosMasDe50.forEach((gasto) => {
@@ -80,6 +80,14 @@ gastosSegurosMasDe200.forEach((gasto) => {
 
     const listadoPorAño = gestionPresupuesto.agruparGastos('anyo');
                 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', listadoPorAño , 'año');
+
+
+let $eventoPrespuesto = document.getElementById("actualizarpresupuesto")
+$eventoPrespuesto.addEventListener("click", gestionPresupuestoWeb.actualizarPresupuestoWeb)
+
+let $eventoAnyadirGasto = document.getElementById("anyadirgasto")
+$eventoAnyadirGasto.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb)
+
 
                 export * from './generarDatosEstaticos.js';
 
