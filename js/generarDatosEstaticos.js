@@ -30,6 +30,6 @@ gesPreWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gesPre.filtrarGastos({val
 gesPreWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gesPre.filtrarGastos({valorMinimo: 200, etiquetasTiene: ['seguros']}));
 gesPreWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gesPre.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida', 'transporte']}));
 
-gesPreWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gesPre.agruparGastos('día'));
-gesPreWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gesPre.agruparGastos('mes'));
-gesPreWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', gesPre.agruparGastos('anyo'));
+gesPreWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gesPre.agruparGastos('dia'), 'día');
+gesPreWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gesPre.agruparGastos('mes'), 'mes');
+gesPreWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', gesPre.agruparGastos('anyo'), 'año');
