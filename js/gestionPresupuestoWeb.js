@@ -29,25 +29,6 @@ export function mostrarGastoWeb(idElemento, gasto) {
         valorElemento.textContent = gasto.valor;
         gastoElemento.appendChild(valorElemento);
 
-        const btnEditar = document.createElement("button");
-        btnEditar.type = "button";
-        btnEditar.textContent = "Editar";
-        btnEditar.classList.add("gasto-editar");
-
-        const editarHandler = new EditarHandle(gasto);
-        btnEditar.addEventListener("click", editarHandler);
-
-        const btnBorrar = document.createElement("button");
-        btnBorrar.type = "button";
-        btnBorrar.textContent = "Borrar";
-        btnBorrar.classList.add("gasto-borrar");
-
-        const borrarHandler = new BorrarHandle(gasto);
-        btnBorrar.addEventListener("click", borrarHandler);
-
-        gastoElemento.appendChild(btnEditar);
-        gastoElemento.appendChild(btnBorrar);
-
         const etiquetasElemento = document.createElement("div");
         etiquetasElemento.classList.add("gasto-etiquetas");
         gasto.etiquetas.forEach((etiqueta) => {
@@ -58,6 +39,24 @@ export function mostrarGastoWeb(idElemento, gasto) {
             etiquetasElemento.appendChild(span);
         });
         gastoElemento.appendChild(etiquetasElemento);
+
+        // Botón Editar
+        const btnEditar = document.createElement("button");
+        btnEditar.type = "button";
+        btnEditar.textContent = "Editar";
+        btnEditar.classList.add("gasto-editar");
+        const editarHandler = new EditarHandle(gasto);
+        btnEditar.addEventListener("click", editarHandler);
+        gastoElemento.appendChild(btnEditar);
+
+        // Botón Borrar
+        const btnBorrar = document.createElement("button");
+        btnBorrar.type = "button";
+        btnBorrar.textContent = "Borrar";
+        btnBorrar.classList.add("gasto-borrar");
+        const borrarHandler = new BorrarHandle(gasto);
+        btnBorrar.addEventListener("click", borrarHandler);
+        gastoElemento.appendChild(btnBorrar);
 
         elemento.appendChild(gastoElemento);
     }
@@ -95,14 +94,14 @@ export function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 export function repintar() {
-    mostrarDatoEnId("presupuesto", gestionPresupuesto.obtenerPresupuesto());
+    mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
-    const listadoGastosCompleto = gestionPresupuesto.listarGastos();
     const elementoListadoGastosCompleto = document.getElementById("listado-gastos-completo");
     if (elementoListadoGastosCompleto) {
         elementoListadoGastosCompleto.innerHTML = "";
+        const listadoGastosCompleto = gestionPresupuesto.listarGastos();
         listadoGastosCompleto.forEach((gasto) => mostrarGastoWeb("listado-gastos-completo", gasto));
     }
 }

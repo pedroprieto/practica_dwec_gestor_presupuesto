@@ -167,7 +167,7 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
 
     };
 
-    this.borrarEtiquetas = function(...etiquetas){
+   this.borrarEtiquetas = function(...etiquetas){
         let filtroEtiquetas = [];
         for(let i = 0; i < this.etiquetas.length; i++){
             let etiqueta = this.etiquetas[i];
@@ -177,6 +177,7 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {                    
         }    
         this.etiquetas = filtroEtiquetas;
     };
+
 
     this.obtenerPeriodoAgrupacion = function(periodo){                                                                         //Metodo que devuelve un formato de fecha segun un periodo ARA
         let auxFecha = this.fecha;                                                                                             //OJO! this.fecha no puede hacer uso de las funciones .getFY, getM y .getD
