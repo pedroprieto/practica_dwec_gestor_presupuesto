@@ -23,23 +23,75 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //TODO
-    
     // Propiedades
     this.descripcion = descripcion;
     this.valor = (valor >= 0) ? valor : 0;
-    
+
+    let f = Date.parse(fecha);
+    if (f) {
+        this.fecha = f;
+    } else {
+        this.fecha = Date.parse(new Date());
+    }
+
+    this.etiquetas = [];
+    this.anyadirEtiquetas = function (...listaEtiquetas) {
+        for (let e of listaEtiquetas) {
+            if (this.etiquetas.indexOf(e) == -1) {
+                this.etiquetas.push(e);
+            }
+        }
+    }
+
+    this.anyadirEtiquetas(...etiquetas);
+
     // Métodos
-    this.mostrarGasto = function() {
+    this.mostrarGasto = function () {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
 
-    this.actualizarDescripcion = function(nuevaDescripcion) {
+    this.actualizarDescripcion = function (nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
     }
-    
-    this.actualizarValor = function(nuevoValor) {
+
+    this.actualizarValor = function (nuevoValor) {
         this.valor = (nuevoValor >= 0) ? nuevoValor : this.valor;
     }
+
+    this.mostrarGastoCompleto = function() {
+        let texto = `Gasto correspondiente a ${this.descripcion } con valor ${this.valor} €.
+Fecha: ${new Date(this.fecha).toLocaleString()}
+Etiquetas:\n`
+
+        for (let e of this.etiquetas) {
+            texto += `- ${e}\n`
+        }
+        return texto;
+
+    };
+
+    this.actualizarFecha = function (fecha) {
+        let f = Date.parse(fecha);
+
+        if (f) {
+            this.fecha = f;
+        }
+    }
+
+    
+
+    this.borrarEtiquetas = function (...listaEtiquetas) {
+        let nuevaListaEtiquetas = [];
+
+        for (let e of this.etiquetas) {
+            if (listaEtiquetas.indexOf(e) == -1) {
+                nuevaListaEtiquetas.push(e);
+            }
+        }
+
+        this.etiquetas = nuevaListaEtiquetas;
+    }
+
 
 }
 
@@ -48,19 +100,19 @@ function listarGastos() {
 }
 
 function anyadirGasto() {
-    
+
 }
 
 function borrarGasto() {
-    
+
 }
 
 function calcularTotalGastos() {
-    
+
 }
 
 function calcularBalance() {
-    
+
 }
 
 
@@ -68,7 +120,7 @@ function calcularBalance() {
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
+export {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
