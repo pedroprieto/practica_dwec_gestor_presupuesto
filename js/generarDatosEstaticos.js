@@ -26,11 +26,11 @@ gestionPresupuesto.anyadirGasto(gasto6);
 
 //Mostrar gastos totales en el elemnto con ID "gastos-totales"
 const totalGastos = gestionPresupuesto.calcularTotalGastos();
-gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', totalGastos);
+gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', parseFloat(totalGastos.toFixed(2)));
 
 //Mostrar el balance total en el elemento con ID "balance-total"
 const balanceTotal = gestionPresupuesto.calcularBalance();
-gestionPresupuestoWeb.mostrarDatoEnId('balance-total', balanceTotal);
+gestionPresupuestoWeb.mostrarDatoEnId('balance-total', parseFloat(balanceTotal.toFixed(2)));
 
 //Mostrar listado de gastos completo
 const listadoGastos = gestionPresupuesto.listarGastos();

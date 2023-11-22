@@ -39,7 +39,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     const divFecha = document.createElement("div");
     divFecha.classList.add("gasto-fecha");
-    const fechaFormateada = gasto.fecha;
+    const fechaFormateada = new Date(gasto.fecha).toISOString().split('T')[0];
     divFecha.textContent = fechaFormateada;
 
     const divValor = document.createElement("div");
@@ -293,7 +293,7 @@ function EditarHandleformulario(gasto, divGasto) {
     // Rellenar formulario
     formulario.elements.descripcion.value = this.gasto.descripcion;
     formulario.elements.valor.value = this.gasto.valor;
-    formulario.elements.fecha.value = this.gasto.fecha
+    formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().split('T')[0];
     formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
     // Accedemos y deshabilitamos bontón de editar formulario
