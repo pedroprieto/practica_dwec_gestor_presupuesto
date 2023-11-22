@@ -88,6 +88,18 @@ function mostrarGastoWeb(idElemento, gasto) {
 	// Añadimos el botón al DOM a continuación de las etiquetas
 	divGasto.appendChild(botonBorrar)
 
+	// Segundo botón de edición
+	let botonEditarFormulario = document.createElement("button")
+	botonEditarFormulario.classList.add("gasto-editar-formulario")
+	botonEditarFormulario.type = "button"
+	botonEditarFormulario.textContent = "Editar (formulario)"
+
+	// Manejador de evento de editar formulario
+	let editarManejadorFormulario = new EditarHandleFormulario(gasto)
+	botonEditarFormulario.addEventListener("click", editarManejadorFormulario)
+
+	divGasto.appendChild(botonEditarFormulario)
+
 	// Agregamos al contenedor el div gasto creado con todos sus elementos
 	contenedor.appendChild(divGasto)
 }
@@ -250,6 +262,43 @@ function BorrarEtiquetasHandle() {
 	}
 }
 
+// Función constructora EditarHandleformulario con un único método handleEvent que se encargará de manejar el evento 'click'
+function EditarHandleFormulario(gasto) {
+	this.gasto = gasto
+	this.handleEvent = function (event) {
+		// Creamos una copia del formulario web definido en la plantilla HTML
+		let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true)
+
+		// Creamos la variable que accede al formulario dentro de la plantilla
+		var formulario = plantillaFormulario.querySelector("form")
+
+		// Desactivamos el botón de editar gasto (formulario)
+		let botonEditarFormulario = event.target // el evento se produce sobre el botón
+		botonEditarFormulario.setAttribute("disabled", "")
+
+		// Creamos las variables para tomar los valores del gasto que se va a editar
+		let descripcion = this.gasto.descripcion
+		let valor = this.gasto.valor
+		let fecha = new Date(this.gasto.fecha).toISOString().slice(0, 10) // Transformamos el valor para poder mostrarlo en el input type date
+		let etiquetas = this.gasto.etiquetas.join(", ") // Transformamos el array de etiquetas en una cadena de texto separada por comas
+
+		// Añadimos el formulario de edición al div gasto correspondiente
+		let divGasto = event.target.parentNode // el evento se produce sobre el botón, por lo que el padre del botón es el div gasto
+		divGasto.appendChild(plantillaFormulario)
+
+		// Asignamos los valores del gasto al formulario
+		formulario.querySelector("#descripcion").value = descripcion
+		formulario.querySelector("#valor").value = valor
+		formulario.querySelector("#fecha").value = fecha
+		formulario.querySelector("#etiquetas").value = etiquetas
+
+		// Manejamos el evento 'click' en el botón 'Cancelar'
+		let botonCancelar = formulario.querySelector("button.cancelar")
+		let manejadorCancelar = new CancelarFormularioHandle(formulario, botonEditarFormulario)
+		botonCancelar.addEventListener("click", manejadorCancelar)
+	}
+}
+
 // Función nuevoGastoWebFormulario manejadora de eventos del botón 'anyadirgasto-formulario'
 function nuevoGastoWebFormulario() {
 	// Creamos una copia del formulario web definido en la plantilla HTML
@@ -323,4 +372,4 @@ function CancelarFormularioHandle(formulario, botonAnyadir) {
 	}
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, nuevoGastoWebFormulario }
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, EditarHandleFormulario, nuevoGastoWebFormulario }
