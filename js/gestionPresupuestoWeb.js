@@ -254,7 +254,7 @@ function nuevoGastoWebFormulario(event) {
 
 
   let btncancelar = plantillaFormulario.querySelector(".cancelar")
-  btncancelar.addEventListener(`click`, botonCancelar);
+  btncancelar.addEventListener(`click`,new BotonCancelar());
 
 
 
@@ -286,8 +286,9 @@ function botonAnadir(event) {
 
 }
 
-function botonCancelar(event) {
-  //let btncancelar = document.querySelector(".cancelar");
+function BotonCancelar(event) {
+  
+  this.handleEvent = function (event) {
 
   let formulario = document.querySelector("#formulario-template");
   formulario.remove(); //! no de borra el fomulario
@@ -297,11 +298,54 @@ function botonCancelar(event) {
 
   let botonAnyadir = document.getElementById("anyadirgasto-formulario");
   botonAnyadir.dissable = true; //activo botn
+  }
 }
 
-function EditarHandleFormulario(event) {
-  //TODO
- 
+function EditarHandleFormulario(event, gasto) {
+  //! TODO
+  this.gasto = gasto;
+  this.handleEvent = function (event) {
+    
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+    let formulario = plantillaFormulario.querySelector("form");
+
+    formulario.descripcion.value = this.gasto.descripcion;
+    formulario.valor.value = this.gasto.valor;
+    formulario.fecha.value = this.gasto.fecha;
+    formulario.etiquetas.value = this.gasto.etiquetas;
+
+    //evento submit
+    function HandleSubmit() {
+      let descripcion = formulario.descripcion.value; //formulario.element.descripcion.value;
+      let valor = Number(formulario.valor.value);
+      H;
+      let fecha = formulario.fecha.value;
+      let etiquetas = formulario.etiquetas.value;
+      let arrEtiquetas = etiquetas.split(`,`);
+
+      // creo new gasto
+      let nuevoGasto = new gestionPresupuesto.CrearGasto(
+        descripcion,
+        valor,
+        fecha,
+        arrEtiquetas
+      );
+      gestionPresupuesto.anyadirGasto(nuevoGasto);
+
+      repintar();
+
+      let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+    }
+
+    let editarGastoFrom = document.getElementById(`gasto-editar-formulario`);
+    editarGastoFrom.HandleSubmit();
+
+    //evento cancelar
+
+
+    
+  };
 }
 
 
