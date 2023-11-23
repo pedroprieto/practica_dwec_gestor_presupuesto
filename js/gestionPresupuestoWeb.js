@@ -136,7 +136,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
         //Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
         let nuevaEtiqueta = prompt("Etiquetas del gasto separadas por coma").split(",");
         //Crear un nuevo gasto (función crearGasto)
-        let nuevoGasto = gestPresupuesto.CrearGasto(nuevaDescripcion,nuevoValor,nuevaFecha,...nuevaEtiqueta);
+        let nuevoGasto = new gestPresupuesto.CrearGasto(nuevaDescripcion, nuevoValor, nuevaFecha, ...nuevaEtiqueta);
         //Añadir el gasto a la lista (función anyadirGasto).
         gestPresupuesto.anyadirGasto(nuevoGasto);
         //Llamar a la función repintar
@@ -148,7 +148,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
         document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 
         //Función EditarHandle
-        
+
 
 export {
     mostrarDatoEnId,
