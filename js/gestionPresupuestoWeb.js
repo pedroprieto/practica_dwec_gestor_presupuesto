@@ -48,8 +48,42 @@ function mostrarGastoWeb (idElemento , gasto) {
         divEtiquetas.append(spanEti);
     }
 
+    //Modificación de la función mostrarGastoWeb
+    //Botón editar: Crear un botón 
+    let botonEditar = document.createElement("button");
+    //con clase gasto-editar.
+    botonEditar.className = "gasto-editar";
+    //tipo button (<button type="button">) 
+    botonEditar.type = "button";
+    //con texto Editar 
+    botonEditar.innerText = "Editar";
+    //Crear un nuevo objeto a partir de la función constructora EditarHandle.
+    let objetoBotonEditar = new EditarHandle();
+    //Establecer la propiedad gasto del objeto creado al objeto gasto
+    objetoBotonEditar.gasto = gasto;
+    //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
+    botonEditar.addEventListener("click", objetoBotonEditar);
+    //Añadir el botón al DOM a continuación de las etiquetas en componer DIVS
+
+    //Botón borrar: Crear un botón 
+    let botonBorrar = document.createElement("button");
+    //con clase gasto-borrar.
+    botonBorrar.className = "gasto-borrar";
+    //de tipo button (<button type="button">) 
+    botonBorrar.type = "button";
+    //con texto Borrar 
+    botonBorrar.innerText = "Borrar";
+    //Crear un nuevo objeto a partir de la función constructora BorrarHandle.
+    let objetoBotonBorrar = new BorrarHandle();
+    //Establecer la propiedad gasto del objeto creado al objeto gasto
+    objetoBotonBorrar.gasto = gasto;
+    //Añadir el objeto recién creado como objeto manejador del evento click al botón Borrar recién creado.
+    botonBorrar.addEventListener("click", objetoBotonBorrar);
+    //Añadir el botón al DOM a continuación del botón Editar.
+
+
     //Componer los divs
-    divGasto.append(divDescripcion, divFecha,divValor, divEtiquetas);
+    divGasto.append(divDescripcion, divFecha,divValor, divEtiquetas, botonEditar, botonBorrar);
 
     //Añadir el div contenedor
     let divContenedor = document.getElementById(idElemento);
