@@ -200,7 +200,27 @@ function EditarHandle() {
 
 }
 
+function BorrarHandle(){
+    
+  this.handleEvent = function(){ //handleEvent metodo para manejar el evento
+      
+      gestorPresuesto.borrarGasto(this.gasto.id);//se borra el gasto utilizando la f(x) borrarGasto
 
+      repintar();
+ 
+  }
+  
+}
+
+function BorrarEtiquetasHandle()
+{
+    this.handleEvent = function ()
+    {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+
+        repintar();
+    }
+}
 
 
 
