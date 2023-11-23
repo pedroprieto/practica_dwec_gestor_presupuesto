@@ -69,8 +69,6 @@ function mostrarGastoWeb(idElemento, gastos) {
 
         divGasto.append(botonBorrarGasto);
 
-        
-
 
         document.getElementById(idElemento).append(divGasto);
     }
