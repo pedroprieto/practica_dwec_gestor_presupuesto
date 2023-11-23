@@ -1,11 +1,11 @@
+// Adrián Romero Alonso 2DAWY 53978049Q
 "use strict";
-let presupuesto = 0;
+let presupuesto = 0;                                                                                                 //Declaración de variables globales ARA
 let gastos = [];
 let idGasto = 0;
 
-function actualizarPresupuesto(valor) {
+function actualizarPresupuesto(valor) {                                                                             //Función que acutaliza la variable global presupuesto ARA
     let valorDevuelto = 0;
-
     if (valor < 0 || isNaN(valor)) {
         console.log("El valor introducido es negativo e incorrecto.");
         valorDevuelto = -1;
@@ -14,20 +14,19 @@ function actualizarPresupuesto(valor) {
         presupuesto = valor;
         valorDevuelto = valor;
     }
-
     return valorDevuelto;
 }
 
-function mostrarPresupuesto() {
+function mostrarPresupuesto() {                                                                                     //Función que devuelve un mensaje y la variable global presupuesto ARA  
     console.log(`Tu presupuesto actual es de ${presupuesto} €`);
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date.now(), ...etiquetasEntrante) {
+function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date.now(), ...etiquetasEntrante) {     //Función contructor del objeto Gasto ARA
     if (valorEntrante < 0 || isNaN(valorEntrante)) {
         valorEntrante = 0;
     }
-    if (typeof fechaEntrante === "string") {
+    if (typeof fechaEntrante === "string") {                                                                        //Zona de asignación de parametros ARA
         if (isNaN(Date.parse(fechaEntrante))) {
             fechaEntrante = Date.now();
         }
@@ -41,12 +40,12 @@ function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date
     this.etiquetas =  [...etiquetasEntrante],
     this.fecha = fechaEntrante,
     
-    this.mostrarGasto = function () {
+    this.mostrarGasto = function () {                                                                             // Metodo que devuelve un texto con la descripción y valor del objeto gasto ARA
         console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     },
 
-    this.mostrarGastoCompleto = function () {
+    this.mostrarGastoCompleto = function () {                                                                       //Metodo que devuelvela información detallada del objeto gasto ARA 
         let cadenaCompleta = "";
         let cadenaFecha = new Date(this.fecha).toLocaleString();
         cadenaCompleta += `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${cadenaFecha}\nEtiquetas:\n`;
@@ -57,7 +56,7 @@ function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date
         return cadenaCompleta;
     },
 
-    this.anyadirEtiquetas = function (...nuevasEtiquetas) {
+    this.anyadirEtiquetas = function (...nuevasEtiquetas) {                                                                //Metodo para añadir etiquetas ARA 
         for (let i = 0; i < nuevasEtiquetas.length; i++) {
             if(this.etiquetas.includes(nuevasEtiquetas[i])) {
                 continue;
@@ -66,7 +65,7 @@ function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date
         }
     },
 
-    this.borrarEtiquetas = function (...etiquetasABorrar) {
+    this.borrarEtiquetas = function (...etiquetasABorrar) {                                                                 //Metodo para borrar etiquetas ARA 
         for (let i = 0; i < etiquetasABorrar.length; i++) {
             for (let f = 0; f < this.etiquetas.length; f++) {
                 if (etiquetasABorrar[i] === this.etiquetas[f]){
@@ -76,7 +75,7 @@ function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date
         }
     },
 
-    this.actualizarDescripcion = function(nuevaDescripcion) {
+    this.actualizarDescripcion = function(nuevaDescripcion) {                                                               //Metodos para actualizar valores ARA
         this.descripcion = nuevaDescripcion;
     },
 
@@ -93,7 +92,7 @@ function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date
         }
     },
 
-    this.obtenerPeriodoAgrupacion = function(periodo) {
+    this.obtenerPeriodoAgrupacion = function(periodo) {                                                                                 //Metodo que obtiene el periodo de educacion ARA
         let fechaGasto = new Date(this.fecha);
 
         switch(periodo) {
@@ -115,17 +114,17 @@ function CrearGasto(descripcionEntrante, valorEntrante = 0, fechaEntrante = Date
     }
 } 
 
-function listarGastos() {
+function listarGastos() {                                                                                                             //Funcion getter de gastos ARA
     return gastos;
 }
 
-function anyadirGasto(gasto) {
+function anyadirGasto(gasto) {                                                                                                      //Función para añadir gastos ARA
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
 }
 
-function borrarGasto(idEntrante) {
+function borrarGasto(idEntrante) {                                                                                                  //Función para borrar gastos ARA
     for(let i = 0; i < gastos.length; i++) {
         if (gastos[i].id === idEntrante) {
             gastos.splice(i, 1);
@@ -133,28 +132,25 @@ function borrarGasto(idEntrante) {
     }
 }
 
-function calcularTotalGastos() {
+function calcularTotalGastos() {                                                                                                   //Funcion para calcular los gastos totales ARA
     let acumulado = 0;
 
     for (let i = 0; i < gastos.length; i++) {
         acumulado += gastos[i].valor;
     }
-
     return acumulado;
 }
 
-function calcularBalance() {
+function calcularBalance() {                                                                                                //Funcion que devuelve el balance de gastos ARA
     return (presupuesto - calcularTotalGastos())
 }
 
 function filtrarGastos(filtroEntrante) {    
-    //Creación de variables.
-    let fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene;
+    let fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene;                              //Zona de Creación de variables ARA
     let tieneEtiquetas = false;
-    let caseString = ""; //Variable para usarla luego en el switch para las diferentes posibilidades de filtrado.
+    let caseString = ""; 
 
-    //Comprobación y asignacion de las propiedades del objeto entrante.
-    if (filtroEntrante.hasOwnProperty("fechaDesde")) {
+    if (filtroEntrante.hasOwnProperty("fechaDesde")) {                                                                      //Zona de comprobación y asignacion de las propiedades del objeto entrante ARA
         if (!isNaN(Date.parse(filtroEntrante.fechaDesde))) {
             fechaDesde = Date.parse(filtroEntrante.fechaDesde);
             caseString += "a";
@@ -183,25 +179,22 @@ function filtrarGastos(filtroEntrante) {
         tieneEtiquetas = true;
     }
 
-    //Filtrado del array de gastos.
-    let arrayDevolver = gastos.filter((gasto) => {
-        //Creación de booleanos para su posterior uso.
-        let boolSwitch = false;
+        let arrayDevolver = gastos.filter((gasto) => {                                                                       //Filtro del array de gastos ARA
+        
+        let boolSwitch = false;                                                                                             //Zona de declaracion de booleanos ARA
         let boolEtiquetas = false;
         let tienePropiedades = (caseString === "") ? false : true; 
         let boolFilter = false;
 
-        //Comprobación de si tiene etiquetas.
-        if (tieneEtiquetas) {
+        if (tieneEtiquetas) {                                                                                               //Zona de comprobación de etiquetas ARA
             etiquetasTiene.forEach((etiqueta) => {
                 if (gasto.etiquetas.includes(etiqueta)) {
                     boolEtiquetas = true;
                 }
             });
         }
-
-        //Switch para comprobar la cantidad de propiedades.
-        switch(caseString) {
+        
+        switch(caseString) {                                                                                               //Comprobacion de propiedades ARA
             case "abcde":
                 if (fechaDesde <= gasto.fecha && fechaHasta >= gasto.fecha) {
                     if(valorMaximo >= gasto.valor && valorMinimo <= gasto.valor) {
@@ -372,9 +365,8 @@ function filtrarGastos(filtroEntrante) {
                 }
                 break;
         }
-
-        //Asignando el bool de return dependiendo de si se han introducido etiquetas o propiedades.
-        if (tieneEtiquetas && tienePropiedades) {
+        
+        if (tieneEtiquetas && tienePropiedades) {                                           //Asignacion del booleano dependiendo de si se han introducido etiquetas o propiedades ARA
             if (boolEtiquetas && boolSwitch)
                 boolFilter = true;
             else
@@ -395,25 +387,21 @@ function filtrarGastos(filtroEntrante) {
 
         return boolFilter;
     })
-
-    //Si se introduce un objeto vacio se devuelve el array con todos los gastos.
-    if (arrayDevolver.length === 0) {
+   
+    if (arrayDevolver.length === 0) {                                                       //Si se introduce un objeto vacio se devuelve el array con todos los gastos ARA
         arrayDevolver = [...gastos];
     }
 
-    //Return de array de gastos filtrados.
     return arrayDevolver;
 }
 
-function agruparGastos(periodo = "mes", etiquetasEntrante = [], fechaDesdeEntrante = "", fechaHastaEntrante = Date.now()) {
-    //Creación de objeto gasto.
+function agruparGastos(periodo = "mes", etiquetasEntrante = [], fechaDesdeEntrante = "", fechaHastaEntrante = Date.now()) {   //Función para agrupar los gastos ARA
     let gasto = {
         etiquetasTiene: etiquetasEntrante,
         fechaDesde: fechaDesdeEntrante,
         fechaHasta: fechaHastaEntrante
     }
 
-    //Creación de array de gastos filtrados mediante la función filtrarGastos()
     let gastosFiltrados = filtrarGastos(gasto);
 
     let gastosAgrupados = gastosFiltrados.reduce((acumulado, gasto) => {
