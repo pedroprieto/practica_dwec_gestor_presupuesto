@@ -53,31 +53,33 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
   let targetElement = document.getElementById(idElemento);
   let gastoTag = document.createElement("div");
   gastoTag.classList.add("agrupacion");
-  
   targetElement.append(gastoTag);
+
   gastoTag = document.createElement("h1");
   gastoTag.textContent = `Gastos agrupados por ${periodo}`
-  targetElement = document.querySelector(".agrupacion");
+  targetElement = document.querySelector(`#${idElemento} > .agrupacion:last-child`);
   targetElement.append(gastoTag);
  
 
-  for (let grupo in agrup){
-    let agrupacionDato = document.createElement("div");
-    agrupacionDato.classList.add("agrupacion-dato");
+    for (let grupo in agrup){
+    gastoTag = document.createElement("div");
+    gastoTag.classList.add("agrupacion-dato");
+    targetElement = document.querySelector(`#${idElemento} > div`);
+    targetElement.append(gastoTag);
 
-    let claveTag = document.createElement("span");
-    claveTag.classList.add("agrupacion-dato-clave");
-    claveTag.textContent = grupo;
+    gastoTag = document.createElement("span");
+    gastoTag.classList.add("agrupacion-dato-clave");
+    targetElement = document.querySelector(`#${idElemento} > .agrupacion > div.agrupacion-dato:last-child`);
+    gastoTag.textContent = grupo;
+    targetElement.append(gastoTag);
 
-    let valorTag = document.createElement("span");
-    valorTag.classList.add("agrupacion-dato-valor");
-    valorTag.textContent = agrup[grupo];
+    gastoTag = document.createElement("span");
+    gastoTag.classList.add("agrupacion-dato-valor");
+    targetElement = document.querySelector(`#${idElemento} > .agrupacion > div.agrupacion-dato:last-child`);
+    gastoTag.textContent = agrup[grupo];
+    targetElement.append(gastoTag);
 
-    agrupacionDato.append(claveTag, valorTag);
-
-    targetElement = document.querySelector("h1");
-    targetElement.after(agrupacionDato);
-  }
+  } 
 
 }
 

@@ -28,7 +28,6 @@ gestionPresuWeb.mostrarDatoEnId("balance-total", gestionPresu.calcularBalance())
 for (let gasto of gestionPresu.listarGastos()){
   gestionPresuWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
-const filtro1 = {valorMinimo: 50};
 
 
 for (let gasto of gestionPresu.filtrarGastos({"fechaDesde": "2021-9-01", "fechaHasta" : "2021-9-30"})){
@@ -47,5 +46,15 @@ for (let gasto of gestionPresu.filtrarGastos({"valorMinimo": 200, "etiquetas": [
 for (let gasto of gestionPresu.filtrarGastos({"valorMaximo": 50, "etiquetas": ["comida", "transportes"]})){
   gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
+let agrupacionDia = gestionPresu.agruparGastos("dia");
 
+gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", agrupacionDia, "día");
+
+let agrupacionMes = gestionPresu.agruparGastos("mes");
+
+gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", agrupacionMes, "mes");
+
+let agrupacionAnyo = gestionPresu.agruparGastos("anyo");
+
+gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupacionAnyo, "año");
 

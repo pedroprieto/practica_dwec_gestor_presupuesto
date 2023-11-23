@@ -1,4 +1,3 @@
-//Código de gestor de presupuesto por DVS curso 2023/2024...
 
 let presupuesto = 0;
 let gastos = [];
@@ -204,33 +203,48 @@ function filtrarGastos(objetoFiltro){ //A ver si me consigo explicar... aqui pas
 }
 
 
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
 
-    let objetoFiltro = {etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta}; //Aqui es donde me he comido mucho la cabeza
+    let objetoFiltro = {etiquetasTiene: etiquetas} //Aqui es donde me he comido mucho la cabeza
     //No paraba de poner if, como en filtrar gastos, para comprobar si existian las propiedades, y venga a darme fallo....
     //Tras 40342 ifs y 345243242352 pruebas, me doy cuenta que si etiquetas esta undefined, en filtrar gastos actuaria como si no existen etiquetas
     //Por lo que podemos declarar el objeto directamente como lo estoy haciendo, no declarando un objeto {} al que luego se le van añadiendo propiedades 
     //si no existe, que es lo que trataba de hacer en un principio----
     
-    (Date.parse(objetoFiltro.fechaHasta)) ? objetoFiltro.fechaHasta : objetoFiltro.fechaHasta = `${new Date(Date.now()).getFullYear()}-${new Date(Date.now()).getMonth() + 1}-${new Date(Date.now()).getDate()}`;
-        
+    
+   if(Date.parse(fechaHasta)){
+   	objetoFiltro.fechaHasta = fechaHasta;
+   }
+   else{
+   	objetoFiltro.fechaHasta = `${new Date(Date.now()).getFullYear()}-${new Date(Date.now()).getMonth() + 1}-${new Date(Date.now()).getDate()}`;
+   }
+   
+   console.log(objetoFiltro);
+   
+   
+   if(Date.parse(fechaDesde)){
+   	objetoFiltro.fechaDesde = fechaDesde;
+   }
+   
+   console.log(objetoFiltro);
+   /*console.log(hayFechaDesde);
+   
+   (objetoFiltro.fechaDesde) ? hayFechaDesde = true : hayFechaDesde = false;
+   
+   console.log(hayFechaDesde);*/
     
     return filtrarGastos(objetoFiltro).reduce(function(acc, actual){ //Y esto otro quebradero, pero una vez que comprendes la lógica, es entendible y práctico
-
-        let perio = actual.obtenerPeriodoAgrupacion(periodo);
-
-        let hayFechaDesde = false;
     
-        if (Date.parse(fechaDesde)){
-            objetoFiltro.fechaDesde = fechaDesde;
-            hayFechaDesde = true;
-        }
+    		console.log("ENTRAMOS EN FILTRAR");
+        let perio = actual.obtenerPeriodoAgrupacion(periodo);
         
-        let controlFecha = true;
+        console.log(perio);
 
-        if (hayFechaDesde && (actual.fecha < Date.parse(fechaDesde))){
-            controlFecha = false;
-        }
+        let controlFecha = true;
+        
+
+        //(hayFechaDesde && (actual.fecha < fechaDesde) ) ? controlFecha = false : controlFecha = true;
+        
 
         if(controlFecha){
             if (acc[perio]){
@@ -239,27 +253,27 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
             else{
             acc[perio] = actual.valor;
             }
+            console.log(acc);
         }
-
+		
         return acc;
 
     }, {})
 
 }
 
+let gasto1 = new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
+let gasto2 = new CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
+let gasto3 = new CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
+let gasto4 = new CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
+let gasto5 = new CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
+let gasto6 = new CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos
-}
+anyadirGasto(gasto1);
+anyadirGasto(gasto2);
+anyadirGasto(gasto3);
+anyadirGasto(gasto4);
+anyadirGasto(gasto5);
+anyadirGasto(gasto6);
+
+agruparGastos("dia", "2022-10-10");
