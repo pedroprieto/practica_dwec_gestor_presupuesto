@@ -50,8 +50,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {  //Constructor co
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €` //Método que nos cuenta un poco del gasto
     }
 
-    this.actualizarDescripcion = function(descripcion){ //Podemos actualizar la descripción
-        this.descripcion = descripcion;
+    this.actualizarDescripcion = function(nuevaDescripcion){ //Podemos actualizar la descripción
+        this.descripcion = nuevaDescripcion;
     }
 
     this.actualizarValor = function(valor){ //Con este método podríamos actualizar el valor del gasto
