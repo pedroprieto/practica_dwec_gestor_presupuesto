@@ -44,6 +44,14 @@ function mostrarGastoWeb (idElemento , gasto) {
         let spanEti = document.createElement("span");
         spanEti.className = "gasto-etiquetas-etiqueta";
         spanEti.innerText = eti;
+        //Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+        let objetoEtiqueta = new BorrarEtiquetasHandle();
+        //Establecer la propiedad gasto del objeto creado al objeto gasto
+        objetoEtiqueta.gasto = gasto;
+        //Establecer la propiedad etiqueta del objeto creado al texto de la etiqueta que se esté procesando
+        objetoEtiqueta.etiqueta = eti;
+        //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+        spanEti.addEventListener("click" , objetoEtiqueta);
         //Añadir etiquetas al div
         divEtiquetas.append(spanEti);
     }
