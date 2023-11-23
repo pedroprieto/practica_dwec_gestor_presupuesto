@@ -182,6 +182,20 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             }
         }
 
+        //Función BorrarEtiquetasHandle Esta función se utilizará como objeto manejador
+        //de eventos para borrar etiquetas de un gasto
+        function BorrarEtiquetasHandle () {
+            //definirá exclusivamente un método llamado handleEvent
+            this.handleEvent = function (event) {
+                //Borrar la etiqueta seleccionada del gasto asociado. Para ello utilizará la función 
+                //borrarEtiquetas del gasto asociado (this.gasto) y como parámetro utilizará 
+                //la etiqueta seleccionada, disponible en this.etiqueta.
+                this.gasto.borrarEtiquetas(this.etiqueta);
+                //Llamar a la función repintar
+                repintar();
+            }
+        }
+
 
 export {
     mostrarDatoEnId,
