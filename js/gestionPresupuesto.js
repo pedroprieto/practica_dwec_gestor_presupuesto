@@ -36,15 +36,18 @@ function anyadirGasto(nuevoGasto) {
 
 function borrarGasto(id) {
     //busco el gasto con el id que me dan
+    console.log(gastos.length);
     for (const gasto of gastos) {
         if (gasto.id == id) {
             // encuentro el i del gasto
             const i = gastos.indexOf(gasto);
             //elimino el gasto del array gastos
             gastos.splice(i, 1);
-      
+            
         }
+
     }
+    console.log(gastos.length);
 }
 
 function calcularTotalGastos() {

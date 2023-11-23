@@ -164,7 +164,8 @@ function repintar(){
       mostrarGastoWeb("listado-gastos-completo", gasto);
 
   }
-  
+}
+
   function actualizarPresupuestoWeb() {
     
     let promptPresupuestoStr = prompt("Introduzca el nuevo presupuesto");
@@ -191,7 +192,7 @@ function nuevoGastoWeb() {
    
   //creo un nuevo gasto
   let gasto = new gestorPresupuesto.CrearGasto(promptDescripcion,promptValorStr,promptFecha,etiquetas);
-  gestorPresuesto.anyadirGasto(gasto);//añado el gasto a la lista
+  gestorPresupuesto.anyadirGasto(gasto);//añado el gasto a la lista
 
   repintar();//llamo a la funcion repintar
   
@@ -205,7 +206,7 @@ document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 function EditarHandle() {
   
   //metodo handleEvent para manejar el evento
-  this.handleEvent = function () {
+  this.handleEvent = function (event) {
 
     //pido informacion al usuario 
   let promptDescripcion = prompt("Introduzca la descripcion del gasto: ");
@@ -223,7 +224,7 @@ function EditarHandle() {
   this.gasto.actualizarFecha(promptFecha);
   this.gasto.anyadirEtiquetas(etiquetas);
 
-        repintar();
+  repintar();
 
     
   }
@@ -232,9 +233,9 @@ function EditarHandle() {
 
 function BorrarHandle(){
     
-  this.handleEvent = function(){ //handleEvent metodo para manejar el evento de borrado
-      
-      gestorPresuesto.borrarGasto(this.gasto.id);//se borra el gasto utilizando la f(x) borrarGasto
+  this.handleEvent = function(event){ //handleEvent metodo para manejar el evento de borrado
+      console.log(this.gasto.id);
+      gestorPresupuesto.borrarGasto(this.gasto.id);//se borra el gasto utilizando la f(x) borrarGasto
 
       repintar();
  
@@ -244,7 +245,7 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle()
 {
-    this.handleEvent = function () // handleEvent maneja el event de borrado de etiquetas
+    this.handleEvent = function (event) // handleEvent maneja el event de borrado de etiquetas
     {
         this.gasto.borrarEtiquetas(this.etiqueta); //borra la etiqueta seleccionada del gasto asociado
 
@@ -254,7 +255,7 @@ function BorrarEtiquetasHandle()
 
 
 
-} 
+
 
 export{
   mostrarDatoEnId,
