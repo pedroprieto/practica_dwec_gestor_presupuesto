@@ -10,7 +10,7 @@ function mostrarGastoWeb(idElemento, gasto){
   let gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto");
 
-  
+  function appender() {targetElement.append(gastoTag);}
   appender();
 
   targetElement = targetElement.querySelector(".gasto");
@@ -42,25 +42,44 @@ function mostrarGastoWeb(idElemento, gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
-  function appender() {targetElement.append(gastoTag);}
 
   let targetElement = document.getElementById(idElemento);
   let gastoTag = document.createElement("div");
   gastoTag.classList.add("agrupacion");
   
-  function appender() {targetElement.append(gastoTag);}
-
-  appender();
+  targetElement.append(gastoTag);
   gastoTag = document.createElement("h1");
   gastoTag.textContent = `Gastos agrupados por ${periodo}`
-
+  targetElement = document.querySelector(".agrupacion");
+  targetElement.append(gastoTag);
+ 
 
   for (let grupo in agrup){
-    
+    let agrupacionDato = document.createElement("div");
+    agrupacionDato.classList.add("agrupacion-dato");
+
+    let claveTag = document.createElement("span");
+    claveTag.classList.add("agrupacion-dato-clave");
+    claveTag.textContent = grupo;
+
+    let valorTag = document.createElement("span");
+    valorTag.classList.add("agrupacion-dato-valor");
+    valorTag.textContent = agrup[grupo];
+
+    agrupacionDato.append(claveTag, valorTag);
+
+    targetElement = document.querySelector("h1");
+    targetElement.after(agrupacionDato);
   }
 
 }
 
+let agrupacion = {
+    "2021-09": 5,
+    "2021-10": 5,
+    "2021-11": 5,
+    "2021-12": 5,
+}
 
 let gasto1 = {
   descripcion: "Gasto de cositas",
@@ -68,8 +87,6 @@ let gasto1 = {
   valor: 200,
   etiquetas: ["Hogar", "Perro"]
 }
-
-
 
 
 
