@@ -90,6 +90,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     //Periodo de agrupación segun periodo pasado
     let agrupacionPeriodo = document.getElementById(idElemento);
     agrupacionPeriodo.append(divAgrupacion);
+}
 
     //Crear una función repintar para actualizar la página
     function repintar () {
@@ -124,8 +125,30 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
     // manejadora del evento click del botón actualizarpresupuesto mediante addEventListener
     document.getElementById("actualizarpresupuesto").addEventListener("click" , actualizarPresupuestoWeb);
 
-}
+    //Función nuevoGastoWeb
+    function nuevoGastoWeb () {
+        //Pedir al usuario la información necesaria para crear un nuevo gasto
+        let nuevaDescripcion = prompt ("Descripción del gasto?");
+        //valor Convertir el valor a número
+        let nuevoValor = Number(prompt("Valor del gasto:"));
+        //La fecha vendrá dada en formato internacional (yyyy-mm-dd)
+        let nuevaFecha = prompt("Introduce la fecha en formato yyyy-mm-dd");
+        //Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
+        let nuevaEtiqueta = prompt("Etiquetas del gasto separadas por coma").split(",");
+        //Crear un nuevo gasto (función crearGasto)
+        let nuevoGasto = gestPresupuesto.CrearGasto(nuevaDescripcion,nuevoValor,nuevaFecha,...nuevaEtiqueta);
+        //Añadir el gasto a la lista (función anyadirGasto).
+        gestPresupuesto.anyadirGasto(nuevoGasto);
+        //Llamar a la función repintar
+        repintar();
+        
+    }
+        /*Una vez definida la función, se añadirá como manejadora del evento click del botón anyadirgasto mediante addEventListener.
+         Para ello habrá que obtener el elemento botón correspondiente previamente.*/
+        document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 
+        //Función EditarHandle
+        
 
 export {
     mostrarDatoEnId,
