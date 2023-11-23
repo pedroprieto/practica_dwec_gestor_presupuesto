@@ -13,6 +13,8 @@ function actualizarPresupuesto(cantidad) {
     }
 }
 
+
+
 function mostrarPresupuesto() {
     return(`Tu presupuesto actual es de ${presupuesto} €`);
 }
@@ -56,10 +58,26 @@ Etiquetas:\n`;
     }
 
     this.obtenerPeriodoAgrupacion = function (periodo) {
-        fechaADevolver = new Date(this.fecha);
-        if (periodo = "mes"){
-            return (fechaADevolver.getFullYear() + `-` + fechaADevolver.getMonth());
+        let parteExtraida = "";
+        if (periodo == `mes`)
+        {
+            parteExtraida = fecha.slice(0, 7);
+            console.log(parteExtraida);
+            return (parteExtraida);
         }
+        if (periodo == `anyo`)
+        {
+            parteExtraida = fecha.slice(0, 4);
+            return (parteExtraida);
+
+        }
+        if (periodo == `dia`)
+        {
+            parteExtraida = fecha.slice(0, 10);
+            return (parteExtraida);
+
+        }
+
     }
 
     
@@ -80,8 +98,16 @@ Etiquetas:\n`;
     this.etiquetas = [];
     this.anyadirEtiquetas(...etiquetas);
 }    
-    
-    
+
+function filtrarGastos() {
+
+}
+
+
+function agruparGastos() {
+
+}
+
 CrearGasto.prototype.mostrarGasto = function (){
     return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
 }
@@ -155,6 +181,6 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
-    filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    filtrarGastos
 }
