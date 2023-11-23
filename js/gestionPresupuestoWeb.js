@@ -32,34 +32,44 @@ function mostrarGastoWeb(idElemento, gastos) {
             let spanEtiqueta = document.createElement('span');
             spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
             spanEtiqueta.textContent = etiqueta;
+
+            // Eliminación de Etiqueta de un Gasto -----------------
+            let manejadorEventoBorrarEtiqueta = new BorrarEtiquetasHandle();
+            manejadorEventoBorrarEtiqueta.gasto = gasto;
+            manejadorEventoBorrarEtiqueta.etiqueta = etiqueta;
+
+            spanEtiqueta.addEventListener('click', manejadorEventoBorrarEtiqueta);
+
             divGastoEtiquetas.append(spanEtiqueta);
         }
 
         divGasto.append(divGastoEtiquetas);
 
         // Botón Editar Gasto ---------------------------------------
-        let botonEditar = document.createElement('button');
-        botonEditar.type = 'button';
-        botonEditar.className = 'gasto-editar';
-        botonEditar.innerHTML = 'Editar';
+        let botonEditarGasto = document.createElement('button');
+        botonEditarGasto.type = 'button';
+        botonEditarGasto.className = 'gasto-editar';
+        botonEditarGasto.innerHTML = 'Editar';
 
         let manejadorEventoEditar = new EditarHandle();
         manejadorEventoEditar.gasto = gasto;
-        botonEditar.addEventListener('click', manejadorEventoEditar);
+        botonEditarGasto.addEventListener('click', manejadorEventoEditar);
 
-        divGasto.append(botonEditar);
+        divGasto.append(botonEditarGasto);
 
         // Botón Borrar Gasto ---------------------------------------
-        let botonBorrar = document.createElement('button');
-        botonBorrar.type = 'button';
-        botonBorrar.className = 'gasto-borrar';
-        botonBorrar.innerHTML = 'Borrar';
+        let botonBorrarGasto = document.createElement('button');
+        botonBorrarGasto.type = 'button';
+        botonBorrarGasto.className = 'gasto-borrar';
+        botonBorrarGasto.innerHTML = 'Borrar';
 
         let manejadorEventoBorrar = new BorrarHandle();
         manejadorEventoBorrar.gasto = gasto;
-        botonBorrar.addEventListener('click', manejadorEventoBorrar);
+        botonBorrarGasto.addEventListener('click', manejadorEventoBorrar);
 
-        divGasto.append(botonBorrar);
+        divGasto.append(botonBorrarGasto);
+
+        
 
 
         document.getElementById(idElemento).append(divGasto);
@@ -144,6 +154,16 @@ function BorrarHandle() {
 
     this.handleEvent = function() {
         gesPre.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+
+}
+
+function BorrarEtiquetasHandle() {
+
+    this.handleEvent = function() {
+        this.gasto.borrarEtiquetas(this.etiqueta);
 
         repintar();
     }
