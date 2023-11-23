@@ -135,6 +135,21 @@ function repintar(){
 
   }
   
+  function actualizarPresupuestoWeb() {
+    
+    let promptPresupuesto = prompt("Introduzca un nuevo presupuesto");
+    promptpresupuesto = parseFloat(promptpresupuesto);
+    let nuevoPresupuesto = promptPresupuesto;
+    gestorPresupuesto.actualizarPresupuesto(nuevoPresupuesto);
+    repintar()
+  }
+
+  // botón actualizarpresupuesto
+  document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+
+  
+
+
 } 
 
 export{
