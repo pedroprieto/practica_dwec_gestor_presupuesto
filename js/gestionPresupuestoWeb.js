@@ -163,12 +163,46 @@ function nuevoGastoWeb() {
   let gasto = new gestorPresupuesto.CrearGasto(promptDescripcion,promptValorStr,promptFecha,etiquetas);
   gestorPresuesto.anyadirGasto(gasto);//añado el gasto a la lista
 
-  repintar()//llamo a la funcion repintar
+  repintar();//llamo a la funcion repintar
   
 }
 
 //botón anyadirgasto
-document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb)
+document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
+
+//Función EditarHandle constructora
+
+function EditarHandle() {
+  
+  //metodo handleEvent para manejar el evento
+  this.handleEvent = function () {
+
+    //pido informacion al usuario 
+  let promptDescripcion = prompt("Introduzca la descripcion del gasto: ");
+  let promptValorStr = prompt("Introduzca el valor del gasto: ");
+  let promptFecha = prompt("Introduzca la fecha del gasto:");
+  let promptEtiquetasStr = prompt("Introduzca las etiquetas del gasto:");
+  //convierto el valor a numero
+  promptValorStr = parseFloat(promptValorStr);
+  //convierto el string de etiquetas a un array
+  let etiquetas =  promptEtiquetasStr.split(',');
+
+  //actualizo las propiedades del gasto
+  this.gasto.actualizarDescripcion(promptDescripcion);
+  this.gasto.actualizarValor(promptValorStr);
+  this.gasto.actualizarFecha(promptFecha);
+  this.gasto.anyadirEtiquetas(etiquetas);
+
+        repintar();
+
+    
+  }
+
+}
+
+
+
+
 
 } 
 
