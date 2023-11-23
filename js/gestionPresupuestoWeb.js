@@ -167,6 +167,8 @@ function nuevoGastoWeb() {
   
 }
 
+//botón anyadirgasto
+document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb)
 
 } 
 
