@@ -169,6 +169,18 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
 
             }
         }
+        //Función BorrarHandle Esta función se utilizará como objeto manejador 
+        //de eventos para borrar un gasto
+        function BorrarHandle () {
+            //definirá exclusivamente un método llamado handleEvent.
+            this.handleEvent = function (event) {
+                //Borrar el gasto asociado. Para ello utilizará la función borrarGasto
+                // y como parámetro utilizará el id del gasto
+                gestPresupuesto.borrarGasto(this.gasto.id);
+                //Llamar a la función repintar
+                repintar();
+            }
+        }
 
 
 export {
