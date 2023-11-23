@@ -30,7 +30,7 @@ for (let gasto of gestionPresu.listarGastos()){
 }
 const filtro1 = {valorMinimo: 50};
 
-for (let gasto of gestionPresu.filtrarGastos(filtro1)){
+for (let gasto of gestionPresu.filtrarGastos({"valorMinimo": 50})){
   gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 }
 

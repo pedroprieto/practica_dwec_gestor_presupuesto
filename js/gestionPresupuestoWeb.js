@@ -13,25 +13,25 @@ function mostrarGastoWeb(idElemento, gasto){
   targetElement.append(gastoTag);
   
 
-  targetElement = document.querySelector(".gasto:last-child");
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-descripcion");
   gastoTag.textContent = gasto.descripcion;
   targetElement.append(gastoTag);
 
-  targetElement = document.querySelector(".gasto:last-child");
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-fecha");
   gastoTag.textContent = gasto.fecha;
   targetElement.append(gastoTag);
 
-  targetElement = document.querySelector(".gasto:last-child");
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-valor");
   gastoTag.textContent = gasto.valor;
   targetElement.append(gastoTag);
 
-  targetElement = document.querySelector(".gasto:last-child");
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-etiquetas");
   targetElement.append(gastoTag);
