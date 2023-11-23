@@ -81,12 +81,27 @@ function repintar() {
 function actualizarPresupuestoWeb() {
     let presupuesto = Number(prompt('Introduzca el presupuesto', 0));
     gesPre.actualizarPresupuesto(presupuesto);
+
+    repintar();
+}
+
+function nuevoGastoWeb() {
+    let descripcion = prompt('Introduzca la descripción', '');
+    let valor = Number(prompt('Introduzca el valor', 0));
+    let fecha = prompt('Introduzca la fecha (YYYY-MM-DD)', '');
+    let etiquetas = prompt('Introduzca las etiquetas separadas por comas', '').split(',');
+
+    let gasto = new gesPre.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    gesPre.anyadirGasto(gasto);
+
     repintar();
 }
 
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
 botonPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 
+let botonAnyadirGasto = document.getElementById('anyadirgasto');
+botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
