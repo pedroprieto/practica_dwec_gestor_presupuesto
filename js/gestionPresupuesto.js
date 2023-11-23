@@ -146,7 +146,7 @@ function calcularBalance(){ //Un simple balance, en el que restamos los gastos t
 }
 
 function filtrarGastos(objetoFiltro){ //A ver si me consigo explicar... aqui pasamos de parámetro un objeto, de momento sin parámetros, al que se los iremos añadiendo si procede
-    return gastos.filter(function(gasto){  //Vamos a aplicar el gasto... menudo cacao para entender como funciona el filter
+    let filtrado = gastos.filter(function(gasto){  //Vamos a aplicar el gasto... menudo cacao para entender como funciona el filter
         let pasaFiltro = true; //Esta variable sera la encargada de decir si el current gasto pasa el filtro o no, vamos a aplicar la logica 
                                //De dejarlo default en si, y pasarlo a false en caso de que el valor no deba ser filtrado
         if (objetoFiltro.fechaDesde){  //Vemos si existe la propiedad fechaDesde
@@ -200,6 +200,7 @@ function filtrarGastos(objetoFiltro){ //A ver si me consigo explicar... aqui pas
         return pasaFiltro; //Si ningun filtro ha dicho "por aqui no pasas", el pasaFiltro permanecería true, y el current gasto pasaria el filtro
     })
 
+    return filtrado;
 }
 
 

@@ -28,3 +28,10 @@ gestionPresuWeb.mostrarDatoEnId("balance-total", gestionPresu.calcularBalance())
 for (let gasto of gestionPresu.listarGastos()){
   gestionPresuWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
+const filtro1 = {valorMinimo: 50};
+
+for (let gasto of gestionPresu.filtrarGastos(filtro1)){
+  gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+
