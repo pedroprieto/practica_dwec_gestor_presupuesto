@@ -137,17 +137,35 @@ function repintar(){
   
   function actualizarPresupuestoWeb() {
     
-    let promptPresupuesto = prompt("Introduzca un nuevo presupuesto");
-    promptpresupuesto = parseFloat(promptpresupuesto);
-    let nuevoPresupuesto = promptPresupuesto;
+    let promptPresupuestoStr = prompt("Introduzca el nuevo presupuesto");
+    promptPresupuestoStr = parseFloat(promptPresupuestoStr); //convierto el valor a num
+    let nuevoPresupuesto = promptPresupuestoStr;
     gestorPresupuesto.actualizarPresupuesto(nuevoPresupuesto);
-    repintar()
+    repintar() //llamo a la funcion repintar para mostrar la info actualizada
   }
 
   // botón actualizarpresupuesto
   document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 
+function nuevoGastoWeb() {
+
+  //pido informacion al usuario 
+  let promptDescripcion = prompt("Introduzca la descripcion del gasto: ");
+  let promptValorStr = prompt("Introduzca el valor del gasto: ");
+  let promptFecha = prompt("Introduzca la fecha del gasto:");
+  let promptEtiquetasStr = prompt("Introduzca las etiquetas del gasto:");
+  //convierto el valor a numero
+  promptValorStr = parseFloat(promptValorStr);
+  //convierto el string de etiquetas a un array
+  let etiquetas =  promptEtiquetasStr.split(',');
+   
+  //creo un nuevo gasto
+  let gasto = new gestorPresupuesto.CrearGasto(promptDescripcion,promptValorStr,promptFecha,etiquetas);
+  gestorPresuesto.anyadirGasto(gasto);//añado el gasto a la lista
+
+  repintar()//llamo a la funcion repintar
   
+}
 
 
 } 
