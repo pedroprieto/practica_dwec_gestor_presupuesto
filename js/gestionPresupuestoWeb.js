@@ -147,7 +147,28 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
          Para ello habrá que obtener el elemento botón correspondiente previamente.*/
         document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 
-        //Función EditarHandle
+        //Función EditarHandle Esta función se utilizará como objeto manejador de eventos
+        // para editar un gasto.
+        function EditarHandle () {
+            //definirá exclusivamente un método llamado handleEvent
+            this.handleEvent = function (event) {
+            //Pedir al usuario la información necesaria para editar el gasto
+            let editarDescrpcion = prompt("Edita la descripción:");
+            let editarValor = Number(prompt("Nuevo valor:"));
+            let editarFecha = prompt("Edita la fecha del gasto yyyy-mm-dd");
+            let editarEtiquetas = prompt("Edita las etiquetas por comas").split(",");
+            //Actualizar las propiedades del gasto (disponible mediante this.gasto)
+            this.gasto.actualizarDescripcion(editarDescrpcion);
+            this.gasto.actualizarValor(editarValor);
+            this.gasto.actualizarFecha(editarFecha);
+            this.gasto.anyadirEtiquetas(...editarEtiquetas);
+
+            //Llamar a la función repintar
+            repintar();
+
+
+            }
+        }
 
 
 export {
