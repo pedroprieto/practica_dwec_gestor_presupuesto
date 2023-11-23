@@ -62,6 +62,36 @@ function mostrarGastoWeb(idElemento, gasto) {
   contenedor.appendChild(divGasto); //añado el div del gasto 
 
 
+  //Boton editar 
+
+  let botonEditar = document.createElement('button');
+  botonEditar.className = 'gasto-editar';
+  botonEditar.type = 'button';
+  botonEditar.innerText = 'Editar ';
+
+  // Creo objeto Editar y pongo como manejador del evento click a botonEditar
+  let editar = new EditarHandle();
+  editar.gasto = gasto;
+  botonEditar.addEventListener('click', editar);
+
+  //añado botonEditar al DOM
+  divGasto.appendChild(botonEditar);
+
+  //Boton borrar
+
+  let botonBorrar = document.createElement('button');
+  botonBorrar.className = 'gasto-borrar';
+  botonBorrar.type = 'button';
+  botonBorrar.innerText = 'Borrar ';
+
+  // Creo objeto Borrar asignar como manejador del evento click a botonBorrar
+  let borrar = new BorrarHandle();
+  borrar.gasto = gasto;
+  botonBorrar.addEventListener('click', borrar);
+
+    // Añadir el botonBorrar al DOM
+  divGasto.appendChild(botonBorrar);
+
 }
 
 function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo) {
@@ -202,7 +232,7 @@ function EditarHandle() {
 
 function BorrarHandle(){
     
-  this.handleEvent = function(){ //handleEvent metodo para manejar el evento
+  this.handleEvent = function(){ //handleEvent metodo para manejar el evento de borrado
       
       gestorPresuesto.borrarGasto(this.gasto.id);//se borra el gasto utilizando la f(x) borrarGasto
 
@@ -214,7 +244,7 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle()
 {
-    this.handleEvent = function ()
+    this.handleEvent = function () // handleEvent maneja el event de borrado de etiquetas
     {
         this.gasto.borrarEtiquetas(this.etiqueta); //borra la etiqueta seleccionada del gasto asociado
 
