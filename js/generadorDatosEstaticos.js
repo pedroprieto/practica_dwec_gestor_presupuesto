@@ -25,4 +25,6 @@ gestionPresuWeb.mostrarDatoEnId("gastos-totales", gestionPresu.calcularTotalGast
 
 gestionPresuWeb.mostrarDatoEnId("balance-total", gestionPresu.calcularBalance());
 
-gestionPresuWeb.mostrarGastoWeb("listado-gastos-completo", gestionPresu.listarGastos());
+for (let gasto of gestionPresu.listarGastos()){
+  gestionPresuWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}

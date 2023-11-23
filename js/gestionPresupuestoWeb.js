@@ -6,36 +6,43 @@ function mostrarDatoEnId(idElemento, valor){
 
 
 function mostrarGastoWeb(idElemento, gasto){
+    
   let targetElement = document.getElementById(idElemento);
   let gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto");
+  targetElement.append(gastoTag);
+  
 
-  function appender() {targetElement.append(gastoTag);}
-  appender();
-
-  targetElement = targetElement.querySelector(".gasto");
+  targetElement = document.querySelector(".gasto:last-child");
   gastoTag = document.createElement("div");
-  gastoTag.classList.add("gasto-escripcion");
+  gastoTag.classList.add("gasto-descripcion");
   gastoTag.textContent = gasto.descripcion;
-  appender();
+  targetElement.append(gastoTag);
+
+  targetElement = document.querySelector(".gasto:last-child");
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-fecha");
   gastoTag.textContent = gasto.fecha;
-  appender();
+  targetElement.append(gastoTag);
+
+  targetElement = document.querySelector(".gasto:last-child");
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-valor");
   gastoTag.textContent = gasto.valor;
-  appender();
+  targetElement.append(gastoTag);
+
+  targetElement = document.querySelector(".gasto:last-child");
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-etiquetas");
-  appender();
+  targetElement.append(gastoTag);
 
   targetElement = targetElement.querySelector(".gasto-etiquetas");
+  
   for (let eti in gasto.etiquetas){
     gastoTag = document.createElement("span");
     gastoTag.classList.add("gasto-etiquetas-etiqueta");
     gastoTag.textContent = gasto.etiquetas[eti];
-    appender();
+    targetElement.append(gastoTag);
   }
 }
 
