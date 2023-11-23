@@ -1,4 +1,8 @@
 
+//importacion de funciones exportadas
+import * as gestorPresupuesto from './gestionPresupuesto.js'
+
+
 function mostrarDatoEnId(idElemento, valor) {
 
     //obtengo el elemento HTML por su id
@@ -107,7 +111,31 @@ function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo) {
   element.appendChild(divAgrupacion); 
 }
 
+function repintar(){
 
+  let mostrarPresupuesto = gestorPresupuesto.mostrarPresupuesto();
+  mostrarDatoEnId("presupuesto", mostrarPresupuesto);
+
+  let gastoTotal = gestorPresupuesto.calcularTotalGastos();
+  mostrarDatoEnId("gastos-totales", gastoTotal);
+
+  let balanceTotal = gestorPresupuesto.calcularBalance();
+  mostrarDatoEnId("balance-total", balanceTotal);
+
+  //se borra el contenido de div litado-gastos-completo
+  let divListadoGastosCompleto = document.getElementById("listado-gastos-completo");
+  divListadoGastosCompleto.innerHTML = " ";
+
+  let listarGasto = gestorPresupuesto.listarGastos();
+
+  //muestro el listado de gastos completo
+  for(let gasto of listarGasto){
+
+      mostrarGastoWeb("listado-gastos-completo", gasto);
+
+  }
+  
+} 
 
 export{
   mostrarDatoEnId,
