@@ -37,6 +37,31 @@ function mostrarGastoWeb(idElemento, gastos) {
 
         divGasto.append(divGastoEtiquetas);
 
+        // Botón Editar Gasto ---------------------------------------
+        let botonEditar = document.createElement('button');
+        botonEditar.type = 'button';
+        botonEditar.className = 'gasto-editar';
+        botonEditar.innerHTML = 'Editar';
+
+        let manejadorEventoEditar = new EditarHandle();
+        manejadorEventoEditar.gasto = gasto;
+        botonEditar.addEventListener('click', manejadorEventoEditar);
+
+        divGasto.append(botonEditar);
+
+        // Botón Borrar Gasto ---------------------------------------
+        let botonBorrar = document.createElement('button');
+        botonBorrar.type = 'button';
+        botonBorrar.className = 'gasto-borrar';
+        botonBorrar.innerHTML = 'Borrar';
+
+        let manejadorEventoBorrar = new BorrarHandle();
+        manejadorEventoBorrar.gasto = gasto;
+        botonBorrar.addEventListener('click', manejadorEventoBorrar);
+
+        divGasto.append(botonBorrar);
+
+
         document.getElementById(idElemento).append(divGasto);
     }
 }
@@ -97,11 +122,40 @@ function nuevoGastoWeb() {
     repintar();
 }
 
+function EditarHandle() {
+
+    this.handleEvent = function() {
+        let descripcion = prompt('Introduzca la descripción', this.gasto.descripcion);
+        let valor = Number(prompt('Introduzca el valor', this.gasto.valor));
+        let fecha = prompt('Introduzca la fecha (YYYY-MM-DD)', new Date(this.gasto.fecha).toISOString().slice(0, 10));
+        let etiquetas = (prompt('Introduzca las etiquetas separadas por comas', this.gasto.etiquetas.join(','))).split(',');
+
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+
+        repintar();
+    }
+
+}
+
+function BorrarHandle() {
+
+    this.handleEvent = function() {
+        gesPre.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+
+}
+
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
 botonPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
+
 
 export {
     mostrarDatoEnId,
