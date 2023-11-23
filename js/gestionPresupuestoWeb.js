@@ -216,7 +216,7 @@ function BorrarEtiquetasHandle()
 {
     this.handleEvent = function ()
     {
-        this.gasto.borrarEtiquetas(this.etiqueta);
+        this.gasto.borrarEtiquetas(this.etiqueta); //borra la etiqueta seleccionada del gasto asociado
 
         repintar();
     }
