@@ -30,8 +30,22 @@ for (let gasto of gestionPresu.listarGastos()){
 }
 const filtro1 = {valorMinimo: 50};
 
-for (let gasto of gestionPresu.filtrarGastos({"valorMinimo": 50})){
+
+for (let gasto of gestionPresu.filtrarGastos({"fechaDesde": "2021-9-01", "fechaHasta" : "2021-9-30"})){
   gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+
+for (let gasto of gestionPresu.filtrarGastos({"valorMinimo": 50})){
+  gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
+
+for (let gasto of gestionPresu.filtrarGastos({"valorMinimo": 200, "etiquetas": ["seguros"]})){
+  gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
+
+for (let gasto of gestionPresu.filtrarGastos({"valorMaximo": 50, "etiquetas": ["comida", "transportes"]})){
+  gestionPresuWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
 
 
