@@ -1,11 +1,11 @@
 
-function mostrarDatoEnId(idElemento, valor){
-  const elemento = document.getElementById(idElemento);
-  elemento.textContent = valor;
+function mostrarDatoEnId(idElemento, valor){  //Función sencilla en la a la etiqueta que apuntamos con "targetElement", le insertamos el valor correspondiente en "valor"
+  let targetElement = document.getElementById(idElemento);
+  targetElement.textContent = valor;
 }
 
 
-function mostrarGastoWeb(idElemento, gasto){
+function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apuntamos a un target, pero en este caso, creamos un arbol de etiquetas algo más complejo
   
   let targetElement = document.getElementById(idElemento);
   let gastoTag = document.createElement("div");
@@ -13,9 +13,9 @@ function mostrarGastoWeb(idElemento, gasto){
   targetElement.append(gastoTag);
   
 
-  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
-  gastoTag = document.createElement("div");
-  gastoTag.classList.add("gasto-descripcion");
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`); //Creo que seria muy redundante repetir cada paso que damos, mas siendo tan "poco a poco", 
+  gastoTag.classList.add("gasto-descripcion");                                //tan solo comentar la importancia de elegir correctamente los selectores, realmente hay que pensarlo muy bien...
+  gastoTag = document.createElement("div");                                    //y respecto al procedimiento, el tipico: seleccionar objetivo, crear elemento, añadir clase, texto y append...
   gastoTag.textContent = gasto.descripcion;
   targetElement.append(gastoTag);
 

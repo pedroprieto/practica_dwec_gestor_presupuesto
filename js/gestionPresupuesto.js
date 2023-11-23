@@ -221,7 +221,7 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
         let hayFechaDesde = false;
     
-        if (Date.parse(fechaDesde)){
+        if (Date.parse(fechaDesde)){                //Hemos mejorado el control de filtro, para añadirle el comportamiento en caso que no tenga fecha desde/hastas
             objetoFiltro.fechaDesde = fechaDesde;
             hayFechaDesde = true;
         }
