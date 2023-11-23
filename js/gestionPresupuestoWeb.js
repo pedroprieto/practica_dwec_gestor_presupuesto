@@ -74,22 +74,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 }
 
-let agrupacion = {
-    "2021-09": 5,
-    "2021-10": 5,
-    "2021-11": 5,
-    "2021-12": 5,
-}
-
-let gasto1 = {
-  descripcion: "Gasto de cositas",
-  fecha: "2022-10-10",
-  valor: 200,
-  etiquetas: ["Hogar", "Perro"]
-}
-
-
-
 
 
 
