@@ -59,7 +59,7 @@ describe("Eventos", () => {
         cy.visit('/interaccionHTML.html', {
             onBeforeLoad(win) {
                 let call = 0;
-                const fakes = ['nuevo gasto', '95.78', '2021-11-02', 'eti1,eti2,eti3'];
+                const fakes = ['nuevo gasto', '95,78', '2021-11-02', 'eti1,eti2,eti3'];
                 cy.stub(win, 'prompt').callsFake(() => {
                     return fakes[call++];
                 });
@@ -77,7 +77,7 @@ describe("Eventos", () => {
             expect($p, "Se debe mostrar la cantidad correspondiente al balance total mediante la función 'calcularBalance'").to.contain('1081');
         });
         // Se debe haber editado el gasto
-        cy.get("#listado-gastos-completo > div.gasto > div.gasto-valor").eq(5).should('have.text', '95.78');
+        cy.get("#listado-gastos-completo > div.gasto > div.gasto-valor").eq(5).should('have.text', '95,78');
 
 
     });

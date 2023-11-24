@@ -54,9 +54,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {  //Constructor co
         this.descripcion = nuevaDescripcion;
     }
 
-    this.actualizarValor = function(valor){ //Con este método podríamos actualizar el valor del gasto
-        if (valor >= 0){
-            this.valor = valor;
+    this.actualizarValor = function(nuevoValor){ //Con este método podríamos actualizar el valor del gasto
+        if (nuevoValor >= 0){
+            this.valor = nuevoValor;
         }
     }
 

@@ -26,8 +26,9 @@ botonActualizar.addEventListener("click", actualizarPresupuestoWeb);
 
 function nuevoGastoWeb(){
   let descripcion = prompt("Introduce una descripción", "factura luz");
-  let valor = parseInt(prompt("Introduce un valor", "0"), 10);
-  let fecha = parseInt(prompt("Introduce una fecha YYYY-MM-DD", "2023-1-1"), 10);
+  let valor = parseFloat(prompt("Introduce un valor", "0").replace(`,`,`.`));
+  alert(valor);
+  let fecha = prompt("Introduce una fecha YYYY-MM-DD", "2023-1-1");
   let etiquetas = prompt("Introduce las etiquetas separadas por comas", "recibos,hogar").split(",");
   let gasto = new gestionPresu.CrearGasto(descripcion, valor, fecha,...etiquetas);
 
@@ -41,8 +42,8 @@ botonAnyadir.addEventListener("click", nuevoGastoWeb);
 function EditarHandle(){
   this.handleEvent = function(){
     let descripcion = prompt("Introduce una descripción", this.gasto.descripcion);
-    let valor = parseInt(prompt("Introduce un valor", this.gasto.valor), 10);
-    let fecha = parseInt(prompt("Introduce una fecha YYYY-MM-DD", this.gasto.fecha), 10);
+    let valor = parseFloat(prompt("Introduce un valor", "0").replace(`,`,`.`));
+    let fecha = prompt("Introduce una fecha YYYY-MM-DD", this.gasto.fecha);
     let etiquetas = prompt("Introduce las etiquetas separadas por comas", this.gasto.etiquetas.join()).split(",");
     this.gasto.actualizarDescripcion(descripcion);
     this.gasto.actualizarValor(valor);
@@ -94,13 +95,13 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-fecha");
-  gastoTag.textContent = gasto.fecha;
+  gastoTag.textContent = new Date(gasto.fecha).toLocaleString("es-ES", {year: "numeric", month: "long", day: "numeric"});
   targetElement.append(gastoTag);
 
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-valor");
-  gastoTag.textContent = gasto.valor;
+  gastoTag.textContent = gasto.valor.toLocaleString("es-ES");
   targetElement.append(gastoTag);
 
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
@@ -115,6 +116,10 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
     gastoTag = document.createElement("span");
     gastoTag.classList.add("gasto-etiquetas-etiqueta");
     gastoTag.textContent = gasto.etiquetas[eti];
+    let manejadorEtiquetas = new BorrarEtiquetasHandle();
+    manejadorEtiquetas.gasto = gasto;
+    manejadorEtiquetas.etiqueta = gastoTag.textContent;
+    gastoTag.addEventListener("click", manejadorEtiquetas);
     targetElement.append(gastoTag);
   }
 
@@ -122,6 +127,7 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   let boton = document.createElement("button");
   boton.setAttribute("type", "button");
   boton.textContent= "Editar";
+  boton.classList.add("gasto-editar");
   
   let manejadorEditar = new EditarHandle();
   manejadorEditar.gasto = gasto;
@@ -133,6 +139,7 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   boton = document.createElement("button");
   boton.setAttribute("type", "button");
   boton.textContent = "Borrar";
+  boton.classList.add("gasto-borrar");
 
   let manejadorBorrar = new BorrarHandle();
 
@@ -142,12 +149,6 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   targetElement.append(boton);
 
-  let manejadorEtiquetas = new BorrarEtiquetasHandle();
-
-  manejadorEtiquetas.gasto = gasto;
-  let ultimaEti = document.querySelector(".gasto-etiquetas-etiqueta:last-child");
-  manejadorEtiquetas.etiqueta = ultimaEti.textContent;
-  ultimaEti.addEventListener("click", manejadorEtiquetas);
   
 }
 
