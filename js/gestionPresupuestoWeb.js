@@ -39,14 +39,14 @@ function EditarHandle(){
     this.gasto.actualizarDescripcion(descripcion);
     this.gasto.actualizarValor(valor);
     this.gasto.actualizarFecha(fecha);
-    this.gasto.anyadirEtiquetas(etiquetas);
+    this.gasto.anyadirEtiquetas(...etiquetas);
     repintar();
   } 
 }
 
 function BorrarHandle(){
   this.handleEvent = function(){
-    this.gasto.borrarGasto(this.gasto.id);
+    gestionPresu.borrarGasto(this.gasto.id);
     repintar();
   }
 }
@@ -68,9 +68,7 @@ function mostrarDatoEnId(idElemento, valor){  //Función sencilla en la a la eti
 
 function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apuntamos a un target, pero en este caso, creamos un arbol de etiquetas algo más complejo
   
-  let boton = document.createElement("button");
-  boton.setAttribute("type", "button");
-  manejadorEditar = new EditarHandle();
+  
 
 
   let targetElement = document.getElementById(idElemento);
@@ -104,12 +102,45 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
 
   targetElement = targetElement.querySelector(".gasto-etiquetas");
   
+  
   for (let eti in gasto.etiquetas){
     gastoTag = document.createElement("span");
     gastoTag.classList.add("gasto-etiquetas-etiqueta");
     gastoTag.textContent = gasto.etiquetas[eti];
     targetElement.append(gastoTag);
   }
+
+  
+  let boton = document.createElement("button");
+  boton.setAttribute("type", "button");
+  boton.textContent= "Editar";
+  
+  let manejadorEditar = new EditarHandle();
+  manejadorEditar.gasto = gasto;
+  boton.addEventListener("click", manejadorEditar);
+
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`)
+  targetElement.append(boton);
+
+  boton = document.createElement("button");
+  boton.setAttribute("type", "button");
+  boton.textContent = "Borrar";
+
+  let manejadorBorrar = new BorrarHandle();
+
+  manejadorBorrar.gasto = gasto;
+  boton.addEventListener("click", manejadorBorrar);
+
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
+  targetElement.append(boton);
+
+  let manejadorEtiquetas = new BorrarEtiquetasHandle();
+
+  manejadorEtiquetas.gasto = gasto;
+  let ultimaEti = document.querySelector(".gasto-etiquetas-etiqueta:last-child");
+  manejadorEtiquetas.etiqueta = ultimaEti.textContent;
+  ultimaEti.addEventListener("click", manejadorEtiquetas);
+  
 }
 
 
