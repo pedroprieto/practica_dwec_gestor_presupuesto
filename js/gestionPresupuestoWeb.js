@@ -15,6 +15,14 @@ function repintar(){
 
 }
 
+function actualizarPresupuestoWeb(){
+  let presupuesto = prompt("Introduce un nuevo presupuesto", 0);
+  gestionPresu.actualizarPresupuesto(presupuesto);
+  repintar();
+}
+
+let botonActualizar = document.getElementById("actualizarpresupuesto");
+botonActualizar.addEventListener("click", actualizarPresupuestoWeb);
 
 function nuevoGastoWeb(){
   let descripcion = prompt("Introduce una descripción", "factura luz");
