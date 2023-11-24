@@ -1,11 +1,11 @@
-var presupuesto = 0;
+var Presupuesto = 0;
 var gastos = [];
 var idGasto = 0;
 
 function actualizarPresupuesto(cantidad) {
     if (cantidad >= 0){
-        presupuesto = cantidad;
-        return presupuesto;
+        Presupuesto = cantidad;
+        return Presupuesto;
     }
     else {
         console.log("Cantidad introducida no es positiva");
@@ -16,7 +16,7 @@ function actualizarPresupuesto(cantidad) {
 
 
 function mostrarPresupuesto() {
-    return(`Tu presupuesto actual es de ${presupuesto} €`);
+    return(`Tu Presupuesto actual es de ${Presupuesto} €`);
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -24,7 +24,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //MÉTODOS        
     this.mostrarGastoCompleto = function() {
         let objFecha = new Date(this.fecha).toLocaleString();
-        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+        let texto = `Gasto coranyadirpondiente a ${this.descripcion} con valor ${this.valor} €.
 Fecha: ${objFecha}
 Etiquetas:\n`;
         for (let e of this.etiquetas) {
@@ -99,17 +99,84 @@ Etiquetas:\n`;
     this.anyadirEtiquetas(...etiquetas);
 }    
 
-function filtrarGastos() {
+function filtrarGastos(opciones) {
+    return gastos.filter(function (gasto){
 
+        let anyadir=true;
+
+        if(opciones.fechaDesde){
+            if (gasto.fecha < Date.parse(opciones.fechaDesde)){
+                anyadir = false;
+            }
+        }
+
+        if(opciones.fechaHasta) {
+            if (gasto.fecha > Date.parse(opciones.fechaHasta)){
+                anyadir = false;
+            }
+        }
+
+        if(opciones.valorMinimo) {
+            if (gasto.valor < opciones.valorMinimo){
+                anyadir = false;
+            }
+        }
+
+        if(opciones.valorMaximo){
+            if(gasto.valor > opciones.valorMaximo){
+                anyadir = false;
+            }
+        }
+        
+        if(opciones.descripcionContiene){
+            if (!gasto.descripcion.includes(opciones.descripcionContiene)){
+
+                anyadir = false;
+            }
+        }
+        if(opciones.etiquetasTiene){
+            let encontrado = false;
+            for (let eti of gasto.etiquetas){
+                for (let etiExiste of opciones.etiquetasTiene){
+                    if (eti.toLowerCase() == etiExiste.toLowerCase()){
+                        encontrado = true;
+                    }
+                }
+            }
+            if(!encontrado){
+                anyadir = false;
+            }
+        }
+        
+    return anyadir;
+    })
 }
 
+function agruparGastos(periodo = mes, etiquetas, fechaDesde, fechaHasta) {
+    let opciones = {};
+    opciones.periodo = periodo;
+    opciones.etiquetasTiene = etiquetas;
+    opciones.fechaDesde = fechaDesde;
+    opciones.fechaHasta = fechaHasta;
 
-function agruparGastos() {
+    let gastosFiltrados = filtrarGastos (opciones);
+    
+    return gastosFiltrados.reduce((acc, gasto) => {
+        let pAgrup = gasto.obtenerPeriodoAgrupacion(periodo);
+    
+        if (acc[pAgrup]){
+            acc[pAgrup] += gasto.valor;
+        }
+        else {
+            acc[pAgrup] = gasto.valor;
+        }
+        return acc;
+    }, {});
 
 }
 
 CrearGasto.prototype.mostrarGasto = function (){
-    return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+    return (`Gasto coranyadirpondiente a ${this.descripcion} con valor ${this.valor} €`);
 }
 
 CrearGasto.prototype.actualizarDescripcion = function (actDescripcion) {
@@ -164,13 +231,13 @@ function calcularTotalGastos () {
 }
 
 function calcularBalance (){
-    return presupuesto - calcularTotalGastos();
+    return Presupuesto - calcularTotalGastos();
 }
 
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
+// Las funciones y objetos deben tener los nombanyadir que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
     mostrarPresupuesto,
