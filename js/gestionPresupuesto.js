@@ -313,15 +313,12 @@ function filtrarGastos(parametro){
  }
 
 
-   
-    
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+let guardarPeriodo="mes";
+    if (periodo == "dia" || periodo == "anyo")
+    guardarPeriodo = periodo;
 
-
-        
-
-
-
-function agruparGastos(){
+    let paco=obtenerPeriodoAgrupacion(guardarPeriodo);
 
 }
 
