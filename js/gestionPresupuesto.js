@@ -122,7 +122,39 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
             return (`${valor}`)
         }
         
-    }   
+    }  
+    this.obtenerPeriodoAgrupacion= function(tipoFecha){
+        let fechaCompleta = new Date (fecha);
+        fechaCompleta.toDateString();
+        let mes;
+        if(fechaCompleta.getMonth()<9)
+        mes=(`0${fechaCompleta.getMonth()+1}`)
+         else
+         mes=(`${fechaCompleta.getMonth()+1}`)
+        
+        if (tipoFecha=="dia")
+        {
+            let dia;
+            if(fechaCompleta.getDate()<9)
+            dia=(`0${fechaCompleta.getDate()}`);
+            else
+            dia=fechaCompleta.getDate();
+
+            return(`${fechaCompleta.getFullYear()}-${mes}-${dia}`);
+            
+        }
+        else if(tipoFecha=="mes")
+        {
+            
+            return(`${fechaCompleta.getFullYear()}-${mes}`)
+            
+        }
+        else if(tipoFecha=="anyo")
+        {
+            return(fechaCompleta.getFullYear());
+        }
+
+    } 
     if(valor<0 || isNaN(valor)){      
         this.valor=0       
         return (`gasto= new gasto  ${this.descripcion}  ${this.valor} €`)       
@@ -131,21 +163,7 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
         return (`gasto= new gasto  ${this.descripcion}  ${this.valor}`)
   
     }
-    this.obtenerPeriodoAgrupacion= function(tipoFecha){
-
-        if (tipoFecha=="dia")
-        {
-
-        }
-        else if(ipoFecha=="mes")
-        {
-
-        }
-        else if(ipoFecha=="anyo")
-        {
-
-        }
-    }
+    
 
 }
 function anyadirGasto(objetoGasto){
@@ -189,165 +207,118 @@ function listarGastos(){
 }
 
 function filtrarGastos(parametro){
-   
-    
-    let objetoFechaDesde =[]
-    objetoFechaDesde = gastos.filter(function fechaDesde(gastos){
-        
-            let gasto=gastos.fecha;
-            Date.parse(gasto)
-            let fechaObj= new Date(gasto)
-             fechaObj.toLocaleString();  
-             let parametroPrueba =parametro.fechaDesde;
-             Date.parse(parametroPrueba)
-             let parametroPrueba1 = new Date(parametroPrueba)
-             parametroPrueba1.toLocaleString();
-             if(parametroPrueba1<=fechaObj)
-             {
-                objetoFechaDesde.push(gastos)
-                return (objetoFechaDesde)
-             } 
-            
-             
-        
-        
-    }
 
-    );
-    
-        let objetoFechaHasta=[]
-        objetoFechaHasta = gastos.filter( function fechaHasta(gastos){
-            
-            let gasto=gastos.fecha;
-            Date.parse(gasto)
-            let fechaObj= new Date(gasto)
-             fechaObj.toLocaleString();  
-             let parametroPrueba =parametro.fechaHasta;
-             Date.parse(parametroPrueba)
-             let parametroPrueba1 = new Date(parametroPrueba)
-             parametroPrueba1.toLocaleString();
-            
-            if(parametroPrueba1>=fechaObj)
-                 {
-                    objetoFechaHasta.push(gastos)
-                    return ( objetoFechaHasta)
-                 } 
-    
-        })
-    
-    if(parametro.fechaDesde && parametro.fechaHasta)
-    {
-        let objetoFiltrado=[];
-        //////////////
-        objetoFiltrado = gastos.filter( function fechaFiltrada(gastos){
-        let gasto=gastos.fecha;
-         Date.parse(gasto)
-        let fechaObj= new Date(gasto)
-         fechaObj.toLocaleString();  
-        let parametroPrueba =parametro.fechaHasta;
-        Date.parse(parametroPrueba)
-        let parametroPrueba1 = new Date(parametroPrueba)
-        parametroPrueba1.toLocaleString();
-        
-        let parametroPrueba2=parametro.fechaDesde;
-        Date.parse(parametroPrueba2);
-        let parametroPrueba3= new Date(parametroPrueba2)
-        parametroPrueba3.toLocaleString();
-         if(parametroPrueba1>=fechaObj && parametroPrueba3<=fechaObj)
-        {
-        objetoFiltrado.push(gastos)
-        return ( objetoFiltrado)
-        } 
-        
-        })
-        return ( objetoFiltrado)
-    }
-    if(parametro.valorMinimo)
-{
-    let objetoValorMinimo=[]
-    objetoValorMinimo = gastos.filter (function fechaValorMinimo(gastos){
-        let gasto=gastos.valor;
-       
-        if (gasto>=parametro.valorMinimo)
-        {
-            objetoValorMinimo.push(gastos)
-            return(objetoValorMinimo)
-        }
-        
-    })
-    return(objetoValorMinimo)
-}
-    if(typeof parametro === 'object' && Object.keys(parametro).length === 0)
-        {
-            return (gastos)
-        }
-       
-        else if (parametro.fechaDesde)
-        {
-            return (objetoFechaDesde)
-        }     
-        else if(parametro.fechaHasta)
-        {
-            return(objetoFechaHasta)
-        }   
-       
-}
-
-        
-/*let param = gastos.filter(function(gastoParam){
-let existe=true;
+    let resultadoFiltrado =[...gastos]
+     
     if (parametro.fechaDesde)
     {
         
-        let fechaD = new Date (parametro)
-       fechaD.toLocaleString();
-        let fechaObj= new Date(gastoParam.fecha)
-        fechaObj.toLocaleString();
-        if (fechaObj > parametro)
-        {
+       resultadoFiltrado= resultadoFiltrado.filter(function fechaDesde(x){
             
-            return fechaObj < parametro
-            
+                let gasto = x.fecha;
+                Date.parse(gasto)
+                let fechaObj = new Date(gasto)
+                 fechaObj.toLocaleString();  
+                 let parametroPrueba =parametro.fechaDesde;
+                 Date.parse(parametroPrueba)
+                 let fechaMin = new Date(parametroPrueba)
+                 fechaMin.toLocaleString();
+                 
+                 if(fechaMin<=fechaObj)
+                 {
+                    return x;
+                    
+                 } 
+                 
         }
+    
+        ); 
         
     }
-    /*let f = Date.parse(fecha)
-    if (isNaN(f)){
-        this.fecha=Date.now()
-    } 
-    else{
-        this.fecha=f
-    }
+    
+    
     if (parametro.fechaHasta)
     {
-        let fechaH = Date.parse(parametro.fechaHasta)
-        if (gastoParam.fecha <= fechaH)
+        
+        resultadoFiltrado=  resultadoFiltrado.filter(function fechaHasta(x){
+            
+                let gasto = x.fecha;
+                Date.parse(gasto)
+                let fechaObj = new Date(gasto)
+                 fechaObj.toLocaleString();  
+                 let parametroPrueba =parametro.fechaHasta;
+                 Date.parse(parametroPrueba)
+                 let fechaTope = new Date(parametroPrueba)
+                
+                
+                 
+                 if(fechaTope>=fechaObj)
+                 {
+                    return x;
+                    
+                 }
+      
+        }
+    
+        ); 
+    }
+
+   if(parametro.valorMinimo)
+    {
+        resultadoFiltrado=  resultadoFiltrado.filter(function fechaValorMinimo(x){
+        let gasto=x.valor;
+       
+        if (gasto>=parametro.valorMinimo)
         {
-            existe=false;
+            return x;
+            
         }
         
+    })
+    
     }
-    if (parametro.valorMinimo)
+    if(parametro.valorMaximo)
     {
-       if( gastoParam.valor > parametro.valorMinimo )
-       existe= false;
-    }
+    
+     resultadoFiltrado = resultadoFiltrado.filter(function fechaValorMaximo(x){
+        let gasto=x.valor;
+       
+        if (gasto<=parametro.valorMaximo)
+        {
+            return x;
+        }
+        
+    })
+ }
     if (parametro.descripcionContiene)
     {
-       if( gastoParam.descripcion > parametro.descripcionContiene.toLowerCase() )
-       existe= false;
+        resultadoFiltrado = resultadoFiltrado.filter(function fechaDescripcionContiene(x){
+            if(x.descripcion.includes(parametro.descripcionContiene))
+            return x;
+        })
     }
     if (parametro.etiquetasTiene)
     {
-       if( gastoParam.etiquetas > parametro.etiquetasTiene.toLowerCase() )
-       existe= false;
+        
+        resultadoFiltrado = resultadoFiltrado.filter(function fechaEtiquetasTiene(x){
+            
+            
+            
+            let tieneEtiquetaComun = x.etiquetas.some(etiqueta => parametro.etiquetasTiene.includes(etiqueta));
+            return tieneEtiquetaComun ;
+        })
     }
-
     
+    return(resultadoFiltrado) 
+ }
+
+
    
-})
-return (gastos)
-*/
+    
+
+
+        
+
 
 
 function agruparGastos(){
