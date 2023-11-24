@@ -27,7 +27,6 @@ botonActualizar.addEventListener("click", actualizarPresupuestoWeb); //Con esto,
 function nuevoGastoWeb(){ //Funcion para ir preguntando los datos para un nuevo gasto
   let descripcion = prompt("Introduce una descripción", "factura luz");
   let valor = parseFloat(prompt("Introduce un valor", "0").replace(`,`,`.`));
-  alert(valor);
   let fecha = prompt("Introduce una fecha YYYY-MM-DD", "2023-1-1");
   let etiquetas = prompt("Introduce las etiquetas separadas por comas", "recibos,hogar").split(",");
   let gasto = new gestionPresu.CrearGasto(descripcion, valor, fecha,...etiquetas);
