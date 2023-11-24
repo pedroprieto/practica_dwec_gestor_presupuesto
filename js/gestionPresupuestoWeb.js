@@ -1,4 +1,20 @@
 
+import * as gestionPresu from "./gestionPresupuesto";
+
+
+function repintar(){
+  mostrarDatoEnId("presupuesto", gestionPresu.mostrarPresupuesto());
+  mostrarDatoEnId("gastos-totales", gestionPresu.calcularTotalGastos());
+  mostrarDatoEnId("balance-total", gestionPresu.calcularBalance());
+  let elementTarget = document.getElementById("listado-gastos-completo");
+  elementTarget.innerHTML = ``;
+
+  for (let gasto of gestionPresu.listarGastos()){
+    mostrarGastoWeb("listado-gastos-completo", gasto);
+  }
+
+}
+
 function mostrarDatoEnId(idElemento, valor){  //Función sencilla en la a la etiqueta que apuntamos con "targetElement", le insertamos el valor correspondiente en "valor"
   let targetElement = document.getElementById(idElemento);
   targetElement.textContent = valor;
