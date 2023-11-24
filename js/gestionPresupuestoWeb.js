@@ -2,29 +2,29 @@
 import * as gestionPresu from "./gestionPresupuesto.js";
 
 
-function repintar(){
+function repintar(){  //volvemos a rellenar la página con todos los datos nuevos
   mostrarDatoEnId("presupuesto", gestionPresu.mostrarPresupuesto());
   mostrarDatoEnId("gastos-totales", gestionPresu.calcularTotalGastos());
   mostrarDatoEnId("balance-total", gestionPresu.calcularBalance());
   let elementTarget = document.getElementById("listado-gastos-completo");
   elementTarget.innerHTML = ``;
 
-  for (let gasto of gestionPresu.listarGastos()){
+  for (let gasto of gestionPresu.listarGastos()){ //Haciamos lo mismo en rellenar datos estaticos, simplemente listar los gastos pero esta vez pudiendo haber más además de los estáticos
     mostrarGastoWeb("listado-gastos-completo", gasto);
   }
 
 }
 
-function actualizarPresupuestoWeb(){
+function actualizarPresupuestoWeb(){ //Sencillo, actualizamos el presupuesto (ojalá tan facil en la vida real)
   let presupuesto = prompt("Introduce un nuevo presupuesto", 0);
   gestionPresu.actualizarPresupuesto(presupuesto);
   repintar();
 }
 
 let botonActualizar = document.getElementById("actualizarpresupuesto");
-botonActualizar.addEventListener("click", actualizarPresupuestoWeb);
+botonActualizar.addEventListener("click", actualizarPresupuestoWeb); //Con esto, añadimos el manejador de eventos al boton de actualizar
 
-function nuevoGastoWeb(){
+function nuevoGastoWeb(){ //Funcion para ir preguntando los datos para un nuevo gasto
   let descripcion = prompt("Introduce una descripción", "factura luz");
   let valor = parseFloat(prompt("Introduce un valor", "0").replace(`,`,`.`));
   alert(valor);
@@ -36,13 +36,13 @@ function nuevoGastoWeb(){
   repintar();
 }
 
-let botonAnyadir = document.getElementById("anyadirgasto");
+let botonAnyadir = document.getElementById("anyadirgasto"); //Igual que con el boton de actualizar, aqui añadimos el manejador de añadir, valga la redundancia...
 botonAnyadir.addEventListener("click", nuevoGastoWeb);
 
 function EditarHandle(){
   this.handleEvent = function(){
     let descripcion = prompt("Introduce una descripción", this.gasto.descripcion);
-    let valor = parseFloat(prompt("Introduce un valor", "0").replace(`,`,`.`));
+    let valor = parseFloat(prompt("Introduce un valor", "0").replace(`,`,`.`)); //Esto ha sido un autentico calvario, desde luego la de metodos que puede haber por ahi... no somos nadie
     let fecha = prompt("Introduce una fecha YYYY-MM-DD", this.gasto.fecha);
     let etiquetas = prompt("Introduce las etiquetas separadas por comas", this.gasto.etiquetas.join()).split(",");
     this.gasto.actualizarDescripcion(descripcion);
@@ -53,14 +53,14 @@ function EditarHandle(){
   } 
 }
 
-function BorrarHandle(){
+function BorrarHandle(){ //Objeto manejador para borrar
   this.handleEvent = function(){
     gestionPresu.borrarGasto(this.gasto.id);
     repintar();
   }
 }
 
-function BorrarEtiquetasHandle(){
+function BorrarEtiquetasHandle(){ //Objeto manejador para borrar etiquetas
   this.handleEvent = function(){
     this.gasto.borrarEtiquetas(this.etiqueta);
     repintar();
@@ -116,7 +116,7 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
     gastoTag = document.createElement("span");
     gastoTag.classList.add("gasto-etiquetas-etiqueta");
     gastoTag.textContent = gasto.etiquetas[eti];
-    let manejadorEtiquetas = new BorrarEtiquetasHandle();
+    let manejadorEtiquetas = new BorrarEtiquetasHandle();  //Tambien muy dificil el conseguir que todas las etiquetas se puedan borrar, por mas que leia el enunciado no entendia...
     manejadorEtiquetas.gasto = gasto;
     manejadorEtiquetas.etiqueta = gastoTag.textContent;
     gastoTag.addEventListener("click", manejadorEtiquetas);
@@ -133,8 +133,8 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   manejadorEditar.gasto = gasto;
   boton.addEventListener("click", manejadorEditar);
 
-  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`)
-  targetElement.append(boton);
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`)  //Quizás todo muy apelotonoado y pudiendo tener mas orden y limpieza, pero entre que soy novato 
+  targetElement.append(boton);                                                 //Y que ya se me ha hecho de dia, creo que el resultado esta mejor de lo que me esperaba incluso...
 
   boton = document.createElement("button");
   boton.setAttribute("type", "button");
