@@ -59,3 +59,4 @@ let agrupacionAnyo = gestionPresu.agruparGastos("anyo");
 
 gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupacionAnyo, "año");
 
+

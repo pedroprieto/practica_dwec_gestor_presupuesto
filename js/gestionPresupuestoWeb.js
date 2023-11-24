@@ -1,5 +1,5 @@
 
-import * as gestionPresu from "./gestionPresupuesto";
+import * as gestionPresu from "./gestionPresupuesto.js";
 
 
 function repintar(){
@@ -15,6 +15,51 @@ function repintar(){
 
 }
 
+
+function nuevoGastoWeb(){
+  let descripcion = prompt("Introduce una descripción", "factura luz");
+  let valor = parseInt(prompt("Introduce un valor", "0"), 10);
+  let fecha = parseInt(prompt("Introduce una fecha YYYY-MM-DD", "2023-1-1"), 10);
+  let etiquetas = prompt("Introduce las etiquetas separadas por comas", "recibos,hogar").split(",");
+  let gasto = new gestionPresu.CrearGasto(descripcion, valor, fecha,...etiquetas);
+
+  gestionPresu.anyadirGasto(gasto);
+  repintar();
+}
+
+let botonAnyadir = document.getElementById("anyadirgasto");
+botonAnyadir.addEventListener("click", nuevoGastoWeb);
+
+function EditarHandle(){
+  this.handleEvent = function(){
+    let descripcion = prompt("Introduce una descripción", this.gasto.descripcion);
+    let valor = parseInt(prompt("Introduce un valor", this.gasto.valor), 10);
+    let fecha = parseInt(prompt("Introduce una fecha YYYY-MM-DD", this.gasto.fecha), 10);
+    let etiquetas = prompt("Introduce las etiquetas separadas por comas", this.gasto.etiquetas.join()).split(",");
+    this.gasto.actualizarDescripcion(descripcion);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(fecha);
+    this.gasto.anyadirEtiquetas(etiquetas);
+    repintar();
+  } 
+}
+
+function BorrarHandle(){
+  this.handleEvent = function(){
+    this.gasto.borrarGasto(this.gasto.id);
+    repintar();
+  }
+}
+
+function BorrarEtiquetasHandle(){
+  this.handleEvent = function(){
+    this.gasto.borrarEtiquetas(this.etiqueta);
+    repintar();
+  }
+}
+
+
+
 function mostrarDatoEnId(idElemento, valor){  //Función sencilla en la a la etiqueta que apuntamos con "targetElement", le insertamos el valor correspondiente en "valor"
   let targetElement = document.getElementById(idElemento);
   targetElement.textContent = valor;
@@ -23,6 +68,11 @@ function mostrarDatoEnId(idElemento, valor){  //Función sencilla en la a la eti
 
 function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apuntamos a un target, pero en este caso, creamos un arbol de etiquetas algo más complejo
   
+  let boton = document.createElement("button");
+  boton.setAttribute("type", "button");
+  manejadorEditar = new EditarHandle();
+
+
   let targetElement = document.getElementById(idElemento);
   let gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto");
