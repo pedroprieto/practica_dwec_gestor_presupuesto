@@ -207,8 +207,6 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
 
             //Llamar a la función repintar
             repintar();
-
-
             }
         }
         //Función BorrarHandle Esta función se utilizará como objeto manejador 
@@ -236,6 +234,27 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
                 //Llamar a la función repintar
                 repintar();
             }
+        }
+
+        //Crear y modificar gastos mediante formularios sin prompt
+        function nuevoGastoWebFormulario () {
+            //Crear una copia del formulario web definido en la plantilla HTML.
+            let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+            //Acceder al elemento <form> dentro de ese fragmento de documento
+            var formulario = plantillaFormulario.querySelector("form");
+            //Desde este momento, la variable formulario almacena el nodo formulario que vamos a crear.
+
+            //Crear un manejador de evento para el evento submit del formulario.
+            formulario.addEventListener("submit", enviarFormulario);
+
+        }
+
+        //Deberás crear una función manejadora de este evento enviarFormulario
+        function enviarFormulario (event) {
+            //Prevenir el envío del formulario mediante event.preventDefault()
+            event.preventDefault();
+            //Crear un nuevo gasto con la información de los campos del formulario
+            por aqui
         }
 
 
