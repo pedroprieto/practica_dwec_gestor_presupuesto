@@ -261,8 +261,41 @@ function BorrarEtiquetasHandle()
     }
 }
 
+//FORMULARIOS
 
+ //Función nuevoGastoWebFormulario
 
+ function nuevoGastoWebFormulario( event ){
+   // Creo una copia del formulario web
+  let plantillaFormulario = document.getElementById( "formulario-template" ).content.cloneNode( true );
+
+  // Accedo al elem <form> dentro del fragmento de documento
+  var formulario = plantillaFormulario.querySelector( "form" );
+
+  // Creo un handleEvent para el evento submit del formulario
+  formulario.addEventListener( "submit", anyadirElementoFormulario );
+
+  //Se añade manejador de click para botón Cancelar
+  var botonCancelarForm = plantillaFormulario.querySelector( "button.cancelar" );
+  botonCancelarForm.addEventListener( "click",  function(event){
+      let anyadirgasto = document.getElementById("anyadirgasto-formulario")
+      cancelarAnyadirGasto(event, anyadirgasto)
+  })
+  //Se deshabilita el botón que inició el evento
+  event.currentTarget.disabled = true;
+  
+  //se agrega el formulario al DOM
+  let controles = document.getElementById( "controlesprincipales" );
+  controles.append( plantillaFormulario );
+
+}
+
+ //Botón anyadirgasto-formulario
+ let botonAnyadirForm = document.getElementById( "anyadirgasto-formulario" );
+ botonAnyadirForm.addEventListener( "click", nuevoGastoWebFormulario );
+ 
+ 
+ 
 
 
 export{
