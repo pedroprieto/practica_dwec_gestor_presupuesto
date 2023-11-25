@@ -186,6 +186,49 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
     }
 }
 
+function submitFormularioHandler(e) {
+    e.preventDefault();
+    const formulario = e.currentTarget;
+
+    const descripcion = formulario.elements.descripcion.value;
+    const valor = Number(formulario.elements.valor.value);
+    const fecha = formulario.elements.fecha.value;
+    let etiquetas = formulario.elements.etiquetas.value;
+    etiquetas = etiquetas.split(",");
+
+    const gasto = new gestion.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    gestion.anyadirGasto(gasto);
+
+    repintar();
+
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+}
+
+function CancelarHandle(formulario, botonAnyadirGasto) {
+    this.formulario = formulario;
+    this.botonAnyadirGasto = botonAnyadirGasto;
+
+    this.handleEvent = function () {
+        formulario.remove();
+        botonAnyadirGasto.removeAttribute("disabled");
+    }
+}
+
+function nuevoGastoWebFormulario(e) {
+    let boton = e.currentTarget;
+    const plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    const formulario = plantillaFormulario.querySelector("form");
+    formulario.addEventListener("submit", submitFormularioHandler);
+    const botonCancelar = formulario.querySelector("button.cancelar");
+    const cancelarHandle = new CancelarHandle(formulario, boton);
+    botonCancelar.addEventListener("click", cancelarHandle);
+
+    boton.setAttribute("disabled", "");
+    document.getElementById("controlesprincipales").appendChild(formulario);
+}
+
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
