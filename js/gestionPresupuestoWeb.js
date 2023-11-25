@@ -41,9 +41,30 @@ function mostrarGastoWeb(idElemento, gasto) {
         let spanEtiqueta = document.createElement("span");
         spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
         spanEtiqueta.textContent = etiqueta;
+        let borrarEtiquetaHandle = new BorrarEtiquetasHandle(gasto, etiqueta);
+        spanEtiqueta.addEventListener("click", borrarEtiquetaHandle);
+
         divGastoEtiquetas.appendChild(spanEtiqueta);
     }
     divGasto.appendChild(divGastoEtiquetas);
+    
+    // boton editar
+    let botonEditar = document.createElement("button");
+    botonEditar.textContent = "Editar";
+    botonEditar.type = "button";
+    botonEditar.classList.add("gasto-editar");
+    let editarHandle = new EditarHandle(gasto);
+    botonEditar.addEventListener("click", editarHandle);
+    divGasto.appendChild(botonEditar);
+
+    // boton borrar
+    let botonBorrar = document.createElement("button");
+    botonBorrar.textContent = "Borrar";
+    botonBorrar.type = "button";
+    botonBorrar.classList.add("gasto-borrar");
+    let borrarHandle = new BorrarHandle(gasto);
+    botonBorrar.addEventListener("click", borrarHandle);
+    divGasto.appendChild(botonBorrar);
 
     // agrego el divGasto al elemento
     elem.appendChild(divGasto);
