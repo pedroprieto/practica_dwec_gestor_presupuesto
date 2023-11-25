@@ -154,6 +154,17 @@ function BorrarHandle(gasto) {
     }
 }
 
+function BorrarEtiquetasHandle(gasto, etiqueta) {
+    this.gasto = gasto;
+    this.etiqueta = etiqueta;
+
+    this.handleEvent = function () {
+        this.gasto.borrarEtiquetas(etiqueta);
+
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
