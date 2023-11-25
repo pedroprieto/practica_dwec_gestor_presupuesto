@@ -77,6 +77,13 @@ function mostrarGastoWeb(idElemento, gasto) {
   botonEditar.type = 'button';
   botonEditar.innerText = 'Editar ';
 
+  let editarhand = new EditarHandle()
+  editarhand.gasto = gasto;
+
+  botoneditar.addEventListener('click', editarhand)
+
+  divGasto.append(botonEditar)
+
   // Creo objeto Editar y pongo como manejador del evento click a botonEditar
   let editar = new EditarHandle();
   editar.gasto = gasto;
@@ -99,6 +106,21 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     // Añadir el botonBorrar al DOM
   divGasto.appendChild(botonBorrar);
+
+
+  let botonEditarForm = document.createElement( "button" );
+  botonEditarForm.type = "button";
+  botonEditarForm.className = "gasto-editar-formulario";
+  botonEditarForm.innerHTML = "Editar (formulario)";
+
+  
+  let eventEditarForm = new EditarHandleFormulario();
+
+  eventEditarForm.gasto = gasto;
+
+  botonEditarForm.addEventListener( "click", eventEditarForm );
+
+  divGasto.append( botonEditarForm );
 
 }
 
@@ -266,27 +288,27 @@ function BorrarEtiquetasHandle()
  //Función nuevoGastoWebFormulario
 
  function nuevoGastoWebFormulario( event ){
-   // Creo una copia del formulario web
-  let plantillaFormulario = document.getElementById( "formulario-template" ).content.cloneNode( true );
+    // Creo una copia del formulario web
+    let plantillaFormulario = document.getElementById( "formulario-template" ).content.cloneNode( true );
 
-  // Accedo al elem <form> dentro del fragmento de documento
-  var formulario = plantillaFormulario.querySelector( "form" );
+    // Accedo al elem <form> dentro del fragmento de documento
+    var formulario = plantillaFormulario.querySelector( "form" );
 
-  // Creo un handleEvent para el evento submit del formulario
-  formulario.addEventListener( "submit", anyadirElementoFormulario );
+    // Creo un handleEvent para el evento submit del formulario
+    formulario.addEventListener( "submit", anyadirElementoFormulario );
 
-  //Se añade manejador de click para botón Cancelar
-  var botonCancelarForm = plantillaFormulario.querySelector( "button.cancelar" );
-  botonCancelarForm.addEventListener( "click",  function(event){
-      let anyadirgasto = document.getElementById("anyadirgasto-formulario")
-      cancelarAnyadirGasto(event, anyadirgasto)
-  })
-  //Se deshabilita el botón que inició el evento
-  event.currentTarget.disabled = true;
-  
-  //se agrega el formulario al DOM
-  let controles = document.getElementById( "controlesprincipales" );
-  controles.append( plantillaFormulario );
+    //Se añade manejador de click para botón Cancelar
+    var botonCancelarForm = plantillaFormulario.querySelector( "button.cancelar" );
+    botonCancelarForm.addEventListener( "click",  function(event){
+        let anyadirgasto = document.getElementById("anyadirgasto-formulario")
+        cancelarAnyadirGasto(event, anyadirgasto)
+    })
+    //Se deshabilita el botón que inició el evento
+    event.currentTarget.disabled = true;
+    
+    //se agrega el formulario al DOM
+    let controles = document.getElementById( "controlesprincipales" );
+    controles.append( plantillaFormulario );
 
 }
 
@@ -294,8 +316,35 @@ function BorrarEtiquetasHandle()
  let botonAnyadirForm = document.getElementById( "anyadirgasto-formulario" );
  botonAnyadirForm.addEventListener( "click", nuevoGastoWebFormulario );
  
+
+ function anyadirElementoFormulario( event ){
+    
+  event.preventDefault();
+
+  let arrayEtiquetas = event.currentTarget.etiquetas.value.split( ", " );
+  let valorNumero = parseFloat( event.currentTarget.valor.value );
+  let nuevoGastoForm = new gestorPresupuesto.CrearGasto( event.currentTarget.descripcion.value, valorNumero, event.currentTarget.fecha.value, ...arrayEtiquetas );
+
+  gestorPresupuesto.anyadirGasto( nuevoGastoForm );
+
+  repintar();
+
+  let botonAnyadirForm = document.getElementById( "anyadirgasto-formulario" );
+  botonAnyadirForm.disabled = false;
+
+  event.currentTarget.remove();
+}
  
- 
+function cancelarAnyadirGasto(event, botonEditar){
+  //almaceno el elemento actual en una variable
+  var botonCancelar = event.currentTarget;
+  botonCancelar.disabled = true;
+  let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+  botonAnyadirFormulario.disabled = false;
+  botonEditar.disabled = false;
+  event.currentTarget.parentNode.remove()
+}
+
 
 
 export{
