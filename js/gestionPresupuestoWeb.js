@@ -109,6 +109,22 @@ function actualizarPresupuestoWeb() {
 const botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
+function nuevoGastoWeb() {
+    const descripcion = prompt("Descripcion");
+    const valor = Number(prompt("Valor"));
+    const fecha = prompt("Fecha (yyyy-mm-dd)");
+    let etiquetas = prompt("Etiquetas (lista separada por comas)");
+    etiquetas = etiquetas.split(",");
+
+    const gasto = new gestion.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    gestion.anyadirGasto(gasto);
+
+    repintar();
+}
+
+const botonAnyadirGasto = document.getElementById("anyadirgasto");
+botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
