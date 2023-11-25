@@ -285,6 +285,67 @@ function BorrarEtiquetasHandle()
 
 //FORMULARIOS
 
+function EditarHandleFormulario(){
+  //método handleEvent para manejar el evento click
+  this.handleEvent = function(event){
+
+    //creo copia del formulario 
+    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
+
+   //accedo al elemento form dentro del document(html)
+    let formulario = plantillaFormulario.querySelector('form');
+
+    
+    event.currentTarget.after(formulario); //inserto el form en el boton
+    //desactivo el botonEditar 
+    let botonEditar = event.currentTarget;
+    botonEditar.disabled = true;
+      
+   //actualizo el gasto con la informacion de los campos del form
+    formulario.elements.valor.value = this.gasto.valor;
+    formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+    formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+    //Creoun objeto handleEvent para el evento submit del form
+    let SubmitEditarHandleForm = new SubmitEditarHandleForm();
+    // Asigno el gasto que se está editando al objeto manejador de eventos
+    SubmitEditarHandleForm.gasto = this.gasto;
+    //agrego el handleEvent al form para el event submit
+    formulario.addEventListener('submit', SubmitEditarHandleForm);
+     // Obtengo el botón cancelar dentro del form y agrego un handleEvent
+     let botonCancelar = formulario.querySelector( "button.cancelar" );
+     botonCancelar.addEventListener( "click", function(event) {
+          cancelarAnyadirGasto(event, botonEditar) //llamo a la funcion cancelarAnyadirGasto al hacer click en cancelar
+      });
+
+  }
+}
+
+function SubmitEditarHandleForm(){
+  this.handleEvent = function( event ){
+
+    event.preventDefault();
+
+    let formulario = event.currentTarget;
+
+    let ndescripcion = form.elements.descripcion.value;
+    let nvalor = form.elements.valor.value;
+    let nfecha =  form.elements.fecha.value;
+    let netiquetas = form.elements.etiquetas.value;
+
+    nvalor = parseFloat(nvalor);
+
+    let netiquetasArray = netiquetas.split(',');
+
+    this.gasto.actualizarDescripcion(ndescripcion);
+    this.gasto.actualizarValor(nvalor);
+    this.gasto.actualizarFecha(nfecha);
+    this.gasto.anyadirEtiquetas(...netiquetasArray);
+
+    repintar();
+  }
+}
+
  //Función nuevoGastoWebFormulario
 
  function nuevoGastoWebFormulario( event ){
