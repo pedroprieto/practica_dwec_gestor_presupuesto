@@ -144,6 +144,15 @@ function EditarHandle(gasto) {
     }
 }
 
+function BorrarHandle(gasto) {
+    this.gasto = gasto;
+
+    this.handleEvent = function () {
+        gestion.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+}
 
 export {
     mostrarDatoEnId,
