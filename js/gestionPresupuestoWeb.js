@@ -237,7 +237,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
         }
 
         //Crear y modificar gastos mediante formularios sin prompt
-        function nuevoGastoWebFormulario () {
+        function nuevoGastoWebFormulario (event) {
             //Crear una copia del formulario web definido en la plantilla HTML.
             let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
             //Acceder al elemento <form> dentro de ese fragmento de documento
@@ -246,6 +246,16 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
 
             //Crear un manejador de evento para el evento submit del formulario.
             formulario.addEventListener("submit", enviarFormulario);
+            
+            //desactivado al activar el formulario el boton añadir
+            event.target.disabled = true;
+            //Crear un manejador de evento para el evento click del botón Cancelar
+            var botonCancelarFormulario = plantillaFormulario.querySelector("button.cancelar");
+            //definir una función constructora que implemente handleEvent
+            botonCancelarFormulario.addEventListener("click", manejadorBotonCancelarFormulario);
+            //añadir el fragmento de documento
+            let controles = document.getElementById("controlesprincipales");
+            controles.append(plantillaFormulario);
 
         }
 
@@ -254,7 +264,31 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             //Prevenir el envío del formulario mediante event.preventDefault()
             event.preventDefault();
             //Crear un nuevo gasto con la información de los campos del formulario
-            por aqui
+            //Errores, valor decimal y array de etiquetas
+            let valorGasto = event.target.valor.value;
+            valorGasto = parseFloat(valorGasto);
+            let etiquetas = event.target.etiqueta.value;
+            let arrayEtiquetas = etiquetas.split(",");
+            let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, 
+              valorGasto, event.target.fecha.value, ...arrayEtiquetas);
+              //Añadir el gasto a la lista de gastos.
+            gestPresupuesto.anyadirGasto(nuevoGastoFormulario);
+            //Llamar a la función repintar.
+            repintar();
+            //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
+            let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+            botonAnyadirFormulario.disabled = false;
+
+        }
+        //Crear un manejador de evento para el evento click del botón Cancelar del formulario
+        function manejadorBotonCancelarFormulario () {
+            //La variable formulario, para que al pulsar en cancelar se elimine el formulario.
+            this.handleEvent = function(event) {
+                event.currentTarget.remove();
+                //al pulsar en cancelar se vuelva a activar dicho botón
+                this.botonEditar.disabled = false;
+
+            }
         }
 
 
