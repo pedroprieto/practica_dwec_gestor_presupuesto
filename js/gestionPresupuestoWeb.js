@@ -125,6 +125,26 @@ function nuevoGastoWeb() {
 const botonAnyadirGasto = document.getElementById("anyadirgasto");
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
+function EditarHandle(gasto) {
+    this.gasto = gasto;
+
+    this.handleEvent = function () {
+        const descripcion = prompt("Descripcion", this.gasto.descripcion);
+        const valor = Number(prompt("Valor", this.gasto.valor));
+        const fecha = prompt("Fecha (yyyy-mm-dd)", this.gasto.fecha);
+        let etiquetas = prompt("Etiquetas (lista separada por comas)", this.gasto.etiquetas);
+        etiquetas = etiquetas.split(",");
+
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+
+        repintar();
+    }
+}
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
