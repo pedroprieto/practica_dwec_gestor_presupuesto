@@ -88,10 +88,20 @@ function mostrarGastoWeb (idElemento , gasto) {
     //Añadir el objeto recién creado como objeto manejador del evento click al botón Borrar recién creado.
     botonBorrar.addEventListener("click", objetoBotonBorrar);
     //Añadir el botón al DOM a continuación del botón Editar.
+    //<button class="gasto-editar-formulario" type="button">Editar (formulario)</button>
+    let botonEditarFormulario =document.createElement("button");
+    botonEditarFormulario.className = "gasto-editar-formulario";
+    botonEditarFormulario.type = "button";
+    botonEditarFormulario.innerText = "Editar (formulario)";
+    //Relaccionar al manejador
+    let objetoEditarFormulario = new EditarHandleFormulario();
+    objetoEditarFormulario.gasto = gasto;
+     botonEditarFormulario.addEventListener('click', objetoEditarFormulario);
 
 
     //Componer los divs
-    divGasto.append(divDescripcion, divFecha,divValor, divEtiquetas, botonEditar, botonBorrar);
+    divGasto.append(divDescripcion, divFecha,divValor, divEtiquetas, botonEditar, botonBorrar, 
+       botonEditarFormulario);
 
     //Añadir el div contenedor
     let divContenedor = document.getElementById(idElemento);
@@ -287,6 +297,26 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
                 event.currentTarget.remove();
                 //al pulsar en cancelar se vuelva a activar dicho botón
                 this.botonEditar.disabled = false;
+
+            }
+        }
+        //funcio EditarHandleFormulario
+        function EditarHandleFormulario () {
+            //definirá exclusivamente un método llamado handleEvent
+            this.handleEvent = function (event) {
+                //realizará las mismas tareas que nuevoGastoWebFormulario
+             //Crear una copia del formulario web definido en la plantilla HTML.
+             let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+             //Acceder al elemento <form> dentro de ese fragmento de documento
+             var formulario = plantillaFormulario.querySelector("form");
+             //Desde este momento, la variable formulario almacena el nodo formulario que vamos a crear.
+            //El formulario debe quedar con los campos rellenos al abrirse 
+            formulario.elements.descripcion.value = this.gasto.descripcion;
+            formulario.elements.valor.value = this.gasto.valor;
+            formulario.elements.fecha.value = this.gasto.fecha;
+            formulario.elements.etiquetas.value = this.gasto.etiquetas;
+            //añadir el formulario al final del botón editar
+            event.currentTarget.after(formulario);
 
             }
         }
