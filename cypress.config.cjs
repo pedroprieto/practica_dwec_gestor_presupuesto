@@ -1,0 +1,8 @@
+module.exports = {
+    pluginsFile: false,
+    integrationFolder: "test",
+    fixturesFolder: false,
+    video: false,
+    supportFile: false,
+    screenshotOnRunFailure: false
+}

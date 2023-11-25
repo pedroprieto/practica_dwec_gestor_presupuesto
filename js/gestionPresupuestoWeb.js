@@ -1,48 +1,106 @@
+import * as gestionPresupuesto from "./gestionPresupuesto.js";
+
 function mostrarDatoEnId(id, valor) {
-    let elem = document.getElementById(id).innerText = valor;
+    let elem = document.getElementById(id);
+
+    if (elem) {
+        elem.innerText = valor;
+    }
 }
 
-
 function mostrarGastoWeb(idElemento, gasto) {
+    // Obtén el elemento objetivo
+    let elementoObj = document.getElementById(idElemento);
 
-    let elementObj = document.getElementById(idElement);
-   //Creo Elemento div
+    // Crea los elementos div
     let divGasto = document.createElement('div');
     let divGasDesc = document.createElement('div');
     let divGasFecha = document.createElement('div');
     let divGasValor = document.createElement('div');
     let divGasEtiquetas = document.createElement('div');
 
-    //Le asigno una clase
+    // Asigna las clases
     divGasto.className = "gasto";
-    divGasDesc.className = "gasto-descripcion";   //cambio nombre más facil de ver
+    divGasDesc.className = "gasto-descripcion";
     divGasFecha.className = "gasto-fecha";
     divGasValor.className = "gasto-valor";
-    divGasEtiquetas.className = "gastos-etiquetas";
-    
-    //Le asigno valor
+    divGasEtiquetas.className = "gasto-etiquetas";
+
+    // Asigna los valores
     divGasDesc.innerText = gasto.descripcion;
     divGasValor.innerText = gasto.valor;
-    divGasFecha.innerText = new Date(gasto.fecha).toLocaleDateString();
-    divGasEtiquetas.innerText = "PENDIENTE DE HACER";
 
-    for (let etiqueta of gasto.etiquetas) {
-        let divEtiqueta = document.createElement('span');             // Crear un nuevo elem. <span>
-        divEtiqueta.className = "gasto-etiquetas-etiqueta";           // Asigna la clase al nuevo elem. <span> como "gasto-etiquetas-etiqueta"
-        divEtiqueta.append(`${etiqueta},`);                           // Agrega el contenido de la etiqueta al elem. <span>
-        divGasEtiquetas.append(divEtiqueta);                          // Agrega el nuevo elem. <span> al contenedor divGasEtiquetas
+    // Formatea la fecha (si gasto.fecha es un objeto Date)
+    let fechaFormateada = gasto.fecha.toLocaleDateString();
+    divGasFecha.innerText = fechaFormateada;
+
+    // Agrega etiquetas
+    for (let i = 0; i < gasto.etiquetas.length; i++) {
+        let etiqueta = gasto.etiquetas[i];
+        let divEtiqueta = document.createElement('span');
+        divEtiqueta.className = "gasto-etiquetas-etiqueta";
+        divEtiqueta.append(etiqueta);
+
+        // Evita agregar una coma al final del último elemento
+        if (i < gasto.etiquetas.length - 1) {
+            divEtiqueta.append(', ');
+        }
+
+        divGasEtiquetas.append(divEtiqueta);
     }
-    // Crea los elem.
-    divGasto.append(divGasDescripcion);
+
+    // Agrega los elementos al divGasto
+    divGasto.append(divGasDesc);
     divGasto.append(divGasFecha);
     divGasto.append(divGasValor);
     divGasto.append(divGasEtiquetas);
 
-    // Agrega el elem. del gasto completo al elem. objetivo. Todos los elementos que representan la info. de gasto, estarán dentro de elementObjetive en el documento HTML.
-    elementObjetive.append(divGasto);
+    // Agrega el divGasto al elemento objetivo
+    elementoObj.append(divGasto);
 }
- 
-function mostrarGastosAgrupadosWeb() { }
+
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+    // Obtén el elemento objetivo
+    let elementoObjetivo = document.getElementById(idElemento);
+
+    // Creo elemento div para la agrupación
+    let divAgrupacion = document.createElement('div');
+    divAgrupacion.className = "agrupacion";
+
+    // Creo elemento h1 para mostrar el periodo
+    let h1Periodo = document.createElement('h1');
+    h1Periodo.innerText = `Gastos agrupados por ${periodo}`;
+    divAgrupacion.append(h1Periodo);
+
+    // Itera sobre las propiedades del objeto agrup
+    for (let clave in agrup) {
+        if (Object.prototype.hasOwnProperty.call(agrup, clave)) {
+            // Crea el elemento div para cada propiedad
+            let divAgrupacionDato = document.createElement('div');
+            divAgrupacionDato.className = "agrupacion-dato";
+
+            // Crea el elemento span para la clave (nombre de la propiedad)
+            let spanClave = document.createElement('span');
+            spanClave.className = "agrupacion-dato-clave";
+            spanClave.innerText = clave;
+
+            // Crea el elemento span para el valor (cantidad)
+            let spanValor = document.createElement('span');
+            spanValor.className = "agrupacion-dato-valor";
+            spanValor.innerText = agrup[clave];
+
+            // Agrega los elementos al divAgrupacionDato
+            divAgrupacionDato.append(spanClave);
+            divAgrupacionDato.append(spanValor);
+
+            // Agrega el divAgrupacionDato al divAgrupacion
+            divAgrupacion.append(divAgrupacionDato);
+        }
+    }
+
+    // Agrega el divAgrupacion al elemento objetivo
+    elementoObjetivo.append(divAgrupacion);
+}
 
 export {
     mostrarDatoEnId,

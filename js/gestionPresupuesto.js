@@ -234,11 +234,3 @@ export {
     agruparGastos,
 }
 
-/*let pAgrup = elemento.obtenerPeriodoAgrupacion(periodo);       //*pAgrup periodo a agrupar año,mes o dia en concreto.
-
-if (acumulador[pAgrup]) {                                      //*el acumulador tiene una propiedad existente ya con XX fecha? 
-    acumulador[pAgrup] = acumulador[pAgrup] + elemento.valor;  //* suma lo que tenía más el nuevo valor. 
-}
-else
-    acumulador[pAgrup] = elemento.valor;                        //* La 1º vez que lo llamo estará vacio y entra en else. Se crea xx fecha.
-return acumulador;*/
