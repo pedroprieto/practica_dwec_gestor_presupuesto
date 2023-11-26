@@ -80,9 +80,9 @@ function mostrarGastoWeb(idElemento, gasto) {
   let editarhand = new EditarHandle()
   editarhand.gasto = gasto;
 
-  botoneditar.addEventListener('click', editarhand)
+  botonEditar.addEventListener('click', editarhand);
 
-  divGasto.append(botonEditar)
+  divGasto.append(botonEditar);
 
   // Creo objeto Editar y pongo como manejador del evento click a botonEditar
   let editar = new EditarHandle();
@@ -285,44 +285,6 @@ function BorrarEtiquetasHandle()
 
 //FORMULARIOS
 
-function EditarHandleFormulario(){
-  //método handleEvent para manejar el evento click
-  this.handleEvent = function(event){
-
-    //creo copia del formulario 
-    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
-
-   //accedo al elemento form dentro del document(html)
-    let formulario = plantillaFormulario.querySelector('form');
-
-    
-    event.currentTarget.after(formulario); //inserto el form en el boton
-    //desactivo el botonEditar 
-    let botonEditar = event.currentTarget;
-    botonEditar.disabled = true;
-      
-   //actualizo el gasto con la informacion de los campos del form
-    formulario.elements.valor.value = this.gasto.valor;
-    formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
-    formulario.elements.etiquetas.value = this.gasto.etiquetas;
-
-    //Creo un objeto handleEvent para el evento submit del form // (Creo un objeto basado en la función constructora)
-
-    let SubmitEditarHandleForm = new SubmitEditarHandleForm();
-    // Asigno el gasto que se está editando al objeto manejador de eventos
-    SubmitEditarHandleForm.gasto = this.gasto;
-    //agrego el handleEvent al form para el event submit
-    formulario.addEventListener('submit', SubmitEditarHandleForm);
-     // Obtengo el botón cancelar dentro del form y agrego un handleEvent
-     let botonCancelar = formulario.querySelector( "button.cancelar" );
-     botonCancelar.addEventListener( "click", function(event) {
-          cancelarAnyadirGasto(event, botonEditar) //llamo a la funcion cancelarAnyadirGasto al hacer click en cancelar
-      });
-
-  }
-}
-
-
 // función constructora del manejador de eventos para el submit del formulario
 function SubmitEditarHandleForm(){
   //Método handleEvent para manejar el evento submit
@@ -352,6 +314,46 @@ function SubmitEditarHandleForm(){
     repintar();
   }
 }
+
+function EditarHandleFormulario(){
+  //método handleEvent para manejar el evento click
+  this.handleEvent = function(event){
+
+    //creo copia del formulario 
+    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
+
+   //accedo al elemento form dentro del document(html)
+    let formulario = plantillaFormulario.querySelector('form');
+
+    
+    event.currentTarget.after(formulario); //inserto el form en el boton
+    //desactivo el botonEditar 
+    let botonEditar = event.currentTarget;
+    botonEditar.disabled = true;
+      
+   //actualizo el gasto con la informacion de los campos del form
+    formulario.elements.valor.value = this.gasto.valor;
+    formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+    formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+    //Creo un objeto handleEvent para el evento submit del form // (Creo un objeto basado en la función constructora)
+    let SubmitEditar = new SubmitEditarHandleForm();
+
+    // Asigno el gasto que se está editando al objeto manejador de eventos
+    SubmitEditar.gasto = this.gasto;
+    //agrego el handleEvent al form para el event submit
+    formulario.addEventListener('submit', SubmitEditar);
+     // Obtengo el botón cancelar dentro del form y agrego un handleEvent
+     let botonCancelar = formulario.querySelector( "button.cancelar" );
+     botonCancelar.addEventListener( "click", function(event) {
+          cancelarAnyadirGasto(event, botonEditar) //llamo a la funcion cancelarAnyadirGasto al hacer click en cancelar
+      });
+
+  }
+}
+
+
+
 
  //Función nuevoGastoWebFormulario
 
