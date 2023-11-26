@@ -33,7 +33,13 @@ gesPres.listarGastos().forEach(gasto => {
 });
 
 //Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
-gesPres.filtrarGastos()
+let gastosSeptiembre2021 = gesPres.filtrarGastos({
+    fechaDesde: "2021-09-01",
+    fechaHasta: "2021-09-30"
+});
+gastosSeptiembre2021.forEach(gasto => {
+    gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+});
 
 
 
