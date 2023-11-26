@@ -106,15 +106,35 @@ function actualizarPresupuestoWeb() {
     gesPres.actualizarPresupuesto(nuevoPresupuesto);
     repintar();
 }
-
 // evento click del botón actualizarpresupuesto mediante addEventListener
 let buttonActualizarPresupuesto = document.getElementById(`actualizarpresupuesto`);
 buttonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 
 function nuevoGastoWeb() {
+    let descripcionNuevo = prompt (`introduce descripción`);
+    let valorNuevo = prompt (`introduce valor`);
+    let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`);
+    let etiquetasNuevo = prompt (`introduce etiquetas separadas por comas`);
+
+    valorNuevo = Number(valorNuevo);
+    let etiquetasArray = etiquetasNuevo.split(`,`);
+
+    let nuevoGasto = {
+        descripcion: descripcionNuevo,
+        valor: valorNuevo,
+        fecha: fechaNuevo,
+        etiquetas: etiquetasArray
+    }
+    gesPres.anyadirGasto(nuevoGasto);
+    repintar();
+}
+//evento click del botón anyadirgasto mediante addEventListener
+let buttonAnyadirGasto = document.getElementById(`anyadirgasto`);
+buttonAnyadirGasto.addEventListener(`click`,nuevoGastoWeb);
+
+function EditarHandle(){
     
 }
-
 
 
 export{
