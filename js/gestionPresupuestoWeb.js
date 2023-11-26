@@ -168,11 +168,60 @@ function BorrarEtiquetasHandle() {
 
 }
 
+function CancelarGastoWebHandle() {
+
+    this.handleEvent = function(event) {
+        this.formulario.remove();
+        this.botonAnyadirGastoFormulario.disabled = false;
+    }
+}
+
+// Evento al hacer 'click' en el botón "Añadir gasto (formulario)"
+function nuevoGastoWebFormulario() {
+    
+    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector('form');
+
+    formulario.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let descripcion = event.currentTarget.elements.descripcion.value;
+        let valor = Number(event.currentTarget.elements.valor.value);
+        let fecha = event.currentTarget.elements.fecha.value;
+        let etiquetas = event.currentTarget.elements.etiquetas.value.split(',');
+    
+        let gasto = new gesPre.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+        gesPre.anyadirGasto(gasto);
+    
+        repintar();
+    
+        this.remove(); // Elimino el formulario porque, al activarse de nuevo el botón, si le damos se duplica el formulario
+        botonAnyadirGastoFormulario.disabled = false;
+    });
+
+    let botonCancelar = formulario.querySelector('button.cancelar');
+    let manejadorEventoCancelarGasto = new CancelarGastoWebHandle();
+    manejadorEventoCancelarGasto.formulario = formulario;
+    
+    manejadorEventoCancelarGasto.botonAnyadirGastoFormulario = botonAnyadirGastoFormulario;
+
+    botonCancelar.addEventListener('click', manejadorEventoCancelarGasto);
+
+    botonAnyadirGastoFormulario.disabled = true;
+    document.getElementById('controlesprincipales').append(plantillaFormulario);
+}
+
+// Botón "Actualizar presupuesto"
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
 botonPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 
+// Botón "Añadir gasto"
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
+
+// Botón "Añadir gasto (formulario)"
+let botonAnyadirGastoFormulario = document.getElementById('anyadirgasto-formulario');
+botonAnyadirGastoFormulario.addEventListener('click', nuevoGastoWebFormulario);
 
 
 export {
