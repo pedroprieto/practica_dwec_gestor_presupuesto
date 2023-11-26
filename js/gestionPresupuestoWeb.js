@@ -322,21 +322,25 @@ function EditarHandleFormulario(){
 }
 
 function SubmitEditarHandleForm(){
+  //Método handleEvent para manejar el evento submit
   this.handleEvent = function( event ){
-
+    //Se prevee el comportamiento por defecto del formulario (envío a una URL)
     event.preventDefault();
 
+    // Obtener el form desde el evento
     let formulario = event.currentTarget;
 
-    let ndescripcion = form.elements.descripcion.value;
-    let nvalor = form.elements.valor.value;
-    let nfecha =  form.elements.fecha.value;
-    let netiquetas = form.elements.etiquetas.value;
+    //Obtengo los nuevos valores del form
+    let ndescripcion = formulario.elements.descripcion.value;
+    let nvalor = formulario.elements.valor.value;
+    let nfecha =  formulario.elements.fecha.value;
+    let netiquetas = formulario.elements.etiquetas.value;
 
-    nvalor = parseFloat(nvalor);
+    nvalor = parseFloat(nvalor); //convierto el nuevo valor a num
 
-    let netiquetasArray = netiquetas.split(',');
+    let netiquetasArray = netiquetas.split(','); //convierto cadena de etiquetas en un array
 
+    // Actualizo el gasto con los nuevos valores del form
     this.gasto.actualizarDescripcion(ndescripcion);
     this.gasto.actualizarValor(nvalor);
     this.gasto.actualizarFecha(nfecha);
