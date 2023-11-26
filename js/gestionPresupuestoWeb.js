@@ -306,7 +306,8 @@ function EditarHandleFormulario(){
     formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
     formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
-    //Creoun objeto handleEvent para el evento submit del form
+    //Creo un objeto handleEvent para el evento submit del form // (Creo un objeto basado en la función constructora)
+
     let SubmitEditarHandleForm = new SubmitEditarHandleForm();
     // Asigno el gasto que se está editando al objeto manejador de eventos
     SubmitEditarHandleForm.gasto = this.gasto;
@@ -321,6 +322,8 @@ function EditarHandleFormulario(){
   }
 }
 
+
+// función constructora del manejador de eventos para el submit del formulario
 function SubmitEditarHandleForm(){
   //Método handleEvent para manejar el evento submit
   this.handleEvent = function( event ){
