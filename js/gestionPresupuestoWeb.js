@@ -8,7 +8,6 @@ function mostrarDatoEnId(idElemento, valor){
     }else{
         text= document.createTextNode(Math.floor(valor));
     }
-    
     p.appendChild(text);
     document.getElementById(idElemento).appendChild(p);
 }
@@ -42,6 +41,25 @@ function mostrarGastoWeb(idElemento, gasto){
     }
     
     gastoElement.appendChild(etiquetasElement);
+
+    var editElement = document.createElement("button");
+    editElement.classList.add("gasto-editar")
+    editElement.setAttribute("type","gasto-editar");
+    editElement.textContent = "Editar";
+    let editarManejador = new EditarHandle;
+    editarManejador.gasto= gasto;
+    editElement.addEventListener("click",editarManejador);
+    gastoElement.appendChild(editElement);
+
+    var deleteElement = document.createElement("button");    
+    deleteElement.classList.add("gasto-borrar")
+    deleteElement.setAttribute("type","gasto-eliminar");
+    deleteElement.textContent = "Eliminar";
+    let eliminarManejador = new BorrarHandle;
+    eliminarManejador.gasto= gasto;
+    deleteElement.addEventListener("click",eliminarManejador);
+    gastoElement.appendChild(deleteElement);
+
     
     var contenedor= document.getElementById(idElemento);
     contenedor.appendChild(gastoElement);
@@ -76,19 +94,24 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     contenedor.appendChild(agrupacionElement);
 }
 
-function repintar(){
+function repintar(){ 
+    document.getElementById("presupuesto").innerHTML="";
+    document.getElementById("gastos-totales").innerHTML="";
+    document.getElementById("balance-total").innerHTML="";
     mostrarDatoEnId("presupuesto",gesPres.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales",gesPres.calcularTotalGastos());
     mostrarDatoEnId("balance-total",gesPres.calcularBalance());
+    let lG = document.getElementById("listado-gastos-completo");
+    lG.innerHTML= '<div id="listado-gastos-completo"></div>';
     var gastos = gesPres.listarGastos();
-    document.getElementById("listado-gastos-completo").innerHTML="";
+    
     gastos.forEach(g => {
         mostrarGastoWeb("listado-gastos-completo",g);
     });
 }
 function actualizarPresupuestoWeb(){
     let pres = prompt("Introduce el nuevo presupuesto");
-    gesPres.actualizarPresupuesto(parseInt(pres));
+    gesPres.actualizarPresupuesto(parseFloat(pres));
     repintar();
 }
 function nuevoGastoWeb(){
@@ -96,9 +119,39 @@ function nuevoGastoWeb(){
     let val = prompt("Introduce el valor");
     let fec = prompt("Introduce la fecha (yyyy-mm-dd");
     let eti = prompt("Introduce etiquetas (eti1,eti2,eti3,...)");
-
-    gesPres.anyadirGasto(new gesPres.CrearGasto(desc,parseInt(val),fec,eti.split(",")))
+    let listEti= eti.split(",");
+    let nuevoGasto = new gesPres.CrearGasto(desc,parseFloat(val),fec);
+    listEti.forEach(e=> nuevoGasto.anyadirEtiquetas(e));
+    gesPres.anyadirGasto(nuevoGasto);
     repintar();
+}
+function EditarHandle(){
+
+    EditarHandle.prototype.handleEvent= function(){
+        let descripcion = prompt("Ingrese la nueva descripción del gasto:", this.gasto.descripcion);
+        let valor = parseFloat(prompt("Ingrese el nuevo valor del gasto:", this.gasto.valor));
+        let fecha = prompt("Ingrese la nueva fecha del gasto (yyyy-mm-dd):", this.gasto.fecha);
+        let etiquetasTexto = prompt("Ingrese las nuevas etiquetas del gasto (separadas por comas):");
+        let etiquetas= etiquetasTexto.split(',');
+        this.gasto.actualizarValor(valor);
+        mostrarDatoEnId("gastos-totales",gesPres.calcularTotalGastos());
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(fecha);
+        for ( var eti of etiquetas){
+            if(eti!="") {
+                this.gasto.anyadirEtiquetas(eti)
+            }
+        }
+       
+        repintar();
+    };
+}
+function BorrarHandle(){
+
+    BorrarHandle.prototype.handleEvent= function(){
+        gesPres.borrarGasto(this.gasto.id);
+        repintar();
+    };
 }
 export{
     mostrarDatoEnId,
