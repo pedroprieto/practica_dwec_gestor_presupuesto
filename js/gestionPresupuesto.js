@@ -8,7 +8,9 @@ let idGasto = 0;
 function listarGastos() {
     return gastos;
     }
-    isEmpty.listarGastos();
+
+
+    
 // TODO: Variable global
 
 
@@ -29,21 +31,16 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function anyadirGasto(gasto){
-      //  gasto.id = idGasto++;
-          // Añadir el objeto gasto al final del array gastos
-        gastos.push(gasto);
-}
 
 
 //función CrearGasto porqeu es un constructor y va en en mayúsculas.
 // Para objeto gasto creamos dentro de Crear Gasto los métodos qeu nos piden
 
-function CrearGasto(descripcion, valor =0 , fecha, ... etiquetas) {
+function CrearGasto(descripcion, valor = 0 , fecha, ... etiquetas) {
     // TODO
 
     //propiedades
-    this.id = idGasto++;
+   
     this.descripcion = descripcion;
     this.valor = typeof valor === 'number' && valor >=0 ? valor: 0; 
     
@@ -75,9 +72,13 @@ function CrearGasto(descripcion, valor =0 , fecha, ... etiquetas) {
 }
 
 
+
 CrearGasto.prototype.mostrarGastoCompleto = function () {
-    const fechaLocalizada = new Date(this.fecha).toLocaleString();
-    const etiquetasList = this.etiquetas.map(etiqueta => ` - ${etiqueta}`).join('\n');
+    let fechaLocalizada = new Date(this.fecha).toLocaleString();
+    let etiquetasList = '';
+    for (const etiqueta of this.etiquetas) {
+      etiquetasList += `- ${etiqueta}\n`;
+    }
   
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${etiquetasList}`;
   };
@@ -113,25 +114,37 @@ CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
     this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasABorrar.includes(etiqueta));
   };
 
-  let valor1 = 23.44,
+  function anyadirGasto(gasto){
+      gasto.id = idGasto++;
+        // Añadir el objeto gasto al final del array gastos
+      gastos.push(gasto);
+      //gastos.id = idGasto++;
+}
+
+/*
+ let valor1 = 23.44,
   valor2 = 42.88,
   valor3 = 22.87;
 
 let gasto1 = new CrearGasto("descripción del gasto", valor1, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
 let gasto2 = new CrearGasto("descripción del gasto", valor2, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
 let gasto3 = new CrearGasto("descripción del gasto", valor3, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
+
 //assert., 0);
 //lengthOf(listarGastos());
 gastos.length;
+console.log((listarGastos().length));
 anyadirGasto(gasto1);
 gastos.length;
 //assert.lengthOf(listarGastos(), 1);
-listarGastos();
+
 //assert.equal(listarGastos()[0].id, 0, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
-listarGastos()[0].id;
+console.log(listarGastos()[0].id);
+console.log(listarGastos());
 anyadirGasto(gasto2);
 //assert.lengthOf(listarGastos(), 2);
 //lengthOf(listarGastos());
+console.log(listarGastos().length);
 //assert.equal(listarGastos()[1].id, 1, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
 console.log(listarGastos()[1].id);
 anyadirGasto(gasto3);
@@ -139,7 +152,8 @@ anyadirGasto(gasto3);
 //assert.lengthOf(listarGastos(), 3);
 //lengthOf(listarGastos());
 //assert.equal(listarGastos()[2].id, 2, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
-listarGastos()[2].id;
+console.log(listarGastos()[2].id);*/
+
 function borrarGasto(idGastoABorrar){
     let index = gastos.findIndex(gasto => gasto.id === idGastoABorrar);
     if (index !== -1) {
