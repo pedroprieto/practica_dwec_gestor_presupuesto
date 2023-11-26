@@ -1,4 +1,4 @@
-import * as gesGasTos from "/js/gestionPresupuesto.js";
+import * as gesPres from "/js/gestionPresupuesto.js";
 
 function mostrarDatoEnId(idElemento, valor){
     var p = document.createElement("p");
@@ -76,8 +76,34 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     contenedor.appendChild(agrupacionElement);
 }
 
+function repintar(){
+    mostrarDatoEnId("presupuesto",gesPres.mostrarPresupuesto());
+    mostrarDatoEnId("gastos-totales",gesPres.calcularTotalGastos());
+    mostrarDatoEnId("balance-total",gesPres.calcularBalance());
+    var gastos = gesPres.listarGastos();
+    document.getElementById("listado-gastos-completo").innerHTML="";
+    gastos.forEach(g => {
+        mostrarGastoWeb("listado-gastos-completo",g);
+    });
+}
+function actualizarPresupuestoWeb(){
+    let pres = prompt("Introduce el nuevo presupuesto");
+    gesPres.actualizarPresupuesto(parseInt(pres));
+    repintar();
+}
+function nuevoGastoWeb(){
+    let desc = prompt("Introduce la descripción del gasto");
+    let val = prompt("Introduce el valor");
+    let fec = prompt("Introduce la fecha (yyyy-mm-dd");
+    let eti = prompt("Introduce etiquetas (eti1,eti2,eti3,...)");
+
+    gesPres.anyadirGasto(new gesPres.CrearGasto(desc,parseInt(val),fec,eti.split(",")))
+    repintar();
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    nuevoGastoWeb,
+    actualizarPresupuestoWeb
 }

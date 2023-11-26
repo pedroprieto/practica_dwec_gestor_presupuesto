@@ -5,8 +5,7 @@ gp.actualizarPresupuesto(1500);
 gpWeb.mostrarDatoEnId("presupuesto",gp.mostrarPresupuesto());
 
 //Crear y añadir gastos
-var gasto1 = new gp.CrearGasto("Compra carne",23.44,"2021-10-06","casa","comida");
-gp.anyadirGasto(gasto1);
+gp.anyadirGasto(new gp.CrearGasto("Compra carne",23.44,"2021-10-06","casa","comida"));
 gp.anyadirGasto(new gp.CrearGasto("Compra fruta y verdura",14.25,"2021-09-06","supermercado","comida"));
 gp.anyadirGasto(new gp.CrearGasto("Bonobús",18.60,"2020-05-26","transporte"));
 gp.anyadirGasto(new gp.CrearGasto("Gasolina",60.42,"2021-10-08","transporte","gasolina"));
@@ -76,3 +75,9 @@ gpWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gp.agruparGastos("mes",undefine
 
 //gastos agrupados por año
 gpWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gp.agruparGastos("anyo",undefined,undefined,undefined),"año");
+
+let botonAnyadir = document.getElementById("anyadirgasto");
+botonAnyadir.addEventListener("click",gpWeb.nuevoGastoWeb);
+
+let botonActualizarPres = document.getElementById("actualizarpresupuesto");
+botonActualizarPres.addEventListener("click",gpWeb.actualizarPresupuestoWeb);
