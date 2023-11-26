@@ -37,6 +37,11 @@ function mostrarGastoWeb(idElemento, gasto){
         var etiquetaElement = document.createElement('span');
         etiquetaElement.classList.add('gasto-etiquetas-etiqueta');
         etiquetaElement.textContent = g;
+        let eliminarEtiquetasManejador = new BorrarEtiquetasHandle;
+        eliminarEtiquetasManejador.gasto= gasto;
+        eliminarEtiquetasManejador.etiqueta= g;
+        console.log(g);
+        etiquetaElement.addEventListener("click",eliminarEtiquetasManejador);
         etiquetasElement.appendChild(etiquetaElement);
     }
     
@@ -44,7 +49,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     var editElement = document.createElement("button");
     editElement.classList.add("gasto-editar")
-    editElement.setAttribute("type","gasto-editar");
+    editElement.setAttribute("type","button");
     editElement.textContent = "Editar";
     let editarManejador = new EditarHandle;
     editarManejador.gasto= gasto;
@@ -53,7 +58,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     var deleteElement = document.createElement("button");    
     deleteElement.classList.add("gasto-borrar")
-    deleteElement.setAttribute("type","gasto-eliminar");
+    deleteElement.setAttribute("type","button");
     deleteElement.textContent = "Eliminar";
     let eliminarManejador = new BorrarHandle;
     eliminarManejador.gasto= gasto;
@@ -150,6 +155,13 @@ function BorrarHandle(){
 
     BorrarHandle.prototype.handleEvent= function(){
         gesPres.borrarGasto(this.gasto.id);
+        repintar();
+    };
+}
+function BorrarEtiquetasHandle(){
+
+    BorrarEtiquetasHandle.prototype.handleEvent= function(){
+        this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
     };
 }
