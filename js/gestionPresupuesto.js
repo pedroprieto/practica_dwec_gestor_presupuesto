@@ -313,12 +313,97 @@ function filtrarGastos(parametro){
  }
 
 
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
-let guardarPeriodo="mes";
+ function agruparGastos(periodo, etiquetasValidas,  fechaDesde, fechaHasta){
+
+    let guardarPeriodo="mes";
     if (periodo == "dia" || periodo == "anyo")
     guardarPeriodo = periodo;
+    let resultadoFiltrado =[...gastos]
 
-    let paco=obtenerPeriodoAgrupacion(guardarPeriodo);
+
+
+
+
+
+     resultadoFiltrado =filtrarGastos({fechaDesde: fechaDesde},{fechaHasta: fechaHasta}, {etiquetasValidas});
+
+     let returnBueno=[];
+let agruparPor =  resultadoFiltrado.reduce(function(acc, periodo){
+
+    let gastoAgrup = periodo.fecha;
+    Date.parse (gastoAgrup)
+    let fechaAgrup= new Date(gastoAgrup);
+    fechaAgrup.toLocaleDateString();
+
+    let parametroFechaDesde =fechaDesde;
+    Date.parse(parametroFechaDesde)
+    let fechaMin = new Date(parametroFechaDesde)
+
+    let parametroFechaHasta =fechaHasta;
+    Date.parse(parametroFechaHasta)
+    let fechaTope = new Date(parametroFechaHasta)
+
+
+    let periodo1=periodo.obtenerPeriodoAgrupacion(guardarPeriodo);
+
+
+
+    acc[ periodo1] = acc[guardarPeriodo] || {cuenta: 0, listado:[]}
+   if(acc[periodo1].cuenta=0){
+        acc[periodo1].valor=0;
+    }
+    acc[ periodo1].cuenta++;
+
+
+
+
+    acc[ periodo1].listado.push(periodo)
+
+    let encontrado = false;
+    if(etiquetasValidas==undefined)
+    encontrado=true;
+else{
+    periodo.etiquetas.forEach(element => {
+
+        etiquetasValidas.forEach(elementValido => {
+
+
+            if (element==elementValido){
+
+                encontrado=true;
+
+
+            }
+
+        });
+
+    });
+}
+
+
+if(fechaHasta==null)
+{
+    if(encontrado)
+    {
+     if(returnBueno[periodo1]>0)
+     returnBueno[periodo1]= periodo.valor + returnBueno[periodo1];
+     else
+     returnBueno[periodo1]= periodo.valor;
+    }
+}
+   else if (fechaAgrup>=fechaMin && fechaAgrup<=fechaTope)
+   {
+
+    returnBueno[periodo1]= periodo.valor;
+   }
+
+
+    return acc  ;
+},{})
+
+
+return  returnBueno;
+
 
 }
 
