@@ -76,6 +76,47 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
     elemento.append(nuevoDiv);
 }
 
+
+function repintar(){
+
+    //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+    mostrarDatoEnId(`presupuesto`,`Presupuesto: ${gesPres.mostrarPresupuesto()} €`);
+    
+    //Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+    mostrarDatoEnId(`gastos-totales`,`Gastos totales: ${gesPres.calcularTotalGastos()} €`);
+    
+    //Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+    mostrarDatoEnId(`balance-total`,`Balance total: ${gesPres.calcularBalance()} €`);
+    
+    //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información.
+    //Puedes utilizar innerHTML para borrar el contenido de dicha capa
+    let listadoGastosCompleto = document.getElementById(`listado-gastos-completo`);
+    listadoGastosCompleto.innerHTML = ` `;
+    
+    //Mostrar el listado completo de gastos en div#listado-gastos-completo
+    //(funciones listarGastos y mostrarGastoWeb)
+    gesPres.listarGastos().forEach(gasto => {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+    });
+}
+
+function actualizarPresupuestoWeb() {
+    let nuevoPresupuesto = prompt('Introduce un nuevo presupuesto');
+    nuevoPresupuesto = Number(nuevoPresupuesto); //convertimos a número
+    gesPres.actualizarPresupuesto(nuevoPresupuesto);
+    repintar();
+}
+
+// evento click del botón actualizarpresupuesto mediante addEventListener
+let buttonActualizarPresupuesto = document.getElementById(`actualizarpresupuesto`);
+buttonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
+function nuevoGastoWeb() {
+    
+}
+
+
+
 export{
     
     mostrarDatoEnId,
