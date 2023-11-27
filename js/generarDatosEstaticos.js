@@ -1,10 +1,14 @@
 "use strict";
-import * as gesGastos from "./gestionPresupuesto.js";
 import * as gesGastosWeb from "./gestionPresupuestoWeb.js";
+import * as gesGastos from "./gestionPresupuesto.js";
 
-gesGastos.actualizarPresupuesto("1500");
-//gesGastosWeb.mostrarDatoEnId("presupuesto",gesGastos.mostrarPresupuesto());
-gesGastosWeb.mostrarDatoEnId("presupuesto","1000");
+//Actualizo presupuesto
+gesGastos.actualizarPresupuesto(1500);
+
+//Muestro presupuesto en el id 'presupuesto'
+gesGastosWeb.mostrarDatoEnId("presupuesto",gesGastos.mostrarPresupuesto());
+
+
 
 
 

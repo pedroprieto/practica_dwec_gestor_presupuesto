@@ -1,6 +1,6 @@
 "use strict";
 
-import { assert } from "chai";
+//import { assert } from "chai";
 
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
