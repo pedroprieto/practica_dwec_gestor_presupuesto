@@ -16,6 +16,14 @@ let gasto4 = new gesGastos.CrearGasto ("Gasolina", 60.42, "2021-10-08", "transpo
 let gasto5 = new gesGastos.CrearGasto ("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
 let gasto6 = new gesGastos.CrearGasto ("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
+gesGastos.anyadirGasto (gasto1);
+gesGastos.anyadirGasto (gasto2);
+gesGastos.anyadirGasto (gasto3);
+gesGastos.anyadirGasto (gasto4);
+gesGastos.anyadirGasto (gasto5);
+gesGastos.anyadirGasto (gasto6);
+
+
 
 
 
