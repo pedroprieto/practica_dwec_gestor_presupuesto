@@ -29,5 +29,8 @@ gesGastos.anyadirGasto (gasto6);
 //Muestro los gastos totales en div#gastos-totales
 gesGastosWeb.mostrarDatoEnId ("gastos-totales",gesGastos.calcularTotalGastos());
 
+//Muestro el balance total en div#balance-total
+gesGastosWeb.mostrarDatoEnId ("balance-total",gesGastos.calcularBalance());
+
 
 
