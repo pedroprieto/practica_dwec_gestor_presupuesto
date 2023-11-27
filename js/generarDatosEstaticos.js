@@ -32,12 +32,13 @@ gesGastosWeb.mostrarDatoEnId ("gastos-totales",gesGastos.calcularTotalGastos());
 //Muestro el balance total en div#balance-total
 gesGastosWeb.mostrarDatoEnId ("balance-total",gesGastos.calcularBalance());
 
-gesGastosWeb.mostrarGastoWeb("aplicacion", gasto1);
-gesGastosWeb.mostrarGastoWeb("aplicacion", gasto2);
-gesGastosWeb.mostrarGastoWeb("aplicacion", gasto3);
-gesGastosWeb.mostrarGastoWeb("aplicacion", gasto4);
-gesGastosWeb.mostrarGastoWeb("aplicacion", gasto5);
-gesGastosWeb.mostrarGastoWeb("aplicacion", gasto6);
+gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto1);
+gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto2);
+gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto3);
+gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto4);
+gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto5);
+gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto6);
+
 
 
 
