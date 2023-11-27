@@ -83,3 +83,6 @@ botonAnyadir.addEventListener("click",gpWeb.nuevoGastoWeb);
 let botonActualizarPres = document.getElementById("actualizarpresupuesto");
 botonActualizarPres.addEventListener("click",gpWeb.actualizarPresupuestoWeb);
 
+let botonForm = document.getElementById("anyadirgasto-formulario");
+botonForm.addEventListener("click",gpWeb.nuevoGastoWebFormulario)
+
