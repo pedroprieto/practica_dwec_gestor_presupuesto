@@ -27,10 +27,16 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGastoValor.classList.add ("gasto-valor");
     divGastoEtiquetas.classList.add ("gasto-etiquetas");
     
+    let mesString = (parseInt (new Date(gasto.fecha).getMonth()) < 10) ? "0" + new Date(gasto.fecha).getMonth() : new Date(gasto.fecha).getMonth();
+    let diaString = (parseInt (new Date(gasto.fecha).getDate()) <10) ? "0" + new Date(gasto.fecha).getDate() : new Date(gasto.fecha).getDate();
+    let fechaString = new Date(gasto.fecha).getFullYear() + "-" + mesString + "-" + diaString;  
+
     divGastoDescripcion.textContent = gasto.descripcion;
-    divGastoFecha.textContent =  gasto.fecha;
+    divGastoFecha.textContent = fechaString;
     divGastoValor.textContent = gasto.valor;
     
+    
+
     divGasto.append (divGastoDescripcion);
     divGasto.append (divGastoFecha);
     divGasto.append (divGastoValor);

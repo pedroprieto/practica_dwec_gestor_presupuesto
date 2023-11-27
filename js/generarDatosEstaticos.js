@@ -32,12 +32,23 @@ gesGastosWeb.mostrarDatoEnId ("gastos-totales",gesGastos.calcularTotalGastos());
 //Muestro el balance total en div#balance-total
 gesGastosWeb.mostrarDatoEnId ("balance-total",gesGastos.calcularBalance());
 
+//Muestro el listado completo de gastos en div#listado-gastos-completo
 gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto1);
 gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto2);
 gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto3);
 gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto4);
 gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto5);
 gesGastosWeb.mostrarGastoWeb("listado-gastos-completo", gasto6);
+
+//Muestro el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1
+
+//Filtro los gastos desde septiembre 2021
+let gastosDesdeSeptiembre = gesGastos.filtrarGastos ({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
+
+//Muestro todos los gastos desde septiembre de 2021
+for (let item of gastosDesdeSeptiembre) {
+    gesGastosWeb.mostrarGastoWeb ("listado-gastos-filtrado-1", item);
+}
 
 
 
