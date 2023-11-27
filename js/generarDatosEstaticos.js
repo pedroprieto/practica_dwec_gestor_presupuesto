@@ -61,4 +61,13 @@ for (let item of gastosMas50) {
     gesGastosWeb.mostrarGastoWeb ("listado-gastos-filtrado-2", item);
 }
 
+//Mostrar el listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3
+
+//Filtro gastos mayores a 200 y con etiqueta seguros
+let gastosMas200etiquetaSeguros = gesGastos.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+
+//Muestro los gastos mayores a 200 y con etiqueta seguros
+for (let item of gastosMas200etiquetaSeguros) {
+    gesGastosWeb.mostrarGastoWeb ("listado-gastos-filtrado-3",item);
+}
 
