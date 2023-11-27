@@ -268,6 +268,8 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             controles.append(plantillaFormulario);
 
         }
+        let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+        botonAnyadirFormulario.addEventListener("click", nuevoGastoWebFormulario);
 
         //Deberás crear una función manejadora de este evento enviarFormulario
         function enviarFormulario (event) {
@@ -277,24 +279,28 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             //Errores, valor decimal y array de etiquetas
             let valorGasto = event.target.valor.value;
             valorGasto = parseFloat(valorGasto);
-            let etiquetas = event.target.etiqueta.value;
+            let etiquetas = event.target.etiquetas.value;
             let arrayEtiquetas = etiquetas.split(",");
             let nuevoGastoFormulario = new gestPresupuesto.CrearGasto(event.target.descripcion.value, 
               valorGasto, event.target.fecha.value, ...arrayEtiquetas);
               //Añadir el gasto a la lista de gastos.
             gestPresupuesto.anyadirGasto(nuevoGastoFormulario);
-            //Llamar a la función repintar.
-            repintar();
+            
             //Activar (eliminar atributo disabled) el botón anyadirgasto-formulario
             let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+            botonAnyadirFormulario.addEventListener("click", nuevoGastoFormulario);
             botonAnyadirFormulario.disabled = false;
+            //Quitar formulario 
+            event.target.remove();
+            //Llamar a la función repintar.
+            repintar();
 
         }
         //Crear un manejador de evento para el evento click del botón Cancelar del formulario
         function manejadorBotonCancelarFormulario () {
             //La variable formulario, para que al pulsar en cancelar se elimine el formulario.
             this.handleEvent = function(event) {
-                event.currentTarget.remove();
+                event.currentTarget.parentNode.remove();
                 //al pulsar en cancelar se vuelva a activar dicho botón
                 this.botonEditar.disabled = false;
 
@@ -317,9 +323,45 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             formulario.elements.etiquetas.value = this.gasto.etiquetas;
             //añadir el formulario al final del botón editar
             event.currentTarget.after(formulario);
+            //anular boton 
+            let botonEditarFormulario = event.currentTarget;
+            botonEditarFormulario.disabled = true;
+            //botón submit
+            let botonSubmitFormulario = new manejadorSubmitEditarFormulario();
+            botonSubmitFormulario.gasto = this.gasto;
+            formulario.addEventListener('submit', botonSubmitFormulario);
+             //botón cancelar
+             let botonCancelarFormulario = formulario.querySelector("button.cancelar");
+             let cancelarFormulario = new manejadorBotonCancelarFormulario();
+             cancelarFormulario.botonEditar = event.currentTarget; // Pasas una referencia al botón de editar
+             cancelarFormulario.className = "button.cancelar"
+             botonCancelarFormulario.addEventListener('click', cancelarFormulario);
 
             }
         }
+        function manejadorSubmitEditarFormulario() {
+            this.handleEvent = function(event) {
+                //prevenir funcion por defecto
+                event.preventDefault();
+                //Limpiar el array de etiquetas
+                this.gasto.etiquetas = [];
+                
+                let formulario = event.currentTarget;
+                let descripcion = formulario.elements.descripcion.value;
+                let valor = formulario.elements.valor.value;
+                let fecha =  formulario.elements.fecha.value;
+                let etiquetas = formulario.elements.etiquetas.value; //separar array
+                let sepEtiquetas = etiquetas.split(',');
+                //Actualizar los datos
+                this.gasto.actualizarDescripcion(descripcion);
+                this.gasto.actualizarValor(parseFloat(valor));
+                this.gasto.actualizarFecha(fecha);
+                this.gasto.anyadirEtiquetas(...sepEtiquetas);
+                
+                repintar();
+            }
+        }
+        
 
 
 export {
