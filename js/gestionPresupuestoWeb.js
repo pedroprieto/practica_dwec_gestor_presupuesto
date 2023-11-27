@@ -24,7 +24,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let valorDiv = document.createElement('div');
     valorDiv.classList.add('gasto-valor');
-    valorDiv.innerText = `Valor del gasto: ${gasto.valor} €`;
+    valorDiv.innerText = gasto.valor;
     nuevoGastoDiv.append(valorDiv);   
 
     let etiquetasDiv = document.createElement('div');
@@ -42,7 +42,40 @@ function mostrarGastoWeb(idElemento, gasto) {
     });
 
     elemento.append(nuevoGastoDiv);
+
+
+    //cree dos botones para editar y borrar el gasto y añada los manejadores de eventos
+    //necesarios para realizar las acciones de edición y borrado de gastos y borrado de etiquetas.
+
+    //botón editar
+    let botonEditar = document.createElement(`button`);
+    botonEditar.type = `button`;
+    botonEditar.className = `gasto-editar`;
+    botonEditar.innerText = `Editar Gasto`;
+    //  nuevo objeto
+    let eventEditar = new EditarHandle();
+    
+    eventEditar.gasto = gasto;
+    botonEditar.addEventListener(`click`, eventEditar);
+    nuevoGastoDiv.append(botonEditar);
+    
+    //botón borrar
+    let botonBorrar = document.createElement(`button`);
+    botonBorrar.type = `button`;
+    botonBorrar.className = `gasto-borrar`;
+    botonBorrar.innerText = `Borrar Gasto`;
+    
+    //  nuevo objeto
+    /*
+    let eventBorrar = new BorrarHandle();
+    
+
+    eventBorrar.gasto = gasto;
+    botonBorrar.addEventListener(`click`, eventBorrar);
+    nuevoGastoDiv.append(botonBorrar);
+*/
 }
+
 
     
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
@@ -106,6 +139,7 @@ function actualizarPresupuestoWeb() {
     gesPres.actualizarPresupuesto(nuevoPresupuesto);
     repintar();
 }
+
 // evento click del botón actualizarpresupuesto mediante addEventListener
 let buttonActualizarPresupuesto = document.getElementById(`actualizarpresupuesto`);
 buttonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
@@ -132,8 +166,50 @@ function nuevoGastoWeb() {
 let buttonAnyadirGasto = document.getElementById(`anyadirgasto`);
 buttonAnyadirGasto.addEventListener(`click`,nuevoGastoWeb);
 
-function EditarHandle(){
+function EditarHandle() {
+    //METODO
+    this.handleEvent = function() {
+
+    let descripcionNuevo = prompt (`introduce nueva descripción`, this.gasto.descripcion);
+    let valorNuevo = prompt (`introduce valor`, this.gasto.valor);
+    let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`/*, this.gasto,fecha*/);
+    let etiquetasNuevo = prompt (`introduce etiquetas separadas por comas`, this.gasto.etiquetas.join(','));
+
+    valorNuevo = Number(valorNuevo);
+    let etiquetasArray = etiquetasNuevo.split(`,`);
     
+    this.gasto.actualizarDescripcion(descripcionNuevo);
+    this.gasto.actualizarValor(valorNuevo);
+    this.gasto.actualizarFecha(fechaNuevo);
+
+    this.gasto.borrarEtiquetas(...this.gasto.etiquetas);
+    this.gasto.anyadirEtiquetas(...etiquetasArray);
+
+    repintar();
+    }
+}
+
+function BorrarHandle() {
+    //METODO
+    this.handleEvent = function() {
+        gesPres.borrarGasto(this.gasto.idElemento);
+        repintar();
+    }
+
+    //PROPIEDAD
+    this.gasto=gasto;
+}
+
+function BorrarEtiquetasHandle() {
+    //METODO
+    this.handleEvent = function() {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+
+    }
+    //PROPIEDAD
+    this.gasto=gasto;
+    this.etiqueta=etiqueta;
 }
 
 
