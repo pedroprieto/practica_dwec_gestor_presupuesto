@@ -51,6 +51,14 @@ for (let item of gastosDesdeSeptiembre) {
 }
 
 
+//Muestro el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2
 
+//Filtro los gastos mayores a 50
+let gastosMas50 = gesGastos.filtrarGastos({valorMinimo: 50});
+
+//Muestro los gastos superiores a 50
+for (let item of gastosMas50) {
+    gesGastosWeb.mostrarGastoWeb ("listado-gastos-filtrado-2", item);
+}
 
 
