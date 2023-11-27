@@ -39,6 +39,11 @@ function mostrarGastoWeb(idElemento, gasto) {
         etiquetasDiv.append(etiquetaSpan);
 
         nuevoGastoDiv.append(etiquetasDiv);
+
+        //OBJETO MANEJADOR DEL EVENTO, DENTRO DEL FOR
+        //AQUÍ CAZAMOS LA ETIQUETA CONCRETA
+        let borrarEtiquetasHandle = new BorrarEtiquetasHandle(gasto, etiqueta);
+        etiquetaSpan.addEventListener('click', borrarEtiquetasHandle);
     });
 
     elemento.append(nuevoGastoDiv);
@@ -52,9 +57,8 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonEditar.type = `button`;
     botonEditar.className = `gasto-editar`;
     botonEditar.innerText = `Editar Gasto`;
-    //  nuevo objeto
-    let eventEditar = new EditarHandle();
-    
+        //  nuevo objeto
+    let eventEditar = new EditarHandle(gasto);
     eventEditar.gasto = gasto;
     botonEditar.addEventListener(`click`, eventEditar);
     nuevoGastoDiv.append(botonEditar);
@@ -64,20 +68,14 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.type = `button`;
     botonBorrar.className = `gasto-borrar`;
     botonBorrar.innerText = `Borrar Gasto`;
-    
-    //  nuevo objeto
-    /*
-    let eventBorrar = new BorrarHandle();
-    
-
+        // nuevo objeto
+    let eventBorrar = new BorrarHandle(gasto);
     eventBorrar.gasto = gasto;
     botonBorrar.addEventListener(`click`, eventBorrar);
     nuevoGastoDiv.append(botonBorrar);
-*/
 }
 
 
-    
 function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
     let elemento =document.getElementById(idElemento);
 
@@ -166,13 +164,16 @@ function nuevoGastoWeb() {
 let buttonAnyadirGasto = document.getElementById(`anyadirgasto`);
 buttonAnyadirGasto.addEventListener(`click`,nuevoGastoWeb);
 
-function EditarHandle() {
+
+
+function EditarHandle(gasto) {
+    this.gasto = gasto;
     //METODO
-    this.handleEvent = function() {
+    EditarHandle.prototype.handleEvent = function() {
 
     let descripcionNuevo = prompt (`introduce nueva descripción`, this.gasto.descripcion);
     let valorNuevo = prompt (`introduce valor`, this.gasto.valor);
-    let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`/*, this.gasto,fecha*/);
+    let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`, this.gasto.fecha);
     let etiquetasNuevo = prompt (`introduce etiquetas separadas por comas`, this.gasto.etiquetas.join(','));
 
     valorNuevo = Number(valorNuevo);
@@ -189,29 +190,23 @@ function EditarHandle() {
     }
 }
 
-function BorrarHandle() {
-    //METODO
-    this.handleEvent = function() {
-        gesPres.borrarGasto(this.gasto.idElemento);
+function BorrarHandle(gasto){
+    this.gasto = gasto;
+    BorrarHandle.prototype.handleEvent = function() {
+        gesPres.borrarGasto(this.gasto.id);
         repintar();
     }
-
-    //PROPIEDAD
-    this.gasto=gasto;
 }
 
-function BorrarEtiquetasHandle() {
-    //METODO
-    this.handleEvent = function() {
-        this.gasto.borrarEtiquetas(this.etiqueta);
-        repintar();
-
-    }
-    //PROPIEDAD
+function BorrarEtiquetasHandle(gasto, etiqueta) {
     this.gasto=gasto;
     this.etiqueta=etiqueta;
-}
 
+    BorrarEtiquetasHandle.prototype.handleEvent = function() {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
+}
 
 export{
     
