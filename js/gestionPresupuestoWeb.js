@@ -7,8 +7,7 @@ function mostrarDatoEnId (idElemento, valor) {
 
 function mostrarGastoWeb(idElemento, gasto) {
     //Creo los elementos
-    //Primero creo los div
-    
+    //Primero creo los div    
     
     let divGasto = document.createElement("div");
     let divGastoDescripcion = document.createElement("div");
@@ -48,7 +47,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     
     //Creo los span
     for (let item of gasto.etiquetas) {
-        let spanGastoEtiqueta = document.createElement("span");
+        let spanGastoEtiqueta = document.createElement ("span");
         spanGastoEtiqueta.classList.add ("gasto-etiquetas-etiqueta");
         spanGastoEtiqueta.textContent = item;
         divGastoEtiquetas.append (spanGastoEtiqueta);
@@ -56,8 +55,46 @@ function mostrarGastoWeb(idElemento, gasto) {
 
 }
 
-function mostrarGastosAgrupadosWeb() {
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
+    //Creo elementos
+    let divAgrupacion = document.createElement ("div");
+    let h1Periodo = document.createElement ("h1");    
 
+    //Asigno clases
+    divAgrupacion.classList.add ("agrupacion");
+
+
+    h1Periodo.textContent = "Gastos agrupados por " + periodo;
+    divAgrupacion.append (h1Periodo);
+
+
+    //Creo el elemento donde insertar el html
+    let elementoInsertar = document.getElementById (idElemento);
+    
+    for (let item in agrup) {
+        let propiedad = item;
+        let valor = agrup[item];
+
+        //Creo elementos
+        let divAgrupacionDato = document.createElement ("div");    
+        let spanAgrupacionDatoClave = document.createElement ("span");
+        let spanAgrupacionDatoValor = document.createElement ("span");
+        
+        //Asigno clases
+        divAgrupacionDato.classList.add ("agrupacion-dato");
+        spanAgrupacionDatoClave.classList.add ("agrupacion-dato-clave");
+        spanAgrupacionDatoValor.classList.add ("agrupacion-dato-valor");
+    
+        spanAgrupacionDatoClave.textContent = propiedad;
+        spanAgrupacionDatoValor.textContent = valor;
+        
+        divAgrupacionDato.append (spanAgrupacionDatoClave);
+        divAgrupacionDato.append (spanAgrupacionDatoValor);
+        divAgrupacion.append (divAgrupacionDato);
+    }
+
+    
+    elementoInsertar.append (divAgrupacion);
 }
 
 export {

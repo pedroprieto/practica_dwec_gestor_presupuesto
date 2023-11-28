@@ -64,10 +64,34 @@ for (let item of gastosMas50) {
 //Mostrar el listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3
 
 //Filtro gastos mayores a 200 y con etiqueta seguros
-let gastosMas200etiquetaSeguros = gesGastos.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+let gastosMas200EtiquetaSeguros = gesGastos.filtrarGastos ({valorMinimo: 200, etiquetasTiene: ["seguros"]});
 
 //Muestro los gastos mayores a 200 y con etiqueta seguros
-for (let item of gastosMas200etiquetaSeguros) {
+for (let item of gastosMas200EtiquetaSeguros) {
     gesGastosWeb.mostrarGastoWeb ("listado-gastos-filtrado-3",item);
 }
+
+//Mostrar el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en div#listado-gastos-filtrado-4
+
+//Filtro el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€
+let gastosMenos50EtiquetaComidaTransporte = gesGastos.filtrarGastos ({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
+
+//Muestro listado de gastos que tengan las etiquetas comida o transporte de menos de 50€
+for (let item of gastosMenos50EtiquetaComidaTransporte) {
+    gesGastosWeb.mostrarGastoWeb ("listado-gastos-filtrado-4", item);
+}
+
+//Muestro el total de gastos agrupados por día en div#agrupacion-dia
+
+//Filtro el total de gastos agrupados por día, mes y año respectivamente
+let gastosAgrupadosDia = gesGastos.agruparGastos ("dia");
+let gastosAgrupadosMes = gesGastos.agruparGastos ("mes");
+let gastosAgrupadosAnyo = gesGastos.agruparGastos ("anyo");
+
+//Muestro el total de gastos agrupados por día, mes y año respectivamente
+gesGastosWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gastosAgrupadosDia,"día");
+gesGastosWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gastosAgrupadosMes,"mes");
+gesGastosWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gastosAgrupadosAnyo,"año");
+
+
 
