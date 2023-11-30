@@ -1,4 +1,5 @@
 "use strict";
+import * as gesPresupuesto from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId (idElemento, valor) {
     let dato = document.getElementById (idElemento);
@@ -97,8 +98,32 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     elementoInsertar.append (divAgrupacion);
 }
 
+function repintar() {
+    //Creo variables con elementos a utilizar
+
+    let divPresupuesto = document.getElementById ("presupuesto ");
+    let divGastosTotales = document.getElementById ("gastos-totales");
+    let divBalanceTotal = document.getElementById ("balance-total");
+    let divListadoGastosCompleto = document.getElementById ("listado-gastos-completo");
+
+    gesPresupuesto.mostrarDatoEnId (divPresupuesto, gesPresupuesto.mostrarPresupuesto ());
+    gesPresupuesto.mostrarDatoEnId (divGastosTotales, gesPresupuesto.calcularTotalGastos());
+    gesPresupuesto.mostrarDatoEnId (divBalanceTotal, gesPresupuesto.calcularBalance());
+    
+    //Borro contenido
+    divListadoGastosCompleto.innerHTML = "";
+    mostrarGastoWeb(divListadoGastosCompleto, gesPresupuesto.listarGastos());
+}
+
+function actualizarPresupuestoWeb() {
+
+}
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb,    
 }
