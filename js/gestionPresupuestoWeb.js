@@ -45,7 +45,6 @@ function mostrarGastoWeb(idElemento, gasto) {
     
     
     elementoInsertar.append (divGasto); 
-    
     //Creo los span
     for (let item of gasto.etiquetas) {
         let spanGastoEtiqueta = document.createElement ("span");
@@ -101,23 +100,65 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 function repintar() {
     //Creo variables con elementos a utilizar
 
-    let divPresupuesto = document.getElementById ("presupuesto ");
+    let divPresupuesto = document.getElementById ("presupuesto");
     let divGastosTotales = document.getElementById ("gastos-totales");
     let divBalanceTotal = document.getElementById ("balance-total");
+
     let divListadoGastosCompleto = document.getElementById ("listado-gastos-completo");
 
-    gesPresupuesto.mostrarDatoEnId (divPresupuesto, gesPresupuesto.mostrarPresupuesto ());
-    gesPresupuesto.mostrarDatoEnId (divGastosTotales, gesPresupuesto.calcularTotalGastos());
-    gesPresupuesto.mostrarDatoEnId (divBalanceTotal, gesPresupuesto.calcularBalance());
-    
+    mostrarDatoEnId (divPresupuesto.id, gesPresupuesto.mostrarPresupuesto ());
+    mostrarDatoEnId (divGastosTotales.id, gesPresupuesto.calcularTotalGastos());
+    mostrarDatoEnId (divBalanceTotal.id, gesPresupuesto.calcularBalance());
+
     //Borro contenido
     divListadoGastosCompleto.innerHTML = "";
-    mostrarGastoWeb(divListadoGastosCompleto, gesPresupuesto.listarGastos());
+
+    let gastos = gesPresupuesto.listarGastos();
+
+    for (let item of gastos) {
+        mostrarGastoWeb(divListadoGastosCompleto.id, item);
+    }    
 }
 
-function actualizarPresupuestoWeb() {
+/*
 
+let botonActualizoPresupuesto = document.getElementById ("actualizarpresupuesto");
+
+botonActualizoPresupuesto.addEventListener ("click", function (e) {
+    console.log (e);
+    
+    let nuevoPresupuesto = parseFloat(prompt ("Nuevo presupuesto"));
+
+    gesPresupuesto.actualizarPresupuesto (nuevoPresupuesto);
+    repintar();
+});
+*/
+
+/*let botonActualizoPresupuesto = document.getElementById ("actualizarpresupuesto");
+
+botonActualizoPresupuesto.addEventListener ("click", function (e) {
+    console.log (e);
+    e.preventDefault();
+    let nuevoPresupuesto = parseFloat(prompt ("Nuevo presupuesto"));
+    gesPresupuesto.actualizarPresupuesto (nuevoPresupuesto);
+    repintar();
+});*/
+
+
+
+
+
+function actualizarPresupuestoWeb () {
+        console.log (event.target.id);
+        let nuevoPresupuesto = parseFloat(prompt ("Nuevo presupuesto"));
+        gesPresupuesto.actualizarPresupuesto (nuevoPresupuesto);
+
+        repintar();
 }
+
+let botonActualizoPresupuesto = document.getElementById ("actualizarpresupuesto");    
+
+botonActualizoPresupuesto.addEventListener ("click", actualizarPresupuestoWeb);
 
 
 export {

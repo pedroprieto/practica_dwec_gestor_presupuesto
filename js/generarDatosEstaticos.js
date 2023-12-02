@@ -92,6 +92,3 @@ let gastosAgrupadosAnyo = gesGastos.agruparGastos ("anyo");
 gesGastosWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gastosAgrupadosDia,"día");
 gesGastosWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gastosAgrupadosMes,"mes");
 gesGastosWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gastosAgrupadosAnyo,"año");
-
-
-
