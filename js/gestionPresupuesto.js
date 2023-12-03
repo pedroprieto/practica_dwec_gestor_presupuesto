@@ -69,6 +69,8 @@ function CrearGasto(descripcion, valor = 0 , fecha, ... etiquetas) {
         this.fecha = f;
     }
 
+    
+
 }
 
 
@@ -118,41 +120,8 @@ CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
       gasto.id = idGasto++;
         // Añadir el objeto gasto al final del array gastos
       gastos.push(gasto);
-      //gastos.id = idGasto++;
+
 }
-
-/*
- let valor1 = 23.44,
-  valor2 = 42.88,
-  valor3 = 22.87;
-
-let gasto1 = new CrearGasto("descripción del gasto", valor1, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
-let gasto2 = new CrearGasto("descripción del gasto", valor2, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
-let gasto3 = new CrearGasto("descripción del gasto", valor3, "2021-10-06T13:10Z", "casa", "supermercado", "comida" );
-
-//assert., 0);
-//lengthOf(listarGastos());
-gastos.length;
-console.log((listarGastos().length));
-anyadirGasto(gasto1);
-gastos.length;
-//assert.lengthOf(listarGastos(), 1);
-
-//assert.equal(listarGastos()[0].id, 0, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
-console.log(listarGastos()[0].id);
-console.log(listarGastos());
-anyadirGasto(gasto2);
-//assert.lengthOf(listarGastos(), 2);
-//lengthOf(listarGastos());
-console.log(listarGastos().length);
-//assert.equal(listarGastos()[1].id, 1, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
-console.log(listarGastos()[1].id);
-anyadirGasto(gasto3);
-
-//assert.lengthOf(listarGastos(), 3);
-//lengthOf(listarGastos());
-//assert.equal(listarGastos()[2].id, 2, "Al añadir un gasto se le tiene que asignar un id que se irá incrementando");
-console.log(listarGastos()[2].id);*/
 
 function borrarGasto(idGastoABorrar){
     let index = gastos.findIndex(gasto => gasto.id === idGastoABorrar);
