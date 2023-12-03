@@ -59,7 +59,7 @@ function CrearGasto(descripcion, valor = 0 , fecha, ... etiquetas) {
     }
     this.etiquetas = [];
 
-    this.anyadirEtiquetas(...etiquetas);
+   // this.anyadirEtiquetas(...etiquetas);
 
     let f = Date.parse(fecha);
     if (isNaN(f)) {
@@ -73,6 +73,33 @@ function CrearGasto(descripcion, valor = 0 , fecha, ... etiquetas) {
 
 }
 
+CrearGasto.prototype.obtenerPeriodoAgrupacion = function(periodo){
+    let newDate = new Date(this.fecha);
+    let anyo = newDate.getFullYear();
+    let mes = newDate.getMonth() + 1;
+    let dia = newDate.getDate();
+    let periodoAgrupacion;
+    if (periodo === "anyo"){
+        periodoAgrupacion = `${anyo}`;
+    }else if (periodo === "mes"){
+        if(mes<10){
+          mes = "0" + mes.toString();   
+        }
+
+        periodoAgrupacion = `${anyo}-${mes}`;
+    }else if (periodo === "dia"){
+        if(mes < 10){
+            mes = "0" + mes.toString();   
+          }
+          if(dia < 10){
+            dia = "0" + dia.toString();   
+          }
+        periodoAgrupacion = `${anyo}-${mes}-${dia}`;
+    }else {
+        periodoAgrupacion = `Fecha no válida.`;
+    }
+    return periodoAgrupacion;
+}
 
 
 CrearGasto.prototype.mostrarGastoCompleto = function () {
@@ -136,6 +163,13 @@ function calcularTotalGastos(){
 function calcularBalance(){
 return presupuesto - calcularTotalGastos();
 }
+function filtrarGastos()
+{
+
+}
+function agruparGastos(){
+
+}
 
 
 
@@ -161,5 +195,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
