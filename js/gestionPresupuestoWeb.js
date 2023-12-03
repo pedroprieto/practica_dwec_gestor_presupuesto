@@ -147,9 +147,8 @@ botonActualizoPresupuesto.addEventListener ("click", function (e) {
 
 
 
-
+//Manejadora de eventos para el botón 'Actualizar presupuesto'
 function actualizarPresupuestoWeb () {
-        console.log (event.target.id);
         let nuevoPresupuesto = parseFloat(prompt ("Nuevo presupuesto"));
         gesPresupuesto.actualizarPresupuesto (nuevoPresupuesto);
 
@@ -160,11 +159,33 @@ let botonActualizoPresupuesto = document.getElementById ("actualizarpresupuesto"
 
 botonActualizoPresupuesto.addEventListener ("click", actualizarPresupuestoWeb);
 
+//Manejadora de eventos para el botón 'Añadir gasto'
+function nuevoGastoWeb () {
+    let descripcionGasto = prompt ("Descripción del gasto");
+    let valorGasto = parseFloat(prompt ("Valor del gasto"));
+    let fechaGasto = prompt ("Fecha del gasto (formato 'yyyy-mm-dd'");
+    let etiquetasGasto =  prompt ("Etiquetas (separadas por ,");
+
+    //Separo el string de etiquetas por , y lo meto en un arrayEtiquetasGasto
+    let arrayEtiquetasGasto = etiquetasGasto.split(",");
+
+    //El array arrayEtiquetasGasto es de tipo rest, por eso pongo los ..., para que meta cada elemento del array como un parámetro
+    let gastoAnyadir = new gesPresupuesto.CrearGasto (descripcionGasto, valorGasto, fechaGasto, ...arrayEtiquetasGasto);
+        
+    gesPresupuesto.anyadirGasto (gastoAnyadir);
+
+    repintar();
+
+}
+
+
+let botonAnyadirGasto = document.getElementById ("anyadirgasto");
+
+botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar,
-    actualizarPresupuestoWeb,    
+    repintar,    
 }
