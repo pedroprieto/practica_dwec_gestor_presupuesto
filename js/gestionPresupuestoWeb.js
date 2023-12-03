@@ -260,9 +260,9 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             //desactivado al activar el formulario el boton añadir
             event.target.disabled = true;
             //Crear un manejador de evento para el evento click del botón Cancelar
-            var botonCancelarFormulario = plantillaFormulario.querySelector("button.cancelar");
+            let botonCancelarFormulario = plantillaFormulario.querySelector("button.cancelar");
             //definir una función constructora que implemente handleEvent
-            botonCancelarFormulario.addEventListener("click", manejadorBotonCancelarFormulario);
+            botonCancelarFormulario.addEventListener("click", cerrarFormulario);
             //añadir el fragmento de documento
             let controles = document.getElementById("controlesprincipales");
             controles.append(plantillaFormulario);
@@ -360,6 +360,14 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
                 
                 repintar();
             }
+        }
+        function cerrarFormulario (event) {
+            //cerrar formulario 
+            let botonCancelar = event.currentTarget;
+            botonCancelar.disabled = true;
+            let botonAnyadirFormulario = document.getElementById("anyadirgasto-formulario");
+            botonAnyadirFormulario.disabled = false;
+            event.currentTarget.parentNode.remove();
         }
         
 
