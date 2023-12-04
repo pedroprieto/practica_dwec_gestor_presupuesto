@@ -50,9 +50,18 @@ function mostrarGastoWeb(idElemento, gasto) {
         let spanGastoEtiqueta = document.createElement ("span");
         spanGastoEtiqueta.classList.add ("gasto-etiquetas-etiqueta");
         spanGastoEtiqueta.textContent = item;
+
         divGastoEtiquetas.append (spanGastoEtiqueta);
     }
 
+    //Creo los botones Editar y Borrar respectivamente
+    let botonEditar = document.createElement ("button");
+    botonEditar.innerText = "Editar";
+
+    let botonBorrar = document.createElement ("button");
+    botonBorrar.innerText = "Borrar";
+    divGasto.append (botonEditar);
+    divGasto.append (botonBorrar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -182,6 +191,17 @@ function nuevoGastoWeb () {
 let botonAnyadirGasto = document.getElementById ("anyadirgasto");
 
 botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
+
+//Manejadora de eventos para editar un gasto
+function EditarHandle () {
+    this.handleEvent = function (event) {
+        console.log (`Editando ${this.gasto}`);
+    }
+}
+
+let botonEditar = document.getElementById("controlesprincipales");
+
+botonEditar.addEventListener ("click", EditarHandle);
 
 export {
     mostrarDatoEnId,
