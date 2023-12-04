@@ -56,12 +56,23 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     //Creo los botones Editar y Borrar respectivamente
     let botonEditar = document.createElement ("button");
+    botonEditar.classList.add ("gasto-editar");
     botonEditar.innerText = "Editar";
 
     let botonBorrar = document.createElement ("button");
+    botonBorrar.classList.add ("gasto-borrar");
     botonBorrar.innerText = "Borrar";
+
     divGasto.append (botonEditar);
     divGasto.append (botonBorrar);
+
+    //Genero nuevo objeto EditarHandle
+    let accionEditar = new EditarHandle();
+    //Le asigno nueva propiedad gasto, apuntando a gasto
+    accionEditar.gasto = gasto;
+
+    //Asocio el click del botón Editar, con eventListener, al objeto EditHandler
+    botonEditar.addEventListener ("click", accionEditar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -195,13 +206,24 @@ botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
 //Manejadora de eventos para editar un gasto
 function EditarHandle () {
     this.handleEvent = function (event) {
-        console.log (`Editando ${this.gasto}`);
+        
+        let nuevaDescripcion = prompt ("Escribe la nueva descripción", this.gasto.descripcion);
+        let nuevaFecha = prompt ("Escribe la nueva fecha (yyyy-mm-dd", this.gasto.fecha);
+        let nuevoValor = parseFloat (prompt ("Escribe el nuevo valor",this.gasto.valor));
+        let nuevasEtiquetas = prompt ("Escribe las nuevas etiquetas separadas por ',' sí es más de una.", this.gasto.etiquetas);
+        let arrayNuevasEtiquetas = nuevasEtiquetas.split (",");
+
+        this.gasto.actualizarDescripcion (nuevaDescripcion);
+        this.gasto.actualizarFecha (nuevaFecha);
+        this.gasto.actualizarValor (nuevoValor);
+        this.gasto.anyadirEtiquetas (...arrayNuevasEtiquetas);
+
+        //this.gasto.calcularTotalGastos();
+
+        repintar();
     }
+
 }
-
-let botonEditar = document.getElementById("controlesprincipales");
-
-botonEditar.addEventListener ("click", EditarHandle);
 
 export {
     mostrarDatoEnId,
