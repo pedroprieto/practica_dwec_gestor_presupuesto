@@ -259,8 +259,17 @@ function filtrarGastos (filtros) {
   return resultado
 }
 
-function transformarListadoEtiquetas () {
-  // TODO
+/**
+ * Transforma una lista de etiquetas en un array de etiquetas. *
+ * @param {string} cadenaEtiquetas - Etiquetas separadas por ~,~, ., :, ; y espacio
+ * @returns {string[]} - Array de etiquetas.
+ */
+function transformarListadoEtiquetas (cadenaEtiquetas) {
+  const separadores = /[~.:;, ]+/
+
+  const arrayEtiquetas = cadenaEtiquetas.split(separadores)
+
+  return arrayEtiquetas
 }
 
 function cargarGastos () {
