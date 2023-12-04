@@ -27,7 +27,6 @@ for (const gasto of gp.listarGastos()) {
   gpWeb.mostrarGastoWeb('listado-gastos-completo', gasto)
 }
 
-/*
 for (const gasto of gp.filtrarGastos({ fechaDesde: '2021-09-01', fechaHasta: '2021-09-30' })) {
   gpWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gasto)
 }
@@ -44,7 +43,6 @@ for (const gasto of gp.filtrarGastos({ valorMaximo: 50, etiquetasTiene: ['comida
   gpWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gasto)
 }
 
-*/
 gpWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gp.agruparGastos('dia'), 'día')
 
 gpWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gp.agruparGastos('mes'), 'mes')
