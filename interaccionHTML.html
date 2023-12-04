@@ -17,6 +17,8 @@
         <button type="button" id="anyadirgasto-formulario">
           Añadir gasto (formulario)
         </button>
+        <button type="button" id="guardar-gastos">Guardar gastos</button>
+        <button type="button" id="cargar-gastos">Cargar gastos</button>
       </div>
       <div id="presupuesto"></div>
 
@@ -119,6 +121,14 @@
       document
         .querySelector("#filtrar-gastos form")
         .addEventListener("submit", gp.filtrarGastosWeb);
+
+      document
+        .getElementById("guardar-gastos")
+        .addEventListener("click", gp.guardarGastosWeb);
+
+      document
+        .getElementById("cargar-gastos")
+        .addEventListener("click", gp.cargarGastosWeb);
     </script>
     <template id="formulario-template">
       <form>

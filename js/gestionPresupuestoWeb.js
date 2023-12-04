@@ -359,6 +359,19 @@ function filtrarGastosWeb (e) {
   }
 }
 
+function guardarGastosWeb (e) {
+  globalThis.localStorage.GestorGastosDWEC = JSON.stringify(gp.listarGastos())
+}
+
+function cargarGastosWeb (e) {
+  const gMemoria = globalThis.localStorage.GestorGastosDWEC ?? '[]'
+  const gastos = JSON.parse(gMemoria)
+
+  gp.cargarGastos(gastos)
+
+  repintar()
+}
+
 export {
   actualizarPresupuestoWeb,
   nuevoGastoWebFormulario,
@@ -370,5 +383,7 @@ export {
   mostrarDatoEnID,
   mostrarGastoWeb,
   mostrarGastosAgrupadosWeb,
-  filtrarGastosWeb
+  filtrarGastosWeb,
+  guardarGastosWeb,
+  cargarGastosWeb
 }
