@@ -115,6 +115,10 @@
       document
         .getElementById("anyadirgasto-formulario")
         .addEventListener("click", gp.nuevoGastoWebFormulario);
+
+      document
+        .querySelector("#filtrar-gastos form")
+        .addEventListener("submit", gp.filtrarGastosWeb);
     </script>
     <template id="formulario-template">
       <form>

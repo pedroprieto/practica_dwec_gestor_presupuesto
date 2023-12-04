@@ -325,6 +325,40 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
   elemento.append(dAgrupacion)
 }
 
+function filtrarGastosWeb (e) {
+  e.preventDefault()
+
+  // Recogemos datos del formulario
+  const form = e.target
+
+  const descripcionContiene = form.elements['formulario-filtrado-descripcion'].value
+  const valorMinimo = form.elements['formulario-filtrado-valor-minimo'].value
+  const valorMaximo = form.elements['formulario-filtrado-valor-maximo'].value
+  const fechaDesde = form.elements['formulario-filtrado-fecha-desde'].value
+  const fechaHasta = form.elements['formulario-filtrado-fecha-hasta'].value
+  const etiquetasTiene = form.elements['formulario-filtrado-etiquetas-tiene'].value
+
+  // Creamos filtro
+  const objetoFiltro = {}
+
+  if (descripcionContiene !== '') { objetoFiltro.descripcionContiene = descripcionContiene }
+  if (valorMinimo !== '') { objetoFiltro.valorMinimo = valorMinimo }
+  if (valorMaximo !== '') { objetoFiltro.valorMaximo = valorMaximo }
+  if (fechaDesde !== '') { objetoFiltro.fechaDesde = fechaDesde }
+  if (fechaHasta !== '') { objetoFiltro.fechaHasta = fechaHasta }
+  if (etiquetasTiene !== '') { objetoFiltro.etiquetasTiene = gp.transformarListadoEtiquetas(etiquetasTiene) }
+
+  // Filtramos
+  const gastosFiltrados = gp.filtrarGastos(objetoFiltro)
+
+  // Borramos la lista de gastos y mostramos sólo los filtrados
+  document.getElementById('listado-gastos-completo').innerHTML = ''
+
+  for (const gasto of gastosFiltrados) {
+    mostrarGastoWeb('listado-gastos-completo', gasto)
+  }
+}
+
 export {
   actualizarPresupuestoWeb,
   nuevoGastoWebFormulario,
@@ -335,5 +369,6 @@ export {
   repintar,
   mostrarDatoEnID,
   mostrarGastoWeb,
-  mostrarGastosAgrupadosWeb
+  mostrarGastosAgrupadosWeb,
+  filtrarGastosWeb
 }
