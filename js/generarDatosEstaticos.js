@@ -30,7 +30,6 @@ var gastosFiltro1= gastos.filter(function(g){
 });
 gastosFiltro1.forEach(element => {
     gpWeb.mostrarGastoWeb("listado-gastos-filtrado-1",element);
-    console.log(element);
 });
 //listado de mas de 50€
 var gastosFiltro2= gastos.filter(function(g){
@@ -42,7 +41,6 @@ var gastosFiltro2= gastos.filter(function(g){
 });
 gastosFiltro2.forEach(element => {
     gpWeb.mostrarGastoWeb("listado-gastos-filtrado-2",element);
-    console.log(element);
 });
 //listado de mas de 200€ y etiqueta seguros
 var gastosFiltro3= gastos.filter(function(g){
@@ -54,7 +52,6 @@ var gastosFiltro3= gastos.filter(function(g){
 });
 gastosFiltro3.forEach(element => {
     gpWeb.mostrarGastoWeb("listado-gastos-filtrado-3",element);
-    console.log(element);
 });
 //listado con etiqueta comida y transporte de menos de 50€
 var gastosFiltro4= gastos.filter(function(g){
@@ -66,7 +63,6 @@ var gastosFiltro4= gastos.filter(function(g){
 });
 gastosFiltro4.forEach(element => {
     gpWeb.mostrarGastoWeb("listado-gastos-filtrado-4",element);
-    console.log(element);
 });
 //gastos agrupados por dia
 gpWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gp.agruparGastos("dia",undefined,undefined,undefined),"día");
