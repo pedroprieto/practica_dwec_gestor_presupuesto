@@ -50,8 +50,14 @@ function mostrarGastoWeb(idElemento, gasto) {
         let spanGastoEtiqueta = document.createElement ("span");
         spanGastoEtiqueta.classList.add ("gasto-etiquetas-etiqueta");
         spanGastoEtiqueta.textContent = item;
+        divGastoEtiquetas.append (spanGastoEtiqueta);        
 
-        divGastoEtiquetas.append (spanGastoEtiqueta);
+        //Genero nuevo objeto BorrarEtiquetasHandle
+        let accionBorrarEtiqueta = new BorrarEtiquetasHandle();
+        //Asigno objeto gasto a accionBorrarEtiqueta
+        accionBorrarEtiqueta.gasto = gasto;
+        //Añado el eventListener para asociar la etiqueta con el evento BorrarEtiquetasHandle
+        spanGastoEtiqueta.addEventListener ("click", accionBorrarEtiqueta);        
     }
 
     //Creo los botones Editar y Borrar respectivamente
@@ -145,7 +151,8 @@ function repintar() {
 
     for (let item of gastos) {
         mostrarGastoWeb(divListadoGastosCompleto.id, item);
-    }    
+    }  
+
 }
 
 /*
@@ -216,15 +223,15 @@ function EditarHandle () {
     this.handleEvent = function (event) {
         
         let nuevaDescripcion = prompt ("Escribe la nueva descripción", this.gasto.descripcion);
-        let nuevaFecha = prompt ("Escribe la nueva fecha (yyyy-mm-dd", this.gasto.fecha);
         let nuevoValor = parseFloat (prompt ("Escribe el nuevo valor",this.gasto.valor));
+        let nuevaFecha = prompt ("Escribe la nueva fecha (yyyy-mm-dd", this.gasto.fecha);
         let nuevasEtiquetas = prompt ("Escribe las nuevas etiquetas separadas por ',' sí es más de una.", this.gasto.etiquetas);
         let arrayNuevasEtiquetas = nuevasEtiquetas.split (",");
 
         this.gasto.actualizarDescripcion (nuevaDescripcion);
         this.gasto.actualizarFecha (nuevaFecha);
-        this.gasto.anyadirEtiquetas (...arrayNuevasEtiquetas);
         this.gasto.actualizarValor (nuevoValor);
+        this.gasto.anyadirEtiquetas (...arrayNuevasEtiquetas);
 
         repintar();
     }
@@ -237,9 +244,16 @@ function BorrarHandle () {
     }    
 }
 
+function BorrarEtiquetasHandle () {
+    this.handleEvent = function (event) {
+        //Busco la etiqueta por el nombre pues es lo que utilizo para luego poder borrarla
+        this.gasto.borrarEtiquetas (event.target.innerHTML);
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    repintar,    
+    mostrarGastosAgrupadosWeb,  
 }
