@@ -73,6 +73,14 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     //Asocio el click del botón Editar, con eventListener, al objeto EditHandler
     botonEditar.addEventListener ("click", accionEditar);
+
+    //Genero nuevo objeto BorrarHandle
+    let accionBorrar = new BorrarHandle();
+    //Le asigno nueva propiedad gasto, apuntando a gasto
+    accionBorrar.gasto = gasto;
+
+    //Asocio el click del botón Borrar, con eventListener, al objeto BorrarHandler
+    botonBorrar.addEventListener ("click", accionBorrar); 
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -215,14 +223,18 @@ function EditarHandle () {
 
         this.gasto.actualizarDescripcion (nuevaDescripcion);
         this.gasto.actualizarFecha (nuevaFecha);
-        this.gasto.actualizarValor (nuevoValor);
         this.gasto.anyadirEtiquetas (...arrayNuevasEtiquetas);
-
-        //this.gasto.calcularTotalGastos();
+        this.gasto.actualizarValor (nuevoValor);
 
         repintar();
     }
+}
 
+function BorrarHandle () {
+    this.handleEvent = function (event) {
+        gesPresupuesto.borrarGasto (this.gasto.id);        
+        repintar();
+    }    
 }
 
 export {

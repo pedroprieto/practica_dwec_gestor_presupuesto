@@ -23,9 +23,7 @@ function actualizarPresupuesto(nuevoValorPresupuesto) {
 }
 
 function mostrarPresupuesto() {
-    console.log (`Tu presupuesto actual es de ${presupuesto} €`);
-    return `Tu presupuesto actual es de ${presupuesto} €`;
-    
+    return `Tu presupuesto actual es de ${presupuesto} €`;    
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
