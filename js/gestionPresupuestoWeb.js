@@ -1,11 +1,6 @@
-import * as gestionPresupuesto from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(id, valor) {
-    let elem = document.getElementById(id);
-
-    if (elem) {
-        elem.innerText = valor;
-    }
+    document.getElementById(id).innerText = valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
@@ -31,15 +26,19 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasValor.innerText = gasto.valor;
 
     // Formatea la fecha (si gasto.fecha es un objeto Date)
-    let fechaFormateada = gasto.fecha.toLocaleDateString();
+    let fechaFormateada = new Date(gasto.fecha).toLocaleDateString()
+    //let fechaFormateada = gasto.fecha;
+    /*if (gasto.fecha instanceof Date) {
+        fechaFormateada = gasto.fecha.toLocaleDateString();
+    }*/
     divGasFecha.innerText = fechaFormateada;
 
     // Agrega etiquetas
-    for (let i = 0; i < gasto.etiquetas.length; i++) {
-        let etiqueta = gasto.etiquetas[i];
+    for (let etiqueta of gasto.etiquetas) {
+        etiqueta = gasto.etiquetas[i];
         let divEtiqueta = document.createElement('span');
         divEtiqueta.className = "gasto-etiquetas-etiqueta";
-        divEtiqueta.append(etiqueta);
+        divEtiqueta.append(`${etiqueta},`)
 
         // Evita agregar una coma al final del último elemento
         if (i < gasto.etiquetas.length - 1) {
