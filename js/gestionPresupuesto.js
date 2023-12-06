@@ -165,7 +165,7 @@ function transformarListadoEtiquetas(etiquetas) {
 }
 
 function cargarGastos(gastosAlmacenamiento) {
-    gastos.length = 0;
+    gastos.splice(0, gastos.length);
     gastosAlmacenamiento.forEach(
         gasto => {
             const gastoRehidratado = new CrearGasto();
