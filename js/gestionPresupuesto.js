@@ -24,18 +24,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.fecha = Date.parse(fecha) || Date.now();
     this.etiquetas = etiquetas;
 
-    this.mostrarGasto = function() {
+    this.mostrarGasto = function () {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
-    this.actualizarDescripcion = function(descripcion) {
+    this.actualizarDescripcion = function (descripcion) {
         this.descripcion = descripcion;
     }
-    this.actualizarValor = function(valor) {
+    this.actualizarValor = function (valor) {
         if (valor >= 0) {
             this.valor = valor;
         }
     }
-    this.mostrarGastoCompleto = function() {
+    this.mostrarGastoCompleto = function () {
         let ret = `${this.mostrarGasto()}.\n`;
         ret += `Fecha: ${(new Date(this.fecha)).toLocaleString()}\n`;
         ret += "Etiquetas:\n";
@@ -44,22 +44,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
         return ret;
     }
-    this.actualizarFecha = function(fecha) {
+    this.actualizarFecha = function (fecha) {
         if (Date.parse(fecha)) {
             this.fecha = Date.parse(fecha);
         }
     }
-    this.anyadirEtiquetas = function(...etiquetas) {
+    this.anyadirEtiquetas = function (...etiquetas) {
         for (const etiqueta of etiquetas) {
             if (!this.etiquetas.includes(etiqueta)) {
                 this.etiquetas.push(etiqueta);
             }
         }
     }
-    this.borrarEtiquetas = function(...etiquetas) {
+    this.borrarEtiquetas = function (...etiquetas) {
         this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetas.includes(etiqueta))
     }
-    this.obtenerPeriodoAgrupacion = function(periodo) {
+    this.obtenerPeriodoAgrupacion = function (periodo) {
         let texto = "";
         let fecha = new Date(this.fecha);
         if (periodo === "anyo" || periodo === "mes" || periodo === "dia") {
@@ -148,7 +148,7 @@ function filtrarGastos(
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
-    const gastosFiltrados = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene: etiquetas});
+    const gastosFiltrados = filtrarGastos({ fechaDesde, fechaHasta, etiquetasTiene: etiquetas });
     return gastosFiltrados.reduce((agrup, gasto) => {
         let periodoAgrup = gasto.obtenerPeriodoAgrupacion(periodo);
         if (periodoAgrup in agrup) {
@@ -164,19 +164,31 @@ function transformarListadoEtiquetas(etiquetas) {
     return etiquetas.trim() && etiquetas.split(/[,\.;: ]+/g);
 }
 
+function cargarGastos(gastosAlmacenamiento) {
+    gastos.length = 0;
+    gastosAlmacenamiento.forEach(
+        gasto => {
+            const gastoRehidratado = new CrearGasto();
+            Object.assign(gastoRehidratado, gasto);
+            gastos.push(gastoRehidratado);
+        }
+    );
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
+export {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
-    listarGastos, 
-    anyadirGasto, 
-    borrarGasto, 
-    calcularTotalGastos, 
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
     agruparGastos,
     transformarListadoEtiquetas,
+    cargarGastos,
 }
