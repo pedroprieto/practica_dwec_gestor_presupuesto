@@ -309,6 +309,12 @@ function guardarGastosWeb() {
 
 document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
 
+function cargarGastosWeb() {
+    gestion.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC || "[]"));
+    repintar();
+}
+
+document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
 
 export {
     mostrarDatoEnId,
