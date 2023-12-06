@@ -303,6 +303,12 @@ function filtrarGastosWeb(event) {
 
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
 
+function guardarGastosWeb() {
+    localStorage.GestorGastosDWEC = JSON.stringify(gestion.listarGastos());
+}
+
+document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
+
 
 export {
     mostrarDatoEnId,
