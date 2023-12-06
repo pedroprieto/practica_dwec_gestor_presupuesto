@@ -248,7 +248,11 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 //Para error solo hacer
-function transformarListadoEtiquetas () {
+function transformarListadoEtiquetas (etiquetasTiene) {
+
+    let rangoArray = etiquetasTiene;
+    let arrayEtiquetas = rangoArray.match(/\w{1,}/g);
+    return arrayEtiquetas;
 
 }
 
