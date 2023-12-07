@@ -369,7 +369,43 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             botonAnyadirFormulario.disabled = false;
             event.currentTarget.parentNode.remove();
         }
+        function filtrarGastosWeb () {
+            this.handleEvent = function(evento) {
+                //Prevenir el envio
+                evento.preventDefault();
+                //Recoger los datos del formulario formulario-filtrado.
+                let formularioFiltrado = evento.currentTarget;
+                let descripcion = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
+                let valorMinimo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
+                let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
+                let fechaDesde = formularioFiltrado.elements['formulario-filtrado-fecha-desde'].value;
+                let fechaHasta = formularioFiltrado.elements['formulario-filtrado-fecha-hasta'].value;
+                let etiquetas = formularioFiltrado.elements['formulario-filtrado-etiquetas-tiene'].value;
+                //Pasar valores de string a numeros
+                valorMinimo = parseFloat(valorMinimo);
+                valorMaximo = parseFloat(valorMaximo);
+                //llamar a la función transformarListadoEtiquetas para que devuelva un array de etiquetas válidas.
+                if(etiquetas) {
+                    etiquetas = gestPresupuesto.transformarListadoEtiquetas(etiquetas);
+                }
+                //Crear el objeto necesario para llamar a la función filtrarGastos 
+                let filtradoFormulario = gestPresupuesto.filtrarGastos({fechaDesde : fechaDesde, 
+                fechaHasta : fechaHasta, valorMinimo : valorMinimo, valorMaximo : valorMaximo, 
+                descripcionContien : descripcion, etiquetasTiene : etiquetas});
+                //Actualizar la lista de gastos filtrados en la capa listado-gastos-completo
+                document.getElementById('listado-gastos-completo').innerHTML = "";
+                for (let gastos of filtradoFormulario) 
+                {
+                    mostrarGastoWeb('listado-gastos-completo', gastos);
+                } 
+
+            }
+        }
         
+            //deberás añadirla como manejadora del evento submit del formulario formulario-filtrado
+            let filtradoFormulario = new filtrarGastosWeb();
+            document.getElementById( "formulario-filtrado" ).addEventListener( "submit", filtradoFormulario );
+            
 
 
 export {
