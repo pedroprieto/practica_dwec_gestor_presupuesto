@@ -391,7 +391,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
                 //Crear el objeto necesario para llamar a la función filtrarGastos 
                 let filtradoFormulario = gestPresupuesto.filtrarGastos({fechaDesde : fechaDesde, 
                 fechaHasta : fechaHasta, valorMinimo : valorMinimo, valorMaximo : valorMaximo, 
-                descripcionContien : descripcion, etiquetasTiene : etiquetas});
+                descripcionContiene : descripcion, etiquetasTiene : etiquetas});
                 //Actualizar la lista de gastos filtrados en la capa listado-gastos-completo
                 document.getElementById('listado-gastos-completo').innerHTML = "";
                 for (let gastos of filtradoFormulario) 
