@@ -415,7 +415,7 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             }
         }
             let guardarGastosNavegador = new guardarGastosWeb();
-            document.getElementById("guardar-gastos").addEventListener("submit" , guardarGastosNavegador);
+            document.getElementById("guardar-gastos").addEventListener("click" , guardarGastosNavegador);
 
 
         //Función cargarGastosWeb
