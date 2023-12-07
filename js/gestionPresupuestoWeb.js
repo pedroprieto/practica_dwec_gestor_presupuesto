@@ -402,9 +402,9 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             }
         }
         
-            //deberás añadirla como manejadora del evento submit del formulario formulario-filtrado
-            let filtradoFormulario = new filtrarGastosWeb();
-            document.getElementById( "formulario-filtrado" ).addEventListener( "submit", filtradoFormulario );
+        //deberás añadirla como manejadora del evento submit del formulario formulario-filtrado
+        let filtradoFormulario = new filtrarGastosWeb();
+        document.getElementById( "formulario-filtrado" ).addEventListener( "submit", filtradoFormulario );
             
 
 
