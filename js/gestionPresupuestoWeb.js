@@ -370,11 +370,11 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
             event.currentTarget.parentNode.remove();
         }
         function filtrarGastosWeb () {
-            this.handleEvent = function(evento) {
+            this.handleEvent = function(event) {
                 //Prevenir el envio
-                evento.preventDefault();
+                event.preventDefault();
                 //Recoger los datos del formulario formulario-filtrado.
-                let formularioFiltrado = evento.currentTarget;
+                let formularioFiltrado = event.currentTarget;
                 let descripcion = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
                 let valorMinimo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
                 let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
