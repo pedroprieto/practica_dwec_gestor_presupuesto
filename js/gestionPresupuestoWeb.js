@@ -406,6 +406,39 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
         let filtradoFormulario = new filtrarGastosWeb();
         document.getElementById( "formulario-filtrado" ).addEventListener( "submit", filtradoFormulario );
             
+        //Función guardarGastosWeb
+        function guardarGastosWeb () {
+            //manejadora de eventos del evento click del botón guardar-gastos.
+            //Se encargará de guardar el listado de gastos
+            this.handleEvent = function () {
+                localStorage.GestorGastosDWEC = JSON.stringify(gestPresupuesto.listarGastos());
+            }
+        }
+            let guardarGastosNavegador = new guardarGastosWeb();
+            document.getElementById("guardar-gastos").addEventListener("submit" , guardarGastosNavegador);
+
+
+        //Función cargarGastosWeb
+        function cargarGastosWeb () {
+            //manejadora de eventos del evento click del botón cargar-gastos.
+            //Se encargará de cargar el listado de gastos (función cargarGastos
+            this.handleEvent = function () {
+                let cargaGastosNavegador = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+                //Si no existe la clave en el almacenamiento, llamará a cargarGastos con un array vacío.
+                if(!cargaGastosNavegador) {
+                    gestPresupuesto.cargarGastos([]);
+                }
+                else {
+                    gestPresupuesto.cargarGastos(cargaGastosNavegador);
+                }
+                //Una vez cargados los gastos deberá llamar a la función repintar
+                repintar();
+
+            }
+
+        }
+        let cargarGastosNavegador = new cargarGastosWeb();
+        document.getElementById("cargar-gastos").addEventListener("click" , cargarGastosNavegador());
 
 
 export {
