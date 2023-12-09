@@ -222,6 +222,41 @@ function EditarHandleFormulario (gasto) {
     }
 }
 
+function filtrarGastosWeb(e) {
+    e.preventDefault();
+    let formFiltrado = e.currentTarget;
+    let descripcion = formFiltrado.elements["formulario-filtrado-descripcion"].value;
+    let vMin = formFiltrado.elements["formulario-filtrado-valor-minimo"].value;
+    let vMax = formFiltrado.elements["formulario-filtrado-valor-maximo"].value;
+    let fDesde = formFiltrado.elements["formulario-filtrado-fecha-desde"].value;
+    let fHasta = formFiltrado.elements["formulario-filtrado-fecha-hasta"].value;
+    let etiquetas = formFiltrado.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+    if (etiquetas) {
+        etiquetas = gp.transformarListadoEtiquetas(etiquetas);        
+    }
+
+    let filtros = {
+        fechaDesde: fDesde, 
+        fechaHasta: fHasta, 
+        valorMinimo: vMin, 
+        valorMaximo: vMax, 
+        descripcionContiene: descripcion, 
+        etiquetasTiene: etiquetas
+    };
+
+    let listadoCompleto = document.getElementById("listado-gastos-completo");
+    listadoCompleto.innerHTML = "";
+    let gastos = gp.filtrarGastos(filtros);
+    for (const gasto of gastos) {
+         mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+}
+
+let formFiltrado = document.getElementById("formulario-filtrado");
+
+formFiltrado.addEventListener("submit", filtrarGastosWeb);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
