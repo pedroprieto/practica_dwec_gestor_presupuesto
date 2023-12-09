@@ -257,6 +257,14 @@ let formFiltrado = document.getElementById("formulario-filtrado");
 
 formFiltrado.addEventListener("submit", filtrarGastosWeb);
 
+function guardarGastosWeb() {
+    let listadoGastos = gp.listarGastos();
+    localStorage.setItem('GestorGastosDWEC', JSON.stringify(listadoGastos));
+}
+
+let botonGuardarGastos = document.getElementById("guardar-gastos");
+botonGuardarGastos.addEventListener("click", guardarGastosWeb);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
