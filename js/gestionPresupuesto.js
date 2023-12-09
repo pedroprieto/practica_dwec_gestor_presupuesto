@@ -59,7 +59,7 @@ function CrearGasto(descripcion, valor = 0 , fecha, ... etiquetas) {
     }
     this.etiquetas = [];
 
-   // this.anyadirEtiquetas(...etiquetas);
+   this.anyadirEtiquetas(...etiquetas);
 
     let f = Date.parse(fecha);
     if (isNaN(f)) {
@@ -163,10 +163,76 @@ function calcularTotalGastos(){
 function calcularBalance(){
 return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos()
+function filtrarGastos(filtros)
 {
+return gastos.filter((gasto) =>{
+    // Aquí metemos las condiciones
+    if (filtros.fechaDesde){
+        let fechaDesde = Date.parse(filtros.fechaDesde);
+        
+        if (isNaN(fechaDesde) || gasto.fecha < fechaDesde) {
+            return false;
+        }
+    }
+    if (filtros.fechaHasta){
+        let fechaHasta = Date.parse(filtros.fechaHasta);
+        if (isNaN(fechaHasta) || gasto.fecha > fechaHasta) {
+            return false;
+        }
+    }
+    if (filtros.valorMinimo && gasto.valor < filtros.valorMinimo) {
+        return false;
+      }
+  
+      
+      if (filtros.valorMaximo && gasto.valor > filtros.valorMaximo) {
+        return false;
+      }
+      if (
+        filtros.descripcionContiene &&
+        !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())
+      ) {
+        return false;
+      }
+      if (
+        filtros.etiquetasTiene &&
+        Array.isArray(filtros.etiquetasTiene) &&
+        filtros.etiquetasTiene.length > 0 &&
+        !filtros.etiquetasTiene.some((etiqueta) =>
+          gasto.etiquetas.includes(etiqueta.toLowerCase())
+        )
+      ) {
+        return false;
+      }
 
+      return true;
+    });
 }
+/*
+let valor1 = 23.44,
+valor2 = 12.88,
+valor3 = 22.80,
+valor4 = 62.22,
+valor5 = 304.75,
+valor6 = 195.88;
+
+let gasto1 = new CrearGasto("Compra carne", valor1, "2021-10-06", "casa", "comida" );
+let gasto2 = new CrearGasto("Compra fruta y verdura", valor2, "2021-09-06", "supermercado", "comida" );
+let gasto3 = new CrearGasto("Bonobús", valor3, "2020-05-26", "transporte" );
+let gasto4 = new CrearGasto("Gasolina", valor4, "2021-10-08", "transporte", "gasolina" );
+let gasto5 = new CrearGasto("Seguro hogar", valor5, "2021-09-26", "casa", "seguros" );
+let gasto6 = new CrearGasto("Seguro coche", valor6, "2021-10-06", "transporte", "seguros" );
+anyadirGasto(gasto1);
+anyadirGasto(gasto2);
+anyadirGasto(gasto3);
+anyadirGasto(gasto4);
+anyadirGasto(gasto5);
+anyadirGasto(gasto6);
+
+console.log(gasto1.etiquetas + gasto1.descripcion + gasto1.valor + gasto1.fecha);
+console.log(filtrarGastos({etiquetasTiene: ["comida","gasolina"]}));
+console.log(filtrarGastos({}));
+*/
 function agruparGastos(){
 
 }
