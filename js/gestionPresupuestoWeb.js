@@ -65,11 +65,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonEditar.classList.add ("gasto-editar");
     botonEditar.innerText = "Editar";
 
+    let botonEditarForm = document.createElement ("button");
+    botonEditarForm.classList.add ("gasto-editar");
+    botonEditarForm.innerText = "EditarForm";
+
+
     let botonBorrar = document.createElement ("button");
     botonBorrar.classList.add ("gasto-borrar");
     botonBorrar.innerText = "Borrar";
 
     divGasto.append (botonEditar);
+    divGasto.append (botonEditarForm);
     divGasto.append (botonBorrar);
 
     //Genero nuevo objeto EditarHandle
