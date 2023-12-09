@@ -265,6 +265,18 @@ function guardarGastosWeb() {
 let botonGuardarGastos = document.getElementById("guardar-gastos");
 botonGuardarGastos.addEventListener("click", guardarGastosWeb);
 
+function cargarGastosWeb() {
+    let gastosAlmacenamiento = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+    if(gastosAlmacenamiento === null) {
+        gastosAlmacenamiento = [];
+    }
+    gp.cargarGastos(gastosAlmacenamiento);
+    repintar();
+}
+
+let botonCargarGastos = document.getElementById("cargar-gastos");
+botonCargarGastos.addEventListener("click", cargarGastosWeb);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
