@@ -269,10 +269,9 @@ ${listaEtiquetas}`;
     
 }
 
-function transformarListadoEtiquetas(){
+function transformarListadoEtiquetas(etiq){
 
-    let etiquetasInput = document.getElementById("formulario-filtrado-etiquetas-tiene");
-    let etiquetas = etiquetasInput.value.split(/[~,.;:\s]+/);
+    let etiquetas = etiq.split(/[~,.;:\s]+/);
     // Filtrar elementos vacíos en el array resultante
     etiquetas = etiquetas.filter(etiqueta => etiqueta !== "");
 

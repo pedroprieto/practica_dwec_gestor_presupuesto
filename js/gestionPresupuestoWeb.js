@@ -393,6 +393,52 @@ function nuevoGastoWebFormulario(){
     btnCancelar.addEventListener('click', new CancelarHandle(formulario, btnAnyadir));
 
 }
+const formFiltrado = document.getElementById("formulario-filtrado");
+
+function filtrarGastosWeb(){
+  
+  this.handleEvent = function(event) {
+  
+    event.preventDefault();
+
+  const form = event.currentTarget;
+
+  let descripcionContiene = form.elements["formulario-filtrado-descripcion"].value;
+  let valorMinimo = Number(form.elements["formulario-filtrado-valor-minimo"].value);
+  let valorMaximo = Number(form.elements["formulario-filtrado-valor-maximo"].value);
+  let fechaDesde = form.elements["formulario-filtrado-fecha-desde"].value;
+  let fechaHasta = form.elements["formulario-filtrado-fecha-hasta"].value;
+  let etiquetasTiene = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+  // Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a transformarListadoEtiquetas
+  if (etiquetasTiene) {
+    etiquetasTiene = GesPrest.transformarListadoEtiquetas(etiquetasTiene);
+  } else {
+    etiquetasTiene = undefined;
+  }
+  // Construir el objeto con los parámetros necesarios
+  const filtros = {
+    descripcionContiene,
+    valorMinimo,
+    valorMaximo,
+    fechaDesde,
+    fechaHasta,
+    etiquetasTiene,
+  };
+
+  document.getElementById('listado-gastos-completo').innerHTML = "";
+
+  // Llamar a la función filtrarGastos con los filtros
+  const gastosFiltrados = GesPrest.filtrarGastos(filtros);
+
+  // Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb.
+  gastosFiltrados.forEach(gasto => {
+    mostrarGastoWeb('listado-gastos-completo', gasto);
+  });
+}
+}
+formFiltrado.addEventListener("submit", new filtrarGastosWeb());
+
+
 
 export{
   mostrarDatoEnId,
