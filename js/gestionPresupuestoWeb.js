@@ -21,6 +21,8 @@ function mostrarDatoEnId(idElemento, valor){
   }
 }
 
+
+
 //Función de dos parámetros que se encargará de añadir dentro del elemento HTML con id idElemento 
 //indicado una estructura HTML para el gasto que se pase como parámetro
 function mostrarGastoWeb(idElemento, gasto){
@@ -311,6 +313,7 @@ function EditarHandleformulario(gasto, divGasto) {
     };
 }
 
+// Objeto manejador del evento submit
 function SubmitHandler(gasto){
 
   this.gasto = gasto;
@@ -332,7 +335,6 @@ function SubmitHandler(gasto){
       this.gasto.actualizarDescripcion(descripcion);
       this.gasto.actualizarValor(valor);
       this.gasto.actualizarFecha(fecha);
-
       this.gasto.borrarEtiquetas();
       this.gasto.anyadirEtiquetas(...etiquetas);
 
@@ -341,13 +343,9 @@ function SubmitHandler(gasto){
 
       btnAnyadir.removeAttribute('disabled'); // Otra opción: btnAnyadir.disabled = false;
 
-
   }
   
 }
-
-
-
 
 btnAnyadir.addEventListener('click', nuevoGastoWebFormulario)
 

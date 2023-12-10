@@ -266,7 +266,18 @@ ${listaEtiquetas}`;
         else 
             return "Periodo no válido"
     }
-        
+    
+}
+
+function transformarListadoEtiquetas(){
+
+    let etiquetasInput = document.getElementById("formulario-filtrado-etiquetas-tiene");
+    let etiquetas = etiquetasInput.value.split(/[~,.;:\s]+/);
+    // Filtrar elementos vacíos en el array resultante
+    etiquetas = etiquetas.filter(etiqueta => etiqueta !== "");
+
+
+    return etiquetas;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -283,5 +294,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    transformarListadoEtiquetas
 
 }

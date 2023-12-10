@@ -2,6 +2,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 
+
 gestionPresupuesto.actualizarPresupuesto(1500);
 
 // Muestra el presupuesto en el elemento con ID "presupuesto"
@@ -26,7 +27,7 @@ gestionPresupuesto.anyadirGasto(gasto6);
 
 //Mostrar gastos totales en el elemnto con ID "gastos-totales"
 const totalGastos = gestionPresupuesto.calcularTotalGastos();
-gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', parseFloat(totalGastos.toFixed(2)));
+gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', parseFloat(totalGastos.toFixed(2)));//Formateo para que solo se vean dos decimales
 
 //Mostrar el balance total en el elemento con ID "balance-total"
 const balanceTotal = gestionPresupuesto.calcularBalance();
