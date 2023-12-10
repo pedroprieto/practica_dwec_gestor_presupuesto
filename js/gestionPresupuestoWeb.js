@@ -237,7 +237,7 @@ function nuevoGastoWebFormulario (event) {
     let botonAñadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
     botonAñadirGastoFormulario.disabled = true;
     
-    //Asocio el submit (click en el botóin 'Enviar' o ulsar 'Enter') del formulario a la función manejadora 'cargarNuevoGasto'
+    //Asocio el submit (click en el botóin 'Enviar' o pulsar 'Enter') del formulario a la función manejadora 'cargarNuevoGasto'
     formulario.addEventListener ("submit", cargarNuevoGastoFormulario);
 
     //Asocio el botón 'Cancelar'a la función manejadora 'cancelarCargarNuevoGasto'
@@ -255,12 +255,14 @@ function cargarNuevoGastoFormulario(event) {
     
     let gastoAnyadir = new gesPresupuesto.CrearGasto (descripcionGasto, valorGasto, fechaGasto, ...etiquetasGasto);
     gesPresupuesto.anyadirGasto (gastoAnyadir);
-
+    event.currentTarget.remove();
+    document.getElementById ("anyadirgasto-formulario").disabled = false;
     repintar();
 }
 
 function cancelarCargarNuevoGastoFormulario (event) {
-    alert ("Cancelando envío de nuevo gasto");
+    event.target.form.remove();
+    document.getElementById ("anyadirgasto-formulario").disabled = false;
 }
 
 let anyadirGastoBoton = document.getElementById("anyadirgasto-formulario");
@@ -305,10 +307,10 @@ function BorrarEtiquetasHandle () {
     }
 }
 
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar,
-    EditarHandle
 }

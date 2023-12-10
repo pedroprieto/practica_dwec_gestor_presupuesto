@@ -164,7 +164,7 @@ function calcularTotalGastos() {
 
     return valores.reduce ((valorInicial, valorElemento) => valorInicial + valorElemento, 0);*/
 
-    return gastos.map (gastoUsar => gastoUsar.valor).reduce ((valorInicial, valorElemento) => valorInicial + valorElemento, 0);
+    return gastos.map (gastoUsar => gastoUsar.valor).reduce ((valorInicial, valorElemento) => valorInicial + parseFloat(valorElemento), 0);
 
 }
 
