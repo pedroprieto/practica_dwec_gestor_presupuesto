@@ -15,11 +15,12 @@
         <div id="aplicacion">
             <div id="controlesprincipales">
                 <button type="button" id="actualizarpresupuesto">
-                  Actualizar presupuesto
+                    Actualizar presupuesto
                 </button>
                 <button type="button" id="anyadirgasto">
-                  Añadir gasto
+                    Añadir gasto
                 </button>
+                
                 <button type="button" id="anyadirgasto-formulario">
                     Añadir gasto (formulario)
                 </button>
@@ -68,9 +69,7 @@
              https://es.javascript.info/modules-intro#que-es-un-modulo
         -->
 
-        <script type="module" src="./js/generarDatosEstaticos.js"></script>
-        
-        <template id="formulario-template">
+       <template id="formulario-template">
             <form>
                 <div class="form-control">
                     <label for="descripcion">Descripción</label>
@@ -93,6 +92,10 @@
             </form>
         </template>
 
+        <script type="module" src="./js/generarDatosEstaticos.js"></script>
         
+
+
+
     </body>
 </html>
