@@ -82,8 +82,16 @@ function mostrarGastoWeb(idElemento, gasto) {
     //Le asigno nueva propiedad gasto, apuntando a gasto
     accionEditar.gasto = gasto;
 
-    //Asocio el click del botón Editar, con eventListener, al objeto EditHandler
+    //Asocio el click del botón Editar, con eventListener, al objeto EditHandle
     botonEditar.addEventListener ("click", accionEditar);
+
+    //Genero nuevo objeto EditarHandleFormulario
+    let accionEditarFormulario = new EditarHandleFormulario();
+    //Le asigno la nueva propiedad gasto, apuntando a gasto
+    accionEditarFormulario.gasto = gasto;
+
+    //Asocio el click del botón EditarForm al objeto EditarHandleFormulario
+    botonEditarForm.addEventListener ("click", accionEditarFormulario);
 
     //Genero nuevo objeto BorrarHandle
     let accionBorrar = new BorrarHandle();
@@ -234,15 +242,19 @@ function nuevoGastoWebFormulario (event) {
     controlesPrincipales.append (formulario);
 
     //Inhabilito el botón 'anyadirgasto-formulario' para no ir abriendo un formulario tras otro indefinidamente
-    let botonAñadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
-    botonAñadirGastoFormulario.disabled = true;
+    let botonAnyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
+    botonAnyadirGastoFormulario.disabled = true;
     
     //Asocio el submit (click en el botóin 'Enviar' o pulsar 'Enter') del formulario a la función manejadora 'cargarNuevoGasto'
     formulario.addEventListener ("submit", cargarNuevoGastoFormulario);
 
-    //Asocio el botón 'Cancelar'a la función manejadora 'cancelarCargarNuevoGasto'
+    //Asocio el botón 'Cancelar'a la función manejadora 'CancelarNuevoGastoFormulario'
     let botonCancelar = formulario.querySelector (".cancelar");
-    botonCancelar.addEventListener ("click", cancelarCargarNuevoGastoFormulario);
+    let accionCancelar = new CancelarNuevoGastoFormulario();
+    //Asigno como propiedad el evento que abre el formulario asociado al boton 'anyadirgasto-formulario'
+    //me será útil para poder reactivar dicho botón
+    accionCancelar.botonActivar = event;
+    botonCancelar.addEventListener ("click", accionCancelar);
 
 }
 
@@ -260,10 +272,15 @@ function cargarNuevoGastoFormulario(event) {
     repintar();
 }
 
-function cancelarCargarNuevoGastoFormulario (event) {
-    event.target.form.remove();
+/*function cancelarCargarNuevoGastoFormulario (event) {
     document.getElementById ("anyadirgasto-formulario").disabled = false;
-}
+    let botonCan = event.target;
+    console.log (botonCan);
+    let accionCancelar = new CancelarNuevoGastoFormulario();
+    accionCancelar.formulario = event.target.form; 
+    botonCan.addEventListener ("click",accionCancelar);
+
+}*/
 
 let anyadirGastoBoton = document.getElementById("anyadirgasto-formulario");
 anyadirGastoBoton.addEventListener ("click", nuevoGastoWebFormulario);
@@ -278,6 +295,25 @@ function EditarHandle () {
     this.handleEvent = function (event) {
         
         let nuevaDescripcion = prompt ("Escribe la nueva descripción", this.gasto.descripcion);
+        let nuevoValor = parseFloat (prompt ("Escribe el nuevo valor",this.gasto.valor));
+        let nuevaFecha = prompt ("Escribe la nueva fecha (yyyy-mm-dd", this.gasto.fecha);
+        let nuevasEtiquetas = prompt ("Escribe las nuevas etiquetas separadas por ',' sí es más de una.", this.gasto.etiquetas);
+        let arrayNuevasEtiquetas = nuevasEtiquetas.split (",");
+
+        this.gasto.actualizarDescripcion (nuevaDescripcion);
+        this.gasto.actualizarValor (nuevoValor);
+        this.gasto.actualizarFecha (nuevaFecha);        
+        this.gasto.anyadirEtiquetas (...arrayNuevasEtiquetas);
+
+        repintar();
+    }
+}
+
+//Manejadora de eventos para editar un gasto
+function EditarHandleFormulario () {
+    this.handleEvent = function (event) {
+        
+        let nuevaDescripcion = this.gasto.descripcion
         let nuevoValor = parseFloat (prompt ("Escribe el nuevo valor",this.gasto.valor));
         let nuevaFecha = prompt ("Escribe la nueva fecha (yyyy-mm-dd", this.gasto.fecha);
         let nuevasEtiquetas = prompt ("Escribe las nuevas etiquetas separadas por ',' sí es más de una.", this.gasto.etiquetas);
@@ -307,6 +343,15 @@ function BorrarEtiquetasHandle () {
     }
 }
 
+
+function CancelarNuevoGastoFormulario () {
+    this.handleEvent = function (event) {
+        //Busco el boton 'anyadirgasto-formulario' partiendo de this. Previamente asigno 'event' a 'botonActivar'
+        this.botonActivar.target.disabled = false;
+        event.currentTarget.form.remove();
+        
+    }
+}
 
 
 export {
