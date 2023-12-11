@@ -71,7 +71,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let botonEditarForm = document.createElement ("button");
     botonEditarForm.classList.add ("gasto-editar-formulario");
-    botonEditarForm.innerText = "EditarForm";
+    botonEditarForm.innerText = "Editar (formulario)";
 
     divGasto.append (botonEditar);
     divGasto.append (botonBorrar);
@@ -310,21 +310,65 @@ function EditarHandle () {
 }
 
 //Manejadora de eventos para editar un gasto
+function ActualizarGastoHandle () {
+    this.handleEvent = function (event) {
+        event.preventDefault();        
+        console.log (event.currentTarget);
+        this.gasto.actualizarDescripcion (event.currentTarget.descripcion.value);
+        this.gasto.actualizarValor (event.currentTarget.valor.value);
+        this.gasto.actualizarFecha (event.currentTarget.fecha.value); 
+        let arrayEtiquetas = event.currentTarget.etiquetas.value.split (",");
+        this.gasto.anyadirEtiquetas (...arrayEtiquetas);
+        event.currentTarget.remove();
+        repintar();        
+    }
+}
+
+//Manejadora de eventos para editar un gasto
 function EditarHandleFormulario () {
     this.handleEvent = function (event) {
+        let fechaAux = new Date((parseInt(this.gasto.fecha)));
+        let mes = (fechaAux.getMonth().toString().length == 1) ? "0" + fechaAux.getMonth() : fechaAux.getMonth();
+        let dia = (fechaAux.getDate().toString().length == 1) ? "0" + fechaAux.getDate() : fechaAux.getDate();
+        let fechaUsar = fechaAux.getFullYear() + "-" + mes + "-" + dia;
+
+        //Clono la plantilla
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+        //Obtengo el formulario (sólo hay uno)
+        let formulario = plantillaFormulario.querySelector("form");
+
+        //Obtengo 'controlesprincipales', donde añadiré el formulario ¡¡FINALMENTE NO LO USO!!
+        //let controlesPrincipales = document.getElementById("controlesprincipales");
+
+        //Obtengo el nodo que contiene el botón y el resto de elementos del DIV gasto y es ahí donde introduzco el formulario
+        let controlesPrincipales = event.target.parentNode;
+
+        //Añado el formulario a 'controlesprincipales'
+        controlesPrincipales.append (formulario);
         
-        let nuevaDescripcion = this.gasto.descripcion
-        let nuevoValor = parseFloat (prompt ("Escribe el nuevo valor",this.gasto.valor));
-        let nuevaFecha = prompt ("Escribe la nueva fecha (yyyy-mm-dd", this.gasto.fecha);
-        let nuevasEtiquetas = prompt ("Escribe las nuevas etiquetas separadas por ',' sí es más de una.", this.gasto.etiquetas);
-        let arrayNuevasEtiquetas = nuevasEtiquetas.split (",");
+        //Asigno al formulario los valores del objeto
+        formulario.descripcion.value = this.gasto.descripcion;
+        formulario.valor.value = this.gasto.valor;
+        formulario.fecha.value = fechaUsar;
+        formulario.etiquetas.value = this.gasto.etiquetas;
+        
+        //Inhabilito el botón 'anyadirgasto-formulario'
+        event.currentTarget.disabled = true;
 
-        this.gasto.actualizarDescripcion (nuevaDescripcion);
-        this.gasto.actualizarValor (nuevoValor);
-        this.gasto.actualizarFecha (nuevaFecha);        
-        this.gasto.anyadirEtiquetas (...arrayNuevasEtiquetas);
-
-        repintar();
+        //Asocio el botón 'Cancelar'a la función manejadora 'CancelarNuevoGastoFormulario'
+        let botonCancelar = formulario.querySelector (".cancelar");
+        let accionCancelar = new CancelarNuevoGastoFormulario();
+        
+        //Asigno como propiedad el evento que abre el formulario asociado al boton 'anyadirgasto-formulario'
+        //me será útil para poder reactivar dicho botón
+        accionCancelar.botonActivar = event;
+        botonCancelar.addEventListener ("click", accionCancelar);
+        
+        let actualizar = new ActualizarGastoHandle();
+        actualizar.gasto = this.gasto;
+        
+        formulario.addEventListener ("submit", actualizar);
     }
 }
 
