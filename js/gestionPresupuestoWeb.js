@@ -457,6 +457,30 @@ function guardarGastosWeb(){
 const botonGuardar = document.getElementById('guardar-gastos');
 botonGuardar.addEventListener('click', new guardarGastosWeb());
 
+
+function cargarGastosWeb() {
+  this.handleEvent = function (event) {
+    // Obtener la cadena JSON del LocalStorage
+    const gastosJSON = localStorage.getItem('GestorGastosDWEC');
+    let gastos; // Declarar la variable fuera del bloque if-else
+
+    if (gastosJSON) {
+      // Si la cadena JSON existe, convertirla a un array de gastos
+      gastos = JSON.parse(gastosJSON);
+    } else {
+      gastos = [];
+    }
+
+    // Cargar los gastos
+    GesPrest.cargarGastos(gastos);
+
+    repintar();
+  };
+}
+
+const botonCargar = document.getElementById('cargar-gastos');
+botonCargar.addEventListener('click', new cargarGastosWeb());
+
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
