@@ -439,6 +439,23 @@ function filtrarGastosWeb(){
 formFiltrado.addEventListener("submit", new filtrarGastosWeb());
 
 
+function guardarGastosWeb(){
+
+  this.handleEvent = function(event){
+    // Obtener el listado de gastos
+    const gastos = GesPrest.listarGastos();
+
+    // Convertir el listado de gastos a una cadena JSON
+    const gastosJSON = JSON.stringify(gastos);
+
+    // Guardar la cadena JSON en LocalStorage
+    localStorage.setItem('GestorGastosDWEC', gastosJSON);
+
+  }
+}
+
+const botonGuardar = document.getElementById('guardar-gastos');
+botonGuardar.addEventListener('click', new guardarGastosWeb());
 
 export{
   mostrarDatoEnId,
