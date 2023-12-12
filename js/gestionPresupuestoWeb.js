@@ -26,7 +26,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGastoValor.classList.add ("gasto-valor");
     divGastoFecha.classList.add ("gasto-fecha");    
     divGastoEtiquetas.classList.add ("gasto-etiquetas");
-    
+
     let mesString = (parseInt (new Date(gasto.fecha).getMonth()) < 10) ? "0" + new Date(gasto.fecha).getMonth() : new Date(gasto.fecha).getMonth();
     let diaString = (parseInt (new Date(gasto.fecha).getDate()) <10) ? "0" + new Date(gasto.fecha).getDate() : new Date(gasto.fecha).getDate();
     let fechaString = new Date(gasto.fecha).getFullYear() + "-" + mesString + "-" + diaString;  
@@ -273,6 +273,33 @@ function cargarNuevoGastoFormulario(event) {
     repintar();
 }
 
+function filtrarGastosWeb (event) {
+    event.preventDefault();
+    
+    //Asigno el formulario para filtrar a la variable 'formulario'
+    let formulario = event.currentTarget;
+
+    //Genero el objeto filtro asignándole los valores que haya en el formulario de filtrar
+    let filtro = {
+        descripcionContiene : formulario.querySelector ("#formulario-filtrado-descripcion").value,
+        valorMinimo : formulario.querySelector ("#formulario-filtrado-valor-minimo").value,
+        valorMaximo : formulario.querySelector ("#formulario-filtrado-valor-maximo").value,
+        fechaDesde : formulario.querySelector ("#formulario-filtrado-fecha-desde").value,
+        fechaHasta : formulario.querySelector ("#formulario-filtrado-fecha-hasta").value,
+        etiquetasTiene : gesPresupuesto.transformarListadoEtiquetas(formulario.querySelector ("#formulario-filtrado-etiquetas-tiene").value),
+    }
+    
+    //Asigno los datos filtrados a la variable 'gastosFiltrados'
+    let gastosFiltrados = gesPresupuesto.filtrarGastos (filtro);
+
+    //Vacío el contenido de #listado-gastos-completo antes de mostrar los valores filtrados
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    //Recorro la variable 'gastosFiltrados' y voy mostrando cada uno de los gastos
+    for (let item of gastosFiltrados) {
+        mostrarGastoWeb("listado-gastos-completo", item);
+    }  
+}
 /*function cancelarCargarNuevoGastoFormulario (event) {
     document.getElementById ("anyadirgasto-formulario").disabled = false;
     let botonCan = event.target;
@@ -288,6 +315,11 @@ anyadirGastoBoton.addEventListener ("click", nuevoGastoWebFormulario);
 
 let botonAnyadirGasto = document.getElementById ("anyadirgasto");
 botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
+
+//Asocio el submit que pueda realizar en '#formulario-filtrado' a la función manejadora 'filtrarGastosWeb'
+let formularioFiltrado = document.getElementById("formulario-filtrado");
+
+formularioFiltrado.addEventListener ("submit",filtrarGastosWeb);
 
 
 
