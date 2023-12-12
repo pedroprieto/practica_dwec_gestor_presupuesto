@@ -300,6 +300,14 @@ function filtrarGastosWeb (event) {
         mostrarGastoWeb("listado-gastos-completo", item);
     }  
 }
+
+function guardarGastosWeb (event) {
+    //Obtengo los gastos
+    let gastosGuardar = gesPresupuesto.listarGastos();
+    
+    //Convierto el array de gastos a JSON
+    localStorage.GestorGastosDWEC = JSON.stringify (gastosGuardar);
+}
 /*function cancelarCargarNuevoGastoFormulario (event) {
     document.getElementById ("anyadirgasto-formulario").disabled = false;
     let botonCan = event.target;
@@ -310,18 +318,19 @@ function filtrarGastosWeb (event) {
 
 }*/
 
-let anyadirGastoBoton = document.getElementById("anyadirgasto-formulario");
+let anyadirGastoBoton = document.getElementById ("anyadirgasto-formulario");
 anyadirGastoBoton.addEventListener ("click", nuevoGastoWebFormulario);
 
 let botonAnyadirGasto = document.getElementById ("anyadirgasto");
 botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
 
 //Asocio el submit que pueda realizar en '#formulario-filtrado' a la función manejadora 'filtrarGastosWeb'
-let formularioFiltrado = document.getElementById("formulario-filtrado");
-
+let formularioFiltrado = document.getElementById ("formulario-filtrado");
 formularioFiltrado.addEventListener ("submit",filtrarGastosWeb);
 
-
+//Asocio el click en el botón '#guardar-gastos' a la funcion manejadora guardarGastosWeb
+let guardarGasto = document.getElementById ("guardar-gastos");
+guardarGasto.addEventListener ("click",guardarGastosWeb);
 
 //Manejadora de eventos para editar un gasto
 function EditarHandle () {
