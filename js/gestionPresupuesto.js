@@ -252,6 +252,12 @@ function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
     }, {}); //Como valor inicial pongo un objeto vacío '{}'
 }
 
+function transformarListadoEtiquetas (etiquetas) {
+    // \w* --> Cualquier caracter alfanumérico, 
+    // [^\s,;:.]--> Excepto cualquiera de los símbolos que preceden a ^ (¡OJO! \s representa un espacio en blanco)
+    return (etiquetas.match(/\w*[^\s,;:.~]/g));
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -265,5 +271,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas,
 }

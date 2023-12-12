@@ -258,6 +258,7 @@ function nuevoGastoWebFormulario (event) {
 
 }
 
+
 function cargarNuevoGastoFormulario(event) {
     event.preventDefault();
     let descripcionGasto = event.currentTarget.querySelector("#descripcion").value;
