@@ -3,8 +3,8 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-// FUNCIONES ...............................
-// 
+//-------------------------------------------> FUNCIONES <-------------------------------------
+ 
 function actualizarPresupuesto(num) {
     if(num >= 0){
         presupuesto = num;
