@@ -308,6 +308,22 @@ function guardarGastosWeb (event) {
     //Convierto el array de gastos a JSON
     localStorage.GestorGastosDWEC = JSON.stringify (gastosGuardar);
 }
+
+function cargarGastosWeb (event) {
+    let gastosRecuperados = localStorage.GestorGastosDWEC;
+
+    //Si existe GestorGastosDWEC tomo el array generado; si no existe (es undefined) entonces paso un array vacío.
+    if (gastosRecuperados == undefined) {
+        gastosRecuperados = [];
+    }
+    else {
+        gastosRecuperados = JSON.parse(gastosRecuperados);
+    }
+
+    //Cargo los gastos recuperados y vuelvo a pintar la pantalla con los gastos
+    gesPresupuesto.cargarGastos(gastosRecuperados);
+    repintar();
+}
 /*function cancelarCargarNuevoGastoFormulario (event) {
     document.getElementById ("anyadirgasto-formulario").disabled = false;
     let botonCan = event.target;
@@ -318,9 +334,11 @@ function guardarGastosWeb (event) {
 
 }*/
 
+//Asocio el click en el botón '#anyadirgasto-formulario' a la función manejadora 'nuevoGastoWebFormulario'
 let anyadirGastoBoton = document.getElementById ("anyadirgasto-formulario");
 anyadirGastoBoton.addEventListener ("click", nuevoGastoWebFormulario);
 
+//Asocio el click en el botón '#anyadirgasto' a la función manejadora 'nuevoGastoWeb'
 let botonAnyadirGasto = document.getElementById ("anyadirgasto");
 botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
 
@@ -328,9 +346,13 @@ botonAnyadirGasto.addEventListener ("click", nuevoGastoWeb);
 let formularioFiltrado = document.getElementById ("formulario-filtrado");
 formularioFiltrado.addEventListener ("submit",filtrarGastosWeb);
 
-//Asocio el click en el botón '#guardar-gastos' a la funcion manejadora guardarGastosWeb
+//Asocio el click en el botón '#guardar-gastos' a la funcion manejadora 'guardarGastosWeb'
 let guardarGasto = document.getElementById ("guardar-gastos");
 guardarGasto.addEventListener ("click",guardarGastosWeb);
+
+//Asocio el click en el botón '#cargar-gastos' a la función manejadora 'cargarGastosWeb'
+let cargarTodosGastos = document.getElementById ("cargar-gastos");
+cargarTodosGastos.addEventListener ("click",cargarGastosWeb);
 
 //Manejadora de eventos para editar un gasto
 function EditarHandle () {
