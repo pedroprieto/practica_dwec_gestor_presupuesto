@@ -72,36 +72,31 @@ Etiquetas:\n`
     
     this.borrarEtiquetas = function(...etqs) {
         let newetiquetas = []; // Crea un nuevo array donde se van a meter las etiquetas que
-        // no estén en el array existente 'etiquetas'
+                               // no estén en el array existente 'etiquetas'
 
         for (let e of this.etiquetas) { // Recorre el array 'etiquetas' existente
 	    if (etqs.indexOf(e) == -1) { // Comprueba si cada una de las etiquetas existentes 
-        //está en el nuevo array etqs mediante indexOf, == -1 si no está 
+                                     //está en el nuevo array etqs mediante indexOf, == -1 si no está 
                 newetiquetas.push(e); // Añade al nuevo array creado cada etiqueta 
-        //que no esté en el array existente
+                                      //que no esté en el array existente
 	    }
         }
         this.etiquetas = newetiquetas; // 
     }
 
-    // ANOTACIÓN PARA PEDRO
-    // He mirado en la solución porque no entendía bien lo que se pedía,
-    // Lo he hecho como sigue porque tampoco entiendo el código escrito en la solución
-    // aunque me ha ayudado a entender lo que se pide, pero no entiendo porqué 
-    // se pone '!periodo' dentro de los 'if'
     this.obtenerPeriodoAgrupacion = function(periodo){
-        // Creo la variable fecha y le asigno una fecha nueva con parámetro propiedad fecha de la función CrearGasto.
-        let f = new Date(this.fecha);
-        // Si el periodo introducido es dia, mes o año, devuelve el día, el mes o el año de la fecha.
-        if (periodo == "dia"){
-            let mes = f.getDate();
-            return mes + 1; 
+        let f = new Date(this.fecha).toISOString();
+        if(periodo == "dia"){
+            let fechaDia = f.slice(0,10);
+            return fechaDia;
         }
         if(periodo == "mes"){
-            return f.toLocaleDateString('es-ES', {month:'long'});
+            let fechaMes = f.slice(0,7);
+            return fechaMes;
         }
-        if(periodo == "año"){
-            return f.getFullYear();
+        if(periodo == "anyo"){
+            let fechaAnyo = f.slice(0,4);
+            return fechaAnyo;
         }
     }
 
@@ -118,6 +113,7 @@ Etiquetas:\n`
     this.etiquetas = [];
     this.anyadirEtiquetas(...etiquetas);
 }
+
 
 // FUNCIONES
 // 
@@ -156,14 +152,91 @@ function calcularBalance(){
     return balance;
 }
 
-// 
-function filtrarGastos(){
-
+// He copiado la solución porque no me pasaba los test pero no entiendo muy bien.
+// En el enunciado dice que tiene que " devolverá un subconjunto de los gastos existentes "
+// pero en la solución devuelve result, que está almacenando un booleano...?
+function filtrarGastos (filtroGasto){
+    return gastos.filter(function(filtrado){
+        var resul = true;
+        if (filtroGasto.fechaDesde) {
+            var f = Date.parse(filtroGasto.fechaDesde);
+            resul = resul && (filtrado.fecha >= f);
+        }
+        if (filtroGasto.fechaHasta) {
+            var f = Date.parse(filtroGasto.fechaHasta);
+            resul = resul && (filtrado.fecha <= f);
+        }
+        if (filtroGasto.valorMinimo) {
+            resul = resul && (filtrado.valor >= filtroGasto.valorMinimo);
+        }
+        if (filtroGasto.valorMaximo) {            
+            resul = resul && (filtrado.valor <= filtroGasto.valorMaximo);
+        }
+        if (filtroGasto.descripcionContiene) {
+            resul = resul && (filtrado.descripcion.indexOf(filtroGasto.descripcionContiene) > -1);
+        }
+        if (filtroGasto.etiquetasTiene) {
+            let etiqSi = false;
+            for (let e of filtroGasto.etiquetasTiene) {
+                if (filtrado.etiquetas.indexOf(e) > -1) {
+                    etiqSi = true;
+                }
+            }
+            resul = resul && etiqSi;
+        }
+        return resul;
+    })
 }
-
-// 
-function agruparGastos(){
-
+/* ------- Así es como lo había hecho
+function filtrarGastos (filtroGasto){
+    return gastos.filter(function(filtrado){
+        let conjunto_datos = {};
+        if (filtroGasto.fechaDesde) {
+            var f = Date.parse(filtroGasto.fechaDesde);
+            conjunto_datos.fechaDesde = filtrado.fecha >= Date.parse(filtroGasto.fechaDesde);
+        }
+        if (filtroGasto.fechaHasta) {
+            var f = Date.parse(filtroGasto.fechaHasta);
+            conjunto_datos.fechaHasta = filtrado.fecha <= Date.parse(filtroGasto.fechaHasta);
+        }
+        if (filtroGasto.valorMinimo) {
+            conjunto_datos.valorMinimo = filtrado.valor >= filtroGasto.valorMinimo;
+        }
+        if (filtroGasto.valorMaximo) {
+            conjunto_datos.valorMaximo = filtrado.valor <= filtroGasto.valorMaximo;
+        }
+        if (filtroGasto.descripcionContiene) {
+            conjunto_datos.descripcionContiene = filtrado.descripcion.indexOf(filtroGasto.descripcionContiene) > -1;
+        }
+        if (filtroGasto.etiquetasTiene) {
+            for (let e of filtroGasto.etiquetasTiene) {
+                if (filtrado.etiquetas.indexOf(e) > -1) {
+                    conjunto_datos.etiquetasTiene = filtrado.etiquetas[e];
+                }
+            }
+        }
+        return conjunto_datos;
+    })
+}*/
+// Copiada
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+    let gastos_filtrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    // Función reduce --> valor inicial acc(objeto) = objeto vacío
+    return gastos_filtrados.reduce(
+        function(acc, g){
+            // Obtener periodo de agrupación del gasto
+            let per = g.obtenerPeriodoAgrupacion(periodo);
+            // Comprueba si existe en el acumulador una entrada para el período de agrupación actual
+            if(acc[per]){
+                // Si existe, le sumamos el valor del gasto actual
+                acc[per] += g.valor;
+            }else{
+                // Si no existe, la creamos con el valor del gasto actual
+                acc[per] = g.valor;
+            }
+            return acc;
+        },
+        {});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
