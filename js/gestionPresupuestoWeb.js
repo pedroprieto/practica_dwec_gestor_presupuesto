@@ -1,3 +1,4 @@
+import * as gestorPresu from '/js/gestionPresupuesto.js';
 
 function mostrarDatoEnId(id, valor) {
     document.getElementById(id).innerText = valor;
@@ -100,9 +101,15 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     // Agrega el divAgrupacion al elemento objetivo
     elementoObjetivo.append(divAgrupacion);
 }
+function repintar() { }
+function actualizarPresupuestoWeb() { }
+function nuevoGastoWeb() { }
+function EditarHandle() { }
+function BorrarHandle() { }
+function BorrarEtiquetasHandle() { }
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
 };
