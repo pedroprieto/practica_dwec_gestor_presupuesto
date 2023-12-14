@@ -25,15 +25,17 @@ gestionPresupuesto.anyadirGasto(gasto3)
 gestionPresupuesto.anyadirGasto(gasto4)
 gestionPresupuesto.anyadirGasto(gasto5)
 gestionPresupuesto.anyadirGasto(gasto6)
-let calculoGastosTotasles = gestionPresupuesto.calcularTotalGastos()
-gestionPresupuestoWeb.mostrarDatoEnId(calculoGastosTotasles, "gastos-totales")
+
 
 let calculobalance = gestionPresupuesto.calcularBalance()
 gestionPresupuestoWeb.mostrarDatoEnId(calculobalance, "balance-total")
 
+let calculoGastosTotasles = gestionPresupuesto.calcularTotalGastos()
+gestionPresupuestoWeb.mostrarDatoEnId(calculoGastosTotasles, "gastos-totales")
+
 let listarGast = gestionPresupuesto.listarGastos()
 
-for (let gast of listarGast) {
+for (let i = 0; i < listarGast.length; i++) {
 
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gast)
 }
