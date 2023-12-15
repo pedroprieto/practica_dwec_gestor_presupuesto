@@ -209,7 +209,7 @@ function listarGastos(){
 function filtrarGastos(parametro){
 
     let resultadoFiltrado =[...gastos]
-     
+    
     if (parametro.fechaDesde)
     {
         
@@ -297,6 +297,7 @@ function filtrarGastos(parametro){
             return x;
         })
     }
+    
     if (parametro.etiquetasTiene)
     {
         
@@ -308,101 +309,59 @@ function filtrarGastos(parametro){
             return tieneEtiquetaComun ;
         })
     }
-    
+ 
     return(resultadoFiltrado) 
  }
 
+ function CrearGastoBuscado(etiquetasTiene,fechaDesde, fechaHasta){
 
- function agruparGastos(periodo, etiquetasValidas,  fechaDesde, fechaHasta){
+    this.fechaDesde=fechaDesde;
+    this.fechaHasta=fechaHasta;
+    
+    if(etiquetasTiene!=undefined)
+    {
+        this.etiquetasTiene=etiquetasTiene;
+    }
+
+ }
+
+
+ function agruparGastos(periodo, etiquetasTiene,  fechaDesde, fechaHasta){
 
     let guardarPeriodo="mes";
     if (periodo == "dia" || periodo == "anyo")
     guardarPeriodo = periodo;
     let resultadoFiltrado =[...gastos]
 
+    let gastoBuscado=new CrearGastoBuscado ( etiquetasTiene,  fechaDesde, fechaHasta);
 
+    //solo entra con un parametro
+    resultadoFiltrado =filtrarGastos(gastoBuscado);
+    
+  let resultadoReducido= resultadoFiltrado.reduce(function(acc, gasto){
+    
+   
 
+    
+    let periodoAgrup = gasto.obtenerPeriodoAgrupacion(periodo);
 
+   
 
-
-     resultadoFiltrado =filtrarGastos({fechaDesde: fechaDesde},{fechaHasta: fechaHasta}, {etiquetasValidas});
-
-     let returnBueno=[];
-let agruparPor =  resultadoFiltrado.reduce(function(acc, periodo){
-
-    let gastoAgrup = periodo.fecha;
-    Date.parse (gastoAgrup)
-    let fechaAgrup= new Date(gastoAgrup);
-    fechaAgrup.toLocaleDateString();
-
-    let parametroFechaDesde =fechaDesde;
-    Date.parse(parametroFechaDesde)
-    let fechaMin = new Date(parametroFechaDesde)
-
-    let parametroFechaHasta =fechaHasta;
-    Date.parse(parametroFechaHasta)
-    let fechaTope = new Date(parametroFechaHasta)
-
-
-    let periodo1=periodo.obtenerPeriodoAgrupacion(guardarPeriodo);
-
-
-
-    acc[ periodo1] = acc[guardarPeriodo] || {cuenta: 0, listado:[]}
-   if(acc[periodo1].cuenta=0){
-        acc[periodo1].valor=0;
+  if (acc[periodoAgrup]) {
+   
+    acc[periodoAgrup] = acc[periodoAgrup] + gasto.valor;
+  } else {
+   
+    acc[periodoAgrup] = gasto.valor;
     }
-    acc[ periodo1].cuenta++;
 
-
-
-
-    acc[ periodo1].listado.push(periodo)
-
-    let encontrado = false;
-    if(etiquetasValidas==undefined)
-    encontrado=true;
-else{
-    periodo.etiquetas.forEach(element => {
-
-        etiquetasValidas.forEach(elementValido => {
-
-
-            if (element==elementValido){
-
-                encontrado=true;
-
-
-            }
-
-        });
-
-    });
-}
-
-
-if(fechaHasta==null)
-{
-    if(encontrado)
-    {
-     if(returnBueno[periodo1]>0)
-     returnBueno[periodo1]= periodo.valor + returnBueno[periodo1];
-     else
-     returnBueno[periodo1]= periodo.valor;
-    }
-}
-   else if (fechaAgrup>=fechaMin && fechaAgrup<=fechaTope)
-   {
-
-    returnBueno[periodo1]= periodo.valor;
-   }
-
+  
 
     return acc  ;
 },{})
 
+return resultadoReducido;
 
-return  returnBueno;
 
 
 }
