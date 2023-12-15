@@ -36,7 +36,7 @@ function mostrarGastoWeb(idElemento, gasto) {
         divValorGasto.classList.add('gasto-valor')
         //Le agrego el signo euro, ya que en un video dijo que lo agregemos si no daria error
         //No se si en esta parte daria igual, pero lo agrego
-        divValorGasto.textContent = gasto.valor + '€';
+        divValorGasto.textContent = gasto.valor;
         contenidoGasto.appendChild(divValorGasto);
 
         const divGastoEtiquetas = document.createElement('div');
