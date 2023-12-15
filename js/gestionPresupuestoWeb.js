@@ -1,4 +1,4 @@
-import * as gesPres from './gestionPresupuesto.js';
+import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor) {
     const elemento = document.getElementById(idElemento);
@@ -173,7 +173,7 @@ function nuevoGastoWeb() {
 
 	let arrayEtiquetas = etiquetas.split(", ")
 
-	let nuevoGasto = new gesPres.CrearGasto(descripcion, valor, fecha, arrayEtiquetas)
+	let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arrayEtiquetas)
 
 	gestionPresupuesto.anyadirGasto(nuevoGasto)
 

@@ -127,7 +127,6 @@ function borrarGasto(id) {
         return gasto.id == id
     });
     gastos.splice(index, 1);
-
 }
 
 function calcularTotalGastos() {
