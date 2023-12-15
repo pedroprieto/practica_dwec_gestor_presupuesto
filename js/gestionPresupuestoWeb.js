@@ -52,7 +52,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 
                 let borrarEtiquetaMan = new BorrarEtiquetasHandle();
                 borrarEtiquetaMan.gasto = gasto;
-                borrarEtiquetaMan.etique = etique;
+                borrarEtiquetaMan.etiqueta = etique;
                 spanEtiquetas.addEventListener('click', borrarEtiquetaMan);
                 divGastoEtiquetas.appendChild(spanEtiquetas);
             }

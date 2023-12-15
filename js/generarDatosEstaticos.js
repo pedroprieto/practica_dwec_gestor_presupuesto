@@ -26,10 +26,14 @@ gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gasto);
 const balance = gestionPresupuesto.calcularBalance();
 gestionPresupuestoWeb.mostrarDatoEnId('balance-total', balance);
 
-const listGasto = gestionPresupuesto.listarGastos();
+for (let gasto of gestionPresupuesto.listarGastos()){
+  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+
+/*const listGasto = gestionPresupuesto.listarGastos();
 listGasto.forEach((gasto) => {
     gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
-});
+});*/
 
 const gastosSeptiembre2021 = gestionPresupuesto.filtrarGastos({ fechaDesde: '2021-09-01', fechaHasta: '2021-09-30' });
 gastosSeptiembre2021.forEach((gasto) => {
