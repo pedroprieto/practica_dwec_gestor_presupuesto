@@ -37,16 +37,12 @@ function nuevoGastoWeb(){ //Funcion para ir preguntando los datos para un nuevo 
 
 let botonAnyadir = document.getElementById("anyadirgasto"); //Igual que con el boton de actualizar, aqui añadimos el manejador de añadir, valga la redundancia...
 botonAnyadir.addEventListener("click", nuevoGastoWeb);
-/*
-botonAnyadir = document.querySelector("button.enviar");
-botonAnyadir.addEventListener("click", manejadorEnviarFormulario);
-botonAnyadir = document.querySelector("button.cancelar");
-botonAnyadir.addEventListener("click", manejadorCancelarFormulario);*/
 
-botonAnyadir = document.getElementById("anyadirgasto-formulario");
-botonAnyadir.addEventListener("click", nuevoGastoWebFormulario);
 
-function nuevoGastoWebFormulario(){
+botonAnyadir = document.getElementById("anyadirgasto-formulario"); //Ponemos el foco en el nuevo boton de anyadir mediante formulario
+botonAnyadir.addEventListener("click", nuevoGastoWebFormulario); //Con esto, utilizamos la funcion nuevoGastoWebFormulario como la manejadora del evento click, en el formulario que hemos señalado
+
+function nuevoGastoWebFormulario(){ //Funcion principal
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
   
   let target = document.getElementById("controlesprincipales");
@@ -58,7 +54,7 @@ function nuevoGastoWebFormulario(){
   
   var formulario = document.body.querySelector("form");
 
-  formulario.addEventListener("submit", (e) => {
+  formulario.addEventListener("submit", function(e) {
     e.preventDefault();
 
 
