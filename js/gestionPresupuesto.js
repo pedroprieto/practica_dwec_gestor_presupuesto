@@ -247,5 +247,5 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     agruparGastos,
-    filtrarGastos
+    filtrarGastos,
 }

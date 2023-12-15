@@ -107,7 +107,7 @@ function mostrarGastosAgrupadosWeb (idElemento, agrup, periodo) {
     elemento.append(nuevoDiv);
 }
 
-
+/*
 function repintar(){
 
     //Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
@@ -129,6 +129,28 @@ function repintar(){
     gesPres.listarGastos().forEach(gasto => {
         mostrarGastoWeb('listado-gastos-completo', gasto);
     });
+}
+*/
+
+//repintar profesor clase 23
+
+function repintar() {
+    let gastTotales = document.getElementById("gastos-totales");
+
+    for (let gasto of gastos) {
+        let div = document.createElement("div");
+        div.innerText = `${gasto.descripcion} - ${gasto.valor}`;
+
+        let botonEditar = document.createElement("button");
+        botonEditar.innerText = "Editar";
+        div.append(botonEditar);
+
+        let botonBorrar = document.createElement("button");
+        botonBorrar.innerText = "Borrar";
+        div.append(botonBorrar);
+
+        gastTotales.append(div);
+    }
 }
 
 function actualizarPresupuestoWeb() {
@@ -207,6 +229,60 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
         repintar();
     }
 }
+
+//FORMULARIOS, DESDE LA CLASE ÚLTIMA 23/11
+
+function nuevoGastoWebFormulario(event) {
+
+    event.target.disabled = true; //event.target es el botón de añadir
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    let formulario = plantillaFormulario.querySelector("form");
+    let controlesPrincipales = document.getElementById(`controlesprincipales`);
+    controlesPrincipales.append(plantillaFormulario);
+
+    formulario.addEventListener("submit", enviarAnyadirGasto);
+    
+    let botonCancelar = formulario.querySelector(".cancelar");
+    botonCancelar.addEventListener("click", cerrarAnyadirGasto);
+    
+}
+
+function enviarAnyadirGasto(event) {
+    event.preventDefault();
+    //recoger datos del formulario
+    // TODO
+    let descripcion = event.target.elements.descripcion.value;
+    alert(`creando nombre con descripcion ${descripcion}`)
+    //crear gasto
+    //añadir gasto
+    //repintar
+
+    // event.target es el formulario
+    event.target.remove();
+    document.getElementById("anyadirgasto-formulario").disabled = false;
+
+}
+
+function cerrarAnyadirGasto(event) {
+    event.target.form.remove();
+    document.getElementById("anyadirgasto-formulario").disabled = false;
+}
+
+//DE LA CLASE, QUITAR LUEGO:
+let gastos = [
+    {
+        descripcion: "desc1",
+        valor: 55
+    },
+    {
+        descripcion: "desc2",
+        valor: 66
+    }
+]
+
+
+let anyadirGastoBoton = document.getElementById("anyadirgasto-formulario");
+anyadirGastoBoton.addEventListener(`click`, nuevoGastoWebFormulario);
 
 export{
     
