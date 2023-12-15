@@ -37,21 +37,54 @@ function nuevoGastoWeb(){ //Funcion para ir preguntando los datos para un nuevo 
 
 let botonAnyadir = document.getElementById("anyadirgasto"); //Igual que con el boton de actualizar, aqui añadimos el manejador de añadir, valga la redundancia...
 botonAnyadir.addEventListener("click", nuevoGastoWeb);
+/*
+botonAnyadir = document.querySelector("button.enviar");
+botonAnyadir.addEventListener("click", manejadorEnviarFormulario);
+botonAnyadir = document.querySelector("button.cancelar");
+botonAnyadir.addEventListener("click", manejadorCancelarFormulario);*/
 
+botonAnyadir = document.getElementById("anyadirgasto-formulario");
+botonAnyadir.addEventListener("click", nuevoGastoWebFormulario);
 
 function nuevoGastoWebFormulario(){
+  let boton = document.getElementById("anyadirgasto-formulario");
+  boton.disabled = true;
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+  var formulario = plantillaFormulario.querySelector("form");
+  let target = document.getElementById("controlesprincipales");
+  target.after(formulario);
+  botonAnyadir = formulario.querySelector("button.enviar");
+  botonAnyadir.addEventListener("click", manejadorEnviarFormulario);
+  botonAnyadir = formulario.querySelector("button.cancelar");
+  botonAnyadir.addEventListener("click", manejadorCancelarFormulario);
   
 
 }
 
+function manejadorEnviarFormulario(e){
+  e.preventDefault();
+  let gasto = e.currentTarget();
+  let descripcion = gasto.getElementById("descripcion").textContent;
+  let valor = gasto.getElementById("valor").textContent;
+  let fecha = Date(gasto.getElementById("fecha").textContent);
+  let etiquetas = gasto.getElementById("etiquetas").textContent.split(",");
 
-function CancelarHandle(){
-    this.handleEvent(function(){
-      this.formulario.remove();
-      this.anyadirGastoBoton.removeAttribute("disabled");
-    })
-  }
+  let gastoNuevo = new gestionPresu.CrearGasto(descripcion, valor, fecha,...etiquetas);
+
+  gestionPresu.anyadirGasto(gastoNuevo);
+
+  repintar();
+
+  let boton = document.getElementById("anyadirgasto-formulario");
+  boton.removeAttribute("disabled");
+
+}
+
+
+function MnejadorCancelarFormulario(){
+
+  
+}
 
 
 
