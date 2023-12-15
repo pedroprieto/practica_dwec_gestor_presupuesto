@@ -47,42 +47,56 @@ botonAnyadir = document.getElementById("anyadirgasto-formulario");
 botonAnyadir.addEventListener("click", nuevoGastoWebFormulario);
 
 function nuevoGastoWebFormulario(){
-  let boton = document.getElementById("anyadirgasto-formulario");
-  boton.disabled = true;
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-  var formulario = plantillaFormulario.querySelector("form");
+  
   let target = document.getElementById("controlesprincipales");
-  target.after(formulario);
-  botonAnyadir = formulario.querySelector("button.enviar");
-  botonAnyadir.addEventListener("click", manejadorEnviarFormulario);
-  botonAnyadir = formulario.querySelector("button.cancelar");
-  botonAnyadir.addEventListener("click", manejadorCancelarFormulario);
+  target.append(plantillaFormulario);
+
+
+  let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+  botonAnyadir.disabled = true;
+  
+  var formulario = document.body.querySelector("form");
+
+  formulario.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+
+    let gasto = e.currentTarget;
+
+
+    let descripcion = gasto.elements.descripcion.value;
+    let valor = parseFloat(gasto.elements.valor.value);
+    let fecha = gasto.elements.fecha.value;
+    let etiquetas = gasto.elements.etiquetas.value.split(",");
+
+    let gastoNuevo = new gestionPresu.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+
+    gestionPresu.anyadirGasto(gastoNuevo);
+
+    repintar();
+
+    botonAnyadir.disabled = false;
+
+    document.getElementById("controlesprincipales").removeChild(formulario);
+
+  });
   
 
-}
+  let botonCancelar = formulario.querySelector("button.cancelar");
 
-function manejadorEnviarFormulario(e){
-  e.preventDefault();
-  let gasto = e.currentTarget();
-  let descripcion = gasto.getElementById("descripcion").textContent;
-  let valor = gasto.getElementById("valor").textContent;
-  let fecha = Date(gasto.getElementById("fecha").textContent);
-  let etiquetas = gasto.getElementById("etiquetas").textContent.split(",");
-
-  let gastoNuevo = new gestionPresu.CrearGasto(descripcion, valor, fecha,...etiquetas);
-
-  gestionPresu.anyadirGasto(gastoNuevo);
-
-  repintar();
-
-  let boton = document.getElementById("anyadirgasto-formulario");
-  boton.removeAttribute("disabled");
+  botonCancelar.addEventListener("click", new ManejadorCancelarFormulario(formulario, botonAnyadir))
 
 }
 
 
-function MnejadorCancelarFormulario(){
 
+function ManejadorCancelarFormulario(formulario, boton){
+
+  this.handleEvent = function(){
+    document.getElementById("controlesprincipales").removeChild(formulario);
+    boton.disabled = false;
+  }
   
 }
 
