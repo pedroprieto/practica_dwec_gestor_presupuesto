@@ -7,12 +7,16 @@ let presupuesto = 0;
 function actualizarPresupuesto(num) {
     if (typeof(num) === 'number' && num >= 0) {
         presupuesto = num;
+        return presupuesto;
     }
-    return presupuesto;
+    else {
+        console.log("Se ha producido un error: el presupuesto debe ser el número que no sea negativo");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto() {
