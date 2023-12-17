@@ -23,7 +23,7 @@ function mostrarPresupuesto() {
 }
 
 function listarGastos() {
-
+    return gastos;
 }
 function anyadirGasto() {
     
@@ -38,11 +38,13 @@ function calcularBalance() {
     
 }
 
-
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //propiedades
     this.descripcion = descripcion;
-    typeof(valor)==='number' && valor >= 0 ? this.valor = valor : this.valor = 0;
+    this.valor = typeof(valor)==='number' && valor >= 0 ? valor : 0;
+    this.etiquetas = etiquetas.length > 0 ? etiquetas : [];
+    this.fecha = !isNaN(Date.parse(fecha)) ? Date.parse(fecha) : new Date().getTime();
+
     //métodos
     this.mostrarGasto = function () {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
