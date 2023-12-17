@@ -34,15 +34,28 @@ function mostrarGastoWeb(idElemento,gasto){
     
     divGasto.append(divEtiquetas);
    
-    for (let i = 0;i<gasto.etiquetas.length;i++)
+    if(gasto.etiquetas)
     {
-        let etiqueta=gasto.etiquetas[i];
+        for (let i = 0;i<gasto.etiquetas.length;i++)
+        {
+            let etiqueta=gasto.etiquetas[i];
+            let spanEtiqueta=document.createElement("span");
+            spanEtiqueta.className="gasto-etiquetas-etiqueta";
+            spanEtiqueta.innerHTML=etiqueta;
+            divEtiquetas.append(spanEtiqueta);   
+    
+        }
+    }
+      else 
+      {
+        
         let spanEtiqueta=document.createElement("span");
         spanEtiqueta.className="gasto-etiquetas-etiqueta";
-        spanEtiqueta.innerHTML=etiqueta;
+        spanEtiqueta.innerHTML=gasto.etiquetas;
         divEtiquetas.append(spanEtiqueta);   
-
-    }
+      }
+    
+    
        
         
     

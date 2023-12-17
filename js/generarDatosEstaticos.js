@@ -22,10 +22,20 @@ gesPresupuesto.anyadirGasto(gasto6);
 gesPresupuestoWeb.mostrarDatoEnId("gastos-totales", gesPresupuesto.calcularTotalGastos());
 
 gesPresupuestoWeb.mostrarDatoEnId("balance-total", gesPresupuesto.calcularBalance());
-gesPresupuesto.listarGastos()
-gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto1);
-gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto2);
-gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto3);
-gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto4);
-gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto5);
-gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto6);
+
+let gastosListados=gesPresupuesto.listarGastos()
+for(let i=0;i<gastosListados.length;i++)
+{
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gastosListados[i]);
+}
+
+
+let gastosFiltrados1=gesPresupuesto.filtrarGastos({fechaDesde: "2021-09-1", fechaHasta: "2021-9-30"})
+for(let i=0;i<gastosFiltrados1.length;i++)
+{
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gastosFiltrados1[i]);
+}
+
+
+
+
