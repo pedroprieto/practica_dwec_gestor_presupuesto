@@ -335,7 +335,7 @@ function filtrarGastos(parametro){
 
     let gastoBuscado=new CrearGastoBuscado ( etiquetasTiene,  fechaDesde, fechaHasta);
 
-    //solo entra con un parametro
+    
     resultadoFiltrado =filtrarGastos(gastoBuscado);
     
   let resultadoReducido= resultadoFiltrado.reduce(function(acc, gasto){
