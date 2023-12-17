@@ -36,6 +36,18 @@ for(let i=0;i<gastosFiltrados1.length;i++)
     gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gastosFiltrados1[i]);
 }
 
+let gastosFiltrados2=gesPresupuesto.filtrarGastos({valorMinimo:50})
+for(let j=0;j<gastosFiltrados2.length;j++)
+{
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gastosFiltrados2[j]);
+}
+
+let gastosFiltrados3=gesPresupuesto.filtrarGastos({etiquetasTiene: ["seguros"], valorMinimo:200})
+for(let k=0;k<gastosFiltrados3.length;k++)
+{
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gastosFiltrados3[k]);
+}
+
 
 
 
