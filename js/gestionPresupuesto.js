@@ -38,10 +38,14 @@ function borrarGasto(id) {
     }
 }
 function calcularTotalGastos() {
-    
+    let suma = 0;
+    for (let g of gastos) {
+        suma += g.valor;
+    }
+    return suma;
 }
 function calcularBalance() {
-    
+    return presupuesto - calcularTotalGastos();
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
