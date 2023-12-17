@@ -48,6 +48,13 @@ for(let k=0;k<gastosFiltrados3.length;k++)
     gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gastosFiltrados3[k]);
 }
 
+let gastosFiltrados4=gesPresupuesto.filtrarGastos({etiquetasTiene: ["comida","transporte"], valorMaximo:50})
+for(let q=0;q<gastosFiltrados4.length;q++)
+{
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gastosFiltrados4[q]);
+}
+
+
 
 
 
