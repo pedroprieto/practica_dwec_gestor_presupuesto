@@ -25,11 +25,17 @@ function mostrarPresupuesto() {
 function listarGastos() {
     return gastos;
 }
-function anyadirGasto() {
-    
+function anyadirGasto(gasto) {
+    gasto.id = idGasto++;
+    gastos.push(gasto);
 }
-function borrarGasto() {
-    
+function borrarGasto(id) {
+    // Busca el índice del gasto con el id proporcionado
+    let indice = gastos.findIndex(gasto => gasto.id === id);
+    // Si se encuentra el gasto, elimínalo
+    if (indice != -1) {
+        gastos.splice(indice, 1);
+    }
 }
 function calcularTotalGastos() {
     
