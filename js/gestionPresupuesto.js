@@ -24,8 +24,14 @@ function CrearGasto(descripcion, valor) {
     this.descripcion = descripcion;
     typeof(valor)==='number' && valor >= 0 ? this.valor = valor : this.valor = 0;
     //métodos
-    function mostrarGasto () {
+    this.mostrarGasto = function () {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    }
+    this.actualizarDescripcion = function (texto) {
+        this.descripcion = texto;
+    }
+    this.actualizarValor = function (valor) {
+        typeof(valor)==='number' && valor >= 0 ? this.valor = valor : null;
     }
 }
 
