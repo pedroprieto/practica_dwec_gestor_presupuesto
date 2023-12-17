@@ -54,7 +54,11 @@ for(let q=0;q<gastosFiltrados4.length;q++)
     gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gastosFiltrados4[q]);
 }
 
+let agrup1 = gesPresupuesto.agruparGastos("dia");
+gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",agrup1,"día");
 
+let agrup2 = gesPresupuesto.agruparGastos("mes");
+gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",agrup2,"mes");
 
-
-
+let agrup3 = gesPresupuesto.agruparGastos("anyo");
+gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",agrup3,"año")
