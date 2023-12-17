@@ -2,6 +2,9 @@
 
 // TODO: Variable global
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
+
 
 //Funciones
 function actualizarPresupuesto(num) {
@@ -18,6 +21,23 @@ function actualizarPresupuesto(num) {
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
+
+function listarGastos() {
+
+}
+function anyadirGasto() {
+    
+}
+function borrarGasto() {
+    
+}
+function calcularTotalGastos() {
+    
+}
+function calcularBalance() {
+    
+}
+
 
 function CrearGasto(descripcion, valor) {
     //propiedades
@@ -41,5 +61,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
