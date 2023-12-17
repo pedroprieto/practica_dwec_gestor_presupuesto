@@ -3,7 +3,7 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-//-------------------------------------------> FUNCIONES <-------------------------------------
+//-------------------------------------------> FUNCIONES <-------------------------------------//
  
 function actualizarPresupuesto(num) {
     if(num >= 0){
@@ -21,7 +21,7 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-// OBJETO GASTO
+// ----------------------------------------> OBJETO GASTO <------------------------------------ //
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     // Métodos
@@ -115,7 +115,7 @@ Etiquetas:\n`
 }
 
 
-// FUNCIONES
+//-------------------------------------------> FUNCIONES <-------------------------------------//
 // 
 function listarGastos(){
     return gastos;
@@ -151,10 +151,7 @@ function calcularBalance(){
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
-
-// He copiado la solución porque no me pasaba los test pero no entiendo muy bien.
-// En el enunciado dice que tiene que " devolverá un subconjunto de los gastos existentes "
-// pero en la solución devuelve result, que está almacenando un booleano...?
+//
 function filtrarGastos (filtroGasto){
     return gastos.filter(function(filtrado){
         var resul = true;
@@ -187,57 +184,17 @@ function filtrarGastos (filtroGasto){
         return resul;
     })
 }
-/* ------- Así es como lo había hecho
-function filtrarGastos (filtroGasto){
-    return gastos.filter(function(filtrado){
-        let conjunto_datos = {};
-        if (filtroGasto.fechaDesde) {
-            var f = Date.parse(filtroGasto.fechaDesde);
-            conjunto_datos.fechaDesde = filtrado.fecha >= Date.parse(filtroGasto.fechaDesde);
-        }
-        if (filtroGasto.fechaHasta) {
-            var f = Date.parse(filtroGasto.fechaHasta);
-            conjunto_datos.fechaHasta = filtrado.fecha <= Date.parse(filtroGasto.fechaHasta);
-        }
-        if (filtroGasto.valorMinimo) {
-            conjunto_datos.valorMinimo = filtrado.valor >= filtroGasto.valorMinimo;
-        }
-        if (filtroGasto.valorMaximo) {
-            conjunto_datos.valorMaximo = filtrado.valor <= filtroGasto.valorMaximo;
-        }
-        if (filtroGasto.descripcionContiene) {
-            conjunto_datos.descripcionContiene = filtrado.descripcion.indexOf(filtroGasto.descripcionContiene) > -1;
-        }
-        if (filtroGasto.etiquetasTiene) {
-            for (let e of filtroGasto.etiquetasTiene) {
-                if (filtrado.etiquetas.indexOf(e) > -1) {
-                    conjunto_datos.etiquetasTiene = filtrado.etiquetas[e];
-                }
-            }
-        }
-        return conjunto_datos;
-    })
-}*/
-// Copiada
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
-    let gastos_filtrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
-    // Función reduce --> valor inicial acc(objeto) = objeto vacío
-    return gastos_filtrados.reduce(
-        function(acc, g){
-            // Obtener periodo de agrupación del gasto
-            let per = g.obtenerPeriodoAgrupacion(periodo);
-            // Comprueba si existe en el acumulador una entrada para el período de agrupación actual
-            if(acc[per]){
-                // Si existe, le sumamos el valor del gasto actual
-                acc[per] += g.valor;
-            }else{
-                // Si no existe, la creamos con el valor del gasto actual
-                acc[per] = g.valor;
-            }
-            return acc;
-        },
-        {});
-}
+//
+function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta = new Date().toISOString().split('T')[0]) {
+    let gastosFiltrados = filtrarGastos({ etiquetas, fechaDesde, fechaHasta });
+  
+    return gastosFiltrados.reduce(function(acc, g){
+      let periodoAgrupacion = g.obtenerPeriodoAgrupacion(periodo);
+      acc[periodoAgrupacion] = (acc[periodoAgrupacion] || 0) + g.valor;
+      return acc;
+    }, {});
+  
+  }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
