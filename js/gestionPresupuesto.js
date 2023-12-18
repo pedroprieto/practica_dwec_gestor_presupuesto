@@ -30,9 +30,9 @@ function anyadirGasto(gasto) {
     gastos.push(gasto);
 }
 function borrarGasto(id) {
-    // Busca el índice del gasto con el id proporcionado
+    //* Busca el índice del gasto con el id proporcionado
     let indice = gastos.findIndex(gasto => gasto.id === id);
-    // Si se encuentra el gasto, elimínalo
+    //^ Si se encuentra el gasto, elimínalo
     if (indice != -1) {
         gastos.splice(indice, 1);
     }
@@ -64,6 +64,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
     this.actualizarValor = function (valor) {
         typeof(valor)==='number' && valor >= 0 ? this.valor = valor : null;
+    }
+    this.mostrarGastoCompleto = function () {
+        let fechaLocale = new Date(parseInt(this.fecha));
+        let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        texto += "Fecha: " + fechaLocale.toLocaleString() + "\n";
+        texto += "Etiquetas:\n";
+        for (let e of etiquetas) {
+            texto += `- ${e}\n`;
+        }
+        return texto;
     }
 }
 
