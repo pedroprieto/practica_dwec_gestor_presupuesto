@@ -66,7 +66,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         typeof(valor)==='number' && valor >= 0 ? this.valor = valor : null;
     }
     this.mostrarGastoCompleto = function () {
-        let fechaLocale = new Date(parseInt(this.fecha));
+        let fechaLocale = new Date(parseInt(this.fecha)); //^Creamos una variable de tipo "Date", que corresponde a la this.fecha de formato "String"
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
         texto += "Fecha: " + fechaLocale.toLocaleString() + "\n";
         texto += "Etiquetas:\n";
@@ -74,6 +74,29 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             texto += `- ${e}\n`;
         }
         return texto;
+    }
+    this.actualizarFecha = function (fechaN) {
+        let fechaValida = Date.parse(fechaN);
+        if (!isNaN(fechaValida)) {
+            this.fecha = fechaValida;
+        }
+    }
+    this.anyadirEtiquetas = function (...nuevasEtiquetas) {
+        for (let e of nuevasEtiquetas) {
+            if (!this.etiquetas.includes(e)) {
+                this.etiquetas.push(e);
+            }
+        }
+    }
+    this.borrarEtiquetas = function (...etiquetasBorradas) {
+        //*this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasBorradas.includes(etiqueta));
+        let etiquetasArray = [];
+        for (let e of this.etiquetas) {
+            if (!etiquetasBorradas.includes(e)) {
+                etiquetasArray.push(e);
+            }
+        }
+        this.etiquetas = etiquetasArray;
     }
 }
 
