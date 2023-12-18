@@ -142,6 +142,16 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
   return agrupacionGastos;
 }
 
+function transformarListadoEtiquetas(etiquetasTiene){
+
+  //const regex = /[^,\s]+/g;
+  let regex = /\w+/g;
+ 
+ let comprobacion= etiquetasTiene.match(regex);
+ return comprobacion;
+ 
+ }
+
 
 //Función constructora que se encargará de crear un objeto gasto
 
@@ -270,5 +280,6 @@ export {
   calcularBalance,
   filtrarGastos,
   agruparGastos,
+  transformarListadoEtiquetas,
 
 };

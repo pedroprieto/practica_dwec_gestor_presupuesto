@@ -372,6 +372,52 @@ function cancelarActualizarGasto() {
     };
     
 }
+let filterGastos = new filtrarGastosWeb();
+let filtrado = document.getElementById("formulario-filtrado");
+filtrado.addEventListener("submit", filterGastos);
+
+function filtrarGastosWeb() {
+
+  this.handleEvent = function (event) {
+
+    event.preventDefault();
+    alert("editando filtro GASTOs ");
+    alert(event.target)
+
+    let plantillaFormulario = document.getElementById("filtrar-gastos");
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
+    let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+    let valorMinimo = formulario.elements["formulario-filtrado-valor-minimo"].value;
+    let valorMaximo = formulario.elements["formulario-filtrado-valor-maximo"].value;  
+    let descripcionContiene = formulario.elements["formulario-filtrado-descripcion"].value;    
+    let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+    if (etiquetasTiene != null) {
+
+      etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene)
+    }
+
+    let objeto = {
+      fechaDesde,
+      fechaHasta,
+      valorMinimo,
+      valorMaximo,
+      descripcionContiene,
+      etiquetasTiene,
+    };
+
+     document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    let filtroGastos = gestionPresupuesto.filtrarGastos(objeto);   
+
+    for (let gasto of filtroGastos) {
+      mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+  }
+
+}
 
 
 
