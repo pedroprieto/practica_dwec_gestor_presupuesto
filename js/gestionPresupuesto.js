@@ -182,6 +182,7 @@ CrearGasto.prototype.actualizarDescripcion = function (actDescripcion) {
 }
 CrearGasto.prototype.actualizarValor = function (nuevovalor){
     if (Number(nuevovalor) >= 0){
+        this.valor = +nuevovalor;
         this.valor = nuevovalor;
     }     
 }
@@ -224,12 +225,13 @@ function calcularTotalGastos () {
     let totalGastos = 0;
     for (let g of gastos){
         totalGastos += g.valor;
-    }
+    } 
     return totalGastos;
 }
 
 function calcularBalance (){
-    return Presupuesto - calcularTotalGastos();
+    //return Presupuesto - calcularTotalGastos();
+    return Presupuesto - (calcularTotalGastos());
 }
 
 

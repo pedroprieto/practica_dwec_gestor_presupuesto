@@ -121,40 +121,45 @@ function repintar(){
     //Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información.
     //Puedes utilizar innerHTML para borrar el contenido de dicha capa
     let listadoGastosCompleto = document.getElementById(`listado-gastos-completo`);
-    listadoGastosCompleto.innerHTML = ` `;
+    listadoGastosCompleto.innerHTML = ``;
     
     //Mostrar el listado completo de gastos en div#listado-gastos-completo
     //(funciones listarGastos y mostrarGastoWeb)
     gesPres.listarGastos().forEach(gasto => {
         mostrarGastoWeb('listado-gastos-completo', gasto);
+        
     });
-}
-
-//repintar profesor clase 23
-/*
-function repintar() {
+    
+    /*
     let gastTotales = document.getElementById("gastos-totales");
-
     for (let gasto of gastos) {
         let div = document.createElement("div");
-        div.innerText = `${gasto.descripcion} - ${gasto.valor}`;
+        div.innerText =`${gasto.descripcion - $(gasto.valor)}`;
 
         let botonEditar = document.createElement("button");
         botonEditar.innerText = "Editar";
         div.append(botonEditar);
 
+        let editarElemento = new EditarHandle();
+        editarElemento.gasto = gasto;
+        botonEditar.addEventListener("click", editarElemento);
+
         let botonBorrar = document.createElement("button");
         botonBorrar.innerText = "Borrar";
         div.append(botonBorrar);
 
-        gastTotales.append(div);
-    }
-}
-*/
+        let borrarElemento = new BorrarHandle();
+        borrarElemento.gasto = gasto;
+        botonBorrar.addEventListener("click", borrarElemento);
 
-function actualizarPresupuestoWeb() {
+        gastTotales.append(div);
+    }       
+*/
+}
+
+    function actualizarPresupuestoWeb() {
     let nuevoPresupuesto = prompt('Introduce un nuevo presupuesto');
-    nuevoPresupuesto = Number(nuevoPresupuesto); //convertimos a número
+    nuevoPresupuesto = +nuevoPresupuesto ; //convertimos a número
     gesPres.actualizarPresupuesto(nuevoPresupuesto);
     repintar();
 }
@@ -169,7 +174,7 @@ function nuevoGastoWeb() {
     let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`);
     let etiquetasNuevo = prompt (`introduce etiquetas separadas por comas`);
 
-    valorNuevo = Number(valorNuevo);
+    valorNuevo = +valorNuevo; //convertimos a número
     let etiquetasArray = etiquetasNuevo.split(`,`);
 
     let nuevoGasto = {
@@ -188,6 +193,12 @@ buttonAnyadirGasto.addEventListener(`click`,nuevoGastoWeb);
 
 
 function EditarHandle(gasto) {
+/*
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode;
+    let formulario = plantillaFormulario.querySelector("form");
+    formulario.elements.descripcion.value = this.descripcion.descripcion;
+    formulario.elements.gasto.value = this.gasto.descripcion;
+*/
     this.gasto = gasto;
     //METODO
     EditarHandle.prototype.handleEvent = function() {
@@ -197,7 +208,7 @@ function EditarHandle(gasto) {
     let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`, this.gasto.fecha);
     let etiquetasNuevo = prompt (`introduce etiquetas separadas por comas`, this.gasto.etiquetas.join(','));
 
-    valorNuevo = Number(valorNuevo);
+    valorNuevo = +valorNuevo;
     let etiquetasArray = etiquetasNuevo.split(`,`);
     
     this.gasto.actualizarDescripcion(descripcionNuevo);
@@ -254,12 +265,13 @@ function enviarAnyadirGasto(event) {
     event.preventDefault();
 
     //recoger datos del formulario
-    let formularioRellenado = event.currentTarget;
+    let formularioRellenado = event.target;
     let descripcion = formularioRellenado.elements.descripcion.value;
     let valor = formularioRellenado.elements.valor.value;
-    let fecha = formularioRellenado.elements.fecha.value;
+    let fecha = formularioRellenado.elements.fecha.value.toLocaleString();
     let etiquetas = formularioRellenado.elements.etiquetas.value;
     let etiquetasArray = etiquetas.split(`,`);
+    //alert(`fecha fuera de objeto es ${fecha}`);
 
     let nuevoGasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetasArray);
     gesPres.anyadirGasto(nuevoGasto);
