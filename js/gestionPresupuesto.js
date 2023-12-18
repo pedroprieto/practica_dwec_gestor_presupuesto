@@ -85,8 +85,18 @@ function filtrarGastos(filtros) {
     })
 }
 
-function agruparGastos() {
-
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {
+ let gastosFiltrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+ return gastosFiltrados.reduce(function(acumulador, gasto){
+    let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+    if (acumulador[periodoAgrupacion]) {
+        acumulador[periodoAgrupacion] += gasto.valor;
+    }
+    else {
+        acumulador[periodoAgrupacion] = gasto.valor;
+    }
+    return acumulador;
+ }, {})
 }
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -141,19 +151,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
     this.obtenerPeriodoAgrupacion = function (periodo) {
         let fechaGasto = new Date(this.fecha);
-        let resultado = "";
         switch(periodo) {
             case "dia":
-                resultado = fechaGasto.toISOString().slice(0, 10);
-                break;
+                return fechaGasto.toISOString().slice(0, 10);
             case "mes":
-                resultado = fechaGasto.toISOString().slice(0, 7);
-                break;
+                return fechaGasto.toISOString().slice(0, 7);
             case "anyo":
-                resultado = fechaGasto.toISOString().slice(0, 4);
-                break;
+                return fechaGasto.toISOString().slice(0, 4);
             default:
-                console.error("El periodo puede ser: dia, mes o anyo.");
+                return fechaGasto.toISOString().slice(0, 7);
         }
         return resultado;
     }
