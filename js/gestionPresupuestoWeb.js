@@ -1,7 +1,7 @@
-import * as gestorPresu from '/js/gestionPresupuesto.js';
+import * as gestorPresu from './gestionPresupuesto.js';
 
-function mostrarDatoEnId(id, valor) {
-    document.getElementById(id).innerText = valor;
+function mostrarDatoEnId(idElemento, valor) {
+    document.getElementById(idElemento).innerText = valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto) {
@@ -36,15 +36,9 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     // Agrega etiquetas
     for (let etiqueta of gasto.etiquetas) {
-        etiqueta = gasto.etiquetas[i];
         let divEtiqueta = document.createElement('span');
         divEtiqueta.className = "gasto-etiquetas-etiqueta";
         divEtiqueta.append(`${etiqueta},`)
-
-        // Evita agregar una coma al final del último elemento
-        if (i < gasto.etiquetas.length - 1) {
-            divEtiqueta.append(', ');
-        }
 
         divGasEtiquetas.append(divEtiqueta);
     }
@@ -72,6 +66,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     h1Periodo.innerText = `Gastos agrupados por ${periodo}`;
     divAgrupacion.append(h1Periodo);
 
+    elementoObjetivo.append(divAgrupacion);
+    let gastosAgrupados = gestorPresu.agruparGastos(periodo)
     // Itera sobre las propiedades del objeto agrup
     for (let clave in agrup) {
         if (Object.prototype.hasOwnProperty.call(agrup, clave)) {
@@ -97,11 +93,32 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
             divAgrupacion.append(divAgrupacionDato);
         }
     }
-
+    
     // Agrega el divAgrupacion al elemento objetivo
     elementoObjetivo.append(divAgrupacion);
 }
-function repintar() { }
+
+function repintar() { 
+    let mostrarPresupuesto = gestorPresu.mostrarPresupuesto()
+    mostrarDatoEnId("presupuesto", mostrarPresupuesto)
+
+    let totalGasto = gestorPresu.calcularTotalGastos()
+    mostrarDatoEnId("gastos-totales", totalGasto)
+
+    let blanceTotal = gestorPresu.calcularBalance()
+    mostrarDatoEnId("balance-total", blanceTotal)
+
+    let divlistadogastocompleto = document.getElementById("listado-gastos-completo")
+    divlistadogastocompleto.innerHTML = " "
+
+    let listarGasto = gestorPresu.listarGastos()
+
+    for (let gasto of listarGasto) {
+
+        mostrarGastoWeb("listado-gastos-completo", gasto)
+
+    }
+}
 function actualizarPresupuestoWeb() { }
 function nuevoGastoWeb() { }
 function EditarHandle() { }

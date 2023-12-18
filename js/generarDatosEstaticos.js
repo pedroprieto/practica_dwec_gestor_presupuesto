@@ -1,15 +1,15 @@
-import * as gestionPresupuesto from "./gestionPresupuesto.js";
-import * as gestionPresupuestoWeb from "./gestionPresupuestoWeb.js";
+console.log("generarDatosEstaticos")
+
+import * as gestionPresupuesto from '/js/gestionPresupuesto.js';
+import * as gestionPresupuestoWeb from '/js/gestionPresupuestoWeb.js';
+
+gestionPresupuesto.actualizarPresupuesto(1500)
+let mostrarPres = gestionPresupuesto.mostrarPresupuesto()
+gestionPresupuestoWeb.mostrarDatoEnId("presupuesto", mostrarPres)
 
 
-gestionPresupuesto.actualizarPresupuesto(1500);
 
-//gestionPresupuestoWeb.mostrarGastoWeb();
-let presupuesto = gestionPresupuesto.mostrarPresupuesto();
-gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', presupuesto);
-
-
-//Creo gastos "Estaticos"
+//Crear gasto 
 
 let gasto1 = new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gasto2 = new gestionPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -18,7 +18,8 @@ let gasto4 = new gestionPresupuesto.CrearGasto("Gasolina", 60.42, "2021-10-08", 
 let gasto5 = new gestionPresupuesto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
 let gasto6 = new gestionPresupuesto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
-//Añado gasto
+//Añysadri gasto
+
 gestionPresupuesto.anyadirGasto(gasto1)
 gestionPresupuesto.anyadirGasto(gasto2)
 gestionPresupuesto.anyadirGasto(gasto3)
@@ -27,15 +28,16 @@ gestionPresupuesto.anyadirGasto(gasto5)
 gestionPresupuesto.anyadirGasto(gasto6)
 
 
-let calculobalance = gestionPresupuesto.calcularBalance()
-gestionPresupuestoWeb.mostrarDatoEnId(calculobalance, "balance-total")
-
 let calculoGastosTotasles = gestionPresupuesto.calcularTotalGastos()
-gestionPresupuestoWeb.mostrarDatoEnId(calculoGastosTotasles, "gastos-totales")
+gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales", calculoGastosTotasles)
+
+let calculobalance = gestionPresupuesto.calcularBalance()
+gestionPresupuestoWeb.mostrarDatoEnId("balance-total", calculobalance)
 
 let listarGast = gestionPresupuesto.listarGastos()
 
-for (let i = 0; i < listarGast.length; i++) {
+
+for (let gast of listarGast) {
 
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gast)
 }
@@ -49,11 +51,13 @@ for (let gast of gastosFiltrados1) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gast);
 }
 
+
 let gastosFiltrados2 = gestionPresupuesto.filtrarGastos({ valorMaximo: 50 });
 
 for (let gast of gastosFiltrados2) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gast);
 }
+
 
 let gastosFiltrados3 = gestionPresupuesto.filtrarGastos({ valorMaximo: 200, etiquetasTiene: ["seguros"] });
 
@@ -67,7 +71,8 @@ for (let gast of gastosFiltrados4) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gast);
 }
 
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", "dia");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", "mes");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", "anyo");
-export * from './generarDatosEstaticos.js';
+
+gestionPresupuestoWeb.mostrarGastoAgrupadosWeb("agrupacion-dia", "día")
+gestionPresupuestoWeb.mostrarGastoAgrupadosWeb("agrupacion-mes", "mes")
+gestionPresupuestoWeb.mostrarGastoAgrupadosWeb("agrupacion-anyo", "año")
+
