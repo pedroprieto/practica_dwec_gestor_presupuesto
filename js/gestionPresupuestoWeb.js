@@ -67,7 +67,7 @@ function mostrarGastoWeb (idElemento, gasto){
       for (let a in agrup){
         estructuraHTML += `
           <div class="agrupacion-dato">
-            <span class="agrupacion-dato-clave">${a}</span>
+            <span class="agrupacion-dato-clave">${a}: </span>
             <span class="agrupacion-dato-valor">${agrup[a]}</span>
           </div>`;
       }
