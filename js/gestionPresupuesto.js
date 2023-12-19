@@ -84,7 +84,6 @@ function filtrarGastos(filtros) {
         return true;
     })
 }
-
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {
  let gastosFiltrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
  return gastosFiltrados.reduce(function(acumulador, gasto){
@@ -93,7 +92,6 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta ) {
     return acumulador;
  }, {})
 }
-
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //propiedades
     this.descripcion = descripcion;
@@ -116,7 +114,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
         texto += "Fecha: " + fechaLocale.toLocaleString() + "\n";
         texto += "Etiquetas:\n";
-        for (let e of etiquetas) {
+        for (let e of this.etiquetas) {
             texto += `- ${e}\n`;
         }
         return texto;
