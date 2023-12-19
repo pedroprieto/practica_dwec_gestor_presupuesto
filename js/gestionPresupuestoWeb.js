@@ -4,6 +4,7 @@ function mostrarDatoEnId(idElemento, valor){
     let elemento = document.getElementById(idElemento);
     elemento.innerText = valor;
     }
+
     
 function mostrarGastoWeb(idElemento, gasto) {
 
@@ -45,10 +46,8 @@ function mostrarGastoWeb(idElemento, gasto) {
         let borrarEtiquetasHandle = new BorrarEtiquetasHandle(gasto, etiqueta);
         etiquetaSpan.addEventListener('click', borrarEtiquetasHandle);
     });
-
     
     elemento.append(nuevoGastoDiv);
-
 
     //cree dos botones para editar y borrar el gasto y añada los manejadores de eventos
     //necesarios para realizar las acciones de edición y borrado de gastos y borrado de etiquetas.
@@ -176,6 +175,7 @@ function nuevoGastoWeb() {
 let buttonAnyadirGasto = document.getElementById(`anyadirgasto`);
 buttonAnyadirGasto.addEventListener(`click`,nuevoGastoWeb);
 
+
 function EditarHandle(gasto) {
     this.gasto = gasto;
     //METODO
@@ -230,9 +230,20 @@ function envioEdicionHandle() {
     this.handleEvent = function(event) {
         event.preventDefault();
         //Lógica para actualizar el gasto pasado en this.gasto que nos han pasado.
-        let valorNuevo = event.this.gasto
         
+        let formulario = event.target;
+        let descripcionFormularioGasto = formulario.elements.descripcion.value;
+        let valorFormularioGasto = Number(formulario.elements.valor.value);
+        let fechaFormularioGasto = formulario.elements.fecha.value;
+        let etiquetasFormularioGasto = formulario.elements.etiquetas.value;
         
+        let arrFormularioGasto = etiquetasFormularioGasto.split(",");
+    
+        this.gasto.actualizarDescripcion(descripcionFormularioGasto);
+        this.gasto.actualizarValor(valorFormularioGasto);
+        this.gasto.actualizarFecha(fechaFormularioGasto);
+        this.gasto.anyadirEtiquetas(...arrFormularioGasto);
+    
         repintar();
     }
 }
@@ -270,10 +281,8 @@ function nuevoGastoWebFormulario(event) {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let formulario = plantillaFormulario.querySelector("form");
 
-    // ?
     let controlesPrincipales = document.getElementById(`controlesprincipales`);
     controlesPrincipales.append(plantillaFormulario);
-    //
 
     // manejador de evento para el evento submit del formulario
     formulario.addEventListener("submit", enviarAnyadirGasto);
@@ -284,6 +293,7 @@ function nuevoGastoWebFormulario(event) {
 
 function enviarAnyadirGasto(event) {
     event.preventDefault();
+    
     //recoger datos del formulario
     let formularioRellenado = event.target;
     let descripcion = formularioRellenado.elements.descripcion.value;
