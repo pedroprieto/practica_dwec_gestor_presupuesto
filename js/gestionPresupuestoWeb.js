@@ -46,6 +46,7 @@ function mostrarGastoWeb(idElemento, gasto) {
         etiquetaSpan.addEventListener('click', borrarEtiquetasHandle);
     });
 
+    
     elemento.append(nuevoGastoDiv);
 
 
@@ -73,6 +74,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     eventBorrar.gasto = gasto;
     botonBorrar.addEventListener(`click`, eventBorrar);
     nuevoGastoDiv.append(botonBorrar);
+
+    //práctica6 - botón EditarFormulario
+    let botonEditarFormulario = document.createElement("button");
+    botonEditarFormulario.type = `button`;
+    botonEditarFormulario.className = `gasto-editar-formulario`;
+    botonEditarFormulario.innerText = `Editar (formulario)`;
+    nuevoGastoDiv.append(botonEditarFormulario);
+        //nuevo objeto
+    let editarElemento = new EditarHandleformulario();
+    editarElemento.gasto = gasto;
+    botonEditarFormulario.addEventListener("click", editarElemento);
 }
 
 
@@ -123,38 +135,11 @@ function repintar(){
     let listadoGastosCompleto = document.getElementById(`listado-gastos-completo`);
     listadoGastosCompleto.innerHTML = ``;
     
-    //Mostrar el listado completo de gastos en div#listado-gastos-completo
-    //(funciones listarGastos y mostrarGastoWeb)
     gesPres.listarGastos().forEach(gasto => {
-        mostrarGastoWeb('listado-gastos-completo', gasto);
-        
-    });
-    
-    /*
-    let gastTotales = document.getElementById("gastos-totales");
-    for (let gasto of gastos) {
         let div = document.createElement("div");
-        div.innerText =`${gasto.descripcion - $(gasto.valor)}`;
-
-        let botonEditar = document.createElement("button");
-        botonEditar.innerText = "Editar";
-        div.append(botonEditar);
-
-        let editarElemento = new EditarHandle();
-        editarElemento.gasto = gasto;
-        botonEditar.addEventListener("click", editarElemento);
-
-        let botonBorrar = document.createElement("button");
-        botonBorrar.innerText = "Borrar";
-        div.append(botonBorrar);
-
-        let borrarElemento = new BorrarHandle();
-        borrarElemento.gasto = gasto;
-        botonBorrar.addEventListener("click", borrarElemento);
-
-        gastTotales.append(div);
-    }       
-*/
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+        listadoGastosCompleto.append(div);
+    })
 }
 
     function actualizarPresupuestoWeb() {
@@ -174,7 +159,7 @@ function nuevoGastoWeb() {
     let fechaNuevo = prompt (`introduce fecha en formato yyyy-mm-dd`);
     let etiquetasNuevo = prompt (`introduce etiquetas separadas por comas`);
 
-    valorNuevo = +valorNuevo; //convertimos a número
+    valorNuevo = Number(valorNuevo); //convertimos a número
     let etiquetasArray = etiquetasNuevo.split(`,`);
 
     let nuevoGasto = {
@@ -186,19 +171,12 @@ function nuevoGastoWeb() {
     gesPres.anyadirGasto(nuevoGasto);
     repintar();
 }
+
 //evento click del botón anyadirgasto mediante addEventListener
 let buttonAnyadirGasto = document.getElementById(`anyadirgasto`);
 buttonAnyadirGasto.addEventListener(`click`,nuevoGastoWeb);
 
-
-
 function EditarHandle(gasto) {
-/*
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode;
-    let formulario = plantillaFormulario.querySelector("form");
-    formulario.elements.descripcion.value = this.descripcion.descripcion;
-    formulario.elements.gasto.value = this.gasto.descripcion;
-*/
     this.gasto = gasto;
     //METODO
     EditarHandle.prototype.handleEvent = function() {
@@ -222,6 +200,52 @@ function EditarHandle(gasto) {
     }
 }
 
+function EditarHandleformulario(){
+    this.handleEvent = function(event) {
+        event.target.disabled = true; //event.target es el botón "Editar (formulario)"
+
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);   
+        let formulario = plantillaFormulario.querySelector("form");
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        //no funciona formulario.elements.fecha.value = this.gasto.fecha.toLocaleString();
+
+        //Botón enviar de "Editar (formulario)"
+        let manejadorEnvioEdicion = new envioEdicionHandle();
+        manejadorEnvioEdicion.gasto = this.gasto;
+        formulario.addEventListener("submit", manejadorEnvioEdicion);
+
+    
+        //Botón cancelar de "Editar (formulario)"
+        let botonCancelar = formulario.querySelector(".cancelar");
+        let manejadorCerrar = new cancelarEditarFormulario();
+        manejadorCerrar.botonEditar = event.target;
+        botonCancelar.addEventListener("click", manejadorCerrar);
+
+        event.target.parentElement.append(plantillaFormulario);
+    }
+}
+
+function envioEdicionHandle() {
+    this.handleEvent = function(event) {
+        event.preventDefault();
+        //Lógica para actualizar el gasto pasado en this.gasto que nos han pasado.
+        let valorNuevo = event.this.gasto
+        
+        
+        repintar();
+    }
+}
+
+
+function cancelarEditarFormulario() {
+        this.handleEvent = function(event) {
+        event.target.form.remove();
+        this.botonEditar.disabled = false;
+    }
+} 
+
+
 function BorrarHandle(gasto){
     this.gasto = gasto;
     BorrarHandle.prototype.handleEvent = function() {
@@ -240,8 +264,6 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
     }
 }
 
-//FORMULARIOS, DESDE LA CLASE ÚLTIMA 23/11
-
 function nuevoGastoWebFormulario(event) {
 
     event.target.disabled = true; //event.target es el botón de añadir
@@ -257,33 +279,30 @@ function nuevoGastoWebFormulario(event) {
     formulario.addEventListener("submit", enviarAnyadirGasto);
     
     let botonCancelar = formulario.querySelector(".cancelar");
-    botonCancelar.addEventListener("click", cerrarAnyadirGasto);
-    
+    botonCancelar.addEventListener("click", cancelarAnyadirGasto);
 }
 
 function enviarAnyadirGasto(event) {
     event.preventDefault();
-
     //recoger datos del formulario
     let formularioRellenado = event.target;
     let descripcion = formularioRellenado.elements.descripcion.value;
     let valor = formularioRellenado.elements.valor.value;
-    let fecha = formularioRellenado.elements.fecha.value.toLocaleString();
+    let fecha = formularioRellenado.elements.fecha.value;
     let etiquetas = formularioRellenado.elements.etiquetas.value;
     let etiquetasArray = etiquetas.split(`,`);
-    //alert(`fecha fuera de objeto es ${fecha}`);
 
+    valor = Number(valor);
     let nuevoGasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetasArray);
     gesPres.anyadirGasto(nuevoGasto);
     repintar();
 
-    // event.target es el formulario
+    // event.target es el formularioRellenado
     event.target.remove();
     document.getElementById("anyadirgasto-formulario").disabled = false;
-
 }
 
-function cerrarAnyadirGasto(event) {
+function cancelarAnyadirGasto(event) {
     event.target.form.remove();
     document.getElementById("anyadirgasto-formulario").disabled = false;
 }
