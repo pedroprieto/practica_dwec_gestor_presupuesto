@@ -17,7 +17,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     //Creamos el contenedor <div class="gasto-fecha">
     let fecha = document.createElement("div");
     fecha.className = "gasto-fecha";
-    fecha.textContent = gasto.fecha.getTime();
+    fecha.textContent = gasto.fecha;
     contenedor_gasto.append(fecha);
     //Creamos el contenedor <div class="gasto-valor">
     let valor = document.createElement("div");
@@ -31,13 +31,35 @@ function mostrarGastoWeb(idElemento, gasto) {
     for (let e of gasto.etiquetas) { //*Creamos un contenedor para cada etiqueta
         let etiqueta = document.createElement("span");
         etiqueta.className = "gasto-etiquetas-etiqueta";
-        etiqueta.textContent = e.value;
+        etiqueta.textContent = e;
         etiquetas.append(etiqueta);
     }
 }
-
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
-    
+    let elemento = document.getElementById(idElemento);
+    let divAgrupacion = document.createElement("div");
+    divAgrupacion.className = "agrupacion";
+    elemento.append(divAgrupacion);
+
+    let header = document.createElement("h1");
+    header.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrupacion.append(header);
+
+    for (let elem of agrup) {
+        let divDato = document.createElement("div");
+        divDato.className = "agrupacion-dato";
+        divAgrupacion.append(divDato);
+
+        let spanClave = document.createElement("span");
+        spanClave.className = "agrupacion-dato-clave";
+        spanClave.textContent = elem;
+        divDato.append(spanClave);
+
+        let spanValor = document.createElement("span");
+        spanValor.className = "agrupacion-dato-valor";
+        spanValor.textContent = agrup[elem];
+        divDato.append(spanValor);
+    }
 }
 export {
     mostrarDatoEnId,

@@ -22,3 +22,32 @@ gestionPresupuesto.anyadirGasto(gasto6);
 gestionPresupuestosWeb.mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
 //*Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
 gestionPresupuestosWeb.mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
+//*Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+let gastos = gestionPresupuesto.listarGastos();
+for (let gasto of gastos) {
+    gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+//*Mostrar el listado de gastos realizados en septiembre de 2021
+//* en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
+let gastosF1 = gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" });
+for (let g of gastosF1) {
+    gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-filtrado-1", g);
+}
+//* Mostrar el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2
+//* (funciones filtrarGastos y mostrarGastoWeb)
+let gastosF2 = gestionPresupuesto.filtrarGastos({valorMinimo: 50 });
+for (let g of gastosF2) {
+    gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-filtrado-2", g);
+}
+//* Mostrar el listado de gastos de más de 200€ con etiqueta seguros
+//* en div#listado-gastos-filtrado-3 (funciones filtrarGastos y mostrarGastoWeb)
+let gastosF3 = gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"] });
+for (let g of gastosF3) {
+    gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-filtrado-3", g);
+}
+//* Mostrar el listado de gastos que tengan las etiquetas comida o transporte de
+//* menos de 50€ en div#listado-gastos-filtrado-4 (funciones filtrarGastos y mostrarGastoWeb)
+let gastosF4 = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]});
+for (let g of gastosF4) {
+    gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
+}

@@ -96,7 +96,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     //propiedades
     this.descripcion = descripcion;
     this.valor = typeof(valor)==='number' && valor >= 0 ? valor : 0;
-    this.etiquetas = etiquetas.length > 0 ? etiquetas : [];
+    this.etiquetas = Array.isArray(etiquetas) ? etiquetas : [];
     this.fecha = !isNaN(Date.parse(fecha)) ? Date.parse(fecha) : new Date().getTime();
 
     //métodos
