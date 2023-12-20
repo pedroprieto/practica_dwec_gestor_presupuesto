@@ -26,6 +26,9 @@ gestionPresupuestosWeb.mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "ba
 let gastos = gestionPresupuesto.listarGastos();
 for (let gasto of gastos) {
     gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+    let divGastos = document.getElementById("listado-gastos-completo").lastChild;
+    let botonEditar = gestionPresupuestosWeb.anyadirBotonEditar(gasto);
+    divGastos.append(botonEditar);
 }
 //*Mostrar el listado de gastos realizados en septiembre de 2021
 //* en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
