@@ -29,6 +29,7 @@ for (let gasto of gastos) {
     let divGastos = document.getElementById("listado-gastos-completo").lastChild;
     let botonEditar = gestionPresupuestosWeb.anyadirBotonEditar(gasto);
     let botonBorrar = gestionPresupuestosWeb.anyadirBotonBorrar(gasto);
+    gestionPresupuestosWeb.anyadirBorrarEtiquetaHandle(divGastos, gasto);
     divGastos.append(botonEditar, botonBorrar);
 }
 //*Mostrar el listado de gastos realizados en septiembre de 2021

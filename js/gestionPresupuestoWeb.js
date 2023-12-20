@@ -103,6 +103,7 @@ function repintar () {
         let divGastos = document.getElementById("listado-gastos-completo").lastChild;
         let botonEditar = anyadirBotonEditar(gasto);
         let botonBorrar = anyadirBotonBorrar(gasto);
+        anyadirBorrarEtiquetaHandle(divGastos, gasto);
         divGastos.append(botonEditar, botonBorrar);
     }
 }
@@ -193,8 +194,26 @@ BorrarHandle.prototype.handleEvent = function () {
         repintar();
     }
 };
-
-
+//^ Definición de la función constructora BorrarEtiquetasHandle:
+function BorrarEtiquetasHandle() {}
+//^Haciendo el prototipo de BorrarEtiquetasHandle:
+// Método handleEvent para el borrado de las  etiquetas del gasto
+BorrarEtiquetasHandle.prototype.handleEvent = function () {
+    // Verificar si hay un gasto asignado
+    if (!this.gasto) {
+        console.error("No se ha asignado un gasto para borrar sus etiquetas.");
+        return;
+    }
+    // Preguntar si el usuario está seguro si quiere borrar la etiqueta del gasto
+    let tituloEtiqueta = this.etiqueta;
+    let respuestaUsuario = confirm("¿Usted está seguro que quiere borrar la etiqueta?\n" + tituloEtiqueta);
+    if (respuestaUsuario) {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+    }
+        // Llamar a la función repintar para actualizar la lista de gastos
+        repintar();  
+};
+//! Creación de botónes con las clases y manejadores de eventos requeridos:
 //^ esta función crea y devuelve un botón para editar el gasto.
 function anyadirBotonEditar(gasto) {
     // Crea el botón Editar
@@ -225,6 +244,22 @@ function anyadirBotonBorrar(gasto) {
     // Agrega el botón al contenedor del gasto
     return botonBorrar;
 }
+//^ La función que añade manejadoras de las etiquetas al contenedor (div/span) dado al gasto definido:
+function anyadirBorrarEtiquetaHandle(elementoHtml, gasto) {
+    // Obtén todas las etiquetas dentro del elementoHtml
+    let etiquetasGasto = elementoHtml.getElementsByClassName("gasto-etiquetas-etiqueta");
+    // Itera sobre cada etiqueta y añade el manejador de eventos
+    for (let i = 0; i < etiquetasGasto.length; i++) {
+        let etiqueta = etiquetasGasto[i];
+        // Crea una instancia de BorrarEtiquetasHandle
+        let borrarEtiquetasHandle = new BorrarEtiquetasHandle();
+        // Asigna el gasto y la etiqueta al objeto handler
+        borrarEtiquetasHandle.gasto = gasto;
+        borrarEtiquetasHandle.etiqueta = etiqueta.textContent;
+        // Configura el manejador de eventos utilizando el método handleEvent de BorrarEtiquetasHandle
+        etiqueta.addEventListener("click", borrarEtiquetasHandle);
+    }
+}
 //^ manejadores de eventos globales:
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
@@ -236,5 +271,6 @@ export {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     anyadirBotonEditar,
-    anyadirBotonBorrar
+    anyadirBotonBorrar,
+    anyadirBorrarEtiquetaHandle
 }
