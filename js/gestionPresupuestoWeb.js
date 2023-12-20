@@ -267,8 +267,9 @@ function SubmitHandleFormulario(){
   this.handleEvent = function(e){
     e.preventDefault();
     this.gasto.descripcion = descripcion.value;
-    this.gasto.valor = valor.value;
+    this.gasto.valor = parseFloat(valor.value);
     this.gasto.fecha = new Date(fecha.value).toLocaleString("es-ES", {year: "numeric", month: "long", day: "numeric"});
+    this.gasto.etiquetas = etiquetas.value.split(",");
     repintar();
   }
 
