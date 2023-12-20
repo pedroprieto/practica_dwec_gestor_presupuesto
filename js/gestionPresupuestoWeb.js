@@ -92,7 +92,7 @@ function ManejadorCancelarFormulario(boton){
   this.handleEvent = function(){
     let eliminado = document.querySelector("form");
     eliminado.remove();    
-    boton.disabled = false;
+    boton.removeAttribute("disabled");
   }
   
 }
