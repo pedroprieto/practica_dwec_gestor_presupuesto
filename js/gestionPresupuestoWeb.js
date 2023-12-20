@@ -265,6 +265,46 @@ let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto"
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 let botonAnyadirGasto = document.getElementById("anyadirgasto");
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
+
+let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+var formulario = plantillaFormulario.querySelector("form");
+let controlesPrincipales = document.getElementById("controlesprincipales");
+
+function nuevoGastoWebFormulario () {
+
+    controlesPrincipales.appendChild(formulario);
+    //crear botones "Enviar" y "Cancelar"
+    let botonEnviar = formulario.querySelector("button[type='submit']");
+    let botonCancelar = document.getElementsByClassName("cancelar")[0];
+    botonAnyadirGastoForm.disabled = true;
+    botonEnviar.addEventListener("click", botonEnviarClick)
+    botonCancelar.addEventListener("click", botonCancelarClick)
+
+}
+function botonEnviarClick(event) {
+    event.preventDefault();
+    botonAnyadirGastoForm.disabled = false;
+    let descripcionGasto = formulario.querySelector("#descripcion");
+    let valorGasto = formulario.querySelector("#valor"); 
+    let fechaGasto = formulario.querySelector("#fecha");
+    let etiquetasGasto = formulario.querySelector("#etiquetas");
+    let etiquetasGastoArray = etiquetasGasto.value.split(', ');
+    controlesPrincipales.lastElementChild.remove();
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcionGasto.value, parseFloat(valorGasto.value), fechaGasto.value, ...etiquetasGastoArray)
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+    descripcionGasto.value = '';
+    valorGasto.value = '';
+    fechaGasto.value = '';
+    etiquetasGasto.value = '';
+    repintar();
+}
+function botonCancelarClick() {
+    botonAnyadirGastoForm.disabled = false;
+    controlesPrincipales.lastElementChild.remove();
+}
+
 
 export {
     mostrarDatoEnId,
