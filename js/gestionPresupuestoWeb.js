@@ -42,22 +42,40 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     elemento.append(divAgrupacion);
 
     let header = document.createElement("h1");
-    header.textContent = `Gastos agrupados por ${periodo}`;
+    let nombrePeriodo = ""; //! nombre del periodo en español (anyo -> año, dia -> día)
+    switch (periodo) {
+        case "anyo":
+            nombrePeriodo = "año";
+            break;
+        case "dia":
+            nombrePeriodo = "día";
+            break;
+        default:
+            nombrePeriodo = "mes";
+            break;
+    }
+    header.textContent = "Gastos agrupados por " + nombrePeriodo;
     divAgrupacion.append(header);
 
-    for (let elem of agrup) {
+    let arrayAgrup = Object.entries(agrup); //! Convertiendo el objeto agrup al array iterable
+    // ^ agrup = {
+    // ^ "2021-09": 5, => arrayAgrup = [["2021-09", 5], ["2021-10", 39]]
+    // ^ "2021-10": 39
+    // ^ }
+
+    for (let [clave, valor] of arrayAgrup) {
         let divDato = document.createElement("div");
         divDato.className = "agrupacion-dato";
         divAgrupacion.append(divDato);
 
         let spanClave = document.createElement("span");
         spanClave.className = "agrupacion-dato-clave";
-        spanClave.textContent = elem;
+        spanClave.textContent = clave;
         divDato.append(spanClave);
 
         let spanValor = document.createElement("span");
         spanValor.className = "agrupacion-dato-valor";
-        spanValor.textContent = agrup[elem];
+        spanValor.textContent = valor;
         divDato.append(spanValor);
     }
 }

@@ -51,3 +51,12 @@ let gastosF4 = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene
 for (let g of gastosF4) {
     gestionPresupuestosWeb.mostrarGastoWeb("listado-gastos-filtrado-4", g);
 }
+//* Mostrar el total de gastos agrupados por día en div#agrupacion-dia
+//*  (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "dia");
+//* Mostrar el total de gastos agrupados por mes en div#agrupacion-mes
+//*  (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+//* Mostrar el total de gastos agrupados por año en div#agrupacion-anyo
+//*  (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
