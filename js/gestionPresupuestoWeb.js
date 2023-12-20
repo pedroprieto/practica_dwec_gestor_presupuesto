@@ -102,7 +102,8 @@ function repintar () {
         mostrarGastoWeb("listado-gastos-completo", gasto);
         let divGastos = document.getElementById("listado-gastos-completo").lastChild;
         let botonEditar = anyadirBotonEditar(gasto);
-        divGastos.append(botonEditar);
+        let botonBorrar = anyadirBotonBorrar(gasto);
+        divGastos.append(botonEditar, botonBorrar);
     }
 }
 function actualizarPresupuestoWeb () {
@@ -139,10 +140,10 @@ function nuevoGastoWeb () {
     //* Llamar a la función repintar para que se muestre la lista con el nuevo gasto.
     repintar();  
 }
-
-//^ Definición de la función constructora:
+//! HANDLERS *******************************
+//^ Definición de la función constructora EditarHandle:
 function EditarHandle() {}
-//^Haciendo el prototipo:
+//^Haciendo el prototipo de EditarHandle:
 // Método handleEvent para la edición del gasto
 EditarHandle.prototype.handleEvent = function () {
     // Verificar si hay un gasto asignado
@@ -171,6 +172,29 @@ EditarHandle.prototype.handleEvent = function () {
     // Llamar a la función repintar para actualizar la lista de gastos
     repintar();
 };
+
+//^ Definición de la función constructora BorrarHandle:
+function BorrarHandle() {}
+//^Haciendo el prototipo de BorrarHandle:
+// Método handleEvent para el borrado del gasto
+BorrarHandle.prototype.handleEvent = function () {
+    // Verificar si hay un gasto asignado
+    if (!this.gasto) {
+        console.error("No se ha asignado un gasto para borrar.");
+        return;
+    }
+    // Preguntar si el usuario está seguro si quiere borrar el gasto
+    let infoGasto = this.gasto.mostrarGastoCompleto();
+    let confirmacionUsuario = confirm("¿Usted está seguro que quiere borrar el gasto?\n" + infoGasto);
+    if (confirmacionUsuario) {
+        let idGastoBorrado = this.gasto.id;
+        gestionPresupuesto.borrarGasto(idGastoBorrado);
+        // Llamar a la función repintar para actualizar la lista de gastos
+        repintar();
+    }
+};
+
+
 //^ esta función crea y devuelve un botón para editar el gasto.
 function anyadirBotonEditar(gasto) {
     // Crea el botón Editar
@@ -186,7 +210,21 @@ function anyadirBotonEditar(gasto) {
     // Agrega el botón al contenedor del gasto
     return botonEditar;
 }
-
+//^ esta función crea y devuelve un botón para borrar el gasto.
+function anyadirBotonBorrar(gasto) {
+    // Crea el botón Borrar
+    let botonBorrar = document.createElement("button");
+    botonBorrar.className = "gasto-borrar";
+    botonBorrar.textContent = "Borrar";
+    // Crea una instancia de la función constructora BorrarHandle
+    let borrarHandle = new BorrarHandle();
+    // Asigna el gasto al objeto BorrarHandle
+    borrarHandle.gasto = gasto;
+    // Configura el event handler usando el método handleEvent de BorrarHandle
+    botonBorrar.addEventListener("click", borrarHandle);
+    // Agrega el botón al contenedor del gasto
+    return botonBorrar;
+}
 //^ manejadores de eventos globales:
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
@@ -197,5 +235,6 @@ export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    anyadirBotonEditar
+    anyadirBotonEditar,
+    anyadirBotonBorrar
 }
