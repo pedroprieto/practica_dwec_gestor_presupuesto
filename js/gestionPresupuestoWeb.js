@@ -62,26 +62,33 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     divAgrupacion.className = "agrupacion";
 
     // Creo elemento h1 para mostrar el periodo
-    let h1Periodo = document.createElement('h1');
-    h1Periodo.innerText = `Gastos agrupados por ${periodo}`;
+    let periodo1 = "mes";
+    if (periodo == "dia") {
+        periodo1 = "día";
+    } else if (periodo == "anyo") {
+        periodo1 = "año";
+    }
+
+    let h1Periodo = document.createElement("h1");
+    h1Periodo.innerText = `Gastos agrupados por ${periodo1}`;
     divAgrupacion.append(h1Periodo);
 
-    elementoObjetivo.append(divAgrupacion);
-    let gastosAgrupados = gestorPresu.agruparGastos(periodo)
+  
+ 
     // Itera sobre las propiedades del objeto agrup
     for (let clave in agrup) {
         if (Object.prototype.hasOwnProperty.call(agrup, clave)) {
             // Crea el elemento div para cada propiedad
-            let divAgrupacionDato = document.createElement('div');
+            let divAgrupacionDato = document.createElement("div");
             divAgrupacionDato.className = "agrupacion-dato";
 
             // Crea el elemento span para la clave (nombre de la propiedad)
-            let spanClave = document.createElement('span');
+            let spanClave = document.createElement("span");
             spanClave.className = "agrupacion-dato-clave";
             spanClave.innerText = clave;
 
             // Crea el elemento span para el valor (cantidad)
-            let spanValor = document.createElement('span');
+            let spanValor = document.createElement("span");
             spanValor.className = "agrupacion-dato-valor";
             spanValor.innerText = agrup[clave];
 
@@ -122,11 +129,11 @@ function repintar() {
 function actualizarPresupuestoWeb() { }
 function nuevoGastoWeb() { }
 function EditarHandle() { }
-function BorrarHandle() { }
+function BorrarHandle() { } 
 function BorrarEtiquetasHandle() { }
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
+    mostrarGastosAgrupadosWeb
 };
