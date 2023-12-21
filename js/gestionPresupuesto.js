@@ -199,8 +199,8 @@ function filtrarGastos(buscarPorFecha) {
         })
 }
 function transformarListadoEtiquetas(etiquetas){
-    let etiquetasTieneTransformar = etiquetas.match(/[w]+/gi);
-    return etiquetasTieneTransformar;
+    let etiquetasTieneTransf = etiquetas.match(/[\w]+/gi);
+    return etiquetasTieneTransf;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.

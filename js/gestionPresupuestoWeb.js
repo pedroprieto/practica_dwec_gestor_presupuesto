@@ -287,18 +287,37 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
   }
 }
 
-function filtrarGastosWeb(){
-  this.handleEvent = function(event) {
-    event.preventDefault();
-    let formularioFiltrado = event.currentTarget;
-    let descripcionFormulario = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
-    let valorMinumo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
-    let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
-    let fechaDesde = formularioFiltrado.elements['formulario-filtrado-fecha-desde'].value;
-    let fechaHasta = formularioFiltrado.elements['formulario-filtrado-fecha-hasta'].value;
-    let etiquetasTiene = formularioFiltrado.elements['formulario-filtrado-etiquetas-tiene'].value;
+function filtrarGastosWeb() {
+  this.handleEvent = function (event) {
+      event.preventDefault();
+      let formularioFiltrado = event.currentTarget;
+      let descripcionContiene = formularioFiltrado.elements['formulario-filtrado-descripcion'].value;
+      let valorMinimo = formularioFiltrado.elements['formulario-filtrado-valor-minimo'].value;
+      let valorMaximo = formularioFiltrado.elements['formulario-filtrado-valor-maximo'].value;
+      let fechaDesde = formularioFiltrado.elements['formulario-filtrado-fecha-desde'].value;
+      let fechaHasta = formularioFiltrado.elements['formulario-filtrado-fecha-hasta'].value;
+      let etiquetasTiene = formularioFiltrado.elements['formulario-filtrado-etiquetas-tiene'].value;
+
+      valorMinimo = parseFloat(valorMinimo);
+      valorMaximo = parseFloat(valorMaximo);
+
+      if (etiquetasTiene != null) {
+          etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
+      }
+
+      let gastosFiltrados = gestionPresupuesto.filtrarGastos({descripcionContiene: descripcionContiene, valorMinimo: valorMinimo,
+      valorMaximo: valorMaximo, fechaDesde: fechaDesde, fechaHasta: fechaHasta,
+      etiquetasTiene: etiquetasTiene});
+
+      let listaFiltrada = document.getElementById('listado-gastos-completo');
+      listaFiltrada.innerHTML = "";
+
+      for (let gasto of gastosFiltrados) {
+          mostrarGastoWeb('listado-gastos-completo', gasto);
+      }    
   }
 }
+
 
 export {
   mostrarDatoEnId,
