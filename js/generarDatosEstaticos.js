@@ -97,8 +97,13 @@ btnAnyadirGasto.onclick = () => gestionPresupuestoWeb.nuevoGastoWeb();
 
 const btnAnyadirGastoFormulario = document.getElementById('anyadirgasto-formulario'); 
 
-btnAnyadirGastoFormulario.onclick = () => gestionPresupuestoWeb.nuevoGastoWebFormulario(); 
+//btnAnyadirGastoFormulario.onclick = () => gestionPresupuestoWeb.nuevoGastoWebFormulario(); 
+btnAnyadirGastoFormulario.addEventListener('click', gestionPresupuestoWeb.nuevoGastoWebFormulario); 
 
 //document.getElementById("anyadirgasto-formulario").addEventListener("click", gestionPresupuestoWeb.nuevoGastoWebFormulario);
+const btnSubmitFiltrado = document.getElementById('filtrarGastos'); 
+
+btnSubmitFiltrado.onclick = (event) => gestionPresupuestoWeb.filtrarGastosWeb(event);
+
 
 export * from './generarDatosEstaticos.js';

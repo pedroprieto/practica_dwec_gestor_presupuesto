@@ -155,46 +155,44 @@ function calcularBalance(){
     return balance; 
 }
 
-function filtrarGastos(filtros){
+function filtrarGastos(filtros) {
+  return gastos.filter(gasto => {
+    // Filtra por la fecha mínima
+    if (filtros.fechaDesde && new Date(gasto.fecha) < new Date(filtros.fechaDesde)) {
+      return false;
+    }
 
-    return gastos.filter(gasto => {
-      //Filtra por la fecha mínima 
-      if(filtros.fechaDesde && new Date(gasto.fecha) < new Date(filtros.fechaDesde) ){
-        return false; 
+    // Filtra por la fecha máxima
+    if (filtros.fechaHasta && new Date(gasto.fecha) > new Date(filtros.fechaHasta)) {
+      return false;
+    }
+
+    // Filtrar por el valor mínimo
+    if (filtros.valorMinimo !== null && gasto.valor < filtros.valorMinimo) {
+      return false;
+    }
+
+    // Filtrar por el valor máximo
+    if (filtros.valorMaximo !== null && gasto.valor > filtros.valorMaximo) {
+      return false;
+    }
+
+    // Filtrar por descripción
+    if (filtros.descripcion && !gasto.descripcion.toLowerCase().includes(filtros.descripcion.toLowerCase())) {
+      return false;
+    }
+
+    // Filtrar por etiquetas
+    if (filtros.etiquetasTiene && filtros.etiquetasTiene.length > 0) {
+      const etiquetasFiltrar = filtros.etiquetasTiene.map(etiqueta => etiqueta.toLowerCase());
+      const gastoEtiquetas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase());
+      if (!etiquetasFiltrar.some(etiqueta => gastoEtiquetas.includes(etiqueta))) {
+        return false;
       }
+    }
 
-      //Filtra por la fecha máxima
-      if(filtros.fechaHasta && new Date (gasto.fecha) > new Date(filtros.fechaHasta)){
-        return false; 
-      }
-
-      //Filtrar por el valor mínimo 
-      if(filtros.valorMinimo && gasto.valor < filtros.valorMinimo){
-        return false; 
-      }
-
-      //Filtrar por el valor máximo
-      if(filtros.valorMaximo && gasto.valor > filtros.valorMaximo){
-        return false; 
-      }
-
-      //Filtrar por descripción 
-      if(filtros.descripcionContiene && !gasto.descripcion.toLowerCase().includes(filtros.descripcionContiene.toLowerCase())){
-        return false; 
-      }
-
-      //Filtrar por etiquetas
-      if(filtros.etiquetasTiene){
-        const etiquetasFiltrar = filtros.etiquetasTiene.map(etiqueta => etiqueta.toLowerCase()); 
-        const gastoEtiquetas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase()); 
-        if(!etiquetasFiltrar.some(etiqueta => gastoEtiquetas.includes(etiqueta))){
-          return false; 
-        }
-      }
-      return true; 
-
-    }); 
-
+    return true;
+  });
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
@@ -213,6 +211,22 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
   }, {});
 }
 
+
+function transformarListadoEtiquetas(etiquetas){
+  // Definir patrón de expresión regular para identificar los diferentes separadores
+  var patron = /[~,.:; ]+/;
+
+  // Utilizar la expresión regular para dividir la cadena en palabras
+  var etiquetas = etiquetas.split(patron);
+
+  // Eliminar elementos vacíos del resultado
+  etiquetas = etiquetas.filter(function (etiqueta) {
+      return etiqueta !== "";
+  });
+
+  return etiquetas;
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -227,7 +241,8 @@ export   {
     calcularTotalGastos, 
     calcularBalance, 
     filtrarGastos, 
-    agruparGastos
+    agruparGastos, 
+    transformarListadoEtiquetas
     
 }
 
