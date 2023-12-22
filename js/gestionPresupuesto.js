@@ -223,7 +223,13 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
 	return gastosReducidos
 }
 
+// Función que transforma el listado de etiquetas que introduzca el usuario en el formulario
+function transformarListadoEtiquetas(listadoEtiquetas) {
+	let separadorRegex = /[\s,.;:~]+/
+	return listadoEtiquetas.split(separadorRegex)
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export { mostrarPresupuesto, actualizarPresupuesto, CrearGasto, listarGastos, anyadirGasto, borrarGasto, calcularTotalGastos, calcularBalance, filtrarGastos, agruparGastos }
+export { mostrarPresupuesto, actualizarPresupuesto, CrearGasto, listarGastos, anyadirGasto, borrarGasto, calcularTotalGastos, calcularBalance, filtrarGastos, agruparGastos, transformarListadoEtiquetas }
