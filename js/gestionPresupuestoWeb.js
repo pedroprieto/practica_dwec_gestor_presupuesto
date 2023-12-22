@@ -410,7 +410,7 @@ function BorrarEtiquetasHandle() {
 
 function filtrarGastosWeb(event) {
   event.preventDefault();
-  let formulario = event.target.form;
+  let formulario = event.target;
   let descripcion = formulario.elements['formulario-filtrado-descripcion'].value || '';
   let valorMinimo = formulario.elements['formulario-filtrado-valor-minimo'].value.trim();
   let valorMaximo = formulario.elements['formulario-filtrado-valor-maximo'].value.trim();
@@ -442,6 +442,13 @@ function filtrarGastosWeb(event) {
     
   });*/
 }
+
+const formulario = document.getElementById('formulario-filtrado');
+
+formulario.addEventListener('submit', function (event) {
+  event.preventDefault();  // Evitar que el formulario se envíe de manera convencional
+  filtrarGastosWeb(event);
+});
 
 
 // Exporta las funciones
