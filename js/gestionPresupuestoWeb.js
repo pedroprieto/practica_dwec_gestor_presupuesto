@@ -414,4 +414,46 @@ function CancelarFormularioHandle(formulario, botonAnyadir) {
 	}
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, EditarHandleFormulario, nuevoGastoWebFormulario }
+function filtrarGastoWeb() {
+	// Evitamos que el formulario se envíe por defecto
+	event.preventDefault()
+
+	// Recogemos los valores del formulario mediante el atributo name
+	let formularioFiltrado = document.getElementById("formulario-filtrado")
+	let descripcion = formularioFiltrado["formulario-filtrado-descripcion"].value
+	let valorMinimo = formularioFiltrado["formulario-filtrado-valor-minimo"].value
+	let valorMaximo = formularioFiltrado["formulario-filtrado-valor-maximo"].value
+	let fechaInicial = formularioFiltrado["formulario-filtrado-fecha-desde"].value
+	let fechaFinal = formularioFiltrado["formulario-filtrado-fecha-hasta"].value
+	let etiquetas = formularioFiltrado["formulario-filtrado-etiquetas-tiene"].value
+
+	// Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamamos a la función transformarListadoEtiquetas para convertir la cadena de texto en un array
+	if (etiquetas) {
+		etiquetas = gestionPresupuesto.transformarListadoEtiquetas(etiquetas)
+	}
+
+	// Creamos el objeto filtros para poder llamar a la función filtrarGastos
+	let filtros = {
+		descripcionContiene: descripcion,
+		valorMinimo: valorMinimo,
+		valorMaximo: valorMaximo,
+		fechaDesde: fechaInicial,
+		fechaHasta: fechaFinal,
+		etiquetasTiene: etiquetas,
+	}
+	console.log(filtros)
+
+	// Llamamos a la función filtrarGastos de gestionPresupuesto pasándole el objeto filtros
+	let gastosFiltrados = gestionPresupuesto.filtrarGastos(filtros)
+
+	// Borramos el contenido de div#listado-gastos-completo usando innerHTML
+	let listadoGastosCompleto = document.getElementById("listado-gastos-completo")
+	listadoGastosCompleto.innerHTML = ""
+
+	// Actualizamos el listado de gastos filtrados mediante la función mostrarGastoWeb
+	for (let gasto of gastosFiltrados) {
+		mostrarGastoWeb("listado-gastos-completo", gasto)
+	}
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, EditarHandleFormulario, nuevoGastoWebFormulario, filtrarGastoWeb }
