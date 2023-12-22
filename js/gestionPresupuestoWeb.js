@@ -199,7 +199,7 @@ EditarHandleForm.prototype.handleEvent = function (event) {
     //crear botones "Enviar" y "Cancelar"
     let botonEnviar = formulario.querySelector("button[type='submit']");
     let botonCancelar = document.getElementsByClassName("cancelar")[0];
-    botonEnviar.addEventListener("click", (event) => botonEnviarEditarGastoClick.call(this, event));
+    formulario.addEventListener("submit", (event) => botonEnviarEditarGastoClick.call(this, event)); //!corregido
     botonCancelar.addEventListener("click", botonCancelarClick);
     // Rellenamos el formulario
     formulario.elements.descripcion.value = this.gasto.descripcion;
@@ -373,7 +373,7 @@ function nuevoGastoWebFormulario () {
         }
     }
 
-    botonEnviar.addEventListener("click", botonEnviarClick)
+    formulario.addEventListener("submit", botonEnviarClick) //! corregido
     botonCancelar.addEventListener("click", botonCancelarClick)
 
 }
