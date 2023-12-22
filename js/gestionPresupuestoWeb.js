@@ -456,4 +456,23 @@ function filtrarGastoWeb() {
 	}
 }
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, EditarHandleFormulario, nuevoGastoWebFormulario, filtrarGastoWeb }
+// Función manejadora de eventos del evento click del botón guardar-gastos
+function guardarGastosWeb() {
+	let listado = gestionPresupuesto.listarGastos()
+	localStorage.setItem("GestorGastosDWEC", JSON.stringify(listado))
+}
+
+// Función manejadora de eventos del evento click del botón cargar-gastos
+function cargarGastosWeb() {
+	let listado = JSON.parse(localStorage.getItem("GestorGastosDWEC"))
+
+	if (listado == null) {
+		console.log("No hay datos guardados")
+		gestionPresupuesto.cargarGastos([])
+	} else {
+		gestionPresupuesto.cargarGastos(listado)
+	}
+	repintar()
+}
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, actualizarPresupuestoWeb, nuevoGastoWeb, EditarHandle, BorrarHandle, CancelarFormularioHandle, EditarHandleFormulario, nuevoGastoWebFormulario, filtrarGastoWeb, guardarGastosWeb, cargarGastosWeb }

@@ -91,3 +91,11 @@ $eventoAnyadirGastoFormulario.addEventListener("click", gestionPresupuestoWeb.nu
 // Manejamos el evento 'submit' del formulario 'formulario-filtrado'
 let $eventoFiltrado = document.getElementById("formulario-filtrado")
 $eventoFiltrado.addEventListener("submit", gestionPresupuestoWeb.filtrarGastoWeb)
+
+// Manejamos el evento 'click' en el botón 'guardar-gastos'
+let $eventoGuardarGasto = document.getElementById("guardar-gastos")
+$eventoGuardarGasto.addEventListener("click", gestionPresupuestoWeb.guardarGastosWeb)
+
+// Manejamos el evento 'click' en el botón 'cargar-gastos'
+let $eventoCargarGasto = document.getElementById("cargar-gastos")
+$eventoCargarGasto.addEventListener("click", gestionPresupuestoWeb.cargarGastosWeb)
