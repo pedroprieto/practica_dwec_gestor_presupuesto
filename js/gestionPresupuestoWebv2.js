@@ -7,10 +7,67 @@ class MiGasto extends HTMLElement {
         super();
     }
     connectedCallback() {
-        let div1 = document.createElement("div");
-        div1.className = "mi-gasto";
-        div1.textContent = this.gasto.descripcion + this.gasto.valor.toString();
-        this.appendChild(div1);
+        //creando un nodo de shadowDOM
+        const shadow = this.attachShadow({ mode: 'open'});
+        //añadiendo estilos:
+        let enlace = document.createElement("link");
+        enlace.setAttribute('rel', 'stylesheet');
+        enlace.setAttribute('href', './css/estilosShadow.css');
+        console.log(enlace);
+        shadow.append(enlace);
+        //creando la estructura para mostrar el gasto:
+        //div.gasto
+        let divGasto = document.createElement("div");
+        divGasto.className = "gasto";
+        //Creamos el contenedor <div class="gasto-descripcion">
+        let divDescripcion = document.createElement("div");
+        divDescripcion.className = "gasto-descripcion";
+        divDescripcion.textContent = "Descripcion del gasto: " + this.gasto.descripcion;
+        divGasto.append(divDescripcion);
+        //Creamos el contenedor <div class="gasto-fecha">
+        let divFecha = document.createElement("div");
+        divFecha.className = "gasto-fecha";
+        //* convirtiendo la fecha al formato yyyy-mm-dd:
+        let fechaFormatoDate = new Date(this.gasto.fecha);
+        let fechaFormatoAdecuado = fechaFormatoDate.toISOString().slice(0, 10);
+        divFecha.textContent = "Fecha: " +fechaFormatoAdecuado;
+        divGasto.append(divFecha);
+        //Creamos el contenedor <div class="gasto-valor">
+        let divValor = document.createElement("div");
+        divValor.className = "gasto-valor";
+        divValor.textContent = "Valor: " + this.gasto.valor;
+        divGasto.append(divValor);
+        //Creamos el contenedor <div class="gasto-etiquetas">
+        let divEtiquetas = document.createElement("div");
+        divEtiquetas.className = "gasto-etiquetas";
+        divEtiquetas.textContent = "Etiquetas:";
+        divGasto.append(divEtiquetas);
+        let ulEtiquetas = document.createElement("ul");
+        ulEtiquetas.className = "lista-etiquetas";
+        divEtiquetas.append(ulEtiquetas);
+        for (let e of this.gasto.etiquetas) { //*Creamos un contenedor para cada etiqueta
+            let liEtiqueta = document.createElement("li");
+            liEtiqueta.className = "gasto-etiquetas-etiqueta";
+            liEtiqueta.textContent = e;
+            ulEtiquetas.append(liEtiqueta);
+        }
+        shadow.append(divGasto);
+
+        //creando una copia del formulario
+        let plantilla = document.getElementById("formulario-template");
+        let contenidoPlantilla = plantilla.content;
+        //añadiendo la copia del formulario al 'mi-gasto'
+        shadow.append(contenidoPlantilla.cloneNode(true));
+        //la variable del formulario dentro del shadowroot:
+        let formularioEditarGasto = this.shadowRoot.querySelector("form");
+        //rellenar formulario:
+        formularioEditarGasto.elements.descripcion.value = this.gasto.descripcion;
+        formularioEditarGasto.elements.valor.value = parseFloat(this.gasto.valor);
+        let fechaGasto = new Date(this.gasto.fecha)
+        formularioEditarGasto.elements.fecha.value = fechaGasto.toISOString().slice(0, 10);
+        formularioEditarGasto.elements.etiquetas.value = this.gasto.etiquetas.join(', ');
+        //añadir eventListeners a los botones:
+        
     }
 }
 customElements.define('mi-gasto', MiGasto);

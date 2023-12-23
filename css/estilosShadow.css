@@ -1,0 +1,11 @@
+div.gasto-etiquetas {
+    background-color: yellow;
+}
+ul.lista-etiquetas {
+    margin: 0;
+    padding: 0;
+    list-style-type: "\270F";
+}
+ul > li {
+    background-color: rgb(54, 207, 207);
+}
