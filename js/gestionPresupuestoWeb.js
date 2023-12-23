@@ -450,6 +450,48 @@ formulario.addEventListener('submit', function (event) {
   filtrarGastosWeb(event);
 });
 
+const btnGuardar = document.getElementById('guardar-gastos'); 
+
+btnGuardar.addEventListener('click', function () {
+
+  let gastosListados = gestionPresupuesto.listarGastos(); 
+
+   // Convertir el listado de gastos a formato de cadena JSON
+   let gastosListadosString = JSON.stringify(gastosListados);
+
+   // Guardar la cadena JSON en el localstorage con la clave 'GestorGastosDWEC'
+   localStorage.setItem('GestorGastosDWEC', gastosListadosString);
+
+} ); 
+
+
+
+const btnCargar = document.getElementById('cargar-gastos'); 
+
+btnCargar.addEventListener('click', function (event) {
+
+   // Obtener la cadena JSON almacenada en el localstorage con la clave 'GestorGastosDWEC'
+   const gastosString = localStorage.getItem('GestorGastosDWEC');
+
+   // Verificar si la cadena JSON existe en el localstorage
+   if (gastosString) {
+     // Convertir la cadena JSON a un array de gastos
+     const gastos = JSON.parse(gastosString);
+ 
+     // Cargar los gastos utilizando la función cargarGastos
+     gestionPresupuesto.cargarGastos(gastos);
+ 
+     // Repintar la interfaz gráfica con los gastos cargados
+     repintar();
+   } else {
+     // Si no existe la clave en el almacenamiento, llamar a cargarGastos con un array vacío
+     gestionPresupuesto.cargarGastos([]);
+ 
+     // Repintar la interfaz gráfica con el array vacío
+     repintar();
+   }
+
+} ); 
 
 // Exporta las funciones
 export {
