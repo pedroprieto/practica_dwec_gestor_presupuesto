@@ -1,3 +1,32 @@
+ form {
+    text-align: center;
+    background-color: aquamarine;
+ }
+div.form-control {
+    display: flex;
+    flex-direction: row;
+ }
+ div.form-control > label {
+    display: block;
+    width: 30%;
+    text-align: right;
+ }
+ div.form-control > input {
+    display: flex;
+    width: 70%;
+    text-align: center;
+ }
+div.gasto {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+div.gasto-botones {
+    display: inline;
+    flex-direction: row;
+    text-align: center;
+}
+
 div.gasto-etiquetas {
     background-color: yellow;
 }
@@ -8,4 +37,19 @@ ul.lista-etiquetas {
 }
 ul > li {
     background-color: rgb(54, 207, 207);
+}
+.oculto {
+    display: none;
+}
+.width0 {
+    width: 0%;
+}
+.width100 {
+    width: 100%;
+}
+.width60 {
+    width: 60%;
+}
+.width40 {
+    width: 40%;
 }

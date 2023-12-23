@@ -18,7 +18,8 @@ class MiGasto extends HTMLElement {
         //creando la estructura para mostrar el gasto:
         //div.gasto
         let divGasto = document.createElement("div");
-        divGasto.className = "gasto";
+        divGasto.classList.add("gasto");
+        divGasto.classList.add("width100");
         //Creamos el contenedor <div class="gasto-descripcion">
         let divDescripcion = document.createElement("div");
         divDescripcion.className = "gasto-descripcion";
@@ -51,8 +52,19 @@ class MiGasto extends HTMLElement {
             liEtiqueta.textContent = e;
             ulEtiquetas.append(liEtiqueta);
         }
+        //añadir botones
+        let divBotones = document.createElement("div");
+        divBotones.className = "gasto-botones";
+        divGasto.append(divBotones);
+        let botonEditarGasto = document.createElement("button");
+        botonEditarGasto.textContent = "Editar";
+        botonEditarGasto.className = "gasto-editar-formulario";
+        divBotones.append(botonEditarGasto);
+        let botonBorrarGasto = document.createElement("button");
+        botonBorrarGasto.textContent = "Borrar";
+        botonBorrarGasto.className = "gasto-borrar";
+        divBotones.append(botonBorrarGasto);
         shadow.append(divGasto);
-
         //creando una copia del formulario
         let plantilla = document.getElementById("formulario-template");
         let contenidoPlantilla = plantilla.content;
@@ -60,6 +72,9 @@ class MiGasto extends HTMLElement {
         shadow.append(contenidoPlantilla.cloneNode(true));
         //la variable del formulario dentro del shadowroot:
         let formularioEditarGasto = this.shadowRoot.querySelector("form");
+        //ocultar formulario
+        formularioEditarGasto.classList.toggle("width0");
+        formularioEditarGasto.classList.toggle("oculto");
         //rellenar formulario:
         formularioEditarGasto.elements.descripcion.value = this.gasto.descripcion;
         formularioEditarGasto.elements.valor.value = parseFloat(this.gasto.valor);
@@ -67,7 +82,15 @@ class MiGasto extends HTMLElement {
         formularioEditarGasto.elements.fecha.value = fechaGasto.toISOString().slice(0, 10);
         formularioEditarGasto.elements.etiquetas.value = this.gasto.etiquetas.join(', ');
         //añadir eventListeners a los botones:
-        
+        botonEditarGasto.addEventListener("click", function() {
+            divGasto.classList.add("width40");
+            divGasto.classList.remove("width100");
+            formularioEditarGasto.classList.toggle("oculto");
+            formularioEditarGasto.classList.remove("width0");
+            formularioEditarGasto.classList.add("width60");
+            this.disabled = true;
+            
+        })
     }
 }
 customElements.define('mi-gasto', MiGasto);

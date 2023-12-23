@@ -152,3 +152,8 @@ button:disabled, button:disabled:hover {
         flex: 1;
     }
 }
+mi-gasto {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+}  
