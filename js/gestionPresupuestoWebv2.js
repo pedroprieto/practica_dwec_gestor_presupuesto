@@ -1,5 +1,20 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
+
+//elemento personalisado 'mi-gasto'
+class MiGasto extends HTMLElement {
+    constructor() {
+        super();
+    }
+    connectedCallback() {
+        let div1 = document.createElement("div");
+        div1.className = "mi-gasto";
+        div1.textContent = this.gasto.descripcion + this.gasto.valor.toString();
+        this.appendChild(div1);
+    }
+}
+customElements.define('mi-gasto', MiGasto);
+
 //let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
 var formulario/* = plantillaFormulario.querySelector("form")*/; 
 let controlesPrincipales = document.getElementById("controlesprincipales");

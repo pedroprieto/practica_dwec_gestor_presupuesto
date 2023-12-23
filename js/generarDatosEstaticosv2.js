@@ -1,4 +1,4 @@
-import * as gestionPresupuestosWeb2 from './gestionPresupuestoWeb.js';
+import * as gestionPresupuestosWeb2 from './gestionPresupuestoWebv2.js';
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 //*Actualizar el presupuesto a 1500€ (función actualizarPresupuesto)
 gestionPresupuesto.actualizarPresupuesto(1500);
@@ -66,3 +66,8 @@ gestionPresupuestosWeb2.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresu
 //* Mostrar el total de gastos agrupados por año en div#agrupacion-anyo
 //*  (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gestionPresupuestosWeb2.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
+
+//!test 
+let gasto10 = document.createElement('mi-gasto');
+gasto10.gasto = gasto1;
+document.body.appendChild(gasto10);

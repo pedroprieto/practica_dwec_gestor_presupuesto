@@ -66,3 +66,8 @@ gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresup
 //* Mostrar el total de gastos agrupados por año en div#agrupacion-anyo
 //*  (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
+
+//!test
+let gasto10 = document.createElement('mi-gasto');
+gasto10.gastoObject = gasto1;
+document.body.appendChild(gasto10);
