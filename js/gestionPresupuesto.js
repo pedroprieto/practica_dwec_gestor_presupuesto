@@ -42,12 +42,20 @@ function calcularTotalGastos() {
     for (let g of gastos) {
         suma += g.valor;
     }
+    suma = Math.round(suma * 100) / 100;
     return suma;
 }
-function calcularBalance() {
-    return presupuesto - calcularTotalGastos();
+function mostrargastosTotales() {
+    return `Tus gastos totales son ` + calcularTotalGastos() + `€`;
 }
-
+function calcularBalance() {
+    let balance = presupuesto - calcularTotalGastos();
+    balance = Math.round(balance * 100) / 100;
+    return balance;
+}
+function mostrarBalance() {
+    return `Tu balance actual es de ` + calcularBalance() + `€`;
+}
 function filtrarGastos(filtros) {
     return gastos.filter(function(gasto) {
         var fDesde = Date.parse(filtros.fechaDesde);
@@ -171,5 +179,7 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    mostrargastosTotales,
+    mostrarBalance
 }

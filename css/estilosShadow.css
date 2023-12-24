@@ -19,7 +19,6 @@ div.form-control {
 div.gasto {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
 }
 div.gasto-botones {
     display: inline;
@@ -52,4 +51,28 @@ ul > li {
 }
 .width40 {
     width: 40%;
+}
+button[type=submit]:hover, button.gasto-editar-formulario:hover {
+    background-color: #888888;
+    color: white;
+}
+button:hover {
+    border: 1px solid #888888;
+    color: #888888;
+}
+button:active:enabled {
+    box-shadow: none;
+    transform: translateY(2px);
+}
+form, .gasto {
+    margin: 1em 0;
+    box-shadow: 5px 5px 5px #555555;
+    border: 1px solid #555555;
+    padding: 1em;
+}
+.gasto-etiquetas-etiqueta:hover {
+    color: red;
+    border: 1px solid red;
+    text-decoration: line-through;
+
 }

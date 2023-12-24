@@ -4,7 +4,12 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
-
+div#aplicacion {
+    text-align: center;
+}
+div#listado-gastos-completo {
+    text-align: justify;
+}
 #aplicacion {
     margin: 1em;
 }
@@ -75,18 +80,15 @@ button:disabled, button:disabled:hover {
     cursor: pointer;
     position: relative;
 }
-
 .gasto-etiquetas-etiqueta:hover {
     color: red;
     border: 1px solid red;
     text-decoration: line-through;
 
 }
-
 .gasto-valor:after {
     content: "€";
 }
-
 /* Formulario filtrado */
 #formulario-filtrado {
     display: flex;
@@ -157,3 +159,7 @@ mi-gasto {
     flex-direction: row;
     border: 1px solid black;
 }  
+h1 {
+    color: red;
+}
+h2 {color: green;}
