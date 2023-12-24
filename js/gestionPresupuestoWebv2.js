@@ -1,6 +1,6 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
-
-
+//contenedor padre de los gastos
+let listadoGastos = document.getElementById("listado-gastos-completo");
 //elemento personalisado 'mi-gasto'
 class MiGasto extends HTMLElement {
     constructor() {
@@ -20,23 +20,24 @@ class MiGasto extends HTMLElement {
         let divGasto = document.createElement("div");
         divGasto.classList.add("gasto");
         divGasto.classList.add("width100");
+        let gastoCorriente = this.gasto;
         //Creamos el contenedor <div class="gasto-descripcion">
         let divDescripcion = document.createElement("div");
         divDescripcion.className = "gasto-descripcion";
-        divDescripcion.textContent = "Descripcion del gasto: " + this.gasto.descripcion;
+        divDescripcion.textContent = "Descripcion del gasto: " + gastoCorriente.descripcion;
         divGasto.append(divDescripcion);
         //Creamos el contenedor <div class="gasto-fecha">
         let divFecha = document.createElement("div");
         divFecha.className = "gasto-fecha";
         //* convirtiendo la fecha al formato yyyy-mm-dd:
-        let fechaFormatoDate = new Date(this.gasto.fecha);
+        let fechaFormatoDate = new Date(gastoCorriente.fecha);
         let fechaFormatoAdecuado = fechaFormatoDate.toISOString().slice(0, 10);
         divFecha.textContent = "Fecha: " +fechaFormatoAdecuado;
         divGasto.append(divFecha);
         //Creamos el contenedor <div class="gasto-valor">
         let divValor = document.createElement("div");
         divValor.className = "gasto-valor";
-        divValor.textContent = "Valor: " + this.gasto.valor;
+        divValor.textContent = "Valor: " + gastoCorriente.valor;
         divGasto.append(divValor);
         //Creamos el contenedor <div class="gasto-etiquetas">
         let divEtiquetas = document.createElement("div");
@@ -46,7 +47,7 @@ class MiGasto extends HTMLElement {
         let ulEtiquetas = document.createElement("ul");
         ulEtiquetas.className = "lista-etiquetas";
         divEtiquetas.append(ulEtiquetas);
-        for (let e of this.gasto.etiquetas) { //*Creamos un contenedor para cada etiqueta
+        for (let e of gastoCorriente.etiquetas) { //*Creamos un contenedor para cada etiqueta
             let liEtiqueta = document.createElement("li");
             liEtiqueta.className = "gasto-etiquetas-etiqueta";
             liEtiqueta.textContent = e;
@@ -76,25 +77,58 @@ class MiGasto extends HTMLElement {
         formularioEditarGasto.classList.toggle("width0");
         formularioEditarGasto.classList.toggle("oculto");
         //rellenar formulario:
-        formularioEditarGasto.elements.descripcion.value = this.gasto.descripcion;
-        formularioEditarGasto.elements.valor.value = parseFloat(this.gasto.valor);
-        let fechaGasto = new Date(this.gasto.fecha)
+        formularioEditarGasto.elements.descripcion.value = gastoCorriente.descripcion;
+        formularioEditarGasto.elements.valor.value = parseFloat(gastoCorriente.valor);
+        let fechaGasto = new Date(gastoCorriente.fecha)
         formularioEditarGasto.elements.fecha.value = fechaGasto.toISOString().slice(0, 10);
-        formularioEditarGasto.elements.etiquetas.value = this.gasto.etiquetas.join(', ');
+        formularioEditarGasto.elements.etiquetas.value = gastoCorriente.etiquetas.join(', ');
         //añadir eventListeners a los botones:
         botonEditarGasto.addEventListener("click", function() {
-            divGasto.classList.add("width40");
-            divGasto.classList.remove("width100");
-            formularioEditarGasto.classList.toggle("oculto");
-            formularioEditarGasto.classList.remove("width0");
-            formularioEditarGasto.classList.add("width60");
-            this.disabled = true;
-            
+                divGasto.classList.add("width40");
+                divGasto.classList.remove("width100");
+                formularioEditarGasto.classList.toggle("oculto");
+                formularioEditarGasto.classList.remove("width0");
+                formularioEditarGasto.classList.add("width60");
+                this.disabled = true;   
+                // bloqueamos los botones "Editar gasto"
+                bloquearBotonesGasto();            
+        })        
+        botonBorrarGasto.addEventListener("click", function() {
+            let respuestaUsuario = confirm("Al pulsar 'Acceptar' se borrará el gasto actual\n¿Usted está seguro?");  
+            if(respuestaUsuario) {
+                gestionPresupuesto.borrarGasto(gastoCorriente.id);
+                repintar();
+                alert('El gasto ha sido eliminado con éxito.')
+            }
         })
     }
 }
 customElements.define('mi-gasto', MiGasto);
-
+function bloquearBotonesGasto() {
+    //definir elemento padre del ShadowDOM
+    let miGastoLista = document.querySelectorAll("mi-gasto");
+    console.log(miGastoLista);
+    console.log(miGastoLista.length);
+    for (let i = 0; i < miGastoLista.length; i++) {
+        //acceso al ShadowDOM
+        let shadowR = miGastoLista[i].shadowRoot;
+        let botonesEditarConFormulario = shadowR.querySelectorAll("button.gasto-editar-formulario");
+        for (let i = 0; i < botonesEditarConFormulario.length; i++) {
+            if (!botonesEditarConFormulario[i].disabled) {
+                botonesEditarConFormulario[i].disabled = true;
+            }
+        }
+        let botonesBorrar = shadowR.querySelectorAll("button.gasto-borrar");
+        for (let i = 0; i < botonesBorrar.length; i++) {
+            if (!botonesBorrar[i].disabled) {
+                botonesBorrar[i].disabled = true;
+            }
+        }
+        //bloquear los botones del formulario también
+        botonAnyadirGastoForm.disabled = true;
+        botonActualizarPresupuesto.disabled = true;
+    }
+}
 //let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
 var formulario/* = plantillaFormulario.querySelector("form")*/; 
 let controlesPrincipales = document.getElementById("controlesprincipales");
@@ -191,7 +225,7 @@ function repintar () {
     mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
     //* Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente
     //* no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
-    let listadoGastos = document.getElementById("listado-gastos-completo");
+    
     listadoGastos.innerHTML = "";
     while (listadoGastos.firstChild) {
         listadoGastos.removeChild(listadoGastos.firstChild);
@@ -199,13 +233,9 @@ function repintar () {
     //* Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
     let gastos = gestionPresupuesto.listarGastos();
     for (let gasto of gastos) {
-        mostrarGastoWeb("listado-gastos-completo", gasto);
-        let divGastos = document.getElementById("listado-gastos-completo").lastChild;
-        let botonEditar = anyadirBotonEditar(gasto);
-        let botonEditarForm = anyadirBotonEditarFormulario(gasto);
-        let botonBorrar = anyadirBotonBorrar(gasto);
-        anyadirBorrarEtiquetaHandle(divGastos, gasto); //añadomos eventHandlers a cada etiqueta del gasto
-        divGastos.append(botonEditar, botonEditarForm, botonBorrar); //añadimos los botones
+        let gastoCorriente = document.createElement('mi-gasto');
+        gastoCorriente.gasto = gasto;
+        listadoGastos.append(gastoCorriente);
     }
 }
 function actualizarPresupuestoWeb () {
@@ -434,8 +464,6 @@ function anyadirBorrarEtiquetaHandle(elementoHtml, gasto) {
 //^ manejadores de eventos globales:
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
-let botonAnyadirGasto = document.getElementById("anyadirgasto");
-botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 

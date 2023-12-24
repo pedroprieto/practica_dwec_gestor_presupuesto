@@ -24,7 +24,12 @@ gestionPresupuestosWeb2.mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos()
 gestionPresupuestosWeb2.mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
 //*Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
 let gastos = gestionPresupuesto.listarGastos();
+let divGastos = document.getElementById("listado-gastos-completo");
 for (let gasto of gastos) {
+    let gastoCorriente = document.createElement('mi-gasto');
+    gastoCorriente.gasto = gasto;
+    divGastos.append(gastoCorriente);
+    /*
     gestionPresupuestosWeb2.mostrarGastoWeb("listado-gastos-completo", gasto);
     let divGastos = document.getElementById("listado-gastos-completo").lastChild;
     let botonEditar = gestionPresupuestosWeb2.anyadirBotonEditar(gasto);
@@ -32,7 +37,9 @@ for (let gasto of gastos) {
     let botonBorrar = gestionPresupuestosWeb2.anyadirBotonBorrar(gasto);
     gestionPresupuestosWeb2.anyadirBorrarEtiquetaHandle(divGastos, gasto); //añadomos eventHandlers a cada etiqueta del gasto
     divGastos.append(botonEditar, botonEditarForm, botonBorrar); //añadimos los botones
+    */
 }
+/*
 //*Mostrar el listado de gastos realizados en septiembre de 2021
 //* en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
 let gastosF1 = gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" });
@@ -66,8 +73,9 @@ gestionPresupuestosWeb2.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresu
 //* Mostrar el total de gastos agrupados por año en div#agrupacion-anyo
 //*  (funciones agruparGastos y mostrarGastosAgrupadosWeb)
 gestionPresupuestosWeb2.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
-
+*/
+/*
 //!test 
 let gasto10 = document.createElement('mi-gasto');
 gasto10.gasto = gasto1;
-document.body.appendChild(gasto10);
+document.body.appendChild(gasto10);*/
