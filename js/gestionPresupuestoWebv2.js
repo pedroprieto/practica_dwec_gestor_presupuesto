@@ -13,11 +13,10 @@ class MiGasto extends HTMLElement {
         let enlace = document.createElement("link");
         enlace.setAttribute('rel', 'stylesheet');
         enlace.setAttribute('href', './css/estilosShadow.css');
-        console.log(enlace);
         shadow.append(enlace);
         //creando la estructura para mostrar el gasto:
         //div.gasto
-        let divGasto = document.createElement("div");
+        const divGasto = document.createElement("div");
         divGasto.classList.add("gasto");
         divGasto.classList.add("width100");
         let gastoCorriente = this.gasto;
@@ -89,7 +88,6 @@ class MiGasto extends HTMLElement {
                 formularioEditarGasto.classList.toggle("oculto");
                 formularioEditarGasto.classList.remove("width0");
                 formularioEditarGasto.classList.add("width60");
-                this.disabled = true;   
                 // bloqueamos los botones "Editar gasto"
                 bloquearBotonesGasto();            
         })        
@@ -101,34 +99,70 @@ class MiGasto extends HTMLElement {
                 alert('El gasto ha sido eliminado con éxito.')
             }
         })
+        function visualizarEditarCancelar() {
+            divGasto.classList.add("width100");
+            divGasto.classList.remove("width40");
+            formularioEditarGasto.classList.toggle("oculto");
+            formularioEditarGasto.classList.add("width0");
+            formularioEditarGasto.classList.remove("width60");
+            bloquearBotonesGasto();
+        }
+        formularioEditarGasto.addEventListener("submit", function(event) {
+            event.preventDefault();
+            gastoCorriente.actualizarDescripcion(formularioEditarGasto.descripcion.value);
+            gastoCorriente.actualizarValor(parseFloat(formularioEditarGasto.valor.value));
+            gastoCorriente.actualizarFecha(formularioEditarGasto.fecha.value);
+            let etiquetasActualizar = formularioEditarGasto.etiquetas.value.split(', ');
+            let etiquetasCorrientes = gastoCorriente.etiquetas;
+            gastoCorriente.borrarEtiquetas(...etiquetasCorrientes);
+            gastoCorriente.anyadirEtiquetas(...etiquetasActualizar);
+            window.alert('El gasto corriente ha sido actualizado con éxito.');
+            //visualización
+            visualizarEditarCancelar();
+            repintar();
+        })
+        let botonCancelar = this.shadowRoot.querySelector("button.cancelar");
+        botonCancelar.addEventListener("click", () => visualizarEditarCancelar());       
     }
 }
 customElements.define('mi-gasto', MiGasto);
 function bloquearBotonesGasto() {
     //definir elemento padre del ShadowDOM
     let miGastoLista = document.querySelectorAll("mi-gasto");
-    console.log(miGastoLista);
-    console.log(miGastoLista.length);
     for (let i = 0; i < miGastoLista.length; i++) {
-        //acceso al ShadowDOM
+        //abrir acceso al ShadowDOM
         let shadowR = miGastoLista[i].shadowRoot;
         let botonesEditarConFormulario = shadowR.querySelectorAll("button.gasto-editar-formulario");
         for (let i = 0; i < botonesEditarConFormulario.length; i++) {
             if (!botonesEditarConFormulario[i].disabled) {
                 botonesEditarConFormulario[i].disabled = true;
+            } else {
+                botonesEditarConFormulario[i].disabled = false;
             }
         }
         let botonesBorrar = shadowR.querySelectorAll("button.gasto-borrar");
         for (let i = 0; i < botonesBorrar.length; i++) {
             if (!botonesBorrar[i].disabled) {
                 botonesBorrar[i].disabled = true;
+            } else {
+                botonesBorrar[i].disabled = false;
             }
         }
-        //bloquear los botones del formulario también
+    }
+    //bloquear/desbloquear los botones del formulario también
+    if (!botonAnyadirGastoForm.disabled){
         botonAnyadirGastoForm.disabled = true;
-        botonActualizarPresupuesto.disabled = true;
+    } else {           
+        botonAnyadirGastoForm.disabled = false;
+    }
+    if (!botonActualizarPresupuesto.disabled) {
+        botonActualizarPresupuesto.disabled = true; 
+                         
+    } else {
+        botonActualizarPresupuesto.disabled = false;   
     }
 }
+
 //let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
 var formulario/* = plantillaFormulario.querySelector("form")*/; 
 let controlesPrincipales = document.getElementById("controlesprincipales");
