@@ -321,6 +321,22 @@ function filtrarGastosWeb() {
 let botonEnvioFormGastoFiltrado = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", botonEnvioFormGastoFiltrado);
 
+function cargarGastosWeb(){
+  this.handleEvent = function(){
+      let cargoGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+      if (!cargoGastos){
+          gestionPresupuesto.cargarGastos([]);
+      }
+      else{
+          gestionPresupuesto.cargarGastos(cargoGastos);
+      }
+      repintar();
+  }
+}
+
+let botonCargarGastos = new cargarGastosWeb();
+document.getElementById("cargar-gastos").addEventListener("click", botonCargarGastos);
+
 function guardarGastosWeb(){
   this.handleEvent = function(){
     localStorage.GestorGastosDWEC = JSON.stringify(gestionPresupuesto.listarGastos());
