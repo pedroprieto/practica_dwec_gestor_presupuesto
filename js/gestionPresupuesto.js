@@ -7,6 +7,17 @@ let idGasto = 0;
 
 
 //Funciones
+function transformarListadoEtiquetas(etiquetasString) {
+    let regex = /[a-zA-Z0-9áéíóúüñÑäëïöüÄËÏÖÜÄËÏÖÜàèìòùÀÈÌÒÙ,] + /g;
+
+    // Encuentra todas las coincidencias usando la expresión regular
+    let matches = input.match(regex);
+
+    // Filtra las coincidencias para eliminar cadenas vacías
+    let etiquetas = matches ? matches.filter(etiqueta => etiqueta.trim() !== "") : [];
+
+    return etiquetas;
+}
 function actualizarPresupuesto(num) {
     if (typeof(num) === 'number' && num >= 0) {
         presupuesto = num;
@@ -181,5 +192,6 @@ export   {
     filtrarGastos,
     agruparGastos,
     mostrargastosTotales,
-    mostrarBalance
+    mostrarBalance,
+    transformarListadoEtiquetas
 }

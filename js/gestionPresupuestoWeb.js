@@ -446,6 +446,18 @@ function botonCancelarClick() {
     formulario.remove();
 }
 
+function filtrarGastosWeb(event) {
+    event.preventDefault();
+    let formularioFiltarGastos = document.getElementById("formulario-filtrado");
+    let gastoDescripcion = document.getElementById("formulario-filtrado-descripcion").value;
+    let gastoValorMinimo = document.getElementById("formulario-filtrado-valor-minimo").value;
+    let gastoValorMaximo = document.getElementById("formulario-filtrado-valor-maximo").value;
+    let gastoFechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
+    let gastoFechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+    let gastoEtiquetasTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
