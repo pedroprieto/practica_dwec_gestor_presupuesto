@@ -8,15 +8,7 @@ let idGasto = 0;
 
 //Funciones
 function transformarListadoEtiquetas(etiquetasString) {
-    let regex = /[a-zA-Z0-9áéíóúüñÑäëïöüÄËÏÖÜÄËÏÖÜàèìòùÀÈÌÒÙ,] + /g;
-
-    // Encuentra todas las coincidencias usando la expresión regular
-    let matches = input.match(regex);
-
-    // Filtra las coincidencias para eliminar cadenas vacías
-    let etiquetas = matches ? matches.filter(etiqueta => etiqueta.trim() !== "") : [];
-
-    return etiquetas;
+    return etiquetasString.split(/\W+/);
 }
 function actualizarPresupuesto(num) {
     if (typeof(num) === 'number' && num >= 0) {

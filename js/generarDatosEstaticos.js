@@ -68,6 +68,5 @@ gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresup
 gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
 
 //!test
-let gasto10 = document.createElement('mi-gasto');
-gasto10.gastoObject = gasto1;
-document.body.appendChild(gasto10);
+
+

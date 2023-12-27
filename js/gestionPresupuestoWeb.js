@@ -445,18 +445,60 @@ function botonCancelarClick() {
     }
     formulario.remove();
 }
-
+const formularioFiltarGastos = document.getElementById("formulario-filtrado");
 function filtrarGastosWeb(event) {
+    // Prevenir el envío del formulario 
     event.preventDefault();
-    let formularioFiltarGastos = document.getElementById("formulario-filtrado");
+    // Recoger los datos del formulario formulario-filtrado
     let gastoDescripcion = document.getElementById("formulario-filtrado-descripcion").value;
     let gastoValorMinimo = document.getElementById("formulario-filtrado-valor-minimo").value;
     let gastoValorMaximo = document.getElementById("formulario-filtrado-valor-maximo").value;
     let gastoFechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
+    console.log(gastoFechaDesde);
     let gastoFechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
     let gastoEtiquetasTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-
+    let gastoEtiquetas = [];
+    // Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a la función transformarListadoEtiquetas
+    // (recordad que está en el paquete gestionpresupuesto.js) para que devuelva un array de etiquetas
+    // válidas.
+    if (gastoEtiquetasTiene != "") {
+        gastoEtiquetas = gestionPresupuesto.transformarListadoEtiquetas(gastoEtiquetasTiene);
+    }
+    // Crear el objeto necesario para llamar a la función filtrarGastos del paquete gestionPresupuesto.js. Recuerda 
+    // que dicha función admite un solo parámetro que es un objeto con varias propiedades (valorMinimo, valorMaximo,
+    // etiquetasTiene,…).
+    let filtros = {};
+    if (gastoFechaDesde != "") {
+        filtros.fechaDesde = gastoFechaDesde;
+    }
+    if (gastoFechaHasta != "") {
+        filtros.fechaHasta = gastoFechaHasta;
+    }
+    if (gastoValorMinimo != "") {
+        filtros.valorMinimo = parseFloat(gastoValorMinimo);
+    }
+    if (gastoValorMaximo != "") {
+        filtros.valorMaximo = parseFloat(gastoValorMaximo);
+    }
+    if (gastoDescripcion != "") {
+        filtros.descripcionContiene = gastoDescripcion;
+    }
+    if (gastoEtiquetas.length > 0) {
+        filtros.etiquetasTiene = gastoEtiquetas;
+    }
+    // Llamar a la función filtrarGastos
+    let gastosFiltrados = gestionPresupuesto.filtrarGastos(filtros);
+    // Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb
+    let listadoGastos = document.getElementById("listado-gastos-completo");
+    listadoGastos.innerHTML = "";
+    while (listadoGastos.firstChild) {
+        listadoGastos.removeChild(listadoGastos.firstChild);
+    }
+    for (let g of gastosFiltrados) {
+        mostrarGastoWeb("listado-gastos-completo", g);
+    }
 }
+formularioFiltarGastos.addEventListener("submit", (event) => filtrarGastosWeb(event));
 
 export {
     mostrarDatoEnId,
