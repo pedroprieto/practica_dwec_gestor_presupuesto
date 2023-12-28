@@ -28,7 +28,7 @@ function mostrarGastoWeb (idElemento, gasto){
     let estructuraHTML = `
       <div class="gasto">
         <div class="gasto-descripcion">${gasto.descripcion}</div>
-        <div class="gasto-fecha">${gasto.fecha}</div>
+        <div class="gasto-fecha">${new Date(gasto.fecha).toLocaleDateString()}</div>
         <div class="gasto-valor">${gasto.valor}</div>
         <div class="gasto-etiquetas">`;
     // Agrega las etiquetas del gasto si existen
@@ -36,7 +36,7 @@ function mostrarGastoWeb (idElemento, gasto){
       for (let e in gasto.etiquetas){
         estructuraHTML += `
           <span class="gasto-etiquetas-etiqueta">
-            ${e}
+            ${gasto.etiquetas}
           </span>`;
       }
     }
@@ -67,8 +67,8 @@ function mostrarGastoWeb (idElemento, gasto){
       for (let a in agrup){
         estructuraHTML += `
           <div class="agrupacion-dato">
-            <span class="agrupacion-dato-clave">${a}: </span>
-            <span class="agrupacion-dato-valor">${agrup[a]}</span>
+            <span class="agrupacion-dato-clave">${a}:</span>
+            <span class="agrupacion-dato-valor">${(agrup[a]).toFixed(2)} €</span>
           </div>`;
       }
       estructuraHTML += `

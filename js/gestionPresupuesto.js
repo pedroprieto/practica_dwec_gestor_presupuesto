@@ -151,17 +151,18 @@ function calcularBalance(){
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
+
 //
 function filtrarGastos (filtroGasto){
     return gastos.filter(function(filtrado){
-        var resul = true;
+        let resul = true;
         if (filtroGasto.fechaDesde) {
-            var f = Date.parse(filtroGasto.fechaDesde);
-            resul = resul && (filtrado.fecha >= f);
+            let fd = Date.parse(filtroGasto.fechaDesde);
+            resul = resul && (filtrado.fecha >= fd);
         }
         if (filtroGasto.fechaHasta) {
-            var f = Date.parse(filtroGasto.fechaHasta);
-            resul = resul && (filtrado.fecha <= f);
+            let fh = Date.parse(filtroGasto.fechaHasta);
+            resul = resul && (filtrado.fecha <= fh);
         }
         if (filtroGasto.valorMinimo) {
             resul = resul && (filtrado.valor >= filtroGasto.valorMinimo);
@@ -184,17 +185,28 @@ function filtrarGastos (filtroGasto){
         return resul;
     })
 }
+
 //
-function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta = new Date().toISOString().split('T')[0]) {
-    let gastosFiltrados = filtrarGastos({ etiquetas, fechaDesde, fechaHasta });
-  
-    return gastosFiltrados.reduce(function(acc, g){
-      let periodoAgrupacion = g.obtenerPeriodoAgrupacion(periodo);
-      acc[periodoAgrupacion] = (acc[periodoAgrupacion] || 0) + g.valor;
-      return acc;
-    }, {});
-  
-  }
+  function agruparGastos(periodo= 'mes', etiquetas, fechaDesde, fechaHasta){
+    let gastos_filtrados = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    // Función reduce --> valor inicial acc(objeto) = objeto vacío
+    return gastos_filtrados.reduce(function(acc, g){
+            // Obtener periodo de agrupación del gasto
+            let per = g.obtenerPeriodoAgrupacion(periodo);
+            // Comprueba si existe en el acumulador una entrada para el período de agrupación actual
+            if(acc[per]){
+                // Si existe, le sumamos el valor del gasto actual
+                acc[per] += g.valor;
+            }else{
+                // Si no existe, la creamos con el valor del gasto actual
+                acc[per] = g.valor;
+            }
+            return acc;
+        },{});
+}
+
+
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado

@@ -31,26 +31,26 @@ for(let gt of gasto){
 // Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb).
 let gastoFiltrado1 = gestionPresupuesto.filtrarGastos({fechaDesde:'2021-09-01', fechaHasta:'2021-09-30'});
 for(let gf1 of gastoFiltrado1){
-  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gastoFiltrado1);
+  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gf1);
 }
 
 // Mostrar el listado de gastos de más de 50€ en div#listado-gastos-filtrado-2 (funciones filtrarGastos y mostrarGastoWeb).
 let gastoFiltrado2 = gestionPresupuesto.filtrarGastos({valorMinimo: 50});
 for(let gf2 of gastoFiltrado2){
-  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gastoFiltrado2);
+  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gf2);
 }
 
 // Mostrar el listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3 (funciones filtrarGastos y mostrarGastoWeb).
 let gastoFiltrado3 = gestionPresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene:['seguros']});
-for(let gt3 of gastoFiltrado3){
-  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gastoFiltrado3);
+for(let gf3 of gastoFiltrado3){
+  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gf3);
 }
 
 // Mostrar el listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en 
 // div#listado-gastos-filtrado-4 (funciones filtrarGastos y mostrarGastoWeb).
 let gastoFiltrado4 = gestionPresupuesto.filtrarGastos({etiquetasTiene:['comida', 'transporte'], valorMaximo:50});
-for(let gt4 of gastoFiltrado4){
-  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gastoFiltrado4);
+for(let gf4 of gastoFiltrado4){
+  gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gf4);
 }
 
 // Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb).
