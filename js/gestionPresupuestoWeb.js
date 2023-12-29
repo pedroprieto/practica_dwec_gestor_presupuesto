@@ -49,8 +49,10 @@ function nuevoGastoWebFormulario(){ //Funcion principal
   target.append(plantillaFormulario);
 
 
-  let botonAnyadir = document.getElementById("anyadirgasto-formulario");
-  botonAnyadir.disabled = true;
+  let botonAnyadir = document.querySelectorAll("#anyadirgasto-formulario");
+  botonAnyadir.forEach(function(bot){
+    bot.disabled = true;
+  })
   
   var formulario = document.body.querySelector("form");
 
@@ -70,9 +72,11 @@ function nuevoGastoWebFormulario(){ //Funcion principal
 
     gestionPresu.anyadirGasto(gastoNuevo);
 
+    let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+    botonAnyadir.removeAttribute("disabled");
     repintar();
 
-    botonAnyadir.disabled = false;
+    
 
     document.getElementById("controlesprincipales").removeChild(formulario);
 
@@ -87,12 +91,14 @@ function nuevoGastoWebFormulario(){ //Funcion principal
 
 
 
-function ManejadorCancelarFormulario(boton){
+function ManejadorCancelarFormulario(boton){  //NOS QUEDAMOS QUE NO SABEMOS COMO USAR EL MANEJADOR DE CANCELAR PARA AÑADIR Y PARA EDITAR
 
   this.handleEvent = function(){
     let eliminado = document.querySelector("form");
-    eliminado.remove();    
-    boton.removeAttribute("disabled");
+    eliminado.remove();
+    boton.forEach(function(bot){
+      bot.removeAttribute("disabled");
+    })
   }
   
 }
@@ -161,7 +167,7 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-valor");
-  gastoTag.textContent = gasto.valor.toLocaleString("es-ES");
+  gastoTag.textContent = gasto.valor.toLocaleString("en-US");
   targetElement.append(gastoTag);
 
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
@@ -254,10 +260,12 @@ function EditarHandleFormulario(){
     let manejadorSubmit = new SubmitHandleFormulario();
     manejadorSubmit.gasto = this.gasto;
     formulario.addEventListener("submit", manejadorSubmit)
-    let boton = document.querySelector(".gasto-editar-formulario");
-    boton.disabled = true;
+    let boton = document.querySelectorAll(".gasto-editar-formulario");
+    boton.forEach(function(bot){
+      bot.disabled = true;
+    })
     boton = document.querySelector(".cancelar");
-    let botonEditar = document.querySelector(".gasto-editar-formulario")
+    let botonEditar = document.querySelectorAll(".gasto-editar-formulario");
     let manejadorCancelar = new ManejadorCancelarFormulario(botonEditar);
     boton.addEventListener("click", manejadorCancelar);
   }
@@ -265,6 +273,7 @@ function EditarHandleFormulario(){
 
 function SubmitHandleFormulario(){
   this.handleEvent = function(e){
+    console.log("A");
     e.preventDefault();
     this.gasto.descripcion = descripcion.value;
     this.gasto.valor = parseFloat(valor.value);
