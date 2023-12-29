@@ -499,6 +499,25 @@ function filtrarGastosWeb(event) {
     }
 }
 formularioFiltarGastos.addEventListener("submit", (event) => filtrarGastosWeb(event));
+//!----Almacenamiento---
+function guardarGastosWeb() {
+    //obtener la lista de los gastos
+    let gastos = gestionPresupuesto.listarGastos();
+    // convertir los gastos al formato JSON:
+    let gastosConvertidos = [];
+    for (let g of gastos) {
+        let gastoJSON = JSON.stringify(g);
+        gastosConvertidos.push(gastoJSON);
+    }
+    //convertir un array en el formato JSON:
+    let gastosJSON = JSON.stringify(gastosConvertidos);
+    localStorage.gastosJSON = gastosJSON;
+    console.log(localStorage.gastosJSON);
+}
+function cargarGastosWeb() {
+    
+}
+
 
 export {
     mostrarDatoEnId,
@@ -507,5 +526,7 @@ export {
     anyadirBotonEditar,
     anyadirBotonBorrar,
     anyadirBorrarEtiquetaHandle,
-    anyadirBotonEditarFormulario
+    anyadirBotonEditarFormulario,
+    guardarGastosWeb,
+    cargarGastosWeb
 }

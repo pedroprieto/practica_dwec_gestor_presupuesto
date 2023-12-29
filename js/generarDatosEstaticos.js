@@ -68,5 +68,5 @@ gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresup
 gestionPresupuestosWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
 
 //!test
-
+let a = gestionPresupuestosWeb.guardarGastosWeb();
 

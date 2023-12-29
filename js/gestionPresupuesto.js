@@ -71,19 +71,19 @@ function calcularTotalGastos() {
     for (let g of gastos) {
         suma += g.valor;
     }
-    suma = Math.round(suma * 100) / 100;
+    //suma = Math.round(suma * 100) / 100;
     return suma;
 }
 function mostrargastosTotales() {
-    return `Tus gastos totales son ` + calcularTotalGastos() + `€`;
+    return `Tus gastos totales son ` + Math.round(calcularTotalGastos() * 100) / 100 + `€`;
 }
 function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
-    balance = Math.round(balance * 100) / 100;
+    //balance = Math.round(balance * 100) / 100;
     return balance;
 }
 function mostrarBalance() {
-    return `Tu balance actual es de ` + calcularBalance() + `€`;
+    return `Tu balance actual es de ` + Math.round(calcularBalance() * 100) / 100 + `€`;
 }
 function filtrarGastos(filtros) {
     return gastos.filter(function(gasto) {
