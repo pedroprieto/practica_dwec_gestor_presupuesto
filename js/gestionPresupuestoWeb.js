@@ -503,20 +503,28 @@ formularioFiltarGastos.addEventListener("submit", (event) => filtrarGastosWeb(ev
 function guardarGastosWeb() {
     //obtener la lista de los gastos
     let gastos = gestionPresupuesto.listarGastos();
-    // convertir los gastos al formato JSON:
-    let gastosConvertidos = [];
-    for (let g of gastos) {
-        let gastoJSON = JSON.stringify(g);
-        gastosConvertidos.push(gastoJSON);
-    }
-    //convertir un array en el formato JSON:
-    let gastosJSON = JSON.stringify(gastosConvertidos);
-    localStorage.gastosJSON = gastosJSON;
-    console.log(localStorage.gastosJSON);
+    //crear un objeto JSON para la lista de gastos:
+    let gastosJSON = JSON.stringify(gastos);
+    localStorage.setItem("GestorGastosDWEC", gastosJSON);
+    //!console.log(localStorage.GestorGastosDWEC);
 }
+document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
 function cargarGastosWeb() {
-    
+    // cargar el listado de gastos (función cargarGastos del paquete
+    // js/gestionPresupuesto.js) desde la clave de almacenamiento de
+    // localstorage denominada GestorGastosDWEC
+    // Si no existe la clave en el almacenamiento, llamará a cargarGastos con un array vacío.
+    let gastosJSON = localStorage.getItem("GestorGastosDWEC");
+    //!console.log(gastosJSON);
+    if (gastosJSON) {
+        let gastosGuardados = JSON.parse(gastosJSON);
+        gestionPresupuesto.cargarGastos(gastosGuardados);
+    } else {gestionPresupuesto.cargarGastos([]) }
+    //Una vez cargados los gastos deberá llamar a la función repintar
+    // para que se muestren correctamente en el HTML.
+    repintar();
 }
+document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
 
 
 export {

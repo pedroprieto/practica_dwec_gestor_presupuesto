@@ -15,6 +15,7 @@ function cargarGastos(gastosAlmacenamiento) {
   
     // Reseteamos la variable global "gastos"
     gastos = [];
+    
     // Procesamos cada gasto del listado pasado a la función
     for (let g of gastosAlmacenamiento) {
         // Creamos un nuevo objeto mediante el constructor
@@ -24,10 +25,12 @@ function cargarGastos(gastosAlmacenamiento) {
         // Copiamos los datos del objeto guardado en el almacenamiento
         // al gasto rehidratado
         // https://es.javascript.info/object-copy#cloning-and-merging-object-assign
+        console.log(g);
         Object.assign(gastoRehidratado, g);
+        //console.log(gastoRehidratado);
+
         // Ahora "gastoRehidratado" tiene las propiedades del gasto
-        // almacenado y además tiene acceso a los métodos de "CrearGasto"
-          
+        // almacenado y además tiene acceso a los métodos de "CrearGasto"          
         // Añadimos el gasto rehidratado a "gastos"
         gastos.push(gastoRehidratado)
     }
