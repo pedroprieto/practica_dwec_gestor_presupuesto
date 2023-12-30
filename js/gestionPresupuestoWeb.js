@@ -143,11 +143,7 @@ function nuevoGastoWebFormulario(e) {
     function enviarForm(e) {
         e.preventDefault();
         let formulario = e.currentTarget;
-        let descripcion = formulario.elements.descripcion.value;
-        let valor = Number(formulario.elements.valor.value);
-        let fecha = formulario.elements.fecha.value;
-        let etiquetas = formulario.elements.etiquetas.value;
-        etiquetas = etiquetas.split(",");
+        let { descripcion, valor, fecha, etiquetas } = extraerDatosForm(formulario);
 
         let gasto = new gp.CrearGasto(descripcion, valor, fecha, ...etiquetas);
         gp.anyadirGasto(gasto);
@@ -157,6 +153,31 @@ function nuevoGastoWebFormulario(e) {
     }
 
     formulario.addEventListener("submit", enviarForm);
+
+    function extraerDatosForm(formulario) {
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = Number(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+        etiquetas = etiquetas.split(",");
+        return { descripcion, valor, fecha, etiquetas };
+    }
+
+    async function enviarFormApi() {
+        let nombreUsuario = document.getElementById("nombre-usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+        await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(extraerDatosForm(formulario)),
+        });
+        cargarGastosApi();
+    }
+
+    let botonGastoEnviarApi = formulario.querySelector(".gasto-enviar-api");
+    botonGastoEnviarApi.addEventListener("click", enviarFormApi);
 
     function CancelarHandle(formulario, botonAnyadirGastoForm) {
         this.formulario = formulario;
@@ -298,7 +319,7 @@ function BorrarHandleApi(gasto) {
     this.handleEvent = async function () {
         let nombreUsuario = document.getElementById("nombre-usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
-        let respuesta = await fetch(url, {method: "DELETE"});
+        await fetch(url, {method: "DELETE"});
         cargarGastosApi();
     }
 }
