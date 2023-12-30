@@ -277,6 +277,18 @@ function cargarGastosWeb() {
 let botonCargarGastos = document.getElementById("cargar-gastos");
 botonCargarGastos.addEventListener("click", cargarGastosWeb);
 
+async function cargarGastosApi() {
+    let nombreUsuario = document.getElementById("nombre-usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+    let respuesta = await fetch(url);
+    let gastos = await respuesta.json();
+    gp.cargarGastos(gastos);
+    repintar();
+}
+
+let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
+botonCargarGastosApi.addEventListener("click", cargarGastosApi);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
