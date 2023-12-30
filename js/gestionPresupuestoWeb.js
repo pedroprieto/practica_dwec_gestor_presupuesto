@@ -25,11 +25,12 @@ function mostrarGastoWeb(idElemento, gasto) {
             <button type="button" class="gasto-borrar" id="${idElemento}-borrargasto-${gasto.id}">
                 Borrar
             </button>
+            <button class="gasto-borrar-api" type="button" id="${idElemento}-borrargastoapi-${gasto.id}">Borrar (API)</button>
             <button class="gasto-editar-formulario" type="button" id="${idElemento}-editargastoform-${gasto.id}">Editar (formulario)</button>
         </div>`;
 
     elemento.insertAdjacentHTML('beforeend', texto);
-    
+
     let botonEditar = document.getElementById(`${idElemento}-editargasto-${gasto.id}`);
     botonEditar.addEventListener("click", new EditarHandle(gasto));
 
@@ -44,6 +45,8 @@ function mostrarGastoWeb(idElemento, gasto) {
     let botonEditarForm = document.getElementById(`${idElemento}-editargastoform-${gasto.id}`);
     botonEditarForm.addEventListener("click", new EditarHandleFormulario(gasto));
 
+    let botonBorrarGastoApi = document.getElementById(`${idElemento}-borrargastoapi-${gasto.id}`);
+    botonBorrarGastoApi.addEventListener("click", new BorrarHandleApi(gasto));
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -61,7 +64,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     elemento.innerHTML += texto;
 }
 
-function repintar() {    
+function repintar() {
     mostrarDatoEnId("presupuesto", gp.mostrarPresupuesto());
 
     mostrarDatoEnId("gastos-totales", gp.calcularTotalGastos().toFixed(2));
@@ -100,7 +103,7 @@ boton2.addEventListener("click", nuevoGastoWeb);
 function EditarHandle(gasto) {
     this.gasto = gasto;
 
-    this.handleEvent = function() {
+    this.handleEvent = function () {
         let descripcion = prompt("Introduzca una descripción: ", this.gasto.descripcion);
         let valor = Number(prompt("Introduzca valor: ", this.gasto.valor));
         let fecha = prompt("Introduzca fecha en formato yyyy-mm-dd: ", this.gasto.obtenerPeriodoAgrupacion("dia"));
@@ -117,7 +120,7 @@ function EditarHandle(gasto) {
 function BorrarHandle(gasto) {
     this.gasto = gasto;
 
-    this.handleEvent = function() {
+    this.handleEvent = function () {
         gp.borrarGasto(this.gasto.id);
         repintar();
     }
@@ -126,14 +129,14 @@ function BorrarHandle(gasto) {
 function BorrarEtiquetasHandle(gasto, etiqueta) {
     this.gasto = gasto;
     this.etiqueta = etiqueta;
-    
-    this.handleEvent = function() {
+
+    this.handleEvent = function () {
         this.gasto.borrarEtiquetas(etiqueta);
         repintar();
     }
 }
 
-function nuevoGastoWebFormulario (e) {
+function nuevoGastoWebFormulario(e) {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
     let formulario = plantillaFormulario.querySelector("form");
 
@@ -155,11 +158,11 @@ function nuevoGastoWebFormulario (e) {
 
     formulario.addEventListener("submit", enviarForm);
 
-    function CancelarHandle (formulario, botonAnyadirGastoForm) {
+    function CancelarHandle(formulario, botonAnyadirGastoForm) {
         this.formulario = formulario;
         this.botonAnyadirGastoForm = botonAnyadirGastoForm;
-        this.handleEvent = function() {
-            this.formulario.remove();            
+        this.handleEvent = function () {
+            this.formulario.remove();
             this.botonAnyadirGastoForm.removeAttribute("disabled");
         }
     }
@@ -176,7 +179,7 @@ function nuevoGastoWebFormulario (e) {
 let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
 botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 
-function EditarHandleFormulario (gasto) {
+function EditarHandleFormulario(gasto) {
     this.gasto = gasto;
     this.handleEvent = function (e) {
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
@@ -204,11 +207,11 @@ function EditarHandleFormulario (gasto) {
 
         formulario.addEventListener("submit", enviarForm.bind(this));
 
-        function CancelarHandle (formulario, botonEditarGastoForm) {
+        function CancelarHandle(formulario, botonEditarGastoForm) {
             this.formulario = formulario;
             this.botonAnyadirGastoForm = botonEditarGastoForm;
-            this.handleEvent = function() {
-                this.formulario.remove();            
+            this.handleEvent = function () {
+                this.formulario.remove();
                 this.botonAnyadirGastoForm.removeAttribute("disabled");
             }
         }
@@ -233,15 +236,15 @@ function filtrarGastosWeb(e) {
     let etiquetas = formFiltrado.elements["formulario-filtrado-etiquetas-tiene"].value;
 
     if (etiquetas) {
-        etiquetas = gp.transformarListadoEtiquetas(etiquetas);        
+        etiquetas = gp.transformarListadoEtiquetas(etiquetas);
     }
 
     let filtros = {
-        fechaDesde: fDesde, 
-        fechaHasta: fHasta, 
-        valorMinimo: vMin, 
-        valorMaximo: vMax, 
-        descripcionContiene: descripcion, 
+        fechaDesde: fDesde,
+        fechaHasta: fHasta,
+        valorMinimo: vMin,
+        valorMaximo: vMax,
+        descripcionContiene: descripcion,
         etiquetasTiene: etiquetas
     };
 
@@ -249,7 +252,7 @@ function filtrarGastosWeb(e) {
     listadoCompleto.innerHTML = "";
     let gastos = gp.filtrarGastos(filtros);
     for (const gasto of gastos) {
-         mostrarGastoWeb("listado-gastos-completo", gasto);
+        mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 }
 
@@ -267,7 +270,7 @@ botonGuardarGastos.addEventListener("click", guardarGastosWeb);
 
 function cargarGastosWeb() {
     let gastosAlmacenamiento = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
-    if(gastosAlmacenamiento === null) {
+    if (gastosAlmacenamiento === null) {
         gastosAlmacenamiento = [];
     }
     gp.cargarGastos(gastosAlmacenamiento);
@@ -288,6 +291,17 @@ async function cargarGastosApi() {
 
 let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
 botonCargarGastosApi.addEventListener("click", cargarGastosApi);
+
+function BorrarHandleApi(gasto) {
+    this.gasto = gasto;
+
+    this.handleEvent = async function () {
+        let nombreUsuario = document.getElementById("nombre-usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+        let respuesta = await fetch(url, {method: "DELETE"});
+        cargarGastosApi();
+    }
+}
 
 export {
     mostrarDatoEnId,
