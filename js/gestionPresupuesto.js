@@ -36,113 +36,113 @@ function mostrarPresupuesto() {
 //función CrearGasto porqeu es un constructor y va en en mayúsculas.
 // Para objeto gasto creamos dentro de Crear Gasto los métodos qeu nos piden
 
-function CrearGasto(descripcion, valor = 0 , fecha, ... etiquetas) {
+class CrearGasto {
+  constructor(descripcion, valor = 0, fecha, ...etiquetas) {
     // TODO
-
     //propiedades
-   
     this.descripcion = descripcion;
-    this.valor = typeof valor === 'number' && valor >=0 ? valor: 0; 
-    
+    this.valor = typeof valor === 'number' && valor >= 0 ? valor : 0;
+
 
     // Métodos 
     this.mostrarGasto = function () {
-       return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    }
-    this.actualizarDescripcion = function(nuevaDescripcion){
-        this.descripcion = nuevaDescripcion;
-    }
-    this.actualizarValor = function (nuevoValor){
-        if(typeof nuevoValor === 'number' && nuevoValor >= 0) {
-            this.valor = nuevoValor;
-        }
-    }
+      return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    };
+    this.actualizarDescripcion = function (nuevaDescripcion) {
+      this.descripcion = nuevaDescripcion;
+    };
+    this.actualizarValor = function (nuevoValor) {
+      if (typeof nuevoValor === 'number' && nuevoValor >= 0) {
+        this.valor = nuevoValor;
+      }
+    };
     this.etiquetas = [];
 
-   this.anyadirEtiquetas(...etiquetas);
+    this.anyadirEtiquetas(...etiquetas);
 
     let f = Date.parse(fecha);
     if (isNaN(f)) {
-        this.fecha = Date.now();
+      this.fecha = Date.now();
     }
     else {
-        this.fecha = f;
+      this.fecha = f;
     }
 
-    
 
-}
 
-CrearGasto.prototype.obtenerPeriodoAgrupacion = function( periodo){
-    
+  }
+  obtenerPeriodoAgrupacion(periodo) {
+
     let newDate = new Date(this.fecha);
     let anyo = newDate.getFullYear();
     let mes = newDate.getMonth() + 1;
     let dia = newDate.getDate();
     let periodoAgrupacion;
-    if (periodo === "anyo"){
-        periodoAgrupacion = `${anyo}`;
-    }else if (periodo === "mes"){
-        if(mes<10){
-          mes = "0" + mes.toString();   
-        }
+    if (periodo === "anyo") {
+      periodoAgrupacion = `${anyo}`;
+    } else if (periodo === "mes") {
+      if (mes < 10) {
+        mes = "0" + mes.toString();
+      }
 
-        periodoAgrupacion = `${anyo}-${mes}`;
-    }else if (periodo === "dia"){
-        if(mes < 10){
-            mes = "0" + mes.toString();   
-          }
-          if(dia < 10){
-            dia = "0" + dia.toString();   
-          }
-        periodoAgrupacion = `${anyo}-${mes}-${dia}`;
-    }else {
-        periodoAgrupacion = `Fecha no válida.`;
+      periodoAgrupacion = `${anyo}-${mes}`;
+    } else if (periodo === "dia") {
+      if (mes < 10) {
+        mes = "0" + mes.toString();
+      }
+      if (dia < 10) {
+        dia = "0" + dia.toString();
+      }
+      periodoAgrupacion = `${anyo}-${mes}-${dia}`;
+    } else {
+      periodoAgrupacion = `Fecha no válida.`;
     }
     return periodoAgrupacion;
-}
-
-
-CrearGasto.prototype.mostrarGastoCompleto = function () {
+  }
+  mostrarGastoCompleto() {
     let fechaLocalizada = new Date(this.fecha).toLocaleString();
     let etiquetasList = '';
     for (const etiqueta of this.etiquetas) {
       etiquetasList += `- ${etiqueta}\n`;
     }
-  
-    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${etiquetasList}`;
-  };
 
-CrearGasto.prototype.actualizarFecha = function (nuevaFecha) {
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${etiquetasList}`;
+  }
+  actualizarFecha(nuevaFecha) {
     let parsedDate = Date.parse(nuevaFecha);
     if (!isNaN(parsedDate)) {
       this.fecha = parsedDate;
     }
-  };
-
-
-
-
-
-CrearGasto.prototype.anyadirEtiquetas = function (...etiquetas) {
+  }
+  anyadirEtiquetas(...etiquetas) {
     etiquetas.forEach(etiqueta => {
-        let etiquetaExistente = false;
-        for (let i = 0; i < this.etiquetas.length; i++) {
-            if (this.etiquetas[i] === etiqueta) {
-                etiquetaExistente = true;
-                break;
-            }
+      let etiquetaExistente = false;
+      for (let i = 0; i < this.etiquetas.length; i++) {
+        if (this.etiquetas[i] === etiqueta) {
+          etiquetaExistente = true;
+          break;
         }
+      }
 
-        if (!etiquetaExistente) {
-            this.etiquetas.push(etiqueta);
-        }
-    })
+      if (!etiquetaExistente) {
+        this.etiquetas.push(etiqueta);
+      }
+    });
+  }
+  borrarEtiquetas(...etiquetasABorrar) {
+    this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasABorrar.includes(etiqueta));
+  }
 }
 
-CrearGasto.prototype.borrarEtiquetas = function (...etiquetasABorrar) {
-    this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasABorrar.includes(etiqueta));
-  };
+
+
+
+
+
+
+
+
+
 
   function anyadirGasto(gasto){
       gasto.id = idGasto++;
@@ -227,6 +227,11 @@ function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
 
   return resultado;
 }
+
+
+
+
+
 
 
 
