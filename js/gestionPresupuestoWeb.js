@@ -79,7 +79,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
     let unit = "";
     switch (periodo) {
-        case "anyo":
+        case "año":
             unit = "year";
             break;
         case "mes":
@@ -141,6 +141,15 @@ function repintar() {
     for (const gasto of gp.listarGastos()) {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
+
+    let agrupadosDia = gp.agruparGastos("dia");
+    mostrarGastosAgrupadosWeb("agrupacion-dia", agrupadosDia, "día");
+
+    let agrupadosMes = gp.agruparGastos("mes");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", agrupadosMes, "mes");
+
+    let agrupadosAnyo = gp.agruparGastos("anyo");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", agrupadosAnyo, "año");
 }
 
 function actualizarPresupuestoWeb() {
@@ -409,5 +418,6 @@ function BorrarHandleApi(gasto) {
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 }
