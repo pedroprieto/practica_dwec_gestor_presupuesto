@@ -419,6 +419,44 @@ function filtrarGastosWeb() {
 
 }
 
+let btnGuardarGstos=document.getElementById("guardar-gastos")
+btnGuardarGstos.addEventListener("click", guardarGastosWeb)
+function guardarGastosWeb(){
+
+  let listaGstos= gestionPresupuesto.listarGastos();
+
+  let gastosListaString = JSON.stringify(listaGstos);
+
+   
+   localStorage.setItem('GestorGastosDWEC', gastosListaString);// Guardar la cadena JSON en el localstorage con la clave 'GestorGastosDWEC'
+
+
+}
+
+let btnCargarGstos=document.getElementById("cargar-gastos")
+btnCargarGstos.addEventListener("click",cargarGastosWeb)
+function cargarGastosWeb() {
+  
+  const gastosString = localStorage.getItem("GestorGastosDWEC");//cadena JSON almacenada en el localstorage con clave 'GestorGastosDWEC'
+
+  
+  if (gastosString) {// Verificar si la cadena JSON existe en el localstorag
+    
+    const gastos = JSON.parse(gastosString);// Convertir la cadena JSON a un array de gastos
+
+    
+    gestionPresupuesto.cargarGastos(gastos);// Cargar los gastos utilizando la función cargarGastos
+    
+    repintar();
+
+  } else { // Si no existe  clave en almacenamiento, cargarGastos con un array vacío
+    
+    gestionPresupuesto.cargarGastos([]);
+    
+    repintar();
+  }
+}
+
 
 
 export {
