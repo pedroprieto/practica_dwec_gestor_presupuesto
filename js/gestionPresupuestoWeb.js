@@ -104,40 +104,79 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar() { 
-    let mostrarPresupuesto = gestorPresu.mostrarPresupuesto()
-    mostrarDatoEnId("presupuesto", mostrarPresupuesto)
+    let mostrarPresupuesto = gestorPresu.mostrarPresupuesto();
+    mostrarDatoEnId("presupuesto", mostrarPresupuesto);
 
-    let totalGasto = gestorPresu.calcularTotalGastos()
-    mostrarDatoEnId("gastos-totales", totalGasto)
+    let totalGasto = gestorPresu.calcularTotalGastos();
+    mostrarDatoEnId("gastos-totales", totalGasto);
 
-    let blanceTotal = gestorPresu.calcularBalance()
-    mostrarDatoEnId("balance-total", blanceTotal)
+    let blanceTotal = gestorPresu.calcularBalance();
+    mostrarDatoEnId("balance-total", blanceTotal);
 
-    let divlistadogastocompleto = document.getElementById("listado-gastos-completo")
-    divlistadogastocompleto.innerHTML = " "
+    let divlistado = document.getElementById("listado-gastos-completo");
+    divlistado.innerHTML = " ";
 
-    let listarGasto = gestorPresu.listarGastos()
+    let listarGasto = gestorPresu.listarGastos();
 
     for (let gasto of listarGasto) {
 
-        mostrarGastoWeb("listado-gastos-completo", gasto)
-
+        mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 }
+
 function actualizarPresupuestoWeb() {
     let presuWeb = prompt('Actualiza el presupuesto: ', ''); 
     parseFloat(presuWeb); 
     gestorPresu.actualizarPresupuesto(presuWeb); 
-    
+
     repintar(); 
- }
-function nuevoGastoWeb() { }
-function EditarHandle() { }
+}
+ 
+function nuevoGastoWeb() { 
+    //Pedir al usuario la información necesaria para crear un nuevo gasto
+    let descripcion = prompt('Introduce la descripción del gasto: ');
+    let valorStr = prompt('Introduce la cantidad: ');
+    let fecha = prompt('Introduce una fecha en formato (ejemplo: 2024-1-05) yyyy-mm-dd:  ');
+    let etiqueta = prompt('Introduce las etiquetas separadas por comas: comida, casa ');
+
+    let arrayEtiquetas = etiqueta.split(', ');
+    valorStr = parseFloat(valorStr);
+
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valorStr, fecha, arrayEtiquetas);
+    gestorPresu.anyadirGasto(nuevoGasto);
+
+    repintar();
+}
+
+function EditarHandle(gasto) {
+    this.handleEvent = function (event) {
+
+        let nuevaDescripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion);
+        let valor = prompt("Introduce el valor del gasto", this.gasto.valor);
+        let nuevaFecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd", new Date(this.gasto.fecha).toISOString().slice(0, 10));
+        let strEtiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.etiquetas.join(", "));
+
+        valor = parseFloat(valor);
+
+        this.gasto.actualizarDescripcion(nuevaDescripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(nuevaFecha);
+        this.gasto.etiquetas = strEtiquetas.split(',').map(etiqueta => etiqueta.trim());
+
+        repintar();
+
+    }
+}
+
 function BorrarHandle() { } 
 function BorrarEtiquetasHandle() { }
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    EditarHandle,
 };
