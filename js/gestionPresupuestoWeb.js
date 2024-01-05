@@ -14,26 +14,19 @@ function mostrarGastoWeb(idElemento, gasto) {
     let divGasFecha = document.createElement('div');
     let divGasValor = document.createElement('div');
     let divGasEtiquetas = document.createElement('div');
-
     // Asigna las clases
     divGasto.className = "gasto";
     divGasDesc.className = "gasto-descripcion";
     divGasFecha.className = "gasto-fecha";
     divGasValor.className = "gasto-valor";
     divGasEtiquetas.className = "gasto-etiquetas";
-
     // Asigna los valores
     divGasDesc.innerText = gasto.descripcion;
     divGasValor.innerText = gasto.valor;
-
     // Formatea la fecha (si gasto.fecha es un objeto Date)
     let fechaFormateada = new Date(gasto.fecha).toLocaleDateString()
     //let fechaFormateada = gasto.fecha;
-    /*if (gasto.fecha instanceof Date) {
-        fechaFormateada = gasto.fecha.toLocaleDateString();
-    }*/
     divGasFecha.innerText = fechaFormateada;
-
     // Agrega etiquetas
     for (let etiqueta of gasto.etiquetas) {
         let divEtiqueta = document.createElement('span');
@@ -42,15 +35,28 @@ function mostrarGastoWeb(idElemento, gasto) {
 
         divGasEtiquetas.append(divEtiqueta);
     }
-
     // Agrega los elementos al divGasto
     divGasto.append(divGasDesc);
     divGasto.append(divGasFecha);
     divGasto.append(divGasValor);
     divGasto.append(divGasEtiquetas);
-
     // Agrega el divGasto al elemento objetivo
     elementoObj.append(divGasto);
+
+    let botonEditar = document.createElement('button');
+    botonEditar.className='gasto-editar';
+    botonEditar.textContent = 'Editar ';
+    botonEditar.addEventListener('click', new EditarHandle(gasto) );
+    divGasto.append(botonEditar) ;  
+    elementoObj.append(divGasto);
+
+    let botonBorrar = document.createElement('button');
+    botonBorrar.className ='gasto-borrar';
+    botonBorrar.textContent = 'Borrar ';
+    botonBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
+    divGasto.append(botonBorrar);
+    elementoObj.append(divGasto);
+
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -168,8 +174,32 @@ function EditarHandle(gasto) {
     }
 }
 
-function BorrarHandle() { } 
-function BorrarEtiquetasHandle() { }
+function BorrarHandle(gasto) {
+    this.gasto = gasto;
+    this.handleEvent = function () {
+
+        gestionPresupuesto.borrarGasto(this.gasto.id);
+
+        repintar();
+    }
+} 
+ 
+function BorrarEtiquetasHandle(gasto, etiqueta) {
+
+    BorrarEtiquetasHandle.prototype.handleEvent = function () {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+        /* if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
+             let etiquetaIndex = gasto.etiquetas.indexOf(etiqueta);
+     
+             if (etiquetaIndex !== -1) {
+                 gasto.etiquetas.splice(etiquetaIndex, 1);
+     
+                 repintar();
+             }
+         }*/
+    }
+}
 
 export {
     mostrarDatoEnId,
@@ -179,4 +209,6 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle,
 };
