@@ -73,8 +73,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     h1Periodo.innerText = `Gastos agrupados por ${periodo1}`;
     divAgrupacion.append(h1Periodo);
 
-  
- 
     // Itera sobre las propiedades del objeto agrup
     for (let clave in agrup) {
         if (Object.prototype.hasOwnProperty.call(agrup, clave)) {

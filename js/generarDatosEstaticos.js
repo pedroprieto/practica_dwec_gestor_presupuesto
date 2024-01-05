@@ -66,7 +66,5 @@ for (let gast of gastosFiltrados4) {
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "dia");
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
-//gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", "día")
-//gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", "mes")
-//gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", "año")
+
 
