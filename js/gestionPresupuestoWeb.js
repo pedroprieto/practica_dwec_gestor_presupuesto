@@ -124,7 +124,13 @@ function repintar() {
 
     }
 }
-function actualizarPresupuestoWeb() { }
+function actualizarPresupuestoWeb() {
+    let presuWeb = prompt('Actualiza el presupuesto: ', ''); 
+    parseFloat(presuWeb); 
+    gestorPresu.actualizarPresupuesto(presuWeb); 
+    
+    repintar(); 
+ }
 function nuevoGastoWeb() { }
 function EditarHandle() { }
 function BorrarHandle() { } 
