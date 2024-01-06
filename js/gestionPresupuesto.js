@@ -30,7 +30,7 @@ function anyadirGasto(gasto) {
 
 
 function borrarGasto(idGasto) {                                 
-    let borrar;
+    
     for (let g of gastos) {
         if (g.id == idGasto) {
             let pos = gastos.indexOf(g);                        // Obj.indexOf(param) busca dentro del obj el índice(pos) donde esta el param

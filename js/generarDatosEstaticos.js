@@ -67,8 +67,8 @@ gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupu
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "anyo");
 
-let eventoBotonAnyadir = document.getElementById("anyadirgasto");
-eventoBotonAnyadir.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb);
+/*let eventoBotonAnyadir = document.getElementById("anyadirgasto");
+eventoBotonAnyadir.addEventListener("click", gestionPresupuestoWeb.nuevoGastoWeb);*/
 
-let eventoBotonActualizarPres = document.getElementById("actualizarpresupuesto");
-eventoBotonActualizarPres.addEventListener("click", gestionPresupuestoWeb.actualizarPresupuestoWeb);
+/*let eventoBotonActualizarPres = document.getElementById("actualizarpresupuesto");
+eventoBotonActualizarPres.addEventListener("click", gestionPresupuestoWeb.actualizarPresupuestoWeb);*/

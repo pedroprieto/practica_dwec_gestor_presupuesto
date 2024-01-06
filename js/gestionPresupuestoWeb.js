@@ -48,14 +48,14 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let botonEditar = document.createElement('button');
     botonEditar.className='gasto-editar';
-    botonEditar.textContent = 'Editar';
+    botonEditar.innerTextent = 'Editar';
     botonEditar.addEventListener('click', new EditarHandle(gasto) );
     divGasto.append(botonEditar) ;  
     elementoObj.append(divGasto);
 
     let botonBorrar = document.createElement('button');
     botonBorrar.className ='gasto-borrar';
-    botonBorrar.textContent = 'Borrar';
+    botonBorrar.innerText = 'Borrar';
     botonBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
     divGasto.append(botonBorrar);
     elementoObj.append(divGasto);
@@ -134,29 +134,32 @@ function repintar() {
 }
 
 function actualizarPresupuestoWeb() {
-    let presuWeb = prompt('Actualiza el presupuesto: ', ''); 
+    let presuWeb = prompt('Actualiza el presupuesto: '); 
 
-    parseFloat(presuWeb); 
+    presuWeb = parseFloat(presuWeb); 
     gestorPresu.actualizarPresupuesto(presuWeb); 
 
     repintar(); 
 }
- 
+// botón actualizarpresupuesto
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);  //Pruebo en datos estaticos.
+
 function nuevoGastoWeb() { 
     //Pedir al usuario la información necesaria para crear un nuevo gasto
     let descripcion = prompt('Introduce la descripción del gasto: ');
     let valorStr = prompt('Introduce la cantidad: ');
-    let fecha = prompt('Introduce una fecha en formato (ejemplo: 2024-1-05) yyyy-mm-dd:  ');
+    let fecha = prompt('Introduce una fecha en formato año-mes-día (yyyy-mm-dd, 2024-1-05):  ');
     let etiqueta = prompt('Introduce las etiquetas separadas por comas: comida, casa ');
 
     let arrayEtiquetas = etiqueta.split(', ');
     valorStr = parseFloat(valorStr);
 
-    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valorStr, fecha, arrayEtiquetas);
+    let nuevoGasto = new gestorPresu.CrearGasto(descripcion, valorStr, fecha, arrayEtiquetas);
     gestorPresu.anyadirGasto(nuevoGasto);
 
     repintar();
 }
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb)//Pruebo en datos estaticos.
 
 function EditarHandle(gasto) {
     this.gasto = gasto;
@@ -181,29 +184,27 @@ function EditarHandle(gasto) {
 
 function BorrarHandle(gasto) {
     this.gasto = gasto;
-    this.handleEvent = function () {
+    this.handleEvent = function (event) {
 
-        gestionPresupuesto.borrarGasto(this.gasto.id);
+        gestorPresu.borrarGasto(this.gasto.id);
 
         repintar();
     }
 } 
  
 function BorrarEtiquetasHandle(gasto, etiqueta) {
-
-    BorrarEtiquetasHandle.prototype.handleEvent = function () {
+    
+    /*BorrarEtiquetasHandle.prototype.handleEvent = function () {
         this.gasto.borrarEtiquetas(this.etiqueta);
-        repintar();
-        /* if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
-             let etiquetaIndex = gasto.etiquetas.indexOf(etiqueta);
-     
-             if (etiquetaIndex !== -1) {
-                 gasto.etiquetas.splice(etiquetaIndex, 1);
+        repintar();*/
+     if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
+            let etiqResultado = gasto.etiquetas.indexOf(etiqueta);    
+        if (etiqResultado !== -1) {
+            gasto.etiquetas.splice(etiqResultado, 1);
      
                  repintar();
              }
-         }*/
-    }
+         }
 }
 
 export {
