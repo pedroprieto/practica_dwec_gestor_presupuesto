@@ -88,6 +88,16 @@ function mostrarGastoWeb (idElemento , gasto) {
     //Añadir el objeto recién creado como objeto manejador del evento click al botón Borrar recién creado.
     botonBorrar.addEventListener("click", objetoBotonBorrar);
     //Añadir el botón al DOM a continuación del botón Editar.
+    //Boton Borra API Este botón tendrá un manejador de eventos 
+    let botonBorrarGastoApi = document.createElement("button");
+    botonBorrarGastoApi.className = "gasto-borrar-api";
+    botonBorrarGastoApi.type = "button";
+    botonBorrarGastoApi.innerHTML = "Borrar (API)";
+    //Manejador del evento
+    let manejadorBotonBorrarApi = new borrarHandleApi();
+    manejadorBotonBorrarApi.gasto = gasto;
+    manejadorBotonBorrarApi.addEventListener('click',manejadorBotonBorrarApi );
+  
     //<button class="gasto-editar-formulario" type="button">Editar (formulario)</button>
     let botonEditarFormulario =document.createElement("button");
     botonEditarFormulario.className = "gasto-editar-formulario";
@@ -101,7 +111,7 @@ function mostrarGastoWeb (idElemento , gasto) {
 
     //Componer los divs
     divGasto.append(divDescripcion, divFecha,divValor, divEtiquetas, botonEditar, botonBorrar, 
-       botonEditarFormulario);
+       botonEditarFormulario, botonBorrarGastoApi);
 
     //Añadir el div contenedor
     let divContenedor = document.getElementById(idElemento);
@@ -469,6 +479,39 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
         //manejadora de eventos del evento click del botón cargar-gastos-api.
         let botonGastosApi = document.getElementById("cargar-gastos-api");
         botonGastosApi.addEventListener("click", cargarGastosApi);
+
+        //Manejador evento borrar API
+        function borrarHandleApi () {
+
+            this.handleEvent = function (evento) 
+            {
+                let nombreUsuario = document.getElementById("nombre_usuario").value;
+                //console.log(nombreUsuario);
+                let gastoBorrar = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+
+                if (nombreUsuario != "")
+                {
+                    fetch(gastoBorrar, {
+                        method: "DELETE",
+                        })
+                    .then(function (response) {
+                        if (response.ok) {
+                            (cargarGastosApi())
+                        } else {
+                            alert("Error-HTTP: " + response.status);
+                        }
+                    })
+                    .catch(function(error) {
+                        alert("Revisa los campos introducidos para subsanar el error.\n Error:  " + error.message); 
+                    });  
+                }
+                else
+                {
+                    alert("Es obligatorio el nombre de usuario");
+                }
+                
+            }
+        }
 
 
 
