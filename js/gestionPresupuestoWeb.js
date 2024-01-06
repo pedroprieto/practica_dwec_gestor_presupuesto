@@ -45,21 +45,20 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasto.append(divGasEtiquetas);
     // Agrega el divGasto al elemento objetivo
     elementoObj.append(divGasto);
-
+    //Botón Editar
     let botonEditar = document.createElement('button');
     botonEditar.className='gasto-editar';
     botonEditar.innerTextent = 'Editar';
     botonEditar.addEventListener('click', new EditarHandle(gasto) );
     divGasto.append(botonEditar) ;  
     elementoObj.append(divGasto);
-
+    //Botón Borrar
     let botonBorrar = document.createElement('button');
     botonBorrar.className ='gasto-borrar';
     botonBorrar.innerText = 'Borrar';
     botonBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
     divGasto.append(botonBorrar);
     elementoObj.append(divGasto);
-
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -115,20 +114,15 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 function repintar() { 
     let mostrarPresupuesto = gestorPresu.mostrarPresupuesto();
     mostrarDatoEnId("presupuesto", mostrarPresupuesto);
-
     let totalGasto = gestorPresu.calcularTotalGastos();
     mostrarDatoEnId("gastos-totales", totalGasto);
-
     let blanceTotal = gestorPresu.calcularBalance();
     mostrarDatoEnId("balance-total", blanceTotal);
-
     let divlistado = document.getElementById("listado-gastos-completo");
     divlistado.innerHTML = " ";
-
     let listarGasto = gestorPresu.listarGastos();
 
     for (let gasto of listarGasto) {
-
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 }
@@ -141,8 +135,6 @@ function actualizarPresupuestoWeb() {
 
     repintar(); 
 }
-// botón actualizarpresupuesto
-document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);  //Pruebo en datos estaticos.
 
 function nuevoGastoWeb() { 
     //Pedir al usuario la información necesaria para crear un nuevo gasto
@@ -150,7 +142,6 @@ function nuevoGastoWeb() {
     let valorStr = prompt('Introduce la cantidad: ');
     let fecha = prompt('Introduce una fecha en formato año-mes-día (yyyy-mm-dd, 2024-1-05):  ');
     let etiqueta = prompt('Introduce las etiquetas separadas por comas: comida, casa ');
-
     let arrayEtiquetas = etiqueta.split(', ');
     valorStr = parseFloat(valorStr);
 
@@ -159,26 +150,23 @@ function nuevoGastoWeb() {
 
     repintar();
 }
-document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb)//Pruebo en datos estaticos.
 
 function EditarHandle(gasto) {
     this.gasto = gasto;
     this.handleEvent = function (event) {
 
-        let nuevaDescripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion);
-        let valor = prompt("Introduce el valor del gasto", this.gasto.valor);
-        let nuevaFecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd", new Date(this.gasto.fecha).toISOString().slice(0, 10));
-        let strEtiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.etiquetas.join(", "));
+    let nuevaDescripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion);
+    let valor = prompt("Introduce el valor del gasto", this.gasto.valor);
+    let nuevaFecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd", new Date(this.gasto.fecha).toISOString().slice(0, 10));
+    let strEtiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.etiquetas.join(", "));
 
-        valor = parseFloat(valor);
+     valor = parseFloat(valor);
+    this.gasto.actualizarDescripcion(nuevaDescripcion);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(nuevaFecha);
+    this.gasto.etiquetas = strEtiquetas.split(',').map(etiqueta => etiqueta.trim());
 
-        this.gasto.actualizarDescripcion(nuevaDescripcion);
-        this.gasto.actualizarValor(valor);
-        this.gasto.actualizarFecha(nuevaFecha);
-        this.gasto.etiquetas = strEtiquetas.split(',').map(etiqueta => etiqueta.trim());
-
-        repintar();
-
+     repintar();
     }
 }
 
@@ -186,9 +174,8 @@ function BorrarHandle(gasto) {
     this.gasto = gasto;
     this.handleEvent = function (event) {
 
-        gestorPresu.borrarGasto(this.gasto.id);
-
-        repintar();
+     gestorPresu.borrarGasto(this.gasto.id);
+     repintar();
     }
 } 
  
