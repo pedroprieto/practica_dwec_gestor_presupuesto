@@ -29,11 +29,14 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasFecha.innerText = fechaFormateada;
     // Agrega etiquetas
     for (let etiqueta of gasto.etiquetas) {
-        let divEtiqueta = document.createElement('span');
-        divEtiqueta.className = "gasto-etiquetas-etiqueta";
-        divEtiqueta.append(`${etiqueta},`)
+        let spanEtiqueta = document.createElement('span');
+        spanEtiqueta.className = "gasto-etiquetas-etiqueta";
+        spanEtiqueta.append(`${etiqueta},`)
 
-        divGasEtiquetas.append(divEtiqueta);
+        spanEtiqueta.addEventListener('click', function () { //No se si funciona
+            BorrarEtiquetasHandle(gasto, etiqueta);         //igual
+        });
+        divGasEtiquetas.append(spanEtiqueta);
     }
     // Agrega los elementos al divGasto
     divGasto.append(divGasDesc);
@@ -45,14 +48,14 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let botonEditar = document.createElement('button');
     botonEditar.className='gasto-editar';
-    botonEditar.textContent = 'Editar ';
+    botonEditar.textContent = 'Editar';
     botonEditar.addEventListener('click', new EditarHandle(gasto) );
     divGasto.append(botonEditar) ;  
     elementoObj.append(divGasto);
 
     let botonBorrar = document.createElement('button');
     botonBorrar.className ='gasto-borrar';
-    botonBorrar.textContent = 'Borrar ';
+    botonBorrar.textContent = 'Borrar';
     botonBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
     divGasto.append(botonBorrar);
     elementoObj.append(divGasto);
@@ -132,6 +135,7 @@ function repintar() {
 
 function actualizarPresupuestoWeb() {
     let presuWeb = prompt('Actualiza el presupuesto: ', ''); 
+
     parseFloat(presuWeb); 
     gestorPresu.actualizarPresupuesto(presuWeb); 
 
@@ -155,6 +159,7 @@ function nuevoGastoWeb() {
 }
 
 function EditarHandle(gasto) {
+    this.gasto = gasto;
     this.handleEvent = function (event) {
 
         let nuevaDescripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion);
