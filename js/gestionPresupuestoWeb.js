@@ -59,7 +59,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
     divGasto.append(botonBorrar);
     elementoObj.append(divGasto);
-
+    //Botón editar formulario
     let btnEditarForm = document.createElement('button');
     btnEditarForm.className = "gasto-editar-formulario";
     btnEditarForm.innerText = "Editar formulario";
@@ -186,18 +186,14 @@ function BorrarHandle(gasto) {
 } 
  
 function BorrarEtiquetasHandle(gasto, etiqueta) {
-    
-    /*BorrarEtiquetasHandle.prototype.handleEvent = function () {
-        this.gasto.borrarEtiquetas(this.etiqueta);
-        repintar();*/
-     if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
+    if (gasto.etiquetas && Array.isArray(gasto.etiquetas)) {
             let etiqResultado = gasto.etiquetas.indexOf(etiqueta);    
         if (etiqResultado !== -1) {
             gasto.etiquetas.splice(etiqResultado, 1);
      
                  repintar();
              }
-         }
+        }
 }
 
 function nuevoGastoWebFormulario() { 
