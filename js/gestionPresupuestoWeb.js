@@ -439,6 +439,37 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
         }
         let cargarGastosNavegador = new cargarGastosWeb();
         document.getElementById("cargar-gastos").addEventListener("click" , cargarGastosNavegador);
+    
+        //API funciones
+        //Nueva función cargarGastosApi
+        function cargarGastosApi () {
+            // Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido
+            let nomUsuario = document.getElementById("nombre_usuario").value;
+            //alert(nomUsuario);
+            let cargarGastos = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nomUsuario}`
+            //Peticion a la API
+            if(nomUsuario != "")
+            {
+            fetch(cargarGastos)
+                .then(response => response.json())
+                .then(result => {
+                    gestPresupuesto.cargarGastos(result);
+                    repintar();
+                })
+                .catch(function(error) {
+                    alert("Revisa los campos introducidos para subsanar el error.\n Error: " + error.message); 
+                });   
+            }
+            else
+            {
+                alert("Es obligatorio el nombre de usuario");
+            }
+
+        }
+        //manejadora de eventos del evento click del botón cargar-gastos-api.
+        let botonGastosApi = document.getElementById("cargar-gastos-api");
+        botonGastosApi.addEventListener("click", cargarGastosApi);
+
 
 
 export {
