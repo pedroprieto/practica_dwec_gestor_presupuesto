@@ -193,6 +193,39 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
              }
          }
 }
+function nuevoGastoWebFormulario() { 
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector("form");
+    //Manejador de evento para el evento submit del formulario.
+    formulario.addEventListener("submit", manejadoraEventoFormulario);
+    document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "true");
+    let cancelarElHandler = new CancelarHandler(formulario, botonAnyadir); 
+    formulario.querySelector("button.cancelar").addEventListener("click", cancelarElHandler);
+
+    document.getElementById("controlesprincipales").append(plantillaFormulario);
+}
+function manejadoraEventoFormulario(event) {
+    //Previene el envío del formulario.
+    event.preventDefault();
+    let form = event.currentTarget;
+
+    let descripcion = formulario.querySelector("#descripcion").value;
+    let valor = formulario.querySelector("#valor").value;
+    let valorGasto = parseFloat(valor);
+    let fecha = formulario.querySelector("#fecha").value;
+    let etiquetas = formulario.querySelector("#etiquetas").value;
+    let arrayEtiquetas = etiquetas.split(',').map(etiqueta => etiqueta.trim());
+
+    let nuevoGastoForm = new gestorPresu.CrearGasto(descripcion, valorGasto, fecha);
+    nuevoGastoForm.anyadirEtiquetas(...arrayEtiquetas);
+
+    gestorPresu.anyadirGasto(nuevoGastoForm);
+
+    repintar();
+
+    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");  
+    }
+
 
 export {
     mostrarDatoEnId,
@@ -204,4 +237,5 @@ export {
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle,
+    nuevoGastoWebFormulario,
 };
