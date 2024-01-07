@@ -1,3 +1,31 @@
+import * as gesPresupuesto from "./gestionPresupuesto.js"
+function repintar()
+{
+    mostrarDatoEnId("presupuesto", gesPresupuesto.mostrarPresupuesto())
+
+    mostrarDatoEnId("gastos-totales", gesPresupuesto.calcularTotalGastos());
+
+    mostrarDatoEnId("balance-total", gesPresupuesto.calcularBalance());
+
+    document.getElementById("listado-gastos-completo").innerHTML="";
+ 
+    for(let i=0;i<gastosListados.length;i++)
+    {
+         gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gastosListados[i]);
+    }
+}
+
+function actualizarPresupuestoWeb(){
+
+    let preguntarPresupuesto =prompt("Introduzca el presupuesto");
+   let presuouestoPreguntado= parseInt(preguntarPresupuesto);
+   gesPresupuesto.actualizarPresupuesto(presuouestoPreguntado);
+   repintar();
+   
+   
+}
+
+
 
 function mostrarDatoEnId(idElemento,valor){
     
@@ -116,9 +144,11 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
 }
 
-
+let botonActualizar= document.getElementById("actualizarpresupuesto")
+        botonActualizar.addEventListener("click",actualizarPresupuestoWeb);
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    actualizarPresupuestoWeb
 }
