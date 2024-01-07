@@ -5,9 +5,7 @@ let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
-function listarGastos() {
-    return gastos;
-    }
+
 
 
     
@@ -230,7 +228,9 @@ function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
 
 
 
-
+function listarGastos() {
+  return gastos;
+  }
 
 
 

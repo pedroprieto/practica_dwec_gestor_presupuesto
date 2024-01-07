@@ -1,6 +1,7 @@
+"use strict";
+
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
-import { CrearGasto } from './gestionPresupuesto.js';
 
 gestionPresupuesto.actualizarPresupuesto(1500);
 
@@ -10,12 +11,13 @@ gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarP
 
 // Crear gastos
 
-let gasto1 = new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
-let gasto2 = new CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
-let gasto3 = new CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
-let gasto4 = new CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
-let gasto5 = new CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
-let gasto6 = new CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
+
+let gasto1 = new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
+let gasto2 = new gestionPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
+let gasto3 = new gestionPresupuesto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
+let gasto4 = new gestionPresupuesto.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
+let gasto5 = new gestionPresupuesto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
+let gasto6 = new gestionPresupuesto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
 
 
@@ -39,8 +41,12 @@ gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcu
 gestionPresupuestoWeb.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
 
 // Mostrar listado completo de gastos en div#listado-gastos-completo
+let gastos = gestionPresupuesto.listarGastos();
+for (let gasto of gastos){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",gasto)
+}
 
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
+//gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
 
 // Mostrar listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1
 
@@ -56,7 +62,7 @@ gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', filtrarGastos
 
 // Mostrar listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en div#listado-gastos-filtrado-4
 
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.({ etiquetas: ["comida", "transporte"], valorMaximo: 50 });
+//gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.({ etiquetas: ["comida", "transporte"], valorMaximo: 50 }));
 
 // Mostrar total de gastos agrupados por día en div#agrupacion-dia
 

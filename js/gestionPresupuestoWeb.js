@@ -1,3 +1,5 @@
+
+
 function mostrarDatoEnId(idElemento, valor){
 
 let elemento = document.getElementById(idElemento);
@@ -29,7 +31,11 @@ function mostrarGastoWeb(idElemento, gasto){
       // Añadir fecha del gasto
       let fechaDiv = document.createElement("div");
       fechaDiv.classList.add("gasto-fecha");
-      fechaDiv.textContent = gasto.fecha;
+     
+    
+      let cadenaFecha = new Date(gasto.fecha).toLocaleDateString();
+
+      fechaDiv.textContent = cadenaFecha;
      
 
       // Añadir valor del gasto
@@ -42,13 +48,11 @@ function mostrarGastoWeb(idElemento, gasto){
       let etiquetasDiv = document.createElement("div");
       etiquetasDiv.classList.add("gasto-etiquetas");
       if (Array.isArray(gasto.etiquetas)) {
-        gasto.etiquetas.forEach(etiqueta => {
-          let etiquetaSpan = document.createElement("span");
-          etiquetaSpan.classList.add("gasto-etiquetas-etiqueta");
-          etiquetaSpan.textContent = etiqueta;
-          etiquetasDiv.appendChild(etiquetaSpan);
+        let etiquetasConComas = gasto.etiquetas.map(etiqueta => etiqueta); // Create a new array with commas
 
-        });
+        etiquetasDiv.textContent = etiquetasConComas.join(" "); // Directly append the new array to the element
+      
+
       }
       nuevoGastoDiv.appendChild(descripcionDiv);
       nuevoGastoDiv.appendChild(fechaDiv);
