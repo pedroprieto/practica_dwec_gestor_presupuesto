@@ -77,11 +77,14 @@ for (let gasto of segurosMay200){
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
 }
  
-//gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',
+
 
 // Mostrar total de gastos agrupados por día en div#agrupacion-dia
 
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', gestionPresupuesto.agruparGastos(), 'día');
+let agrup1 = gestionPresupuesto.agruparGastos("dia");
+
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", agrup1, "día");
+
 
 // Mostrar total de gastos agrupados por mes en div#agrupacion-mes
 

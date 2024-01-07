@@ -157,7 +157,7 @@ function borrarGasto(idGastoABorrar){
 }
 
 function calcularTotalGastos(){
- return gastos.reduce((total, gasto) => total + gasto.valor, 0);   
+ return gastos.reduce((total, gasto) =>  Math.round((total + gasto.valor)*100)/100, 0);   
 }
 function calcularBalance(){
 return presupuesto - calcularTotalGastos();
@@ -219,7 +219,7 @@ function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
   // Utilizar reduce para agrupar gastos por período
   let resultado = gastosFiltrados.reduce((acumulador, gasto) => {
       let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
-      acumulador[periodoAgrupacion] = (acumulador[periodoAgrupacion] || 0) + gasto.valor;
+      acumulador[periodoAgrupacion] = Math.round(((acumulador[periodoAgrupacion] || 0) + gasto.valor)*100)/100;
       return acumulador;
   }, {});
 

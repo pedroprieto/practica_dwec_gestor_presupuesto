@@ -76,43 +76,39 @@ function mostrarGastoWeb(idElemento, gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         //buscamos el eelemento
-    let container = getElementById(idElemento);
-    if (container){
-    let nuevaAgrupacion = document.createElement('div');
-    nuevaAgrupacion.classList.add(agrupacion);
-
-
+    let elemento = document.getElementById(idElemento)
+    //Creamos la estructura principal del HTMl
+    let nuevaAgrupacion = document.createElement("div");
+    nuevaAgrupacion.classList.add("agrupacion");
     //Creamos el título con el período
-    let titulo = document.createElement('div');
-    titulo.textContent = "Gastos agrupados por " + periodo;
+    let titulo = document.createElement("h1");
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
     nuevaAgrupacion.appendChild(titulo);
 
-            for (let [clave, valor] of Object.entries(agrup)) {
+ for(let [clave, valor] of Object.entries(agrup)) {
              
-                    let dato = document.createElement('div');
-                    dato.classList.add('agrupacion-dato');
+                    let dato = document.createElement("div");
+                    dato.classList.add("agrupacion-dato");
 
                     // Crear span para la clave
-                    let claveSpan = document.createElement('span');
-                    claveSpan.classList.add('agrupacion-dato-clave');
-                    claveSpan.textContent = clave;
+                    let claveSpan = document.createElement("span");
+                    claveSpan.classList.add("agrupacion-dato-clave");
+                    claveSpan.textContent = clave + ": ";
                     dato.appendChild(claveSpan);
 
                     // Crear span para el valor
-                    let valorSpan = document.createElement('span');
-                    valorSpan.classList.add('agrupacion-dato-valor');
-                    valorSpan.textContent = agrup[clave];
+                    let valorSpan = document.createElement("span");
+                    valorSpan.classList.add("agrupacion-dato-valor");
+                    valorSpan.textContent = valor;
                     dato.appendChild(valorSpan);
 
               
                     nuevaAgrupacion.appendChild(dato);
             }
-            container.appendChild(nuevaAgrupacion);    
-               
-    } else {
-    console.error('El contenedor con el id ' + idElemento + ' no se' );
-    }
+       elemento.appendChild(nuevaAgrupacion);   
 }
+
+
 
 
 
