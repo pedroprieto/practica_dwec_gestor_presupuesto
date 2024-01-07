@@ -50,11 +50,11 @@ function mostrarGastoWeb(idElemento, gasto){
       // Añadir etiquetas del gasto
       let etiquetasDiv = document.createElement("div");
       etiquetasDiv.classList.add("gasto-etiquetas");
-      if (Array.isArray(gasto.etiquetas)) {
-        let etiquetasConComas = gasto.etiquetas.map(etiqueta => etiqueta); // Create a new array with commas
-
-        etiquetasDiv.textContent = etiquetasConComas.join(" "); // Directly append the new array to the element
-      
+      for(let etiqueta of gasto.etiquetas) {
+        let spanEtiquetas = document.createElement('span');
+        spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
+        spanEtiquetas.textContent = etiqueta;
+        etiquetasDiv.appendChild(spanEtiquetas);
 
       }
       nuevoGastoDiv.appendChild(descripcionDiv);
@@ -93,7 +93,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
                     // Crear span para la clave
                     let claveSpan = document.createElement("span");
                     claveSpan.classList.add("agrupacion-dato-clave");
-                    claveSpan.textContent = clave + ": ";
+                    claveSpan.textContent =clave + ": ";
                     dato.appendChild(claveSpan);
 
                     // Crear span para el valor

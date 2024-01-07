@@ -41,9 +41,9 @@ gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcu
 gestionPresupuestoWeb.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
 
 // Mostrar listado completo de gastos en div#listado-gastos-completo
-let gastos = gestionPresupuesto.listarGastos();
-for (let gasto of gastos){
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",gasto)
+let listGastos = gestionPresupuesto.listarGastos();
+for (let gasto of listGastos){
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gasto)
 }
 
 //gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
