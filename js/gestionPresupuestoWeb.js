@@ -3,6 +3,9 @@
 function mostrarDatoEnId(idElemento, valor){
 
 let elemento = document.getElementById(idElemento);
+
+
+
 if (elemento){
     elemento.textContent = valor;
 } else {
@@ -21,7 +24,7 @@ function mostrarGastoWeb(idElemento, gasto){
       // Crear un nuevo elemento div para representar el gasto
       let nuevoGastoDiv = document.createElement("div");
       nuevoGastoDiv.classList.add("gasto");
-
+    
       // Añadir descripción del gasto
       let descripcionDiv = document.createElement("div");
       descripcionDiv.classList.add("gasto-descripcion");

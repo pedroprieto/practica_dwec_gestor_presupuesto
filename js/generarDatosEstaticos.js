@@ -50,19 +50,34 @@ for (let gasto of gastos){
 
 // Mostrar listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1
 
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gestionPresupuesto.filtrarGastos("2021-09"));
+let gastosSeptiembre =  gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"});
+
+
+for (let gasto of gastosSeptiembre){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1",gasto)
+}
 
 // Mostrar listado de gastos de más de 50€ en div#listado-gastos-filtrado-2
 
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gestionPresupuesto.filtrarGastos(50));
+let gastosMay50 = gestionPresupuesto.filtrarGastos({valorMinimo: "50"});
+
+for (let gasto of gastosMay50){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2",gasto)
+}
 
 // Mostrar listado de gastos de más de 200€ con etiqueta seguros en div#listado-gastos-filtrado-3
 
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', filtrarGastos({ etiquetas: ["seguros"], valorMinimo: 200 }));
-
+let segurosMay200 = gestionPresupuesto.filtrarGastos({ etiquetasTiene: ["seguros"], valorMinimo: 200 });
+for (let gasto of segurosMay200){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3",gasto)
+}
 // Mostrar listado de gastos que tengan las etiquetas comida o transporte de menos de 50€ en div#listado-gastos-filtrado-4
-
-//gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.({ etiquetas: ["comida", "transporte"], valorMaximo: 50 }));
+ let comidaTransporte = gestionPresupuesto.filtrarGastos({ etiquetasTiene: ["comida", "transporte"], valorMaximo: 50 });
+ for (let gasto of comidaTransporte){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
+}
+ 
+//gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',
 
 // Mostrar total de gastos agrupados por día en div#agrupacion-dia
 
