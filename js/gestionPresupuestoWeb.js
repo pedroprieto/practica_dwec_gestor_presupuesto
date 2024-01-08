@@ -8,10 +8,12 @@ function repintar()
     mostrarDatoEnId("balance-total", gesPresupuesto.calcularBalance());
 
     document.getElementById("listado-gastos-completo").innerHTML="";
- 
+    
+     
+    let gastosListados=gesPresupuesto.listarGastos()
     for(let i=0;i<gastosListados.length;i++)
     {
-         gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gastosListados[i]);
+         mostrarGastoWeb("listado-gastos-completo", gastosListados[i]);
     }
 }
 
@@ -25,7 +27,35 @@ function actualizarPresupuestoWeb(){
    
 }
 
+function nuevoGastoWeb(){
 
+    let preguntarDescripcion= prompt("Introduzca la descripción del gasto")
+
+    let preguntarGasto =prompt("Introduzca el valor del gasto");
+   let gastoPreguntado= parseInt(preguntarGasto);
+
+   let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)");
+   let fecha =new Date(preguntarFecha);
+   let dia= fecha.getDate();
+   let mes= fecha.getMonth();
+   let anyo= fecha.getFullYear();
+   let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
+//dia-1
+
+   //crear array y hacer push con cada elemento de preguntarEtiquetas.split(', ')
+   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto");
+   let etiquetasArr= preguntarEtiquetas.split(', ');
+
+let arrayEtq=[];
+for (let name of etiquetasArr)
+{
+    arrayEtq.push(name )
+}
+
+   let gastoPrueba=new gesPresupuesto.CrearGasto(preguntarDescripcion, gastoPreguntado, fechaCompleta, ...arrayEtq);
+   gesPresupuesto.anyadirGasto(gastoPrueba);
+   repintar();
+}
 
 function mostrarDatoEnId(idElemento,valor){
     
@@ -144,8 +174,11 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
 }
 
-let botonActualizar= document.getElementById("actualizarpresupuesto")
+        let botonActualizar= document.getElementById("actualizarpresupuesto")
         botonActualizar.addEventListener("click",actualizarPresupuestoWeb);
+
+        let botonAnyadirGasto= document.getElementById("anyadirgasto")
+        botonAnyadirGasto.addEventListener("click",nuevoGastoWeb);
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
