@@ -70,6 +70,7 @@ function filtrarGastos(listaDatos) {                    //  gastos = [{},{fecha:
             if (listaDatos.valorMinimo) {
                 existe = existe && (g.valor >= listaDatos.valorMinimo);    
             }
+            
             if (listaDatos.valorMaximo) {
                 existe = existe && (g.valor <= listaDatos.valorMaximo);    
             }
@@ -94,6 +95,7 @@ function cumpleEtiquetasTiene(gasto, etiquetasTiene) {
         }
         return tiene;
     }
+
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {   
     var opciones = {};
@@ -218,7 +220,8 @@ Etiquetas:\n`
 }
 
 function transformarListadoEtiquetas(etiquetas) { 
-    return etiquetas.split(/[,\.;: ]+/g);
+    //return etiquetas.split(/[,\.;: ]+/g);
+    return etiquetas.match(/[\w]+/gi);
     //return etiquetas.split(',')
 }
 

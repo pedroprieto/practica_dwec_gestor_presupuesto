@@ -7,7 +7,7 @@ function mostrarDatoEnId(idElemento, valor) {
 function mostrarGastoWeb(idElemento, gasto) {
     // Obtén el elemento objetivo
     let elementoObj = document.getElementById(idElemento);
-
+    if (elementoObj){
     // Crea los elementos div
     let divGasto = document.createElement('div');
     let divGasDesc = document.createElement('div');
@@ -53,11 +53,11 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasto.append(btnEditar) ;  
     elementoObj.append(divGasto);
     //Botón Borrar
-    let botonBorrar = document.createElement('button');
-    botonBorrar.className ='gasto-borrar';
-    botonBorrar.innerText = 'Borrar';
-    botonBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
-    divGasto.append(botonBorrar);
+    let btnBorrar = document.createElement('button');
+    btnBorrar.className ='gasto-borrar';
+    btnBorrar.innerText = 'Borrar';
+    btnBorrar.addEventListener('click' , new BorrarHandle(gasto)); 
+    divGasto.append(btnBorrar);
     elementoObj.append(divGasto);
     //Botón editar formulario
     let btnEditarForm = document.createElement('button');
@@ -66,6 +66,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     btnEditarForm.addEventListener('click', new EditarHandleFormulario(gasto, divGasto));
     divGasto.append(btnEditarForm);
     elementoObj.append(divGasto);
+    }
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -114,7 +115,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
         }
     }
     // Agrega el divAgrupacion al elemento objetivo
-    elementoObjetivo.append(divAgrupacion);
+        elementoObjetivo.append(divAgrupacion);
 }
 
 function repintar() { 
@@ -162,13 +163,13 @@ function EditarHandle(gasto) {
     this.gasto = gasto;
     this.handleEvent = function (event) {
     let nuevaDescripcion = prompt("Introduce la descripción del gasto", this.gasto.descripcion);
-    let valor = prompt("Introduce el valor del gasto", this.gasto.valor);
+    let valorNuevo = prompt("Introduce el valor del gasto", this.gasto.valor);
     let nuevaFecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd", new Date(this.gasto.fecha).toISOString().slice(0, 10));
     let strEtiquetas = prompt("Introduce las etiquetas separadas por comas (,)", this.gasto.etiquetas.join(", "));
 
-     valor = parseFloat(valor);
+     valorNuevo = parseFloat(valorNuevo);
     this.gasto.actualizarDescripcion(nuevaDescripcion);
-    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarValor(valorNuevo);
     this.gasto.actualizarFecha(nuevaFecha);
     this.gasto.etiquetas = strEtiquetas.split(',').map(etiqueta => etiqueta.trim());
 
@@ -289,39 +290,36 @@ function EditarHandleFormulario(gasto, divGasto) {
 function filtrarGastosWeb() { 
     this.handleEvent = function (event) { 
         event.preventDefault();
-        
         let filtradoForm = event.currentTarget;
         let descripcionContiene = filtradoForm.elements['formulario-filtrado-descripcion'].value;
-        let minimoValor = filtradoForm.elements['formulario-filtrado-valor-minimo'].value;
-        let maximoValor = filtradoForm.elements['formulario-filtrado-valor-maximo'].value;
+        let valorMinimo = filtradoForm.elements['formulario-filtrado-valor-minimo'].value;
+        let valorMaximo = filtradoForm.elements['formulario-filtrado-valor-maximo'].value;
         let fechaDesde = filtradoForm.elements['formulario-filtrado-fecha-desde'].value;
         let fechaHasta = filtradoForm.elements['formulario-filtrado-fecha-hasta'].value;
         let etiquetasTiene = filtradoForm.elements['formulario-filtrado-etiquetas-tiene'].value;
-        minimoValor = parseFloat(minimoValor);
-        maximoValor = parseFloat(maximoValor);
+        valorMinimo = parseFloat(valorMinimo);
+        valorMaximo = parseFloat(valorMaximo);
         // Transformo a etiquetasTiene una vez
         let etiquetasTransformadas = etiquetasTiene != null ? gestorPresu.transformarListadoEtiquetas(etiquetasTiene) : null;
-
         let gastosFiltrados = gestorPresu.filtrarGastos({
                     descripcionContiene,
-                    minimoValor,
-                    maximoValor,
+                    valorMinimo,
+                    valorMaximo,
                     fechaDesde,
                     fechaHasta,
-                    etiquetasTiene: etiquetasTransformadas
-         });
+                    etiquetasTiene: etiquetasTransformadas });
+        let listaFiltrada = document.getElementById('listado-gastos-completo');
+            listaFiltrada.innerHTML = "";
 
-                let listaFiltrada = document.getElementById('listado-gastos-completo');
-                listaFiltrada.innerHTML = "";
-
-                for (let gasto of gastosFiltrados) {
-                    mostrarGastoWeb('listado-gastos-completo', gasto);
-                }
-            };
+        for (let gasto of gastosFiltrados) {
+            mostrarGastoWeb('listado-gastos-completo', gasto);
         }
+    }
+}
 
+let botonFiltradoFormGasto = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", botonFiltradoFormGasto);
 
-   
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
