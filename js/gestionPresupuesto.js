@@ -218,7 +218,8 @@ Etiquetas:\n`
 }
 
 function transformarListadoEtiquetas(etiquetas) { 
-        return etiquetas.split(/[,\.;: ]+/g);
+    return etiquetas.split(/[,\.;: ]+/g);
+    //return etiquetas.split(',')
 }
 
 

@@ -285,6 +285,42 @@ function EditarHandleFormulario(gasto, divGasto) {
         divGasto.append(plantillaFormulario);
     }
 }
+
+function filtrarGastosWeb() { 
+    this.handleEvent = function (event) { 
+        event.preventDefault();
+        
+        let filtradoForm = event.currentTarget;
+        let descripcionContiene = filtradoForm.elements['formulario-filtrado-descripcion'].value;
+        let minimoValor = filtradoForm.elements['formulario-filtrado-valor-minimo'].value;
+        let maximoValor = filtradoForm.elements['formulario-filtrado-valor-maximo'].value;
+        let fechaDesde = filtradoForm.elements['formulario-filtrado-fecha-desde'].value;
+        let fechaHasta = filtradoForm.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiquetasTiene = filtradoForm.elements['formulario-filtrado-etiquetas-tiene'].value;
+        minimoValor = parseFloat(minimoValor);
+        maximoValor = parseFloat(maximoValor);
+        // Transformo a etiquetasTiene una vez
+        let etiquetasTransformadas = etiquetasTiene != null ? gestorPresu.transformarListadoEtiquetas(etiquetasTiene) : null;
+
+        let gastosFiltrados = gestorPresu.filtrarGastos({
+                    descripcionContiene,
+                    minimoValor,
+                    maximoValor,
+                    fechaDesde,
+                    fechaHasta,
+                    etiquetasTiene: etiquetasTransformadas
+         });
+
+                let listaFiltrada = document.getElementById('listado-gastos-completo');
+                listaFiltrada.innerHTML = "";
+
+                for (let gasto of gastosFiltrados) {
+                    mostrarGastoWeb('listado-gastos-completo', gasto);
+                }
+            };
+        }
+
+
    
 export {
     mostrarDatoEnId,
@@ -298,4 +334,5 @@ export {
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario,
     EditarHandleFormulario,
+    filtrarGastosWeb,
 };
