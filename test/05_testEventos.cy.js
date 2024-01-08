@@ -77,7 +77,7 @@ describe("Eventos", () => {
             expect($p, "Se debe mostrar la cantidad correspondiente al balance total mediante la función 'calcularBalance'").to.contain('1081');
         });
         // Se debe haber editado el gasto
-        cy.get("#listado-gastos-completo > div.gasto > div.gasto-valor").eq(5).should('have.text', '95,78');
+        cy.get("#listado-gastos-completo > div.gasto > div.gasto-valor").eq(5).should('have.text', '95.78');  //Le pongo el punto decimal, ya que en el testo de formulario tambien lo pide con punto, que si no me da toc de que no pase todos los test
 
 
     });

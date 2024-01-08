@@ -91,7 +91,7 @@ function nuevoGastoWebFormulario(){ //Funcion principal
 
 
 
-function ManejadorCancelarFormulario(boton){  //NOS QUEDAMOS QUE NO SABEMOS COMO USAR EL MANEJADOR DE CANCELAR PARA AÑADIR Y PARA EDITAR
+function ManejadorCancelarFormulario(boton){  //Funcioon manejadora diseñada para el boton de cancelar, encargado de volver a activar todos los botones que le pasemos.
 
   this.handleEvent = function(){
     let eliminado = document.querySelector("form");
@@ -243,7 +243,7 @@ function formatoFecha(fecha){
   return fechaFormateada;
 }
 
-function EditarHandleFormulario(){
+function EditarHandleFormulario(){ //Manejador del boton editar, con el cual a su vez nos encargamos de añadir los eventos correespondientes al boton cancelar y al submit del formulario generado
   this.handleEvent = function(e){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let target = e.target;
@@ -265,13 +265,13 @@ function EditarHandleFormulario(){
       bot.disabled = true;
     })
     boton = document.querySelector(".cancelar");
-    let botonEditar = document.querySelectorAll(".gasto-editar-formulario");
-    let manejadorCancelar = new ManejadorCancelarFormulario(botonEditar);
+    let botonesEditar = document.querySelectorAll(".gasto-editar-formulario");
+    let manejadorCancelar = new ManejadorCancelarFormulario(botonesEditar);
     boton.addEventListener("click", manejadorCancelar);
   }
 }
 
-function SubmitHandleFormulario(){
+function SubmitHandleFormulario(){ //Manejador del boton submit generado a la hora de editar
   this.handleEvent = function(e){
     console.log("A");
     e.preventDefault();
