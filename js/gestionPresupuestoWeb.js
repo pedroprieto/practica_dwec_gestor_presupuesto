@@ -333,10 +333,17 @@ function cargarGastosWeb() {
     this.handleEvent = function () {
         let cargaDeGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
 
+        if (!cargaDeGastos) {
+            gestorPresu.cargarGastos([]);
+        }
+        else {
+            gestorPresu.cargarGastos(cargaDeGastos);
+        }
         repintar();
      }
 }
- 
+let botonCargarGasto = new cargarGastosWeb();
+document.getElementById("cargar-gastos").addEventListener("click", botonCargarGasto);
 
 export {
     mostrarDatoEnId,
