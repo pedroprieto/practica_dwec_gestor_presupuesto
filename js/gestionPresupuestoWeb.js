@@ -320,7 +320,23 @@ function filtrarGastosWeb() {
 let botonFiltradoFormGasto = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", botonFiltradoFormGasto);
 
+function guardarGastosWeb() { 
+    this.handleEvent = function () {
+        localStorage.GestorGastosDWEC = JSON.stringify(gestorPresu.listarGastos());
+    }
+}
 
+let botonGuardarGasto = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener("click", botonGuardarGasto);
+
+function cargarGastosWeb() {
+    this.handleEvent = function () {
+        let cargaDeGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+        repintar();
+     }
+}
+ 
 
 export {
     mostrarDatoEnId,
@@ -335,5 +351,6 @@ export {
     nuevoGastoWebFormulario,
     EditarHandleFormulario,
     filtrarGastosWeb,
-   
+    guardarGastosWeb,
+    cargarGastosWeb,
 };
