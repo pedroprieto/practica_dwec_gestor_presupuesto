@@ -40,9 +40,7 @@ function nuevoGastoWeb(){
    let mes= fecha.getMonth();
    let anyo= fecha.getFullYear();
    let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
-//dia-1
 
-   //crear array y hacer push con cada elemento de preguntarEtiquetas.split(', ')
    let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto");
    let etiquetasArr= preguntarEtiquetas.split(', ');
 
@@ -55,6 +53,55 @@ for (let name of etiquetasArr)
    let gastoPrueba=new gesPresupuesto.CrearGasto(preguntarDescripcion, gastoPreguntado, fechaCompleta, ...arrayEtq);
    gesPresupuesto.anyadirGasto(gastoPrueba);
    repintar();
+}
+
+let EditarHandle={
+handleEvent: function(evento){
+    let preguntarDescripcion= prompt("Introduzca la descripción del gasto")
+
+    let preguntarGasto =prompt("Introduzca el valor del gasto");
+   let gastoPreguntado= parseInt(preguntarGasto);
+
+   let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)");
+   let fecha =new Date(preguntarFecha);
+   let dia= fecha.getDate();
+   let mes= fecha.getMonth();
+   let anyo= fecha.getFullYear();
+   let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
+
+   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto");
+   let etiquetasArr= preguntarEtiquetas.split(', ');
+
+let arrayEtq=[];
+for (let name of etiquetasArr)
+{
+    arrayEtq.push(name )
+}
+
+this.gasto.actualizarDescripcion(preguntarDescripcion);
+this.gasto.actualizarValor(gastoPreguntado);
+this.gasto.actualizarFecha(fechaCompleta);
+this.gasto.anyadirEtiquetas(arrayEtq);
+
+repintar();
+}
+}
+
+
+let BorrarHandle={
+    handleEvent: function(evento){
+        
+        borrarGasto(this.gasto);
+        repintar();
+    } 
+}
+
+let BorrarEtiquetasHandle={
+    handleEvent: function(evento){
+
+       borrarEtiquetas(this.gasto.etiqueta);
+        repintar();
+    } 
 }
 
 function mostrarDatoEnId(idElemento,valor){
@@ -107,20 +154,39 @@ function mostrarGastoWeb(idElemento,gasto){
     
         }
     }
-      else 
-      {
+    else 
+    {
         
         let spanEtiqueta=document.createElement("span");
         spanEtiqueta.className="gasto-etiquetas-etiqueta";
         spanEtiqueta.innerHTML=gasto.etiquetas;
         divEtiquetas.append(spanEtiqueta);   
-      }
+    }
     
-    
-       
-        
-    
-    return contenedor;
+      let botonEditar = document.createElement("button");
+      botonEditar.setAttribute("type", "button");
+      botonEditar.className="gasto-editar";
+      botonEditar.textContent="Editar";
+
+      let editarGasto =Object.create(EditarHandle);
+      editarGasto.gasto= gasto;
+     
+      botonEditar.addEventListener("click", editarGasto);
+   // Añadimos el botón a la estructura HTML
+    divGasto.append(botonEditar);
+  
+    let botonBorrar = document.createElement("button");
+    botonBorrar.setAttribute("type", "button");
+    botonBorrar.className="gasto-borrar";
+    botonBorrar.textContent="Borrar";
+
+    let borrarGasto =Object.create(BorrarHandle);
+    borrarGasto.gasto= gasto;
+   
+    botonBorrar.addEventListener("click", borrarGasto);
+ // Añadimos el botón a la estructura HTML
+  divGasto.append(botonBorrar);
+        return contenedor;
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
