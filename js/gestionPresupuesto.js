@@ -170,7 +170,6 @@ function agruparGastos(periodo = mes, etiquetas, fechaDesde, fechaHasta) {
         }
         return acc;
     }, {});
-
 }
 
 CrearGasto.prototype.mostrarGasto = function (){
@@ -234,6 +233,9 @@ function calcularBalance (){
     return Presupuesto - (calcularTotalGastos());
 }
 
+function transformarListadoEtiquetas(cadena){
+    return cadena.match(/[0-9a-zA-Z]+/g);
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -250,4 +252,5 @@ export   {
     calcularBalance,
     agruparGastos,
     filtrarGastos,
+    transformarListadoEtiquetas
 }

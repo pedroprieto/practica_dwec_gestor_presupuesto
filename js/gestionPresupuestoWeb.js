@@ -320,6 +320,38 @@ function cancelarAnyadirGasto(event) {
 let anyadirGastoBoton = document.getElementById("anyadirgasto-formulario");
 anyadirGastoBoton.addEventListener(`click`, nuevoGastoWebFormulario);
 
+let filtrarFormularioBoton = document.getElementById("formulario-filtrado");
+filtrarFormularioBoton.addEventListener(`click`, filtrarGastosWeb);
+
+
+function filtrarGastosWeb(event) {
+    event.preventDefault();
+    let formulario = document.getElementById("formulario-filtrado")
+    let descFiltro = formulario.elements.formulario-filtrado-descripcion.value;
+    let valorMin = formulario.elements.formulario-filtrado-valor-minimo.value;
+    let valorMax = formulario.elements.formulario-filtrado-valor-maximo.value;
+    let fechaInicialFiltro = formulario.elements.formulario-filtrado-fecha-desde.value;
+    let fechaFinalFiltro= formulario.elements.formulario-filtrado-fecha-hasta.value;
+    let etiquetasFiltro = formulario.elements.formulario-filtrado-etiquetas-tiene.value;
+    if (etiquetasFiltro != null)
+    {   
+        let etiquetasFiltradas = gesPres.transformarListadoEtiquetas(etiquetasTiene);
+        etiquetasFiltro = etiquetasFiltradas;
+    }
+    
+    let opciones = {};
+    opciones.descripcionContiene = descFiltro;
+    opciones.valorMinimo = valorMin;
+    opciones.valorMaximo = valorMax;
+    opciones.fechaDesde = fechaInicialFiltro;
+    opciones.fechaHasta = fechaFinalFiltro;
+    opciones.etiquetasTiene = etiquetasFiltro;
+    let gastosFiltrados = filtrarGastos (opciones);
+    mostrarGastoWeb('listado-gastos-completo', gastosFiltrados); //gastosFiltrados_test
+
+}
+
+
 export{
     
     mostrarDatoEnId,
