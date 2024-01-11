@@ -134,14 +134,6 @@ class CrearGasto {
 
 
 
-
-
-
-
-
-
-
-
   function anyadirGasto(gasto){
       gasto.id = idGasto++;
         // Añadir el objeto gasto al final del array gastos

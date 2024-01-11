@@ -109,7 +109,50 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
        elemento.appendChild(nuevaAgrupacion);   
 }
 
+// Importar la librería js/gestionPresupuesto.js
 
+
+// Función repintar para actualizar la página
+
+function repintar() {
+    // Mostrar el presupuesto en div#presupuesto
+   gestionPresupuesto.mostrarPresupuesto();
+   mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
+    
+    // Mostrar los gastos totales en div#gastos-totales
+   // gestionPresupuesto.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
+    
+    // Mostrar el balance total en div#balance-total
+    //gestionPresupuesto.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
+    
+    // Borrar el contenido de div#listado-gastos-completo
+    //document.getElementById('listado-gastos-completo').innerHTML = '';
+    
+    // Mostrar el listado completo de gastos en div#listado-gastos-completo
+    //gestionPresupuesto.listarGastos('listado-gastos-completo', gestionPresupuesto.mostrarGastoWeb);
+}
+
+// Función actualizarPresupuestoWeb y botón actualizarpresupuesto
+function actualizarPresupuestoWeb() {
+    // Pedir al usuario que introduzca un presupuesto mediante un prompt
+    let nuevoPresupuestoStr = prompt('Introduce el nuevo presupuesto:');
+    
+    // Convertir el valor a número
+    let nuevoPresupuesto = parseFloat(nuevoPresupuestoStr);
+    
+    // Actualizar el presupuesto
+    gestionPresupuesto.actualizarPresupuesto(nuevoPresupuesto);
+    
+    // Llamar a la función repintar para mostrar la información actualizada
+    repintar();
+}
+
+// Obtener el elemento botón correspondiente y añadir la manejadora de eventos
+let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+botonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
+// Llamar a repintar al cargar la página para mostrar la información inicial
+repintar();
 
 
 
@@ -119,5 +162,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb
 }
