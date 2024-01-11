@@ -57,6 +57,7 @@ for (let name of etiquetasArr)
 
 let EditarHandle={
 handleEvent: function(evento){
+    
     let preguntarDescripcion= prompt("Introduzca la descripción del gasto")
 
     let preguntarGasto =prompt("Introduzca el valor del gasto");
@@ -68,8 +69,8 @@ handleEvent: function(evento){
    let mes= fecha.getMonth();
    let anyo= fecha.getFullYear();
    let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
-
-   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto");
+   
+   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto (etiqueta, etiqueta2, ...)");
    let etiquetasArr= preguntarEtiquetas.split(', ');
 
 let arrayEtq=[];
@@ -81,9 +82,16 @@ for (let name of etiquetasArr)
 this.gasto.actualizarDescripcion(preguntarDescripcion);
 this.gasto.actualizarValor(gastoPreguntado);
 this.gasto.actualizarFecha(fechaCompleta);
-this.gasto.anyadirEtiquetas(arrayEtq);
+for (let i = this.gasto.etiquetas.length;i>0;i--)
+{
+    
+      this.gasto.etiquetas.shift()
+     
+}
+this.gasto.anyadirEtiquetas(...arrayEtq)
 
 repintar();
+
 }
 }
 
@@ -91,15 +99,17 @@ repintar();
 let BorrarHandle={
     handleEvent: function(evento){
         
-        borrarGasto(this.gasto);
+        gesPresupuesto.borrarGasto(this.gasto.id);
         repintar();
     } 
 }
 
 let BorrarEtiquetasHandle={
     handleEvent: function(evento){
-
-       borrarEtiquetas(this.gasto.etiqueta);
+        
+        
+       this.gasto.borrarEtiquetas(this.etiqueta)
+       
         repintar();
     } 
 }
@@ -141,7 +151,9 @@ function mostrarGastoWeb(idElemento,gasto){
     divEtiquetas.className="gasto-etiquetas";
     
     divGasto.append(divEtiquetas);
+    
    
+        
     if(gasto.etiquetas)
     {
         for (let i = 0;i<gasto.etiquetas.length;i++)
@@ -150,6 +162,14 @@ function mostrarGastoWeb(idElemento,gasto){
             let spanEtiqueta=document.createElement("span");
             spanEtiqueta.className="gasto-etiquetas-etiqueta";
             spanEtiqueta.innerHTML=etiqueta;
+
+            let borrarEtiquetasGasto =Object.create(BorrarEtiquetasHandle);
+            borrarEtiquetasGasto.gasto= gasto;
+            borrarEtiquetasGasto.etiqueta=gasto.etiquetas[i];
+        
+            spanEtiqueta.addEventListener("click", borrarEtiquetasGasto)
+            
+            
             divEtiquetas.append(spanEtiqueta);   
     
         }
@@ -160,6 +180,11 @@ function mostrarGastoWeb(idElemento,gasto){
         let spanEtiqueta=document.createElement("span");
         spanEtiqueta.className="gasto-etiquetas-etiqueta";
         spanEtiqueta.innerHTML=gasto.etiquetas;
+
+        
+        
+            
+
         divEtiquetas.append(spanEtiqueta);   
     }
     
@@ -186,6 +211,14 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrar.addEventListener("click", borrarGasto);
  // Añadimos el botón a la estructura HTML
   divGasto.append(botonBorrar);
+
+ 
+   
+
+   
+
+  
+
         return contenedor;
 }
 

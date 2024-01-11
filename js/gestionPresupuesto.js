@@ -68,6 +68,7 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
         }
         
     }
+    
    this.anyadirEtiquetas=function(...etiquetaNueva){
 
        for (let i = 0;i<=etiquetas.length;i++)
@@ -107,8 +108,7 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
               etiquetas.splice(i,1)
              
             }
-             
-             
+  
         }
     }
     this.actualizarValor= function(valor){
