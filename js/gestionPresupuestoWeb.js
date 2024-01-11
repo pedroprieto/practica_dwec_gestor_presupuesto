@@ -1,5 +1,7 @@
 import * as gp from './gestionPresupuesto.js'
 
+const API_URL = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'
+
 /**
  * Controlador de eventos que solicita al usuario que edite las
  * propiedades de un objeto `gasto` y luego actualiza el objeto y vuelve a pintar la interfaz de
@@ -89,6 +91,23 @@ function BorrarHandle (gasto) {
   this.handleEvent = (event) => {
     gp.borrarGasto(gasto.id)
     repintar()
+  }
+}
+
+function BorrarApiHandle (gasto) {
+  this.handleEvent = async (event) => {
+    const usuario = document.getElementById('nombre_usuario').value
+
+    const response = await fetch(API_URL + usuario + '/' + gasto.gastoId, {
+      method: 'DELETE'
+    })
+
+    if (response.ok) {
+      cargarGastosApi()
+      repintar()
+    } else {
+      globalThis.alert('ErrorHTTP: ' + response.status)
+    }
   }
 }
 
@@ -266,6 +285,15 @@ function mostrarGastoWeb (idElemento, gasto) {
   bBorrar.type = 'button'
   cGasto.append(bBorrar)
 
+  // Botón borrar gasto API
+  const objetoBorrarApi = new BorrarApiHandle(gasto)
+  const bBorrarApi = document.createElement('button')
+  bBorrarApi.addEventListener('click', objetoBorrarApi)
+  bBorrarApi.classList.add('gasto-borrar-api')
+  bBorrarApi.innerHTML = 'Borrar (API)'
+  bBorrarApi.type = 'button'
+  cGasto.append(bBorrarApi)
+
   // Botón editar gasto en formulario
   const objetoEditarFormulario = new EditarHandleFormulario(gasto)
   const bEditarFormulario = document.createElement('button')
@@ -372,6 +400,20 @@ function cargarGastosWeb (e) {
   repintar()
 }
 
+async function cargarGastosApi (e) {
+  const usuario = document.getElementById('nombre_usuario').value
+
+  const response = await fetch(API_URL + usuario)
+
+  if (response.ok) { // si el HTTP-status es 200-299
+    const json = await response.json()
+    gp.cargarGastos(json)
+    repintar()
+  } else {
+    globalThis.alert('ErrorHTTP: ' + response.status)
+  }
+}
+
 export {
   actualizarPresupuestoWeb,
   nuevoGastoWebFormulario,
@@ -385,5 +427,6 @@ export {
   mostrarGastosAgrupadosWeb,
   filtrarGastosWeb,
   guardarGastosWeb,
-  cargarGastosWeb
+  cargarGastosWeb,
+  cargarGastosApi
 }

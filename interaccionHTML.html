@@ -19,6 +19,15 @@
         </button>
         <button type="button" id="guardar-gastos">Guardar gastos</button>
         <button type="button" id="cargar-gastos">Cargar gastos</button>
+        <button type="button" id="cargar-gastos-api">
+          Cargar Gastos (API)
+        </button>
+        <input
+          type="text"
+          id="nombre_usuario"
+          placeholder="Usuario"
+          value="migueltrascasas"
+        />
       </div>
       <div id="presupuesto"></div>
 
@@ -129,6 +138,10 @@
       document
         .getElementById("cargar-gastos")
         .addEventListener("click", gp.cargarGastosWeb);
+
+      document
+        .getElementById("cargar-gastos-api")
+        .addEventListener("click", gp.cargarGastosApi);
     </script>
     <template id="formulario-template">
       <form>
@@ -150,6 +163,7 @@
         </div>
         <button type="submit">Enviar</button>
         <button class="cancelar" type="button">Cancelar</button>
+        <button type="button" class="gasto-enviar-api">Enviar (API)</button>
       </form>
     </template>
   </body>
