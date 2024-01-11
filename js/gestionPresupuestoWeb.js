@@ -554,7 +554,8 @@ function mostrarGastosAgrupadosWeb (idElemento , agrup , periodo) {
                 })
                 .then(function (response) {
                 if (response.ok) {
-                   (cargarGastosApi())
+                   cargarGastosApi();
+                   repintar();
                 } else {
                     alert("Error-HTTP: " + response.status);
                 }
