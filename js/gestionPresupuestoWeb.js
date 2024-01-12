@@ -104,7 +104,6 @@ function BorrarApiHandle (gasto) {
 
     if (response.ok) {
       cargarGastosApi()
-      repintar()
     } else {
       globalThis.alert('ErrorHTTP: ' + response.status)
     }
@@ -192,8 +191,46 @@ function nuevoGastoWebFormulario () {
     document.getElementById('controlesprincipales').removeChild(formulario)
   })
 
+  // EVENTO CREAR GASTO API -> crea el gasto y lo envia a la api
+  formulario
+    .querySelector('.gasto-enviar-api')
+    .addEventListener('click', enviarGastoApi)
+
   // EVENTO CANCELAR -> borra el formulario y reactiva el botón Añadir
   formulario.querySelector('button.cancelar').addEventListener('click', new EventoCancelar(botonAnyadirFormulario))
+}
+
+async function enviarGastoApi (e) {
+  const usuario = document.getElementById('nombre_usuario').value
+
+  const form = e.target.closest('form')
+
+  const fDescripcion = form.elements.descripcion.value
+  const fValor = Number(form.elements.valor.value)
+  const fFecha = form.elements.fecha.value
+  const fEtiquetas = form.elements.etiquetas.value.split(',')
+
+  const gasto = new gp.CrearGasto(fDescripcion, fValor, fFecha, ...fEtiquetas)
+
+  const headersList = {
+    Accept: '*/*',
+    'Content-Type': 'application/json'
+  }
+
+  const response = await fetch(API_URL + usuario, {
+    method: 'POST',
+    body: JSON.stringify(gasto),
+    headers: headersList
+  })
+
+  console.log(response)
+
+  if (response.ok) { // si el HTTP-status es 200-299
+    globalThis.alert('Gasto enviado correctamente')
+    cargarGastosApi()
+  } else {
+    globalThis.alert('ErrorHTTP: ' + response.status)
+  }
 }
 
 /**
@@ -428,5 +465,6 @@ export {
   filtrarGastosWeb,
   guardarGastosWeb,
   cargarGastosWeb,
-  cargarGastosApi
+  cargarGastosApi,
+  enviarGastoApi
 }
