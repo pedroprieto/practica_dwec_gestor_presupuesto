@@ -48,8 +48,7 @@ function mostrarGastoWeb (idElemento, gasto){
     // Establecer la propiedad etiqueta del objeto creado al texto de la etiqueta que se esté procesando (seguramente este valor lo tendrás disponible dentro del bucle que se encarga de pintar un elemento span para cada etiqueta).
     borrarEtiquetasHandle.etiqueta = gasto.etiquetas;
     //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
-    let gastoetiquetasetiqueta = document.getElementById("gasto-etiquetas-etiqueta");
-    //gastoetiquetasetiqueta.addEventListener("click", borrarEtiquetasHandle);
+    document.querySelector(".gasto-etiquetas-etiqueta").addEventListener("click", borrarEtiquetasHandle);
     //
     // Crear Botones con manejador de eventos:
     estructuraHTML += `
@@ -203,7 +202,7 @@ function EditarHandle (gasto){
     this.gasto.actualizarFecha(new Date(fecha));
     this.gasto.anyadirEtiquetas(etiq);
     // Llamar a la función repintar para que se muestre la lista de gastos con los datos actualizados de la edición.
-    repintar();
+    //repintar();
   }
 }
 //
@@ -218,9 +217,10 @@ function BorrarHandle(gasto){
   // disponible en this.gasto.
   this.handleEvent = function(){
     gestionPresupuesto.borrarGasto(this.gasto.id);
-    // Llamar a la función repintar para que se muestre la lista actualizada de gastos.
-    repintar();
+    //repintar();
   }
+  // Llamar a la función repintar para que se muestre la lista actualizada de gastos.
+//repintar();
 }
 //
 /* Función BorrarEtiquetasHandle. Esta función se utilizará como objeto manejador de eventos para borrar etiquetas de un gasto.
@@ -237,9 +237,10 @@ function BorrarEtiquetasHandle (gasto, etiqueta){
   // (this.gasto) y como parámetro utilizará la etiqueta seleccionada, disponible en this.etiqueta.
   this.handleEvent = function(){
     gestionPresupuesto.borrarEtiquetas(this.etiqueta);
-    // Llamar a la función repintar para que se muestre la lista actualizada de gastos.
-    repintar();
+    //repintar();
   }
+  // Llamar a la función repintar para que se muestre la lista actualizada de gastos.
+  //repintar();
 }
 //
 // Exportar funciones
