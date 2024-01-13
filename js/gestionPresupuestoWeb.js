@@ -32,7 +32,8 @@ function nuevoGastoWeb(){
     let preguntarDescripcion= prompt("Introduzca la descripción del gasto")
 
     let preguntarGasto =prompt("Introduzca el valor del gasto");
-   let gastoPreguntado= parseInt(preguntarGasto);
+   
+   let gastoPreguntado=     parseFloat(preguntarGasto);
 
    let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)");
    let fecha =new Date(preguntarFecha);
@@ -42,7 +43,7 @@ function nuevoGastoWeb(){
    let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
 
    let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto");
-   let etiquetasArr= preguntarEtiquetas.split(', ');
+   let etiquetasArr= preguntarEtiquetas.split(',');
 
 let arrayEtq=[];
 for (let name of etiquetasArr)
@@ -61,7 +62,7 @@ handleEvent: function(evento){
     let preguntarDescripcion= prompt("Introduzca la descripción del gasto")
 
     let preguntarGasto =prompt("Introduzca el valor del gasto");
-   let gastoPreguntado= parseInt(preguntarGasto);
+   let gastoPreguntado= parseFloat(preguntarGasto);
 
    let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)");
    let fecha =new Date(preguntarFecha);
@@ -70,8 +71,8 @@ handleEvent: function(evento){
    let anyo= fecha.getFullYear();
    let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
    
-   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto (etiqueta, etiqueta2, ...)");
-   let etiquetasArr= preguntarEtiquetas.split(', ');
+   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto ");
+   let etiquetasArr= preguntarEtiquetas.split(',');
 
 let arrayEtq=[];
 for (let name of etiquetasArr)
