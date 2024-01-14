@@ -232,14 +232,19 @@ function nuevoGastoWebFormulario(e) {
     async function enviarFormApiNuevo() {
         let nombreUsuario = document.getElementById("nombre-usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
-        await fetch(url, {
+        let respuesta = await fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(extraerDatosForm(formulario)),
         });
+
+        if (respuesta.ok) {
         cargarGastosApi();
+        } else {
+            alert("Error al añadir el gasto");
+        }
     }
 
     let botonGastoEnviarApi = formulario.querySelector(".gasto-enviar-api");
@@ -306,14 +311,20 @@ function EditarHandleFormulario(gasto) {
         async function enviarFormApiEditar() {
             let nombreUsuario = document.getElementById("nombre-usuario").value;
             let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
-            await fetch(url, {
+            let respuesta = await fetch(url, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify(extraerDatosForm(formulario)),
             });
+            
+            if (respuesta.ok) {
             cargarGastosApi();
+            }
+            else {
+                alert("Error al actualizar el gasto");
+            }
         }
 
         let botonGastoEnviarApi = formulario.querySelector(".gasto-enviar-api");
@@ -396,9 +407,14 @@ async function cargarGastosApi() {
     let nombreUsuario = document.getElementById("nombre-usuario").value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
     let respuesta = await fetch(url);
+    
+    if (respuesta.ok) {
     let gastos = await respuesta.json();
     gp.cargarGastos(gastos);
     repintar();
+    } else {
+        alert("Error al cargar los gastos");
+    }
 }
 
 let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
@@ -409,9 +425,14 @@ function BorrarHandleApi(gasto) {
 
     this.handleEvent = async function () {
         let nombreUsuario = document.getElementById("nombre-usuario").value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
-        await fetch(url, { method: "DELETE" });
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`
+        let respuesta = await fetch(url, { method: "DELETE" });
+        
+        if (respuesta.ok) {
         cargarGastosApi();
+        } else {
+            alert("Error al borrar el gasto");
+        }
     }
 }
 
