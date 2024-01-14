@@ -120,16 +120,21 @@ function repintar() {
    mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
     
     // Mostrar los gastos totales en div#gastos-totales
-   // gestionPresupuesto.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
+    mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
     
     // Mostrar el balance total en div#balance-total
-    //gestionPresupuesto.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
+    
+    mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
     
     // Borrar el contenido de div#listado-gastos-completo
-    //document.getElementById('listado-gastos-completo').innerHTML = '';
+    document.getElementById('listado-gastos-completo').innerHTML = '';
     
     // Mostrar el listado completo de gastos en div#listado-gastos-completo
-    //gestionPresupuesto.listarGastos('listado-gastos-completo', gestionPresupuesto.mostrarGastoWeb);
+    let listGastos = gestionPresupuesto.listarGastos();
+    for (let gasto of listGastos){
+    mostrarGastoWeb('listado-gastos-completo', gasto)
+    }
+
 }
 
 // Función actualizarPresupuestoWeb y botón actualizarpresupuesto
@@ -146,10 +151,34 @@ function actualizarPresupuestoWeb() {
     // Llamar a la función repintar para mostrar la información actualizada
     repintar();
 }
+//(descripcion, valor = 0, fecha, ...etiquetas)
+function nuevoGastoWeb(){
+    //introduccimos los campos
+    let newDescripcion = prompt('Introduce la descripción del gasto:');
+    let valorStr = prompt('Introduce el valor del gasto:');
+    let newFecha = prompt('Introduce la fecha del gastos en formato: YYYY-MM-DD');
+    let nombresEtiqueta = prompt('Introduce las etiquetas separadas por ,');
+    let nuevoValor = parseFloat(valorStr);
+    let arrayEtiquetas = nombresEtiqueta.split(', ');
+    //let arrayEtiqueta = [];
+    /*for (let etiqueta of arrayEtiqueta)
+    {
+        arrayEtiqueta.push(etiqueta);
+    }*/
+    // hay que crear y añadir el gasto
+    let nuevoGasto = new gestionPresupuesto.CrearGasto (newDescripcion, nuevoValor, newFecha, arrayEtiquetas)
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+    repintar();
+    
+}
+
+
 
 // Obtener el elemento botón correspondiente y añadir la manejadora de eventos
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+let botonAnyadirGasto = document.getElementById('anyadirgasto');
+botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
 // Llamar a repintar al cargar la página para mostrar la información inicial
 repintar();
