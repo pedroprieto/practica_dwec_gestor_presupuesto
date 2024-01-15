@@ -317,14 +317,73 @@ function EditarHandleformulario(gasto, divGasto) {
     const btnCancelar = formulario.querySelector("button.cancelar");
     btnCancelar.addEventListener('click', new CancelarHandle(formulario, btnEditForm));
    
-
     // Evento submit del formulario
     formulario.addEventListener('submit', new SubmitHandler(gasto));
 
-    
-        
+    // Evento click del botón .gasto-enviar-api
+    const bEnviarApi = formulario.querySelector('.gasto-enviar-api')
+    bEnviarApi.addEventListener('click', new ActualizarGastoApi(gasto, formulario));
     };
 }
+
+// Objeto manejador del boton gasto-enviar-api
+function ActualizarGastoApi(gasto, formulario){
+
+    this.gasto = gasto;
+    this.formulario = formulario;
+
+    this.handleEvent = function (event){
+        // Obtener el nombre de usuario desde el input
+        const nombreUsuario = document.getElementById('nombre_usuario').value;
+
+        // Obtener el ID del gasto actual (reemplaza 'obtenerIdGasto' con la lógica real para obtener el ID)
+        const idGasto = gasto.idGasto;
+
+        // Crear la URL de la API con el nombre de usuario y el ID del gasto
+        const apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${idGasto}`;
+
+
+        // Obtener los datos del formulario
+        const descripcion = formulario.elements.descripcion.value;
+        const valor = Number(formulario.elements.valor.value);
+        const fecha = formulario.elements.fecha.value;
+        const etiquetasRaw = formulario.elements.etiquetas.value;
+        const etiquetas = etiquetasRaw.split(',').map(etiqueta => etiqueta.trim());
+
+        // Crear el objeto con los datos del formulario de edición
+        const datosEdicion = {
+          descripcion: descripcion,
+          valor: valor,
+          fecha: fecha,
+          etiquetas: etiquetas
+        };
+
+        // Realizar la solicitud fetch PUT a la API
+        fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datosEdicion)
+        })
+          .then(response => {
+            // Verificar si la solicitud fue exitosa (código de estado 200)
+            if (!response.ok) {
+              throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            // Parsear la respuesta JSON
+            return response.json();
+          })
+          .then(result => {
+            cargarGastosApi();
+          })
+          .catch(error => {
+            // Manejar errores de la solicitud
+            console.error('Error al editar el gasto:', error.message);
+          });
+        }
+    }
+    
 
 // Objeto manejador del evento submit
 function SubmitHandler(gasto){
@@ -422,7 +481,8 @@ function nuevoGastoWebFormulario(){
       const descripcion = form.elements.descripcion.value;
       const valor = Number(form.elements.valor.value);
       const fecha = form.elements.fecha.value;
-      const etiquetas = form.elements.etiquetas.value;
+      const etiquetasRaw = form.elements.etiquetas.value;
+      const etiquetas = etiquetasRaw.split(',').map(etiqueta => etiqueta.trim());
 
       const gasto = new GesPrest.CrearGasto(descripcion, valor, fecha, etiquetas);
       GesPrest.anyadirGasto(gasto);
@@ -449,7 +509,8 @@ function enviarGastoApi(){
       const descripcion = form.elements.descripcion.value;
       const valor = Number(form.elements.valor.value);
       const fecha = form.elements.fecha.value;
-      const etiquetas = form.elements.etiquetas.value;
+      const etiquetasRaw = form.elements.etiquetas.value;
+      const etiquetas = etiquetasRaw.split(',').map(etiqueta => etiqueta.trim());
 
       // Crear un objeto con los datos del formulario
       const datosGasto = {
@@ -473,10 +534,15 @@ function enviarGastoApi(){
           body: JSON.stringify(datosGasto)
         })
           .then(response => response.json())
-          .then(data => console.log(data))
-          .catch(error => console.error('Error:', error));
+          .then(data => {
+            console.log(data);
+            // Llamar a cargarGastosApi después de que la promesa se haya resuelto
+            cargarGastosApi();
+          })
+          .catch(error => console.error('Error:', error)); 
 
       }
+
 const formFiltrado = document.getElementById("formulario-filtrado");
 
 function filtrarGastosWeb(){
