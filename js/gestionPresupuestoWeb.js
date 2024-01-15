@@ -104,6 +104,8 @@ for (const etiqueta of gasto.etiquetas) {
     divGasto.appendChild(bEditar); 
     divGasto.appendChild(bBorrar);
     divGasto.appendChild(bEditarForm);
+    divGasto.appendChild(bBorrarApi);
+    
     
 
 
@@ -365,10 +367,10 @@ function BorrarApiHandle(gasto){
         // Obtenemos el nombre del usuario del input
         const nombreUsuario = document.getElementById('nombre_usuario').value;
         // Obtener el id del gasto actual
-        const idGasto = gasto.id;
+        const idGasto = gasto.gastoId;
         // Construir la URL de la API con el nombre de usuario y el id del gasto
         const apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${idGasto}`;
-
+      
         // Realizar la solicitud fetch DELETE a la API
         fetch(apiUrl, { method: 'DELETE' })
           .then(response => {
