@@ -63,12 +63,21 @@ function mostrarGastoWeb(idElemento, gasto){
       nuevoGastoDiv.appendChild(valorDiv);
       nuevoGastoDiv.appendChild(etiquetasDiv);
 
-     
+
+      let botonEdit = document.createElement('button');
+      botonEdit.type = 'button';
+      botonEdit.className = 'gasto-editar';
+      botonEdit.textContent = 'Editar';
+      let manejadorEvEditar = new EditarHandle(gasto);
+      
+      botonEdit.addEventListener('click', manejadorEvEditar);
+        nuevoGastoDiv.appendChild(botonEdit);
+    // Añadir el nuevo gasto al contenedor
+        container.append(nuevoGastoDiv);
+      
 
 
 
-      // Añadir el nuevo gasto al contenedor
-      container.appendChild(nuevoGastoDiv);
   } else {
       console.error('El contenedor con el id ' + idElemento + ' no fue encontrado.');
   }
@@ -182,6 +191,30 @@ botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
 // Llamar a repintar al cargar la página para mostrar la información inicial
 repintar();
+// botón Editar Gasto
+
+
+
+class EditarHandle {
+    constructor(gasto) {
+        this.gasto = gasto;
+        this.handleEvent = function () {
+            let newDescripcion = prompt(`Introduce la nueva descripción del gasto. para "${this.gasto.descripcion}"`);
+            let valorStr = parseFloat(prompt('Intruduzca el nuevo valor'));
+            let nuevoValor = parseFloat(valorStr);
+            let newFecha = ('Introduce la fecha del gasto en formato: yyyy-mm-dd');
+            let etiquetasNew = prompt('Introduce las etiquetas separadas por "," ');
+            // let arrayEtiquetas = etiquetasNew.split(', ');
+            // actualizar valores
+            this.gasto.etiquetas=[];
+            this.gasto.actualizarDescripcion(newDescripcion);
+            this.gasto.actualizarValor(nuevoValor);
+            this.gasto.actualizarFecha(newFecha);
+            this.gasto.anyadirEtiquetas(...etiquetasNew.split(', '));
+            repintar();
+        };
+    }
+}
 
 
 
