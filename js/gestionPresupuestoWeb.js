@@ -23,59 +23,72 @@ function mostrarDatoEnId (idElemento, valor){
 function mostrarGastoWeb (idElemento, gasto){
   // Asigna el elemento a una variable
   let elemento = document.getElementById(idElemento);
-  // Estructura HTML
+  // Crea una estructura HTML (crea elementos, asigna nombre de calse y texto, y se añade a la estructura).
   if (elemento) {
-    let estructuraHTML = `
-      <div class="gasto">
-        <div class="gasto-descripcion">${gasto.descripcion}</div>
-        <div class="gasto-fecha">${new Date(gasto.fecha).toLocaleDateString()}</div>
-        <div class="gasto-valor">${gasto.valor}</div>
-        <div class="gasto-etiquetas">`;
-    // Agrega las etiquetas del gasto si existen
+    // <div class="gasto">
+    let divGasto = document.createElement("div");
+    divGasto.className = "gasto";
+    elemento.append(divGasto); // divGasto dentro de elemento
+    //<div class="gasto-descripcion">${gasto.descripcion}</div>
+    let divGastoDesc = document.createElement("div");
+    divGastoDesc.className = "gasto-descripcion";
+    divGastoDesc.append(`${gasto.descripcion}`);
+    divGasto.append(divGastoDesc); // divGastoDesc dentro de divGasto
+    // <div class="gasto-fecha">${new Date(gasto.fecha).toLocaleDateString()}</div>
+    let divGastoFecha = document.createElement("div");
+    divGastoFecha.className = "gasto-fecha";
+    divGastoFecha.append(`${new Date(gasto.fecha).toLocaleDateString()}`);
+    divGasto.append(divGastoFecha); // divGastoFecha dentro de divGasto
+    //<div class="gasto-valor">${gasto.valor}</div>
+    let divGastoValor = document.createElement("div");
+    divGastoValor.className = "gasto-valor";
+    divGastoValor.append(`${gasto.valor}`);
+    divGasto.append(divGastoValor); // divGastoValor dentro de divGasto
+    // <div class="gasto-etiquetas">
+    let divGastoEtiqueta = document.createElement("div");
+    divGastoEtiqueta.className = "gasto-etiquetas";
+    divGasto.append(divGastoEtiqueta);
     if (gasto.etiquetas && gasto.etiquetas.length > 0) {
       for (let e of gasto.etiquetas){
+        // Crea elemento span, añade clase y el texto de la etiqueta.
+        let span = document.createElement("span");
+        span.className = "gasto-etiquetas-etiqueta";
+        span.append(`${e}`);
+        divGastoEtiqueta.append(span); // span dentro de divGastoEtiqueta
         // Eventos para los span de etiquetas (no crearemos botón de borrar: se producirá si el usuario hace clic encima de una etiqueta): 
-        estructuraHTML += `
-          <span id="gasto-etiquetas-etiqueta" class="gasto-etiquetas-etiqueta">
-            ${gasto.etiquetas}
-          </span>`;
+        // Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+        let borrarEtiquetasHandle = new BorrarEtiquetasHandle(gasto, e);
+        // Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
+        borrarEtiquetasHandle.gasto = gasto;
+        // Establecer la propiedad etiqueta del objeto creado al texto de la etiqueta que se esté procesando (seguramente este valor lo tendrás disponible dentro del bucle que se encarga de pintar un elemento span para cada etiqueta).
+        borrarEtiquetasHandle.etiqueta = e;
+        //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+        span.addEventListener("click", borrarEtiquetasHandle);
       }
     }
-    // Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
-    let borrarEtiquetasHandle = new BorrarEtiquetasHandle(gasto);
-    // Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
-    borrarEtiquetasHandle.gasto = gasto;
-    // Establecer la propiedad etiqueta del objeto creado al texto de la etiqueta que se esté procesando (seguramente este valor lo tendrás disponible dentro del bucle que se encarga de pintar un elemento span para cada etiqueta).
-    borrarEtiquetasHandle.etiqueta = gasto.etiquetas;
-    //Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
-    let gastoetiquetasetiqueta = document.getElementById("gasto-etiquetas-etiqueta");
-    //gastoetiquetasetiqueta.addEventListener("click", borrarEtiquetasHandle);
-    //
-    // Crear Botones con manejador de eventos:
-    estructuraHTML += `
-    <button id="gasto-editar" class="gasto-editar" type="button">Editar</button>
-    <button id="gasto-borrar" class="gasto-borrar" type="button">Borrar</button>`;
-    // Crear un nuevo objeto a partir de la función constructora EditarHandle.
+    // Crear Botones
+    // <button class="gasto-editar" type="button">Editar</button>
+    let btnEditar = document.createElement("button");
+    btnEditar.className = "gasto-editar";
+    btnEditar.type = "button";
+    btnEditar.append("Editar");
+    divGasto.append(btnEditar);
+    // <button class="gasto-borrar" type="button">Borrar</button>
+    let btnBorrar = document.createElement("button");
+    btnBorrar.className = "gasto-borrar";
+    btnBorrar.type = "button";
+    btnBorrar.append("Borrar");
+    divGasto.append(btnBorrar);
+    // Crear manejador de eventos para los botones:
+    // Crear un nuevo objeto a partir de la función constructora EditarHandle y BorrarHandle.
     let editarHandle = new EditarHandle(gasto);
-    // Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
-    editarHandle.gasto = gasto;
-    // Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
-    let btnEditar = document.getElementById("gasto-editar");
-    //btnEditar.addEventListener("click", editarHandle);
-    //
-    // Crear un nuevo objeto a partir de la función constructora BorrarHandle.
     let borrarHandle = new BorrarHandle(gasto);
     // Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
+    editarHandle.gasto = gasto;
     borrarHandle.gasto = gasto;
-    // Añadir el objeto recién creado como objeto manejador del evento click al botón Borrar recién creado.
-    let btnBorrar = document.getElementById("gasto-borrar");
-    //btnBorrar.addEventListener("click", BorrarHandle);
-    //
-    estructuraHTML += `
-        </div>
-      </div>`;
-    // Agregar la estructura HTML al elemento
-    elemento.innerHTML += estructuraHTML;
+    // Añadir el objeto recién creado como objeto manejador del evento click al botón creados.
+    btnEditar.addEventListener("click", editarHandle);
+    btnBorrar.addEventListener("click", borrarHandle);
   }
 }
 //
@@ -194,14 +207,12 @@ function EditarHandle (gasto){
     let etiquetas = prompt("Introduzca las nuevas categorías, separadas por comas:", this.gasto.etiquetas);
     // Convertir el valor a número (recuerda que prompt siempre devuelve un string).
     let val = parseFloat(valor);
-    // Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
-    let etiq = etiquetas.split(',');
     // Actualizar las propiedades del gasto (disponible mediante this.gasto), mediante las funciones actualizarValor,
     // actualizarDescripcion, actualizarFecha y anyadirEtiquetas.
     this.gasto.actualizarDescripcion(descripcion);
     this.gasto.actualizarValor(val);
     this.gasto.actualizarFecha(new Date(fecha));
-    this.gasto.anyadirEtiquetas(etiq);
+    this.gasto.anyadirEtiquetas(etiquetas.split(','));// Convertir la cadena de texto de etiquetas devuelta por prompt a un array.
     // Llamar a la función repintar para que se muestre la lista de gastos con los datos actualizados de la edición.
     repintar();
   }
@@ -236,7 +247,7 @@ function BorrarEtiquetasHandle (gasto, etiqueta){
   // Borrar la etiqueta seleccionada del gasto asociado. Para ello utilizará la función borrarEtiquetas del gasto asociado 
   // (this.gasto) y como parámetro utilizará la etiqueta seleccionada, disponible en this.etiqueta.
   this.handleEvent = function(){
-    gestionPresupuesto.borrarEtiquetas(this.etiqueta);
+    gestionPresupuesto.borrarEtiquetas(this.gasto.etiquetas);
     // Llamar a la función repintar para que se muestre la lista actualizada de gastos.
     repintar();
   }
