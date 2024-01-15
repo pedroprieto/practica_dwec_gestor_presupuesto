@@ -80,12 +80,21 @@ for (const etiqueta of gasto.etiquetas) {
     bBorrar.type = 'button';
     bBorrar.addEventListener('click', new BorrarHandle(gasto));
 
+    // Crear botón para borrar gastos de la api
+    const bBorrarApi = document.createElement('button');
+    bBorrarApi.classList = 'gasto-borrar-api';
+    bBorrarApi.innerHTML = 'Borrar (API)';
+    bBorrarApi.type = 'button';
+    bBorrarApi.addEventListener('click', new BorrarApiHandle(gasto))
+
     // Crear botón para editar gastos (formulario)
     const bEditarForm = document.createElement('button');
     bEditarForm.classList = 'gasto-editar-formulario';
     bEditarForm.innerHTML = 'Editar (form)';
     bEditarForm.type = 'button';
     bEditarForm.addEventListener('click', new EditarHandleformulario(gasto, divGasto))
+
+
 
     // Agregar todos los elementos al divGasto
     divGasto.appendChild(divDescripcion);
@@ -309,6 +318,8 @@ function EditarHandleformulario(gasto, divGasto) {
 
     // Evento submit del formulario
     formulario.addEventListener('submit', new SubmitHandler(gasto));
+
+    
         
     };
 }
@@ -345,6 +356,38 @@ function SubmitHandler(gasto){
 
   }
   
+}
+
+function BorrarApiHandle(gasto){
+    this.gasto = gasto;
+    
+    this.handleEvent = function (event){
+        // Obtenemos el nombre del usuario del input
+        const nombreUsuario = document.getElementById('nombre_usuario').value;
+        // Obtener el id del gasto actual
+        const idGasto = gasto.id;
+        // Construir la URL de la API con el nombre de usuario y el id del gasto
+        const apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${idGasto}`;
+
+        // Realizar la solicitud fetch DELETE a la API
+        fetch(apiUrl, { method: 'DELETE' })
+          .then(response => {
+            // Verificar si la solicitud fue exitosa (código de estado 200)
+            if (!response.ok) {
+              throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            // Retornar la respuesta como un objeto JSON
+            return response.json();
+          })
+          .then(data => {
+            // Llamar a la función cargarGastosApi para actualizar la lista en la página
+            cargarGastosApi();
+          })
+          .catch(error => {
+            // Manejar errores de la solicitud
+            console.error('Error al borrar el gasto:', error.message);
+        });
+  }
 }
 
 btnAnyadir.addEventListener('click', nuevoGastoWebFormulario)
@@ -392,7 +435,46 @@ function nuevoGastoWebFormulario(){
     const btnCancelar = formulario.querySelector("button.cancelar")
     btnCancelar.addEventListener('click', new CancelarHandle(formulario, btnAnyadir));
 
+    const btnEnviarApi = formulario.querySelector('.gasto-enviar-api')
+    btnEnviarApi.addEventListener('click', enviarGastoApi)
 }
+
+function enviarGastoApi(){ 
+
+      // Obtener los datos del formulario
+      const form =  document.querySelector("form");
+      // Acceder a los valores del formulario
+      const descripcion = form.elements.descripcion.value;
+      const valor = Number(form.elements.valor.value);
+      const fecha = form.elements.fecha.value;
+      const etiquetas = form.elements.etiquetas.value;
+
+      // Crear un objeto con los datos del formulario
+      const datosGasto = {
+        descripcion: descripcion,
+        valor: valor,
+        fecha: fecha,
+        etiquetas: etiquetas
+    };
+
+      // Obtener el nombre de usuario desde el input
+      const nombreUsuario = document.getElementById('nombre_usuario').value;
+      // Construir la URL de la API con el nombre de usuario
+      const apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+
+       // Realizar la solicitud fetch POST a la API
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+       },
+          body: JSON.stringify(datosGasto)
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
+
+      }
 const formFiltrado = document.getElementById("formulario-filtrado");
 
 function filtrarGastosWeb(){
@@ -462,7 +544,8 @@ function cargarGastosWeb() {
   this.handleEvent = function (event) {
     // Obtener la cadena JSON del LocalStorage
     const gastosJSON = localStorage.getItem('GestorGastosDWEC');
-    let gastos; // Declarar la variable fuera del bloque if-else
+    
+    let gastos; 
 
     if (gastosJSON) {
       // Si la cadena JSON existe, convertirla a un array de gastos
@@ -481,8 +564,45 @@ function cargarGastosWeb() {
 const botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', new cargarGastosWeb());
 
+
+
+
+function cargarGastosApi(){
+    // Obtenemos el nombre del usuario del input
+    const nombreUsuario = document.getElementById('nombre_usuario').value;
+
+    // Creamos la URL de la API
+    const apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+
+      // Realizar la solicitud fetch a la API
+    fetch(apiUrl)
+      .then(response => {
+        // Verificar si la solicitud fue exitosa (código de estado 200)
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        // Parsear la respuesta JSON
+        return response.json();
+      })
+      .then(result => {
+        // Manipular los datos obtenidos 
+        GesPrest.cargarGastos(result)
+        repintar();
+      })
+      .catch(error => {
+        // Manejar errores de la solicitud
+        console.error('Error al cargar los gastos:', error.message);
+      });
+  }
+
+
+const botonCargarApi = document.getElementById('cargar-gastos-api')
+botonCargarApi.addEventListener('click', cargarGastosApi)
+
+
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
-  mostrarGastosAgrupadosWeb
+  mostrarGastosAgrupadosWeb,
+
 } 
