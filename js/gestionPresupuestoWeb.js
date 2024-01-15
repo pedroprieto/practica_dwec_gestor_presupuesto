@@ -355,6 +355,35 @@ function filtrarGastosWeb(event) {
     })        
 }
 
+let GuardarGastosBoton = document.getElementById("guardar-gastos");
+GuardarGastosBoton.addEventListener(`click`, guardarGastosWeb);
+
+
+function guardarGastosWeb (){
+    let listadoGastos = gesPres.listarGastos();
+    let listadoGastosArray = JSON.stringify(listadoGastos);
+    localStorage.setItem("GestorGastosDWEC",listadoGastosArray);
+}
+
+let CargarGastosBoton = document.getElementById("cargar-gastos");
+CargarGastosBoton.addEventListener(`click`, cargarGastosWeb);
+
+function cargarGastosWeb (){
+    let listadoGastosCargados = localStorage.getItem("GestorGastosDWEC");
+    let arrayRecuperado = JSON.parse(listadoGastosCargados);
+    if (listadoGastosCargados != null )
+    {
+        gesPres.cargarGastos(arrayRecuperado);
+    }
+    else
+    {
+        //array vacío
+        gesPres.cargarGastos([]);
+    }
+    repintar();
+}
+
+
 export{
     
     mostrarDatoEnId,
