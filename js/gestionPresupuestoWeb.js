@@ -367,7 +367,7 @@ function ActualizarGastoApi(gasto, formulario){
           body: JSON.stringify(datosEdicion)
         })
           .then(response => {
-            // Verificar si la solicitud fue exitosa (código de estado 200)
+            // Verificar si la solicitud fue exitosa
             if (!response.ok) {
               throw new Error(`Error en la solicitud: ${response.status}`);
             }
@@ -420,6 +420,7 @@ function SubmitHandler(gasto){
 }
 
 function BorrarApiHandle(gasto){
+  
     this.gasto = gasto;
     
     this.handleEvent = function (event){
@@ -440,10 +441,7 @@ function BorrarApiHandle(gasto){
             // Retornar la respuesta como un objeto JSON
             return response.json();
           })
-          .then(data => {
-            // Llamar a la función cargarGastosApi para actualizar la lista en la página
-            cargarGastosApi();
-          })
+          .then(() => cargarGastosApi()) 
           .catch(error => {
             // Manejar errores de la solicitud
             console.error('Error al borrar el gasto:', error.message);
@@ -529,17 +527,13 @@ function enviarGastoApi(){
       fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json'
        },
           body: JSON.stringify(datosGasto)
         })
           .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            // Llamar a cargarGastosApi después de que la promesa se haya resuelto
-            cargarGastosApi();
-          })
-          .catch(error => console.error('Error:', error)); 
+          .then(() => cargarGastosApi()) 
+          .catch(error => console.error('Error:', error));
 
       }
 
@@ -559,6 +553,7 @@ function filtrarGastosWeb(){
   let fechaDesde = form.elements["formulario-filtrado-fecha-desde"].value;
   let fechaHasta = form.elements["formulario-filtrado-fecha-hasta"].value;
   let etiquetasTiene = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+
   // Si el campo formulario-filtrado-etiquetas-tiene tiene datos, llamar a transformarListadoEtiquetas
   if (etiquetasTiene) {
     etiquetasTiene = GesPrest.transformarListadoEtiquetas(etiquetasTiene);
@@ -631,8 +626,6 @@ function cargarGastosWeb() {
 
 const botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', new cargarGastosWeb());
-
-
 
 
 function cargarGastosApi(){
