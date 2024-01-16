@@ -55,19 +55,26 @@ function nuevoGastoWeb(){
 let EditarHandle={
 handleEvent: function(evento){
     
-    let preguntarDescripcion= prompt("Introduzca la descripción del gasto")
+    let preguntarDescripcion= prompt("Introduzca la descripción del gasto", this.gasto.descripcion)
 
-    let preguntarGasto =prompt("Introduzca el valor del gasto");
+    let preguntarGasto =prompt("Introduzca el valor del gasto", this.gasto.valor);
    let gastoPreguntado= parseFloat(preguntarGasto);
 
-   let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)");
+
+    let fechaParam = new Date(this.gasto.fecha)
+    let dia1= fechaParam.getDate();
+    let mes1= fechaParam.getMonth();
+    let anyo1= fechaParam.getFullYear();
+    let fechaCompletaParam =`${dia1 + " "+ (mes1 +1 )+ " "+ anyo1}`
+
+   let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)",fechaCompletaParam);
    let fecha =new Date(preguntarFecha);
    let dia= fecha.getDate();
    let mes= fecha.getMonth();
    let anyo= fecha.getFullYear();
    let fechaCompleta =`${dia + " "+ (mes +1 )+ " "+ anyo}`;
    
-   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto ");
+   let preguntarEtiquetas = prompt("Introduzca las etiquetas del gasto ",this.gasto.etiquetas);
    let etiquetasArr= preguntarEtiquetas.split(',');
 
 
@@ -140,9 +147,7 @@ function mostrarGastoWeb(idElemento,gasto){
     divEtiquetas.className="gasto-etiquetas";
     
     divGasto.append(divEtiquetas);
-    
    
-        
     if(gasto.etiquetas)
     {
         for (let i = 0;i<gasto.etiquetas.length;i++)
