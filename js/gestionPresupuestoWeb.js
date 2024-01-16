@@ -69,9 +69,20 @@ function mostrarGastoWeb(idElemento, gasto){
       botonEdit.className = 'gasto-editar';
       botonEdit.textContent = 'Editar';
       let manejadorEvEditar = new EditarHandle(gasto);
-      
       botonEdit.addEventListener('click', manejadorEvEditar);
-        nuevoGastoDiv.appendChild(botonEdit);
+      nuevoGastoDiv.appendChild(botonEdit);
+  
+      let botonDelete = document.createElement('button');
+      botonDelete.type = 'button';
+      botonDelete.className = 'gasto-borrar';
+      botonDelete.textContent = 'Borrar';
+      let manejadorEvDelete = new BorrarHandle(gasto);
+      botonDelete.addEventListener('click', manejadorEvDelete);
+      nuevoGastoDiv.appendChild(botonDelete);
+      
+
+      
+      
     // Añadir el nuevo gasto al contenedor
         container.append(nuevoGastoDiv);
       
@@ -160,6 +171,10 @@ function actualizarPresupuestoWeb() {
     // Llamar a la función repintar para mostrar la información actualizada
     repintar();
 }
+// Obtener el elemento botón correspondiente y añadir la manejadora de eventos
+let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+botonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
 //(descripcion, valor = 0, fecha, ...etiquetas)
 function nuevoGastoWeb(){
     //introduccimos los campos
@@ -184,8 +199,8 @@ function nuevoGastoWeb(){
 
 
 // Obtener el elemento botón correspondiente y añadir la manejadora de eventos
-let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
-botonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+//let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+//botonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
@@ -206,6 +221,7 @@ class EditarHandle {
             let etiquetasNew = prompt('Introduce las etiquetas separadas por "," ');
             // let arrayEtiquetas = etiquetasNew.split(', ');
             // actualizar valores
+            //ojo con las etiquetas que las hemos borrado
             this.gasto.etiquetas=[];
             this.gasto.actualizarDescripcion(newDescripcion);
             this.gasto.actualizarValor(nuevoValor);
@@ -215,6 +231,21 @@ class EditarHandle {
         };
     }
 }
+
+class BorrarHandle{
+    constructor(gasto){
+        this.gasto = gasto;
+        this.handleEvent = function(){
+            gestionPresupuesto.borrarGasto(this.gasto.id);
+            repintar();
+        }
+
+
+
+    }
+
+}
+
 
 
 
