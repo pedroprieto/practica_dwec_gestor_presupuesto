@@ -247,7 +247,8 @@ function BorrarEtiquetasHandle (gasto, etiqueta){
   // Borrar la etiqueta seleccionada del gasto asociado. Para ello utilizará la función borrarEtiquetas del gasto asociado 
   // (this.gasto) y como parámetro utilizará la etiqueta seleccionada, disponible en this.etiqueta.
   this.handleEvent = function(){
-    gestionPresupuesto.borrarEtiquetas(this.gasto.etiquetas);
+    this.gasto.borrarEtiquetas(this.etiqueta);
+    //gestionPresupuesto.borrarEtiquetas(this.gasto.etiquetas);
     // Llamar a la función repintar para que se muestre la lista actualizada de gastos.
     repintar();
   }
