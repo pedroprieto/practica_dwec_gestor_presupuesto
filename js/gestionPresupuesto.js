@@ -68,22 +68,23 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
         }
         
     }
+    
    this.anyadirEtiquetas=function(...etiquetaNueva){
 
-       for (let i = 0;i<=etiquetas.length;i++)
+       for (let i = 0;i< etiquetaNueva.length;i++)
        {
-        if(this.etiquetas.length==0)
+            if(this.etiquetas.length==0)
              {
-                etiquetas.push(etiquetaNueva[i])
+                this.etiquetas.push(etiquetaNueva[i])
              }
-       else if(!etiquetas.includes(etiquetaNueva[i]) && !etiquetaNueva[i]=="")
-        {
+            else if(!this.etiquetas.includes(etiquetaNueva[i]) && !etiquetaNueva[i]=="")
+                {
 
-        etiquetas.push(etiquetaNueva[i])
-        }
+                 this.etiquetas.push(etiquetaNueva[i])
+                 }
         
        }
-       return (`${etiquetas}`)
+       return etiquetas
     }
     this.borrarEtiquetas=function(...etiqueta){
        
@@ -93,7 +94,7 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
                        
        }
        
-       return (`${etiquetas}`)
+       return etiquetas
 
     }
     this.funcionEtiquetas=function(etiqueta){
@@ -107,8 +108,7 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
               etiquetas.splice(i,1)
              
             }
-             
-             
+  
         }
     }
     this.actualizarValor= function(valor){
