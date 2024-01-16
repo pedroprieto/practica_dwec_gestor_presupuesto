@@ -106,9 +106,12 @@ Para poder realizar esta práctica será necesario *instalar el siguiente softwa
     Vamos a hacer una serie de modificaciones sobre este fichero con respecto a la práctica anterior.
 
 **** Nueva función ~cargarGastosApi~
-     Esta función se utilizará como [[https://es.javascript.info/introduction-browser-events#addeventlistener][manejadora de eventos]] del evento ~click~ del botón ~cargar-gastos-api~.
+     Esta función se utilizará como [[https://es.javascript.info/introduction-browser-events#addeventlistener]
+     [manejadora de eventos]] del evento ~click~ del botón ~cargar-gastos-api~.
      
-     Se encargará de obtener mediante [[https://es.javascript.info/fetch][fetch]] el listado de gastos *a través de la API de servidor*. Para ello tendrá que hacer una solicitud ~GET~ a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~.
+     Se encargará de obtener mediante [[https://es.javascript.info/fetch][fetch]] el listado de gastos *a través de la API de servidor*.
+      Para ello tendrá que hacer una solicitud ~GET~ a la URL correspondiente de la API. 
+      Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~.
 
      Una vez obtenida la lista de gastos de la API deberá llamar a la función ~cargarGastos~ del paquete ~js/gestionPresupuesto.js~ para actualizar el array de gastos.
 
@@ -148,23 +151,31 @@ Para poder realizar esta práctica será necesario *instalar el siguiente softwa
      Este botón se utilizará para *borrar el gasto seleccionado* a través de la API de servidor.
 
 **** Manejador de eventos de los botones ~.gasto-borrar-api~
-     Añade un [[https://es.javascript.info/introduction-browser-events#objetos-handlers-handleevent][objeto manejador de eventos]] necesario para gestionar el evento ~click~ de los botones ~.gasto-borrar-api~.
+     Añade un [[https://es.javascript.info/introduction-browser-events#objetos-handlers-handleevent]
+      [objeto manejador de eventos]] necesario para gestionar el evento ~click~ de los botones ~.gasto-borrar-api~.
 
-     Se encargará de realizar mediante [[https://es.javascript.info/fetch][fetch]] una solicitud ~DELETE~ a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~ y el ~id~ del gasto actual.
+      Se encargará de realizar mediante [[https://es.javascript.info/fetch][fetch]] una solicitud ~DELETE~ a la URL correspondiente de la API. 
+      Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~ y el ~id~ del gasto actual.
 
-     Una vez completada la petición, se deberá llamar a la función ~cargarGastosApi~ para actualizar la lista en la página.
+      Una vez completada la petición, se deberá llamar a la función ~cargarGastosApi~ para actualizar la lista en la página.
 
 **** Manejador de eventos del botón ~.gasto-enviar-api~ dentro de ~nuevoGastoWebFormulario~
-     Añade un [[https://es.javascript.info/introduction-browser-events#controladores-de-eventos][manejador de eventos]] necesario para gestionar el evento ~click~ del botón ~.gasto-enviar-api~.
+     Añade un [[https://es.javascript.info/introduction-browser-events#controladores-de-eventos]
+     [manejador de eventos]] necesario para gestionar el evento ~click~ del botón ~.gasto-enviar-api~.
 
-     Se encargará de realizar mediante [[https://es.javascript.info/fetch][fetch]] una solicitud ~POST~ a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~. El contenido de la petición ~POST~ se obtendrá a partir del formulario de creación.
+     Se encargará de realizar mediante [[https://es.javascript.info/fetch][fetch]] una solicitud ~POST~ a la URL correspondiente de la API. 
+     Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~. 
+     El contenido de la petición ~POST~ se obtendrá a partir del formulario de creación.
 
      Una vez completada la petición, se deberá llamar a la función ~cargarGastosApi~ para actualizar la lista en la página.
 
 **** Manejador de eventos del botón ~.gasto-enviar-api~ dentro de ~EditarHandleFormulario~
-     Añade un [[https://es.javascript.info/introduction-browser-events#objetos-handlers-handleevent][objeto manejador de eventos]] necesario para gestionar el evento ~click~ del botón ~.gasto-enviar-api~.
+     Añade un [[https://es.javascript.info/introduction-browser-events#objetos-handlers-handleevent]
+     [objeto manejador de eventos]] necesario para gestionar el evento ~click~ del botón ~.gasto-enviar-api~.
 
-     Se encargará de realizar mediante [[https://es.javascript.info/fetch][fetch]] una solicitud ~PUT~ a la URL correspondiente de la API. Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~ y el ~id~ del gasto actual. El contenido de la petición ~PUT~ se obtendrá a partir del formulario de edición.
+     Se encargará de realizar mediante [[https://es.javascript.info/fetch][fetch]] una solicitud ~PUT~ a la URL correspondiente de la API.
+      Se deberá crear la URL correspondiente utilizando el *nombre de usuario* que se haya introducido en el control ~input#nombre_usuario~ y el ~id~ del gasto actual.
+       El contenido de la petición ~PUT~ se obtendrá a partir del formulario de edición.
 
      Una vez completada la petición, se deberá llamar a la función ~cargarGastosApi~ para actualizar la lista en la página.
 
