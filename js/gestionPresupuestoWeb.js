@@ -153,7 +153,7 @@ function repintar(){
  
    listadoGastos.forEach((gasto) => {
       mostrarGastoWeb('listado-gastos-completo', gasto);
-      console.log('repintando gastos'); 
+      //console.log('repintando gastos'); 
    });
 
   
@@ -179,7 +179,7 @@ function repintarFiltrados(gastosFiltrados) {
   // Muestra solo los gastos filtrados
   gastosFiltrados.forEach((gasto) => {
     mostrarGastoWeb('listado-gastos-completo', gasto);
-    console.log('Repintando gastos filtrados');
+    //console.log('Repintando gastos filtrados');
   });
 }
 
@@ -396,7 +396,7 @@ function BorrarHandle(gasto) {
   this.handleEvent = function () {
     // Borrar el gasto asociado
     gestionPresupuesto.borrarGasto(this.gasto.id);
-
+    console.log(this.gasto.id); 
     // Llamar a la función repintar para mostrar la lista actualizada de gastos
     repintar();
   };
@@ -523,12 +523,12 @@ btnCargarGastosAPI.addEventListener('click', cargarGastosApi);
 
 function borrarGastoApi(gasto) {
   this.gasto = gasto;
-
+  //console.log(this.gasto); 
   // Método para manejar el evento de borrado
   this.handleEvent = async function () {
     const nombreUsuario = document.getElementById('nombre_usuario').value;
-    const gastoId = this.gasto.id;
-
+    const gastoId = this.gasto.gastoId;
+    console.log(this.gasto.gastoId); 
     try {
       await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${gastoId}`, {
         method: 'DELETE',
