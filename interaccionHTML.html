@@ -28,6 +28,12 @@
                 <button type="button" id="cargar-gastos">
                   Cargar gastos 
                  </button>
+                
+             
+                  <input type="text" id="nombre_usuario" placeholder="Usuario">
+               
+                 <button type="button" id="cargar-gastos-api">Cargar gastos (API)</button>
+                
               </div>
             <div id="presupuesto">
             </div>
@@ -104,7 +110,7 @@
              https://es.javascript.info/modules-intro#que-es-un-modulo
         -->
         <template id="formulario-template">
-          <form>
+          <form id="formulario">
               <div class="form-control">
                   <label for="descripcion">Descripción</label>
                   <input type="text" name="descripcion" id="descripcion">
@@ -121,8 +127,10 @@
                   <label for="etiquetas">Etiquetas</label>
                   <input type="text" name="etiquetas" id="etiquetas">
               </div>
+           
               <button type="submit">Enviar</button>
               <button class="cancelar" type="button">Cancelar</button>
+              <button type="button" class="gasto-enviar-api">Enviar (API)</button>
           </form>
       </template>
         <script type="module" src="./js/generarDatosEstaticos.js"></script>
