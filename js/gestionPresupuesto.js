@@ -248,7 +248,9 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 }
 
 function transformarListadoEtiquetas(etiquetas){
-    let result = etiquetas.match(/\w+/gi);
+    let resultado = etiquetas.match(/\w+/gi);
+
+    return resultado;
 }
 
 
