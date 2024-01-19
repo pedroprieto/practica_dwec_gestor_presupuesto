@@ -33,7 +33,7 @@ function nuevoGastoWeb(){
 
     let preguntarGasto =prompt("Introduzca el valor del gasto");
    
-   let gastoPreguntado=     parseFloat(preguntarGasto);
+   let gastoPreguntado= parseFloat(preguntarGasto);
 
    let preguntarFecha = prompt("Introduzca la fecha del gasto (dia/mes/año)");
    let fecha =new Date(preguntarFecha);
@@ -206,14 +206,25 @@ function mostrarGastoWeb(idElemento,gasto){
  // Añadimos el botón a la estructura HTML
   divGasto.append(botonBorrar);
 
+  let botonEditarFormulario = document.createElement("button");
+  botonEditarFormulario.setAttribute("type", "button");
+  botonEditarFormulario.className="gasto-editar-formulario";
+  botonEditarFormulario.textContent="Editar (Formulario)";
+
+  let editarGastoFormulario =Object.create(EditarHandleFormulario);
+  editarGastoFormulario.gasto= gasto;
  
-   
-
-   
-
-  
+  botonEditarFormulario.addEventListener("click", editarGastoFormulario);
+// Añadimos el botón a la estructura HTML
 
         return contenedor;
+}
+
+let EditarHandleFormulario={
+handleEvent: function(event){
+
+    
+}
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -228,14 +239,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     
     h1.innerHTML="Gastos agrupados por "+periodo;
     divAgrup.append(h1);
-
-     
    
-
-    
-   
-       
-        
         for (let value of Object.entries(agrup))
         {   
             let divAgrupacion=document.createElement("div");
@@ -266,12 +270,58 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
  return contenedor;   
 
 }
+function nuevoGastoWebFormulario(event){
+    event.target.disabled=true;
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    var formulario = plantillaFormulario.querySelector("form");
+
+    let controlesPrincipales = document.getElementById("controlesprincipales")
+    controlesPrincipales.append(plantillaFormulario)
+
+    formulario.addEventListener("submit", anyadirGastoEnviar);
+
+    let botonCancelar = formulario.querySelector(".cancelar");
+    botonCancelar.addEventListener("click", cerrarGastoEnviar);
+
+
+
+
+    
+}
+
+function anyadirGastoEnviar(event){
+    alert("enviando")
+    event.preventDefault();
+
+    
+    let descripcionGastoForm =event.target.elements.descripcion.value
+    let valorGasto=event.target.elements.valor.value
+    let valorGastoForm=parseFloat(valorGasto)
+    let fechaGastoForm=event.target.elements.fecha.value
+    let etiquetasGastoForm= event.target.elements.etiquetas.value
+
+    let etiquetasArrForm= etiquetasGastoForm.split(',');
+
+    let gastoPruebaForm=new gesPresupuesto.CrearGasto(descripcionGastoForm, valorGastoForm, fechaGastoForm, ...etiquetasArrForm);
+    gesPresupuesto.anyadirGasto(gastoPruebaForm);
+    repintar();
+
+    document.getElementById("anyadirgasto-formulario").disabled=false
+}
+function cerrarGastoEnviar(event){
+    alert("cerrando")
+    event.target.form.remove()
+    document.getElementById("anyadirgasto-formulario").disabled=false;
+}
 
         let botonActualizar= document.getElementById("actualizarpresupuesto")
         botonActualizar.addEventListener("click",actualizarPresupuestoWeb);
 
         let botonAnyadirGasto= document.getElementById("anyadirgasto")
         botonAnyadirGasto.addEventListener("click",nuevoGastoWeb);
+
+       let botonAnyadirGastoFormulario= document.getElementById("anyadirgasto-formulario")
+       botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario)
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
