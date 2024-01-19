@@ -216,14 +216,14 @@ function mostrarGastoWeb(idElemento,gasto){
  
   botonEditarFormulario.addEventListener("click", editarGastoFormulario);
 // Añadimos el botón a la estructura HTML
-
+divGasto.append(botonEditarFormulario);
         return contenedor;
 }
 
 let EditarHandleFormulario={
 handleEvent: function(event){
 
-    
+
 }
 }
 
@@ -282,9 +282,6 @@ function nuevoGastoWebFormulario(event){
 
     let botonCancelar = formulario.querySelector(".cancelar");
     botonCancelar.addEventListener("click", cerrarGastoEnviar);
-
-
-
 
     
 }
