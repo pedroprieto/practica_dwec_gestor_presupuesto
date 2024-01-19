@@ -167,7 +167,7 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   gastoTag = document.createElement("div");
   gastoTag.classList.add("gasto-valor");
-  gastoTag.textContent = gasto.valor.toLocaleString("en-US");
+  gastoTag.textContent = gasto.valor;
   targetElement.append(gastoTag);
 
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
@@ -321,7 +321,33 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 }
 
 
+function FiltrarGastosWeb(){
+  this.handleEvent = function(e){
+  e.preventDefault();
+  let formDescripcion = document.getElementById("formulario-filtrado-descripcion").value;
+  let formValorMin = document.getElementById("formulario-filtrado-valor-minimo").value;
+  let formValorMax = document.getElementById("formulario-filtrado-valor-maximo").value;
+  let formFechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
+  let formFechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+  let formEtiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
 
+  if (formEtiquetas != ""){
+    formEtiquetas = gestionPresu.transformarListadoEtiquetas(formEtiquetas);
+  }
+
+
+  let objetoFiltro = {"valorMinimo": formValorMin, "valorMaximo": formValorMax, "descripcionContiene": formDescripcion, "etiquetasTiene": formEtiquetas, "fechaDesde": formFechaDesde, "fechaHasta": formFechaHasta};
+
+  let gastosFiltrado = gestionPresu.filtrarGastos(objetoFiltro);
+
+    console.log(gastosFiltrado);
+  }
+  
+}
+
+let filtroDeGastos = document.getElementById("formulario-filtrado");
+
+filtroDeGastos.addEventListener("submit", new FiltrarGastosWeb)
 
 export {
   mostrarDatoEnId,
