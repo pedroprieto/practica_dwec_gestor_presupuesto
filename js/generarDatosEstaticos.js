@@ -94,8 +94,8 @@ gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', gestionPresupu
 
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', gestionPresupuesto.agruparGastos("anyo"), 'año');
 
+
 // Obtener el elemento botón correspondiente y añadir la manejadora de eventos
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener('click', gestionPresupuestoWeb.actualizarPresupuestoWeb);
-
 

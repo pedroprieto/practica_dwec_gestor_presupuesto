@@ -65,7 +65,29 @@ class CrearGasto {
     else {
       this.fecha = f;
     }
-
+    
+    this.borrarEtiquetas = function(...etiquetas) {
+      let newEti= []; // 
+                            
+      for (let eti of this.etiquetas) { 
+    if (etiquetas.indexOf(eti) == -1) { 
+                                   
+              newEti.push(eti); 
+                                    
+    }
+      }
+      this.etiquetas = newEti; 
+  }
+  //hemos cambiado la función gasto completo y tiene this para referenciar al objeto gasto.
+  this.mostrarGastoCompleto = function() {
+    let fechaLocalizada = new Date(this.fecha).toLocaleString();
+    let texto = `Gasto correspondiente a ${descripcion} con valor ${valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n`
+    for (let key of etiquetas)
+    {
+        texto = texto + "- " + key + "\n";
+    }
+    return texto;
+  }
 
 
   }
@@ -97,15 +119,7 @@ class CrearGasto {
     }
     return periodoAgrupacion;
   }
-  mostrarGastoCompleto() {
-    let fechaLocalizada = new Date(this.fecha).toLocaleString();
-    let etiquetasList = '';
-    for (const etiqueta of this.etiquetas) {
-      etiquetasList += `- ${etiqueta}\n`;
-    }
 
-    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${etiquetasList}`;
-  }
   actualizarFecha(nuevaFecha) {
     let parsedDate = Date.parse(nuevaFecha);
     if (!isNaN(parsedDate)) {
@@ -127,9 +141,11 @@ class CrearGasto {
       }
     });
   }
-  borrarEtiquetas(...etiquetasABorrar) {
+  /*
+borrarEtiquetas(...etiquetasABorrar) {
     this.etiquetas = this.etiquetas.filter(etiqueta => !etiquetasABorrar.includes(etiqueta));
-  }
+  }*/
+  
 }
 
 
@@ -149,7 +165,7 @@ function borrarGasto(idGastoABorrar){
 }
 
 function calcularTotalGastos(){
- return gastos.reduce((total, gasto) =>  Math.round((total + gasto.valor)*100)/100, 0);   
+ return gastos.reduce((total, gasto) => total + gasto.valor, 0);   
 }
 function calcularBalance(){
 return presupuesto - calcularTotalGastos();
@@ -211,7 +227,7 @@ function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
   // Utilizar reduce para agrupar gastos por período
   let resultado = gastosFiltrados.reduce((acumulador, gasto) => {
       let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
-      acumulador[periodoAgrupacion] = Math.round(((acumulador[periodoAgrupacion] || 0) + gasto.valor)*100)/100;
+      acumulador[periodoAgrupacion] = ((acumulador[periodoAgrupacion] || 0) + gasto.valor);
       return acumulador;
   }, {});
 

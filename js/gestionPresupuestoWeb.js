@@ -1,4 +1,3 @@
-
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor){
@@ -54,7 +53,17 @@ function mostrarGastoWeb(idElemento, gasto){
       for(let etiqueta of gasto.etiquetas) {
         let spanEtiquetas = document.createElement('span');
         spanEtiquetas.classList.add('gasto-etiquetas-etiqueta');
-        spanEtiquetas.textContent = etiqueta;
+        spanEtiquetas.textContent = etiqueta +" ";
+            // Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+       let borrarEtiquetasHandler = new BorrarEtiquetasHandle();
+       borrarEtiquetasHandler.gasto = gasto;
+       borrarEtiquetasHandler.etiqueta = etiqueta;
+
+    // Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+      spanEtiquetas.addEventListener('click', borrarEtiquetasHandler);
+
+    // Añadir el span al contenedor
+
         etiquetasDiv.appendChild(spanEtiquetas);
 
       }
@@ -81,8 +90,12 @@ function mostrarGastoWeb(idElemento, gasto){
       nuevoGastoDiv.appendChild(botonDelete);
       
 
-      
-      
+// Crear un nuevo objeto a partir de la función constructora BorrarEtiquetasHandle.
+//let borrarEtiquetasHandler = new BorrarEtiquetasHandle(gastoActual, etiquetaActual);
+
+// Añadir el objeto recién creado como objeto manejador del evento click al span de la etiqueta.
+//spanEtiqueta.addEventListener('click', borrarEtiquetasHandler.handleEvent);
+     
     // Añadir el nuevo gasto al contenedor
         container.append(nuevoGastoDiv);
       
@@ -198,9 +211,7 @@ function nuevoGastoWeb(){
 
 
 
-// Obtener el elemento botón correspondiente y añadir la manejadora de eventos
-//let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
-//botonActualizarPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
+
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 
@@ -247,6 +258,24 @@ class BorrarHandle{
 }
 
 
+// Función constructora BorrarEtiquetasHandle
+class BorrarEtiquetasHandle {
+    constructor(gasto, etiqueta) {
+        this.gasto = gasto;
+        this.etiqueta = etiqueta;
+
+        // Método handleEvent
+        this.handleEvent = function () {
+            if (this.gasto && typeof this.gasto.borrarEtiquetas === 'function') {
+                this.gasto.borrarEtiquetas(this.etiqueta);
+                repintar();
+              } else {
+                console.error("Error: this.gasto o this.gasto.borrarEtiquetas no está definido correctamente.");
+              }
+     
+        };
+    }
+}
 
 
 
@@ -259,3 +288,4 @@ export   {
     repintar,
     actualizarPresupuestoWeb
 }
+
