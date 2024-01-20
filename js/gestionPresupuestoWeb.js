@@ -211,7 +211,7 @@ function mostrarGastoWeb(idElemento,gasto){
   botonEditarFormulario.className="gasto-editar-formulario";
   botonEditarFormulario.textContent="Editar (Formulario)";
 
-  let editarGastoFormulario =Object.create(EditarHandleFormulario);
+  let editarGastoFormulario =new EditarHandleFormulario();
   editarGastoFormulario.gasto= gasto;
  
   botonEditarFormulario.addEventListener("click", editarGastoFormulario);
@@ -220,13 +220,70 @@ divGasto.append(botonEditarFormulario);
         return contenedor;
 }
 
-let EditarHandleFormulario={
-handleEvent: function(event){
+function EditarHandleFormulario(){
+this.handleEvent= function(event){
+    event.target.disabled=true;
+    event.preventDefault();
+    alert(` editando ${this.gasto.descripcion}`)
+    event.target.disabled=true;
 
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    var formulario = plantillaFormulario.querySelector("form");
+    formulario.elements.descripcion.value=this.gasto.descripcion
+    formulario.elements.valor.value=this.gasto.valor
+    
+    formulario.elements.fecha.value=this.gasto.fecha
+    formulario.elements.etiquetas.value=this.gasto.etiquetas
 
+    event.target.parentElement.append(plantillaFormulario)
+  
+    
+    let manejadorEnviar = new handleEnviarForm()
+    manejadorEnviar.gasto=this.gasto;
+    formulario.addEventListener("submit", manejadorEnviar);
+    
+
+    let botonCancelar = formulario.querySelector(".cancelar");
+    let manejadorCerrar = new cerrarGastoEnviarForm()
+    manejadorCerrar.botonEditarFormulario=event.target;
+    botonCancelar.addEventListener("click", manejadorCerrar);
+
+    
 }
 }
+function handleEnviarForm(){
+    this.handleEvent= function(event){
+        alert("enviando")
+    event.preventDefault();
+        let descripcionGastoForm =event.target.elements.descripcion.value
+        let valorGasto=event.target.elements.valor.value
+        let valorGastoForm=parseFloat(valorGasto)
+        let fechaGastoForm=event.target.elements.fecha.value
+        
+        let etiquetasGastoForm= event.target.elements.etiquetas.value
+    
+        let etiquetasArrForm= etiquetasGastoForm.split(',');
+    alert("enviando2222")
+        this.gasto.actualizarDescripcion(descripcionGastoForm);
+        this.gasto.actualizarValor(valorGastoForm);
+        this.gasto.actualizarFecha(fechaGastoForm);
+        this.gasto.etiquetas = [];
+        this.gasto.anyadirEtiquetas(...etiquetasArrForm);
+        repintar()
+        alert("enviando3333")
+        
 
+        
+    }
+}
+function cerrarGastoEnviarForm(){
+    this.handleEvent=function(event){
+         alert("cerrando")
+    event.target.form.remove()
+    this.botonEditarFormulario.disabled=false;
+}
+   
+}
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
     let contenedor = document.getElementById(idElemento);
@@ -273,7 +330,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 function nuevoGastoWebFormulario(event){
     event.target.disabled=true;
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
-    var formulario = plantillaFormulario.querySelector("form");
+    let formulario = plantillaFormulario.querySelector("form");
 
     let controlesPrincipales = document.getElementById("controlesprincipales")
     controlesPrincipales.append(plantillaFormulario)
@@ -295,6 +352,7 @@ function anyadirGastoEnviar(event){
     let valorGasto=event.target.elements.valor.value
     let valorGastoForm=parseFloat(valorGasto)
     let fechaGastoForm=event.target.elements.fecha.value
+   
     let etiquetasGastoForm= event.target.elements.etiquetas.value
 
     let etiquetasArrForm= etiquetasGastoForm.split(',');
@@ -302,7 +360,7 @@ function anyadirGastoEnviar(event){
     let gastoPruebaForm=new gesPresupuesto.CrearGasto(descripcionGastoForm, valorGastoForm, fechaGastoForm, ...etiquetasArrForm);
     gesPresupuesto.anyadirGasto(gastoPruebaForm);
     repintar();
-
+    event.target.remove()
     document.getElementById("anyadirgasto-formulario").disabled=false
 }
 function cerrarGastoEnviar(event){
