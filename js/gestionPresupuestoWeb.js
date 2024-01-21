@@ -306,6 +306,10 @@ function EditarHandleFormulario(gasto) {
             gasto
         );
         formulario.addEventListener("submit", submitEditarHandleFormulario);
+
+        const botonEnviarApi = formulario.querySelector("button.gasto-enviar-api");
+        botonEnviarApi.addEventListener("click", new SubmitEditarHandleFormularioApi(gasto, formulario));
+
         const botonCancelar = formulario.querySelector("button.cancelar");
 
         const cancelarHandle = new CancelarHandle(formulario, boton);
@@ -427,6 +431,42 @@ function EnviarApiFormularioHandler(formulario, botonAnyadirGasto) {
                     formulario.remove();
                     botonAnyadirGasto.removeAttribute("disabled");
                 }
+            }
+        ).catch(
+            reason => alert(`Se ha producido un error: ${reason}`)
+        );
+    };
+}
+
+function SubmitEditarHandleFormularioApi(gasto, formulario) {
+    this.gasto = gasto;
+    this.formulario = formulario;
+
+    this.handleEvent = function () {
+        const formulario = this.formulario;
+
+        const descripcion = formulario.elements.descripcion.value;
+        const valor = Number(formulario.elements.valor.value);
+        const fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+        etiquetas = etiquetas.split(",");
+
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+
+        const nombreUsuario = document.getElementById("nombre_usuario").value;
+        const url = new URL(`${nombreUsuario}/${this.gasto.gastoId}`, apiUrlBase);
+        fetch(url, {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.gasto)
+        }).then(
+            response => {
+                if (response.ok) cargarGastosApi();
             }
         ).catch(
             reason => alert(`Se ha producido un error: ${reason}`)
