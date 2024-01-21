@@ -197,6 +197,30 @@ function repintar() {
     gestion
         .listarGastos()
         .forEach((gasto) => mostrarGastoWeb("listado-gastos-completo", gasto));
+
+    document.getElementById("listado-gastos-filtrado-1").innerHTML = "";
+    gestion.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" }).forEach(
+        gasto => mostrarGastoWeb("listado-gastos-filtrado-1", gasto)
+    );
+
+    document.getElementById("listado-gastos-filtrado-2").innerHTML = "";
+    gestion.filtrarGastos({ valorMinimo: 50 }).forEach(
+        gasto => mostrarGastoWeb("listado-gastos-filtrado-2", gasto)
+    );
+
+    document.getElementById("listado-gastos-filtrado-3").innerHTML = "";
+    gestion.filtrarGastos({ valorMinimo: 200, etiquetasTiene: ["seguros"] }).forEach(
+        gasto => mostrarGastoWeb("listado-gastos-filtrado-3", gasto)
+    );
+
+    document.getElementById("listado-gastos-filtrado-4").innerHTML = "";
+    gestion.filtrarGastos({ valorMaximo: 50, etiquetasTiene: ["comida", "transporte"] }).forEach(
+        gasto => mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
+    );
+
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "día");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "año");
 }
 
 function actualizarPresupuestoWeb() {
@@ -537,4 +561,4 @@ document
     .getElementById("cargar-gastos-api")
     .addEventListener("click", cargarGastosApi);
 
-export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb };
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb, repintar };
