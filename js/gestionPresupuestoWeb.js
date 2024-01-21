@@ -525,6 +525,23 @@ function cargarGastosWeb() {
     repintar();
 }
 document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
+async function cargarGastosApi() {
+    //Construyendo la url. Usuario: serhii-opanasiuk
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+    let usuario = document.getElementById("nombre_usuario").value;
+    url += usuario;
+    //Enviando la petición
+    let response = await fetch(url);
+    //Cargando los datos en el formato JSON
+    let gastosCargados = await response.json();
+    //console.log(gastosCargados);
+    //Actualizando la lista de gastos
+    gestionPresupuesto.cargarGastos(gastosCargados);
+    //Mostramos los datos en el archivo .html
+    repintar();
+}
+let btnCargarGastosAPI = document.getElementById("cargar-gastos-api");
+btnCargarGastosAPI.addEventListener("click", cargarGastosApi);
 
 
 export {
