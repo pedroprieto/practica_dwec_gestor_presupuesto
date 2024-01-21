@@ -234,18 +234,23 @@ function nuevoGastoWebFormulario(e) {
     async function enviarFormApiNuevo() {
         let nombreUsuario = document.getElementById("nombre-usuario").value;
         let url = new URL(nombreUsuario, urlBase);
-        let respuesta = await fetch(url, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(extraerDatosForm(formulario)),
-        });
 
-        if (respuesta.ok) {
+        try {
+            let respuesta = await fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(extraerDatosForm(formulario)),
+            });
+
+            if (!respuesta.ok) {
+                throw new Error("Error al añadir el gasto");
+            }
             cargarGastosApi();
-        } else {
-            alert("Error al añadir el gasto");
+        }
+        catch (err) {
+            alert(err.message);
         }
     }
 
@@ -274,8 +279,7 @@ function extraerDatosForm(formulario) {
     let descripcion = formulario.elements.descripcion.value;
     let valor = Number(formulario.elements.valor.value);
     let fecha = formulario.elements.fecha.value;
-    let etiquetas = formulario.elements.etiquetas.value;
-    etiquetas = etiquetas.split(",");
+    let etiquetas = formulario.elements.etiquetas.value.split(",");
     return { descripcion, valor, fecha, etiquetas };
 }
 
@@ -310,27 +314,35 @@ function EditarHandleFormulario(gasto) {
 
         formulario.addEventListener("submit", enviarForm.bind(this));
 
-        async function enviarFormApiEditar() {
-            let nombreUsuario = document.getElementById("nombre-usuario").value;
-            let url = new URL(`${nombreUsuario}/${this.gasto.gastoId}`, urlBase);
-            let respuesta = await fetch(url, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(extraerDatosForm(formulario)),
-            });
+        function EnviarFormApiEditar(gasto) { 
+            this.gasto = gasto;
 
-            if (respuesta.ok) {
-                cargarGastosApi();
-            }
-            else {
-                alert("Error al actualizar el gasto");
+            this.handleEvent = async function () {
+                let nombreUsuario = document.getElementById("nombre-usuario").value;
+                let url = new URL(`${nombreUsuario}/${this.gasto.gastoId}`, urlBase);
+
+                try {
+                    let respuesta = await fetch(url, {
+                        method: "PUT",
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify(extraerDatosForm(formulario)),
+                    });
+
+                    if (!respuesta.ok) {
+                        throw new Error("Error al actualizar el gasto");
+                    }
+                    cargarGastosApi();
+                }
+                catch (err) {
+                    alert(err.message);
+                }
             }
         }
 
         let botonGastoEnviarApi = formulario.querySelector(".gasto-enviar-api");
-        botonGastoEnviarApi.addEventListener("click", enviarFormApiEditar.bind(this));
+        botonGastoEnviarApi.addEventListener("click", new EnviarFormApiEditar(this.gasto));
 
         function CancelarHandle(formulario, botonEditarGastoForm) {
             this.formulario = formulario;
@@ -408,14 +420,17 @@ botonCargarGastos.addEventListener("click", cargarGastosWeb);
 async function cargarGastosApi() {
     let nombreUsuario = document.getElementById("nombre-usuario").value;
     let url = new URL(nombreUsuario, urlBase);
-    let respuesta = await fetch(url);
-
-    if (respuesta.ok) {
+    try {
+        let respuesta = await fetch(url);
+        if (!respuesta.ok) {
+            throw new Error("Error al cargar los gastos");
+        }
         let gastos = await respuesta.json();
         gp.cargarGastos(gastos);
         repintar();
-    } else {
-        alert("Error al cargar los gastos");
+    }
+    catch (err) {
+        alert(err.message);
     }
 }
 
@@ -428,12 +443,16 @@ function BorrarHandleApi(gasto) {
     this.handleEvent = async function () {
         let nombreUsuario = document.getElementById("nombre-usuario").value;
         let url = new URL(`${nombreUsuario}/${this.gasto.gastoId}`, urlBase);
-        let respuesta = await fetch(url, { method: "DELETE" });
 
-        if (respuesta.ok) {
+        try {
+            let respuesta = await fetch(url, { method: "DELETE" });
+            if (!respuesta.ok) {
+                throw new Error("Error al borrar el gasto");
+            }
             cargarGastosApi();
-        } else {
-            alert("Error al borrar el gasto");
+        }
+        catch (err) {
+            alert(err.message);
         }
     }
 }

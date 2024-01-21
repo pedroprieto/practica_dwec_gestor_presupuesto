@@ -2,3 +2,4 @@ node_modules/
 *.log
 *.tmp
 cypress
+.DS_Store
