@@ -1,5 +1,7 @@
 import * as gestion from "./gestionPresupuesto.js";
 
+const apiUrlBase = new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/");
+
 function mostrarDatoEnId(idElemento, valor) {
     const elem = document.querySelector(`#${idElemento}`);
     if (elem) {
@@ -65,6 +67,16 @@ function mostrarGastoWeb(idElemento, gasto) {
     let borrarHandle = new BorrarHandle(gasto);
     botonBorrar.addEventListener("click", borrarHandle);
     divGasto.appendChild(botonBorrar);
+
+    //   <button class="gasto-borrar-api" type="button">Borrar (API)</button>
+
+    // boton borrar api
+    let botonBorrarApi = document.createElement("button");
+    botonBorrarApi.classList.add("gasto-borrar-api");
+    botonBorrarApi.type = "button";
+    botonBorrarApi.textContent = "Borrar (API)";
+    botonBorrarApi.addEventListener("click", new BorrarHandleApi(gasto));
+    divGasto.appendChild(botonBorrarApi);
 
     let botonEditarFormulario = document.createElement("button");
     botonEditarFormulario.textContent = "Editar (formulario)";
@@ -345,11 +357,12 @@ document
     .getElementById("cargar-gastos")
     .addEventListener("click", cargarGastosWeb);
 
+
 function cargarGastosApi() {
     const nombreUsuario = document.getElementById("nombre_usuario").value;
     const url = new URL(
         nombreUsuario,
-        "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/"
+        apiUrlBase
     );
 
     fetch(url)
@@ -361,6 +374,23 @@ function cargarGastosApi() {
             repintar();
         })
         .catch((reason) => alert(`Se ha producido un error: ${reason}`));
+}
+
+function BorrarHandleApi(gasto) {
+    this.gasto = gasto;
+
+    this.handleEvent = function () {
+        const nombreUsuario = document.getElementById("nombre_usuario").value;
+        const url = new URL(`${nombreUsuario}/${this.gasto.gastoId}`, apiUrlBase);
+
+        fetch(url, { method: "delete" })
+            .then(response => {
+                if (response.ok) cargarGastosApi()
+            }
+            ).catch(
+                reason => alert(`Se ha producido un error: ${reason}`)
+            );
+    };
 }
 
 document
