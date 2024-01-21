@@ -68,8 +68,6 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener("click", borrarHandle);
     divGasto.appendChild(botonBorrar);
 
-    //   <button class="gasto-borrar-api" type="button">Borrar (API)</button>
-
     // boton borrar api
     let botonBorrarApi = document.createElement("button");
     botonBorrarApi.classList.add("gasto-borrar-api");
