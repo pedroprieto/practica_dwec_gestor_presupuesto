@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gestor de Presupuesto - Rodrigo Esteban GIMENEZ</title>
+    <style>
+      #listado-gastos-completo {
+        background-color: teal;
+        color: white;
+      }
+    </style>
   </head>
 
   <body>
@@ -18,6 +24,13 @@
         </button>
         <button type="button" id="guardar-gastos">Guardar gastos</button>
         <button type="button" id="cargar-gastos">Cargar gastos</button>
+        <input
+          type="text"
+          name="nombre_usuario"
+          id="nombre_usuario"
+          placeholder="Nombre de usuario"
+        />
+        <button type="button" id="cargar-gastos-api">Cargar gastos API</button>
       </div>
       <div id="presupuesto"></div>
 
@@ -120,6 +133,7 @@
           <input type="text" name="etiquetas" id="etiquetas" />
         </div>
         <button type="submit">Enviar</button>
+        <button type="button" class="gasto-enviar-api">Enviar (API)</button>
         <button class="cancelar" type="button">Cancelar</button>
       </form>
     </template>

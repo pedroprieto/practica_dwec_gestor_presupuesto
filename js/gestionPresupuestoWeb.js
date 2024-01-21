@@ -1,4 +1,4 @@
-import * as gestion from './gestionPresupuesto.js';
+import * as gestion from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(idElemento, valor) {
     const elem = document.querySelector(`#${idElemento}`);
@@ -7,12 +7,12 @@ function mostrarDatoEnId(idElemento, valor) {
     }
 }
 
-function mostrarGastoWeb(idElemento, gasto) {   
+function mostrarGastoWeb(idElemento, gasto) {
     const elem = document.getElementById(idElemento);
     if (!elem) {
         return;
     }
-    
+
     let divGasto = document.createElement("div");
     divGasto.classList.add("gasto");
 
@@ -47,7 +47,7 @@ function mostrarGastoWeb(idElemento, gasto) {
         divGastoEtiquetas.appendChild(spanEtiqueta);
     }
     divGasto.appendChild(divGastoEtiquetas);
-    
+
     // boton editar
     let botonEditar = document.createElement("button");
     botonEditar.textContent = "Editar";
@@ -91,7 +91,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     let h1 = document.createElement("h1");
     h1.textContent = `Gastos agrupados por ${periodo}`;
     divAgrupacion.appendChild(h1);
-    
+
     // cada gasto
     for (const clave in agrup) {
         let divDato = document.createElement("div");
@@ -123,19 +123,21 @@ function repintar() {
     mostrarDatoEnId("balance-total", gestion.calcularBalance());
 
     document.getElementById("listado-gastos-completo").innerHTML = "";
-    gestion.listarGastos().forEach(gasto =>
-        mostrarGastoWeb("listado-gastos-completo", gasto)
-    );
+    gestion
+        .listarGastos()
+        .forEach((gasto) => mostrarGastoWeb("listado-gastos-completo", gasto));
 }
 
 function actualizarPresupuestoWeb() {
     const presupuesto = Number(prompt("Introduzca el nuevo presupuesto: "));
     gestion.actualizarPresupuesto(presupuesto);
-    
+
     repintar();
 }
 
-const botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+const botonActualizarPresupuesto = document.getElementById(
+    "actualizarpresupuesto"
+);
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 function nuevoGastoWeb() {
@@ -161,7 +163,10 @@ function EditarHandle(gasto) {
         const descripcion = prompt("Descripcion", this.gasto.descripcion);
         const valor = Number(prompt("Valor", this.gasto.valor));
         const fecha = prompt("Fecha (yyyy-mm-dd)", this.gasto.fecha);
-        let etiquetas = prompt("Etiquetas (lista separada por comas)", this.gasto.etiquetas);
+        let etiquetas = prompt(
+            "Etiquetas (lista separada por comas)",
+            this.gasto.etiquetas
+        );
         etiquetas = etiquetas.split(",");
 
         this.gasto.actualizarDescripcion(descripcion);
@@ -170,7 +175,7 @@ function EditarHandle(gasto) {
         this.gasto.anyadirEtiquetas(...etiquetas);
 
         repintar();
-    }
+    };
 }
 
 function BorrarHandle(gasto) {
@@ -180,7 +185,7 @@ function BorrarHandle(gasto) {
         gestion.borrarGasto(this.gasto.id);
 
         repintar();
-    }
+    };
 }
 
 function BorrarEtiquetasHandle(gasto, etiqueta) {
@@ -191,7 +196,7 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
         this.gasto.borrarEtiquetas(etiqueta);
 
         repintar();
-    }
+    };
 }
 
 function submitFormularioHandler(e) {
@@ -209,7 +214,9 @@ function submitFormularioHandler(e) {
 
     repintar();
 
-    document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    document
+        .getElementById("anyadirgasto-formulario")
+        .removeAttribute("disabled");
 }
 
 function CancelarHandle(formulario, botonAnyadirGasto) {
@@ -219,12 +226,14 @@ function CancelarHandle(formulario, botonAnyadirGasto) {
     this.handleEvent = function () {
         formulario.remove();
         botonAnyadirGasto.removeAttribute("disabled");
-    }
+    };
 }
 
 function nuevoGastoWebFormulario(e) {
     let boton = e.currentTarget;
-    const plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    const plantillaFormulario = document
+        .getElementById("formulario-template")
+        .content.cloneNode(true);
     const formulario = plantillaFormulario.querySelector("form");
     formulario.addEventListener("submit", submitFormularioHandler);
     const botonCancelar = formulario.querySelector("button.cancelar");
@@ -235,8 +244,9 @@ function nuevoGastoWebFormulario(e) {
     document.getElementById("controlesprincipales").appendChild(formulario);
 }
 
-document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
-
+document
+    .getElementById("anyadirgasto-formulario")
+    .addEventListener("click", nuevoGastoWebFormulario);
 
 function SubmitEditarHandleFormulario(gasto) {
     this.gasto = gasto;
@@ -244,20 +254,20 @@ function SubmitEditarHandleFormulario(gasto) {
     this.handleEvent = function (e) {
         e.preventDefault();
         const formulario = e.currentTarget;
-    
+
         const descripcion = formulario.elements.descripcion.value;
         const valor = Number(formulario.elements.valor.value);
         const fecha = formulario.elements.fecha.value;
         let etiquetas = formulario.elements.etiquetas.value;
         etiquetas = etiquetas.split(",");
-    
+
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarFecha(fecha);
         this.gasto.anyadirEtiquetas(...etiquetas);
-    
+
         repintar();
-    }
+    };
 }
 
 function EditarHandleFormulario(gasto) {
@@ -265,59 +275,96 @@ function EditarHandleFormulario(gasto) {
 
     this.handleEvent = function (e) {
         let boton = e.currentTarget;
-        const plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        const plantillaFormulario = document
+            .getElementById("formulario-template")
+            .content.cloneNode(true);
         const formulario = plantillaFormulario.querySelector("form");
-        
+
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.obtenerPeriodoAgrupacion("dia");
+        formulario.elements.fecha.value =
+            this.gasto.obtenerPeriodoAgrupacion("dia");
         formulario.elements.etiquetas.value = this.gasto.etiquetas.join(",");
-        
-        const submitEditarHandleFormulario = new SubmitEditarHandleFormulario(gasto);
+
+        const submitEditarHandleFormulario = new SubmitEditarHandleFormulario(
+            gasto
+        );
         formulario.addEventListener("submit", submitEditarHandleFormulario);
         const botonCancelar = formulario.querySelector("button.cancelar");
 
         const cancelarHandle = new CancelarHandle(formulario, boton);
         botonCancelar.addEventListener("click", cancelarHandle);
-    
+
         boton.setAttribute("disabled", "");
         boton.after(formulario);
-    }
+    };
 }
 
 function filtrarGastosWeb(event) {
     event.preventDefault();
     const elements = event.currentTarget.elements;
-    const etiquetas = gestion.transformarListadoEtiquetas(elements["formulario-filtrado-etiquetas-tiene"].value);
+    const etiquetas = gestion.transformarListadoEtiquetas(
+        elements["formulario-filtrado-etiquetas-tiene"].value
+    );
     const parametros = {
         fechaDesde: elements["formulario-filtrado-fecha-desde"].value,
         fechaHasta: elements["formulario-filtrado-fecha-hasta"].value,
-        valorMinimo: elements["formulario-filtrado-valor-minimo"].value && Number(elements["formulario-filtrado-valor-minimo"].value),
-        valorMaximo: elements["formulario-filtrado-valor-maximo"].value && Number(elements["formulario-filtrado-valor-maximo"].value),
+        valorMinimo:
+            elements["formulario-filtrado-valor-minimo"].value &&
+            Number(elements["formulario-filtrado-valor-minimo"].value),
+        valorMaximo:
+            elements["formulario-filtrado-valor-maximo"].value &&
+            Number(elements["formulario-filtrado-valor-maximo"].value),
         descripcionContiene: elements["formulario-filtrado-descripcion"].value,
         etiquetasTiene: etiquetas,
     };
     document.getElementById("listado-gastos-completo").innerHTML = "";
-    gestion.filtrarGastos(parametros).forEach(gasto => mostrarGastoWeb("listado-gastos-completo", gasto));
-}   
+    gestion
+        .filtrarGastos(parametros)
+        .forEach((gasto) => mostrarGastoWeb("listado-gastos-completo", gasto));
+}
 
-document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGastosWeb);
+document
+    .getElementById("formulario-filtrado")
+    .addEventListener("submit", filtrarGastosWeb);
 
 function guardarGastosWeb() {
     localStorage.GestorGastosDWEC = JSON.stringify(gestion.listarGastos());
 }
 
-document.getElementById("guardar-gastos").addEventListener("click", guardarGastosWeb);
+document
+    .getElementById("guardar-gastos")
+    .addEventListener("click", guardarGastosWeb);
 
 function cargarGastosWeb() {
     gestion.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC || "[]"));
     repintar();
 }
 
-document.getElementById("cargar-gastos").addEventListener("click", cargarGastosWeb);
+document
+    .getElementById("cargar-gastos")
+    .addEventListener("click", cargarGastosWeb);
 
-export {
-    mostrarDatoEnId,
-    mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
+function cargarGastosApi() {
+    const nombreUsuario = document.getElementById("nombre_usuario").value;
+    const url = new URL(
+        nombreUsuario,
+        "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/"
+    );
+
+    fetch(url)
+        .then((response) => {
+            if (response.ok) return response.json();
+        })
+        .then((gastos) => {
+            gestion.cargarGastos(gastos);
+            repintar();
+        })
+        .catch((reason) => alert(`Se ha producido un error: ${reason}`));
 }
+
+document
+    .getElementById("cargar-gastos-api")
+    .addEventListener("click", cargarGastosApi);
+
+export { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb };
