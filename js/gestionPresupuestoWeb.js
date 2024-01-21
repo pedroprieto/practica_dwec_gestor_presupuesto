@@ -248,6 +248,10 @@ function nuevoGastoWebFormulario(e) {
         .content.cloneNode(true);
     const formulario = plantillaFormulario.querySelector("form");
     formulario.addEventListener("submit", submitFormularioHandler);
+
+    const botonEnviarApi = formulario.querySelector("button.gasto-enviar-api");
+    botonEnviarApi.addEventListener("click", new EnviarApiFormularioHandler(formulario, boton));
+
     const botonCancelar = formulario.querySelector("button.cancelar");
     const cancelarHandle = new CancelarHandle(formulario, boton);
     botonCancelar.addEventListener("click", cancelarHandle);
@@ -390,6 +394,43 @@ function BorrarHandleApi(gasto) {
             ).catch(
                 reason => alert(`Se ha producido un error: ${reason}`)
             );
+    };
+}
+
+function EnviarApiFormularioHandler(formulario, botonAnyadirGasto) {
+    this.formulario = formulario;
+    this.botonAnyadirGasto = botonAnyadirGasto;
+
+    this.handleEvent = function () {
+        const formulario = this.formulario;
+
+        const descripcion = formulario.elements.descripcion.value;
+        const valor = Number(formulario.elements.valor.value);
+        const fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+        etiquetas = etiquetas.split(",");
+        const nombreUsuario = document.getElementById("nombre_usuario").value;
+        let url = new URL(nombreUsuario, apiUrlBase);
+
+        const gasto = new gestion.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+
+        fetch(url, {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(gasto),
+        }).then(
+            response => {
+                if (response.ok) {
+                    cargarGastosApi()
+                    formulario.remove();
+                    botonAnyadirGasto.removeAttribute("disabled");
+                }
+            }
+        ).catch(
+            reason => alert(`Se ha producido un error: ${reason}`)
+        );
     };
 }
 
