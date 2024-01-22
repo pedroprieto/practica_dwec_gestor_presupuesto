@@ -366,28 +366,28 @@ let filtroDeGastos = document.getElementById("formulario-filtrado");
 filtroDeGastos.addEventListener("submit", new FiltrarGastosWeb)
 
 
-function guardarGastosWeb(){
+function guardarGastosWeb(){ //Tenemos que convertir a string los datos del objeto devuelto por listar gastos ( a su vez compuesto por gastos ), para poder almacenarlo en local
   localStorage.GestorGastosDWEC = JSON.stringify(gestionPresu.listarGastos());
 
 }
 
-let target = document.getElementById("guardar-gastos");
+let target = document.getElementById("guardar-gastos"); //Simplemente asignamos el manejador con el clásico addEventListener...
 
 target.addEventListener("click", guardarGastosWeb);
 
-function cargarGastosWeb(){
+function cargarGastosWeb(){ //En este caso, cargamos los datos, esta vez convirtiendo a JSON las cadena recuperadas, para que puedan ser usados y rehidratados los objetos gasto que incluye
   if(localStorage.GestorGastosDWEC){
     let datosCargados = JSON.parse(localStorage.GestorGastosDWEC);
     gestionPresu.cargarGastos(datosCargados);
   }
-  else{
+  else{ //El else en caso de que no exista la variable local...
     let array = [];
     gestionPresu.cargarGastos(array);
   }
-  repintar();
+  repintar(); //Simplemente repintamos la página...
 }
 
-target = document.getElementById("cargar-gastos");
+target = document.getElementById("cargar-gastos"); //Misma filosofía de siempre a la hora de asigar eventos a botones
 
 target.addEventListener("click", cargarGastosWeb);
 

@@ -254,8 +254,8 @@ function transformarListadoEtiquetas(etiquetas){
 }
 
 
-function cargarGastos(gastosAlmacenamiento){
-    gastos = [];
+function cargarGastos(gastosAlmacenamiento){ //Tratamos de rehidratar todos los objetos recuperados de la variable local
+    gastos = []; //Vaciamos el array de gastos, asi simplemente cargamos los que hayan en local
 
     for (let g of gastosAlmacenamiento){
 
@@ -263,7 +263,7 @@ function cargarGastos(gastosAlmacenamiento){
 
         Object.assign(gastoRehidratado, g);
 
-        gastos.push(gastoRehidratado);
+        gastos.push(gastoRehidratado); //Añadimos cada gasto rehidratado al array gastos
     }
 }
 
