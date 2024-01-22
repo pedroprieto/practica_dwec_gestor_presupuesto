@@ -91,9 +91,9 @@ function repintar () {
     //* Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
     mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), "presupuesto");
     //* Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
-    mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
+    mostrarDatoEnId(gestionPresupuesto.mostrargastosTotales(), "gastos-totales");
     //* Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
-    mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
+    mostrarDatoEnId(gestionPresupuesto.mostrarBalance(), "balance-total");
     //* Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente
     //* no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
     let listadoGastos = document.getElementById("listado-gastos-completo");
@@ -207,7 +207,7 @@ EditarHandleForm.prototype.handleEvent = function (event) {
     //^ manejador de evento del botón "Enviar (API)"
     limpiarEventListeners(botonEnviarAPI);
     botonEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
-    botonEnviarAPI.addEventListener("click", botonEnviarAPIactualizar);
+    botonEnviarAPI.addEventListener("click",() => botonEnviarAPIactualizar.call(this));//!!!!!!!
     // Rellenamos el formulario
     formulario.elements.descripcion.value = this.gasto.descripcion;
     formulario.elements.valor.value = this.gasto.valor;
@@ -237,8 +237,13 @@ EditarHandleForm.prototype.handleEvent = function (event) {
             botonesBorrar[i].disabled = true;
         }
     }
+    let botonesBorrarAPI = document.querySelectorAll("button.gasto-borrar-api");
+    for (let i = 0; i < botonesBorrarAPI.length; i++) {
+        if (!botonesBorrarAPI[i].disabled) {
+            botonesBorrarAPI[i].disabled = true;
+        }
+    }
 };
-
 
 //^ Definición de la función constructora BorrarHandle:
 function BorrarHandle() {}
@@ -295,7 +300,7 @@ BorrarEtiquetasHandle.prototype.handleEvent = function () {
     let respuestaUsuario = confirm("¿Usted está seguro que quiere borrar la etiqueta?\n" + tituloEtiqueta);
     if (respuestaUsuario) {
         this.gasto.borrarEtiquetas(this.etiqueta);
-        peticionEditarGastoAPI(this.gasto); //!Actualizado por API
+        peticionEditarGastoAPI(this.gasto.gastoId, this.gasto); //!Actualizado por API
     }
         // Llamar a la función repintar para actualizar la lista de gastos
         repintar();  
@@ -414,7 +419,12 @@ function nuevoGastoWebFormulario () {
             botonesBorrar[i].disabled = true;
         }
     }
-
+    let botonesBorrarAPI = document.querySelectorAll("button.gasto-borrar-api");
+    for (let i = 0; i < botonesBorrarAPI.length; i++) {
+        if (!botonesBorrarAPI[i].disabled) {
+            botonesBorrarAPI[i].disabled = true;
+        }
+    }
     formulario.addEventListener("submit", botonEnviarClick); //! corregido
     botonCancelar.addEventListener("click", botonCancelarClick);
 
@@ -494,6 +504,12 @@ function botonCancelarClick() {
             botonesBorrar[i].disabled = false;
         }
     }
+    let botonesBorrarAPI = document.querySelectorAll("button.gasto-borrar-api");
+    for (let i = 0; i < botonesBorrarAPI.length; i++) {
+        if (botonesBorrarAPI[i].disabled) {
+            botonesBorrarAPI[i].disabled = false;
+        }
+    } 
     formulario.remove();
 }
 const formularioFiltarGastos = document.getElementById("formulario-filtrado");
@@ -637,7 +653,7 @@ function botonEnviarAPIactualizar() {
     //recogiendo los datos del formulario
     let gastoRecogido = obtenerGastoFormulario();
     //actualizando la base de datos de API
-    peticionEditarGastoAPI(gastoRecogido);
+    peticionEditarGastoAPI(this.gasto.gastoId, gastoRecogido);
     //eliminando el formulario
     formulario.remove();
     // desbloqueamos el botón "Añadir gasto con formulario"
@@ -705,12 +721,12 @@ async function peticionNuevoGastoAPI(gasto) {
     }
 }
 //Función asíncrona: accepta el gasto y lo actualiza en la API
-async function peticionEditarGastoAPI(gasto) {
+async function peticionEditarGastoAPI(gastoId, gasto) {
     let gastoJSON = JSON.stringify(gasto);
     //Creando la petición
     let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
     let usuario = document.getElementById("nombre_usuario").value;
-    url += `${usuario}/${gasto.gastoId}`;
+    url += `${usuario}/${gastoId}`;
     try {
         // Enviando la petición PUT
         let response = await fetch(url, {
