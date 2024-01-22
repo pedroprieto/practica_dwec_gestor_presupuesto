@@ -254,10 +254,10 @@ function transformarListadoEtiquetas(etiquetas){
 }
 
 
-function cargarGastos(arrayGastos){
+function cargarGastos(gastosAlmacenamiento){
     gastos = [];
 
-    for (let g of arrayGastos){
+    for (let g of gastosAlmacenamiento){
 
         let gastoRehidratado = new CrearGasto();
 

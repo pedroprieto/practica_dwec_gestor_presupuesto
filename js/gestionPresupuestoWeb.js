@@ -365,6 +365,32 @@ let filtroDeGastos = document.getElementById("formulario-filtrado");
 
 filtroDeGastos.addEventListener("submit", new FiltrarGastosWeb)
 
+
+function guardarGastosWeb(){
+  localStorage.GestorGastosDWEC = JSON.stringify(gestionPresu.listarGastos());
+
+}
+
+let target = document.getElementById("guardar-gastos");
+
+target.addEventListener("click", guardarGastosWeb);
+
+function cargarGastosWeb(){
+  if(localStorage.GestorGastosDWEC){
+    let datosCargados = JSON.parse(localStorage.GestorGastosDWEC);
+    gestionPresu.cargarGastos(datosCargados);
+  }
+  else{
+    let array = [];
+    gestionPresu.cargarGastos(array);
+  }
+  repintar();
+}
+
+target = document.getElementById("cargar-gastos");
+
+target.addEventListener("click", cargarGastosWeb);
+
 export {
   mostrarDatoEnId,
   mostrarGastoWeb,
