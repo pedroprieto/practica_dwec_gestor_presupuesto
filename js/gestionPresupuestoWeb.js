@@ -232,11 +232,16 @@ function editarHandleFormulario(){
     formulario.elements.etiquetas.value = this.gasto.etiquetas.join(', '); 
 
     let manejadorEditar = new submitHandlerGasto(); 
+    let manejadorEditarAPI = new submitHanlerGastoAPI(); 
+    manejadorEditarAPI.gasto = this.gasto; 
     manejadorEditar.gasto = this.gasto; 
     //manejadorEditar.formulario = formulario; 
     formulario.addEventListener('submit', manejadorEditar);
     let botonCancelar = formulario.querySelector('.cancelar'); 
     let manejadorCerrar = new cerrarActualizarGasto(); 
+    let botonEditarAPI = formulario.querySelector('.gasto-enviar-api'); 
+    manejadorEditarAPI.botonEditarAPI = event.target; 
+    botonEditarAPI.addEventListener('click', manejadorEditarAPI); 
     manejadorCerrar.botonEditar = event.target; 
     botonCancelar.addEventListener('click', manejadorCerrar);  
 
@@ -291,6 +296,9 @@ function nuevoGastoWebFormulario(event){
   let botonCancelar = formulario.querySelector('.cancelar'); 
 
   botonCancelar.addEventListener('click', cerrarAnyadirGasto); 
+
+  let botonEnviarApi = formulario.querySelector('.gasto-enviar-api'); 
+  botonEnviarApi.addEventListener('click', enviarGastoApi); 
 
   repintar(); 
 
@@ -548,9 +556,9 @@ function borrarGastoApi(gasto) {
 async function enviarGastoApi(event) {
   event.preventDefault();
   let nombreUsuario = document.getElementById('nombre_usuario').value;
-
+  let formulario = event.target.form; 
   // Obtener datos del formulario (código no proporcionado, debe adaptarse a tu formulario)
-  let formulario = document.getElementById('formulario'); 
+  //let formulario = document.getElementById('formulario'); 
   let descripcion = formulario.elements.descripcion.value; 
   let valor =  formulario.elements.valor.value; 
   let valorNum = parseFloat(valor); 
@@ -560,7 +568,7 @@ async function enviarGastoApi(event) {
 
   let nuevoGastoAPI = new gestionPresupuesto.CrearGasto(descripcion, valorNum, fecha); 
   nuevoGastoAPI.anyadirEtiquetas(...etiquetasArr); 
-
+ 
   gestionPresupuesto.anyadirGasto(nuevoGastoAPI);
   try {
     await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`, {
@@ -581,37 +589,70 @@ async function enviarGastoApi(event) {
   } catch (error) {
     console.error('Error al enviar el gasto a la API:', error);
   }
+  formulario.remove(); 
+  let botonAnyadir = document.getElementById('anyadirgasto-formulario'); 
+  botonAnyadir.disabled = false; 
+ 
 }
 
-const btnEnviarGastoAPI = document.getElementsByClassName('gasto-enviar-api'); 
-btnCargarGastosAPI.addEventListener('click', enviarGastoApi); 
+function submitHanlerGastoAPI(){
+  this.handleEvent = async function (event) {
+    event.preventDefault();
+
+    // Acceder al formulario desde el evento 
+    const formulario = event.currentTarget.form;
+    const nombreUsuario = document.getElementById('nombre_usuario').value;
+
+    // Obtener datos del formulario
+    const descripcion = formulario.querySelector("#descripcion").value;
+    const valor = formulario.querySelector("#valor").value;
+    const valorFloat = parseFloat(valor);
+    const fecha = formulario.querySelector("#fecha").value;
+    const etiquetasTexto = formulario.querySelector("#etiquetas").value;
+    const etiquetasArr = etiquetasTexto.split(',').map(etiqueta => etiqueta.trim());
+
+    // Actualizar las propiedades del gasto
+    this.gasto.actualizarDescripcion(descripcion);
+    this.gasto.actualizarValor(valorFloat); 
+    this.gasto.actualizarFecha(fecha); 
+    this.gasto.anyadirEtiquetas(...etiquetasArr);
+    let gastoId = this.gasto.gastoId; 
+    console.log(gastoId); 
+    // Llamar a la función cargarGastosApi para actualizar la lista desde la API
+    try {
+      await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${gastoId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          descripcion: this.gasto.descripcion,
+          valor: this.gasto.valor,
+          fecha: this.gasto.fecha,
+          etiquetas: this.gasto.etiquetas,
+        }),
+      });
+
+      // Actualizar la lista de gastos desde la API
+      cargarGastosApi();
+    } catch (error) {
+      console.error('Error al enviar el gasto a la API:', error);
+      console.log('Response:', error.response);
+    }
+
+  }
+  }
+
+  
+
+
 
 
 // En el archivo js/gestionPresupuestoWeb.js
 //const botonEditarEnviarApi = document.querySelector('.gasto-enviar-api');
 //botonEditarEnviarApi.addEventListener('click', editarEnviarGastoApi);
 
-async function editarEnviarGastoApi() {
-  const nombreUsuario = document.getElementById('nombre_usuario').value;
-  //const gastoId = // obtener el ID del gasto actual (código no proporcionado);
 
-  // Obtener datos del formulario de edición (código no proporcionado)
-
-  try {
-    await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${gastoId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(datosDelFormulario),
-    });
-
-    // Actualizar la lista de gastos desde la API
-    cargarGastosApi();
-  } catch (error) {
-    console.error('Error al editar y enviar el gasto a la API:', error);
-  }
-}
 
 // Exporta las funciones
 export {
