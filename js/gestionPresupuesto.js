@@ -93,9 +93,9 @@ function filtrarGastos(filtros) {
         var etiquetasMinusculas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase());
         //*Un array, que es una copia del array gasto.etiquetas, pero en minusculas
         if (
-            (fDesde && gasto.fecha < fDesde) || 
-            (fHasta && gasto.fecha > fHasta)
-            ) {
+            (filtros.fechaDesde && gasto.fecha < fDesde) || 
+            (filtros.fechaHasta && gasto.fecha > fHasta)
+            ) {             
                 return false;
             }
         if (

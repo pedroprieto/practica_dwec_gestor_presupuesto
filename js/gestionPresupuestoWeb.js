@@ -109,8 +109,9 @@ function repintar () {
         let botonEditar = anyadirBotonEditar(gasto);
         let botonEditarForm = anyadirBotonEditarFormulario(gasto);
         let botonBorrar = anyadirBotonBorrar(gasto);
+        let botonBorrarAPI = anyadirBotonBorrarAPI(gasto);
         anyadirBorrarEtiquetaHandle(divGastos, gasto); //añadomos eventHandlers a cada etiqueta del gasto
-        divGastos.append(botonEditar, botonEditarForm, botonBorrar); //añadimos los botones
+        divGastos.append(botonEditar, botonEditarForm, botonBorrar, botonBorrarAPI); //añadimos los botones
     }
 }
 function actualizarPresupuestoWeb () {
@@ -199,8 +200,14 @@ EditarHandleForm.prototype.handleEvent = function (event) {
     //crear botones "Enviar" y "Cancelar"
     let botonEnviar = formulario.querySelector("button[type='submit']");
     let botonCancelar = document.getElementsByClassName("cancelar")[0];
+    //^crear el botón "Enviar (API)"
+    let botonEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
     formulario.addEventListener("submit", (event) => botonEnviarEditarGastoClick.call(this, event)); //!corregido
     botonCancelar.addEventListener("click", botonCancelarClick);
+    //^ manejador de evento del botón "Enviar (API)"
+    limpiarEventListeners(botonEnviarAPI);
+    botonEnviarAPI = formulario.querySelector("button.gasto-enviar-api");
+    botonEnviarAPI.addEventListener("click", botonEnviarAPIactualizar);
     // Rellenamos el formulario
     formulario.elements.descripcion.value = this.gasto.descripcion;
     formulario.elements.valor.value = this.gasto.valor;
@@ -253,6 +260,26 @@ BorrarHandle.prototype.handleEvent = function () {
         repintar();
     }
 };
+function BorrarHandleAPI() {}
+//^Haciendo el prototipo de BorrarHandleAPI:
+// Método handleEvent para el borrado del gasto
+BorrarHandleAPI.prototype.handleEvent = function () {
+    // Verificar si hay un gasto asignado
+    if (!this.gasto) {
+        console.error("No se ha asignado un gasto para borrar.");
+        return;
+    }
+    // Preguntar si el usuario está seguro si quiere borrar el gasto
+    let infoGasto = this.gasto.mostrarGastoCompleto();
+    let confirmacionUsuario = confirm("¿Usted está seguro que quiere borrar el gasto?\n" + infoGasto);
+    if (confirmacionUsuario) {
+        let idGastoBorrado = this.gasto.gastoId;
+        borrarGastoAPI(idGastoBorrado);
+        cargarGastosApi();
+        // Llamar a la función repintar para actualizar la lista de gastos
+        repintar();
+    }
+};
 //^ Definición de la función constructora BorrarEtiquetasHandle:
 function BorrarEtiquetasHandle() {}
 //^Haciendo el prototipo de BorrarEtiquetasHandle:
@@ -268,6 +295,7 @@ BorrarEtiquetasHandle.prototype.handleEvent = function () {
     let respuestaUsuario = confirm("¿Usted está seguro que quiere borrar la etiqueta?\n" + tituloEtiqueta);
     if (respuestaUsuario) {
         this.gasto.borrarEtiquetas(this.etiqueta);
+        peticionEditarGastoAPI(this.gasto); //!Actualizado por API
     }
         // Llamar a la función repintar para actualizar la lista de gastos
         repintar();  
@@ -320,6 +348,20 @@ function anyadirBotonBorrar(gasto) {
     // Agrega el botón al contenedor del gasto
     return botonBorrar;
 }
+function anyadirBotonBorrarAPI(gasto) {
+    // Crea el botón Borrar
+    let botonBorrar = document.createElement("button");
+    botonBorrar.className = "gasto-borrar-api";
+    botonBorrar.textContent = "Borrar (API)";
+    // Crea una instancia de la función constructora BorrarHandleAPI
+    let borrarHandleAPI = new BorrarHandleAPI();
+    // Asigna el gasto al objeto borrarHandleAPI
+    borrarHandleAPI.gasto = gasto;
+    // Configura el event handler usando el método handleEvent de borrarHandleAPI
+    botonBorrar.addEventListener("click", borrarHandleAPI);
+    // Agrega el botón al contenedor del gasto
+    return botonBorrar;
+}
 //^ La función que añade manejadoras de las etiquetas al contenedor (div/span) dado al gasto definido:
 function anyadirBorrarEtiquetaHandle(elementoHtml, gasto) {
     // Obtén todas las etiquetas dentro del elementoHtml
@@ -349,7 +391,7 @@ function nuevoGastoWebFormulario () {
     formulario = plantillaFormulario.querySelector("form"); 
     controlesPrincipales.appendChild(formulario);
     //crear botones "Enviar" y "Cancelar"
-    let botonEnviar = formulario.querySelector("button[type='submit']");
+    //let botonEnviar = formulario.querySelector("button[type='submit']");
     let botonCancelar = document.getElementsByClassName("cancelar")[0];
     //bloquear el botón "Añadir gasto formulario"
     botonAnyadirGastoForm.disabled = true;
@@ -373,10 +415,19 @@ function nuevoGastoWebFormulario () {
         }
     }
 
-    formulario.addEventListener("submit", botonEnviarClick) //! corregido
-    botonCancelar.addEventListener("click", botonCancelarClick)
+    formulario.addEventListener("submit", botonEnviarClick); //! corregido
+    botonCancelar.addEventListener("click", botonCancelarClick);
 
+    let botonEnviarAPI = document.querySelector("button.gasto-enviar-api");
+    limpiarEventListeners(botonEnviarAPI);
+    botonEnviarAPI = document.querySelector("button.gasto-enviar-api");
+    botonEnviarAPI.addEventListener("click", crearGastoAPI);
 }
+//Quita todos los eventlisteners
+function limpiarEventListeners(elemento) {
+    var nuevoElemento = elemento.cloneNode(true);
+    elemento.parentNode.replaceChild(nuevoElemento, elemento);
+  }
 function botonEnviarClick(event) {
     event.preventDefault();
     botonAnyadirGastoForm.disabled = false;
@@ -543,6 +594,157 @@ async function cargarGastosApi() {
 let btnCargarGastosAPI = document.getElementById("cargar-gastos-api");
 btnCargarGastosAPI.addEventListener("click", cargarGastosApi);
 
+async function borrarGastoAPI(idGasto) {
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+    let usuario = document.getElementById("nombre_usuario").value;
+    url += usuario;
+    url += `/${idGasto}`;
+    try {
+        // Enviando la petición DELETE
+        let response = await fetch(url, {
+            method: "DELETE",
+          });
+        // Verificar si la solicitud DELETE fue exitosa (código de respuesta 2xx)
+        if (response.ok) {
+            window.alert(`El gasto con id ${idGasto} ha sido eliminado con éxito.`)
+            // Preparando y ejecutando la petición para cargar los datos actualizados
+            url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+            let gastosCargados = await fetch(url).then(res => res.json());
+            // Actualizando la lista de gastos
+            gestionPresupuesto.cargarGastos(gastosCargados);
+            // Mostramos los datos en el archivo .html
+            repintar();
+        } else {
+            // Si la solicitud no fue exitosa, mostrar un mensaje de alerta
+            window.alert("Error al borrar el gasto. Por favor, inténtalo de nuevo.");
+        }
+    } catch (error) {
+        // Si hay algún error durante la solicitud, mostrar un mensaje de alerta
+        window.alert("Error al borrar el gasto. Por favor, inténtalo de nuevo.");
+    }
+}
+function crearGastoAPI() {
+    //actualizando el formulario
+    botonAnyadirGastoForm.disabled = false;
+    //recogiendo los datos del formulario
+    let gastoRecogido = obtenerGastoFormulario();
+    //actualizando la base de datos de API
+    peticionNuevoGastoAPI(gastoRecogido);
+    //borrando el formulario
+    formulario.remove();
+}
+function botonEnviarAPIactualizar() {
+    //recogiendo los datos del formulario
+    let gastoRecogido = obtenerGastoFormulario();
+    //actualizando la base de datos de API
+    peticionEditarGastoAPI(gastoRecogido);
+    //eliminando el formulario
+    formulario.remove();
+    // desbloqueamos el botón "Añadir gasto con formulario"
+    botonAnyadirGastoForm.disabled = false;
+    // desbloqueamos los botones "Editar gasto"
+    let botonesEditarConFormulario = document.getElementsByName("gasto-editar-formulario");
+    for (let i = 0; i < botonesEditarConFormulario.length; i++) {
+        if (botonesEditarConFormulario[i].disabled) {
+            botonesEditarConFormulario[i].disabled = false;
+        }
+    }
+}
+//Recoge los datos del formulario y devuelve el gasto, construido con estos datos
+function obtenerGastoFormulario() {
+    //Procesando los datos    
+    let descripcionGasto = formulario.querySelector("#descripcion");
+    let valorGasto = formulario.querySelector("#valor"); 
+    let fechaGasto = formulario.querySelector("#fecha");
+    let etiquetasGasto = formulario.querySelector("#etiquetas");
+    let etiquetasGastoArray = etiquetasGasto.value.split(/\W+/).filter(Boolean);
+    let gastoRecogido = new gestionPresupuesto.CrearGasto(descripcionGasto.value,
+         parseFloat(valorGasto.value), fechaGasto.value, ...etiquetasGastoArray);
+    return gastoRecogido;
+}
+//Función asíncrona: accepta el gasto y lo crea en la API
+async function peticionNuevoGastoAPI(gasto) {
+    //convirtiendo el objeto gasto al formato JSON
+    let gastoJSON = JSON.stringify(gasto);
+    //Creando la petición
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+    let usuario = document.getElementById("nombre_usuario").value;
+    url += usuario;
+    try {
+        // Enviando la petición POST
+        let response = await fetch(url, {
+            method: "POST",
+            body: gastoJSON,
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              }
+          })
+          .then((response) => {
+            window.alert(`El gasto "${gasto.descripcion}" ha sido añadido con éxito.`)
+          })
+          .catch((error) => {
+            // Si la solicitud no fue exitosa, mostrar un mensaje de alerta
+            window.alert(`Error al crear el gasto. Por favor, inténtalo de nuevo.\n
+            Descripción del error: ${error}`);
+          });
+       // Preparando y ejecutando la petición para cargar los datos actualizados
+        url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        let gastosCargados = await fetch(url)
+        .then(res => res.json())
+        .catch((error) => {
+            window.alert(`Error al obtener la lista de los gastos.\n
+            Descripción del error: ${error}`);
+        });
+        // Actualizando la lista de gastos
+        gestionPresupuesto.cargarGastos(gastosCargados);
+        // Mostramos los datos en el archivo .html
+        repintar();
+    } catch (error) {
+        // Si hay algún error durante la solicitud, mostrar un mensaje de alerta
+        window.alert("Error al crear el gasto. Por favor, inténtalo de nuevo.");
+    }
+}
+//Función asíncrona: accepta el gasto y lo actualiza en la API
+async function peticionEditarGastoAPI(gasto) {
+    let gastoJSON = JSON.stringify(gasto);
+    //Creando la petición
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+    let usuario = document.getElementById("nombre_usuario").value;
+    url += `${usuario}/${gasto.gastoId}`;
+    try {
+        // Enviando la petición PUT
+        let response = await fetch(url, {
+            method: "PUT",
+            body: gastoJSON,
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              }
+          })
+          .then((response) => {
+            window.alert(`El gasto "${gasto.descripcion}" ha sido actualizado con éxito.`)
+          })
+          .catch((error) => {
+            // Si la solicitud no fue exitosa, mostrar un mensaje de alerta
+            window.alert(`Error al actualizar el gasto. Por favor, inténtalo de nuevo.\n
+            Descripción del error: ${error}`);
+          });
+       // Preparando y ejecutando la petición para cargar los datos actualizados
+        url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        let gastosCargados = await fetch(url)
+        .then(res => res.json())
+        .catch((error) => {
+            window.alert(`Error al obtener la lista de los gastos.\n
+            Descripción del error: ${error}`);
+        });
+        // Actualizando la lista de gastos
+        gestionPresupuesto.cargarGastos(gastosCargados);
+        // Mostramos los datos en el archivo .html
+        repintar();
+    } catch (error) {
+        // Si hay algún error durante la solicitud, mostrar un mensaje de alerta
+        window.alert("Error al actualizar el gasto. Por favor, inténtalo de nuevo.");
+    }
+}
 
 export {
     mostrarDatoEnId,
