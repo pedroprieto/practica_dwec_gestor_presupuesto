@@ -94,8 +94,14 @@ function nuevoGastoWebFormulario(){ //Funcion principal
 function ManejadorCancelarFormulario(boton){  //Funcioon manejadora diseñada para el boton de cancelar, encargado de volver a activar todos los botones que le pasemos.
 
   this.handleEvent = function(){
-    let eliminado = document.querySelector("form");
-    eliminado.remove();
+    let eliminado = document.querySelectorAll("form");
+
+    for (let form of eliminado){
+      if (form.getAttribute("id") != "formulario-filtrado"){
+        form.remove();
+      }
+    }
+    
     boton.forEach(function(bot){
       bot.removeAttribute("disabled");
     })
@@ -323,26 +329,36 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 function FiltrarGastosWeb(){
   this.handleEvent = function(e){
-  e.preventDefault();
-  let formDescripcion = document.getElementById("formulario-filtrado-descripcion").value;
-  let formValorMin = document.getElementById("formulario-filtrado-valor-minimo").value;
-  let formValorMax = document.getElementById("formulario-filtrado-valor-maximo").value;
-  let formFechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
-  let formFechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
-  let formEtiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+    e.preventDefault();
+    let formDescripcion = document.getElementById("formulario-filtrado-descripcion").value;
+    let formValorMin = document.getElementById("formulario-filtrado-valor-minimo").value;
+    let formValorMax = document.getElementById("formulario-filtrado-valor-maximo").value;
+    let formFechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
+    let formFechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+    let formEtiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
 
-  if (formEtiquetas != ""){
-    formEtiquetas = gestionPresu.transformarListadoEtiquetas(formEtiquetas);
-  }
+    if (formEtiquetas != ""){
+      formEtiquetas = gestionPresu.transformarListadoEtiquetas(formEtiquetas);
+    }
 
 
-  let objetoFiltro = {"valorMinimo": formValorMin, "valorMaximo": formValorMax, "descripcionContiene": formDescripcion, "etiquetasTiene": formEtiquetas, "fechaDesde": formFechaDesde, "fechaHasta": formFechaHasta};
+    let objetoFiltro = {"valorMinimo": formValorMin, "valorMaximo": formValorMax, "descripcionContiene": formDescripcion, "etiquetasTiene": formEtiquetas, "fechaDesde": formFechaDesde, "fechaHasta": formFechaHasta};
 
-  let gastosFiltrado = gestionPresu.filtrarGastos(objetoFiltro);
-
-    console.log(gastosFiltrado);
-  }
+    console.log(objetoFiltro);
+    if (objetoFiltro.valorMinimo == "" && objetoFiltro.valorMaximo == "" && objetoFiltro.descripcionContiene == "" && objetoFiltro.etiquetasTiene == "" && objetoFiltro.fechaDesde == "" && objetoFiltro.fechaHasta == ""){
+       repintar();
+    }
+    else{
+      let gastosFiltrados = gestionPresu.filtrarGastos(objetoFiltro);
+      let target = document.getElementById("listado-gastos-completo");
+      target.innerHTML = "";
+    
+      for (let gasto of gastosFiltrados){
+       mostrarGastoWeb("listado-gastos-completo", gasto);
+     }
+    }
   
+  }
 }
 
 let filtroDeGastos = document.getElementById("formulario-filtrado");
