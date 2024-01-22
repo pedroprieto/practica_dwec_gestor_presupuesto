@@ -137,7 +137,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
     let unit = "";
     switch (periodo) {
-        case "anyo":
+        case "año":
             unit = "year";
             break;
         case "mes":
@@ -458,7 +458,10 @@ function cargarGastosApi() {
 
     fetch(url)
         .then((response) => {
-            if (response.ok) return response.json();
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
         })
         .then((gastos) => {
             gestion.cargarGastos(gastos);
@@ -476,7 +479,10 @@ function BorrarHandleApi(gasto) {
 
         fetch(url, { method: "delete" })
             .then(response => {
-                if (response.ok) cargarGastosApi()
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                cargarGastosApi()
             }
             ).catch(
                 reason => alert(`Se ha producido un error: ${reason}`)
@@ -509,11 +515,12 @@ function EnviarApiFormularioHandler(formulario, botonAnyadirGasto) {
             body: JSON.stringify(gasto),
         }).then(
             response => {
-                if (response.ok) {
-                    cargarGastosApi()
-                    formulario.remove();
-                    botonAnyadirGasto.removeAttribute("disabled");
+                if (!response.ok) {
+                    throw new Error(response.statusText);
                 }
+                cargarGastosApi()
+                formulario.remove();
+                botonAnyadirGasto.removeAttribute("disabled");
             }
         ).catch(
             reason => alert(`Se ha producido un error: ${reason}`)
@@ -549,7 +556,8 @@ function SubmitEditarHandleFormularioApi(gasto, formulario) {
             body: JSON.stringify(this.gasto)
         }).then(
             response => {
-                if (response.ok) cargarGastosApi();
+                if (!response.ok) throw new Error(response.statusText);
+                cargarGastosApi();
             }
         ).catch(
             reason => alert(`Se ha producido un error: ${reason}`)
