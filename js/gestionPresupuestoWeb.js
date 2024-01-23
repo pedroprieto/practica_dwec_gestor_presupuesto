@@ -45,7 +45,9 @@ function mostrarGastoWeb(idElemento, gasto) {
     let spanEtiquetas = document.createElement("span");
     spanEtiquetas.classList.add("gasto-etiquetas-etiqueta");
     spanEtiquetas.innerText = "Etiqueta :" + etiqueta;
-    spanEtiquetas.addEventListener(`click`, new BorrarEtiquetasHandle(gasto, etiqueta)
+    spanEtiquetas.addEventListener(
+      `click`,
+      new BorrarEtiquetasHandle(gasto, etiqueta)
     );
     divEtiquetas.appendChild(spanEtiquetas);
     //divGasto.appendChild(divEtiquetas);
@@ -90,13 +92,22 @@ function mostrarGastoWeb(idElemento, gasto) {
   btnEditarFormulario.innerText = "Editar Gasto formulario";
 
   btnEditarFormulario.gasto = gasto; //!referencia gasto para pasar al boton
-  btnEditarFormulario.addEventListener("click", new EditarHandleFormulario(gasto)
+  btnEditarFormulario.addEventListener(
+    "click",
+    new EditarHandleFormulario(gasto)
   );
   divGasto.appendChild(btnEditarFormulario); // agrego bton
 }
 
 // Función para mostrar gastos agrupados en un elemento HTML por su ID
 function mostrarGastosAgrupadosWeb(idElemento, periodo) {
+  // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+  // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
+  // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
+  var divP = document.getElementById(idElemento);
+  // Borrar el contenido de la capa para que no se duplique el contenido al repintar
+  divP.innerHTML = "";
+
   let agrup = gestionPresupuesto.agruparGastos(periodo); // resultado de agrupar el total de gastos por período temporal (ejecución de la función agruparGastos
   let divContenedor = document.getElementById(idElemento);
 
@@ -108,7 +119,8 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo) {
   h1.textContent = `Gastos agrupados por ${periodo}`;
   divAgrupacion.appendChild(h1);
 
-  for (let item of Object.entries(agrup)) { //! gstosAgrupados es un objeto
+  for (let item of Object.entries(agrup)) {
+    //! gstosAgrupados es un objeto
     /* 
      1- (let item in agrup)
      2- for (let item of Object.entries(agrup)) { // Utilizar Object.entries para obtener pares clave-valor
@@ -139,6 +151,66 @@ function mostrarGastosAgrupadosWeb(idElemento, periodo) {
     divContenedor.appendChild(divAgrupacion);
   }
   divContenedor.appendChild(divAgrupacion);
+
+  // Estilos
+  divP.style.width = "33%";
+  divP.style.display = "inline-block";
+  // Crear elemento <canvas> necesario para crear la gráfica
+  // https://www.chartjs.org/docs/latest/getting-started/
+  let chart = document.createElement("canvas");
+  // Variable para indicar a la gráfica el período temporal del eje X
+  // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+  let unit = "";
+  switch (periodo) {
+    case "anyo":
+      unit = "year";
+      break;
+    case "mes":
+      unit = "month";
+      break;
+    case "dia":
+    default:
+      unit = "day";
+      break;
+  }
+
+  // Creación de la gráfica
+  // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+  const myChart = new Chart(chart.getContext("2d"), {
+    // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+    type: "bar",
+    data: {
+      datasets: [
+        {
+          // Título de la gráfica
+          label: `Gastos por ${periodo}`,
+          // Color de fondo
+          backgroundColor: "#555555",
+          // Datos de la gráfica
+          // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+          data: agrup,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: {
+          // El eje X es de tipo temporal
+          type: "time",
+          time: {
+            // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+            unit: unit,
+          },
+        },
+        y: {
+          // Para que el eje Y empieza en 0
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+  // Añadimos la gráfica a la capa
+  divP.append(chart);
 }
 
 //crear toda la estructura HTML que refleje los cambios realizados en el modelo de datos.
@@ -182,7 +254,8 @@ function nuevoGastoWeb() {
   let fecha = prompt(" Introduzca nueva Fecha Año/Mes/Dia");
   fecha = Date.parse(fecha);
 
-  let Etiquetas = prompt("Introduzca nueva Etiqueta.Si son varias separa por Coma"
+  let Etiquetas = prompt(
+    "Introduzca nueva Etiqueta.Si son varias separa por Coma"
   );
   let arrrayEtiquetas = Etiquetas.split(", "); //dividir la cadena de texto por una coma
 
@@ -274,7 +347,6 @@ function nuevoGastoWebFormulario(event) {
   let cancelarFormulario = document.querySelector(`.cancelar`);
   cancelarFormulario.addEventListener(`click`, cancelarGastoFormulario); //escuchadora botn cancelar formulario
 
-
   /*/Boton enviar datos a API
   let btnEnvioApiForm = document.querySelector(`.gasto-enviar-api`);
   let manejadorEnvioApi = new envioDatosApiHandle();
@@ -321,7 +393,9 @@ function EditarHandleFormulario(gasto) {
   this.gasto = gasto;
 
   this.handleEvent = function (event) {
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let plantillaFormulario = document
+      .getElementById("formulario-template")
+      .content.cloneNode(true);
     let formulario = plantillaFormulario.querySelector("form");
 
     //alert("editando gasto individual ")
@@ -355,15 +429,11 @@ function EditarHandleFormulario(gasto) {
     enviarAPI.gasto = this.gasto;
     btnEnviaApiForm.addEventListener(`click`, enviarAPI);
 
-
     //Boton actualizar datos API
     let btnActualizarApiForm = document.querySelector(`.gasto-actualizar-api`);
     let editarAPI = new actualizarDatosApiHandle();
     editarAPI.gasto = this.gasto;
     btnActualizarApiForm.addEventListener(`click`, editarAPI);
-
-
-
   };
 }
 function actualizaGastoFormulario() {
@@ -502,10 +572,9 @@ function borrarApiHandle() {
     let user = document.getElementById("nombre_usuario").value;
     const url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
 
-    let resultado = await fetch(url,
-      { method: "DELETE" });
+    let resultado = await fetch(url, { method: "DELETE" });
     if (resultado.ok) {
-      alert("🚀🚀🚀🚀 Gasto borrado con exito🚀🚀🚀🚀", (resultado.ok))
+      alert("🚀🚀🚀🚀 Gasto borrado con exito🚀🚀🚀🚀", resultado.ok);
       cargarGastosApi();
     } else {
       throw "Error en borrado del gasto:" + resultado.status;
@@ -518,8 +587,8 @@ function envioDatosApiHandle() {
     //console.log("🚀 ~ event:", event.target);
     //! EVENT.TARGET  = boton gasto enviar api
 
-    //datos formulario  
-    let formulario = event.target.closest('form'); //!busca el form mas cercano al evento.target
+    //datos formulario
+    let formulario = event.target.closest("form"); //!busca el form mas cercano al evento.target
     let descripcionApi = formulario.elements.descripcion.value;
     let valorApi = formulario.elements.valor.value;
     let fechaApi = formulario.elements.fecha.value;
@@ -543,28 +612,26 @@ function envioDatosApiHandle() {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
-      body: JSON.stringify(datosApi)
+      body: JSON.stringify(datosApi),
     });
 
     if (respuesta.ok) {
       cargarGastosApi();
-      alert(" 🚀🚀🚀🚀 Datos enviados 🚀🚀🚀🚀")
+      alert(" 🚀🚀🚀🚀 Datos enviados 🚀🚀🚀🚀");
 
       //TODO cerrar el fomulario
     } else {
       alert("Error-HTTP: " + respuesta.status);
     }
-
   };
 }
-
 
 function actualizarDatosApiHandle() {
   this.handleEvent = async function (event) {
     console.log("🚀 ~ event:", event.target);
 
     //datos formulario
-    let formulario = event.target.closest('form');
+    let formulario = event.target.closest("form");
     let descripcionApi = formulario.elements.descripcion.value;
     let valorApi = formulario.elements.valor.value;
     let fechaApi = formulario.elements.fecha.value;
@@ -589,20 +656,18 @@ function actualizarDatosApiHandle() {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify(datosApi),
-    })
+    });
 
     if (respuesta.ok) {
       cargarGastosApi();
-      alert("Datos Actualizados")
+      alert("Datos Actualizados");
 
       //TODO cerrar el fomulario
     } else {
       alert("Error-HTTP: " + respuesta.status);
     }
-
   };
 }
-
 
 export {
   mostrarDatoEnId,
