@@ -232,7 +232,7 @@ this.handleEvent= function(event){
     formulario.elements.descripcion.value=this.gasto.descripcion
     formulario.elements.valor.value=this.gasto.valor
     
-    formulario.elements.fecha.value=this.gasto.fecha
+    formulario.elements.fecha.valueAsDate=new Date(this.gasto.fecha)
     formulario.elements.etiquetas.value=this.gasto.etiquetas
 
     event.target.parentElement.append(plantillaFormulario)
