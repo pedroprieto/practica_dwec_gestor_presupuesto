@@ -99,13 +99,13 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
     }
     this.funcionEtiquetas=function(etiqueta){
         
-        for (let i = 0;i<etiquetas.length;i++)
+        for (let i = 0;i<this.etiquetas.length;i++)
         {
          
-             if( etiquetas[i]==etiqueta  )
+             if( this.etiquetas[i]==etiqueta  )
             {
                  
-              etiquetas.splice(i,1)
+              this.etiquetas.splice(i,1)
              
             }
   
