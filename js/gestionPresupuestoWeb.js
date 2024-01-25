@@ -224,7 +224,7 @@ function EditarHandleFormulario(){
 this.handleEvent= function(event){
     event.target.disabled=true;
     event.preventDefault();
-    alert(` editando ${this.gasto.descripcion}`)
+   
     event.target.disabled=true;
 
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
@@ -253,7 +253,7 @@ this.handleEvent= function(event){
 }
 function handleEnviarForm(){
     this.handleEvent= function(event){
-        alert("enviando")
+        
     event.preventDefault();
         let descripcionGastoForm =event.target.elements.descripcion.value
         let valorGasto=event.target.elements.valor.value
@@ -263,14 +263,14 @@ function handleEnviarForm(){
         let etiquetasGastoForm= event.target.elements.etiquetas.value
     
         let etiquetasArrForm= etiquetasGastoForm.split(',');
-    alert("enviando2222")
+    
         this.gasto.actualizarDescripcion(descripcionGastoForm);
         this.gasto.actualizarValor(valorGastoForm);
         this.gasto.actualizarFecha(fechaGastoForm);
         this.gasto.etiquetas = [];
         this.gasto.anyadirEtiquetas(...etiquetasArrForm);
         repintar()
-        alert("enviando3333")
+        
         
 
         
@@ -278,7 +278,7 @@ function handleEnviarForm(){
 }
 function cerrarGastoEnviarForm(){
     this.handleEvent=function(event){
-         alert("cerrando")
+         
     event.target.form.remove()
     this.botonEditarFormulario.disabled=false;
 }
@@ -344,7 +344,7 @@ function nuevoGastoWebFormulario(event){
 }
 
 function anyadirGastoEnviar(event){
-    alert("enviando")
+   
     event.preventDefault();
 
     
@@ -364,7 +364,7 @@ function anyadirGastoEnviar(event){
     document.getElementById("anyadirgasto-formulario").disabled=false
 }
 function cerrarGastoEnviar(event){
-    alert("cerrando")
+  
     event.target.form.remove()
     document.getElementById("anyadirgasto-formulario").disabled=false;
 }
