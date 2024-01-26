@@ -383,6 +383,22 @@ function cargarGastosWeb (){
     repintar();
 }
 
+let CargarGastosApiBoton = document.getElementById("cargar-gastos-api");
+CargarGastosApiBoton.addEventListener(`click`, cargarGastosApi);
+
+//Creados gastos previamente con https://hoppscotch.io/
+//mi usuario es albertomeseguer
+
+async function cargarGastosApi() {
+    let usuario = document.getElementById(`nombre_usuario`).value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    let gastosApi = await fetch(url);
+    let gasto = await gastosApi.json();
+    gesPres.cargarGastos(gasto);
+    repintar();
+
+}
+
 
 export{
     
