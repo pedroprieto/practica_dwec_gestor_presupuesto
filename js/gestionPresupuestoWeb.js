@@ -3,9 +3,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 function mostrarDatoEnId(idElemento, valor){
 
 let elemento = document.getElementById(idElemento);
-let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
 
-var formulario = plantillaFormulario.querySelector("form");
     
 
 
@@ -286,6 +284,12 @@ function nuevoGastoWebFormulario() {
 
     // Acceder al elemento <form> dentro de ese fragmento de documento
     let formulario = plantillaFormulario.querySelector("form");
+/*
+
+Por último, añadir el fragmento de documento (variable plantillaFormulario) al final del <div id="controlesprincipales"> para que se muestre en la página.
+*/
+    let controlesPrincipales = document.getElementById("controlesprincipales");
+    controlesPrincipales.append(plantillaFormulario);
 
     // Crear un manejador de evento para el evento submit del formulario
     formulario.addEventListener("submit", function (event) {
@@ -316,7 +320,20 @@ function nuevoGastoWebFormulario() {
 
     // Desactivar el botón anyadirgasto-formulario
     document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "true");
+    //localizar button cancelar
+    let botonCancelarGasto = formulario.querySelector(".cancelar") ;
+    // Para que al pulsar se elimine el formulario.
+    botonCancelarGasto.addEventListener( "click" , cancelarNuevoGasto);
+    
 }
+
+
+
+function cancelarNuevoGasto(event) {
+    event.target.form.remove();
+    document.getElementById("anyadirgasto-formulario").disabled = false;
+}
+
 
 // Asociar la función nuevoGastoWebFormulario al evento click del botón anyadirgasto-formulario
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
