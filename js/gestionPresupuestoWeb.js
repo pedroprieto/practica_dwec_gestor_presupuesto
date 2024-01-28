@@ -73,6 +73,18 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener(`click`, eventBorrar);
     nuevoGastoDiv.append(botonBorrar);
 
+    //BorrarAPI
+    let botonBorrarApi = document.createElement(`button`);
+    botonBorrarApi.type = `button`;
+	
+    botonBorrarApi.className = `gasto-borrar-api`;
+    botonBorrarApi.innerText = `Borrar (API)`;
+        // nuevo objeto
+    let eventBorrarApi = new BorrarHandleApi();
+    eventBorrarApi.id = gasto.gastoId;
+    botonBorrarApi.addEventListener(`click`, eventBorrarApi);
+    nuevoGastoDiv.append(botonBorrarApi);
+
     //práctica6 - botón EditarFormulario
     let botonEditarFormulario = document.createElement("button");
     botonEditarFormulario.type = `button`;
@@ -207,19 +219,25 @@ function EditarHandleFormulario(){
         formulario.elements.valor.value = this.gasto.valor;
         //no funciona formulario.elements.fecha.value = this.gasto.fecha.toLocaleString();
 
-        //Botón enviar de "Editar (formulario)"
+        //Botón Enviar dentro de "Editar (formulario)"
         let manejadorEnvioEdicion = new envioEdicionHandle();
         manejadorEnvioEdicion.gasto = this.gasto;
         formulario.addEventListener("submit", manejadorEnvioEdicion);
 
     
-        //Botón cancelar de "Editar (formulario)"
+        //Botón Cancelar dentro de "Editar (formulario)"
         let botonCancelar = formulario.querySelector(".cancelar");
         let manejadorCerrar = new cancelarEditarFormulario();
         manejadorCerrar.botonEditar = event.target;
         botonCancelar.addEventListener("click", manejadorCerrar);
 
         event.target.parentElement.append(plantillaFormulario);
+
+        //OBJETO Manejador de eventos del botón .gasto-enviar-api dentro de ("Editar (formulario)") PUT
+        let botonEnviarApi = document.querySelector(`.gasto-enviar-api`);
+        let enviarAPI = new envioEdicionHandleAPI();
+        enviarAPI.gasto = this.gasto;
+        botonEnviarApi.addEventListener(`click`, enviarAPI);
     }
 }
 
@@ -272,6 +290,31 @@ function BorrarEtiquetasHandle(gasto, etiqueta) {
     }
 }
 
+function BorrarHandleApi() {
+    BorrarHandleApi.prototype.handleEvent = async function () {
+        let idABorrar = this.id;
+        let usuario = document.getElementById(`nombre_usuario`).value;
+        
+        //meto IF para evitar errores cada vez que se abre la página
+        if (usuario != ``)
+        {
+            
+            let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idABorrar}`;
+            let borradoGasto = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            if (borradoGasto.ok) {
+                alert("gasto borrado correctamente")
+        }
+        else {alert("error al borrar")};
+    }
+    cargarGastosApi();
+    }
+}
+
 function nuevoGastoWebFormulario(event) {
 
     event.target.disabled = true; //event.target es el botón de añadir
@@ -286,6 +329,11 @@ function nuevoGastoWebFormulario(event) {
     
     let botonCancelar = formulario.querySelector(".cancelar");
     botonCancelar.addEventListener("click", cancelarAnyadirGasto);
+
+    //Manejador de eventos del botón .gasto-enviar-api
+    let botonEnviarApi = formulario.querySelector(".gasto-enviar-api");
+    botonEnviarApi.addEventListener(`click`, nuevoGastoWebFormularioApi);
+
 }
 
 function enviarAnyadirGasto(event) {
@@ -386,6 +434,7 @@ function cargarGastosWeb (){
 let CargarGastosApiBoton = document.getElementById("cargar-gastos-api");
 CargarGastosApiBoton.addEventListener(`click`, cargarGastosApi);
 
+
 //Creados gastos previamente con https://hoppscotch.io/
 //mi usuario es albertomeseguer
 
@@ -396,13 +445,77 @@ async function cargarGastosApi() {
     let gasto = await gastosApi.json();
     gesPres.cargarGastos(gasto);
     repintar();
-
 }
 
+async function nuevoGastoWebFormularioApi(event) {
+        let usuario = document.getElementById(`nombre_usuario`).value;
+        alert("estamos aquí");
+        //meto IF para evitar errores cada vez que se abre la página
+        if (usuario != ``)
+        {
+
+            let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+            //capturamos formulario rellenado
+            let formulario = event.currentTarget.parentElement;
+            let descripcion = formulario.elements.descripcion.value;
+            let valor = Number(formulario.elements.valor.value);
+            let fecha = formulario.elements.fecha.value;
+            let etiquetas = formulario.elements.etiquetas.value;
+
+            let etiquetasArray = etiquetas.split(`,`);
+
+            let nuevoGastoApi = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetasArray);
+
+            let subirGasto = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(nuevoGastoApi)
+        });
+    }
+    cargarGastosApi();
+}
+
+//PUT
+function envioEdicionHandleAPI() {
+
+    this.handleEvent = async function(event) {
+        event.preventDefault();
+        let formulario = event.target.form;
+        let descripcionFormularioGasto = formulario.elements.descripcion.value;
+        let valorFormularioGasto = Number(formulario.elements.valor.value);
+        let fechaFormularioGasto = formulario.elements.fecha.value;
+        fechaFormularioGasto = new Date(fechaFormularioGasto);
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        
+        let etiquetasArray = etiquetas.split(",");
+
+        let gastoAPI = {
+            descripcion: descripcionFormularioGasto,
+            valor: valorFormularioGasto,
+            fecha: fechaFormularioGasto,
+            etiquetas: etiquetasArray,
+        }
+
+        let user = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
+    
+        let respuesta = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(gastoAPI),
+        });
+
+        cargarGastosApi();
+    }
+}
 
 export{
-    
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
-}    
+}
