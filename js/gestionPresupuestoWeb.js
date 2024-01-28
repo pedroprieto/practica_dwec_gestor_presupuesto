@@ -342,6 +342,22 @@ function guardarGastosWeb(){
     localStorage.GestorGastosDWEC = JSON.stringify(gestionPresupuesto.listarGastos());
 }
 }
+function cargarGastosApi() {
+    let nombreUsuario = document.getElementById("nombre-usuario")
+    let cargoGasto = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+
+    if(nombreUsuario != null) {
+        fetch(cargoGasto)
+        .then(function(respuesta){
+          return respuesta.JSON();
+        }).then(function(datos){
+            gestionPresupuesto.cargarGastos(datos);
+            repintar();
+        })
+    }else {
+      gestionPresupuesto.cargarGastos([]);
+    }
+}
 
 let botonGuardarGastos = new guardarGastosWeb();
 document.getElementById("guardar-gastos").addEventListener("click", botonGuardarGastos);
@@ -361,4 +377,5 @@ export {
   filtrarGastosWeb,
   cargarGastosWeb,
   guardarGastosWeb,
+  cargarGastosApi,
 };
