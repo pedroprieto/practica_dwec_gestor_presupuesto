@@ -191,6 +191,8 @@ function EditarHandleFormulario(gasto, divGasto) {
     const submitHandler =  (event) => {
 
       event.preventDefault();
+
+      
       let descripcion = formulario.querySelector("#descripcion").value;
       let valor = formulario.querySelector("#valor").value;
       let fecha = formulario.querySelector("#fecha").value;
