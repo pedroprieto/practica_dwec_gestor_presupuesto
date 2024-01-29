@@ -207,112 +207,37 @@ function listarGastos(){
 
 }
 
-function filtrarGastos(parametro){
+function filtrarGastos(parametro) {
+    return gastos.filter(function(x) {
+        let fechaObj = new Date(x.fecha);
 
-    let resultadoFiltrado =[...gastos]
-    
-    if (parametro.fechaDesde)
-    {
-        
-       resultadoFiltrado= resultadoFiltrado.filter(function fechaDesde(x){
-            
-                let gasto = x.fecha;
-                Date.parse(gasto)
-                let fechaObj = new Date(gasto)
-                 fechaObj.toLocaleString();  
-                 let parametroPrueba =parametro.fechaDesde;
-                 Date.parse(parametroPrueba)
-                 let fechaMin = new Date(parametroPrueba)
-                 fechaMin.toLocaleString();
-                 
-                 if(fechaMin<=fechaObj)
-                 {
-                    return x;
-                    
-                 } 
-                 
+        if (parametro.fechaDesde && fechaObj < new Date(parametro.fechaDesde)) {
+            return false;
         }
-    
-        ); 
-        
-    }
-    
-    
-    if (parametro.fechaHasta)
-    {
-        
-        resultadoFiltrado=  resultadoFiltrado.filter(function fechaHasta(x){
-            
-                let gasto = x.fecha;
-                Date.parse(gasto)
-                let fechaObj = new Date(gasto)
-                 fechaObj.toLocaleString();  
-                 let parametroPrueba =parametro.fechaHasta;
-                 Date.parse(parametroPrueba)
-                 let fechaTope = new Date(parametroPrueba)
-                
-                
-                 
-                 if(fechaTope>=fechaObj)
-                 {
-                    return x;
-                    
-                 }
-      
-        }
-    
-        ); 
-    }
 
-   if(parametro.valorMinimo)
-    {
-        resultadoFiltrado=  resultadoFiltrado.filter(function fechaValorMinimo(x){
-        let gasto=x.valor;
-       
-        if (gasto>=parametro.valorMinimo)
-        {
-            return x;
-            
+        if (parametro.fechaHasta && fechaObj > new Date(parametro.fechaHasta)) {
+            return false;
         }
-        
-    })
-    
-    }
-    if(parametro.valorMaximo)
-    {
-    
-     resultadoFiltrado = resultadoFiltrado.filter(function fechaValorMaximo(x){
-        let gasto=x.valor;
-       
-        if (gasto<=parametro.valorMaximo)
-        {
-            return x;
+
+        if (parametro.valorMinimo && x.valor < parametro.valorMinimo) {
+            return false;
         }
-        
-    })
- }
-    if (parametro.descripcionContiene)
-    {
-        resultadoFiltrado = resultadoFiltrado.filter(function fechaDescripcionContiene(x){
-            if(x.descripcion.includes(parametro.descripcionContiene))
-            return x;
-        })
-    }
-    
-    if (parametro.etiquetasTiene)
-    {
-        
-        resultadoFiltrado = resultadoFiltrado.filter(function fechaEtiquetasTiene(x){
-            
-            
-            
-            let tieneEtiquetaComun = x.etiquetas.some(etiqueta => parametro.etiquetasTiene.includes(etiqueta));
-            return tieneEtiquetaComun ;
-        })
-    }
- 
-    return(resultadoFiltrado) 
- }
+
+        if (parametro.valorMaximo && x.valor > parametro.valorMaximo) {
+            return false;
+        }
+
+        if (parametro.descripcionContiene && !x.descripcion.includes(parametro.descripcionContiene)) {
+            return false;
+        }
+
+        if (parametro.etiquetasTiene && !x.etiquetas.some(etiqueta => parametro.etiquetasTiene.includes(etiqueta))) {
+            return false;
+        }
+
+        return true;
+    });
+}
  function transformarListadoEtiquetas(etiquetas){
 
     let str=etiquetas
@@ -321,7 +246,7 @@ function filtrarGastos(parametro){
     console.log(etq)
     return etq;
  }
- //.join(',')
+ 
  function CrearGastoBuscado(etiquetasTiene,fechaDesde, fechaHasta){
 
     this.fechaDesde=fechaDesde;
