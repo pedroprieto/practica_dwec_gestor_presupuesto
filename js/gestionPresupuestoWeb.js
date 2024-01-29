@@ -116,7 +116,6 @@ return document.getElementById(idElemento).innerText=valor;
     
 }
 
-
 function mostrarGastoWeb(idElemento,gasto){
 
     let fechaGasto =new Date(gasto.fecha)
@@ -217,8 +216,69 @@ function mostrarGastoWeb(idElemento,gasto){
   botonEditarFormulario.addEventListener("click", editarGastoFormulario);
 // Añadimos el botón a la estructura HTML
 divGasto.append(botonEditarFormulario);
+
+
+let enviar =document.getElementById("formulario-filtrado")
+enviar.addEventListener("submit", filtrarGastosWeb)
         return contenedor;
 }
+
+
+
+
+////////////////////////////////////////////////////////////
+
+let filtrarGastosWeb={
+    handleEvent: function(event){
+     event.preventDefault();
+
+     
+
+     let enviar = document.getElementById("formulario-filtrado")
+
+  
+     
+   
+     
+     let descripcionGastoForm = enviar.elements["formulario-filtrado-descripcion"].value;
+let valorGastoMinimo = enviar.elements["formulario-filtrado-valor-minimo"].value;
+let valorGastoMaximo = enviar.elements["formulario-filtrado-valor-maximo"].value;
+let fechaDesdeGastoForm = enviar.elements["formulario-filtrado-fecha-desde"].value;
+let fechaHastaGastoForm = enviar.elements["formulario-filtrado-fecha-hasta"].value;
+let etiquetasGastoForm = enviar.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+let valorGastoMinimoForm=parseFloat(valorGastoMinimo)
+
+     
+let valorGastoMaximoForm=parseFloat(valorGastoMaximo)
+
+     
+       let etiquetasArrForm= gesPresupuesto.transformarListadoEtiquetas(etiquetasGastoForm);
+     
+
+     let gastoPruebaForm=new gesPresupuesto.CrearGastoBuscadoFiltro(descripcionGastoForm, valorGastoMinimoForm,valorGastoMaximoForm, fechaDesdeGastoForm,fechaHastaGastoForm, etiquetasArrForm);
+
+     let gastosFiltrados =  gesPresupuesto.filtrarGastos(gastoPruebaForm);
+
+     
+     for(let i=0;i<gastosFiltrados.length;i++)
+     {
+          mostrarGastoWeb("listado-gastos-completo",gastosFiltrados[i]);
+     }
+
+     
+
+     enviar.addEventListener("submit", filtrarGastosWeb)
+
+    
+    }
+}
+
+
+
+
+
+
 
 function EditarHandleFormulario(){
 this.handleEvent= function(event){
@@ -368,6 +428,9 @@ function cerrarGastoEnviar(event){
     event.target.form.remove()
     document.getElementById("anyadirgasto-formulario").disabled=false;
 }
+
+
+
 
         let botonActualizar= document.getElementById("actualizarpresupuesto")
         botonActualizar.addEventListener("click",actualizarPresupuestoWeb);

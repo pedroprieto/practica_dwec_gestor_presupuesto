@@ -166,6 +166,7 @@ function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
     
 
 }
+
 function anyadirGasto(objetoGasto){
 objetoGasto.id=idGasto;
 idGasto++;
@@ -312,7 +313,15 @@ function filtrarGastos(parametro){
  
     return(resultadoFiltrado) 
  }
+ function transformarListadoEtiquetas(etiquetas){
 
+    let str=etiquetas
+     
+    let etq= str.match(/[^~.;:,\s]+/g)
+    console.log(etq)
+    return etq;
+ }
+ //.join(',')
  function CrearGastoBuscado(etiquetasTiene,fechaDesde, fechaHasta){
 
     this.fechaDesde=fechaDesde;
@@ -324,7 +333,20 @@ function filtrarGastos(parametro){
     }
 
  }
+ function CrearGastoBuscadoFiltro(descripcion,valormin,valormax,fechaDesde, fechaHasta,...etiquetasTiene){
 
+    this.descripcion=descripcion;
+    this.valormin=valormin;
+    this.valormax=valormax;
+    this.fechaDesde=fechaDesde;
+    this.fechaHasta=fechaHasta;
+    
+    if(etiquetasTiene!=undefined)
+    {
+        this.etiquetasTiene=etiquetasTiene;
+    }
+
+ }
 
  function agruparGastos(periodo, etiquetasTiene,  fechaDesde, fechaHasta){
 
@@ -380,5 +402,7 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas,
+    CrearGastoBuscadoFiltro
 }
