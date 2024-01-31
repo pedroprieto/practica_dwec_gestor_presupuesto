@@ -259,24 +259,20 @@ let valorGastoMaximoForm=parseFloat(valorGastoMaximo)
 
      let gastoPruebaForm=new gesPresupuesto.CrearGastoBuscadoFiltro(descripcionGastoForm, valorGastoMinimoForm,valorGastoMaximoForm, fechaDesdeGastoForm,fechaHastaGastoForm, etiquetasArrForm);
 
-     let gastosFiltrados =  gesPresupuesto.filtrarGastos({fechaDesde:gastoPruebaForm.fechaDesdeGastoForm, fechaHasta: gastoPruebaForm.fechaHastaGastoForm ,  valorMinimo:gastoPruebaForm.valorGastoMinimoForm , valorMaximo: gastoPruebaForm.valorGastoMaximoForm,descripcionContiene: gastoPruebaForm.descripcionGastoForm,
-        etiquetasTiene: gastoPruebaForm.etiquetasTiene});
+    
+
+     let gastosFiltrados =  gesPresupuesto.filtrarGastos(gastoPruebaForm);
 
      
-     let gastosListados=gesPresupuesto.listarGastos()
-
-
-     console.log("Antes filtrado : "+gastosFiltrados.length)
-     console.log("Antes listado : "+gastosListados.length)
-
+ 
      document.getElementById("listado-gastos-completo").innerHTML = "";
 
-     console.log("Despues filtrado:"+gastosFiltrados.length)
-     console.log("Despues listado:"+gastosListados.length)
+     
      
      for(let i=0;i<gastosFiltrados.length;i++)
      {
           mostrarGastoWeb("listado-gastos-completo", gastosFiltrados[i]);
+          
      }
 
      

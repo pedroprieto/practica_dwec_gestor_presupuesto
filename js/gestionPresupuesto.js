@@ -243,7 +243,7 @@ function filtrarGastos(parametro) {
     let str=etiquetas
      
     let etq= str.match(/[^~.;:,\s]+/g)
-    console.log(etq)
+   
     return etq;
  }
  
@@ -258,11 +258,11 @@ function filtrarGastos(parametro) {
     }
 
  }
- function CrearGastoBuscadoFiltro(descripcion,valormin,valormax,fechaDesde, fechaHasta,...etiquetasTiene){
+ function CrearGastoBuscadoFiltro(descripcionContiene,valorMinimo,valorMaximo,fechaDesde, fechaHasta,etiquetasTiene){
 
-    this.descripcion=descripcion;
-    this.valormin=valormin;
-    this.valormax=valormax;
+    this.descripcionContiene=descripcionContiene;
+    this.valorMinimo=valorMinimo;
+    this.valorMaximo=valorMaximo;
     this.fechaDesde=fechaDesde;
     this.fechaHasta=fechaHasta;
     
