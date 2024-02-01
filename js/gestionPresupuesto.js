@@ -31,6 +31,7 @@ function mostrarPresupuesto() {
     
 }
 
+
 function CrearGasto( descripcion, valor, fecha,  ...etiquetas) {
     this.descripcion=descripcion;
     this.valor=valor;
@@ -354,5 +355,6 @@ export   {
     agruparGastos,
     transformarListadoEtiquetas,
     CrearGastoBuscadoFiltro,
-    cargarGastos
+    cargarGastos,
+    
 }

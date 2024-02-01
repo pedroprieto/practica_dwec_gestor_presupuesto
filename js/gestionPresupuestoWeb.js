@@ -358,12 +358,55 @@ function guardarGastosWeb(){
    } 
 
 let btnCargar=document.getElementById("cargar-gastos")
-btnCargar.addEventListener("click", cargarGastosWeb)
+let manejadorCargar = new cargarGastosWeb()
+btnCargar.addEventListener("click", manejadorCargar)
+
 
 function cargarGastosWeb(){
     this.handleEvent = function(event){
 
+        if(localStorage.GestorGastosDWEC!=null)
+        {
+            
+            console.log("Me da 173 cuando debe dar 2" +localStorage.GestorGastosDWEC.length)
+           console.log("Salen los dos objetos, aunque cuenta los caracteres"+localStorage.getItem("GestorGastosDWEC"))
+           
+           let pruebaCargarGastos =gesPresupuesto.cargarGastos(localStorage.GestorGastosDWEC)
+         console.log("pruebaCargarGastos undefined "+pruebaCargarGastos)
 
+
+           
+
+          //Accediendo a las claves del objeto para iterarlo
+           let keys = Object.keys(localStorage);
+           
+           for(let key of keys) {
+            //pinta ambos objetos
+            console.log(`${key}: ${localStorage.getItem(key)}`);
+            
+           let pruebaParse=JSON.parse(localStorage.GestorGastosDWEC);
+           let usuario2BienRecuperado = new gesPresupuesto.CrearGasto();
+           //[object,object]
+           console.log("ANTES 2:"+usuario2BienRecuperado)
+           console.log("ANTES pruebaParse:"+pruebaParse)
+
+           Object.assign(usuario2BienRecuperado, pruebaParse);
+
+           console.log("DESPUES 2:"+usuario2BienRecuperado)
+           console.log("DESPUES pruebaParse:"+pruebaParse)
+           
+           }
+           
+            
+        }
+        else{
+            let cargarGastos=[]
+            gesPresupuesto.cargarGastos(cargarGastos)
+        }
+        
+       
+
+        repintar()
     }
 }
 
