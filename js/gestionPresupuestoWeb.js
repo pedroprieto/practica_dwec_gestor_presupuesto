@@ -226,21 +226,13 @@ enviar.addEventListener("submit", filtrarGastosWeb)
 
 
 
-////////////////////////////////////////////////////////////
+
 
 let filtrarGastosWeb={
     handleEvent: function(event){
      event.preventDefault();
-
-     
-
      let enviar = document.getElementById("formulario-filtrado");
 
-
-  
-     
-   
-     
      let descripcionGastoForm = enviar.elements["formulario-filtrado-descripcion"].value;
 let valorGastoMinimo = enviar.elements["formulario-filtrado-valor-minimo"].value;
 let valorGastoMaximo = enviar.elements["formulario-filtrado-valor-maximo"].value;
@@ -349,8 +341,32 @@ function cerrarGastoEnviarForm(){
     event.target.form.remove()
     this.botonEditarFormulario.disabled=false;
 }
-   
 }
+
+let btnGuardar=document.getElementById("guardar-gastos")
+let manejadorGuardar = new guardarGastosWeb()
+btnGuardar.addEventListener("click",manejadorGuardar)
+
+
+
+function guardarGastosWeb(){
+    this.handleEvent = function(event){
+
+        localStorage.GestorGastosDWEC = JSON.stringify(gesPresupuesto.listarGastos())
+   
+    }
+   } 
+
+let btnCargar=document.getElementById("cargar-gastos")
+btnCargar.addEventListener("click", cargarGastosWeb)
+
+function cargarGastosWeb(){
+    this.handleEvent = function(event){
+
+
+    }
+}
+
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
     let contenedor = document.getElementById(idElemento);
