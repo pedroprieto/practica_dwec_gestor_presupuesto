@@ -216,6 +216,17 @@ return gastos.filter((gasto) =>{
     });
 }
 
+function transformarListadoEtiquetas (textoEtiquetas){
+  //la cadena tendrá no tendra en cuetna todos estos carácteres
+  let regex = /[^~;.\s:]+/g ;
+    // Se divide el texto en un array utilizando la expresión regular
+  let etiquetas = textoEtiquetas.match(regex);
+
+    // Se eliminan los posibles espacios vacíos del array
+    return etiquetas;
+
+}
+
 function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) {
   // Filtrar gastos según los parámetros proporcionados
   let gastosFiltrados = filtrarGastos({
@@ -267,5 +278,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
