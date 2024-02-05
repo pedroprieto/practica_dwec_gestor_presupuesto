@@ -405,6 +405,60 @@ function cancelarNuevoGasto(event) {
   
 }
 
+function filtrarGastosWeb () {
+this.handleEvent = function(e){
+    e.preventDefault();
+   // document.getElementById("formulario-filtrado");
+
+    let filtradoFormulario = e.currentTarget;
+    //recojo los datos
+    let descripcionContiene = filtradoFormulario.elements['formulario-filtrado-descripcion'].value;
+    let valorMinimo = filtradoFormulario.elements['formulario-filtrado-valor-minimo'].value;
+    let valorMaximo = filtradoFormulario.elements['formulario-filtrado-valor-maximo'].value;
+    let fechaDesde = filtradoFormulario.elements['formulario-filtrado-fecha-desde'].value;
+    let fechaHasta = filtradoFormulario.elements['formulario-filtrado-fecha-hasta'].value;
+    let etiquetasTiene = filtradoFormulario.elements['formulario-filtrado-etiquetas-tiene'].value;
+    valorMinimo = parseFloat(valorMinimo);
+    valorMaximo = parseFloat(valorMaximo);
+    //Transformamos las etiquetas
+    let etiquetasValidas =[];
+    if (etiquetasTiene.trim() !== null){
+        etiquetasValidas = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
+    }
+    //Crear el objeto necesario para llamar a la función filtrarGastos del paquete gestionPresupuesto.js
+    //Llamar a la función filtrarGastos
+    let filtroGastos = gestionPresupuesto.filtrarGastos({
+     descripcionContiene,
+     valorMinimo,
+     valorMaximo,
+     fechaDesde,
+     fechaHasta,
+     etiquetasTiene : etiquetasValidas
+
+    }
+    
+    )
+    console.log('filtroGastos:', filtroGastos);
+    let listaFiltro = document.getElementById('listado-gastos-completo');
+    //dejamos vacios
+    listaFiltro.innerHTML = "";
+   // Actualizar la lista de gastos filtrados en la capa listado-gastos-completo mediante la función mostrarGastoWeb
+    for (let gasto of filtroGastos) {
+        mostrarGastoWeb('listado-gastos-completo', gasto);
+    }
+
+
+}
+
+
+    
+
+}
+let botonFiltradoFormulGasto = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", botonFiltradoFormulGasto);
+
+
+
 
 
 

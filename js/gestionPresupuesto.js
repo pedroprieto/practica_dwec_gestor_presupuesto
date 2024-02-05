@@ -217,8 +217,8 @@ return gastos.filter((gasto) =>{
 }
 
 function transformarListadoEtiquetas (textoEtiquetas){
-  //la cadena tendrá no tendra en cuetna todos estos carácteres
-  let regex = /[^~;.\s:]+/g ;
+  //la cadena tendrá no tendra en cuetna todos estos carácteres, además hemos incluido la coma
+  let regex = /[^~;.\s:,]+/gi ;
     // Se divide el texto en un array utilizando la expresión regular
   let etiquetas = textoEtiquetas.match(regex);
 
