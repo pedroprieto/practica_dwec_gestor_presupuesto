@@ -454,6 +454,7 @@ this.handleEvent = function(e){
     
 
 }
+
 let botonFiltradoFormulGasto = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", botonFiltradoFormulGasto);
 
