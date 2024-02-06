@@ -462,15 +462,38 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click", nue
 function guardarGastosWeb () {
     this.handleEvent = function ()
     {
-        // Convertir el listado de gastos a formato JSON
-        let gastosJSON = JSON.stringify(gestionPresupuesto.listarGastos());
-        // Guardar el listado de gastos en localStorage
-        localStorage.setItem('GestorGastosDWEC', gastosJSON);
+        // Convertir el listado de gastos a formato JSON Y guadar
+        localStorage.setItem('GestorGastosDWEC', JSON.stringify(gestionPresupuesto.listarGastos()));
+   
 
     }
-
 }
+//Esta función se utilizará como manejadora de eventos del evento click del botón guardar-gastos.
+let botonGuardarGastoWeb = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener("click",botonGuardarGastoWeb);
 
+
+function cargarGastosWeb(){
+    this.handleEvent = function()
+    {
+        //tenemos que parsear a strings con Json
+        let cargaGastosWeb = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+         // Si no hay datos en el localStorage, retornar un array vacío
+         if (!cargaGastosWeb) {
+            // si es vacio array vacio
+            gestionPresupuesto.cargarGastos([]);
+        }
+        else{
+        // Convertir el JSON de gastos a un array de JavaScript
+        gestionPresupuesto.cargarGastos(cargaGastosWeb);
+        }
+        repintar();
+    }
+}
+let botonCargarGastos = new cargarGastosWeb();
+
+// Agregar manejador de eventos para el evento click
+document.getElementById("cargar-gastos").addEventListener("click",botonCargarGastos);
 
 
 export   {
