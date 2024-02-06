@@ -448,10 +448,7 @@ this.handleEvent = function(e){
     }
 
 
-}
-
-
-    
+}    
 
 }
 
@@ -459,17 +456,20 @@ let botonFiltradoFormulGasto = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", botonFiltradoFormulGasto);
 
 
-
-
-
-
-
-
-
 // Asociar la función nuevoGastoWebFormulario al evento click del botón anyadirgasto-formulario
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
+function guardarGastosWeb () {
+    this.handleEvent = function ()
+    {
+        // Convertir el listado de gastos a formato JSON
+        let gastosJSON = JSON.stringify(gestionPresupuesto.listarGastos());
+        // Guardar el listado de gastos en localStorage
+        localStorage.setItem('GestorGastosDWEC', gastosJSON);
 
+    }
+
+}
 
 
 
