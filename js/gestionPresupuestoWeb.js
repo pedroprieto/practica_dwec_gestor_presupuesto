@@ -354,6 +354,19 @@ guardarGasto.addEventListener ("click",guardarGastosWeb);
 let cargarTodosGastos = document.getElementById ("cargar-gastos");
 cargarTodosGastos.addEventListener ("click",cargarGastosWeb);
 
+//Asocio el click en el botón '#cargar-gastos-api' a la función manejadora 'cargarGastosApi'
+let cargarTodosGastosApi = document.getElementById ("cargar-gastos-api");
+cargarTodosGastosApi.addEventListener ("click",CargarGastosApi);
+
+//Asocio el botón 'Cancelar'a la función manejadora 'CancelarNuevoGastoFormulario'
+/*let botonCancelar = formulario.querySelector (".cancelar");
+let accionCancelar = new CancelarNuevoGastoFormulario();*/
+//Asigno como propiedad el evento que abre el formulario asociado al boton 'anyadirgasto-formulario'
+//me será útil para poder reactivar dicho botón
+/*accionCancelar.botonActivar = event;
+botonCancelar.addEventListener ("click", accionCancelar);*/
+
+
 //Manejadora de eventos para editar un gasto
 function EditarHandle () {
     this.handleEvent = function (event) {
@@ -461,9 +474,30 @@ function CancelarNuevoGastoFormulario () {
     }
 }
 
+async function CargarGastosApi () {
+    
+    let nombreUsuario = document.getElementById ("nombre_usuario");
+    let url1 = new URL ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.value);
+    
+    let respuesta = await fetch (url1); 
+    //Si es ok la promesa de respuesta entonces guardo en datos la promesa de respuesta.json()
+    //si no es ok, muestro mensaje de error
+    if (respuesta.ok) {
+        console.log ("Dentro");
+        let datos = await respuesta.json();
+        console.log(datos);
+        gesPresupuesto.cargarGastos(datos);
+        repintar();
+    }
+    else {
+        console.log ("Error al obtener la respuesta");
+    }
+    repintar();
+
+}
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
+    mostrarGastosAgrupadosWeb
 }
