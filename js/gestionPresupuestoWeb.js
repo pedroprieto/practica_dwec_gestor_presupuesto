@@ -90,7 +90,59 @@ repintar();
 
 }
 }
+function cargarGastosApi() {
+    this.handleEvent = function (event) {
+        let usuario = document.getElementById("nombre_usuario").value;
+        let urlCargar = new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
+        urlCargar.searchParams.append("usuario", usuario)
+        fetch(urlCargar , {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json', // Ajusta los encabezados según los requisitos de tu API
+                // Puedes incluir otros encabezados si es necesario (por ejemplo, tokens de autorización)
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error al cargar los gastos. Código de estado: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Aquí puedes manejar la respuesta de la API
+            console.log(data);
+            // Realiza las operaciones necesarias con los datos obtenidos
+        })
+        .catch(error => {
+            
+            console.error('Error al cargar los gastos:', error);
+        });
 
+        gesPresupuesto.cargarGastos();
+        repintar();
+    }
+}
+let gastoBorrarApi={
+    handleEvent:function(event){
+        let usuario = document.getElementById("nombre_usuario").value
+        let urlBorrar= new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
+        urlBorrar.searchParams.append("usuario", usuario)
+        urlBorrar.searchParams.append("gasto", this.gasto.id)
+        let borrar=   fetch(urlBorrar, {
+            method:`DELETE`
+        })
+        .then(function(respuesta){
+            if(respuesta.ok)
+            {
+                console.log("Borrado con exito")
+            }
+        }).catch(function(error){
+            console.log(`Error ${error.message}`)
+        })
+        
+    }
+
+}
 
 let BorrarHandle={
     handleEvent: function(evento){
@@ -204,6 +256,17 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrar.addEventListener("click", borrarGasto);
  // Añadimos el botón a la estructura HTML
   divGasto.append(botonBorrar);
+
+  let botonBorrarApi = document.createElement("button");
+  botonBorrarApi.setAttribute("type", "button");
+  botonBorrarApi.className="gasto-borrar-api";
+  botonBorrarApi.textContent="Borrar (API)";
+  
+  let borrarGastoApi =Object.create(gastoBorrarApi);
+  borrarGastoApi.gasto= gasto;
+ botonBorrarApi.addEventListener("click", borrarGastoApi);
+
+ divGasto.append(botonBorrarApi);
 
   let botonEditarFormulario = document.createElement("button");
   botonEditarFormulario.setAttribute("type", "button");
@@ -369,7 +432,7 @@ function cargarGastosWeb(){
         {
             let gastosArray =  JSON.parse(gastosAlmacenamiento) ;
 
-            // Llama a cargarGastos con el array obtenido
+            
          gesPresupuesto.cargarGastos(gastosArray);
            
            
@@ -385,6 +448,8 @@ function cargarGastosWeb(){
         repintar()
     }
 }
+
+
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
@@ -482,6 +547,9 @@ function cerrarGastoEnviar(event){
 
        let botonAnyadirGastoFormulario= document.getElementById("anyadirgasto-formulario")
        botonAnyadirGastoFormulario.addEventListener("click", nuevoGastoWebFormulario)
+
+       let botonCargarGastoApi= document.getElementById("cargar-gastos-api")
+       botonCargarGastoApi.addEventListener("click",cargarGastosApi )
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
