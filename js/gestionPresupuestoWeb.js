@@ -218,8 +218,30 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   manejadorBorrar.gasto = gasto;
   boton.addEventListener("click", manejadorBorrar);
 
+
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   targetElement.append(boton);
+
+  boton = document.createElement("button");
+  boton.setAttribute("type", "button");
+  boton.textContent = "Borrar (API)";
+  boton.classList.add("gasto-borrar-api");
+
+  targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
+  targetElement.append(boton);
+
+  let id;
+
+  if (gasto.id)
+  {
+    id = gasto.id;
+  }
+  else{
+    id = gasto.gastoId
+  }
+  console.log(id);
+
+  boton.addEventListener("click", new BorrarGastoApi(id));
 
   boton = document.createElement("button");
   boton.setAttribute("type", "button");
@@ -391,6 +413,74 @@ target = document.getElementById("cargar-gastos"); //Misma filosofía de siempre
 
 target.addEventListener("click", cargarGastosWeb);
 
+
+function crearUrl(){
+  let recuadro = document.getElementById("nombre-usuario");
+  let nombre = recuadro.value.replace(/\s/,"").toLowerCase();
+  let url = new URL(` https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre}`);
+
+  return url;
+}
+
+async function cargarGastosApi(){
+
+  let url = crearUrl();
+
+  let respuesta = await fetch(url);
+
+  let objetoGastosApi = await respuesta.json();
+
+  console.log(objetoGastosApi);
+
+
+  gestionPresu.cargarGastos(objetoGastosApi);
+
+  repintar();
+}
+
+target = document.getElementById("cargar-gastos-api");
+
+target.addEventListener("click", cargarGastosApi)
+
+
+async function programaBorrarGastoApi(url){
+  let respuesta = await fetch(
+    url,
+    {
+      method: "DELETE"
+    });
+
+  if (respuesta.ok){
+    console.log("Eliminado");
+    cargarGastosApi();
+  }
+}
+
+
+function BorrarGastoApi(idGasto){
+  this.handleEvent = function(e){
+    let url = crearUrl() + `/${idGasto}`
+
+    console.log(url);
+
+    programaBorrarGastoApi(url);
+
+  }
+}
+
+
+//NOS QUEDAMOS AQUÍ, para enviar el gasto a la API, página 7 del apartado AJAX.
+function programaEnviarGastoApi(){
+
+}
+function EnviarGastoApi(){
+  let url = crearUrl();
+
+  console.log(url);
+  
+  programaEnviarGastoApi(url);
+
+}
 export {
   mostrarDatoEnId,
   mostrarGastoWeb,
