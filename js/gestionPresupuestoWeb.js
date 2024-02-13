@@ -2,6 +2,8 @@
 import * as gestionPresu from "./gestionPresupuesto.js";
 
 
+let id;
+
 function repintar(){  //volvemos a rellenar la página con todos los datos nuevos
   mostrarDatoEnId("presupuesto", gestionPresu.mostrarPresupuesto());
   mostrarDatoEnId("gastos-totales", gestionPresu.calcularTotalGastos());
@@ -56,12 +58,25 @@ function nuevoGastoWebFormulario(){ //Funcion principal
   
   var formulario = document.body.querySelector("form");
 
-  formulario.addEventListener("submit", function(e) {
+  formulario.addEventListener("submit", new ManejadorEnviarGasto)  
+
+  let botonCancelar = formulario.querySelector("button.cancelar");
+
+  botonCancelar.addEventListener("click", new ManejadorCancelarFormulario(botonAnyadir));
+
+  let botonEnviarApi = document.querySelector(".gasto-enviar-api");
+
+  botonEnviarApi.addEventListener("click", new EnviarGastoApi);
+
+}
+
+
+function ManejadorEnviarGasto(){
+  this.handleEvent = function(e){
     e.preventDefault();
 
 
     let gasto = e.currentTarget;
-
 
     let descripcion = gasto.elements.descripcion.value;
     let valor = parseFloat(gasto.elements.valor.value);
@@ -75,20 +90,9 @@ function nuevoGastoWebFormulario(){ //Funcion principal
     let botonAnyadir = document.getElementById("anyadirgasto-formulario");
     botonAnyadir.removeAttribute("disabled");
     repintar();
-
-    
-
-    document.getElementById("controlesprincipales").removeChild(formulario);
-
-  });
-  
-
-  let botonCancelar = formulario.querySelector("button.cancelar");
-
-  botonCancelar.addEventListener("click", new ManejadorCancelarFormulario(botonAnyadir))
+  }
 
 }
-
 
 
 function ManejadorCancelarFormulario(boton){  //Funcioon manejadora diseñada para el boton de cancelar, encargado de volver a activar todos los botones que le pasemos.
@@ -230,7 +234,6 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   targetElement = document.querySelector(`#${idElemento} .gasto:last-child`);
   targetElement.append(boton);
 
-  let id;
 
   if (gasto.id)
   {
@@ -248,7 +251,7 @@ function mostrarGastoWeb(idElemento, gasto){ //Función en la que tambien apunta
   boton.textContent = "Editar (formulario)";
   boton.classList.add("gasto-editar-formulario");
 
-  let manejadorEditarFormulario = new EditarHandleFormulario();
+  let manejadorEditarFormulario = new EditarHandleFormulario(id);
 
   manejadorEditarFormulario.gasto = gasto;
   
@@ -271,7 +274,7 @@ function formatoFecha(fecha){
   return fechaFormateada;
 }
 
-function EditarHandleFormulario(){ //Manejador del boton editar, con el cual a su vez nos encargamos de añadir los eventos correespondientes al boton cancelar y al submit del formulario generado
+function EditarHandleFormulario(id){ //Manejador del boton editar, con el cual a su vez nos encargamos de añadir los eventos correespondientes al boton cancelar y al submit del formulario generado
   this.handleEvent = function(e){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let target = e.target;
@@ -296,6 +299,8 @@ function EditarHandleFormulario(){ //Manejador del boton editar, con el cual a s
     let botonesEditar = document.querySelectorAll(".gasto-editar-formulario");
     let manejadorCancelar = new ManejadorCancelarFormulario(botonesEditar);
     boton.addEventListener("click", manejadorCancelar);
+    let botonEditarApi = document.querySelector(".gasto-enviar-api");
+    botonEditarApi.addEventListener("click", new SubmitHandleFormularioApi(id))
   }
 }
 
@@ -312,6 +317,53 @@ function SubmitHandleFormulario(){ //Manejador del boton submit generado a la ho
 
 }
 
+async function programaEditarFormularioApi(id){
+  
+  let url = crearUrl() + `/${id}`;
+
+  let formulario = document.getElementById("formulario-editar");
+
+  let objetoDatos = {};
+
+  objetoDatos.descripcion = formulario.elements.descripcion.value;
+  objetoDatos.valor = parseFloat(formulario.elements.valor.value);
+  objetoDatos.fecha = formulario.elements.fecha.value;
+  objetoDatos.etiquetas = formulario.elements.etiquetas.value.split(",");
+
+  console.log(url);
+  let respuesta = await fetch(url,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+
+      body: JSON.stringify(objetoDatos)
+
+    });
+
+  if(respuesta.ok){
+    console.log("Datos actualizados");
+    cargarGastosApi(crearUrl());
+    let botones = document.querySelectorAll(".gasto-editar-formulario");
+
+    for(let boton of botones){
+      boton.disabled = false;
+    }
+  }
+  else{
+    console.log("Error de red");
+  }
+
+}
+
+function SubmitHandleFormularioApi(id){
+  this.handleEvent = function(e) {
+    e.preventDefault();
+
+    programaEditarFormularioApi(id);
+  }
+}
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 
@@ -452,7 +504,10 @@ async function programaBorrarGastoApi(url){
 
   if (respuesta.ok){
     console.log("Eliminado");
-    cargarGastosApi();
+    cargarGastosApi(crearUrl());
+  }
+  else{
+    console.log("Fallo de red.")
   }
 }
 
@@ -470,17 +525,53 @@ function BorrarGastoApi(idGasto){
 
 
 //NOS QUEDAMOS AQUÍ, para enviar el gasto a la API, página 7 del apartado AJAX.
-function programaEnviarGastoApi(){
+async function programaEnviarGastoApi(url){
+
+  let formulario = document.querySelector("form");
+
+  console.log(formulario);
+
+  let objetoDatos = {};
+
+  objetoDatos.descripcion = formulario.elements.descripcion.value;
+  objetoDatos.valor = parseFloat(formulario.elements.valor.value);
+  objetoDatos.fecha = formulario.elements.fecha.value;
+  objetoDatos.etiquetas = formulario.elements.etiquetas.value.split(",");
+
+  let respuesta = await fetch(
+    url,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json;charset=utf-8"
+      },
+      body: JSON.stringify(objetoDatos)
+
+    });
+
+  if(respuesta.ok){
+    console.log("Peticion POST realizada con éxito");
+    cargarGastosApi(url);
+
+  }
 
 }
 function EnviarGastoApi(){
-  let url = crearUrl();
+  this.handleEvent = function(e){
+    e.preventDefault();
+    
+    let url = crearUrl();
 
-  console.log(url);
+    console.log(url);
   
-  programaEnviarGastoApi(url);
+    programaEnviarGastoApi(url);
 
+    let boton = document.getElementById("anyadirgasto-formulario");
+    boton.disabled = false;
+
+  }
 }
+
 export {
   mostrarDatoEnId,
   mostrarGastoWeb,
