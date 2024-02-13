@@ -90,40 +90,45 @@ repintar();
 
 }
 }
-function cargarGastosApi() {
-    this.handleEvent = function (event) {
-        let usuario = document.getElementById("nombre_usuario").value;
-        let urlCargar = new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
-        urlCargar.searchParams.append("usuario", usuario)
-        fetch(urlCargar , {
-            method: 'GET', 
-            headers: {
-                'Content-Type': 'application/json', // Ajusta los encabezados según los requisitos de tu API
-                // Puedes incluir otros encabezados si es necesario (por ejemplo, tokens de autorización)
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error al cargar los gastos. Código de estado: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Aquí puedes manejar la respuesta de la API
-            console.log(data);
-            // Realiza las operaciones necesarias con los datos obtenidos
-        })
-        .catch(error => {
-            
-            console.error('Error al cargar los gastos:', error);
-        });
 
-        gesPresupuesto.cargarGastos();
-        repintar();
-    }
-}
+async function cargarGastosApi(event) {
+    
+        event.preventDefault();
+        
+            
+               
+                let usuario = document.getElementById("nombre_usuario").value;
+                console.log("Usuario: "+ usuario)
+                
+                let urlObtenerApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/?usuario=${usuario}`;
+               
+                
+                console.log("URL: "+ urlObtenerApi,
+                )
+                let respuesta = await fetch(urlObtenerApi,{
+                    method:`GET`,
+                    headers: { "Content-Type": "application/json;charset=utf-8" },
+                });
+        
+                if (respuesta.ok) {
+                    
+                    let listaGastosApi = await respuesta.json();
+
+                    gesPresupuesto.cargarGastos(listaGastosApi);
+
+                    repintar();
+                } else {
+                    console.error("Error al obtener la lista de gastos desde la API:", respuesta.status, respuesta.statusText);
+                }
+            
+        }
+        
+       
+    
+
 let gastoBorrarApi={
     handleEvent:function(event){
+        event.preventDefault();
         let usuario = document.getElementById("nombre_usuario").value
         let urlBorrar= new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
         urlBorrar.searchParams.append("usuario", usuario)
@@ -140,6 +145,7 @@ let gastoBorrarApi={
             console.log(`Error ${error.message}`)
         })
         
+        cargarGastosApi();
     }
 
 }
@@ -507,8 +513,50 @@ function nuevoGastoWebFormulario(event){
     let botonCancelar = formulario.querySelector(".cancelar");
     botonCancelar.addEventListener("click", cerrarGastoEnviar);
 
+    let botonEnviarApi= formulario.querySelector(".gasto-enviar-api")
+    botonEnviarApi.addEventListener("click", enviarGastoApi)
     
 }
+
+async function  enviarGastoApi(event){
+    
+        event.preventDefault();
+console.log("hola")
+        let descripcionGastoForm =event.target.elements.descripcion.value
+        let valorGasto=event.target.elements.valor.value
+        let valorGastoForm=parseFloat(valorGasto)
+        let fechaGastoForm=event.target.elements.fecha.value
+       
+        let etiquetasGastoForm= event.target.elements.etiquetas.value
+    
+        let etiquetasArrForm= etiquetasGastoForm.split(',');
+        let gastoPruebaFormApi = {
+            descripcion: descripcionGastoForm,
+            valor: valorGastoForm,
+            fecha: fechaGastoForm,
+            etiquetas: etiquetasArrForm
+        };
+
+        let usuario = document.getElementById("nombre_usuario").value
+        console.log(usuario)
+        let urlEnviarApi = new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
+        urlEnviarApi.searchParams.append("usuario", usuario)
+
+        let respuesta = await fetch(urlEnviarApi, {
+            method:`POST`,
+            headers:{"Content-Type:": "aplication/json;charset=utf-8"},
+            body: JSON.stringify(gastoPruebaFormApi)     
+        });
+        if (respuesta.ok)
+        {
+            console.log ("Petición POST realizada con exito")
+        } else {
+                console.error("Error al realizar la petición POST:", respuesta.status, respuesta.statusText);
+        }
+
+        cargarGastosApi()
+    }
+
 
 function anyadirGastoEnviar(event){
    
