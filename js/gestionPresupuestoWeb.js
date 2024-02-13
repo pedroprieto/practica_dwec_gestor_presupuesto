@@ -69,12 +69,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.classList.add ("gasto-borrar");
     botonBorrar.innerText = "Borrar";
 
+    let botonBorrarAPI = document.createElement ("button");
+    botonBorrarAPI.classList.add ("gasto-borrar-api");
+    botonBorrarAPI.innerText = "Borrar (API)";
+
     let botonEditarForm = document.createElement ("button");
     botonEditarForm.classList.add ("gasto-editar-formulario");
     botonEditarForm.innerText = "Editar (formulario)";
 
     divGasto.append (botonEditar);
     divGasto.append (botonBorrar);
+    divGasto.append (botonBorrarAPI);
     divGasto.append (botonEditarForm);
 
     //Genero nuevo objeto EditarHandle
@@ -478,14 +483,13 @@ async function CargarGastosApi () {
     
     let nombreUsuario = document.getElementById ("nombre_usuario");
     let url1 = new URL ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.value);
+    //let url1 = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.value;
     
     let respuesta = await fetch (url1); 
-    //Si es ok la promesa de respuesta entonces guardo en datos la promesa de respuesta.json()
+    //Si es ok la promesa de respuesta entonces guardo en datos la promesa de respuesta.json() en datos y los cargo en la web
     //si no es ok, muestro mensaje de error
     if (respuesta.ok) {
-        console.log ("Dentro");
         let datos = await respuesta.json();
-        console.log(datos);
         gesPresupuesto.cargarGastos(datos);
         repintar();
     }
