@@ -89,12 +89,15 @@ function mostrarGastoWeb (idElemento, gasto){
     // Crear un nuevo objeto a partir de la función constructora EditarHandle y BorrarHandle.
     let editarHandle = new EditarHandle(gasto);
     let borrarHandle = new BorrarHandle(gasto);
+    let editarFormHandle = new EditarHandleformulario(gasto);
     // Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
     editarHandle.gasto = gasto;
     borrarHandle.gasto = gasto;
+    editarFormHandle.gasto = gasto;
     // Añadir el objeto recién creado como objeto manejador del evento click al botón creados.
     btnEditar.addEventListener("click", editarHandle);
     btnBorrar.addEventListener("click", borrarHandle);
+    btnEditarForm.addEventListener("click", editarFormHandle);
   }
 }
 //
@@ -271,28 +274,15 @@ function nuevoGastoWebFormulario (gasto){
   // Desactivar (añadir atributo disabled) el botón anyadirgasto-formulario.
   btnanyadirgastoform.setAttribute('disabled', 'true');
 
-  
-
-
-
-    // Crear manejador de eventos para los botones:
+    // Crear manejador de eventos para el botón cancelar:
     //
-    // Crear un nuevo objeto a partir de la función constructora EditarHandle y BorrarHandle.
+    // Crear un nuevo objeto a partir de la función constructora.
     let cancelarForm = new CancelarFormulario(gasto);
-    // Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb).
+    // Establecer la propiedad gasto del objeto creado al objeto gasto.
     cancelarForm.gasto = gasto;
-    // Añadir el objeto recién creado como objeto manejador del evento click al botón creados.
+    // Añade el objeto recién creado como objeto manejador del evento click al botón.
     let btnCancelar = formulario.querySelector("button.cancelar");
-    //btnCancelar.addEventListener('click', cancelarFormulario);
     btnCancelar.addEventListener("click", cancelarForm);
-
-
-
-
-
-
-
-
 
 ///////////////////////////////////////// formulario.addEventListener("submit", enviarForm);
 //////////////////////////////////////// event.target.disable = true;
@@ -345,24 +335,20 @@ function enviarHandle(){
   crear un objeto basado en ese constructor y añadir como propiedades adicionales de dicho objeto: */
 function CancelarFormulario(){
   this.handleEvent = function(cancelar){
-  // La variable formulario, para que al pulsar en cancelar se elimine el formulario.
-  //var formulario = plantillaFormulario.querySelector("form");
-  //formulario.remove();
+    // La variable formulario, para que al pulsar en cancelar se elimine el formulario.
+    //var formulario = plantillaFormulario.querySelector("form");
+    //formulario.remove();
     cancelar.target.form.remove();
-  // La referencia al botón anyadirgasto-formulario, para que al pulsar en cancelar se vuelva
-  // a activar dicho botón (eliminar atributo disabled). Recuerda que estamos en su función
-  // manejadora de eventos, por lo que dicho botón es el que ha provocado dicho evento y por
-  // tanto está disponible en la propiedad currentTarget del evento.
-  //cancelar.target.removeAttribute('disabled');
+    // La referencia al botón anyadirgasto-formulario, para que al pulsar en cancelar se vuelva
+    // a activar dicho botón (eliminar atributo disabled). Recuerda que estamos en su función
+    // manejadora de eventos, por lo que dicho botón es el que ha provocado dicho evento y por
+    // tanto está disponible en la propiedad currentTarget del evento.
+    //////////////////////////cancelar.target.removeAttribute('disabled');
     let btnanyadirgastoform = document.getElementById("anyadirgasto-formulario");
     btnanyadirgastoform.removeAttribute('disabled');
     ///////////////////////document.getElementById("anyadirgasto-formulario").disable = false;
   }
-}      
-// 
-
-
-
+}
 //
 /* Función EditarHandleFormulario
   Esta función se utilizará para crear el objeto manejador de eventos para editar un gasto a través
@@ -370,14 +356,61 @@ function CancelarFormulario(){
   button.gasto-editar-formulario (creado en el punto anterior).
   La función EditarHandleFormulario será una función constructora que definirá exclusivamente un
   método llamado handleEvent*/
-function EditarHandleFormulario(gasto){
+function EditarHandleformulario(gasto){
   this.gasto = gasto;
-  this.handleEvent = function(){
+  this.handleEvent = function(enviar){
+    alert('funciona');
+    // Esta función (handleEvent) realizará las mismas tareas que nuevoGastoWebFormulario,
+    // con las siguientes diferencias:
+    //
+    // A la hora de crear el formulario, deberá actualizar los campos del formulario con la 
+    // información del gasto que se está editando. El formulario debe quedar con los campos rellenos
+    // al abrirse. Recuerda que esta función tendrá acceso a los datos del gasto que se esté editando
+    // en this.gasto.
+    //
+    // Crear una copia del formulario web definido en la plantilla HTML.
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    // Acceder al elemento <form> dentro de ese fragmento de documento.
+    var formulario = plantillaFormulario.querySelector("form");
+    // Inserta el formulario.
+    let controlesprincipales  = document.getElementById('controlesprincipales');
+    controlesprincipales.append(plantillaFormulario);
+    // Rellena el formulario con los valores del gasto actual.
+    formulario.elements.descripcion.value = this.gasto.descripcion;
+    formulario.elements.valor.value = this.gasto.valor;
+    formulario.elements.fecha.value = this.gasto.fecha;
+    formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
+    /*this.gasto.actualizarDescripcion(descripcion);
+    this.gasto.actualizarValor(val);
+    this.gasto.actualizarFecha(new Date(fecha));
+    this.gasto.anyadirEtiquetas(etiquetas.split(','));*/
+
+
+    // Enviar los datos.
+    let desc = enviar.target.elements.descripcion.value;
+    let val = parseFloat(enviar.target.elements.valor.value);
+    let fecha = enviar.target.elements.fecha.value;
+    let etiq = enviar.target.elements.etiquetas.value.split(" ");
+    let gasto = new gestionPresupuesto.CrearGasto(desc, val, fecha.toLocaleDateString, ...etiq);
+    // Añadir el gasto a la lista de gastos.
+    gestionPresupuesto.anyadirGasto(gasto);
+    // Llamar a la función repintar.
+    repintar();
+    // El manejador de eventos del evento submit del formulario no será una función, sino un objeto manejador de eventos, ya que necesita acceder al gasto para actualizarlo. Por tanto, debe utilizarse la misma técnica utilizada en la práctica anterior: definir una función constructora que implemente handleEvent, crear un objeto basado en ese constructor y añadir el gasto como propiedad adicional de dicho objeto.
+    // El manejador de eventos del evento submit no tendrá que volver a habilitar el botón de Editar, ya que la función repintar se encarga de volver a mostrar el listado de gastos creando la estructura nueva (botones de Editar y Borrar incluidos, sin ningún atributo disabled).
+    // Puedes utilizar la misma función constructora que has creado para el botón Cancelar de nuevoGastoWebFormulario: la funcionalidad es la misma, así que solo tendrás que crear un objeto basado en ese constructor y pasar las referencias correspondientes al formulario y al botón del gasto que estés editando.
+    // Crear manejador de eventos para el botón cancelar:
+    //
+    // Crear un nuevo objeto a partir de la función constructora.
+    let cancelarForm = new CancelarFormulario(gasto);
+    // Establecer la propiedad gasto del objeto creado al objeto gasto.
+    cancelarForm.gasto = gasto;
+    // Añade el objeto recién creado como objeto manejador del evento click al botón.
+    let btnCancelar = formulario.querySelector("button.cancelar");
+    btnCancelar.addEventListener("click", cancelarForm);
   }
 }
-
-
 //
 // Exportar funciones
 export{
