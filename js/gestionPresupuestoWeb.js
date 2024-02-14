@@ -93,14 +93,14 @@ repintar();
 
 async function cargarGastosApi(event) {
     
-        event.preventDefault();
+        
         
             
                
                 let usuario = document.getElementById("nombre_usuario").value;
                 console.log("Usuario: "+ usuario)
                 
-                let urlObtenerApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/?usuario=${usuario}`;
+                let urlObtenerApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
                
                 
                 console.log("URL: "+ urlObtenerApi,
@@ -127,14 +127,16 @@ async function cargarGastosApi(event) {
     
 
 let gastoBorrarApi={
-    handleEvent:function(event){
-        event.preventDefault();
+    handleEvent: function(event){
+        event.preventDefault()
         let usuario = document.getElementById("nombre_usuario").value
-        let urlBorrar= new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
-        urlBorrar.searchParams.append("usuario", usuario)
-        urlBorrar.searchParams.append("gasto", this.gasto.id)
-        let borrar=   fetch(urlBorrar, {
-            method:`DELETE`
+        let gasto =this.gasto.id
+        console.log("gasto gasto"+ gasto)
+        let urlBorrar=`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`
+       console.log("gasto "+this.gasto.id)
+        let respuesta=   fetch(urlBorrar, {
+            method:'DELETE',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
         })
         .then(function(respuesta){
             if(respuesta.ok)
@@ -270,6 +272,7 @@ function mostrarGastoWeb(idElemento,gasto){
   
   let borrarGastoApi =Object.create(gastoBorrarApi);
   borrarGastoApi.gasto= gasto;
+  
  botonBorrarApi.addEventListener("click", borrarGastoApi);
 
  divGasto.append(botonBorrarApi);
@@ -376,9 +379,58 @@ this.handleEvent= function(event){
     manejadorCerrar.botonEditarFormulario=event.target;
     botonCancelar.addEventListener("click", manejadorCerrar);
 
+    let botonEnviarApi= formulario.querySelector(".gasto-enviar-api")
+    let manejadorEnviarApiForm = new enviarGastoApiForm()
+    manejadorEnviarApiForm.botonEnviarApi= event.target
+    manejadorEnviarApiForm.gasto=this.gasto
+    botonEnviarApi.addEventListener("click", manejadorEnviarApiForm)// investigar handleformedit y cerrar form tras enviar gasto api
+
+}
+}
+ function enviarGastoApiForm(){
+    this.handleEvent= async function(event){
+        event.preventDefault();
+        console.log("hola boton enviar")
+        let descripcionGastoForm =document.getElementById("descripcion").value
+        let valorGasto=document.getElementById("valor").value
+        let valorGastoForm=parseFloat(valorGasto)
+        let fechaGastoForm=document.getElementById("fecha").value
+       
+        let etiquetasGastoForm= document.getElementById("etiquetas").value
     
+        let etiquetasArrForm= etiquetasGastoForm.split(',');
+        let gastoPruebaFormApi = {
+            descripcion: descripcionGastoForm,
+            valor: valorGastoForm,
+            fecha: fechaGastoForm,
+            etiquetas: etiquetasArrForm  
+        };
+        console.log("Descripcion objeto "+ descripcion.value)
+        
+        let usuario = document.getElementById("nombre_usuario").value
+        console.log(usuario)
+        let urlEnviarApiForm = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`
+       
+
+        let respuesta = await fetch(urlEnviarApiForm, {
+            method:'PUT',
+            headers:{
+                'Content-Type': 'application/json;charset=utf-8', 
+            },
+            body: JSON.stringify(gastoPruebaFormApi)     
+        });
+        if (respuesta.ok)
+        {
+            console.log ("Petición PUT realizada con exito")
+        } else {
+                console.error("Error al realizar la petición PUT:", respuesta.status, respuesta.statusText);
+        }
+
+        cargarGastosApi()
+        event.target.form.remove()
+    }
 }
-}
+
 function handleEnviarForm(){
     this.handleEvent= function(event){
         
@@ -522,12 +574,13 @@ async function  enviarGastoApi(event){
     
         event.preventDefault();
 console.log("hola")
-        let descripcionGastoForm =event.target.elements.descripcion.value
-        let valorGasto=event.target.elements.valor.value
+
+        let descripcionGastoForm =document.getElementById("descripcion").value
+        let valorGasto=document.getElementById("valor").value
         let valorGastoForm=parseFloat(valorGasto)
-        let fechaGastoForm=event.target.elements.fecha.value
+        let fechaGastoForm=document.getElementById("fecha").value
        
-        let etiquetasGastoForm= event.target.elements.etiquetas.value
+        let etiquetasGastoForm= document.getElementById("etiquetas").value
     
         let etiquetasArrForm= etiquetasGastoForm.split(',');
         let gastoPruebaFormApi = {
@@ -536,15 +589,17 @@ console.log("hola")
             fecha: fechaGastoForm,
             etiquetas: etiquetasArrForm
         };
-
+console.log("Descripcion objeto "+ descripcion.value)
         let usuario = document.getElementById("nombre_usuario").value
         console.log(usuario)
-        let urlEnviarApi = new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/")
-        urlEnviarApi.searchParams.append("usuario", usuario)
+        let urlEnviarApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`
+       
 
         let respuesta = await fetch(urlEnviarApi, {
             method:`POST`,
-            headers:{"Content-Type:": "aplication/json;charset=utf-8"},
+            headers:{
+                'Content-Type': 'application/json;charset=utf-8', 
+            },
             body: JSON.stringify(gastoPruebaFormApi)     
         });
         if (respuesta.ok)
@@ -555,6 +610,7 @@ console.log("hola")
         }
 
         cargarGastosApi()
+        event.target.form.remove()
     }
 
 
