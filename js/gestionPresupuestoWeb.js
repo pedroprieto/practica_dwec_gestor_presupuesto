@@ -317,53 +317,7 @@ function SubmitHandleFormulario(){ //Manejador del boton submit generado a la ho
 
 }
 
-async function programaEditarFormularioApi(id){
-  
-  let url = crearUrl() + `/${id}`;
 
-  let formulario = document.getElementById("formulario-editar");
-
-  let objetoDatos = {};
-
-  objetoDatos.descripcion = formulario.elements.descripcion.value;
-  objetoDatos.valor = parseFloat(formulario.elements.valor.value);
-  objetoDatos.fecha = formulario.elements.fecha.value;
-  objetoDatos.etiquetas = formulario.elements.etiquetas.value.split(",");
-
-  console.log(url);
-  let respuesta = await fetch(url,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8"
-      },
-
-      body: JSON.stringify(objetoDatos)
-
-    });
-
-  if(respuesta.ok){
-    console.log("Datos actualizados");
-    cargarGastosApi(crearUrl());
-    let botones = document.querySelectorAll(".gasto-editar-formulario");
-
-    for(let boton of botones){
-      boton.disabled = false;
-    }
-  }
-  else{
-    console.log("Error de red");
-  }
-
-}
-
-function SubmitHandleFormularioApi(id){
-  this.handleEvent = function(e) {
-    e.preventDefault();
-
-    programaEditarFormularioApi(id);
-  }
-}
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 
@@ -569,6 +523,54 @@ function EnviarGastoApi(){
     let boton = document.getElementById("anyadirgasto-formulario");
     boton.disabled = false;
 
+  }
+}
+
+async function programaEditarFormularioApi(id){
+  
+  let url = crearUrl() + `/${id}`;
+
+  let formulario = document.getElementById("formulario-editar");
+
+  let objetoDatos = {};
+
+  objetoDatos.descripcion = formulario.elements.descripcion.value;
+  objetoDatos.valor = parseFloat(formulario.elements.valor.value);
+  objetoDatos.fecha = formulario.elements.fecha.value;
+  objetoDatos.etiquetas = formulario.elements.etiquetas.value.split(",");
+
+  console.log(url);
+  let respuesta = await fetch(url,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+
+      body: JSON.stringify(objetoDatos)
+
+    });
+
+  if(respuesta.ok){
+    console.log("Datos actualizados");
+    cargarGastosApi(crearUrl());
+    let botones = document.querySelectorAll(".gasto-editar-formulario");
+
+    for(let boton of botones){
+      boton.disabled = false;
+    }
+  }
+  else{
+    console.log("Error de red");
+  }
+
+}
+
+function SubmitHandleFormularioApi(id){
+  this.handleEvent = function(e) {
+    e.preventDefault();
+
+    programaEditarFormularioApi(id);
   }
 }
 
