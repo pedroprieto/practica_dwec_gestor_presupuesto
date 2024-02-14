@@ -343,10 +343,11 @@ function CancelarFormulario(){
     // a activar dicho botón (eliminar atributo disabled). Recuerda que estamos en su función
     // manejadora de eventos, por lo que dicho botón es el que ha provocado dicho evento y por
     // tanto está disponible en la propiedad currentTarget del evento.
-    //////////////////////////cancelar.target.removeAttribute('disabled');
     let btnanyadirgastoform = document.getElementById("anyadirgasto-formulario");
     btnanyadirgastoform.removeAttribute('disabled');
-    ///////////////////////document.getElementById("anyadirgasto-formulario").disable = false;
+    // Activar botón editar gasto formulario
+    let btnEditarForm = document.querySelector("button.gasto-editar-formulario");
+    btnEditarForm.removeAttribute('disabled');
   }
 }
 //
@@ -359,7 +360,8 @@ function CancelarFormulario(){
 function EditarHandleformulario(gasto){
   this.gasto = gasto;
   this.handleEvent = function(enviar){
-    alert('funciona');
+    // Deshabilita el botón de envío
+    enviar.target.disabled = true;
     // Esta función (handleEvent) realizará las mismas tareas que nuevoGastoWebFormulario,
     // con las siguientes diferencias:
     //
@@ -373,8 +375,8 @@ function EditarHandleformulario(gasto){
     // Acceder al elemento <form> dentro de ese fragmento de documento.
     var formulario = plantillaFormulario.querySelector("form");
     // Inserta el formulario.
-    let controlesprincipales  = document.getElementById('controlesprincipales');
-    controlesprincipales.append(plantillaFormulario);
+    let parent = enviar.target.parentNode;  // Elemento <div> que contiene la estructura del gasto
+    parent.append(plantillaFormulario);
     // Rellena el formulario con los valores del gasto actual.
     formulario.elements.descripcion.value = this.gasto.descripcion;
     formulario.elements.valor.value = this.gasto.valor;
@@ -386,18 +388,11 @@ function EditarHandleformulario(gasto){
     this.gasto.actualizarFecha(new Date(fecha));
     this.gasto.anyadirEtiquetas(etiquetas.split(','));*/
 
-
-    // Enviar los datos.
-    let desc = enviar.target.elements.descripcion.value;
-    let val = parseFloat(enviar.target.elements.valor.value);
-    let fecha = enviar.target.elements.fecha.value;
-    let etiq = enviar.target.elements.etiquetas.value.split(" ");
-    let gasto = new gestionPresupuesto.CrearGasto(desc, val, fecha.toLocaleDateString, ...etiq);
-    // Añadir el gasto a la lista de gastos.
-    gestionPresupuesto.anyadirGasto(gasto);
-    // Llamar a la función repintar.
-    repintar();
     // El manejador de eventos del evento submit del formulario no será una función, sino un objeto manejador de eventos, ya que necesita acceder al gasto para actualizarlo. Por tanto, debe utilizarse la misma técnica utilizada en la práctica anterior: definir una función constructora que implemente handleEvent, crear un objeto basado en ese constructor y añadir el gasto como propiedad adicional de dicho objeto.
+    let enviarForm = new enviarHandle();
+    enviarForm.gasto = this.gasto;
+    //enviarForm.enviar.target = enviar.target;
+    formulario.addEventListener("submit", enviarForm);
     // El manejador de eventos del evento submit no tendrá que volver a habilitar el botón de Editar, ya que la función repintar se encarga de volver a mostrar el listado de gastos creando la estructura nueva (botones de Editar y Borrar incluidos, sin ningún atributo disabled).
     // Puedes utilizar la misma función constructora que has creado para el botón Cancelar de nuevoGastoWebFormulario: la funcionalidad es la misma, así que solo tendrás que crear un objeto basado en ese constructor y pasar las referencias correspondientes al formulario y al botón del gasto que estés editando.
     // Crear manejador de eventos para el botón cancelar:
