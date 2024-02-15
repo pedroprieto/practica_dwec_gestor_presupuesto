@@ -284,8 +284,7 @@ function nuevoGastoWebFormulario (gasto){
     let btnCancelar = formulario.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", cancelarForm);
 
-///////////////////////////////////////// formulario.addEventListener("submit", enviarForm);
-//////////////////////////////////////// event.target.disable = true;
+  formulario.addEventListener("submit", enviarHandle);
 
   // Por último, añadir el fragmento de documento (variable plantillaFormulario) al final del
   // <div id="controlesprincipales"> para que se muestre en la página.
@@ -347,7 +346,7 @@ function CancelarFormulario(){
     btnanyadirgastoform.removeAttribute('disabled');
     // Activar botón editar gasto formulario
     let btnEditarForm = document.querySelector("button.gasto-editar-formulario");
-    btnEditarForm.removeAttribute('disabled');
+    btnEditarForm.disabled = false;
   }
 }
 //
