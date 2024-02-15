@@ -15,6 +15,10 @@ function repintar()
     {
          mostrarGastoWeb("listado-gastos-completo", gastosListados[i]);
     }
+
+    mostrarGastosAgrupadosWeb("agrupacion-dia",gesPresupuesto.agruparGastos("dia") ,"día");
+    mostrarGastosAgrupadosWeb("agrupacion-mes",gesPresupuesto.agruparGastos("mes") ,"mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo",gesPresupuesto.agruparGastos("anyo") ,"año");
 }
 
 function actualizarPresupuestoWeb(){
@@ -550,8 +554,8 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
         }
         
 // Estilos
-divP.style.width = "33%";
-divP.style.display = "inline-block";
+contenedor.style.width = "33%";
+contenedor.style.display = "inline-block";
 // Crear elemento <canvas> necesario para crear la gráfica
 // https://www.chartjs.org/docs/latest/getting-started/
 let chart = document.createElement("canvas");
