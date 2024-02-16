@@ -415,6 +415,49 @@ function cancelarAnyadirGasto(event, botonEditar){
   event.currentTarget.parentNode.remove()
 }
 
+//Función filtrarGastosWeb
+
+function filtrarGastoWeb() 
+{
+    this.handleEvent = function(e)
+    {
+        e.preventDefault(); //prevenir el envio de formulario
+
+        //se recogen los datos del formulario
+
+        let plantillaFormulario = document.getElementById("filtrar-gastos");
+        var formulario = plantillaFormulario.querySelector("form");
+
+        let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let valorMinimo = formulario.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximo = formulario.elements["formulario-filtrado-valor-maximo"].value;  
+        let descripcionContiene = formulario.elements["formulario-filtrado-descripcion"].value;    
+        let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+        //transformo las etiquetas si existen
+        if (etiquetasTiene != "")
+        {
+            etiquetasTiene = gestorPresupuesto.transformarListadoEtiquetas(etiquetasTiene); //llamo f(x) del objeto gestorPresupuesto para convertir las etiq en formato valido
+        }
+
+        let opciones = ({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}); //se crea objeto opciones
+
+        document.getElementById("listado-gastos-completo").innerHTML = ""; //limpio contenido del elemento 
+
+        let gastosFiltrados = gestorPresupuesto.filtrarGastos(opciones);
+
+        for (let g of gastosFiltrados)
+        {   
+            mostrarGastoWeb("listado-gastos-completo", g);
+        }
+    }   
+}
+
+//añado la f(x) como manejadora del evento submit del form 
+let manejadorFiltrado = new filtrarGastoWeb();
+let formularioFiltrado = document.getElementById("formulario-filtrado");
+formularioFiltrado.addEventListener("submit", manejadorFiltrado);
 
 
 export{
