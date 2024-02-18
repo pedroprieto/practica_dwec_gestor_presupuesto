@@ -495,6 +495,25 @@ let botonCargarGastos = new cargarGastosWeb();
 // Agregar manejador de eventos para el evento click
 document.getElementById("cargar-gastos").addEventListener("click",botonCargarGastos);
 
+async function cargarGastosApi(){
+    let nomUsuario = document.getElementById("nombre_usuario");
+try{
+    let respuesta =await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nomUsuario}`);
+    let datos = await respuesta.json();
+    gestionPresupuesto.cargarGastos(datos);
+
+    //tendremos que listar los gastos
+    gestionPresupuesto.listarGastos();
+    console.log(datos);
+    repintar();
+} catch(error){
+    console.error('Tipo de error en la carga de datos: ', error);
+}
+    
+}
+let btnCargarGastosAPI = document.getElementById('cargar-gastos-api'); 
+btnCargarGastosAPI.addEventListener('click', cargarGastosApi); 
+
 
 export   {
     mostrarDatoEnId,
