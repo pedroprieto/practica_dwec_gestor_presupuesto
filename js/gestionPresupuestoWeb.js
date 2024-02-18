@@ -89,6 +89,16 @@ function mostrarGastoWeb(idElemento, gasto){
       let manejadorEvDelete = new BorrarHandle(gasto);
       botonDelete.addEventListener('click', manejadorEvDelete);
       nuevoGastoDiv.appendChild(botonDelete);
+
+      // botón Borrar API
+      let botonBorrarAPI = document.createElement('button');
+      botonBorrarAPI.type = 'button';
+      botonBorrarAPI.className = 'gasto-borrar-api';
+      botonBorrarAPI.textContent = 'Borrar (API)';
+      let manejadorApiDelete = new borrarGastoApi(gasto);
+      botonBorrarAPI.addEventListener('click',manejadorApiDelete);
+      nuevoGastoDiv.appendChild(botonBorrarAPI);
+
       
       let botonEditForm = document.createElement('button');
       botonEditForm.type = 'button';
@@ -513,6 +523,29 @@ try{
 }
 let btnCargarGastosAPI = document.getElementById('cargar-gastos-api'); 
 btnCargarGastosAPI.addEventListener('click', cargarGastosApi); 
+
+function borrarGastoApi(gasto){
+    //como hacemos en BorrarHandle
+    this.gasto = gasto;
+
+    this.handleEvent = async function () {
+        let nomUsuario = document.getElementById('nombre_usuario').value;
+        let gastoId = gasto.id;
+        try {
+            await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nomUsuario}/${gastoId}`, {
+              method: 'DELETE',
+            });
+      
+            // Llamar a la función cargarGastosApi para actualizar la lista desde la API
+            cargarGastosApi();
+          } catch (error) {
+            console.error('Tipo de error al borrar el gasto en la API:', error);
+          }
+    
+
+    }
+
+}
 
 
 export   {
