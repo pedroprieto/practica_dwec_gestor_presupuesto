@@ -267,25 +267,25 @@ function BorrarEtiquetasHandle (gasto, etiqueta){
 /* Esta función se utilizará como manejadora de eventos del botón anyadirgasto-formulario
    del código HTML. Realizará las siguientes tareas:   */
 function nuevoGastoWebFormulario (gasto){
+  this.gasto = gasto;
   // Crear una copia del formulario web definido en la plantilla HTML.
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
   // Acceder al elemento <form> dentro de ese fragmento de documento.
   var formulario = plantillaFormulario.querySelector("form");
   // Desactivar (añadir atributo disabled) el botón anyadirgasto-formulario.
   btnanyadirgastoform.setAttribute('disabled', 'true');
-
-    // Crear manejador de eventos para el botón cancelar:
-    //
-    // Crear un nuevo objeto a partir de la función constructora.
-    let cancelarForm = new CancelarFormulario(gasto);
-    // Establecer la propiedad gasto del objeto creado al objeto gasto.
-    cancelarForm.gasto = gasto;
-    // Añade el objeto recién creado como objeto manejador del evento click al botón.
-    let btnCancelar = formulario.querySelector("button.cancelar");
-    btnCancelar.addEventListener("click", cancelarForm);
-
-  formulario.addEventListener("submit", enviarHandle);
-
+  // Crear manejador de eventos para el botón cancelar:
+  // Crear un nuevo objeto a partir de la función constructora.
+  let cancelarForm = new CancelarFormulario(gasto);
+  // Establecer la propiedad gasto del objeto creado al objeto gasto.
+  cancelarForm.gasto = gasto;
+  // Añade el objeto recién creado como objeto manejador del evento click al botón.
+  let btnCancelar = formulario.querySelector("button.cancelar");
+  btnCancelar.addEventListener("click", cancelarForm);
+  // Objeto para manejador Enviar
+  let enviarForm = new enviarHandle();
+  enviarForm.gasto = this.gasto;
+  formulario.addEventListener("submit", enviarForm);
   // Por último, añadir el fragmento de documento (variable plantillaFormulario) al final del
   // <div id="controlesprincipales"> para que se muestre en la página.
   let controlesprincipales  = document.getElementById('controlesprincipales');
@@ -346,7 +346,7 @@ function CancelarFormulario(){
     btnanyadirgastoform.removeAttribute('disabled');
     // Activar botón editar gasto formulario
     let btnEditarForm = document.querySelector("button.gasto-editar-formulario");
-    btnEditarForm.disabled = false;
+    btnEditarForm.removeAttribute('disabled');
   }
 }
 //
@@ -381,14 +381,8 @@ function EditarHandleformulario(gasto){
     formulario.elements.valor.value = this.gasto.valor;
     formulario.elements.fecha.value = this.gasto.fecha;
     formulario.elements.etiquetas.value = this.gasto.etiquetas;
-
-    /*this.gasto.actualizarDescripcion(descripcion);
-    this.gasto.actualizarValor(val);
-    this.gasto.actualizarFecha(new Date(fecha));
-    this.gasto.anyadirEtiquetas(etiquetas.split(','));*/
-
     // El manejador de eventos del evento submit del formulario no será una función, sino un objeto manejador de eventos, ya que necesita acceder al gasto para actualizarlo. Por tanto, debe utilizarse la misma técnica utilizada en la práctica anterior: definir una función constructora que implemente handleEvent, crear un objeto basado en ese constructor y añadir el gasto como propiedad adicional de dicho objeto.
-    let enviarForm = new enviarHandle();
+    let enviarForm = new enviarEditarForm();
     enviarForm.gasto = this.gasto;
     //enviarForm.enviar.target = enviar.target;
     formulario.addEventListener("submit", enviarForm);
@@ -403,6 +397,27 @@ function EditarHandleformulario(gasto){
     // Añade el objeto recién creado como objeto manejador del evento click al botón.
     let btnCancelar = formulario.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", cancelarForm);
+  }
+}
+// 
+function enviarEditarForm(){
+  this.handleEvent = function( enviar ){
+    enviar.preventDefault();
+    let form = enviar.currentTarget;
+
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha =  form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    
+    this.gasto.actualizarDescripcion(descripcion);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(new Date(fecha));
+    this.gasto.anyadirEtiquetas(etiquetas.split(','));
+
+    repintar();
+    
+    document.getElementById("anyadirgasto-formulario").disabled = false;
   }
 }
 //
