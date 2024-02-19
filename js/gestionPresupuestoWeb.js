@@ -283,6 +283,34 @@ function BorrarEtiquetasHandle()
     }
 }
 
+function cargarGastosApi() {
+  
+  let nombreUsuario = document.getElementById("nombre_usuario").value;
+  let urlcargar = `${url}/${nombreUsuario}`;
+
+  if (nombreUsuario != "") {
+    fetch(urlcargar)
+      .then(response => response.json())
+      .then(result => {
+       gesPres.cargarGastos(result)
+
+        repintar();
+      })
+      .catch(function(error) {
+      console.log('Hubo un problema con la petición Fetch:' + error.message);
+      });   
+  }
+  else
+  {
+    alert("Introduzca un nombre de usuario para cargar sus datos.")
+  }
+
+}
+let butCargarGastosApi = document.getElementById("cargar-gastos-api");
+butCargarGastosApi.addEventListener("click", cargarGastosApi);
+
+
+
 //FORMULARIOS
 
 // función constructora del manejador de eventos para el submit del formulario
