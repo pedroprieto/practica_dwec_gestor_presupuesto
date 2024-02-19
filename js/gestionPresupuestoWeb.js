@@ -314,6 +314,9 @@ function enviarHandle(){
     let gasto = new gestionPresupuesto.CrearGasto(desc, val, fecha.toLocaleDateString, ...etiq);
     // Añadir el gasto a la lista de gastos.
     gestionPresupuesto.anyadirGasto(gasto);
+    // Accede al elemento <form> dentro del documento para cerrarlo.
+    var formulario = document.querySelector("form");
+    formulario.remove();
     // Llamar a la función repintar.
     repintar(); 
     // Activar (eliminar atributo disabled) el botón anyadirgasto-formulario (lo habremos
@@ -345,8 +348,9 @@ function CancelarFormulario(){
     let btnanyadirgastoform = document.getElementById("anyadirgasto-formulario");
     btnanyadirgastoform.removeAttribute('disabled');
     // Activar botón editar gasto formulario
-    let btnEditarForm = document.querySelector("button.gasto-editar-formulario");
-    btnEditarForm.removeAttribute('disabled');
+    //let btnEditarForm = document.querySelector("button.gasto-editar-formulario");
+    //btnEditarForm.removeAttribute('disabled');
+    this.botonEditar.removeAttribute('disabled');
   }
 }
 //
@@ -394,6 +398,9 @@ function EditarHandleformulario(gasto){
     let cancelarForm = new CancelarFormulario(gasto);
     // Establecer la propiedad gasto del objeto creado al objeto gasto.
     cancelarForm.gasto = gasto;
+    
+    cancelarForm.botonEditar = enviar.target; // enviar.target será el botón de editar de ese gasto
+
     // Añade el objeto recién creado como objeto manejador del evento click al botón.
     let btnCancelar = formulario.querySelector("button.cancelar");
     btnCancelar.addEventListener("click", cancelarForm);
