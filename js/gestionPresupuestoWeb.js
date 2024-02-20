@@ -350,7 +350,9 @@ function CancelarFormulario(){
     // Activar botón editar gasto formulario
     //let btnEditarForm = document.querySelector("button.gasto-editar-formulario");
     //btnEditarForm.removeAttribute('disabled');
-    this.botonEditar.removeAttribute('disabled');
+    if(this.botonEditar){
+      this.botonEditar.removeAttribute('disabled');
+    }
   }
 }
 //
