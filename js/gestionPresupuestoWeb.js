@@ -284,6 +284,25 @@ function SubmitHandleFormulario() {
     }
 }
 
+function filtrarGastosWeb() {
+
+    this.handleEvent = function(event) {
+        event.preventDefault();
+
+        let descripcionContiene = event.currentTarget.elements['formulario-filtrado-descripcion'].value;
+        let valorMinimo = Number(event.currentTarget.elements['formulario-filtrado-valor-minimo'].value);
+        let valorMaximo = Number(event.currentTarget.elements['formulario-filtrado-valor-maximo'].value);
+        let fechaDesde = event.currentTarget.elements['formulario-filtrado-fecha-desde'].value;
+        let fechaHasta = event.currentTarget.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiquetasTiene = gesPre.transformarListadoEtiquetas(event.currentTarget.elements['formulario-filtrado-etiquetas-tiene'].value);
+
+        let gastosFiltrados = gesPre.filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene});
+
+        document.getElementById('listado-gastos-completo').innerHTML = "";
+        mostrarGastoWeb('listado-gastos-completo', gastosFiltrados);
+    }
+}
+
 
 // Botón "Actualizar presupuesto"
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
@@ -296,6 +315,11 @@ botonAnyadirGasto.addEventListener('click', nuevoGastoWeb);
 // Botón "Añadir gasto (formulario)"
 let botonAnyadirGastoFormulario = document.getElementById('anyadirgasto-formulario');
 botonAnyadirGastoFormulario.addEventListener('click', nuevoGastoWebFormulario);
+
+// Botón "Filtrar gastos"
+let handleFiltrado = new filtrarGastosWeb();
+let botonFiltrarGastosFormulario = document.getElementById('formulario-filtrado');
+botonFiltrarGastosFormulario.addEventListener('submit', handleFiltrado);
 
 
 export {
