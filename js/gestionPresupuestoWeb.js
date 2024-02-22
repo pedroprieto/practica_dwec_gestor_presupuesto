@@ -303,6 +303,12 @@ function filtrarGastosWeb() {
     }
 }
 
+function guardarGastosWeb() {
+
+    this.handleEvent = function(event) {
+        localStorage.setItem('GestorGastosDWEC', JSON.stringify(gesPre.listarGastos()));
+    }
+}
 
 // Botón "Actualizar presupuesto"
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
@@ -317,9 +323,14 @@ let botonAnyadirGastoFormulario = document.getElementById('anyadirgasto-formular
 botonAnyadirGastoFormulario.addEventListener('click', nuevoGastoWebFormulario);
 
 // Botón "Filtrar gastos"
-let handleFiltrado = new filtrarGastosWeb();
+let manejadorFiltradoGastos = new filtrarGastosWeb();
 let botonFiltrarGastosFormulario = document.getElementById('formulario-filtrado');
-botonFiltrarGastosFormulario.addEventListener('submit', handleFiltrado);
+botonFiltrarGastosFormulario.addEventListener('submit', manejadorFiltradoGastos);
+
+// Botón "Guardar gastos"
+let manejadorGuardarGastos = new guardarGastosWeb();
+let botonGuardarGastos = document.getElementById('guardar-gastos');
+botonGuardarGastos.addEventListener('click', manejadorGuardarGastos);
 
 
 export {
