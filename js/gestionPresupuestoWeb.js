@@ -314,8 +314,9 @@ function cargarGastosWeb() {
 
     this.handleEvent = function(event) {
         let gastosAlmacenados = localStorage.getItem('GestorGastosDWEC') ?? "";
+        gastosAlmacenados = gastosAlmacenados == "" ? [] : JSON.parse(gastosAlmacenados);
 
-        gesPre.cargarGastos(JSON.parse(gastosAlmacenados));
+        gesPre.cargarGastos(gastosAlmacenados);
         
         repintar();
     }
