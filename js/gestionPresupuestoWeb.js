@@ -17,7 +17,7 @@ function mostrarGastoWeb(idElemento, gastos) {
 
         let divGastoFecha = document.createElement('div');
         divGastoFecha.className = 'gasto-fecha';
-        divGastoFecha.textContent = new Date(gasto.fecha).toISOString().slice(0, 10);
+        divGastoFecha.textContent = gasto.fecha == "" ? "????-??-??" : new Date(gasto.fecha).toISOString().slice(0, 10);
         divGasto.append(divGastoFecha);
 
         let divGastoValor = document.createElement('div');
@@ -29,18 +29,20 @@ function mostrarGastoWeb(idElemento, gastos) {
         divGastoEtiquetas.className = 'gasto-etiquetas';
         
         for (let etiqueta of gasto.etiquetas) {
-            let spanEtiqueta = document.createElement('span');
-            spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
-            spanEtiqueta.textContent = etiqueta;
-
-            // Eliminación de Etiqueta de un Gasto -----------------
-            let manejadorEventoBorrarEtiqueta = new BorrarEtiquetasHandle();
-            manejadorEventoBorrarEtiqueta.gasto = gasto;
-            manejadorEventoBorrarEtiqueta.etiqueta = etiqueta;
-
-            spanEtiqueta.addEventListener('click', manejadorEventoBorrarEtiqueta);
-
-            divGastoEtiquetas.append(spanEtiqueta);
+            if (etiqueta != "") {
+                let spanEtiqueta = document.createElement('span');
+                spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
+                spanEtiqueta.textContent = etiqueta;
+    
+                // Eliminación de Etiqueta de un Gasto -----------------
+                let manejadorEventoBorrarEtiqueta = new BorrarEtiquetasHandle();
+                manejadorEventoBorrarEtiqueta.gasto = gasto;
+                manejadorEventoBorrarEtiqueta.etiqueta = etiqueta;
+    
+                spanEtiqueta.addEventListener('click', manejadorEventoBorrarEtiqueta);
+    
+                divGastoEtiquetas.append(spanEtiqueta);
+            }
         }
 
         divGasto.append(divGastoEtiquetas);
@@ -322,6 +324,25 @@ function cargarGastosWeb() {
     }
 }
 
+async function cargarGastosApi() {
+
+    let usuario = document.getElementById('nombre_usuario').value;
+    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario;
+
+    let response = await fetch(url);
+
+    if (response.ok) {
+        let gastosRecuperados = await response.json();
+
+        gesPre.cargarGastos(gastosRecuperados);
+
+        repintar();
+    } else {
+        alert("Error-HTTP: " + response.status);
+    }
+}
+
+
 // Botón "Actualizar presupuesto"
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
 botonPresupuesto.addEventListener('click', actualizarPresupuestoWeb);
@@ -335,19 +356,20 @@ let botonAnyadirGastoFormulario = document.getElementById('anyadirgasto-formular
 botonAnyadirGastoFormulario.addEventListener('click', nuevoGastoWebFormulario);
 
 // Botón "Filtrar gastos"
-let manejadorFiltradoGastos = new filtrarGastosWeb();
 let botonFiltrarGastosFormulario = document.getElementById('formulario-filtrado');
-botonFiltrarGastosFormulario.addEventListener('submit', manejadorFiltradoGastos);
+botonFiltrarGastosFormulario.addEventListener('submit', new filtrarGastosWeb());
 
 // Botón "Guardar gastos"
-let manejadorGuardarGastos = new guardarGastosWeb();
 let botonGuardarGastos = document.getElementById('guardar-gastos');
-botonGuardarGastos.addEventListener('click', manejadorGuardarGastos);
+botonGuardarGastos.addEventListener('click', new guardarGastosWeb());
 
 // Botón "Cargar gastos"
-let manejadorCargarGastos = new cargarGastosWeb();
 let botonCargarGastos = document.getElementById('cargar-gastos');
-botonCargarGastos.addEventListener('click', manejadorCargarGastos);
+botonCargarGastos.addEventListener('click', new cargarGastosWeb());
+
+// Botón "Cargar gastos (API)"
+let botonCargarGastosApi = document.getElementById('cargar-gastos-api');
+botonCargarGastosApi.addEventListener('click', cargarGastosApi);
 
 
 export {
