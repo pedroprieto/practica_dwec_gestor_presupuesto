@@ -71,6 +71,18 @@ function mostrarGastoWeb(idElemento, gastos) {
 
         divGasto.append(botonBorrarGasto);
 
+        // Botón Borrar Gasto (API) ---------------------------------
+        let botonBorrarGastoApi = document.createElement('button');
+        botonBorrarGastoApi.type = 'button';
+        botonBorrarGastoApi.className = 'gasto-borrar-api';
+        botonBorrarGastoApi.innerHTML = 'Borrar (API)';
+
+        let manejadorEventoBorrarApi = new BorrarApiHandle();
+        manejadorEventoBorrarApi.gasto = gasto;
+        botonBorrarGastoApi.addEventListener('click', manejadorEventoBorrarApi);
+
+        divGasto.append(botonBorrarGastoApi);
+        
         // Botón Editar Gasto (Formulario) --------------------------
         let botonEditarGastoFormulario = document.createElement('button');
         botonEditarGastoFormulario.type = 'button';
@@ -169,6 +181,14 @@ function BorrarHandle() {
         gesPre.borrarGasto(this.gasto.id);
 
         repintar();
+    }
+
+}
+
+function BorrarApiHandle() {
+
+    this.handleEvent = function() {
+
     }
 
 }
