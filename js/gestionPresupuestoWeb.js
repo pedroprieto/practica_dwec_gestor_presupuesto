@@ -27,9 +27,14 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGastoFecha.classList.add ("gasto-fecha");    
     divGastoEtiquetas.classList.add ("gasto-etiquetas");
 
-    let mesString = (parseInt (new Date(gasto.fecha).getMonth()) < 10) ? "0" + new Date(gasto.fecha).getMonth() : new Date(gasto.fecha).getMonth();
+    let mesString = (parseInt (new Date(gasto.fecha).getMonth()) + 1 < 10) ? "0" + (parseInt(new Date(gasto.fecha).getMonth()) + 1).toString() : (parseInt(new Date(gasto.fecha).getMonth()) + 1).toString();
     let diaString = (parseInt (new Date(gasto.fecha).getDate()) <10) ? "0" + new Date(gasto.fecha).getDate() : new Date(gasto.fecha).getDate();
-    let fechaString = new Date(gasto.fecha).getFullYear() + "-" + mesString + "-" + diaString;  
+    let fechaString = new Date(gasto.fecha).getFullYear() + "-" + mesString + "-" + diaString; 
+    
+
+    /*let mesString = (parseInt (new Date(gasto.fecha).getMonth()) < 10) ? "0" + new Date(gasto.fecha).getMonth() : new Date(gasto.fecha).getMonth();
+    let diaString = (parseInt (new Date(gasto.fecha).getDate()) <10) ? "0" + new Date(gasto.fecha).getDate() : new Date(gasto.fecha).getDate();
+    let fechaString = new Date(gasto.fecha).getFullYear() + "-" + mesString + "-" + diaString;  */
 
     divGastoDescripcion.textContent = gasto.descripcion;
     divGastoFecha.textContent = fechaString;
@@ -100,11 +105,19 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     //Genero nuevo objeto BorrarHandle
     let accionBorrar = new BorrarHandle();
-    //Le asigno nueva propiedad gasto, apuntando a gasto
+    //Le asigno nueva propiedad gasto, apuntando a gastos
     accionBorrar.gasto = gasto;
 
     //Asocio el click del botón Borrar, con eventListener, al objeto BorrarHandler
     botonBorrar.addEventListener ("click", accionBorrar); 
+
+    //Genero nuevo objeto BorrarHandleAPI
+    let accionBorrarAPI = new BorrarHandleApi;
+    //Le asigno nueva propiedad gasto, apuntando a gasto
+    accionBorrarAPI.gasto = gasto;
+
+    //Asocio el click del botón Borrar, con eventListener, al objeto BorrarHandler
+    botonBorrarAPI.addEventListener ("click", accionBorrarAPI); 
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
@@ -261,6 +274,10 @@ function nuevoGastoWebFormulario (event) {
     accionCancelar.botonActivar = event;
     botonCancelar.addEventListener ("click", accionCancelar);
 
+
+    let botonEnviarAPI = formulario.querySelector(".gasto-enviar-api");
+    let accionEnviarAPI = new enviarGastosApi();
+    botonEnviarAPI.addEventListener ("click", accionEnviarAPI);
 }
 
 
@@ -456,7 +473,7 @@ function EditarHandleFormulario () {
 
 function BorrarHandle () {
     this.handleEvent = function (event) {
-        gesPresupuesto.borrarGasto (this.gasto.id);        
+        gesPresupuesto.borrarGasto (this.gasto.id);  
         repintar();
     }    
 }
@@ -479,6 +496,89 @@ function CancelarNuevoGastoFormulario () {
     }
 }
 
+function enviarGastosApi() {
+    this.handleEvent = async function (event) {
+        event.preventDefault();
+        let nombreUsuario = document.getElementById ("nombre_usuario");
+        let url1 = new URL ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.value);
+
+        let descripcionGasto = document.querySelector("#descripcion").value;
+        let valorGasto = document.querySelector("#valor").value;
+        let fechaGasto = document.querySelector("#fecha").value;    
+        let etiquetasGasto = document.querySelector("#etiquetas").value.split(",");
+        let usuario = document.querySelector("#nombre_usuario").value;
+
+
+        let mesString = (parseInt (new Date(fechaGasto).getMonth()) < 10) ? "0" + (parseInt(new Date(fechaGasto).getMonth()) + 1).toString() : (parseInt(new Date(fechaGasto).getMonth()) + 1).toString();
+        let diaString = (parseInt (new Date(fechaGasto).getDate()) <10) ? "0" + new Date(fechaGasto).getDate() : new Date(fechaGasto).getDate();
+        let fechaString = new Date(fechaGasto).getFullYear() + "-" + mesString + "-" + diaString; 
+
+        console.log (fechaString); 
+
+        let newGasto = {
+            "valor" : valorGasto, 
+            "descripcion" : descripcionGasto,
+            "usuario" : usuario, 
+            "fecha" : fechaString, 
+            "etiquetas" : etiquetasGasto,
+        }
+
+
+        let respuesta = await fetch (url1, {
+            //Método POST
+            method: "POST",
+            //Cabeceras
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            //Datos ya convertidos a JSON
+            body: JSON.stringify (newGasto)
+        });
+
+        if (respuesta.ok) {
+            console.log ("Gasto añadido.");
+        }
+        else {
+            console.log ("No se ha podido añadir el gasto.")
+        }
+        
+        /*let gastoAnyadir = new gesPresupuesto.CrearGasto (descripcionGasto, valorGasto, fechaGasto, ...etiquetasGasto);
+
+
+        gesPresupuesto.anyadirGasto (gastoAnyadir);
+        event.currentTarget.remove();
+        document.getElementById ("anyadirgasto-formulario").disabled = false;*/
+        repintar();    
+    }
+}
+
+function BorrarHandleApi () {
+    this.handleEvent = async function (event) {
+        event.preventDefault();
+        let nombreUsuario = document.getElementById ("nombre_usuario");  
+        //Obtengo el gastoId para poder borrar
+        let gastoId = this.gasto.gastoId;
+        //let gastoId = "79c69239-3132-45d1-9021-41195fee45b8";
+
+        let url1 = new URL ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.value + "/" + gastoId);
+        
+
+        let respuesta1 = await fetch (url1);
+
+        if (respuesta1.ok) {
+                let respuesta = await fetch (url1, { method: "DELETE"});
+                
+                if (respuesta.ok) {
+                    console.log("Gasto borrado");
+                }
+                else {
+                    console.log ("No se ha podido borrar el gastp");
+                }
+        }
+        CargarGastosApi();
+    }
+}
+
 async function CargarGastosApi () {
     
     let nombreUsuario = document.getElementById ("nombre_usuario");
@@ -490,6 +590,7 @@ async function CargarGastosApi () {
     //si no es ok, muestro mensaje de error
     if (respuesta.ok) {
         let datos = await respuesta.json();
+        console.log(JSON.stringify(datos));
         gesPresupuesto.cargarGastos(datos);
         repintar();
     }
@@ -500,8 +601,10 @@ async function CargarGastosApi () {
 
 }
 
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
 }
