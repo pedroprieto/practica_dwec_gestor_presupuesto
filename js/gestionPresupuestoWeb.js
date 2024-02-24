@@ -426,10 +426,14 @@ function ActualizarGastoHandle () {
 //Manejadora de eventos para editar un gasto
 function EditarHandleFormulario () {
     this.handleEvent = function (event) {
-        let fechaAux = new Date((parseInt(this.gasto.fecha)));
-        let mes = (fechaAux.getMonth().toString().length == 1) ? "0" + fechaAux.getMonth() : fechaAux.getMonth();
-        let dia = (fechaAux.getDate().toString().length == 1) ? "0" + fechaAux.getDate() : fechaAux.getDate();
-        let fechaUsar = fechaAux.getFullYear() + "-" + mes + "-" + dia;
+        event.preventDefault();
+        /*let mes = (fechaAux.getMonth().toString().length == 1) ? "0" + fechaAux.getMonth() : fechaAux.getMonth();
+        let dia = (fechaAux.getDate().toString().length == 1) ? "0" + fechaAux.getDate() : fechaAux.getDate();*/
+        let mes = (parseInt(new Date(this.gasto.fecha).getMonth() + 1) < 10) ? "0" + (parseInt(new Date(this.gasto.fecha).getMonth() + 1)).toString() : (parseInt(new Date(this.gasto.fecha).getMonth() + 1)).toString();
+        let dia = (parseInt(new Date(this.gasto.fecha).getDate()) <10) ? "0" + parseInt(new Date(this.gasto.fecha).getDate()).toString() : parseInt(new Date(this.gasto.fecha).getDate()).toString();
+        
+        let fechaUsar = parseInt(new Date(this.gasto.fecha).getFullYear().toString()) + "-" + mes + "-" + dia;
+       
 
         //Clono la plantilla
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
@@ -464,10 +468,19 @@ function EditarHandleFormulario () {
         accionCancelar.botonActivar = event;
         botonCancelar.addEventListener ("click", accionCancelar);
         
+        let botonEnviarApi = formulario.querySelector (".gasto-enviar-api");
+        let accionEnviarApi = new modificarGastosApi(formulario);
+        
+        accionEnviarApi.gasto = this.gasto;
+        
+
         let actualizar = new ActualizarGastoHandle();
-        actualizar.gasto = this.gasto;
+        actualizar.gasto = this.gasto;        
+        
+        botonEnviarApi.addEventListener ("click", accionEnviarApi);
         
         formulario.addEventListener ("submit", actualizar);
+        
     }
 }
 
@@ -515,6 +528,7 @@ function enviarGastosApi() {
 
         console.log (fechaString); 
 
+        //Monto el objeto newGasto que luego pasaré en formato JSON 
         let newGasto = {
             "valor" : valorGasto, 
             "descripcion" : descripcionGasto,
@@ -542,13 +556,60 @@ function enviarGastosApi() {
             console.log ("No se ha podido añadir el gasto.")
         }
         
-        /*let gastoAnyadir = new gesPresupuesto.CrearGasto (descripcionGasto, valorGasto, fechaGasto, ...etiquetasGasto);
+         CargarGastosApi();    
+    }
+}
+
+//Le paso el parámetro formulario para poder acceder a los elementos del formulario
+function modificarGastosApi(formulario) {
+    this.handleEvent = async function (event) {
+        event.preventDefault();
+        let nombreUsuario = document.getElementById ("nombre_usuario");
+        //Obtengo el gastoId para poder modificar
+        let gastoId = this.gasto.gastoId;
+
+        let url1 = new URL ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.value + "/" + gastoId);
+
+        let descripcionGasto = formulario.descripcion.value;
+        let valorGasto = formulario.valor.value;
+        let fechaGasto = formulario.fecha.value;    
+        let etiquetasGasto = formulario.etiquetas.value.split (",");
+        let usuario = document.querySelector("#nombre_usuario").value;
 
 
-        gesPresupuesto.anyadirGasto (gastoAnyadir);
-        event.currentTarget.remove();
-        document.getElementById ("anyadirgasto-formulario").disabled = false;*/
-        repintar();    
+        let mesString = (parseInt (new Date(fechaGasto).getMonth()) < 10) ? "0" + (parseInt(new Date(fechaGasto).getMonth()) + 1).toString() : (parseInt(new Date(fechaGasto).getMonth()) + 1).toString();
+        let diaString = (parseInt (new Date(fechaGasto).getDate()) <10) ? "0" + new Date(fechaGasto).getDate() : new Date(fechaGasto).getDate();
+        let fechaString = new Date(fechaGasto).getFullYear() + "-" + mesString + "-" + diaString; 
+
+        //Monto el objeto newGasto que luego pasaré en formato JSON
+        let newGasto = {
+            "valor" : valorGasto, 
+            "descripcion" : descripcionGasto,
+            "usuario" : usuario, 
+            "fecha" : fechaString, 
+            "etiquetas" : etiquetasGasto,
+        }
+
+
+        let respuesta = await fetch (url1, {
+            //Método PUT
+            method: "PUT",
+            //Cabeceras
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            //Datos ya convertidos a JSON
+            body: JSON.stringify (newGasto)
+        });
+
+        if (respuesta.ok) {
+            console.log ("Gasto modificado.");
+        }
+        else {
+            console.log ("No se ha podido modificar el gasto.")
+        }
+        
+         CargarGastosApi();    
     }
 }
 
@@ -590,7 +651,6 @@ async function CargarGastosApi () {
     //si no es ok, muestro mensaje de error
     if (respuesta.ok) {
         let datos = await respuesta.json();
-        console.log(JSON.stringify(datos));
         gesPresupuesto.cargarGastos(datos);
         repintar();
     }
