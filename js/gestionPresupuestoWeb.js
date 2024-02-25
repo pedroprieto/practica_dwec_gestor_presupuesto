@@ -353,7 +353,7 @@ function SubmitHandleFormulario() {
     this.handleEvent = function(event) {
         event.preventDefault();
     
-        elementosFormulario = event.currentTarget.elements;
+        let elementosFormulario = event.currentTarget.elements;
 
         let descripcion = elementosFormulario.descripcion.value;
         let valor = Number(elementosFormulario.valor.value);
