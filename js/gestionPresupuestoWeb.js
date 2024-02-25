@@ -77,7 +77,28 @@ function mostrarGastoWeb(idElemento, gastos) {
         botonBorrarGastoApi.className = 'gasto-borrar-api';
         botonBorrarGastoApi.innerHTML = 'Borrar (API)';
 
-        let manejadorEventoBorrarApi = new BorrarApiHandle();
+        let manejadorEventoBorrarApi = {
+            async handleEvent(event) {
+
+                let usuario = comprobarUsuario();
+
+                if (usuario) {
+                    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario + "/" + this.gasto.gastoId;;
+            
+                    let response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {'Content-Type': 'application/json;charset=utf-8'}
+                    });
+                
+                    if (response.ok) {
+                        cargarGastosApi();
+                    } else {
+                        alert("Error-HTTP: " + response.status);
+                    }
+                }
+            }
+        };
+
         manejadorEventoBorrarApi.gasto = gasto;
         botonBorrarGastoApi.addEventListener('click', manejadorEventoBorrarApi);
 
@@ -185,14 +206,6 @@ function BorrarHandle() {
 
 }
 
-function BorrarApiHandle() {
-
-    this.handleEvent = function() {
-
-    }
-
-}
-
 function BorrarEtiquetasHandle() {
 
     this.handleEvent = function() {
@@ -238,6 +251,40 @@ function nuevoGastoWebFormulario() {
         botonAnyadirGastoFormulario.disabled = false;
     });
 
+    // Tratamiento botón 'Enviar (API)'
+    let botonEnviarApi = formulario.querySelector('button.gasto-enviar-api');
+    
+    botonEnviarApi.addEventListener('click', async function(event) {
+
+        let usuario = comprobarUsuario();
+
+        if (usuario) {
+            let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario;
+
+            let descripcion = event.currentTarget.parentElement.elements.descripcion.value;
+            let valor = Number(event.currentTarget.parentElement.elements.valor.value);
+            let fecha = event.currentTarget.parentElement.elements.fecha.value;
+            let etiquetas = event.currentTarget.parentElement.elements.etiquetas.value.split(',');
+    
+            let gasto = new gesPre.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+        
+            let response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(gasto)
+            });
+        
+            if (response.ok) {
+                cargarGastosApi();
+            } else {
+                alert("Error-HTTP: " + response.status);
+            }
+        }
+
+    });
+
+
+    // Tratamiento botón 'Cancelar'
     let botonCancelar = formulario.querySelector('button.cancelar');
     let manejadorEventoCancelarGasto = new CancelarGastoWebHandle();
     manejadorEventoCancelarGasto.formulario = formulario;
@@ -346,22 +393,36 @@ function cargarGastosWeb() {
 
 async function cargarGastosApi() {
 
-    let usuario = document.getElementById('nombre_usuario').value;
-    let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario;
+    let usuario = comprobarUsuario();
 
-    let response = await fetch(url);
+    if (usuario) {
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + usuario;
 
-    if (response.ok) {
-        let gastosRecuperados = await response.json();
-
-        gesPre.cargarGastos(gastosRecuperados);
-
-        repintar();
-    } else {
-        alert("Error-HTTP: " + response.status);
+        let response = await fetch(url);
+    
+        if (response.ok) {
+            let gastosRecuperados = await response.json();
+    
+            gesPre.cargarGastos(gastosRecuperados);
+    
+            repintar();
+        } else {
+            alert("Error-HTTP: " + response.status);
+        }
     }
 }
 
+function comprobarUsuario() {
+    
+    let usuario = document.getElementById('nombre_usuario').value;
+
+    if (usuario == null || usuario == '') {
+        alert('Por favor, indique el nombre de usuario.');
+        usuario = '';
+    }
+    
+    return usuario;
+}
 
 // Botón "Actualizar presupuesto"
 let botonPresupuesto = document.getElementById('actualizarpresupuesto');
