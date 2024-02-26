@@ -125,7 +125,7 @@ function mostrarGastoWeb(idElemento, gastos) {
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 
     var divP = document.getElementById(idElemento);
-    divP.innerHTML = "";
+    divP.innerHTML = '';
 
     let divAgrupacion = document.createElement('div');
     divAgrupacion.className = 'agrupacion';
@@ -165,13 +165,13 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
     let unit = "";
     switch (periodo) {
-        case "anyo":
+        case "año":
             unit = "year";
             break;
         case "mes":
             unit = "month";
             break;
-        case "dia":
+        case "día":
         default:
             unit = "day";
             break;
@@ -223,6 +223,10 @@ function repintar() {
     mostrarDatoEnId('balance-total', gesPre.calcularBalance());
     document.getElementById('listado-gastos-completo').innerHTML = '';
     mostrarGastoWeb('listado-gastos-completo', gesPre.listarGastos());
+
+    mostrarGastosAgrupadosWeb('agrupacion-dia', gesPre.agruparGastos('dia'), 'día');
+    mostrarGastosAgrupadosWeb('agrupacion-mes', gesPre.agruparGastos('mes'), 'mes');
+    mostrarGastosAgrupadosWeb('agrupacion-anyo', gesPre.agruparGastos('anyo'), 'año');
 }
 
 function actualizarPresupuestoWeb() {
