@@ -95,7 +95,8 @@ function mostrarGastoWeb(idElemento, gasto){
       botonBorrarAPI.type = 'button';
       botonBorrarAPI.className = 'gasto-borrar-api';
       botonBorrarAPI.textContent = 'Borrar (API)';
-      let manejadorApiDelete = new borrarGastoApi(gasto);
+      let manejadorApiDelete = new borrarGastoApi;
+      manejadorApiDelete.gasto = gasto;
       botonBorrarAPI.addEventListener('click',manejadorApiDelete);
       nuevoGastoDiv.appendChild(botonBorrarAPI);
 
@@ -215,7 +216,7 @@ function nuevoGastoWeb(){
     let newFecha = prompt('Introduce la fecha del gastos en formato: YYYY-MM-DD');
     let nombresEtiqueta = prompt('Introduce las etiquetas separadas por ,');
     let nuevoValor = parseFloat(valorStr);
-    let arrayEtiquetas = nombresEtiqueta.split(', ');
+    let arrayEtiquetas = nombresEtiqueta.split(',');
     //let arrayEtiqueta = [];
     /*for (let etiqueta of arrayEtiqueta)
     {
@@ -293,6 +294,10 @@ function EditarHandleFormulario(gasto){
          // Para que al pulsar se elimine el formulario.
         let eventoCancelar = new cancelarNuevoGasto();
         botonCancelarGasto.addEventListener("click",eventoCancelar);
+        // Evento click  del boton .gasto-enviar-api
+        let botonEnviarAPi = formulario.querySelector('.gasto-enviar-api');
+        botonEnviarAPi.addEventListener('click', new ActualizarGastoApi(gasto, formulario));
+
 
     }
 
@@ -383,11 +388,14 @@ Por último, añadir el fragmento de documento (variable plantillaFormulario) al
         // Llamar a la función repintar
         repintar();
 
+        let botonEnviarGastoApi = plantillaFormulario.querySelector(".gasto-enviar-api");
+        botonEnviarGastoApi.addEventListener('click', envGastFormApi);
         // Activar el botón anyadirgasto-formulario
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 
         // Cerrar el formulario (puedes ocultarlo o eliminarlo del DOM según tu preferencia)
         formulario.parentElement.removeChild(formulario);
+
     });
 
     // Agregar el formulario a la página
@@ -506,46 +514,154 @@ let botonCargarGastos = new cargarGastosWeb();
 document.getElementById("cargar-gastos").addEventListener("click",botonCargarGastos);
 
 async function cargarGastosApi(){
-    let nomUsuario = document.getElementById("nombre_usuario");
-try{
-    let respuesta =await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nomUsuario}`);
-    let datos = await respuesta.json();
-    gestionPresupuesto.cargarGastos(datos);
+    let usuario = document.getElementById("nombre_usuario").value;
+    console.log("El usuario es: " + usuario);
+    let urlApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
-    //tendremos que listar los gastos
-    gestionPresupuesto.listarGastos();
-    console.log(datos);
-    repintar();
-} catch(error){
-    console.error('Tipo de error en la carga de datos: ', error);
-}
+
+    try {
+        let response = await fetch(urlApi);
+        let data = await response.json();
     
-}
-let btnCargarGastosAPI = document.getElementById('cargar-gastos-api'); 
+        // Actualizar el array de gastos y repintar la página
+        gestionPresupuesto.cargarGastos(data);
+        repintar();
+        gestionPresupuesto.listarGastos(); 
+        console.log(data); 
+      } catch (error) {
+        console.error('Error al cargar gastos desde la API:', error);
+      }
+
+} 
+    
+
+let btnCargarGastosAPI = document.getElementById("cargar-gastos-api"); 
 btnCargarGastosAPI.addEventListener('click', cargarGastosApi); 
 
-function borrarGastoApi(gasto){
-    //como hacemos en BorrarHandle
-    this.gasto = gasto;
+function borrarGastoApi() {
+   
 
-    this.handleEvent = async function () {
-        let nomUsuario = document.getElementById('nombre_usuario').value;
-        let gastoId = gasto.id;
-        try {
-            await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nomUsuario}/${gastoId}`, {
-              method: 'DELETE',
-            });
-      
-            // Llamar a la función cargarGastosApi para actualizar la lista desde la API
+        this.handleEvent = async function (event) {
+            event.preventDefault();
+            let nomUsuario = document.getElementById('nombre_usuario').value;
+            let gastoId = this.gasto.gastoId;
+            console.log("este gasto es "+ gastoId);
+            let url = new URL("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nomUsuario + "/" + gastoId);
+        
+            let answer =    await fetch(url);
+            if (answer.ok){
+
+                let respuesta = await fetch (url, { method: "DELETE"});
+           
+                if (respuesta.ok) {
+                    console.log("Gasto borrado");
+                }
+                else {
+                    console.log ("No se ha podido borrar el gasto");
+                }
+            }
             cargarGastosApi();
-          } catch (error) {
-            console.error('Tipo de error al borrar el gasto en la API:', error);
-          }
+    }
+}
+
+
+async function envGastFormApi(event){
+       this.handleEvent= async function(event){
+        event.preventDefault();
+        console.log(" ha pasaado por nvGastFormAp");
+        let descripcionGastoForm =document.getElementById("descripcion").value;
+        let valorGasto=document.getElementById("valor").value;
+        let valorGastoForm=parseFloat(valorGasto);
+        let fechaGastoForm=document.getElementById("fecha").value;
+
+        let etiquetasGastoForm= document.getElementById("etiquetas").value
+
+        let etiquetasArrForm= etiquetasGastoForm.split(',');
+        let gastoPruebaFormApi = {
+            descripcion: descripcionGastoForm,
+            valor: valorGastoForm,
+            fecha: fechaGastoForm,
+            etiquetas: etiquetasArrForm  
+        };
+        console.log("Descripcion objeto "+ descripcion.value)
+
+        let usuario = document.getElementById("nombre_usuario").value
+        console.log(usuario);
+        let urlEnviarApiForm = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`
+
+
+        let respuesta = await fetch(urlEnviarApiForm, {
+            method:'PUT',
+            headers:{
+                'Content-Type': 'application/json;charset=utf-8', 
+            },
+            body: JSON.stringify(gastoPruebaFormApi)     
+        });
+        if (respuesta.ok)
+        {
+            console.log ("Petición PUT realizada con exito")
+        } else {
+                console.error("Error al realizar la petición PUT:", respuesta.status, respuesta.statusText);
+        }
+
+        cargarGastosApi();
+  
+    }
+    
+}
+
+function ActualizarGastoApi(gasto, formulario){
+    this.gasto = gasto;
+    this.formulario = formulario;
+    this.handleEvent = function (event){
+        // Obtener el nombre de usuario desde el input
+        let nomUsuario = document.getElementById('nombre_usuario').value;
+        // Obtener el ID del gasto actual (reemplaza 'obtenerIdGasto' con la lógica real para obtener el ID)
+        let idGasto = gasto.id;
+        // Crear la URL de la API con el nombre de usuario y el ID del gasto
+        let apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${idGasto}`;
+        // Obtener los datos del formulario
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = Number(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value.split(',');
+
+        // Crear el objeto con los datos del formulario de edición
+        const datosActualizar = {
+          descripcion: descripcion,
+          valor: valor,
+          fecha: fecha,
+          etiquetas: etiquetas
+        };
+        // Realizar la solicitud fetch PUT a la API
+        fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datosActualizar)
+        })
+          .then(respuesta => {
+            // Verificar si la solicitud fue exitosa (código de estado 200)
+            // Verificar si la solicitud fue exitosa
+            if (!respuesta.ok) {
+              throw new Error(`Error en la solicitud: ${respuesta.status}`);
+            }
+            // Parsear la respuesta JSON
+            return respuesta.json();
+          })
+          .then(result => {
+            cargarGastosApi();
+          })
+          .catch(error => {
+            // Manejar errores de la solicitud
+            console.error('Error al editar el gasto:', error.message);
+          });
+        }
+    }
     
 
-    }
 
-}
 
 
 export   {
