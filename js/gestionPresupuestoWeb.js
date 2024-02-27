@@ -122,6 +122,17 @@ function mostrarGastoWeb(idElemento, gasto) {
 
   divGasto.append( botonEditarForm );
 
+  //segundo botón de borrado API
+
+  let buttonBorrarApi = document.createElement("button");
+  buttonBorrarApi.className += `gasto-borrar-api`;
+  buttonBorrarApi.type = "button";
+  buttonBorrarApi.textContent = "Borrar (API)";
+
+  let eventoBorrarApi = new BorrarGastoApiHandle();
+  eventoBorrarApi.gasto = gastos;
+  buttonBorrarApi.addEventListener("click",eventoBorrarApi);
+
 }
 
 function mostrarGastoAgrupadosWeb(idElemento, agrup, periodo) {
@@ -283,32 +294,168 @@ function BorrarEtiquetasHandle()
     }
 }
 
-function cargarGastosApi() {
-  
-  let nombreUsuario = document.getElementById("nombre_usuario").value;
-  let urlcargar = `${url}/${nombreUsuario}`;
 
-  if (nombreUsuario != "") {
-    fetch(urlcargar)
+
+function cargarGastosApi(){
+  let usuario = document.getElementById("nombre_usuario").value;
+  let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+  if(usuario == ""){
+      console.log("Nombre de usuario no introducido");
+  }else{
+      fetch(url, {method: 'GET'})
       .then(response => response.json())
-      .then(result => {
-       gesPres.cargarGastos(result)
+      .then((result) => { 
+      let resultado = result;
+      if(resultado == ""){
+          console.log("El usuario no ha introducido gastos")
+      }else{
+          gesPres.cargarGastos(resultado);
+          repintar();
+      }
+      }); 
+  }
+}
 
-        repintar();
+function borrarGastoApiHandle(){
+  this.handleEvent = function(e){
+      let usuario = document.getElementById("nombre_usuario").value;
+      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+
+      if(usuario == ""){
+          console.log("Nombre de usuario no introducido")
+      }else{
+          fetch(url, {method: 'DELETE'})
+          .then(response => response.json())
+          .then((result) => { 
+          let resultado = result;
+          if(!resultado.errorMessage){
+          cargarGastosApi();
+          }else{
+          console.log(resultado.errorMessage);
+          }
+          });
+      }
+}
+}
+
+function enviarGastoApi(){
+  this.handleEvent = function (e) {
+    
+ 
+  let usuario = document.getElementById("nombre_usuario").value;
+  let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+
+  let form = e.currentTarget.form;
+  let descripcionApi = form.elements.descripcion.value;
+  let valorApi = form.elements.valor.value;
+  let fechaApi = form.elements.fecha.value;
+  let etiquetasApi = form.elements.etiquetas.value;
+
+  valorApi = parseFloat(valorApi);
+  etiquetasApi = etiquetasApi.split(",");
+
+  let objetoApi = {
+      descripcion: descripcionApi,
+      fecha: fechaApi,
+      valor: valorApi,
+      etiquetas: etiquetasApi
+  }
+
+  if(usuario == ""){
+      console.log("Nombre de usuario no introducido")
+  }else{
+
+      fetch(url, {
+          method: 'POST', 
+          body: JSON.stringify(objetoApi),
+          headers:{
+              "Content-Type": "application/json"
+          }
       })
-      .catch(function(error) {
-      console.log('Hubo un problema con la petición Fetch:' + error.message);
-      });   
+      .then(response => {
+          
+          if(response.ok){
+              console.log("La petición se ha añadido correctamente");
+              cargarGastosApi();
+          }else{
+              console.log("No se ha podido añadir la petición");
+          }
+      });
   }
-  else
-  {
-    alert("Introduzca un nombre de usuario para cargar sus datos.")
+}
+}
+
+
+function editarGastoApi(){
+
+  this.handleEvent = function(e){
+      let usuario = document.getElementById("nombre_usuario").value;
+      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+
+  let formu = e.currentTarget.form;
+  let descripcionApi = formu.elements.descripcion.value;
+  let valorApi = formu.elements.valor.value;
+  let fechaApi = formu.elements.fecha.value;
+  let etiquetasApi = formu.elements.etiquetas.value;
+
+  valorApi = parseFloat(valorApi);
+  etiquetasApi = etiquetasApi.split(",");
+
+  let objetoApi = {
+      descripcion: descripcionApi,
+      fecha: fechaApi,
+      valor: valorApi,
+      etiquetas: etiquetasApi
   }
+
+  if(usuario == ""){
+      console.log("Nombre de usuario no introducido")
+  }else{
+
+      fetch(url, {
+          method: 'PUT', 
+          body: JSON.stringify(objetoApi),
+          headers:{
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => {
+          
+          if(response.ok){
+              console.log("La petición de modificación se ha añadido correctamente");
+              cargarGastosApi();
+          }else{
+              console.log("No se ha podido añadir la petición de modificación");
+          }
+      });
+  }
+}
 
 }
-let butCargarGastosApi = document.getElementById("cargar-gastos-api");
-butCargarGastosApi.addEventListener("click", cargarGastosApi);
 
+
+
+let crearFormulario = new nuevoGastoWebFormulario();
+
+let botonCrear = document.getElementById("anyadirgasto-formulario");
+botonCrear.addEventListener("click", crearFormulario);
+
+let gastosFiltradosWeb = new filtrarGastosWeb();
+
+let botonFiltro = document.getElementById("formulario-filtrado");
+botonFiltro.addEventListener("submit", gastosFiltradosWeb);
+
+
+let botonGuardar = document.getElementById("guardar-gastos");
+botonGuardar.addEventListener("click", guardarGastosWeb);
+
+
+let botonCargar = document.getElementById("cargar-gastos");
+botonCargar.addEventListener("click", cargarGastosWeb);
+
+let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
+botonCargarGastosApi.addEventListener("click", cargarGastosApi);
 
 
 //FORMULARIOS
