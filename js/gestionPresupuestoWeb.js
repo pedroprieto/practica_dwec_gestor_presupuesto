@@ -4,7 +4,7 @@ function mostrarDatoEnId(idElemento, valor){
 
 let elemento = document.getElementById(idElemento);
 
-    
+
 
 
 if (elemento){
@@ -288,6 +288,9 @@ function EditarHandleFormulario(gasto){
         let submitFormulario = new submitEditarHandleForm();
         submitFormulario.gasto = this.gasto;
         formulario.addEventListener('submit',submitFormulario);
+        //seleccionamos actualizarGasto y el gasto
+        let manejadorEditarAPI = new actualizarGastoApi(); 
+        manejadorEditarAPI.gasto = this.gasto;
         
         // Localizar el botón cancelar
         let botonCancelarGasto = formulario.querySelector(".cancelar");
@@ -295,8 +298,9 @@ function EditarHandleFormulario(gasto){
         let eventoCancelar = new cancelarNuevoGasto();
         botonCancelarGasto.addEventListener("click",eventoCancelar);
         // Evento click  del boton .gasto-enviar-api
-        let botonEnviarAPi = formulario.querySelector('.gasto-enviar-api');
-        botonEnviarAPi.addEventListener('click', new ActualizarGastoApi(gasto, formulario));
+        let botonEditarAPi = formulario.querySelector('.gasto-enviar-api');
+        manejadorEditarAPI.botonEditar = event.target; 
+        botonEditarAPi.addEventListener('click', manejadorEditarAPI);
 
 
     }
@@ -358,6 +362,9 @@ class BorrarEtiquetasHandle {
     }
 }
 
+
+
+
 function nuevoGastoWebFormulario() {
     // Crear una copia del formulario
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
@@ -388,10 +395,11 @@ Por último, añadir el fragmento de documento (variable plantillaFormulario) al
         // Llamar a la función repintar
         repintar();
 
-        let botonEnviarGastoApi = plantillaFormulario.querySelector(".gasto-enviar-api");
-        botonEnviarGastoApi.addEventListener('click', envGastFormApi);
+
         // Activar el botón anyadirgasto-formulario
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+        // Obtener el botón
+
 
         // Cerrar el formulario (puedes ocultarlo o eliminarlo del DOM según tu preferencia)
         formulario.parentElement.removeChild(formulario);
@@ -401,6 +409,7 @@ Por último, añadir el fragmento de documento (variable plantillaFormulario) al
     // Agregar el formulario a la página
     document.body.appendChild(plantillaFormulario);
 
+
     // Desactivar el botón anyadirgasto-formulario
     document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "true");
     //localizar button cancelar
@@ -408,9 +417,63 @@ Por último, añadir el fragmento de documento (variable plantillaFormulario) al
 
          // Para que al pulsar se elimine el formulario.
         let eventoCancelar = new cancelarNuevoGasto();
+
         botonCancelarGasto.addEventListener("click",eventoCancelar);
+        document.body.appendChild(plantillaFormulario);  
+        let botonEnviarApi = formulario.querySelector('.gasto-enviar-api'); 
+        botonEnviarApi.addEventListener('click', enviarGastoApi); 
+       
+             
+        
+}
+function formatearFecha(fecha) {
+  const d = new Date(fecha);
+  const dd = d.getDate().toString().padStart(2, '0');
+  const mm = (d.getMonth() + 1).toString().padStart(2, '0');
+  const yyyy = d.getFullYear();
+
+  return `${dd}/${mm}/${yyyy}`;
+}
+
+async function enviarGastoApi(event) {
+  event.preventDefault();
+  let nombreUsuario = document.getElementById('nombre_usuario').value;
+  let formulario = event.target.form; 
+  let descripcion = formulario.elements.descripcion.value; 
+  let valor =  formulario.elements.valor.value; 
+  let valorNum = parseFloat(valor); 
+  let fecha = formulario.elements.fecha.value; 
+  console.log(fecha);
+  let etiquetas = formulario.elements.etiquetas.value; 
+  let etiquetasArr = etiquetas.split(', ').map(etiqueta => etiqueta.trim()); 
+  let nuevoGastoAPI = new gestionPresupuesto.CrearGasto(descripcion, valorNum, fecha); 
+  nuevoGastoAPI.anyadirEtiquetas(...etiquetasArr); 
+  gestionPresupuesto.anyadirGasto(nuevoGastoAPI);
+  try {
+    await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        descripcion: nuevoGastoAPI.descripcion,
+        valor: nuevoGastoAPI.valor,
+        fecha: formatearFecha(fecha)
+        ,
+        etiquetas: nuevoGastoAPI.etiquetas,
+      }),
+    });
+    // Actualizar la lista de gastos desde la API
+    cargarGastosApi();
+  } catch (error) {
+    console.error('Error al enviar el gasto a la API:', error);
+  }
+  formulario.remove(); 
+  let botonAnyadir = document.getElementById('anyadirgasto-formulario'); 
+  botonAnyadir.disabled = false; 
 
 }
+
 
 
 
@@ -536,7 +599,7 @@ async function cargarGastosApi(){
     
 
 let btnCargarGastosAPI = document.getElementById("cargar-gastos-api"); 
-btnCargarGastosAPI.addEventListener('click', cargarGastosApi); 
+btnCargarGastosAPI.addEventListener("click", cargarGastosApi); 
 
 function borrarGastoApi() {
    
@@ -565,66 +628,27 @@ function borrarGastoApi() {
 }
 
 
-async function envGastFormApi(event){
-       this.handleEvent= async function(event){
-        event.preventDefault();
-        console.log(" ha pasaado por nvGastFormAp");
-        let descripcionGastoForm =document.getElementById("descripcion").value;
-        let valorGasto=document.getElementById("valor").value;
-        let valorGastoForm=parseFloat(valorGasto);
-        let fechaGastoForm=document.getElementById("fecha").value;
 
-        let etiquetasGastoForm= document.getElementById("etiquetas").value
-
-        let etiquetasArrForm= etiquetasGastoForm.split(',');
-        let gastoPruebaFormApi = {
-            descripcion: descripcionGastoForm,
-            valor: valorGastoForm,
-            fecha: fechaGastoForm,
-            etiquetas: etiquetasArrForm  
-        };
-        console.log("Descripcion objeto "+ descripcion.value)
-
-        let usuario = document.getElementById("nombre_usuario").value
-        console.log(usuario);
-        let urlEnviarApiForm = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`
-
-
-        let respuesta = await fetch(urlEnviarApiForm, {
-            method:'PUT',
-            headers:{
-                'Content-Type': 'application/json;charset=utf-8', 
-            },
-            body: JSON.stringify(gastoPruebaFormApi)     
-        });
-        if (respuesta.ok)
-        {
-            console.log ("Petición PUT realizada con exito")
-        } else {
-                console.error("Error al realizar la petición PUT:", respuesta.status, respuesta.statusText);
-        }
-
-        cargarGastosApi();
-  
-    }
-    
-}
-
-function ActualizarGastoApi(gasto, formulario){
-    this.gasto = gasto;
-    this.formulario = formulario;
-    this.handleEvent = function (event){
+function actualizarGastoApi(){
+ 
+    this.handleEvent = async function (event){
         // Obtener el nombre de usuario desde el input
         let nomUsuario = document.getElementById('nombre_usuario').value;
+        // para acceder a los campos del formulario
+        let formulario = event.currentTarget.form;
         // Obtener el ID del gasto actual (reemplaza 'obtenerIdGasto' con la lógica real para obtener el ID)
-        let idGasto = gasto.id;
-        // Crear la URL de la API con el nombre de usuario y el ID del gasto
-        let apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${idGasto}`;
+        
+ 
         // Obtener los datos del formulario
         let descripcion = formulario.elements.descripcion.value;
-        let valor = Number(formulario.elements.valor.value);
-        let fecha = formulario.elements.fecha.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formatearFecha(formulario.elements.fecha.value);
+        console.log(fecha);
         let etiquetas = formulario.elements.etiquetas.value.split(',');
+        let idGasto = this.gasto.gastoId;
+               // Crear la URL de la API con el nombre de usuario y el ID del gasto
+        let apiUrl = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nomUsuario}/${idGasto}`;
+        console.log(apiUrl);
 
         // Crear el objeto con los datos del formulario de edición
         const datosActualizar = {
