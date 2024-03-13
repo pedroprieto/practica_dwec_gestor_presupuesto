@@ -128,10 +128,10 @@ function mostrarGastoWeb(idElemento, gasto) {
   buttonBorrarApi.className += `gasto-borrar-api`;
   buttonBorrarApi.type = "button";
   buttonBorrarApi.textContent = "Borrar (API)";
-
+/* 
   let eventoBorrarApi = new BorrarGastoApiHandle();
   eventoBorrarApi.gasto = gastos;
-  buttonBorrarApi.addEventListener("click",eventoBorrarApi);
+  buttonBorrarApi.addEventListener("click",eventoBorrarApi); */
 
 }
 
@@ -229,8 +229,12 @@ function nuevoGastoWeb() {
   //convierto el valor a numero
   promptValorStr = parseFloat(promptValorStr);
   //convierto el string de etiquetas a un array
-  let etiquetas =  promptEtiquetasStr.split(',');
-   
+  let etiquetas = [];
+
+  if (!promptEtiquetasStr == null) {
+    etiquetas =  promptEtiquetasStr.split(',');
+  }
+  
   //creo un nuevo gasto
   let gasto = new gestorPresupuesto.CrearGasto(promptDescripcion,promptValorStr,promptFecha,etiquetas);
   gestorPresupuesto.anyadirGasto(gasto);//añado el gasto a la lista
@@ -247,7 +251,7 @@ document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 function EditarHandle() {
   
   //metodo handleEvent para manejar el evento
-  this.handleEvent = function (event) {
+  this.handleEvent = function (e) {
 
     //pido informacion al usuario 
   let promptDescripcion = prompt("Introduzca la descripcion del gasto: ");
@@ -274,7 +278,7 @@ function EditarHandle() {
 
 function BorrarHandle(){
     
-  this.handleEvent = function(event){ //handleEvent metodo para manejar el evento de borrado
+  this.handleEvent = function(e){ //handleEvent metodo para manejar el evento de borrado
       console.log(this.gasto.id);
       gestorPresupuesto.borrarGasto(this.gasto.id);//se borra el gasto utilizando la f(x) borrarGasto
 
@@ -286,7 +290,7 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle()
 {
-    this.handleEvent = function (event) // handleEvent maneja el event de borrado de etiquetas
+    this.handleEvent = function (e) // handleEvent maneja el event de borrado de etiquetas
     {
         this.gasto.borrarEtiquetas(this.etiqueta); //borra la etiqueta seleccionada del gasto asociado
 
@@ -308,7 +312,7 @@ function cargarGastosApi(){
       .then((result) => { 
       let resultado = result;
       if(resultado == ""){
-          console.log("El usuario no ha introducido gastos")
+          console.log("El usuario no ha introducido gastos");
       }else{
           gesPres.cargarGastos(resultado);
           repintar();
@@ -447,12 +451,13 @@ let botonFiltro = document.getElementById("formulario-filtrado");
 botonFiltro.addEventListener("submit", gastosFiltradosWeb);
 
 
-let botonGuardar = document.getElementById("guardar-gastos");
-botonGuardar.addEventListener("click", guardarGastosWeb);
+/* let botonGuardar = document.getElementById("guardar-gastos");
+botonGuardar.addEventListener("click", guardarGastosWeb); 
+
 
 
 let botonCargar = document.getElementById("cargar-gastos");
-botonCargar.addEventListener("click", cargarGastosWeb);
+botonCargar.addEventListener("click", cargarGastosWeb);*/
 
 let botonCargarGastosApi = document.getElementById("cargar-gastos-api");
 botonCargarGastosApi.addEventListener("click", cargarGastosApi);
@@ -549,7 +554,11 @@ function EditarHandleFormulario(){
         cancelarAnyadirGasto(event, anyadirgasto)
     })
     //Se deshabilita el botón que inició el evento
-    event.currentTarget.disabled = true;
+   
+    if (!event == undefined ) {
+      event.currentTarget.disabled = true;
+    }
+   
     
     //se agrega el formulario al DOM
     let controles = document.getElementById( "controlesprincipales" );
@@ -592,7 +601,7 @@ function cancelarAnyadirGasto(event, botonEditar){
 
 //Función filtrarGastosWeb
 
-function filtrarGastoWeb() 
+function filtrarGastosWeb() 
 {
     this.handleEvent = function(e)
     {
@@ -630,7 +639,7 @@ function filtrarGastoWeb()
 }
 
 //añado la f(x) como manejadora del evento submit del form 
-let manejadorFiltrado = new filtrarGastoWeb();
+let manejadorFiltrado = new filtrarGastosWeb();
 let formularioFiltrado = document.getElementById("formulario-filtrado");
 formularioFiltrado.addEventListener("submit", manejadorFiltrado);
 
