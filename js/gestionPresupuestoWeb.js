@@ -314,7 +314,7 @@ function cargarGastosApi(){
       if(resultado == ""){
           console.log("El usuario no ha introducido gastos");
       }else{
-          gesPres.cargarGastos(resultado);
+          gestorPresupuesto.cargarGastos(resultado);
           repintar();
       }
       }); 
