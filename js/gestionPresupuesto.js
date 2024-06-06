@@ -188,8 +188,24 @@ function filtrarGastos(filtros) {
     });
 }
 
-function agruparGastos() {
+function agruparGastos(periodo = "mes", etiquetas, fDesde, fHasta) {
+    
+    let gastosFiltrados = filtrarGastos({fechaDesde: fDesde, fechaHasta: fHasta, etiquetasTiene: etiquetas})
 
+    return gastosFiltrados.reduce((acc, gasto) => {
+
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        if (acc[periodoAgrupacion]) {
+            // Si existe el periodo le sumamos el valor
+            acc[periodoAgrupacion] += gasto.valor;
+        } else {
+            // Si no, creamos la propiedad
+            acc[periodoAgrupacion] = gasto.valor;
+        }
+        return acc;
+
+    }, {});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
