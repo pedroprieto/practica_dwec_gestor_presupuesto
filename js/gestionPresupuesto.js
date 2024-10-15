@@ -43,7 +43,11 @@ function CrearGasto(descripcion, valor) {
     }
 }
 
-function listarGastos(){}
+function listarGastos(){
+    return gastos;
+}
+
+
 function anyadirGasto(){}
 function borrarGasto(){}
 function calcularTotalGastos(){}
