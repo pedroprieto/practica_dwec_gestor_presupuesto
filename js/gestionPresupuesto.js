@@ -6,7 +6,7 @@ let presupuesto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) {
     
-    return (nuevoPresupuesto >= 0)?(presupuesto = nuevoPresupuesto, nuevoPresupuesto):(console.log("Error, numero negativo"),  -1);
+    return (nuevoPresupuesto >= 0)?(presupuesto = nuevoPresupuesto, nuevoPresupuesto):(console.log("Error, numero negativo"), -1);
     /*
     if (nuevoPresupuesto >= 0) { 
         presupuesto= nuevoPresupuesto;
@@ -24,8 +24,9 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto() {
-    // TODO
+function CrearGasto(descripcion, valor) {
+    this.descripcion=descripcion;
+    (valor>0 && !valor.isNaN)?(this.valor = valor):(this.valor = 0);
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
