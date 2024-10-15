@@ -27,6 +27,10 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion, valor) {
     this.descripcion=descripcion;
     (valor>0 && !valor.isNaN)?(this.valor = valor):(this.valor = 0);
+
+    this.mostrarGasto=function(){
+        return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
