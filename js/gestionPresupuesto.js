@@ -17,7 +17,7 @@ let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa");
 let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");
 let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");
 
-gasto6.mostrarGasto();
+gasto5.mostrarGastoCompleto();
 
 console.log(gasto6);
 
@@ -51,10 +51,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
   //mostrar todos los datos introducidos por pantalla
   this.mostrarGasto = function () {
+    console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`);
+  };
+
+  this.mostrarGastoCompleto = function () {
+    let fechaLocalizada = new Date(this.fecha).toLocaleString(); // Formato de fecha localizado
+    let textoEtiquetas = this.etiquetas.map((etiqueta) => ` - ${etiqueta}`).join("\n"); // Formato de etiquetas
     console.log(
-      `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €, fecha: ${new Date(
-        this.fecha
-      ).toLocaleString()}, etiquetas: ${this.etiquetas.join(", ")}`
+      `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`
     );
   };
 
@@ -69,10 +73,30 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   };
 
   this.anyadirEtiquetas = function (...nuevasEtiquetas) {
-    this.etiquetas.push(...nuevasEtiquetas);
+    for (i = 0; i < nuevasEtiquetas.length; i++) {
+      let etiqueta = nuevasEtiquetas[i];
+
+      if (!this.etiquetas.includes(etiqueta)) {
+        this.etiquetas.push(etiquetas);
+      }
+    }
   };
 
-  this.mostrarGastoCompleto = function () {};
+  this.actualizarFecha = function (nuevaFecha) {
+    if (nuevaFecha && !isNaN(Date.parse(nuevaFecha))) {
+      this.fecha = Date.Parse(nuevaFecha);
+    }
+  };
+
+  this.borrarEtiquetas = function (...borrarEtiquetas) {
+    for (i = 0; i < borrarEtiquetas.length; i++) {
+      let etiqueta = borrarEtiquetas[i];
+      let index = this.etiquetas.indexOf(etiqueta); //Buscar la etiqueta en el Array
+      if (index !== 1) {
+        this.etiquetas.splice(index, 1); //elimina la etiqueda si existe
+      }
+    }
+  };
 }
 
 //Función listar gastos
