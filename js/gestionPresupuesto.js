@@ -9,16 +9,7 @@ let idGasto = 0;
 function actualizarPresupuesto(nuevoPresupuesto) {
     
     return (nuevoPresupuesto >= 0)?(presupuesto = nuevoPresupuesto, nuevoPresupuesto):(console.log("Error, numero negativo"), -1);
-    /*
-    if (nuevoPresupuesto >= 0) { 
-        presupuesto= nuevoPresupuesto;
-        return presupuesto;
-    }
-    else{
-        console.log("Error, numero negativo");
-        return -1;
-    }
-        */
+
 }
 
 
@@ -26,9 +17,12 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+    
     this.descripcion=descripcion;
     (valor>0 && !valor.isNaN)?(this.valor = valor):(this.valor = 0);
+    (!isNaN(Date.parse(fecha)))?(this.fecha = Date.parse(fecha)):(this.fecha = Date.now());
+    (etiquetas)?(this.etiquetas = etiquetas):(this.etiquetas = []);
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
