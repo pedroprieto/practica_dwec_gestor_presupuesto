@@ -2,9 +2,16 @@
 
 let presupuesto=0;
 
+function actualizarPresupuesto(presu) {
+    if (isNaN(presu)){
+        return -1
+    }
+    if (presu < 0){
+        return -1
+    }
 
-function actualizarPresupuesto() {
-    // TODO
+    presupuesto=presu
+    return presupuesto
 }
 
 function mostrarPresupuesto() {
