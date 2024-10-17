@@ -9,7 +9,6 @@ let idGasto = 0;
 function actualizarPresupuesto(nuevoPresupuesto) {
     
     return (nuevoPresupuesto >= 0)?(presupuesto = nuevoPresupuesto, nuevoPresupuesto):(console.log("Error, numero negativo"), -1);
-
 }
 
 
@@ -42,7 +41,13 @@ function listarGastos(){
 }
 
 
-function anyadirGasto(){}
+function anyadirGasto(gasto){
+       gasto.id=idGasto;
+       idGasto++;
+       gastos.push(gasto);
+}
+ 
+
 function borrarGasto(){}
 function calcularTotalGastos(){}
 function calcularBalance(){}
