@@ -42,13 +42,20 @@ function listarGastos(){
 
 
 function anyadirGasto(gasto){
-       gasto.id=idGasto;
-       idGasto++;
-       gastos.push(gasto);
+    gasto.id=idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
  
 
-function borrarGasto(){}
+function borrarGasto(id){
+    let index = -1;
+    index = gastos.findIndex(gasto => gasto.id == id);
+    (index>=0)?(gastos.splice(index, 1)):(null);
+ 
+}
+
+
 function calcularTotalGastos(){}
 function calcularBalance(){}
 
