@@ -33,6 +33,21 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.actualizarValor = function(nuevoValor){
         (nuevoValor>0 && !nuevoValor.isNaN)?(this.valor = nuevoValor):(null);
     }
+
+    this.mostrarGastoCompleto = function(){
+        const date = new Date(this.fecha).toLocaleString("es");
+        let gastoCompleto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${date}\n`
+
+        if(etiquetas){
+            gastoCompleto+="Etiquetas:\n"
+            for(let etiqueta of etiquetas){
+                 gastoCompleto+=`- ${etiqueta}\n`;
+            }
+        }
+        return gastoCompleto;
+    }
+
+
 }
 
 function listarGastos(){
