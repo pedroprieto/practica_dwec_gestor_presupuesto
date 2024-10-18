@@ -47,11 +47,15 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return gastoCompleto;
     }
 
-    this.actualizarFecha=function(nuevaFecha){
+    this.actualizarFecha = function(nuevaFecha){
       return (!isNaN(Date.parse(nuevaFecha)))?(this.fecha = Date.parse(nuevaFecha)):(null);
     }
-    
-    this.anyadirEtiquetas=function(){}
+
+    this.anyadirEtiquetas = function(...nuevasEtiquetas){
+        for (let etiqueta of nuevasEtiquetas){
+            (!this.etiquetas.includes(etiqueta))?(this.etiquetas.push(etiqueta)):(null);
+        }
+    }
     this.borrarEtiquetas=function(){}
 
 
