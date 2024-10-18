@@ -6,7 +6,7 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceFolder}/test/01_testIntroJSI.js"
+                "${workspaceFolder}/test/01_testIntroJSI.cy.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "01 - Fundamentos de JS I - Tests",
@@ -22,7 +22,7 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceFolder}/test/02_testIntroJSII.js"
+                "${workspaceFolder}/test/02_testIntroJSII.cy.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "02 - Fundamentos de JS II - Tests",
@@ -38,7 +38,7 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceFolder}/test/03_testIntroJSIII.js"
+                "${workspaceFolder}/test/03_testIntroJSIII.cy.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "name": "03 - Fundamentos de JS III - Tests",
