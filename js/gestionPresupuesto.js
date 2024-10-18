@@ -4,8 +4,6 @@ let gastos = [];
 let idGasto = 0;
 let presupuesto = 0;
 
-//let dinero = prompt("Introduce la cantidad de dinero para el presupuesto");
-
 //actualizarPresupuesto();
 
 //mostrarPresupuesto();
@@ -14,10 +12,10 @@ let presupuesto = 0;
 let gasto2 = new CrearGasto("Gasto 2", 23.55);
 let gasto3 = new CrearGasto("Gasto 3", 23.55, "2021-10-06T13:10");
 let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa");
-let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");*/
-let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");
+let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");
+let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");*/
 
-console.log(gasto6.mostrarGastoCompleto());
+//console.log(gasto6.mostrarGastoCompleto());
 
 //console.log(gasto6);
 
