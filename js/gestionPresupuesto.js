@@ -5,8 +5,8 @@ let idGasto = 0;
 let presupuesto = 0;
 
 //actualizarPresupuesto();
-
 //mostrarPresupuesto();
+
 //pruebas para la función CrearGasto.
 /*let gasto1 = new CrearGasto("Gasto 1");
 let gasto2 = new CrearGasto("Gasto 2", 23.55);
@@ -16,8 +16,6 @@ let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "super
 let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");*/
 
 //console.log(gasto6.mostrarGastoCompleto());
-
-//console.log(gasto6);
 
 function actualizarPresupuesto(dinero) {
   if (dinero >= 0) {
