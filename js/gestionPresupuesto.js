@@ -57,9 +57,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.mostrarGastoCompleto = function () {
     let fechaLocalizada = new Date(this.fecha).toLocaleString(); // Formato de fecha localizado
     let textoEtiquetas = this.etiquetas.map((etiqueta) => ` - ${etiqueta}`).join("\n"); // Formato de etiquetas
-    console.log(
-      `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`
-    );
+    return;
+    `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`;
   };
 
   this.actualizarDescripcion = function (nuevaDescripcion) {
@@ -73,7 +72,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   };
 
   this.anyadirEtiquetas = function (...nuevasEtiquetas) {
-    for (i = 0; i < nuevasEtiquetas.length; i++) {
+    for (let i = 0; i < nuevasEtiquetas.length; i++) {
       let etiqueta = nuevasEtiquetas[i];
 
       if (!this.etiquetas.includes(etiqueta)) {
@@ -89,7 +88,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   };
 
   this.borrarEtiquetas = function (...borrarEtiquetas) {
-    for (i = 0; i < borrarEtiquetas.length; i++) {
+    for (let i = 0; i < borrarEtiquetas.length; i++) {
       let etiqueta = borrarEtiquetas[i];
       let index = this.etiquetas.indexOf(etiqueta); //Buscar la etiqueta en el Array
       if (index !== 1) {
@@ -110,12 +109,12 @@ function anyadirGasto(gasto) {
 
   idGasto++;
 
-  idGasto.push(gasto);
+  gastos.push(gasto);
 }
 
 //Función borrar gastos.
 function borrarGasto(id) {
-  for (i = 0; i < gastos.length; i++) {
+  for (let i = 0; i < gastos.length; i++) {
     if (gastos[i].id === id) {
       gastos.splice(i, 1); //Elimina el gasto de la posición i
 
@@ -129,7 +128,7 @@ function borrarGasto(id) {
 //función Calcular el total de los gastos
 function calcularTotalGastos() {
   let total = 0;
-  for (i = 0; i < gastos.length; i++) {
+  for (let i = 0; i < gastos.length; i++) {
     total += gastos[i].valor;
   }
   return total;
@@ -137,9 +136,9 @@ function calcularTotalGastos() {
 
 //Función calcular balance presupuestario
 function calcularBalance() {
-  let computo = calcularTotalGastos() - presupuesto;
+  let computo = presupuesto - calcularTotalGastos();
 
-  console.log(`El balance es de ${computo} euros`);
+  return computo;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
