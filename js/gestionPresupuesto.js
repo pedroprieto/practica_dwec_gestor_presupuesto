@@ -6,9 +6,9 @@ let presupuesto = 0;
 
 //let dinero = prompt("Introduce la cantidad de dinero para el presupuesto");
 
-actualizarPresupuesto(300);
+//actualizarPresupuesto();
 
-mostrarPresupuesto();
+//mostrarPresupuesto();
 //pruebas para la función CrearGasto.
 let gasto1 = new CrearGasto("Gasto 1");
 let gasto2 = new CrearGasto("Gasto 2", 23.55);
@@ -26,7 +26,7 @@ function actualizarPresupuesto(dinero) {
     presupuesto = dinero;
     return presupuesto;
   } else {
-    alert("La cantidad introducida no es válida");
+    console.error("La cantidad introducida no es válida");
     return -1;
   }
 }
