@@ -10,12 +10,12 @@ let presupuesto = 0;
 
 //mostrarPresupuesto();
 //pruebas para la función CrearGasto.
-let gasto1 = new CrearGasto("Gasto 1");
+/*let gasto1 = new CrearGasto("Gasto 1");
 let gasto2 = new CrearGasto("Gasto 2", 23.55);
 let gasto3 = new CrearGasto("Gasto 3", 23.55, "2021-10-06T13:10");
 let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa");
 let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");
-let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");
+let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");*/
 
 //gasto5.mostrarGastoCompleto();
 
@@ -57,8 +57,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.mostrarGastoCompleto = function () {
     let fechaLocalizada = new Date(this.fecha).toLocaleString(); // Formato de fecha localizado
     let textoEtiquetas = this.etiquetas.map((etiqueta) => ` - ${etiqueta}`).join("\n"); // Formato de etiquetas
-    return;
-    `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`;
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`;
   };
 
   this.actualizarDescripcion = function (nuevaDescripcion) {
