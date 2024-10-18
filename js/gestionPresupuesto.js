@@ -55,7 +55,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   this.mostrarGastoCompleto = function () {
     let fechaLocalizada = new Date(this.fecha).toLocaleString(); // Formato de fecha localizado
     let textoEtiquetas = this.etiquetas.map((etiqueta) => `- ${etiqueta}`).join("\n"); // Formato de etiquetas
-    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`;
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}\n`;
   };
 
   this.actualizarDescripcion = function (nuevaDescripcion) {
