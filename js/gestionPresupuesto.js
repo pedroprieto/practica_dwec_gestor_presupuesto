@@ -56,9 +56,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             (!this.etiquetas.includes(etiqueta))?(this.etiquetas.push(etiqueta)):(null);
         }
     }
-    this.borrarEtiquetas=function(){}
-
-
+    this.borrarEtiquetas=function(...etiquetasBorrar){
+        for (let etiqueta of etiquetasBorrar){
+            
+            let indice = this.etiquetas.indexOf(etiqueta);
+            (indice >-1)?(this.etiquetas.splice(this.etiquetas.indexOf(etiqueta), 1)):(null);
+        }
+    }
 }
 
 function listarGastos(){
