@@ -14,10 +14,10 @@ let presupuesto = 0;
 let gasto2 = new CrearGasto("Gasto 2", 23.55);
 let gasto3 = new CrearGasto("Gasto 3", 23.55, "2021-10-06T13:10");
 let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa");
-let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");
-let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");*/
+let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");*/
+let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");
 
-//gasto5.mostrarGastoCompleto();
+console.log(gasto6.mostrarGastoCompleto());
 
 //console.log(gasto6);
 
@@ -56,7 +56,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
   this.mostrarGastoCompleto = function () {
     let fechaLocalizada = new Date(this.fecha).toLocaleString(); // Formato de fecha localizado
-    let textoEtiquetas = this.etiquetas.map((etiqueta) => ` - ${etiqueta}`).join("\n"); // Formato de etiquetas
+    let textoEtiquetas = this.etiquetas.map((etiqueta) => `- ${etiqueta}`).join("\n"); // Formato de etiquetas
     return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaLocalizada}\nEtiquetas:\n${textoEtiquetas}`;
   };
 
@@ -82,7 +82,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
   this.actualizarFecha = function (nuevaFecha) {
     if (nuevaFecha && !isNaN(Date.parse(nuevaFecha))) {
-      this.fecha = Date.Parse(nuevaFecha);
+      this.fecha = Date.parse(nuevaFecha);
     }
   };
 
