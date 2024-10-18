@@ -7,7 +7,6 @@ let idGasto = 0;
 
 
 function actualizarPresupuesto(nuevoPresupuesto) {
-    
     return (nuevoPresupuesto >= 0)?(presupuesto = nuevoPresupuesto, nuevoPresupuesto):(console.log("Error, numero negativo"), -1);
 }
 
@@ -40,23 +39,27 @@ function listarGastos(){
     return gastos;
 }
 
-
 function anyadirGasto(gasto){
     gasto.id=idGasto;
     idGasto++;
     gastos.push(gasto);
 }
  
-
 function borrarGasto(id){
     let index = -1;
     index = gastos.findIndex(gasto => gasto.id == id);
     (index>=0)?(gastos.splice(index, 1)):(null);
- 
+ }
+
+
+function calcularTotalGastos(){
+    let suma = 0;
+    for (let gasto of gastos){
+        suma+=gasto.valor;
+    }
+    return suma;
 }
 
-
-function calcularTotalGastos(){}
 function calcularBalance(){}
 
 
