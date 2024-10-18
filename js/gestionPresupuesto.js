@@ -32,7 +32,7 @@ function actualizarPresupuesto(dinero) {
 }
 
 function mostrarPresupuesto() {
-  return "Tu presupuesto actual es de " + presupuesto + " euros";
+  return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 //FUNCIÓN CREAR GASTO:
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -51,7 +51,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
   //mostrar todos los datos introducidos por pantalla
   this.mostrarGasto = function () {
-    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
+    return `Gasto correspondiente a ${descripcion} con valor ${valor} €`;
   };
 
   this.mostrarGastoCompleto = function () {
