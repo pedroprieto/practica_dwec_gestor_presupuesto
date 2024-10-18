@@ -17,9 +17,9 @@ let gasto4 = new CrearGasto("Gasto 4", 23.55, "2021-10-06T13:10", "casa");
 let gasto5 = new CrearGasto("Gasto 5", 23.55, "2021-10-06T13:10", "casa", "supermercado");
 let gasto6 = new CrearGasto("Gasto 6", 23.55, "2021-10-06T13:10", "casa", "supermercado", "comida");
 
-gasto5.mostrarGastoCompleto();
+//gasto5.mostrarGastoCompleto();
 
-console.log(gasto6);
+//console.log(gasto6);
 
 function actualizarPresupuesto(dinero) {
   if (dinero >= 0) {
@@ -32,7 +32,7 @@ function actualizarPresupuesto(dinero) {
 }
 
 function mostrarPresupuesto() {
-  console.log("Tu presupuesto actual es de " + presupuesto + " euros");
+  return "Tu presupuesto actual es de " + presupuesto + " euros";
 }
 //FUNCIÓN CREAR GASTO:
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
@@ -51,7 +51,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
   //mostrar todos los datos introducidos por pantalla
   this.mostrarGasto = function () {
-    console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`);
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
   };
 
   this.mostrarGastoCompleto = function () {
