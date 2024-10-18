@@ -75,7 +75,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
       let etiqueta = nuevasEtiquetas[i];
 
       if (!this.etiquetas.includes(etiqueta)) {
-        this.etiquetas.push(etiquetas);
+        this.etiquetas.push(etiqueta);
       }
     }
   };
@@ -90,7 +90,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     for (let i = 0; i < borrarEtiquetas.length; i++) {
       let etiqueta = borrarEtiquetas[i];
       let index = this.etiquetas.indexOf(etiqueta); //Buscar la etiqueta en el Array
-      if (index !== 1) {
+      if (index !== -1) {
         this.etiquetas.splice(index, 1); //elimina la etiqueda si existe
       }
     }
